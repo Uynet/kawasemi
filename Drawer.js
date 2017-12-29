@@ -13,7 +13,7 @@ class Drawer{
   }
 
   static addStage(Sprite){
-    this.Stage.addChild(new PIXI.Sprite(PIXI.Texture.fromImage('img/hiyoko2.png')));
+    this.Stage.addChild(Sprite);
   }
 
   //animation loop
