@@ -1,6 +1,6 @@
 Main = _=>{
   Game.Init();
-  Drawer.addStage(Art.Player);
+  Stage.addEntity(new Entity(100,100,Art.Player));
   Drawer.animate();
 }
     
@@ -11,6 +11,7 @@ class Game{
   }
 
   static Load(){
+    console.log("load");
     Art.Load();
   }
 }

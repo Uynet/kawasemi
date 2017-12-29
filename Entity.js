@@ -1,10 +1,9 @@
 class Entity{
-  constructor(x,y){
-    this.position.x = x;
-    this.position.y = y;
+  constructor(x,y,Sprite){
+    this.x = x;
+    this.y = y;
+    this.Sprite = Sprite;
   }
-
-
 }
 
 /*singleton*/
@@ -18,9 +17,19 @@ class Player extends Entity{
   }
 }
 
-
+/*singleton*/
 class Stage{
   constructor(){
+    this.Entity = ["u","i"]; 
+    if(typeof Entity.instance === "object"){
+      return Entity.instance;
+    }
+    Entity.instance = this;
+    return this;
+  }
 
+  static addEntity(entity){
+    new Stage().Entity.push(entity); 
+    Drawer.addStage(entity.Sprite);
   }
 }
