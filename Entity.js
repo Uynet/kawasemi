@@ -1,8 +1,11 @@
+//EntityとSpriteを結びつけるべきなのか?
 class Entity{
   constructor(x,y,Sprite){
     this.x = x;
     this.y = y;
     this.Sprite = Sprite;
+    this.Sprite.position.x = x;
+    this.Sprite.position.y = y;
   }
 }
 
@@ -20,7 +23,7 @@ class Player extends Entity{
 /*singleton*/
 class Stage{
   constructor(){
-    this.Entity = ["u","i"]; 
+    this.Entity = []; 
     if(typeof Entity.instance === "object"){
       return Entity.instance;
     }
@@ -28,7 +31,11 @@ class Stage{
     return this;
   }
 
+  //Entityをリストに登録
+  //Entityに紐付けられたSpriteをStage
+  //Stageはsingletonなので同一のinstanceをさす
   static addEntity(entity){
+    console.log(entity.Sprite.position.x);
     new Stage().Entity.push(entity); 
     Drawer.addStage(entity.Sprite);
   }
