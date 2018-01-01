@@ -12,11 +12,12 @@ class Entity{
 /*singleton*/
 class Player extends Entity{
   constructor(){
-    if(typeof Player.instance === "object"){
-      return Player.instance;
+  }
+
+  updatePlayer(){
+    if(isKeyInput[40]){
+      this.y++;
     }
-    Player.instance = this;
-    return this;
   }
 }
 
@@ -32,8 +33,8 @@ class Stage{
   }
 
   //Entityをリストに登録
-  static addEntity(entity){
-    new Stage().Entity.push(entity); 
+  addEntity(entity){
+    this.Entity.push(entity); 
     Drawer.addStage(entity.Sprite);
   }
 }
