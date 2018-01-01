@@ -1,11 +1,11 @@
+let stageEntity;
+let input;
 
 Main = _=>{
   Game.Init();
   input = new Input();
-  stage = new Stage();
-
-  stage.addEntity(new Entity(10,10,new PIXI.Sprite(PIXI.Texture.fromImage('img/hiyoko2.png'))));
-
+  stageEntity = new StageEntity();
+  stageEntity.addEntity(new Player(10,10,Art.Player));
 
   loop();
 }
@@ -21,6 +21,6 @@ class Game{
   }
 
   static Update(){
-    console.log("update");  
+    stageEntity.EntityList[0].updatePosition(); 
   }
 }

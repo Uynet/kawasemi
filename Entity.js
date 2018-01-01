@@ -7,34 +7,29 @@ class Entity{
     this.Sprite.position.x = x;
     this.Sprite.position.y = y;
   }
+  update(){console.log("Po")};
 }
 
 /*singleton*/
 class Player extends Entity{
-  constructor(){
-  }
-
-  updatePlayer(){
-    if(isKeyInput[40]){
+  updatePosition(){
+    if(input.isKeyInput(40)){
       this.y++;
+      this.Sprite.position.y++;
     }
   }
 }
 
 /*singleton*/
-class Stage{
+class StageEntity{
   constructor(){
-    this.Entity = []; 
-    if(typeof Entity.instance === "object"){
-      return Entity.instance;
-    }
-    Entity.instance = this;
-    return this;
+    this.EntityList = []; 
   }
 
   //Entityをリストに登録
   addEntity(entity){
-    this.Entity.push(entity); 
+    this.EntityList.push(entity); 
     Drawer.addStage(entity.Sprite);
   }
+
 }
