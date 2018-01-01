@@ -1,4 +1,3 @@
-//EntityとSpriteを結びつけるべきなのか?
 class Entity{
   constructor(x,y,Sprite){
     this.x = x;
@@ -7,18 +6,8 @@ class Entity{
     this.Sprite.position.x = x;
     this.Sprite.position.y = y;
   }
-  update(){console.log("Po")};
 }
 
-/*singleton*/
-class Player extends Entity{
-  updatePosition(){
-    if(input.isKeyInput(40)){
-      this.y++;
-      this.Sprite.position.y++;
-    }
-  }
-}
 
 /*singleton*/
 class StageEntity{
