@@ -1,10 +1,8 @@
 Main = _=>{
   Game.Init();
-  for(let i = 0;i<10;i++){
-    Stage.addEntity(new Entity(10*i,10*i,new PIXI.Sprite(PIXI.Texture.fromImage('img/kame2.png'))));
-  }
+  Stage.addEntity(new Entity(10,10,new PIXI.Sprite(PIXI.Texture.fromImage('img/hiyoko2.png'))));
   input = new Input();
-  Drawer.animate();
+  loop();
 }
 
 class Game{
@@ -15,5 +13,9 @@ class Game{
 
   static Load(){
     Art.Load();
+  }
+
+  static Update(){
+    
   }
 }

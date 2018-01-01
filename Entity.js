@@ -32,8 +32,6 @@ class Stage{
   }
 
   //Entityをリストに登録
-  //Entityに紐付けられたSpriteをStage
-  //Stageはsingletonなので同一のinstanceをさす
   static addEntity(entity){
     new Stage().Entity.push(entity); 
     Drawer.addStage(entity.Sprite);

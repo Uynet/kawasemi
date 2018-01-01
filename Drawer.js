@@ -16,15 +16,4 @@ class Drawer{
     this.Stage.addChild(Sprite);
   }
 
-  /*animation loop
-   *なんでここthisだとダメなの..
-   */
-  static animate(){
-    requestAnimationFrame(Drawer.animate);
-
-    //input test
-    console.log(input.isKeyInput(40));
-
-    Drawer.Renderer.render(Drawer.Stage);
-  }
 }
