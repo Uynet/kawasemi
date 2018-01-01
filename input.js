@@ -1,19 +1,28 @@
 /*singleton*/
-class Keyboard{
+class Input{
   constructor(){
-    this.key;
-    /*statemant as singleton*/
-    if(typeof Keyboard.instance === "object"){
-      return Keyboard.instance;
+    this.inputedKeyList = [];
+    for(let i = 0;i<256;i++){
+      this.inputedKeyList[i] = false;
     }
-    Keyboard.instance = this;
+    /*statemant as singleton*/
+    if(typeof Input.instance === "object"){
+      return Input.instance;
+    }
+    Input.instance = this;
     return this;
+  }
+
+  isKeyInput(key){
+    return this.inputedKeyList[key];
   }
 }
 
-
 /*receive input event*/
-document.onkeydown = (e)=> {
-  let keyboard = new Keyboard();
-  keyboard.key = event.keyCode;
-};
+$(document).on("keydown",(e)=> {
+  input.inputedKeyList[event.keyCode] = true;
+});
+$(document).on("keyup",(e)=> {
+  input.inputedKeyList[event.keyCode] = false;
+});
+

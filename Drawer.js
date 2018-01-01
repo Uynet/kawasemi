@@ -23,7 +23,7 @@ class Drawer{
     requestAnimationFrame(Drawer.animate);
 
     //input test
-    //console.log(new Keyboard().key);
+    console.log(input.isKeyInput(40));
 
     Drawer.Renderer.render(Drawer.Stage);
   }
