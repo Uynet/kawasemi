@@ -3,9 +3,12 @@
   let loop = ()=>{
     requestAnimationFrame(loop);
 
-    /*更新*/
-    Game.Update();
+    switch(state){
+      /*更新*/
+      case 0 : Game.Update();
+      break;
 
+    }
 
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);

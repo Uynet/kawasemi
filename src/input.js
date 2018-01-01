@@ -11,7 +11,7 @@ class Input{
     //}
     //Input.instance = this;
     //return this;
-  }
+    }
 
   isKeyInput(key){
     return this.inputedKeyList[key];
@@ -21,6 +21,7 @@ class Input{
 /*receive input event*/
 $(document).on("keydown",(e)=> {
   input.inputedKeyList[event.keyCode] = true;
+  event.preventDefault();
 });
 $(document).on("keyup",(e)=> {
   input.inputedKeyList[event.keyCode] = false;

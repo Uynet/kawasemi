@@ -1,14 +1,18 @@
 class Art{
   constructor(){
-    this.Player;
-    this.teki1;
-    this.teki2;
+    this.playerTexture;
+    this.teki1Texture;
+    this.teki2Texture;
   }
 
-  static Load(){
-    this.Player = new PIXI.Sprite(PIXI.Texture.fromImage('img/hiyoko2.png'));
-    this.teki1 = new PIXI.Sprite(PIXI.Texture.fromImage('img/kame2.png'));
-    this.teki2 = new PIXI.Sprite(PIXI.Texture.fromImage('img/zou2.png'));
+  static LoadTexture(){
+    this.playerTexture = PIXI.Texture.fromImage('img/player.png');
+    this.teki1Texture = PIXI.Texture.fromImage('img/teki1.png');
+    this.teki2Texture = PIXI.Texture.fromImage('img/teki2.png');
   }
 
+  static SpriteFactory(texture){
+    return new PIXI.Sprite(texture);
+  }
 }
+
