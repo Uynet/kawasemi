@@ -1,4 +1,8 @@
 class Player extends Entity{
+  constructor(x,y,Sprite){
+    super(x,y,Sprite);
+    this.shape = "circle";
+  }
   updatePosition(){
     if(input.isKeyInput(40)){
       this.y++;

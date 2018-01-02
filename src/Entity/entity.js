@@ -5,6 +5,9 @@ class Entity{
     this.Sprite = Sprite;
     this.Sprite.position.x = x;
     this.Sprite.position.y = y;
+
+    //衝突判定の形状
+    this.shape;
   }
 }
 
