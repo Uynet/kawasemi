@@ -1,10 +1,7 @@
 class Entity{
-  constructor(x,y,Sprite){
-    this.x = x;
-    this.y = y;
-    this.Sprite = Sprite;
-    this.Sprite.position.x = x;
-    this.Sprite.position.y = y;
+  constructor(pos){
+    this.pos = pos;
+    this.sprite;
 
     //衝突判定の形状
     this.shape;
@@ -21,7 +18,7 @@ class StageEntity{
   //Entityをリストに登録
   addEntity(entity){
     this.EntityList.push(entity); 
-    Drawer.addStage(entity.Sprite);
+    Drawer.addStage(entity.sprite);
   }
 
 }

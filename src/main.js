@@ -5,6 +5,7 @@ let input;
 //状態
 let state = 0;
 
+//ato de kesu
 let map = [
   [1,1,1,1,1],
   [1,0,0,0,1],
@@ -19,17 +20,17 @@ Main = _=>{
   stageEntity = new StageEntity();
 
 
-  for(let y = 0;y<5;y++){
-    for(let x = 0;x<5;x++){
-      switch(map[y][x]){
+  for(let mapY = 0;mapY<5;mapY++){
+    for(let mapX = 0;mapX<5;mapX++){
+      switch(map[mapY][mapX]){
         case 0 :
-          stageEntity.addEntity(new Wall(32*x,32*y,Art.SpriteFactory(Art.teki1Texture)));
+          /*nothing to do*/
           break;
         case 1 :
-          stageEntity.addEntity(new Wall(32*x,32*y,Art.SpriteFactory(Art.teki2Texture)));
+          stageEntity.addEntity(new Wall({x:32*mapX,y:32*mapY}));
           break;
         case 2 :
-          stageEntity.addEntity(new Player(32*x,32*y,Art.SpriteFactory(Art.playerTexture)));
+          stageEntity.addEntity(new Player({x:32*mapX,y:32*mapY}));
           break;
       }
     }
