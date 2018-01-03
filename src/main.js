@@ -1,9 +1,9 @@
-//
+/*singleton*/
 let stageEntity;
-//入力
 let input;
-//状態
-let state = 0;
+let state;
+let util;
+let collision;
 
 //ato de kesu
 let map = [
@@ -17,8 +17,10 @@ let map = [
 Main = _=>{
   Game.Init();
   input = new Input();
+  util = new Util();
   stageEntity = new StageEntity();
-
+  collision = new Collision();
+  state = 0;
 
   for(let mapY = 0;mapY<5;mapY++){
     for(let mapX = 0;mapX<5;mapX++){

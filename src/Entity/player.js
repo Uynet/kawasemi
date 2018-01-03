@@ -4,6 +4,7 @@ class Player extends Entity{
     this.shape = "circle";
     this.sprite = Art.SpriteFactory(Art.playerTexture);
     this.sprite.position = pos;
+    this.circle = new Circle(pos,10);
   }
   updatePosition(){
     if(input.isKeyInput(40)){
@@ -19,6 +20,13 @@ class Player extends Entity{
       this.pos.x++;
     }
 
+    for(let l of stageEntity.EntityList){
+      if(l != this){
+        if(collision.on(this,l).isHit){
+          console.log("hit");
+        }
+      }
+    }
     this.sprite.position = this.pos;
   }
 }

@@ -6,11 +6,11 @@ class Input{
       this.inputedKeyList[i] = false;
     }
     /*statemant as singleton*/
-    //if(typeof Input.instance === "object"){
-    //  return Input.instance;
-    //}
-    //Input.instance = this;
-    //return this;
+    if(typeof Input.instance === "object"){
+      return Input.instance;
+    }
+    Input.instance = this;
+    return this;
     }
 
   isKeyInput(key){

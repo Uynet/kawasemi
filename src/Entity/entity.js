@@ -2,6 +2,7 @@ class Entity{
   constructor(pos){
     this.pos = pos;
     this.sprite;
+    this.collision;
 
     //衝突判定の形状
     this.shape;

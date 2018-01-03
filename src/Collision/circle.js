@@ -1,6 +1,6 @@
-class circle{
+class Circle{
   constructor(pos,r){
-    this.pos = {x:pos.x,y:pos.y};
+    this.pos = pos;
     this.r = r;
   }
 }
