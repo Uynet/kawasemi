@@ -1,10 +1,11 @@
 class Player extends Entity{
   constructor(pos){
     super(pos);
-    this.shape = "circle";
     this.sprite = Art.SpriteFactory(Art.playerTexture);
     this.sprite.position = pos;
     this.circle = new Circle(pos,10);
+    this.shape = "circle";
+    this.collisionShape;//衝突判定の形状
   }
   updatePosition(){
     if(input.isKeyInput(40)){
@@ -21,10 +22,8 @@ class Player extends Entity{
     }
 
     for(let l of stageEntity.EntityList){
-      if(l != this){
-        if(collision.on(this,l).isHit){
-          console.log("hit");
-        }
+      if(collision.on(this,l).isHit){
+        console.log(typeof(l));
       }
     }
     this.sprite.position = this.pos;
