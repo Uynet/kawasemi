@@ -10,6 +10,11 @@ let map = [
   [1,1,1,1,1],
   [1,0,0,0,1],
   [1,0,0,0,1],
+  [1,0,0,0,1],
+  [1,0,0,0,1],
+  [1,0,0,0,1],
+  [1,0,0,0,1],
+  [1,0,0,0,1],
   [1,0,2,0,1],
   [1,1,1,1,1]
 ];
@@ -22,7 +27,7 @@ Main = _=>{
   collision = new Collision();
   state = 0;
 
-  for(let mapY = 0;mapY<5;mapY++){
+  for(let mapY = 0;mapY<10;mapY++){
     for(let mapX = 0;mapX<5;mapX++){
       switch(map[mapY][mapX]){
         case 0 :

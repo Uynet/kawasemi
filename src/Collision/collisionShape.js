@@ -1,6 +1,6 @@
 class CollisionShape{
-  constructor(shape,shapeObject){
+  constructor(shape,hitbox){
     this.shape = shape;
-    this.shapeObject = shapeObject;
+    this.hitbox = hitbox;
   }
 }
