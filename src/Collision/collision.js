@@ -1,16 +1,17 @@
 class Collision{
   on(e1,e2){
     //円同士の衝突判定
-    if(e1.shape == "circle" && e2.shape == "circle"){
+    if(e1.collisionShape.shape == "circle" && e2.collisionShape.shape == "circle"){
       let isHit;
-      if(util.distance(e1.circle.pos,e2.circle.pos) < e1.circle.r + e2.circle.r){
+      let circ1 = e1.collisionShape.shapeObject;
+      let circ2 = e2.collisionShape.shapeObject;
+      if(util.distance(circ1.pos,circ2.pos) < circ1.r + circ2.r){
         isHit = true;
       }else{
         isHit = false;
       }
       return new CollisionInfo(isHit);
     }
-    throw Error("うんこ");
   }
 }
 
