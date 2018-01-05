@@ -1,5 +1,17 @@
 class Collision{
   on(e1,e2){
+
+    //??
+    let coltype  = {
+      e1shape : e1.collisionShape.shape,
+      e2shape : e2.collisionShape.shape
+    }
+
+    let c_to_c = {
+      e1shape : SHAPE.CIRCLE,
+      e2shape : SHAPE.CIRCLE
+    }
+
     //円同士の衝突判定
     if(e1.collisionShape.shape == SHAPE.CIRCLE && e2.collisionShape.shape == SHAPE.CIRCLE){
       let isHit;

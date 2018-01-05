@@ -1,52 +1,6 @@
-/*形状*/
-const SHAPE = {
-  BOX : 0,
-  CIRCLE : 1
-};
-
-/*Entity*/
-const ENTITY_TYPE = {
- PLAYER  : 0,
- WALL : 1
-};
-
-/*Key*/
-const KEY = {
-  UP : 38,
-  DOWN : 40,
-  RIGHT : 39,
-  LEFT : 37,
-  Z : 90
-}
-
-/*singleton*/
-let stageEntity;
-let input;
-let state;
-let util;
-let collision;
-
-//ato de kesu
-const map = [
-  [1,1,1,1,1],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [1,0,2,0,1],
-  [1,1,1,1,1]
-];
-
+/*+∵.EntryPoint.∴+*/
 Main = _=>{
   Game.Init();
-  input = new Input();
-  util = new Util();
-  stageEntity = new StageEntity();
-  collision = new Collision();
-  state = 0;
 
   for(let mapY = 0;mapY<10;mapY++){
     for(let mapX = 0;mapX<5;mapX++){
@@ -68,12 +22,24 @@ Main = _=>{
 
 class Game{
   static Init(){
+    /* class */
+    input = new Input();
+    util = new Util();
+    stageEntity = new StageEntity();
+    collision = new Collision();
+    mapData = new MapData();
+    /* ------*/
+
+    /*TODO Sceneクラスでやる*/
+    state = 0;
+
     Drawer.InitializeValuables();
     this.Load();
   }
 
   static Load(){
     Art.LoadTexture();
+    mapData.Load();
   }
 
   static Update(){
