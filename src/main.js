@@ -1,3 +1,24 @@
+/*形状*/
+const SHAPE = {
+  BOX : 0,
+  CIRCLE : 1
+};
+
+/*Entity*/
+const ENTITY_TYPE = {
+ PLAYER  : 0,
+ WALL : 1
+};
+
+/*Key*/
+const KEY = {
+  UP : 38,
+  DOWN : 40,
+  RIGHT : 39,
+  LEFT : 37,
+  Z : 90
+}
+
 /*singleton*/
 let stageEntity;
 let input;
@@ -6,7 +27,7 @@ let util;
 let collision;
 
 //ato de kesu
-let map = [
+const map = [
   [1,1,1,1,1],
   [1,0,0,0,1],
   [1,0,0,0,1],
@@ -36,9 +57,9 @@ Main = _=>{
         case 1 :
           stageEntity.addEntity(new Wall({x:32*mapX,y:32*mapY}));
           break;
-        case 2 :
-          stageEntity.addEntity(new Player({x:32*mapX,y:32*mapY}));
-          break;
+ case 2 :
+   stageEntity.addEntity(new Player({x:32*mapX,y:32*mapY}));
+   break;
       }
     }
   }

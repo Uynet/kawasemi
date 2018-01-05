@@ -1,7 +1,7 @@
 class Collision{
   on(e1,e2){
     //円同士の衝突判定
-    if(e1.collisionShape.shape == "circle" && e2.collisionShape.shape == "circle"){
+    if(e1.collisionShape.shape == SHAPE.CIRCLE && e2.collisionShape.shape == SHAPE.CIRCLE){
       let isHit;
       let circ1 = e1.collisionShape.hitbox;
       let circ2 = e2.collisionShape.hitbox;
@@ -12,6 +12,7 @@ class Collision{
       }
       return new CollisionInfo(isHit);
     }
+    throw new Error("po");
   }
 }
 

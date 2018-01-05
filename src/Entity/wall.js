@@ -3,8 +3,8 @@ class Wall extends Entity{
     super(pos);
     this.sprite = Art.SpriteFactory(Art.teki1Texture);
     this.sprite.position = pos;
-    this.collisionShape = new CollisionShape("circle",new Circle(pos,10));//衝突判定の形状
-    this.type = "WALL";
+    this.collisionShape = new CollisionShape(SHAPE.CIRCLE,new Circle(pos,10));//衝突判定の形状
+    this.type = ENTITY_TYPE.WALL;
   }
   updatePosition(){
     /*nothing to do*/
