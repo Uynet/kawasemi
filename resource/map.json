@@ -1,9 +1,9 @@
 { "height":10,
  "layers":[
         {
-         "data":[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "data":[0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
          "height":10,
-         "name":"\u30bf\u30a4\u30eb\u30fb\u30ec\u30a4\u30e4\u30fc1",
+         "name":"BackGround",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
@@ -17,17 +17,18 @@
  "tileheight":16,
  "tilesets":[
         {
-         "columns":9,
+         "columns":20,
          "firstgid":1,
-         "image":"..\/graphics\/tileset\/ForegroundTileset.png",
-         "imageheight":256,
-         "imagewidth":144,
+         "image":"tileset\/BackGroundTileset.png",
+         "imageheight":320,
+         "imagewidth":320,
          "margin":0,
-         "name":"foreground",
+         "name":"BackGround",
          "spacing":0,
-         "tilecount":144,
+         "tilecount":400,
          "tileheight":16,
-         "tilewidth":16
+         "tilewidth":16,
+         "transparentcolor":"#fcffff"
         }],
  "tilewidth":16,
  "version":1,
