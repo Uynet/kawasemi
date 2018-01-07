@@ -1,5 +1,7 @@
+import Entity from '../entity.js';
+
 /* 動く物体クラス*/
-class Mover extends Entity{
+export default class Mover extends Entity{
   /*
    * vel : 速度
    * acc : 加速度

@@ -1,26 +1,30 @@
+import StageEntity from './Stage/stageEntity.js'
+import Entity from './Entity/entity.js'
+import Wall from './Entity/wall.js'
+import Mover from './Entity/Mover/mover.js'
+import Player from './Entity/Mover/player.js'
+import Game from './Game.js'
+
 /*マップデータ*/
-class MapData{
+export default class MapData{
   constructor(){
     this.stageNo;
-    this.data = 111;
+    this.data;
     this.width;
     this.height;
   }
 
-  Load(stageNo){
+  static Load(stageNo){
     return new Promise((resolve)=>{
       let xhr = new XMLHttpRequest();
-      xhr.open('GET','resource/map.json',true);
+      xhr.open('GET','resource/map/stage'+stageNo+'.json',true);
       xhr.onreadystatechange = ()=>{
         if(xhr.responseText!=""){
           /*TODO 1回しか実行されないように */
-          if(po==0){
-            let jsonObj = JSON.parse(xhr.responseText);
-            this.data = jsonObj.layers[0].data;
-            this.width = jsonObj.layers[0].width;
-            this.height = jsonObj.layers[0].height;
-            po++;
-          }
+          let jsonObj = JSON.parse(xhr.responseText);
+          this.data = jsonObj.layers[0].data;
+          this.width = jsonObj.layers[0].width;
+          this.height = jsonObj.layers[0].height;
           resolve();
         }
       }
@@ -29,24 +33,28 @@ class MapData{
     });
   }
 
-  async CreateStage(stageNo){
-    await this.Load();
+  static async CreateStage(stageNo){
+    await this.Load(stageNo);
 
-    for(let mapY = 0;mapY<this.height;mapY++){
-      for(let mapX = 0;mapX<this.width;mapX++){
-        switch(this.data[10*mapY + mapX]){
+    for(let y = 0;y<this.height;y++){
+      for(let x = 0;x<this.width;x++){
+        switch(this.data[this.width*y + x]){
           case 0 :
             /*nothing to do*/
             break;
           case 1 :
-            stageEntity.addEntity(new Wall({x:32*mapX,y:32*mapY}));
+            StageEntity.addEntity(new Wall({x:32*x,y:32*y}));
             break;
-          case 2 :
-            stageEntity.addEntity(new Player({x:32*mapX,y:32*mapY}));
-            break;
+ case 2 :
+   StageEntity.addEntity(new Player({x:32*x,y:32*y}));
+   break;
         }
       }
     }
     return;
+  }
+
+  /*現在開かれているステージを削除*/
+  DeleteStage(){
   }
 }

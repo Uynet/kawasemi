@@ -1,0 +1,21 @@
+{
+  "name": "po",
+  "version": "1.0.0",
+  "description": "popo",
+  "main": "main.js",
+  "scripts": {
+    "test": "ls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.trapti.tech/uynet/kawasemi.git"
+  },
+  "keywords": [
+    "po"
+  ],
+  "author": "uynet",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^3.10.0"
+  }
+}

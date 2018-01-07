@@ -1,5 +1,5 @@
 /* Singleton */
-class Drawer{
+export default class Drawer{
   constructor(){
     this.Stage;
     this.Rnderer;
@@ -14,6 +14,10 @@ class Drawer{
 
   static addStage(Sprite){
     this.Stage.addChild(Sprite);
+  }
+
+  static popStage(Sprite){
+    this.Stage.destroy(Sprite);
   }
 
 }

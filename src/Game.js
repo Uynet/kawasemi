@@ -1,24 +1,22 @@
-let po = 0;
-class Game{
-  static Init(){
-    /* class declaration */
-    input = new Input();
-    util = new Util();
-    stageEntity = new StageEntity();
-    collision = new Collision();
-    /* ------*/
+import StageEntity from './Stage/stageEntity.js';
+import collision from './Collision/collision.js';
+import mapData from './mapData.js';
+import Drawer from './drawer.js';
+import Art from './art.js';
 
-    /*TODO Sceneクラスでやる*/
-    state = 0;
+
+/*TODO Sceneクラスでやる*/
+let state = 0;
+
+export default class Game{
+  constructor(){
+  }
+  static Init(){
+    Drawer.InitializeValuables();
+    Game.Load();
 
     /*TODO どっかに移す*/
-    mapData = new MapData();
-    mapData.Load(1);
-    mapData.CreateStage(1);
-
-
-    Drawer.InitializeValuables();
-    this.Load();
+    mapData.CreateStage(0);
   }
 
   static Load(){
@@ -27,8 +25,19 @@ class Game{
 
   static Update(){
     //各Entityの位置の更新
-    for(let l of stageEntity.EntityList){
-      l.updatePosition(); 
+    StageEntity.UpdateEntity();
+  }
+
+  static Run(){
+    requestAnimationFrame(Game.Run);
+
+    switch(state){
+      /*更新*/
+      case 0 : Game.Update();
+        break;
     }
+    /*描画*/
+    Drawer.Renderer.render(Drawer.Stage);
   }
 }
+

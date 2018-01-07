@@ -1,5 +1,7 @@
-class Collision{
-  on(e1,e2){
+import Util from '../util.js';
+
+export default class Collision{
+  static on(e1,e2){
 
     //??
     let coltype  = {
@@ -17,7 +19,7 @@ class Collision{
       let isHit;
       let circ1 = e1.collisionShape.hitbox;
       let circ2 = e2.collisionShape.hitbox;
-      if(util.distance(circ1.pos,circ2.pos) < circ1.r + circ2.r){
+      if(Util.distance(circ1.pos,circ2.pos) < circ1.r + circ2.r){
         isHit = true;
       }else{
         isHit = false;
