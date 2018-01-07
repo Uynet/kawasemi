@@ -10,7 +10,7 @@ export default class Wall extends Entity{
     this.type = ENTITY_TYPE.WALL;
     this.sprite = Art.SpriteFactory(Art.teki1Texture);
     this.sprite.position = pos;
-    this.collisionShape = new CollisionShape(SHAPE.CIRCLE,new Circle(pos,10));//衝突判定の形状
+    this.collisionShape = new CollisionShape(SHAPE.CIRCLE,new Circle(pos,16));//衝突判定の形状
   }
   updatePosition(){
     /*nothing to do*/

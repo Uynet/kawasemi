@@ -24,7 +24,8 @@ export default class Collision{
       }else{
         isHit = false;
       }
-      return new CollisionInfo(isHit);
+      let n = Util.nomalize({x:circ1.pos.x-circ2.pos.x , y:circ1.pos.y-circ2.pos.y});
+      return new CollisionInfo(isHit , n);
     }
     throw new Error("po");
   }
@@ -32,7 +33,8 @@ export default class Collision{
 
 //衝突判定クラス
 class CollisionInfo{
-  constructor(isHit){
+  constructor(isHit,n){
     this.isHit = isHit; // bool
+    this.n = n //法線
   }
 }

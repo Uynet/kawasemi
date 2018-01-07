@@ -19,7 +19,7 @@
         {
          "columns":20,
          "firstgid":1,
-         "image":"..\/tileset\/BackGroundTileset.png",
+         "image":"tileset\/BackGroundTileset.png",
          "imageheight":320,
          "imagewidth":320,
          "margin":0,
