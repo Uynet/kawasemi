@@ -1,4 +1,4 @@
-class Circle{
+export default class Circle{
   constructor(pos,r){
     this.pos = pos;
     this.r = r;

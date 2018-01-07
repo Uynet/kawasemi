@@ -1,7 +1,6 @@
-/*｡+☆.ENTRYPOINT.☆+｡*/
-main = ()=>{
-  Game.Init();
+/*｡+☆.En†rypoinT.☆+｡*/
+import Game from './Game.js'; 
 
-  loop();
-}
+Game.Init();
+Game.Run();
 

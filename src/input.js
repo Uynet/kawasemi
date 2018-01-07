@@ -1,29 +1,17 @@
-/*singleton*/
-class Input{
-  constructor(){
-    this.inputedKeyList = [];
-    for(let i = 0;i<256;i++){
-      this.inputedKeyList[i] = false;
-    }
-    /*statemant as singleton*/
-    if(typeof Input.instance === "object"){
-      return Input.instance;
-    }
-    Input.instance = this;
-    return this;
-    }
+let inputedKeyList = (new Array(256)).fill(false);
 
-  isKeyInput(key){
-    return this.inputedKeyList[key];
+export default class Input{
+  static isKeyInput(key){
+    return inputedKeyList[key];
   }
 }
 
 /*receive input event*/
 $(document).on("keydown",(e)=> {
-  input.inputedKeyList[event.keyCode] = true;
+  inputedKeyList[event.keyCode] = true;
   event.preventDefault();
 });
 $(document).on("keyup",(e)=> {
-  input.inputedKeyList[event.keyCode] = false;
+  inputedKeyList[event.keyCode] = false;
 });
 
