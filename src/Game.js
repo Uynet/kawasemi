@@ -4,6 +4,8 @@ import mapData from './mapData.js';
 import Drawer from './drawer.js';
 import Art from './art.js';
 
+import Player from './Entity/Mover/player.js';
+
 
 /*TODO Sceneクラスでやる*/
 let state = 0;
