@@ -7,7 +7,7 @@ export default class Art{
 
   static LoadTexture(){
     this.playerTexture = PIXI.Texture.fromImage('resource/img/player.png');
-    this.teki1Texture = PIXI.Texture.fromImage('resource/img/teki1.png');
+    this.teki1Texture = PIXI.Texture.fromImage('resource/img/wall.png');
     this.teki2Texture = PIXI.Texture.fromImage('resource/img/teki2.png');
   }
 

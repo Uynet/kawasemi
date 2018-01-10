@@ -3,6 +3,7 @@ import Art from '../../art.js'
 import CollisionShape from '../../Collision/collisionShape.js';
 import Collision from '../../Collision/collision.js';
 import Circle from '../../Collision/Circle.js';
+import Box from '../../Collision/Box.js';
 import Input from '../../input.js';
 import StageEntity from '../../Stage/stageEntity.js';
 import Util from '../../util.js';
@@ -19,7 +20,7 @@ export default class Player extends Mover{
     this.type = ENTITY_TYPE.PLAYER;
     this.sprite = Art.SpriteFactory(Art.playerTexture);
     this.sprite.position = pos;
-    this.collisionShape = new CollisionShape(SHAPE.CIRCLE,new Circle(pos,16));//衝突判定の形状
+    this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
       this.flagJump = 0;//空中にいる時1
   }
 
@@ -42,7 +43,7 @@ export default class Player extends Mover{
       this.vel.x = RUN_VEL;
     }
 
-    console.log(this.flagJump);
+    //console.log(this.flagJump);
     Drawer.ScrollOnPlayer(this);
 
     this.pos.x += this.vel.x; 
@@ -59,12 +60,18 @@ export default class Player extends Mover{
       if(l.type==ENTITY_TYPE.WALL){
         if(Collision.on(this,l).isHit){
           /* 衝突応答をかく */
-          this.vel = {x:0,y:0};//とりあえず
-            while(Collision.on(this,l).isHit){
-              this.pos.x += Collision.on(this,l).n.x;
-              this.pos.y += Collision.on(this,l).n.y;
-            }
+
+          /*押し出し*/
+          if(Collision.on(this,l).n.y < -0.7){
             this.flagJump = 0;
+          }
+       //     console.log(Collision.on(this,l).n);
+           while(Collision.on(this,l).isHit){
+             this.pos.x += Collision.on(this,l).n.x;
+             this.pos.y += Collision.on(this,l).n.y;
+           }
+          this.vel = {x:0,y:0};//とりあえず
+          /*この時点でのisHitはfalse*/
         }
       }
     }
