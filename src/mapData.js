@@ -43,10 +43,10 @@ export default class MapData{
             /*nothing to do*/
             break;
           case 1 :
-            StageEntity.addEntity(new Wall({x:32*x,y:32*y}));
+            StageEntity.addEntity(new Wall({x:16*x,y:16*y}));
             break;
  case 2 :
-   StageEntity.addEntity(new Player({x:32*x,y:32*y}));
+   StageEntity.addEntity(new Player({x:16*x,y:16*y}));
    break;
         }
       }

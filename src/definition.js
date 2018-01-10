@@ -4,7 +4,8 @@ let po = 0;
 /*形状*/
 const SHAPE = {
   BOX : 0,
-  CIRCLE : 1
+  CIRCLE : 1,
+  LINE : 2
 };
 
 /*Entity*/

@@ -12,6 +12,20 @@ export default class Util{
     return v;
   }
 
+  //配列の最大値を取るインデックス番号を返す
+  //最大値が複数あると一番最後の番号が帰ってくる
+  static maxIndex(arr){
+    let max = arr[0];
+    let maxI = 0;
+    for(let i = 1;i<arr.length;i++){
+      if(max < arr[i]){
+        max = arr[i];
+        maxI = i;
+      }
+    }
+    return maxI;
+  }
+
   static advec(v1,v2){
 
     return {x:v1.x + v2.x ,y:v1.y + v2.y};
