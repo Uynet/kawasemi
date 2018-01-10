@@ -12,6 +12,7 @@ import Drawer from '../../drawer.js';
 
 const JUMP_VEL = 13;//ジャンプ速度
   const RUN_VEL = 5;//はしり速度
+const PLAYER_GRAVITY = 0.2;
 
 /*TODO フラグの管理*/
 export default class Player extends Mover{
@@ -21,7 +22,8 @@ export default class Player extends Mover{
     this.sprite = Art.SpriteFactory(Art.playerTexture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-      this.flagJump = 0;//空中にいる時1
+      this.gravity = PLAYER_GRAVITY;
+    this.flagJump = 0;//空中にいる時1
   }
 
 
@@ -50,7 +52,7 @@ export default class Player extends Mover{
     this.pos.y += this.vel.y; 
     this.sprite.position = this.pos;
     /* */
-    this.vel.y += 0.8;
+    this.vel.y += this.gravity;
 
     /* 衝突判定 */
     /*TODO リスト分割 */
@@ -65,13 +67,13 @@ export default class Player extends Mover{
           if(Collision.on(this,l).n.y < -0.7){
             this.flagJump = 0;
           }
-       //     console.log(Collision.on(this,l).n);
-           while(Collision.on(this,l).isHit){
-             this.pos.x += Collision.on(this,l).n.x;
-             this.pos.y += Collision.on(this,l).n.y;
-           }
+          //     console.log(Collision.on(this,l).n);
+          while(Collision.on(this,l).isHit){
+            this.pos.x += Collision.on(this,l).n.x;
+            this.pos.y += Collision.on(this,l).n.y;
+          }
           this.vel = {x:0,y:0};//とりあえず
-          /*この時点でのisHitはfalse*/
+            /*この時点でのisHitはfalse*/
         }
       }
     }

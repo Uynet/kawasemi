@@ -46,7 +46,7 @@ export default class Collision{
         ];
 
         let maxI = Util.maxIndex(meri);
-        console.log(meri);
+ //       console.log(meri);
         isHit = true;
         switch(maxI){
           case 2: n = {x:0 , y:1};break;
