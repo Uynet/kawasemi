@@ -3,18 +3,22 @@ import collision from './Collision/collision.js';
 import mapData from './mapData.js';
 import Drawer from './drawer.js';
 import Art from './art.js';
+import EventManager from './Event/eventmanager.js';
+import Scene from './Event/scene.js';
 
 import Player from './Entity/Mover/player.js';
+import Input from './input.js';
 
 
 /*TODO Sceneクラスでやる*/
 let state = 0;
 
 export default class Game{
-  constructor(){
-  }
   static Init(){
-    Drawer.InitializeValuables();
+    Drawer.Init();
+    Scene.Init();
+    EventManager.Init();
+    StageEntity.Init();
     Game.Load();
 
     /*TODO どっかに移す*/
@@ -33,11 +37,14 @@ export default class Game{
   static Run(){
     requestAnimationFrame(Game.Run);
 
-    switch(state){
+    switch(Scene.state){
       /*更新*/
-      case 0 : Game.Update();
+      case STATE.STAGE : Game.Update();
+        break;
+      case 1: console.log("unko");
         break;
     }
+    console.log(EventManager.eventList);
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);
   }

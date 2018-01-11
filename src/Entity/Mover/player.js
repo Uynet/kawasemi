@@ -7,6 +7,7 @@ import Box from '../../Collision/Box.js';
 import Input from '../../input.js';
 import StageEntity from '../../Stage/stageEntity.js';
 import Util from '../../util.js';
+import EventManager from '../../Event/eventmanager.js';
 
 import Drawer from '../../drawer.js';
 
@@ -23,19 +24,15 @@ export default class Player extends Mover{
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
       this.gravity = PLAYER_GRAVITY;
-    this.flagJump = 0;//空中にいる時1
+    this.flagJump = false;//空中にいる時1
   }
 
-
-
-  updatePosition(){
-    if(Input.isKeyInput(KEY.DOWN)){
-      //this.vel.y = JUMP_VEL;
-      }
-    if(this.flagJump==0){
+  /*キー入力による移動*/
+  moveByInput(){
+    if(this.flagJump == false){
       if(Input.isKeyInput(KEY.UP) || Input.isKeyInput(KEY.Z)){
         this.vel.y = -JUMP_VEL;
-        this.flagJump = 1;
+        this.flagJump = true;
       }
     }
     if(Input.isKeyInput(KEY.LEFT)){
@@ -45,13 +42,22 @@ export default class Player extends Mover{
       this.vel.x = RUN_VEL;
     }
 
-    //console.log(this.flagJump);
+
+    if(Input.isKeyInput(KEY.X)){
+      EventManager.PushEvent(1);
+      this.pos.x = 0;
+      this.pos.y = 0;
+    }
+  }
+
+  updatePosition(){
+    /*キー入力による移動*/
+    this.moveByInput();
+
     Drawer.ScrollOnPlayer(this);
 
     this.pos.x += this.vel.x; 
     this.pos.y += this.vel.y; 
-    this.sprite.position = this.pos;
-    /* */
     this.vel.y += this.gravity;
 
     /* 衝突判定 */
@@ -60,25 +66,26 @@ export default class Player extends Mover{
 
     for(let l of EntityList){
       if(l.type==ENTITY_TYPE.WALL){
+        /*衝突判定*/
         if(Collision.on(this,l).isHit){
-          /* 衝突応答をかく */
-
-          /*押し出し*/
+          /* 衝突応答*/
+          /*TODO Colクラスに核*/
           if(Collision.on(this,l).n.y == -1){
             this.flagJump = 0;
           }
           //console.log(Collision.on(this,l).n);
+          if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
+          if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
           while(Collision.on(this,l).isHit){
-            this.pos.x += Collision.on(this,l).n.x/4;
-            this.pos.y += Collision.on(this,l).n.y/4;
+            this.pos.x += Collision.on(this,l).n.x;
+            this.pos.y += Collision.on(this,l).n.y;
           }
-          this.vel = {x:0,y:0};//とりあえず
-            /*この時点でのisHitはfalse*/
+          /*note : now isHit == false*/
         }
       }
     }
 
-
+    this.sprite.position = this.pos;
   }
 }
 

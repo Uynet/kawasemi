@@ -2,7 +2,7 @@
 export default class Drawer{
 
   //setting stage
-  static InitializeValuables(){
+  static Init(){
     this.app = new PIXI.Application(800, 600, {backgroundColor : 0x1099bb});
     this.Stage = this.app.stage;///new PIXI.Stage(0x000000);
     this.container = new PIXI.Container();

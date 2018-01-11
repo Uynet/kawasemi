@@ -1,6 +1,3 @@
-let po = 0;
-
-
 /*形状*/
 const SHAPE = {
   BOX : 0,
@@ -20,13 +17,11 @@ const KEY = {
   DOWN : 40,
   RIGHT : 39,
   LEFT : 37,
-  Z : 90
+  Z : 90,
+  X : 88
 }
 
-/*singleton*/
-let stageEntity;
-let input;
-let state;
-let util;
-let collision;
-let mapData;
+/*State*/ 
+const STATE = {
+  STAGE : 0
+}
