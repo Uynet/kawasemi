@@ -43,7 +43,8 @@ export default class Player extends Mover{
     }
 
 
-    if(Input.isKeyInput(KEY.X)){
+    if(Input.isKeyClick(KEY.X)){
+      console.log("unko");
       EventManager.PushEvent(1);
       this.pos.x = 0;
       this.pos.y = 0;

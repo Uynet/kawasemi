@@ -5,6 +5,7 @@ import Drawer from './drawer.js';
 import Art from './art.js';
 import EventManager from './Event/eventmanager.js';
 import Scene from './Event/scene.js';
+import Timer from './Timer.js';
 
 import Player from './Entity/Mover/player.js';
 import Input from './input.js';
@@ -19,6 +20,7 @@ export default class Game{
     Scene.Init();
     EventManager.Init();
     StageEntity.Init();
+    Timer.Init();
     Game.Load();
 
     /*TODO どっかに移す*/
@@ -32,20 +34,20 @@ export default class Game{
   static Update(){
     //各Entityの位置の更新
     StageEntity.UpdateEntity();
+    Timer.IncTime();
   }
 
   static Run(){
     requestAnimationFrame(Game.Run);
 
     switch(Scene.state){
-      /*更新*/
+      //更新
       case STATE.STAGE : Game.Update();
         break;
-      case 1: console.log("unko");
+      case 1: console.log("now state1");
         break;
     }
-    console.log(EventManager.eventList);
-    /*描画*/
+    //描画
     Drawer.Renderer.render(Drawer.Stage);
   }
 }
