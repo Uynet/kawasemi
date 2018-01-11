@@ -14,12 +14,14 @@ export default class MapData{
     this.height;
   }
 
+  /*マップデータを読み込む*/
   static Load(stageNo){
     return new Promise((resolve)=>{
       let xhr = new XMLHttpRequest();
       xhr.open('GET','resource/map/stage'+stageNo+'.json',true);
       xhr.onload = ()=>{
         let jsonObj = JSON.parse(xhr.responseText);
+        //BackGroundの読み込み
         this.data = jsonObj.layers[0].data;
         this.width = jsonObj.layers[0].width;
         this.height = jsonObj.layers[0].height;

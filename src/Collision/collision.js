@@ -46,7 +46,7 @@ export default class Collision{
         ];
 
         let maxI = Util.maxIndex(meri);
- //       console.log(meri);
+        //       console.log(meri);
         isHit = true;
         switch(maxI){
           case 2: n = {x:0 , y:1};break;
@@ -60,6 +60,16 @@ export default class Collision{
       return new CollisionInfo(isHit , n);
     }
     throw new Error("po");
+  }
+
+  static push(box1,box2){
+    if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
+    if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
+    while(Collision.on(this,l).isHit){
+      this.pos.x += Collision.on(this,l).n.x;
+      this.pos.y += Collision.on(this,l).n.y;
+    }
+    /*note : now isHit == false*/
   }
 }
 
