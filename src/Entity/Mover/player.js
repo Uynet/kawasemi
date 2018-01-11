@@ -64,13 +64,13 @@ export default class Player extends Mover{
           /* 衝突応答をかく */
 
           /*押し出し*/
-          if(Collision.on(this,l).n.y < -0.7){
+          if(Collision.on(this,l).n.y == -1){
             this.flagJump = 0;
           }
-          //     console.log(Collision.on(this,l).n);
+          //console.log(Collision.on(this,l).n);
           while(Collision.on(this,l).isHit){
-            this.pos.x += Collision.on(this,l).n.x;
-            this.pos.y += Collision.on(this,l).n.y;
+            this.pos.x += Collision.on(this,l).n.x/4;
+            this.pos.y += Collision.on(this,l).n.y/4;
           }
           this.vel = {x:0,y:0};//とりあえず
             /*この時点でのisHitはfalse*/

@@ -18,15 +18,12 @@ export default class MapData{
     return new Promise((resolve)=>{
       let xhr = new XMLHttpRequest();
       xhr.open('GET','resource/map/stage'+stageNo+'.json',true);
-      xhr.onreadystatechange = ()=>{
-        if(xhr.responseText!=""){
-          /*TODO 1回しか実行されないように */
-          let jsonObj = JSON.parse(xhr.responseText);
-          this.data = jsonObj.layers[0].data;
-          this.width = jsonObj.layers[0].width;
-          this.height = jsonObj.layers[0].height;
-          resolve();
-        }
+      xhr.onload = ()=>{
+        let jsonObj = JSON.parse(xhr.responseText);
+        this.data = jsonObj.layers[0].data;
+        this.width = jsonObj.layers[0].width;
+        this.height = jsonObj.layers[0].height;
+        resolve();
       }
       xhr.send(null);
       this.stageNo = stageNo;
