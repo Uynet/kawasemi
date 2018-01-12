@@ -38,15 +38,20 @@ export default class MapData{
     for(let y = 0;y<this.height;y++){
       for(let x = 0;x<this.width;x++){
         switch(this.data[this.width*y + x]){
-          case 0 :
+          case TILE.SPACE :
             /*nothing to do*/
             break;
-          case 1 :
+          case TILE.WALL :
             StageEntity.addEntity(new Wall({x:16*x,y:16*y}));
             break;
- case 2 :
+ case TILE.PLAYER :
    StageEntity.addEntity(new Player({x:16*x,y:16*y}));
    break;
+ case TILE.ENEMY :
+   StageEntity.addEntity(new Wall({x:16*x,y:16*y}));
+   break;
+ default : 
+   console.warn("タイルセットに未実装のチップが使用されています");
         }
       }
     }

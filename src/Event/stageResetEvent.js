@@ -11,6 +11,7 @@ export default class StageResetEvent extends Event{
 
   ReturnFunc(player){
     let posreset = () =>{
+      player.hp = 10;
       player.pos.x = 0;
       player.pos.y = 0;
       player.vel.x = 0;
