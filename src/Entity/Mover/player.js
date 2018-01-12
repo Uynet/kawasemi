@@ -8,6 +8,7 @@ import Input from '../../input.js';
 import StageEntity from '../../Stage/stageEntity.js';
 import Util from '../../util.js';
 import EventManager from '../../Event/eventmanager.js';
+import Event from '../../Event/event.js';
 
 import Drawer from '../../drawer.js';
 
@@ -44,10 +45,13 @@ export default class Player extends Mover{
 
 
     if(Input.isKeyClick(KEY.X)){
-      console.log("unko");
-      EventManager.PushEvent(1);
+      let po = ()=>{console.log("restart")};
+      let restartEvent = new Event(po,1);
+      EventManager.PushEvent(restartEvent);
       this.pos.x = 0;
       this.pos.y = 0;
+      this.vel.x = 0;
+      this.vel.y = 0;
     }
   }
 
