@@ -1,4 +1,4 @@
-/*state : */
+/*state*/
 export default class Scene{
   static Init(){
     this.state = STATE.STAGE;
@@ -6,5 +6,4 @@ export default class Scene{
   static ChangeState(newState){
     this.state = newState;
   }
-
 }
