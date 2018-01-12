@@ -11,9 +11,6 @@ import Player from './Entity/Mover/player.js';
 import Input from './input.js';
 
 
-/*TODO Sceneクラスでやる*/
-let state = 0;
-
 export default class Game{
   static Init(){
     Drawer.Init();
@@ -32,9 +29,10 @@ export default class Game{
   }
 
   static Update(){
-    //各Entityの位置の更新
+    /*各Entityの位置の更新*/
     StageEntity.UpdateEntity();
 
+    /*イベントの実行*/
     while(EventManager.eventList.length > 0){
       EventManager.eventList.pop().Do();
     }
@@ -46,13 +44,13 @@ export default class Game{
     requestAnimationFrame(Game.Run);
 
     switch(Scene.state){
-      //更新
+      /*更新*/
       case STATE.STAGE : Game.Update();
         break;
       case 1: console.log("now state1");
         break;
     }
-    //描画
+    /*描画*/
     Drawer.Renderer.render(Drawer.Stage);
   }
 }
