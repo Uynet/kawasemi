@@ -34,6 +34,11 @@ export default class Game{
   static Update(){
     //各Entityの位置の更新
     StageEntity.UpdateEntity();
+
+    while(EventManager.eventList.length > 0){
+      EventManager.eventList.pop().Do();
+    }
+
     Timer.IncTime();
   }
 
