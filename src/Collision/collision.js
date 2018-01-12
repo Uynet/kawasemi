@@ -50,9 +50,9 @@ export default class Collision{
         isHit = true;
         switch(maxI){
           case 2: n = {x:0 , y:1};break;
- case 3: n = {x:1 , y:0};break;
- case 0:n = {x:0 , y:-1};break;
- case 1:n = {x:-1 , y:0};break;
+          case 3: n = {x:1 , y:0};break;
+          case 0:n = {x:0 , y:-1};break;
+          case 1:n = {x:-1 , y:0};break;
         }
       }else{
         isHit = false;
