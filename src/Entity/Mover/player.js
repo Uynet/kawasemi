@@ -14,8 +14,9 @@ import StageResetEvent from '../../Event/stageResetEvent.js';
 import Drawer from '../../drawer.js';
 
 const JUMP_VEL = 13;//ジャンプ速度
-  const RUN_VEL = 5;//はしり速度
+const RUN_VEL = 5;//はしり速度
 const PLAYER_GRAVITY = 0.2;
+const PLAYER_HP = 10;
 
 /*TODO フラグの管理*/
 export default class Player extends Mover{
@@ -25,7 +26,10 @@ export default class Player extends Mover{
     this.sprite = Art.SpriteFactory(Art.playerTexture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-      this.gravity = PLAYER_GRAVITY;
+    this.hp = PLAYER_HP;
+    this.gravity = PLAYER_GRAVITY;
+
+    this.flagAlive = true;
     this.flagJump = false;//空中にいる時1
   }
 
@@ -46,9 +50,8 @@ export default class Player extends Mover{
 
 
     if(Input.isKeyClick(KEY.X)){
-      //let restartEvent = new Event(po);
-      let restartEvent = new StageResetEvent(this);
-      EventManager.PushEvent(restartEvent);
+      this.hp--;
+      console.log(this.hp);
     }
   }
 
@@ -85,6 +88,11 @@ export default class Player extends Mover{
           /*note : now isHit == false*/
         }
       }
+    }
+
+    if(this.hp <= 0){
+      let restartEvent = new StageResetEvent(this);
+      EventManager.PushEvent(restartEvent);
     }
 
     this.sprite.position = this.pos;

@@ -25,3 +25,11 @@ const KEY = {
 const STATE = {
   STAGE : 0
 }
+
+/*MapChip*/
+const TILE = {
+  SPACE : 0,
+  WALL :1,
+  PLAYER : 2,
+  ENEMY : 3
+}
