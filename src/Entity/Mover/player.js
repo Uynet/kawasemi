@@ -9,6 +9,7 @@ import StageEntity from '../../Stage/stageEntity.js';
 import Util from '../../util.js';
 import EventManager from '../../Event/eventmanager.js';
 import Event from '../../Event/event.js';
+import StageResetEvent from '../../Event/stageResetEvent.js';
 
 import Drawer from '../../drawer.js';
 
@@ -45,13 +46,9 @@ export default class Player extends Mover{
 
 
     if(Input.isKeyClick(KEY.X)){
-      let po = ()=>{console.log("restart")};
-      let restartEvent = new Event(po,1);
+      //let restartEvent = new Event(po);
+      let restartEvent = new StageResetEvent(this);
       EventManager.PushEvent(restartEvent);
-      this.pos.x = 0;
-      this.pos.y = 0;
-      this.vel.x = 0;
-      this.vel.y = 0;
     }
   }
 
