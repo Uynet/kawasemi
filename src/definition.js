@@ -34,3 +34,6 @@ const TILE = {
   PLAYER : 2,
   ENEMY : 3
 }
+
+/*Vector*/
+const VEC0 = {x:0,y:0};
