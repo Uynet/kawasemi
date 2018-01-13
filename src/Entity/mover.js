@@ -1,4 +1,4 @@
-import Entity from '../entity.js';
+import Entity from './entity.js';
 
 /* 動く物体クラス*/
 export default class Mover extends Entity{

@@ -24,9 +24,10 @@ export default class Drawer{
     this.container.addChild(Sprite);
   }
 
-  /*未使用*/
-  static popStage(Sprite){
-    this.Stage.destroy(Sprite);
+  /*コンテナからスプライトを削除*/
+  static removeStage(Sprite){
+    //this.container.destroy(Sprite);
+    Sprite.position.y = 10000;
   }
 
   /* プレイヤー中心にスクロール*/

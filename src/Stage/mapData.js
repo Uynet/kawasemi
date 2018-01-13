@@ -1,9 +1,9 @@
 import StageEntity from './stageEntity.js'
 import Entity from '../Entity/entity.js'
 import Wall from '../Entity/wall.js'
-import Mover from '../Entity/Mover/mover.js'
-import Player from '../Entity/Mover/player.js'
-import Teki1 from '../Entity/Mover/Enemy/teki1.js'
+import Mover from '../Entity/mover.js'
+import Player from '../Entity/player.js'
+import Teki1 from '../Entity/teki1.js'
 import Game from '../Game.js'
 
 /*マップデータ*/
