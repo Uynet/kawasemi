@@ -17,7 +17,7 @@ export default class StageEntity{
 
   static UpdateEntity(){
     for(let l of this.entityList){
-      l.updatePosition(); 
+      l.Update(); 
     }
   }
 }

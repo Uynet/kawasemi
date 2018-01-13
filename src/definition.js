@@ -5,12 +5,6 @@ const SHAPE = {
   LINE : 2
 };
 
-/*Entity*/
-const ENTITY_TYPE = {
-  PLAYER  : 0,
-  WALL : 1
-};
-
 /*Key*/
 const KEY = {
   UP : 38,
@@ -25,6 +19,13 @@ const KEY = {
 const STATE = {
   STAGE : 0
 }
+
+/*Entity*/
+const ENTITY = {
+  PLAYER  : 0,
+  WALL : 1,
+  ENEMY : 2
+};
 
 /*MapChip*/
 const TILE = {
