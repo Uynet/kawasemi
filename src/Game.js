@@ -7,7 +7,7 @@ import EventManager from './Event/eventmanager.js';
 import Scene from './Event/scene.js';
 import Timer from './Timer.js';
 
-import Player from './Entity/Mover/player.js';
+import Player from './Entity/player.js';
 import Input from './input.js';
 
 

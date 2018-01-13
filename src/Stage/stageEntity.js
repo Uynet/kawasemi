@@ -15,6 +15,13 @@ export default class StageEntity{
     Drawer.addStage(entity.sprite);
   }
 
+  static removeEntity(entity){
+    let i = this.entityList.indexOf(entity);
+    console.log(entity.sprite);
+    Drawer.removeStage(entity.sprite);
+    this.entityList.splice(i,1);
+  }
+
   static UpdateEntity(){
     for(let l of this.entityList){
       l.Update(); 

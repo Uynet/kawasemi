@@ -1,22 +1,20 @@
 import Mover from './mover.js'
-import Art from '../../art.js'
-import CollisionShape from '../../Collision/collisionShape.js';
-import Collision from '../../Collision/collision.js';
-import Circle from '../../Collision/Circle.js';
-import Box from '../../Collision/Box.js';
-import Input from '../../input.js';
-import StageEntity from '../../Stage/stageEntity.js';
-import Util from '../../util.js';
-import EventManager from '../../Event/eventmanager.js';
-import Event from '../../Event/event.js';
-import StageResetEvent from '../../Event/stageResetEvent.js';
+import Art from '../art.js'
+import CollisionShape from '../Collision/collisionShape.js';
+import Collision from '../Collision/collision.js';
+import Circle from '../Collision/Circle.js';
+import Box from '../Collision/Box.js';
+import Input from '../input.js';
+import StageEntity from '../Stage/stageEntity.js';
+import Util from '../util.js';
+import EventManager from '../Event/eventmanager.js';
+import Event from '../Event/event.js';
+import StageResetEvent from '../Event/stageResetEvent.js';
+import Teki1 from './teki1.js';
+import Bullet from './bullet.js';
 
-import Drawer from '../../drawer.js';
+import Drawer from '../drawer.js';
 
-const JUMP_VEL = 7;//ジャンプ速度
-const RUN_VEL = 5;//はしり速度
-const PLAYER_GRAVITY = 0.2;
-const PLAYER_HP = 10;
 
 /*TODO フラグの管理*/
 export default class Player extends Mover{
@@ -50,8 +48,8 @@ export default class Player extends Mover{
 
 
     if(Input.isKeyClick(KEY.X)){
-      this.hp--;
-      console.log(this.hp);
+      let bullet = new Bullet({x:this.pos.x+16 , y:this.pos.y});
+      StageEntity.addEntity(bullet);
     }
   }
 
@@ -79,8 +77,8 @@ export default class Player extends Mover{
 
           /*押し出し*/
           while(Collision.on(this,l).isHit){
-            this.pos.x += Collision.on(this,l).n.x;
-            this.pos.y += Collision.on(this,l).n.y;
+            this.pos.x += Collision.on(this,l).n.x/5;
+            this.pos.y += Collision.on(this,l).n.y/5;
           }
           /*note : now isHit == false*/
         }
@@ -98,8 +96,9 @@ export default class Player extends Mover{
     this.pos.x += this.vel.x; 
     this.pos.y += this.vel.y; 
     this.vel.y += this.gravity;
+
     if(this.flagJump == false){
-      this.vel.x *= 0.9;
+      this.vel.x *= FRICTION;
     }
 
     /*衝突*/
