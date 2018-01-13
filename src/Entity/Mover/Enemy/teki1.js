@@ -1,18 +1,20 @@
 import Mover from '../mover.js';
-import Enmey from './enemy.js';
+import Enemy from './enemy.js';
 import Art from '../../../art.js';
 import CollisionShape from '../../../Collision/collisionShape.js';
 import Collision from '../../../Collision/collision.js';
 import Box from '../../../Collision/box.js';
 import StageEntity from '../../../Stage/stageEntity.js';
+import TestAI from './AI/testAI.js';
 
 
-export default class Teki1 extends Mover{
+export default class Teki1 extends Enemy{
   constructor(pos){
-    super(pos,VEC0,VEC0);
+    super(pos,{x:0,y:0},{x:0,y:0});
     this.sprite = Art.SpriteFactory(Art.teki3Texture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.addAI(new TestAI(this));
   }
   /* 衝突判定 */
   collision(){
@@ -38,6 +40,10 @@ export default class Teki1 extends Mover{
 
   Update(){
     this.collision();
+    for (let AI of this.AIList){
+      AI.Do();
+    }
     this.UpdatePosition();
+    this.sprite.position = this.pos;
   }
 }
