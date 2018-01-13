@@ -1,6 +1,6 @@
 import StageEntity from './Stage/stageEntity.js';
 import collision from './Collision/collision.js';
-import mapData from './mapData.js';
+import mapData from './Stage/mapData.js';
 import Drawer from './drawer.js';
 import Art from './art.js';
 import EventManager from './Event/eventmanager.js';

@@ -13,7 +13,7 @@ import StageResetEvent from '../../Event/stageResetEvent.js';
 
 import Drawer from '../../drawer.js';
 
-const JUMP_VEL = 13;//ジャンプ速度
+const JUMP_VEL = 7;//ジャンプ速度
 const RUN_VEL = 5;//はしり速度
 const PLAYER_GRAVITY = 0.2;
 const PLAYER_HP = 10;
@@ -21,8 +21,8 @@ const PLAYER_HP = 10;
 /*TODO フラグの管理*/
 export default class Player extends Mover{
   constructor(pos){
-    super(pos,{x:0,y:-10},{x:0,y:0});
-    this.type = ENTITY_TYPE.PLAYER;
+    super(pos,{x:0,y:0},{x:0,y:0});
+    this.type = ENTITY.PLAYER;
     this.sprite = Art.SpriteFactory(Art.playerTexture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
@@ -55,7 +55,41 @@ export default class Player extends Mover{
     }
   }
 
-  updatePosition(){
+  /* 衝突判定 */
+  collision(){
+    /*TODO リスト分割 */
+    let EntityList = StageEntity.getEntityList();
+
+    for(let l of EntityList){
+      switch(l.type){
+        case ENTITY.WALL :
+        /*衝突判定*/
+        if(Collision.on(this,l).isHit){
+          /* 衝突応答*/
+          /*TODO Colクラスに核*/
+
+          /*フラグの解除*/
+          if(Collision.on(this,l).n.y == -1){
+            this.flagJump = 0;
+          }
+
+          /*速度*/
+          if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
+          if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
+
+          /*押し出し*/
+          while(Collision.on(this,l).isHit){
+            this.pos.x += Collision.on(this,l).n.x;
+            this.pos.y += Collision.on(this,l).n.y;
+          }
+          /*note : now isHit == false*/
+        }
+        break;
+      }
+    }
+  }
+
+  Update(){
     /*キー入力による移動*/
     this.moveByInput();
 
@@ -64,33 +98,15 @@ export default class Player extends Mover{
     this.pos.x += this.vel.x; 
     this.pos.y += this.vel.y; 
     this.vel.y += this.gravity;
-
-    /* 衝突判定 */
-    /*TODO リスト分割 */
-    let EntityList = StageEntity.getEntityList();
-
-    for(let l of EntityList){
-      if(l.type==ENTITY_TYPE.WALL){
-        /*衝突判定*/
-        if(Collision.on(this,l).isHit){
-          /* 衝突応答*/
-          /*TODO Colクラスに核*/
-          if(Collision.on(this,l).n.y == -1){
-            this.flagJump = 0;
-          }
-          //console.log(Collision.on(this,l).n);
-          if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-          if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
-          while(Collision.on(this,l).isHit){
-            this.pos.x += Collision.on(this,l).n.x;
-            this.pos.y += Collision.on(this,l).n.y;
-          }
-          /*note : now isHit == false*/
-        }
-      }
+    if(this.flagJump == false){
+      this.vel.x *= 0.9;
     }
 
-    if(this.hp <= 0){
+    /*衝突*/
+    this.collision();
+
+    /*observer*/
+    if(this.hp <= 9){
       let restartEvent = new StageResetEvent(this);
       EventManager.PushEvent(restartEvent);
     }

@@ -8,12 +8,12 @@ import Box from '../Collision/box.js';
 export default class Wall extends Entity{
   constructor(pos){
     super(pos);
-    this.type = ENTITY_TYPE.WALL;
-    this.sprite = Art.SpriteFactory(Art.teki1Texture);
+    this.type = ENTITY.WALL;
+    this.sprite = Art.SpriteFactory(Art.wallTexture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
   }
-  updatePosition(){
+  Update(){
     /*nothing to do*/
   }
 }
