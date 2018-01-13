@@ -36,4 +36,4 @@ const TILE = {
 }
 
 /*Vector*/
-const VEC0 = {x:0,y:0};
+let VEC0 = {x:0,y:0};
