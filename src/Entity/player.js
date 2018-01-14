@@ -15,6 +15,13 @@ import Bullet from './bullet.js';
 
 import Drawer from '../drawer.js';
 
+const JUMP_VEL = 7;//ジャンプ速度
+const RUN_VEL = 5;//はしり速度
+const PLAYER_GRAVITY = 0.3;
+const PLAYER_HP = 10;
+const FRICTION = 0.9;
+const POP_PLAYER = -1;
+
 
 /*TODO フラグの管理*/
 export default class Player extends Mover{
@@ -24,7 +31,7 @@ export default class Player extends Mover{
     this.sprite = Art.SpriteFactory(Art.playerTexture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    this.hp = PLAYER_HP;
+      this.hp = PLAYER_HP;
     this.gravity = PLAYER_GRAVITY;
 
     this.flagAlive = true;
@@ -41,9 +48,17 @@ export default class Player extends Mover{
     }
     if(Input.isKeyInput(KEY.LEFT)){
       this.vel.x = -RUN_VEL;
+      if(!this.flagJump){
+        this.flagJump = true;
+        this.vel.y = POP_PLAYER;
+      }
     }
     if(Input.isKeyInput(KEY.RIGHT)){
       this.vel.x = RUN_VEL;
+      if(!this.flagJump){
+        this.flagJump = true;
+        this.vel.y = POP_PLAYER;
+      }
     }
 
 
@@ -61,28 +76,28 @@ export default class Player extends Mover{
     for(let l of EntityList){
       switch(l.type){
         case ENTITY.WALL :
-        /*衝突判定*/
-        if(Collision.on(this,l).isHit){
-          /* 衝突応答*/
-          /*TODO Colクラスに核*/
+          /*衝突判定*/
+          if(Collision.on(this,l).isHit){
+            /* 衝突応答*/
+            /*TODO Colクラスに核*/
 
-          /*フラグの解除*/
-          if(Collision.on(this,l).n.y == -1){
-            this.flagJump = 0;
+            /*フラグの解除*/
+            if(Collision.on(this,l).n.y == -1){
+              this.flagJump = 0;
+            }
+
+            /*速度*/
+            if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
+            if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
+
+            /*押し出し*/
+            while(Collision.on(this,l).isHit){
+              this.pos.x += Collision.on(this,l).n.x/5;
+              this.pos.y += Collision.on(this,l).n.y/5;
+            }
+            /*note : now isHit == false*/
           }
-
-          /*速度*/
-          if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-          if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
-
-          /*押し出し*/
-          while(Collision.on(this,l).isHit){
-            this.pos.x += Collision.on(this,l).n.x/5;
-            this.pos.y += Collision.on(this,l).n.y/5;
-          }
-          /*note : now isHit == false*/
-        }
-        break;
+          break;
       }
     }
   }
