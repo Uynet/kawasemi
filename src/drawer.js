@@ -26,8 +26,8 @@ export default class Drawer{
 
   /*コンテナからスプライトを削除*/
   static removeStage(Sprite){
-    //this.container.destroy(Sprite);
-    Sprite.position.y = 10000;
+    this.container.removeChild(Sprite);
+    //Sprite.position.y = 10000;
   }
 
   /* プレイヤー中心にスクロール*/
