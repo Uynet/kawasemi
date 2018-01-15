@@ -8,8 +8,8 @@ import StageEntity from '../Stage/stageEntity.js';
 import TestAI from './AI/testAI.js';
 
 export default class Bullet extends Enemy{
-  constructor(pos){
-    super(pos,{x:6,y:0},{x:0,y:0});
+  constructor(pos,vel){
+    super(pos,vel,{x:0,y:0});
     this.sprite = Art.SpriteFactory(Art.bulletTexture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
@@ -25,6 +25,15 @@ export default class Bullet extends Enemy{
     for(let l of EntityList){
       switch(l.type){
         case ENTITY.ENEMY :
+          /*衝突判定*/
+          if(Collision.on(this,l).isHit){
+            l.hp-=this.atk;
+            this.hp = 0;
+            //let bullet = new Bullet({x:this.pos.x, y:this.pos.y},{x:-this.vel.x,y:0});
+            //StageEntity.addEntity(bullet);
+          }
+          break;
+        case ENTITY.WALL :
           /*衝突判定*/
           if(Collision.on(this,l).isHit){
             l.hp-=this.atk;

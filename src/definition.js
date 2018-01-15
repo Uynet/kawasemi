@@ -1,3 +1,10 @@
+const DIR = {
+  UP : 0,
+  DOWN : 1,
+  RIGHT : 2,
+  LEFT : 3,
+};
+
 /*形状*/
 const SHAPE = {
   BOX : 0,
@@ -7,10 +14,10 @@ const SHAPE = {
 
 /*Key*/
 const KEY = {
-  UP : 38,
-  DOWN : 40,
-  RIGHT : 39,
   LEFT : 37,
+  UP : 38,
+  RIGHT : 39,
+  DOWN : 40,
   Z : 90,
   X : 88
 }
