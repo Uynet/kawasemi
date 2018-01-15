@@ -16,44 +16,71 @@ import Bullet from './bullet.js';
 import Drawer from '../drawer.js';
 
 const JUMP_VEL = 7;//ジャンプ速度
-const RUN_VEL = 5;//はしり速度
+  const RUN_VEL = 2;//はしり速度
 const PLAYER_GRAVITY = 0.3;
 const PLAYER_HP = 10;
 const FRICTION = 0.9;
 const POP_PLAYER = -1;
 
-
+let rect = new PIXI.Rectangle(0,0,16,16);
 /*TODO フラグの管理*/
 export default class Player extends Mover{
   constructor(pos){
-    super(pos,{x:0,y:0},{x:0,y:0});
+    super(pos,VEC0,VEC0);
     this.type = ENTITY.PLAYER;
-    this.sprite = Art.SpriteFactory(Art.playerTexture);
+
+
+    /*for*/
+    this.texture = Art.playerTexture;
+    this.texture.frame = rect;
+    this.sprite = Art.SpriteFactory(this.texture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-      this.hp = PLAYER_HP;
+    this.hp = PLAYER_HP;
     this.gravity = PLAYER_GRAVITY;
-
+    this.arg = 0;//狙撃角度 0 - 2π
     this.flagAlive = true;
     this.flagJump = false;//空中にいる時1
+      this.dir = DIR.RIGHT;//向き
+  }
+
+  pattern(i){
+    rect.x = i*16;
+    this.texture.frame = rect;
+    return this.texture;
   }
 
   /*キー入力による移動*/
   moveByInput(){
-    if(this.flagJump == false){
-      if(Input.isKeyInput(KEY.UP) || Input.isKeyInput(KEY.Z)){
+    /*ジャンプ*/
+    if(Input.isKeyInput(KEY.Z)){
+      if(this.flagJump == false){
         this.vel.y = -JUMP_VEL;
         this.flagJump = true;
       }
     }
+    /*上向き*/
+    if(Input.isKeyInput(KEY.UP)){
+      this.dir = DIR.UP;
+      this.arg = -Math.PI/2;
+      this.texture = this.pattern(2);
+    }
+    /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
+      this.dir = DIR.LEFT;
+      this.arg = Math.PI;
+      this.texture = this.pattern(1);
       this.vel.x = -RUN_VEL;
       if(!this.flagJump){
         this.flagJump = true;
         this.vel.y = POP_PLAYER;
       }
     }
+    /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
+      this.dir = DIR.RIGHT;
+      this.arg = 0;
+      this.texture = this.pattern(0);
       this.vel.x = RUN_VEL;
       if(!this.flagJump){
         this.flagJump = true;
@@ -63,7 +90,18 @@ export default class Player extends Mover{
 
 
     if(Input.isKeyClick(KEY.X)){
-      let bullet = new Bullet({x:this.pos.x+16 , y:this.pos.y});
+      /*これはbulletが持つべき*/
+      //bulletの初速度
+      let v = {
+        x: 10 * Math.cos(this.arg),
+        y: 10 * Math.sin(this.arg)
+      }
+      //bulletの出現位置
+      let p = {
+        x: this.pos.x + 5 * Math.cos(this.arg),
+        y: this.pos.y + 5 * Math.sin(this.arg),
+      }
+      let bullet = new Bullet(p,v);
       StageEntity.addEntity(bullet);
     }
   }
