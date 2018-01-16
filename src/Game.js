@@ -1,12 +1,12 @@
 import EntityManager from './Stage/entityManager.js';
-import collision from './Collision/collision.js';
-import mapData from './Stage/mapData.js';
+import MapData from './Stage/mapData.js';
 import Drawer from './drawer.js';
 import Art from './art.js';
 import EventManager from './Event/eventmanager.js';
 import Scene from './Event/scene.js';
 import Timer from './Timer.js';
 import UIManager from './uiManager.js';
+import UI from './ui.js';
 
 import Player from './Entity/player.js';
 import Input from './input.js';
@@ -25,9 +25,13 @@ export default class Game{
 
     Game.pause = false;
     Game.select = false;
-    /*TODO どっかに移す*/
-    mapData.CreateStage(0);
 
+    /*TODO どっかに移す*/
+    MapData.CreateStage(0);
+    UIManager.addUI(new UI(Art.weapon1Texture,0));
+    UIManager.addUI(new UI(Art.weapon2Texture,0));
+    UIManager.addUI(new UI(Art.weapon3Texture,0));
+    UIManager.addUI(new UI(Art.selectboxTexture,1));
   }
 
   static Load(){
@@ -42,9 +46,9 @@ export default class Game{
 
       /*武器選択画面*/
       if(Game.select){
-       UIManager.Open();
+       UIManager.OpenWeapon();
       }else{
-       UIManager.Close();
+       UIManager.CloseWeapon();
       }
 
 

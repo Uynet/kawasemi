@@ -3,20 +3,39 @@ import UI from './ui.js';
 /*UIクラス*/
 export default class UIManager{
   static Init(){
-    this.UIList = [];
+    /*content
+     * HP
+     * 武器
+     * その他
+     */
+    this.UIList = [];//UI全部のリスト
+    this.WeaponIconList = [];//武器アイコンのリスト
+
   }
-  /*UIのポップアップ*/
-  static Open(){
-    UIManager.addUI(new UI());
+  /*WeaponIconのポップアップ*/
+  static OpenWeapon(){
+    for(let i = 0;i<this.WeaponIconList.length;i++){
+      this.WeaponIconList[i].sprite.x += 20*i;
+    }
   }
   /*ポップアップの逆(?)*/
-  static Close(){
-    UIManager.removeUI(this.UIList[0]);
+  static CloseWeapon(){
+    for(let i = 0;i<this.WeaponIconList.length;i++){
+      this.WeaponIconList[i].sprite.x = 32;
+    }
   }
 
   /*UIをリストに登録*/
   static addUI(ui){
+    /*TODO リストの重複を排除*/
     this.UIList.push(ui); 
+        cl(ui.type);
+    switch (ui.type){
+      case 0 : 
+        this.WeaponIconList.push(ui);
+        break;
+        //add more...
+    }
     Drawer.addContainer(ui.sprite,"UI");
   }
   /*UIをリストから削除*/
