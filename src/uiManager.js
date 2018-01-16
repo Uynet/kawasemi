@@ -1,11 +1,19 @@
 import Drawer from './drawer.js';
+import UI from './ui.js';
 /*UIクラス*/
 export default class UIManager{
   static Init(){
     this.UIList = [];
   }
-  static Pop(){
+  /*UIのポップアップ*/
+  static Open(){
+    UIManager.addUI(new UI());
   }
+  /*ポップアップの逆(?)*/
+  static Close(){
+    UIManager.removeUI(this.UIList[0]);
+  }
+
   /*UIをリストに登録*/
   static addUI(ui){
     this.UIList.push(ui); 

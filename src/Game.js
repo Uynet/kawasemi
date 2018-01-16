@@ -19,6 +19,8 @@ export default class Game{
     EventManager.Init();
     EntityManager.Init();
     Timer.Init();
+    UIManager.Init();
+
     Game.Load();
 
     Game.pause = false;
@@ -34,12 +36,18 @@ export default class Game{
 
   static Input(){
     /*ポーズ */
-    if(Input.isKeyInput(KEY.C)){
-      Game.pause = true;
-      Game.select = true;
-    }else{
-      Game.pause = false;
-      Game.select = false;
+    if(Input.isKeyClick(KEY.C)){
+      Game.pause = !Game.pause;
+      Game.select = !Game.select;
+
+      /*武器選択画面*/
+      if(Game.select){
+       UIManager.Open();
+      }else{
+       UIManager.Close();
+      }
+
+
     }
   }
 
@@ -51,11 +59,6 @@ export default class Game{
      * ポーズ中は停止させる*/
      if(!Game.pause){
        EntityManager.Update();
-     }
-
-     /*武器選択画面*/
-     if(Game.select){
-       UIManager.Pop();
      }
 
      /*イベントの実行*/

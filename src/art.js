@@ -11,6 +11,8 @@ export default class Art{
     this.teki2Texture = PIXI.Texture.fromImage('resource/img/teki2.png');
     this.teki3Texture = PIXI.Texture.fromImage('resource/img/teki3.png');
     this.bulletTexture = PIXI.Texture.fromImage('resource/img/bullet.png');
+    this.weapon1Texture = PIXI.Texture.fromImage('resource/img/weapon1.png');
+    this.weapon2Texture = PIXI.Texture.fromImage('resource/img/weapon2.png');
   }
 
   static SpriteFactory(texture){
