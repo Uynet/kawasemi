@@ -1,4 +1,4 @@
-import StageEntity from './stageEntity.js'
+import EntityManager from './entityManager.js'
 import Entity from '../Entity/entity.js'
 import Wall from '../Entity/wall.js'
 import Mover from '../Entity/mover.js'
@@ -43,13 +43,13 @@ export default class MapData{
             /*nothing to do*/
             break;
           case TILE.WALL :
-            StageEntity.addEntity(new Wall({x:16*x,y:16*y}));
+            EntityManager.addEntity(new Wall({x:16*x,y:16*y}));
             break;
  case TILE.PLAYER :
-   StageEntity.addEntity(new Player({x:16*x,y:16*y}));
+   EntityManager.addEntity(new Player({x:16*x,y:16*y}));
    break;
  case TILE.ENEMY :
-   StageEntity.addEntity(new Teki1({x:16*x,y:16*y}));
+   EntityManager.addEntity(new Teki1({x:16*x,y:16*y}));
    break;
  default : 
    console.warn("タイルセットに未実装のチップが使用されています");

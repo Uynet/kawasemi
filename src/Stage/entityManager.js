@@ -1,6 +1,6 @@
 import Drawer from '../drawer.js';
 /*エンティティのリスト*/
-export default class StageEntity{
+export default class EntityManager{
   static Init(){
     this.entityList = [];
   }
