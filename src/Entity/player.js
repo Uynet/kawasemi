@@ -5,7 +5,7 @@ import Collision from '../Collision/collision.js';
 import Circle from '../Collision/Circle.js';
 import Box from '../Collision/Box.js';
 import Input from '../input.js';
-import StageEntity from '../Stage/stageEntity.js';
+import EntityManager from '../Stage/entityManager.js';
 import Util from '../util.js';
 import EventManager from '../Event/eventmanager.js';
 import Event from '../Event/event.js';
@@ -102,7 +102,7 @@ export default class Player extends Mover{
           y: this.pos.y + 5 * Math.sin(this.arg),
         }
         let bullet = new Bullet(p,v);
-        StageEntity.addEntity(bullet);
+        EntityManager.addEntity(bullet);
       }
     }
 
@@ -111,7 +111,7 @@ export default class Player extends Mover{
   /* 衝突判定 */
   collision(){
     /*TODO リスト分割 */
-    let EntityList = StageEntity.getEntityList();
+    let EntityList = EntityManager.getEntityList();
 
     for(let l of EntityList){
       switch(l.type){
