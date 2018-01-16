@@ -65,7 +65,12 @@ export default class Game{
        EntityManager.Update();
      }
 
+     if(Game.select){
+       UIManager.Update();
+     }
+
      /*イベントの実行*/
+     /*TODO yield*/
      while(EventManager.eventList.length > 0){
        EventManager.eventList.pop().Do();
      }
