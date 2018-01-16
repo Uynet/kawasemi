@@ -7,35 +7,51 @@ export default class Drawer{
   static Init(){
     this.app = new PIXI.Application(PIXI_WIDTH, PIXI_HEIGHT, {backgroundColor : 0x000000});
     this.Stage = this.app.stage;
-    this.container = new PIXI.Container();
-    this.app.stage.addChild(this.container);
+    this.mainContainer = new PIXI.Container();//Entityが乗る
+    this.UIContainer = new PIXI.Container();//UIが乗る
+    this.app.stage.addChild(this.mainContainer);
+    this.app.stage.addChild(this.UIContainer);
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);
 
-    this.magnification = 2;
-
     /*拡大率*/
-    this.container.scale.x *= this.magnification;
-    this.container.scale.y *= this.magnification;
+    this.magnification = 2;
+    this.mainContainer.scale.x *= this.magnification;
+    this.mainContainer.scale.y *= this.magnification;
+    this.UIContainer.scale.x *= this.magnification;
+    this.UIContainer.scale.y *= this.magnification;
     $("#pixiview").append(this.Renderer.view);
   }
 
   /*コンテナにスプライトを追加*/
-  static addStage(Sprite){
-    this.container.addChild(Sprite);
+  static addContainer(Sprite,CONTAINER){
+    switch (CONTAINER){
+      case "UI" :
+        this.UIContainer.addChild(Sprite);
+        break;
+      default :
+        this.mainContainer.addChild(Sprite);
+        break;
+    }
   }
 
   /*コンテナからスプライトを削除*/
-  static removeStage(Sprite){
-    this.container.removeChild(Sprite);
-    //Sprite.position.y = 10000;
+  static removeContainer(Sprite,CONTAINER){
+    switch (CONTAINER){
+      case "UI" :
+        this.UIContainer.removeChild(Sprite);
+        break;
+      default : 
+        this.mainContainer.removeChild(Sprite);
+        break;
+    }
   }
 
   /* プレイヤー中心にスクロール*/
   static ScrollOnPlayer(player){
     let centerX = - player.pos.x*this.magnification + 400;
     let centerY = - player.pos.y*this.magnification + 400;
-    this.container.x = this.container.x +( centerX - this.container.x )/8;
-    this.container.y = this.container.y +( centerY - this.container.y )/8;
+    this.mainContainer.x = this.mainContainer.x +( centerX - this.mainContainer.x )/8;
+    this.mainContainer.y = this.mainContainer.y +( centerY - this.mainContainer.y )/8;
   }
 
 }

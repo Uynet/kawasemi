@@ -17,12 +17,12 @@ export default class UIManager{
   /*UIをリストに登録*/
   static addUI(ui){
     this.UIList.push(ui); 
-    Drawer.addStage(ui.sprite);
+    Drawer.addContainer(ui.sprite,"UI");
   }
   /*UIをリストから削除*/
   static removeUI(ui){
     let i = this.UIList.indexOf(ui);
-    Drawer.removeStage(ui.sprite);
+    Drawer.removeContainer(ui.sprite,"UI");
     this.UIList.splice(i,1);
   }
   /*UIの更新*/

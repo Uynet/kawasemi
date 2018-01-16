@@ -48,9 +48,6 @@ const TILE = {
 /*Vector*/
 let VEC0 = {x:0,y:0};
 
-
-const JUMP_VEL = 7;//ジャンプ速度
-const RUN_VEL = 5;//はしり速度
-const PLAYER_GRAVITY = 0.2;
-const PLAYER_HP = 10;
-const FRICTION = 0.9;
+/*for debug*/
+let po = ()=>{console.log("po")};
+let cl = console.log;
