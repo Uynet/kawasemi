@@ -1,6 +1,8 @@
 import Drawer from './drawer.js';
 import UI from './ui.js';
+import INPUT from './input.js';
 /*UIクラス*/
+/*TODO リファクタリング*/
 export default class UIManager{
   static Init(){
     /*content
@@ -29,7 +31,6 @@ export default class UIManager{
   static addUI(ui){
     /*TODO リストの重複を排除*/
     this.UIList.push(ui); 
-        cl(ui.type);
     switch (ui.type){
       case 0 : 
         this.WeaponIconList.push(ui);
@@ -46,8 +47,20 @@ export default class UIManager{
   }
   /*UIの更新*/
   static Update(){
-    for(let l of this.uiList){
-      l.Update(); 
+      switch (l.type){
+        case 0:
+          /* */
+          break;
+        case 1:
+          cl(INPUT.isKeyClick(KEY.RIGHT));
+          if(INPUT.isKeyClick(KEY.RIGHT)){
+            l.sprite.x += 20;
+          }
+          if(INPUT.isKeyClick(KEY.LEFT)){
+            l.sprite.x -= 20;
+          }
+          break;
+      }
     }
   }
 }
