@@ -20,24 +20,41 @@ export default class Game{
     Timer.Init();
     Game.Load();
 
+    Game.pause = false;
     /*TODO どっかに移す*/
     mapData.CreateStage(0);
+
   }
 
   static Load(){
     Art.LoadTexture();
   }
 
-  static Update(){
-    /*各Entityの位置の更新*/
-    StageEntity.UpdateEntity();
-
-    /*イベントの実行*/
-    while(EventManager.eventList.length > 0){
-      EventManager.eventList.pop().Do();
+  static Input(){
+    /*ポーズ */
+    if(Input.isKeyInput(KEY.C)){
+      Game.pause = true;
+    }else{
+      Game.pause = false;
     }
+  }
 
-    Timer.IncTime();
+  static Update(){
+
+    Game.Input();
+    /*
+     * 各Entityの位置の更新
+     * ポーズ中は停止させる*/
+     if(!Game.pause){
+       StageEntity.Update();
+     }
+     /*イベントの実行*/
+     while(EventManager.eventList.length > 0){
+       EventManager.eventList.pop().Do();
+     }
+
+
+     Timer.IncTime();
   }
 
   static Run(){
@@ -47,8 +64,8 @@ export default class Game{
       /*更新*/
       case STATE.STAGE : Game.Update();
         break;
-      case 1: console.log("now state1");
-        break;
+      default :
+        console.error("unknown state");
     }
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);

@@ -19,12 +19,14 @@ const KEY = {
   RIGHT : 39,
   DOWN : 40,
   Z : 90,
-  X : 88
+  X : 88,
+  C : 67
 }
 
 /*State*/ 
 const STATE = {
-  STAGE : 0
+  STAGE : 0,
+  PAUSE : 1
 }
 
 /*Entity*/
