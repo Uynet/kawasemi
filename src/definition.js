@@ -45,6 +45,13 @@ const TILE = {
   ENEMY : 3
 }
 
+/*UI*/
+const UI = {
+  WEAPONICON : 0,
+  SELECTBOX : 1,
+  HP : 2
+}
+
 /*Vector*/
 let VEC0 = {x:0,y:0};
 
