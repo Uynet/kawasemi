@@ -11,13 +11,13 @@ export default class EntityManager{
   /*Entityをリストに登録*/
   static addEntity(entity){
     this.entityList.push(entity); 
-    Drawer.addStage(entity.sprite);
+    Drawer.addContainer(entity.sprite,"ENTITY");
   }
 
   /*Entityをリストから削除*/
   static removeEntity(entity){
     let i = this.entityList.indexOf(entity);
-    Drawer.removeStage(entity.sprite);
+    Drawer.removeContainer(entity.sprite,"ENTITY");
     this.entityList.splice(i,1);
   }
 

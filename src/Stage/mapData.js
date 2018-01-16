@@ -45,14 +45,14 @@ export default class MapData{
           case TILE.WALL :
             EntityManager.addEntity(new Wall({x:16*x,y:16*y}));
             break;
- case TILE.PLAYER :
-   EntityManager.addEntity(new Player({x:16*x,y:16*y}));
-   break;
- case TILE.ENEMY :
-   EntityManager.addEntity(new Teki1({x:16*x,y:16*y}));
-   break;
- default : 
-   console.warn("タイルセットに未実装のチップが使用されています");
+          case TILE.PLAYER :
+            EntityManager.addEntity(new Player({x:16*x,y:16*y}));
+            break;
+          case TILE.ENEMY :
+            EntityManager.addEntity(new Teki1({x:16*x,y:16*y}));
+            break;
+          default : 
+            console.warn("タイルセットに未実装のチップが使用されています");
         }
       }
     }
