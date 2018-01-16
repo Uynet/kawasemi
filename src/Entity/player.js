@@ -12,11 +12,11 @@ import Event from '../Event/event.js';
 import StageResetEvent from '../Event/stageResetEvent.js';
 import Teki1 from './teki1.js';
 import Bullet from './bullet.js';
-
 import Drawer from '../drawer.js';
+import Game from '../Game.js';
 
 const JUMP_VEL = 7;//ジャンプ速度
-  const RUN_VEL = 2;//はしり速度
+  const RUN_VEL = 4;//はしり速度
 const PLAYER_GRAVITY = 0.3;
 const PLAYER_HP = 10;
 const FRICTION = 0.9;
@@ -28,9 +28,6 @@ export default class Player extends Mover{
   constructor(pos){
     super(pos,VEC0,VEC0);
     this.type = ENTITY.PLAYER;
-
-
-    /*for*/
     this.texture = Art.playerTexture;
     this.texture.frame = rect;
     this.sprite = Art.SpriteFactory(this.texture);
@@ -44,6 +41,7 @@ export default class Player extends Mover{
       this.dir = DIR.RIGHT;//向き
   }
 
+  /*パターン画像の左上から何番目をクリップするか選択*/
   pattern(i){
     rect.x = i*16;
     this.texture.frame = rect;
@@ -63,13 +61,13 @@ export default class Player extends Mover{
     if(Input.isKeyInput(KEY.UP)){
       this.dir = DIR.UP;
       this.arg = -Math.PI/2;
-      this.texture = this.pattern(2);
+      this.pattern(2);
     }
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
       this.dir = DIR.LEFT;
       this.arg = Math.PI;
-      this.texture = this.pattern(1);
+      this.pattern(1);
       this.vel.x = -RUN_VEL;
       if(!this.flagJump){
         this.flagJump = true;
@@ -92,18 +90,22 @@ export default class Player extends Mover{
     if(Input.isKeyClick(KEY.X)){
       /*これはbulletが持つべき*/
       //bulletの初速度
-      let v = {
-        x: 10 * Math.cos(this.arg),
-        y: 10 * Math.sin(this.arg)
+      for(let i = 0;i<500;i++){
+        let vi = 5 + 5 * Math.random();
+        let v = {
+          x: vi * Math.cos(this.arg+ (Math.random()/2)/5),
+          y: vi * Math.sin(this.arg+ (Math.random()/2)/5)
+        }
+        //bulletの出現位置
+        let p = {
+          x: this.pos.x + 5 * Math.cos(this.arg),
+          y: this.pos.y + 5 * Math.sin(this.arg),
+        }
+        let bullet = new Bullet(p,v);
+        StageEntity.addEntity(bullet);
       }
-      //bulletの出現位置
-      let p = {
-        x: this.pos.x + 5 * Math.cos(this.arg),
-        y: this.pos.y + 5 * Math.sin(this.arg),
-      }
-      let bullet = new Bullet(p,v);
-      StageEntity.addEntity(bullet);
     }
+
   }
 
   /* 衝突判定 */

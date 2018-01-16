@@ -22,7 +22,7 @@ export default class StageEntity{
   }
 
   /*Entityの更新*/
-  static UpdateEntity(){
+  static Update(){
     for(let l of this.entityList){
       l.Update(); 
     }
