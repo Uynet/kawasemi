@@ -5,8 +5,9 @@ import Art from './art.js';
 import EventManager from './Event/eventmanager.js';
 import Scene from './Event/scene.js';
 import Timer from './timer.js';
-import UIManager from './uiManager.js';
-import UI from './ui.js';
+import UIManager from './UI/uiManager.js';
+import UI from './UI/ui.js';
+import UISelectBox from './UI/uiSelectBox.js';
 
 import Player from './Entity/player.js';
 import Input from './input.js';
@@ -31,7 +32,7 @@ export default class Game{
     UIManager.addUI(new UI(Art.weapon1Texture,0));
     UIManager.addUI(new UI(Art.weapon2Texture,0));
     UIManager.addUI(new UI(Art.weapon3Texture,0));
-    UIManager.addUI(new UI(Art.selectboxTexture,1));
+    UIManager.addUI(new UISelectBox());
   }
 
   static Load(){
