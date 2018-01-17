@@ -1,8 +1,8 @@
-import Timer from './Timer.js';
+import Timer from './timer.js';
 
 let inputedKeyList = (new Array(256)).fill(false);
 let clickedKeyList = (new Array(256)).fill(false);
-let po = 0;
+let unko = 0;
 
 export default class Input{
   /*押下状態のときtrue*/
@@ -11,7 +11,7 @@ export default class Input{
   }
   /*押された瞬間のみture*/
   static isKeyClick(key){
-    if(po == Timer.timer){
+    if(unko == Timer.timer){
       return clickedKeyList[key];
     }else{
       return false;
@@ -23,7 +23,7 @@ $(document).on("keydown",(e)=> {
   clickedKeyList[event.keyCode] = false;
   if(!inputedKeyList[event.keyCode]){
     clickedKeyList[event.keyCode] = true;
-    po = Timer.timer;
+    unko = Timer.timer;
   }
   inputedKeyList[event.keyCode] = true;
   event.preventDefault();

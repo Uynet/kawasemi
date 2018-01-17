@@ -4,7 +4,7 @@ import Drawer from './drawer.js';
 import Art from './art.js';
 import EventManager from './Event/eventmanager.js';
 import Scene from './Event/scene.js';
-import Timer from './Timer.js';
+import Timer from './timer.js';
 import UIManager from './uiManager.js';
 import UI from './ui.js';
 
@@ -46,7 +46,6 @@ export default class Game{
 
       /*武器選択画面*/
       if(Game.select){
-       UIManager.OpenWeapon();
       }else{
        UIManager.CloseWeapon();
       }
