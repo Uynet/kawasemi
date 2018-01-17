@@ -1,3 +1,5 @@
+import Timer from './timer.js';
+
 //便利関数
 export default class Util{
   static distance(p1,p2){
@@ -27,7 +29,11 @@ export default class Util{
   }
 
   static advec(v1,v2){
-
     return {x:v1.x + v2.x ,y:v1.y + v2.y};
   }
+
+  static quad(x){
+    return x*x;
+  }
+
 }
