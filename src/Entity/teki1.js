@@ -12,7 +12,7 @@ const ATK_TEKI1 = 1;
 export default class Teki1 extends Enemy{
   constructor(pos){
     super(pos,{x:0,y:0},{x:0,y:0});
-    this.sprite = Art.SpriteFactory(Art.playerTexture);
+    this.sprite = Art.SpriteFactory(Art.teki1Texture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.addAI(new TestAI(this));

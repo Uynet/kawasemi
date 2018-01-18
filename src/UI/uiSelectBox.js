@@ -21,7 +21,7 @@ let it;
    }
    Input(){
      if(Input.isKeyClick(KEY.RIGHT)){
-       if(!shift){
+       if(!shift && this.selectID < UIManager.WeaponIconList.length-1){
          shift = true;
          this.selectID++;
          this.select = UIManager.WeaponIconList[this.selectID];//選択中の武器
@@ -29,7 +29,7 @@ let it;
        }
      }
      if(Input.isKeyClick(KEY.LEFT)){
-       if(!shift){
+       if(!shift && this.selectID > 0){
          shift = true;
          this.selectID--;
          this.select = UIManager.WeaponIconList[this.selectID];//選択中の武器
