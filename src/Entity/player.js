@@ -16,17 +16,20 @@ import Drawer from '../drawer.js';
 import Game from '../Game.js';
 
 const JUMP_VEL = 7;//ジャンプ速度
-  const RUN_VEL = 4;//はしり速度
+  const RUN_VEL = 0.5;//はしり速度
 const PLAYER_GRAVITY = 0.3;
 const PLAYER_HP = 10;
-const FRICTION = 0.9;
+const FRICTION = 0.7;
 const POP_PLAYER = -1;
+
+const VX_MAX = 3;
+const VY_MAX = 3;
 
 let rect = new PIXI.Rectangle(0,0,16,16);
 /*TODO フラグの管理*/
 export default class Player extends Mover{
   constructor(pos){
-    super(pos,VEC0,VEC0);
+    super(pos,VEC0,{x:0,y:0});
     this.type = ENTITY.PLAYER;
     this.texture = Art.playerTexture;
     this.texture.frame = rect;
@@ -68,7 +71,7 @@ export default class Player extends Mover{
       this.dir = DIR.LEFT;
       this.arg = Math.PI;
       this.pattern(1);
-      this.vel.x = -RUN_VEL;
+      this.acc.x = -RUN_VEL;
       if(!this.flagJump){
         this.flagJump = true;
         this.vel.y = POP_PLAYER;
@@ -79,22 +82,28 @@ export default class Player extends Mover{
       this.dir = DIR.RIGHT;
       this.arg = 0;
       this.texture = this.pattern(0);
-      this.vel.x = RUN_VEL;
+      this.acc.x = RUN_VEL;
       if(!this.flagJump){
         this.flagJump = true;
         this.vel.y = POP_PLAYER;
       }
+    }
+    /*下向き*/
+    if(Input.isKeyInput(KEY.DOWN)){
+      this.dir = DIR.RIGHT;
+      this.arg = Math.PI/2;
+      this.texture = this.pattern(3);
     }
 
 
     if(Input.isKeyClick(KEY.X)){
       /*これはbulletが持つべき*/
       //bulletの初速度
-      for(let i = 0;i<500;i++){
+      for(let i = 0;i<8;i++){
         let vi = 5 + 5 * Math.random();
         let v = {
-          x: vi * Math.cos(this.arg+ (Math.random()/2)/5),
-          y: vi * Math.sin(this.arg+ (Math.random()/2)/5)
+          x: vi * Math.cos(this.arg+ (Math.random()-0.5)/5),
+          y: vi * Math.sin(this.arg+ (Math.random()-0.5)/5)
         }
         //bulletの出現位置
         let p = {
@@ -150,11 +159,16 @@ export default class Player extends Mover{
 
     this.pos.x += this.vel.x; 
     this.pos.y += this.vel.y; 
+    this.vel.x += this.acc.x;
+    this.vel.y += this.acc.y;
     this.vel.y += this.gravity;
-
+    if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
+    if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
     if(this.flagJump == false){
       this.vel.x *= FRICTION;
+
     }
+    this.acc.x = 0;
 
     /*衝突*/
     this.collision();

@@ -7,51 +7,68 @@ export default class Drawer{
   static Init(){
     this.app = new PIXI.Application(PIXI_WIDTH, PIXI_HEIGHT, {backgroundColor : 0x000000});
     this.Stage = this.app.stage;
-    this.mainContainer = new PIXI.Container();//Entityが乗る
-    this.UIContainer = new PIXI.Container();//UIが乗る
-    this.app.stage.addChild(this.mainContainer);
+    /*コンテナ*/
+    this.entityContainer = new PIXI.Container();//Entity
+    this.effectContainer = new PIXI.Container();//エフェクト
+    this.UIContainer = new PIXI.Container();//UI
+
+      /*ここでレイヤーの上下関係が決まる*/
+    this.app.stage.addChild(this.entityContainer);
+    this.app.stage.addChild(this.effectContainer);
     this.app.stage.addChild(this.UIContainer);
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);
 
+    /*拡大方式をニアレストネイバーに*/
+    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
     /*拡大率*/
     this.magnification = 2;
-    this.mainContainer.scale.x *= this.magnification;
-    this.mainContainer.scale.y *= this.magnification;
+    this.entityContainer.scale.x *= this.magnification;
+    this.entityContainer.scale.y *= this.magnification;
     this.UIContainer.scale.x *= this.magnification;
     this.UIContainer.scale.y *= this.magnification;
+    this.effectContainer.scale.x *= this.magnification;
+    this.effectContainer.scale.y *= this.magnification;
     $("#pixiview").append(this.Renderer.view);
   }
 
   /*コンテナにスプライトを追加*/
-  static addContainer(Sprite,CONTAINER){
+  static addContainer(sprite,CONTAINER){
     switch (CONTAINER){
       case "UI" :
-        this.UIContainer.addChild(Sprite);
+        this.UIContainer.addChild(sprite);
         break;
-      default :
-        this.mainContainer.addChild(Sprite);
+      case "ENTITY":
+        this.entityContainer.addChild(sprite);
+        break;
+      case "FILTER":
+        this.effectContainer.addChild(sprite);
         break;
     }
   }
 
   /*コンテナからスプライトを削除*/
-  static removeContainer(Sprite,CONTAINER){
+  static removeContainer(sprite,CONTAINER){
     switch (CONTAINER){
       case "UI" :
-        this.UIContainer.removeChild(Sprite);
+        this.UIContainer.removeChild(sprite);
         break;
-      default : 
-        this.mainContainer.removeChild(Sprite);
+      case "ENTITY":
+        this.entityContainer.removeChild(sprite);
+        break;
+      case "FILTER":
+        this.effectContainer.removeChild(sprite);
         break;
     }
   }
 
   /* プレイヤー中心にスクロール*/
   static ScrollOnPlayer(player){
-    let centerX = - player.pos.x*this.magnification + 400;
-    let centerY = - player.pos.y*this.magnification + 400;
-    this.mainContainer.x = this.mainContainer.x +( centerX - this.mainContainer.x )/8;
-    this.mainContainer.y = this.mainContainer.y +( centerY - this.mainContainer.y )/8;
+    let centerX = this.magnification*(- player.pos.x + 200);
+    let centerY = this.magnification*(- player.pos.y + 150);
+    this.entityContainer.x = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
+    this.entityContainer.y = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
+    if(this.entityContainer.x%2==1)this.entityContainer.x--;
+    if(this.entityContainer.y%2==1)this.entityContainer.y--;
   }
 
 }

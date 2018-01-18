@@ -3,30 +3,18 @@ import UIManager from './uiManager.js';
 import Art from '../art.js';
 import Input from '../input.js';
 import Timer from '../timer.js';
+import Util from '../util.js';
 
 let shift = false;
 
 /*イテレータ*/
 let it;
-let openIt;
-/*
- * d : 必要時間
- * b : 開始点
- * c : 移動量*/
- let ease = function*(d,b,c){
-   let x = 0;
-   let s = Timer.timer;//開始時点の時刻
-     let f = (x)=>{return Math.sqrt(x)};
-   while(x < 1){
-     x = (Timer.timer - s)/d;
-     yield b + c*f(x);
-   }
-   yield b + c;
- }
+
  export default class UISelectBox extends UI{
    constructor(){
      super(Art.selectboxTexture,1); 
-     this.select = UIManager.WeaponIconList[0];//選択中の武器
+     this.selectID = 0;
+     this.select = UIManager.WeaponIconList[this.selectID];//選択中の武器
    }
    on(icon){
      this.select = icon;
@@ -35,13 +23,17 @@ let openIt;
      if(Input.isKeyClick(KEY.RIGHT)){
        if(!shift){
          shift = true;
-         it = ease(2,this.sprite.x,20);
+         this.selectID++;
+         this.select = UIManager.WeaponIconList[this.selectID];//選択中の武器
+         it = Util.ease(2,this.sprite.x,20,"out");
        }
      }
      if(Input.isKeyClick(KEY.LEFT)){
        if(!shift){
          shift = true;
-         it = ease(2,this.sprite.x,-20);
+         this.selectID--;
+         this.select = UIManager.WeaponIconList[this.selectID];//選択中の武器
+         it = Util.ease(2,this.sprite.x,-20,"out");
        }
      }
    }
@@ -55,5 +47,8 @@ let openIt;
          shift = false;
        }
      }
+   }
+   GetSelectedWeapon(){
+     return UIList[3];
    }
  }

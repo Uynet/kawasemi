@@ -19,7 +19,7 @@ export default class MapData{
   static Load(stageNo){
     return new Promise((resolve)=>{
       let xhr = new XMLHttpRequest();
-      xhr.open('GET','resource/map/stage'+stageNo+'.json',true);
+      xhr.open('GET','src/resource/map/stage'+stageNo+'.json',true);
       xhr.onload = ()=>{
         let jsonObj = JSON.parse(xhr.responseText);
         //BackGroundの読み込み
