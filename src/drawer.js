@@ -7,12 +7,16 @@ export default class Drawer{
   static Init(){
     this.app = new PIXI.Application(PIXI_WIDTH, PIXI_HEIGHT, {backgroundColor : 0x000000});
     this.Stage = this.app.stage;
-    /*コンテナ*/
+
+      /* コンテナ(レイヤー)は以下の通り
+      /* Entityコンテナ:Entityを描画するレイヤ
+       * Effectコンテナ:画面に適用するエフェクトを描画するレイヤ
+       * UIコンテナ:UIを描画するレイヤ
+       * */
     this.entityContainer = new PIXI.Container();//Entity
     this.effectContainer = new PIXI.Container();//エフェクト
     this.UIContainer = new PIXI.Container();//UI
 
-      /*ここでレイヤーの上下関係が決まる*/
     this.app.stage.addChild(this.entityContainer);
     this.app.stage.addChild(this.effectContainer);
     this.app.stage.addChild(this.UIContainer);

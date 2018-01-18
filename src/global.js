@@ -36,7 +36,7 @@ const ENTITY = {
   WALL : 1,
   ENEMY : 2,
   BULLET : 3
-};
+}
 
 /*MapChip*/
 const TILE = {
@@ -47,10 +47,10 @@ const TILE = {
 }
 
 /*UI*/
-const UI = {
-  WEAPONICON : 0,
-  SELECTBOX : 1,
-  HP : 2
+const UI_ = {
+  WICON : "WICON",
+  SELBOX : "SELBOX",
+  WEQUIP : "WEQUIP"
 }
 const WICON_X = 8;
 const WICON_Y = 40;

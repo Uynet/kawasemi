@@ -98,22 +98,24 @@ export default class Player extends Mover{
       this.arg = Math.PI/2;
       this.texture = this.pattern(3);
     }
-
     /*shot*/
     if(Input.isKeyClick(KEY.X)){
       this.weapon.shot(this);
     }
-
     /*for debug*/
     if(Input.isKeyClick(KEY.SP)){
-      WeaponManager.ChangeWeapon(this,"2");
+      this.ChangeWeapon("2");
     }
+  }
+
+  ChangeWeapon(name){
+    WeaponManager.ChangeWeapon(this,name);
   }
 
   /* 衝突判定 */
   collision(){
     /*TODO リスト分割 */
-    let EntityList = EntityManager.getEntityList();
+    let EntityList = EntityManager.entityList;
 
     for(let l of EntityList){
       switch(l.type){
@@ -127,11 +129,9 @@ export default class Player extends Mover{
             if(Collision.on(this,l).n.y == -1){
               this.flagJump = 0;
             }
-
             /*速度*/
             if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
             if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
-
             /*押し出し*/
             while(Collision.on(this,l).isHit){
               this.pos.x += Collision.on(this,l).n.x/5;
@@ -143,13 +143,7 @@ export default class Player extends Mover{
       }
     }
   }
-
-  Update(){
-    /*キー入力による移動*/
-    this.Input();
-
-    Drawer.ScrollOnPlayer(this);
-
+  Physics(){
     this.pos.x += this.vel.x; 
     this.pos.y += this.vel.y; 
     this.vel.x += this.acc.x;
@@ -159,12 +153,16 @@ export default class Player extends Mover{
     if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
     if(this.flagJump == false){
       this.vel.x *= FRICTION;
-
     }
     this.acc.x = 0;
 
-    /*衝突*/
-    this.collision();
+  }
+
+  Update(){
+    this.Input();//入力
+    this.Physics();//物理
+    this.collision();//衝突
+    Drawer.ScrollOnPlayer(this);
 
     /*observer*/
     if(this.hp <= 9){
