@@ -12,6 +12,8 @@ export default class Art{
     this.teki2Texture = PIXI.Texture.fromImage('src/resource/img/teki2.png');
     this.teki3Texture = PIXI.Texture.fromImage('src/resource/img/teki3.png');
     this.bulletTexture = PIXI.Texture.fromImage('src/resource/img/bullet.png');
+    this.bullet2Texture = PIXI.Texture.fromImage('src/resource/img/bullet2.png');
+    this.unkoTexture = PIXI.Texture.fromImage('src/resource/img/unko.png');
 
     /*UI*/
     this.weapon1Texture = PIXI.Texture.fromImage('src/resource/img/weapon1.png');

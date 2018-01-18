@@ -1,5 +1,6 @@
 import Weapon1 from './weapon1.js';
 import Weapon2 from './weapon2.js';
+import Weapon3 from './weapon3.js';
 
 export default class WeaponManager{
   static Init(){
@@ -7,7 +8,8 @@ export default class WeaponManager{
     /*武器のインスタンスを作成*/
     this.weaponList = [
       new Weapon1(),
-      new Weapon2()
+      new Weapon2(),
+      new Weapon3()
     ];
     /*selectBoxの選択*/
     this.select;
