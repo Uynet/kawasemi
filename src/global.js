@@ -51,9 +51,12 @@ const UI = {
   SELECTBOX : 1,
   HP : 2
 }
+const WICON_X = 8;
+const WICON_Y = 40;
 
 /*Vector*/
 let VEC0 = {x:0,y:0};
+
 
 /*for debug*/
 let po = ()=>{console.log("po")};

@@ -21,7 +21,7 @@ import Timer from '../timer.js';
    /*WeaponIconのポップアップ*/
    static OpenWeapon(){
      for(let i = 0;i<this.WeaponIconList.length;i++){
-       let to = 32 + 20*i;
+       let to = WICON_X + 20*i;
        let dif = to - this.WeaponIconList[i].sprite.x;
        this.WeaponIconList[i].sprite.x += dif * 0.6;
      }
@@ -29,8 +29,9 @@ import Timer from '../timer.js';
    /*ポップアップの逆(?)*/
    static CloseWeapon(){
      for(let i = 0;i<this.WeaponIconList.length;i++){
-       this.WeaponIconList[i].sprite.x = 32;
+       this.WeaponIconList[i].sprite.x = -32;
      }
+     UIManager.removeUI(this.UIList[4]);
    }
 
    /*UIをリストに登録*/
