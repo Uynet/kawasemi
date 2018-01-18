@@ -8,9 +8,10 @@ import EntityManager from '../Stage/entityManager.js';
 import TestAI from './AI/testAI.js';
 
 export default class Bullet extends Enemy{
-  constructor(pos,vel){
+  constructor(pos,vel,tex){
     super(pos,vel,{x:0,y:0});
-    this.sprite = Art.SpriteFactory(Art.bulletTexture);
+    /*もどす*/
+    this.sprite = Art.SpriteFactory(tex);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.hp = 1;

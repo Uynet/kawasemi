@@ -15,7 +15,6 @@ import Bullet from './bullet.js';
 import Drawer from '../drawer.js';
 import Game from '../Game.js';
 import Weapon from '../Weapon/weapon.js';
-import Weapon1 from '../Weapon/weapon1.js';
 import WeaponManager from '../Weapon/weaponManager.js';
 
 const JUMP_VEL = 7;//ジャンプ速度
