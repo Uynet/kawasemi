@@ -20,7 +20,8 @@ const KEY = {
   DOWN : 40,
   Z : 90,
   X : 88,
-  C : 67
+  C : 67,
+  SP : 32
 }
 
 /*State*/ 

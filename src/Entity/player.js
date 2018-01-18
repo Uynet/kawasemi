@@ -14,6 +14,9 @@ import Teki1 from './teki1.js';
 import Bullet from './bullet.js';
 import Drawer from '../drawer.js';
 import Game from '../Game.js';
+import Weapon from '../Weapon/weapon.js';
+import Weapon1 from '../Weapon/weapon1.js';
+import WeaponManager from '../Weapon/weaponManager.js';
 
 const JUMP_VEL = 7;//ジャンプ速度
   const RUN_VEL = 0.5;//はしり速度
@@ -41,6 +44,7 @@ export default class Player extends Mover{
     this.arg = 0;//狙撃角度 0 - 2π
     this.flagAlive = true;
     this.flagJump = false;//空中にいる時1
+      this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
       this.dir = DIR.RIGHT;//向き
   }
 
@@ -52,7 +56,7 @@ export default class Player extends Mover{
   }
 
   /*キー入力による移動*/
-  moveByInput(){
+  Input(){
     /*ジャンプ*/
     if(Input.isKeyInput(KEY.Z)){
       if(this.flagJump == false){
@@ -95,26 +99,15 @@ export default class Player extends Mover{
       this.texture = this.pattern(3);
     }
 
-
+    /*shot*/
     if(Input.isKeyClick(KEY.X)){
-      /*これはbulletが持つべき*/
-      //bulletの初速度
-      for(let i = 0;i<8;i++){
-        let vi = 5 + 5 * Math.random();
-        let v = {
-          x: vi * Math.cos(this.arg+ (Math.random()-0.5)/5),
-          y: vi * Math.sin(this.arg+ (Math.random()-0.5)/5)
-        }
-        //bulletの出現位置
-        let p = {
-          x: this.pos.x + 5 * Math.cos(this.arg),
-          y: this.pos.y + 5 * Math.sin(this.arg),
-        }
-        let bullet = new Bullet(p,v);
-        EntityManager.addEntity(bullet);
-      }
+      this.weapon.shot(this);
     }
 
+    /*for debug*/
+    if(Input.isKeyClick(KEY.SP)){
+      WeaponManager.ChangeWeapon(this,"2");
+    }
   }
 
   /* 衝突判定 */
@@ -153,7 +146,7 @@ export default class Player extends Mover{
 
   Update(){
     /*キー入力による移動*/
-    this.moveByInput();
+    this.Input();
 
     Drawer.ScrollOnPlayer(this);
 

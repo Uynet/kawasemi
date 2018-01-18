@@ -11,6 +11,7 @@ import UISelectBox from './UI/uiSelectBox.js';
 import UIWeaponIcon from './UI/uiWeaponIcon.js';
 import UIWeaponEquip from './UI/uiWeaponEquip.js';
 import Util from './util.js';
+import WeaponManager from './Weapon/weaponManager.js';
 
 import Player from './Entity/player.js';
 import Input from './input.js';
@@ -26,6 +27,7 @@ export default class Game{
     Timer.Init();
     UIManager.Init();
     Util.Init();
+    WeaponManager.Init();
 
     Game.Load();
 
