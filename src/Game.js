@@ -13,7 +13,6 @@ import UIWeaponEquip from './UI/uiWeaponEquip.js';
 import Util from './util.js';
 import WeaponManager from './Weapon/weaponManager.js';
 
-import Player from './Entity/player.js';
 import Input from './input.js';
 
 let dark;
@@ -25,11 +24,11 @@ export default class Game{
     EventManager.Init();
     EntityManager.Init();
     Timer.Init();
-    UIManager.Init();
     Util.Init();
     WeaponManager.Init();
 
     Game.Load();
+
 
     Game.pause = false;
     Game.select = false;
@@ -37,10 +36,7 @@ export default class Game{
     /*for debug */
     /*TODO どっかに移す*/
     MapData.CreateStage(0);
-    UIManager.addUI(new UIWeaponIcon(1));
-    UIManager.addUI(new UIWeaponIcon(2));
-    UIManager.addUI(new UIWeaponIcon(3));
-    UIManager.addUI(new UIWeaponEquip("po"));
+    UIManager.Init();
     dark = Art.SpriteFactory(Art.darkTexture);
   }
 
@@ -57,8 +53,8 @@ export default class Game{
 
       /*武器選択画面*/
       if(Game.select){
-        UIManager.addUI(new UISelectBox());
         /*ゲーム画面を暗くする*/
+        UIManager.OpenWeapon();
         Drawer.addContainer(dark,"FILTER");
       }else{
         UIManager.CloseWeapon();

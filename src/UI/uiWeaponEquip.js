@@ -4,10 +4,10 @@ import Art from '../art.js';
 import Input from '../input.js';
 import Timer from '../timer.js';
 import Util from '../util.js';
- export default class UIWeaponIcon extends UI{
 
+ export default class UIWeaponIcon extends UI{
    constructor(name){
-     super(Art.weaponEquip,2); 
+     super(Art.weaponEquip,UI_.WEQUIP); 
      this.name = name;
    }
  }

@@ -9,6 +9,8 @@ export default class WeaponManager{
       new Weapon1(),
       new Weapon2()
     ];
+    /*selectBoxの選択*/
+    this.select;
   }
 
   /*プレイヤーの参照を受け取って武器を変更*/
@@ -19,6 +21,9 @@ export default class WeaponManager{
         break;
       case "2":
         player.weapon = this.weaponList[1];
+        break;
+      case "3":
+        player.weapon = this.weaponList[2];
         break;
     }
   }
