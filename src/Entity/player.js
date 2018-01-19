@@ -34,7 +34,7 @@ export default class Player extends Mover{
     super(pos,VEC0,{x:0,y:0});
     this.type = ENTITY.PLAYER;
     this.texture = Art.playerTexture;
-    this.texture.frame = rect;
+    //this.texture.frame = rect;
     this.sprite = Art.SpriteFactory(this.texture);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
@@ -67,13 +67,13 @@ export default class Player extends Mover{
     if(Input.isKeyInput(KEY.UP)){
       this.dir = DIR.UP;
       this.arg = -Math.PI/2;
-      this.pattern(2);
+      //this.pattern(2);
     }
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
       this.dir = DIR.LEFT;
       this.arg = Math.PI;
-      this.pattern(1);
+      //this.pattern(1);
       this.acc.x = -RUN_VEL;
       if(!this.flagJump){
         this.flagJump = true;
@@ -84,7 +84,7 @@ export default class Player extends Mover{
     if(Input.isKeyInput(KEY.RIGHT)){
       this.dir = DIR.RIGHT;
       this.arg = 0;
-      this.texture = this.pattern(0);
+      //this.texture = this.pattern(0);
       this.acc.x = RUN_VEL;
       if(!this.flagJump){
         this.flagJump = true;
@@ -95,7 +95,7 @@ export default class Player extends Mover{
     if(Input.isKeyInput(KEY.DOWN)){
       this.dir = DIR.RIGHT;
       this.arg = Math.PI/2;
-      this.texture = this.pattern(3);
+      //this.texture = this.pattern(3);
     }
     /*shot*/
     if(Input.isKeyClick(KEY.X)){

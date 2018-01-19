@@ -27,30 +27,34 @@ export default class Game{
     Util.Init();
     WeaponManager.Init();
 
-    Game.Load();
 
-
+    
+    /*TODO どっかに移す*/
+    MapData.CreateStage(0);
+    /*for debug */
+    UIManager.Init();
     Game.pause = false;
     Game.select = false;
 
-    /*for debug */
-    /*TODO どっかに移す*/
-    MapData.CreateStage(0);
-    UIManager.Init();
+
+    /*TODO EffectManagerを作成*/
     dark = Art.SpriteFactory(Art.darkTexture);
+
+    Game.Run();
   }
 
-  static Load(){
-    Art.LoadTexture();
+  static async Load(){
+    await Art.LoadTexture();
+    Game.Init();
   }
 
   static Input(){
+    if(Input.isKeyClick(KEY.SP)){
+    }
     /*ポーズ */
     if(Input.isKeyClick(KEY.C)){
       Game.pause = !Game.pause;
       Game.select = !Game.select;
-
-
       /*武器選択画面*/
       if(Game.select){
         /*ゲーム画面を暗くする*/
@@ -60,13 +64,10 @@ export default class Game{
         UIManager.CloseWeapon();
         Drawer.removeContainer(dark,"FILTER");
       }
-
-
     }
   }
 
   static Update(){
-
     Game.Input();
     /*
      * 各Entityの位置の更新
@@ -74,7 +75,6 @@ export default class Game{
      if(!Game.pause){
        EntityManager.Update();
      }
-
      if(Game.select){
        UIManager.Update();
      }
@@ -85,19 +85,20 @@ export default class Game{
        EventManager.eventList.pop().Do();
      }
 
-
      Timer.IncTime();
   }
 
   static Run(){
+    cl("ya");
     requestAnimationFrame(Game.Run);
 
     switch(Scene.state){
       /*更新*/
-      case STATE.STAGE : Game.Update();
+      case STATE.STAGE :
+        Game.Update();
         break;
       default :
-        console.error("unknown state");
+        console.warn("unknown state");
     }
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);
