@@ -1,18 +1,28 @@
+import Game from './Game.js';
+
+let playerTexture;
 export default class Art{
-  constructor(){
-    this.playerTexture;
-    this.teki1Texture;
-    this.teki2Texture;
+  static TestPoyoPoyo(){
+      this.playerTexture = PIXI.utils.TextureCache.p;
+      //this.playerTexture = PIXI.Texture.fromImage('src/resource/img/player.png');
+      this.wallTexture = PIXI.utils.TextureCache["src/resource/img/wall.png"];
+      this.teki2Texture = PIXI.utils.TextureCache["src/resource/img/wall.png"];
+      this.unko = true;
   }
 
-  static LoadTexture(){
+  static async LoadTexture(){
+    await new Promise((res,rej)=>PIXI.loader
+      .add('p','src/resource/img/player.png')
+      .add('src/resource/img/wall.png')
+      .add('src/resource/img/teki2.png')
+      .load().onLoad.add(res)
+    );
+    Art.TestPoyoPoyo();
+    return new Promise((reso)=>{
     /*Pattern*/
 
     /*Entity*/
-    this.playerTexture = PIXI.Texture.fromImage('src/resource/img/player.png');
-    //this.playerTexture = PIXI.utils.TextureCache["src/resource/img/player.png"];
-    this.wallTexture = PIXI.Texture.fromImage('src/resource/img/wall.png');
-    this.teki2Texture = PIXI.Texture.fromImage('src/resource/img/teki2.png');
+    this.unko = false;
     this.teki3Texture = PIXI.Texture.fromImage('src/resource/img/teki3.png');
     this.bulletTexture = PIXI.Texture.fromImage('src/resource/img/bullet.png');
     this.bullet2Texture = PIXI.Texture.fromImage('src/resource/img/bullet2.png');
@@ -27,10 +37,14 @@ export default class Art{
 
     /*Effect*/
     this.darkTexture = PIXI.Texture.fromImage('src/resource/effect/dark.png');
+
+    reso();
+    });
   }
 
   static SpriteFactory(texture){
     return new PIXI.Sprite(texture);
   }
 }
+
 
