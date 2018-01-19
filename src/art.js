@@ -6,8 +6,11 @@ export default class Art{
   }
 
   static LoadTexture(){
+    /*Pattern*/
+
     /*Entity*/
     this.playerTexture = PIXI.Texture.fromImage('src/resource/img/player.png');
+    //this.playerTexture = PIXI.utils.TextureCache["src/resource/img/player.png"];
     this.wallTexture = PIXI.Texture.fromImage('src/resource/img/wall.png');
     this.teki2Texture = PIXI.Texture.fromImage('src/resource/img/teki2.png');
     this.teki3Texture = PIXI.Texture.fromImage('src/resource/img/teki3.png');

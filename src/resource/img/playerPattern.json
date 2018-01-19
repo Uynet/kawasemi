@@ -1,0 +1,41 @@
+{"frames": {
+  "player0.png":
+  {
+    "frame": {"x":0,"y":0,"w":16,"h":16},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+    "sourceSize": {"w":120,"h":120}
+  },
+    "player1.png":
+  {
+    "frame": {"x":80,"y":0,"w":16,"h":16},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+    "sourceSize": {"w":120,"h":120}
+  },
+    "player2.png":
+  {
+    "frame": {"x":0,"y":0,"w":16,"h":16},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+    "sourceSize": {"w":120,"h":120}
+  },
+    "player3.png":
+  {
+    "frame": {"x":80,"y":0,"w":16,"h":16},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+    "sourceSize": {"w":120,"h":120}
+  },
+},
+"meta": {
+  "image": "playerPattern.png",
+  "format": "RGBA8888",
+  "size": {"w":128,"h":64},
+  "scale": "1"
+}
+}

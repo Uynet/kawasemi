@@ -7,8 +7,6 @@ import UIWeaponEquip from './uiWeaponEquip.js';
 import UISelectBox from './uiSelectBox.js';
 import EntityManager from '../Stage/entityManager.js';
 
-
-
  /*UIクラス*/
  /*TODO リファクタリング*/
  export default class UIManager{
