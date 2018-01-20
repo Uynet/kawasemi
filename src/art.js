@@ -1,10 +1,9 @@
 import Game from './Game.js';
 
 export default class Art{
-  static Load(){
-    return new Promise((res)=>{
+  static Load(resources){
     /*Entity*/
-    Art.playerTexture = PIXI.utils.TextureCache["src/resource/img/player.png"];
+    this.playerTexture = PIXI.utils.TextureCache["src/resource/img/player.png"];
     this.wallTexture = PIXI.utils.TextureCache["src/resource/img/wall.png"];
     this.teki2Texture = PIXI.utils.TextureCache["src/resource/img/teki2.png"];
     this.teki3Texture = PIXI.utils.TextureCache["src/resource/img/teki3.png"];
@@ -19,13 +18,23 @@ export default class Art{
     this.selectboxTexture = PIXI.utils.TextureCache["src/resource/img/selectbox.png"];
     /*Effect*/
     this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
-    cl("dark "+PIXI.utils.TextureCache.d);
-    res();
-    });
+
+    /*Pttern*/
+    this.playerPattern = [
+      PIXI.Texture.fromFrame('player00.png'),
+      PIXI.Texture.fromFrame('player01.png'),
+      PIXI.Texture.fromFrame('player02.png'),
+      PIXI.Texture.fromFrame('player03.png'),
+      PIXI.Texture.fromFrame('player1.png'),
+      PIXI.Texture.fromFrame('player2.png'),
+      PIXI.Texture.fromFrame('player3.png')
+    ];
   }
 
   static async LoadTexture(){
-    await new Promise((res)=>PIXI.loader
+    let loader = PIXI.loader;
+    await new Promise((res)=>loader
+      .add('pattern','src/resource/img/playerPattern.json')
       .add('src/resource/img/player.png')
       .add('src/resource/img/wall.png')
       .add('src/resource/img/teki2.png')
@@ -39,8 +48,7 @@ export default class Art{
       .add('src/resource/img/weaponEquip.png')
       .add('src/resource/img/selectbox.png')
       .add('src/resource/effect/dark.png')
-      .load().onComplete.add(res));
-    Art.Load();
+      .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
   }
 
   static SpriteFactory(texture){
