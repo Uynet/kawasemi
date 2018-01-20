@@ -33,10 +33,12 @@ export default class Player extends Mover{
   constructor(pos){
     super(pos,VEC0,{x:0,y:0});
     this.type = ENTITY.PLAYER;
-    this.texture = Art.playerTexture;
-    //this.texture.frame = rect;
-    this.sprite = Art.SpriteFactory(this.texture);
-    this.sprite.position = pos;
+
+    this.anim = new PIXI.extras.AnimatedSprite(Art.playerPattern);
+    this.anim.animationSpeed = 0.05;
+    this.anim.position = this.pos ;
+    this.sprite = this.anim;
+
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.hp = PLAYER_HP;
     this.gravity = PLAYER_GRAVITY;
@@ -49,7 +51,7 @@ export default class Player extends Mover{
 
   /*パターン画像の左上から何番目をクリップするか選択*/
   pattern(i){
-    rect.x = i*16;
+    this.sprite.pos = NaN;
     this.texture.frame = rect;
     return this.texture;
   }
@@ -67,13 +69,12 @@ export default class Player extends Mover{
     if(Input.isKeyInput(KEY.UP)){
       this.dir = DIR.UP;
       this.arg = -Math.PI/2;
-      //this.pattern(2);
     }
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
       this.dir = DIR.LEFT;
       this.arg = Math.PI;
-      //this.pattern(1);
+      this.anim.stop();
       this.acc.x = -RUN_VEL;
       if(!this.flagJump){
         this.flagJump = true;
@@ -84,8 +85,8 @@ export default class Player extends Mover{
     if(Input.isKeyInput(KEY.RIGHT)){
       this.dir = DIR.RIGHT;
       this.arg = 0;
-      //this.texture = this.pattern(0);
       this.acc.x = RUN_VEL;
+      this.anim.play(0,3);
       if(!this.flagJump){
         this.flagJump = true;
         this.vel.y = POP_PLAYER;
