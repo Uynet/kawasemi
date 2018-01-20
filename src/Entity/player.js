@@ -2,7 +2,6 @@ import Mover from './mover.js'
 import Art from '../art.js'
 import CollisionShape from '../Collision/collisionShape.js';
 import Collision from '../Collision/collision.js';
-import Circle from '../Collision/Circle.js';
 import Box from '../Collision/Box.js';
 import Input from '../input.js';
 import EntityManager from '../Stage/entityManager.js';
@@ -10,59 +9,79 @@ import Util from '../util.js';
 import EventManager from '../Event/eventmanager.js';
 import Event from '../Event/event.js';
 import StageResetEvent from '../Event/stageResetEvent.js';
-import Teki1 from './teki1.js';
-import Bullet from './bullet.js';
 import Drawer from '../drawer.js';
 import Game from '../Game.js';
-import Weapon from '../Weapon/weapon.js';
 import WeaponManager from '../Weapon/weaponManager.js';
 
 const JUMP_VEL = 7;//ジャンプ速度
-  const RUN_VEL = 0.5;//はしり速度
+const RUN_VEL = 0.5;//はしり速度
 const PLAYER_GRAVITY = 0.3;
 const PLAYER_HP = 10;
-const FRICTION = 0.7;
+const FLICTION = 0.7;
 const POP_PLAYER = -1;
 
 const VX_MAX = 3;
 const VY_MAX = 3;
 
-let rect = new PIXI.Rectangle(0,0,16,16);
-/*TODO フラグの管理*/
 export default class Player extends Mover{
   constructor(pos){
     super(pos,VEC0,{x:0,y:0});
-    this.type = ENTITY.PLAYER;
-
-    this.anim = new PIXI.extras.AnimatedSprite(Art.playerPattern);
-    this.anim.animationSpeed = 0.05;
-    this.anim.position = this.pos ;
-    this.sprite = this.anim;
-
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.type = ENTITY.PLAYER;
+    /*スプライト*/
+    this.pattern = Art.playerR;
+    this.sprite = Art.SpriteFactory(this.pattern[0]);
+    this.sprite.position = this.pos ;
+    /*パラメータ*/
     this.hp = PLAYER_HP;
     this.gravity = PLAYER_GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
-    this.flagAlive = true;
-    this.flagJump = false;//空中にいる時1
-      this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
-      this.dir = DIR.RIGHT;//向き
-  }
-
-  /*パターン画像の左上から何番目をクリップするか選択*/
-  pattern(i){
-    this.sprite.pos = NaN;
-    this.texture.frame = rect;
-    return this.texture;
+    /*フラグ*/
+    this.isAlive = true;//生きているか
+    this.isJump = false;//空中にいるか
+    this.isRun = false;//走っているか
+    /*状態*/
+    this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
+    this.dir = DIR.RIGHT;//向き
   }
 
   /*キー入力による移動*/
   Input(){
+    /*右向き*/
+    if(Input.isKeyInput(KEY.RIGHT)){
+      this.dir = DIR.RIGHT;
+      this.arg = 0;
+      this.acc.x = RUN_VEL;
+      if(!this.isJump){
+        this.isJump = true;
+        this.vel.y = POP_PLAYER;
+      }
+    }
+    /*左向き*/
+    if(Input.isKeyInput(KEY.LEFT)){
+      this.dir = DIR.LEFT;
+      this.arg = Math.PI;
+      this.acc.x = -RUN_VEL;
+      if(!this.isJump){
+        this.isJump = true;
+        this.vel.y = POP_PLAYER;
+      }
+    }
     /*ジャンプ*/
     if(Input.isKeyInput(KEY.Z)){
-      if(this.flagJump == false){
+      if(this.isJump == false){
         this.vel.y = -JUMP_VEL;
-        this.flagJump = true;
+        /*左向き*/
+        if(Input.isKeyInput(KEY.LEFT)){
+          this.dir = DIR.LEFT;
+          this.arg = Math.PI;
+          this.acc.x = -RUN_VEL;
+          if(!this.isJump){
+            this.isJump = true;
+            this.vel.y = POP_PLAYER;
+          }
+        }
+        this.isJump = true;
       }
     }
     /*上向き*/
@@ -70,33 +89,10 @@ export default class Player extends Mover{
       this.dir = DIR.UP;
       this.arg = -Math.PI/2;
     }
-    /*左向き*/
-    if(Input.isKeyInput(KEY.LEFT)){
-      this.dir = DIR.LEFT;
-      this.arg = Math.PI;
-      this.anim.stop();
-      this.acc.x = -RUN_VEL;
-      if(!this.flagJump){
-        this.flagJump = true;
-        this.vel.y = POP_PLAYER;
-      }
-    }
-    /*右向き*/
-    if(Input.isKeyInput(KEY.RIGHT)){
-      this.dir = DIR.RIGHT;
-      this.arg = 0;
-      this.acc.x = RUN_VEL;
-      this.anim.play(0,3);
-      if(!this.flagJump){
-        this.flagJump = true;
-        this.vel.y = POP_PLAYER;
-      }
-    }
     /*下向き*/
     if(Input.isKeyInput(KEY.DOWN)){
-      this.dir = DIR.RIGHT;
+      this.dir = DIR.DOWN;
       this.arg = Math.PI/2;
-      //this.texture = this.pattern(3);
     }
     /*shot*/
     if(Input.isKeyClick(KEY.X)){
@@ -104,10 +100,28 @@ export default class Player extends Mover{
     }
     /*for debug*/
     if(Input.isKeyClick(KEY.SP)){
-      this.ChangeWeapon("2");
     }
   }
 
+  /*状態からアニメーションを行う*/
+  Animation(){
+    switch(this.dir){
+      case DIR.RIGHT :
+        this.sprite.texture = this.pattern[0];
+        break;
+      case DIR.LEFT :
+        this.sprite.texture = this.pattern[4];
+        break;
+      case DIR.UP :
+        this.sprite.texture = this.pattern[8];
+        break;
+      case DIR.DOWN :
+        this.sprite.texture = this.pattern[12];
+        break;
+    }
+  }
+
+  /*武器チェンジ*/
   ChangeWeapon(name){
     WeaponManager.ChangeWeapon(this,name);
   }
@@ -127,7 +141,7 @@ export default class Player extends Mover{
 
             /*フラグの解除*/
             if(Collision.on(this,l).n.y == -1){
-              this.flagJump = 0;
+              this.isJump = 0;
             }
             /*速度*/
             if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
@@ -151,8 +165,8 @@ export default class Player extends Mover{
     this.vel.y += this.gravity;
     if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
     if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
-    if(this.flagJump == false){
-      this.vel.x *= FRICTION;
+    if(this.isJump == false){
+      this.vel.x *= FLICTION;
     }
     this.acc.x = 0;
 
@@ -162,6 +176,7 @@ export default class Player extends Mover{
     this.Input();//入力
     this.Physics();//物理
     this.collision();//衝突
+    this.Animation();//状態から画像を更新
     Drawer.ScrollOnPlayer(this);
 
     /*observer*/

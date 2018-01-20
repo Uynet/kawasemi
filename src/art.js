@@ -20,14 +20,23 @@ export default class Art{
     this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
 
     /*Pttern*/
-    this.playerPattern = [
+    this.playerR = [
       PIXI.Texture.fromFrame('player00.png'),
       PIXI.Texture.fromFrame('player01.png'),
       PIXI.Texture.fromFrame('player02.png'),
       PIXI.Texture.fromFrame('player03.png'),
-      PIXI.Texture.fromFrame('player1.png'),
-      PIXI.Texture.fromFrame('player2.png'),
-      PIXI.Texture.fromFrame('player3.png')
+      PIXI.Texture.fromFrame('player10.png'),
+      PIXI.Texture.fromFrame('player11.png'),
+      PIXI.Texture.fromFrame('player12.png'),
+      PIXI.Texture.fromFrame('player12.png'),
+      PIXI.Texture.fromFrame('player20.png'),
+      PIXI.Texture.fromFrame('player21.png'),
+      PIXI.Texture.fromFrame('player22.png'),
+      PIXI.Texture.fromFrame('player23.png'),
+      PIXI.Texture.fromFrame('player30.png'),
+      PIXI.Texture.fromFrame('player31.png'),
+      PIXI.Texture.fromFrame('player32.png'),
+      PIXI.Texture.fromFrame('player33.png')
     ];
   }
 
