@@ -89,7 +89,6 @@ export default class Game{
   }
 
   static Run(){
-    cl("ya");
     requestAnimationFrame(Game.Run);
 
     switch(Scene.state){
