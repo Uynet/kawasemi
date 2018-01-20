@@ -1,3 +1,5 @@
+import Timer from './timer.js';
+
 const PIXI_WIDTH = 800;
 const PIXI_HEIGHT = 600;
 
@@ -7,7 +9,6 @@ export default class Drawer{
   static Init(){
     this.app = new PIXI.Application(PIXI_WIDTH, PIXI_HEIGHT, {backgroundColor : 0x000000});
     this.Stage = this.app.stage;
-
       /* コンテナ(レイヤー)は以下の通り
       /* Entityコンテナ:Entityを描画するレイヤ
        * Effectコンテナ:画面に適用するエフェクトを描画するレイヤ
@@ -26,13 +27,20 @@ export default class Drawer{
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
     /*拡大率*/
     this.magnification = 2;
-    this.entityContainer.scale.x *= this.magnification;
-    this.entityContainer.scale.y *= this.magnification;
-    this.UIContainer.scale.x *= this.magnification;
-    this.UIContainer.scale.y *= this.magnification;
-    this.effectContainer.scale.x *= this.magnification;
-    this.effectContainer.scale.y *= this.magnification;
+    this.entityContainer.scale.x = this.magnification;
+    this.entityContainer.scale.y = this.magnification;
+    this.UIContainer.scale.x = this.magnification;
+    this.UIContainer.scale.y = this.magnification;
+    this.effectContainer.scale.x = this.magnification;
+    this.effectContainer.scale.y = this.magnification;
     $("#pixiview").append(this.Renderer.view);
+
+    /*-----*/
+    /*なぜかyieldがstaticにできないのでココにかく*/
+
+    this.Animator = function*(start,num,startTime,rate){
+      yield (start + Math.floor((Timer.timer - startTime)/rate))%num;
+    }
   }
 
   /*コンテナにスプライトを追加*/
@@ -67,12 +75,21 @@ export default class Drawer{
 
   /* プレイヤー中心にスクロール*/
   static ScrollOnPlayer(player){
-    let centerX = this.magnification*(- player.pos.x + 200);
-    let centerY = this.magnification*(- player.pos.y + 150);
-    this.entityContainer.x = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
-    this.entityContainer.y = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
-    if(this.entityContainer.x%2==1)this.entityContainer.x--;
-    if(this.entityContainer.y%2==1)this.entityContainer.y--;
+    let centerX = this.magnification*(- player.pos.x-8 + 400/this.magnification);
+    let centerY = this.magnification*(- player.pos.y-8 + 300/this.magnification);
+    let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
+    let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
+    this.entityContainer.x = Math.floor(toX);
+    this.entityContainer.y = Math.floor(toY);
   }
+
+  static Yakudo(mag){
+    this.magnification = mag;
+    this.entityContainer.scale.x = this.magnification;
+    this.entityContainer.scale.y = this.magnification;
+    this.effectContainer.scale.x = this.magnification;
+    this.effectContainer.scale.y = this.magnification;
+  }
+
 
 }

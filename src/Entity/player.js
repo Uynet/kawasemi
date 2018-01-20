@@ -12,6 +12,7 @@ import StageResetEvent from '../Event/stageResetEvent.js';
 import Drawer from '../drawer.js';
 import Game from '../Game.js';
 import WeaponManager from '../Weapon/weaponManager.js';
+import Timer from '../timer.js';
 
 const JUMP_VEL = 7;//ジャンプ速度
 const RUN_VEL = 0.5;//はしり速度
@@ -30,7 +31,8 @@ export default class Player extends Mover{
     this.type = ENTITY.PLAYER;
     /*スプライト*/
     this.pattern = Art.playerR;
-    this.sprite = Art.SpriteFactory(this.pattern[0]);
+    this.spid = 0 // spriteIndex 現在のスプライト番号
+    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos ;
     /*パラメータ*/
     this.hp = PLAYER_HP;
@@ -50,6 +52,7 @@ export default class Player extends Mover{
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
       this.dir = DIR.RIGHT;
+      this.isRun = true;
       this.arg = 0;
       this.acc.x = RUN_VEL;
       if(!this.isJump){
@@ -57,9 +60,11 @@ export default class Player extends Mover{
         this.vel.y = POP_PLAYER;
       }
     }
+
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
       this.dir = DIR.LEFT;
+      this.isRun = true;
       this.arg = Math.PI;
       this.acc.x = -RUN_VEL;
       if(!this.isJump){
@@ -99,7 +104,8 @@ export default class Player extends Mover{
       this.weapon.shot(this);
     }
     /*for debug*/
-    if(Input.isKeyClick(KEY.SP)){
+    if(Input.isKeyInput(KEY.SP)){
+      Drawer.Yakudo();
     }
   }
 
@@ -107,18 +113,23 @@ export default class Player extends Mover{
   Animation(){
     switch(this.dir){
       case DIR.RIGHT :
-        this.sprite.texture = this.pattern[0];
+        (this.isRun) ? this.spid = 0 + (Math.floor(Timer.timer/10))%4
+                     : this.spid = 0;
         break;
       case DIR.LEFT :
-        this.sprite.texture = this.pattern[4];
+        (this.isRun) ? this.spid = 4 + (Math.floor(Timer.timer/10))%4
+                     : this.spid = 4;
         break;
       case DIR.UP :
-        this.sprite.texture = this.pattern[8];
+        (this.isRun) ? this.spid = 8 + (Math.floor(Timer.timer/10))%4
+                     : this.spid = 8;
         break;
       case DIR.DOWN :
-        this.sprite.texture = this.pattern[12];
+        (this.isRun) ? this.spid = 12 + (Math.floor(Timer.timer/10))%4
+                     : this.spid = 12;
         break;
     }
+    this.sprite.texture = this.pattern[this.spid];
   }
 
   /*武器チェンジ*/
@@ -173,6 +184,7 @@ export default class Player extends Mover{
   }
 
   Update(){
+    this.isRun = false;
     this.Input();//入力
     this.Physics();//物理
     this.collision();//衝突
