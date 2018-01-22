@@ -49,6 +49,13 @@ export default class Player extends Mover{
 
   /*キー入力による移動*/
   Input(){
+    /*ジャンプ*/
+    if(Input.isKeyInput(KEY.Z)){
+      if(this.isJump == false){
+        this.vel.y = -JUMP_VEL;
+        this.isJump = true;
+      }
+    }
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
       this.dir = DIR.RIGHT;
@@ -70,23 +77,6 @@ export default class Player extends Mover{
       if(!this.isJump){
         this.isJump = true;
         this.vel.y = POP_PLAYER;
-      }
-    }
-    /*ジャンプ*/
-    if(Input.isKeyInput(KEY.Z)){
-      if(this.isJump == false){
-        this.vel.y = -JUMP_VEL;
-        /*左向き*/
-        if(Input.isKeyInput(KEY.LEFT)){
-          this.dir = DIR.LEFT;
-          this.arg = Math.PI;
-          this.acc.x = -RUN_VEL;
-          if(!this.isJump){
-            this.isJump = true;
-            this.vel.y = POP_PLAYER;
-          }
-        }
-        this.isJump = true;
       }
     }
     /*上向き*/

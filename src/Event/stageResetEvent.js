@@ -17,7 +17,7 @@ export default class StageResetEvent extends Event{
       player.pos.y = 64;
       player.vel.x = 0;
       player.vel.y = 0;
-      UIManager.HP[1].Bar();
+      cl(UIManager.HP);
       console.log("reset");
     }
     return posreset;
