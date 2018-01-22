@@ -6,11 +6,16 @@ import Art from '../art.js';
 export default class Weapon1 extends Weapon{
   /* ammunition : 弾薬数 */
   constructor(){
-    super("1","10");
+    super("1",10,10);
+    this.clock = 0;//最後に撃った時刻
+    this.speed = 10;
+    this.length = 120;//射程距離
   }
   shot(player){
+    //最後に撃ってからclockまで停止
+    if(this.clock % this.agi == 0){
       for(let i = 0;i<1;i++){
-        let vi = 16 + 5 * Math.random();
+        let vi = this.speed;
         let v = {
           x: vi * Math.cos(player.arg),
           y: vi * Math.sin(player.arg)
@@ -24,5 +29,7 @@ export default class Weapon1 extends Weapon{
         EntityManager.addEntity(bullet);
       }
       this.ammunition--;
+    }
+    this.clock++;
   }
 }

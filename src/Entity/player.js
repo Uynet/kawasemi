@@ -90,7 +90,7 @@ export default class Player extends Mover{
       this.arg = Math.PI/2;
     }
     /*shot*/
-    if(Input.isKeyClick(KEY.X)){
+    if(Input.isKeyInput(KEY.X)){
       this.weapon.shot(this);
     }
     /*for debug*/
