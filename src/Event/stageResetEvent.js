@@ -1,4 +1,5 @@
 import Event from './event.js';
+import UIManager from '../UI/uiManager.js';
 
 export default class StageResetEvent extends Event{
   //プレイヤーから参照を受け取り、
@@ -11,11 +12,12 @@ export default class StageResetEvent extends Event{
 
   ReturnFunc(player){
     let posreset = () =>{
-      player.hp = 10;
+      player.hp = 100;
       player.pos.x = 32;
       player.pos.y = 64;
       player.vel.x = 0;
       player.vel.y = 0;
+      UIManager.HP[1].Bar();
       console.log("reset");
     }
     return posreset;

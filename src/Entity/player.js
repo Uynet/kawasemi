@@ -17,7 +17,7 @@ import Timer from '../timer.js';
 const JUMP_VEL = 7;//ジャンプ速度
 const RUN_VEL = 0.5;//はしり速度
 const PLAYER_GRAVITY = 0.3;
-const PLAYER_HP = 10;
+const PLAYER_HP = 100;
 const FLICTION = 0.7;
 const POP_PLAYER = -1;
 
@@ -30,7 +30,7 @@ export default class Player extends Mover{
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
     /*スプライト*/
-    this.pattern = Art.playerR;
+    this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos ;
@@ -192,7 +192,7 @@ export default class Player extends Mover{
     Drawer.ScrollOnPlayer(this);
 
     /*observer*/
-    if(this.hp <= 9){
+    if(this.hp <= 0){
       let restartEvent = new StageResetEvent(this);
       EventManager.PushEvent(restartEvent);
     }

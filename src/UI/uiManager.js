@@ -5,6 +5,7 @@ import Timer from '../timer.js';
 import UIWeaponIcon from './uiWeaponIcon.js';
 import UIWeaponEquip from './uiWeaponEquip.js';
 import UISelectBox from './uiSelectBox.js';
+import UIHP from './uiHP.js';
 import EntityManager from '../Stage/entityManager.js';
 
  /*UIクラス*/
@@ -20,6 +21,7 @@ import EntityManager from '../Stage/entityManager.js';
     this.WeaponIconList = [];//武器アイコンのリスト
       this.selectBox;
     this.weaponEquip;
+         this.HP;
     /*各UIの初期化を行う
      * 一度初期化したUIを消す際には
      * ステージから外さず画面外にプールさせる*/
@@ -28,6 +30,8 @@ import EntityManager from '../Stage/entityManager.js';
     UIManager.addUI(new UIWeaponIcon("3"));//武器3のサブアイコン
     UIManager.addUI(new UISelectBox());//セレクトボックス
     UIManager.addUI(new UIWeaponEquip("po"));//武器1のメインアイコン(?)
+    UIManager.addUI(new UIHP("frame"));//HP
+    UIManager.addUI(new UIHP("bar"));//HP
 
    }
    /*WeaponIconのポップアップ*/
@@ -39,8 +43,8 @@ import EntityManager from '../Stage/entityManager.js';
    }
    /*ポップアップの逆(?)*/
    static CloseWeapon(){
-     for(let i = 0;i<this.WeaponIconList.length;i++){
-       this.WeaponIconList[i].sprite.x = -32;
+     for(let l of this.WeaponIconList){
+      l.sprite.x = -32;
      }
      this.selectBox.sprite.x = -32;
      EntityManager.player.ChangeWeapon(this.selectBox.select.name);
@@ -62,6 +66,9 @@ import EntityManager from '../Stage/entityManager.js';
        //equip
        case UI_.WEQUIP : 
          this.weaponEquip = ui;
+         break;
+       case UI_.HP :
+         this.HP = ui;
          break;
        default :
          console.warn(ui);

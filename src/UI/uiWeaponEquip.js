@@ -7,7 +7,7 @@ import Util from '../util.js';
 
  export default class UIWeaponIcon extends UI{
    constructor(name){
-     super(Art.weaponEquip,UI_.WEQUIP); 
+     super(Art.UIPattern[0],UI_.WEQUIP); 
      this.name = name;
    }
  }

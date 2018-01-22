@@ -50,7 +50,8 @@ const TILE = {
 const UI_ = {
   WICON : "WICON",
   SELBOX : "SELBOX",
-  WEQUIP : "WEQUIP"
+  WEQUIP : "WEQUIP",
+  HP : "HP"
 }
 const WICON_X = 8;
 const WICON_Y = 40;
