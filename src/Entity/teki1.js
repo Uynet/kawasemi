@@ -6,6 +6,8 @@ import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
 import TestAI from './AI/testAI.js';
+import UIManager from '../UI/uiManager.js'
+
 
 const ATK_TEKI1 = 1;
 
@@ -29,6 +31,7 @@ export default class Teki1 extends Enemy{
           /*衝突判定*/
           if(Collision.on(this,l).isHit){
             l.hp-=this.atk;
+            UIManager.HP.Bar();
           }
           break;
       }

@@ -22,6 +22,12 @@ export default class UI{
         this.sprite.position.x = 8;
         this.sprite.position.y = 6;
         break;
+        /*HP*/
+      case UI_.HP :
+        this.sprite = Art.SpriteFactory(UItexture);
+        this.sprite.position.x = 56;
+        this.sprite.position.y = 6;
+        break;
       default:
         console.warn(this);
     }

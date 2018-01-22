@@ -12,7 +12,7 @@ let it;
 
  export default class UISelectBox extends UI{
    constructor(){
-     super(Art.selectboxTexture,UI_.SELBOX); 
+     super(Art.UIPattern[6],UI_.SELBOX); 
      this.selectID = 0;
      this.select = UIManager.WeaponIconList[this.selectID];//選択中の武器
    }
