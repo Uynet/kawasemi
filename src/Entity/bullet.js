@@ -6,16 +6,24 @@ import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
 import TestAI from './AI/testAI.js';
+import Util from '../util.js';
 
 export default class Bullet extends Enemy{
   constructor(pos,vel,tex){
     super(pos,vel,{x:0,y:0});
-    /*もどす*/
+    /*スプライト*/
     this.sprite = Art.SpriteFactory(tex);
     this.sprite.position = pos;
-    this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    this.hp = 1;
-    this.atk = 1;
+    /*コライダ*/
+    this.collisionShape = new CollisionShape(
+      SHAPE.BOX,
+      new Box(pos,16,16)
+    );
+    /*パラメータ*/
+    this.hp = 1;//弾丸のHP 0になると消滅
+    this.atk = 1;//攻撃力
+    this.length = 80;//これは武器がもつ?
+    this.launchedPos = {x:pos.x,y:pos.y};//射出された座標 射程距離の計算に必要 
     this.type = ENTITY.BULLET;
   }
   /* 衝突判定 */
@@ -30,8 +38,6 @@ export default class Bullet extends Enemy{
           if(Collision.on(this,l).isHit){
             l.hp-=this.atk;
             this.hp = 0;
-            //let bullet = new Bullet({x:this.pos.x, y:this.pos.y},{x:-this.vel.x,y:0});
-            //EntityManager.addEntity(bullet);
           }
           break;
         case ENTITY.WALL :
@@ -45,7 +51,7 @@ export default class Bullet extends Enemy{
     }
   }
 
-  UpdatePosition(){
+  Phisics(){
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
   }
@@ -57,12 +63,15 @@ export default class Bullet extends Enemy{
       AI.Do();
     }
     */
-    this.UpdatePosition();
+    this.Phisics();
     this.sprite.position = this.pos;
 
     /*observer*/
     if(this.hp<=0){
-      this.hp = 1;
+      EntityManager.removeEntity(this);
+    }
+    //飛行距離判定
+    if(Util.distance(this.pos , this.launchedPos) > this.length){
       EntityManager.removeEntity(this);
     }
   }

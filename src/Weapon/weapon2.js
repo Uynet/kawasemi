@@ -6,7 +6,10 @@ import Art from '../art.js';
 export default class Weapon2 extends Weapon{
   /* ammunition : 弾薬数 */
   constructor(){
-    super("1","10");
+    super("1",10,40);
+    this.clock = 0;//最後に撃った時刻
+    this.speed = 10;
+    this.length = 80;//射程距離
   }
   shot(player){
       for(let i = 0;i<12;i++){
