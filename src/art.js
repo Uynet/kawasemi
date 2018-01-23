@@ -4,7 +4,6 @@ export default class Art{
   static Load(resources){
     /*Entity*/
     //cl(PIXI.utils.TextureCache);
-    this.playerTexture = PIXI.utils.TextureCache["src/resource/img/player.png"];
     this.wallTexture = PIXI.utils.TextureCache["src/resource/img/wall.png"];
     this.teki2Texture = PIXI.utils.TextureCache["src/resource/img/teki2.png"];
     this.teki3Texture = PIXI.utils.TextureCache["src/resource/img/teki3.png"];
@@ -15,8 +14,6 @@ export default class Art{
     this.weapon1Texture = PIXI.utils.TextureCache["src/resource/img/weapon1.png"];
     this.weapon2Texture = PIXI.utils.TextureCache["src/resource/img/weapon2.png"];
     this.weapon3Texture = PIXI.utils.TextureCache["src/resource/img/weapon3.png"];
-    this.weaponEquip = PIXI.utils.TextureCache["src/resource/img/weaponEquip.png"];
-    this.selectboxTexture = PIXI.utils.TextureCache["src/resource/img/selectbox.png"];
     /*Effect*/
     this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
 
