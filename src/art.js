@@ -45,8 +45,13 @@ export default class Art{
       PIXI.Texture.fromFrame('weapon12.png'),
       PIXI.Texture.fromFrame('selectbox.png'),
       PIXI.Texture.fromFrame('HP00.png'),
-      PIXI.Texture.fromFrame('HP01.png'),
+      PIXI.Texture.fromFrame('HP01.png')
     ];
+    this.bulletPattern = [
+      PIXI.Texture.fromFrame('bullet00.png'),
+      PIXI.Texture.fromFrame('bullet10.png'),
+      PIXI.Texture.fromFrame('bullet20.png')
+    ]
   }
 
   static async LoadTexture(){
@@ -54,18 +59,13 @@ export default class Art{
     await new Promise((res)=>loader
       .add('pattern','src/resource/img/playerPattern.json')
       .add('pattern2','src/resource/img/UIPattern.json')
-      .add('src/resource/img/player.png')
+      .add('pattern3','src/resource/img/bulletPattern.json')
       .add('src/resource/img/wall.png')
       .add('src/resource/img/teki2.png')
       .add('src/resource/img/teki3.png')
       .add('src/resource/img/bullet.png')
       .add('src/resource/img/bullet2.png')
       .add('src/resource/img/unko.png')
-      .add('src/resource/img/weapon1.png')
-      .add('src/resource/img/weapon2.png')
-      .add('src/resource/img/weapon3.png')
-      .add('src/resource/img/weaponEquip.png')
-      .add('src/resource/img/selectbox.png')
       .add('src/resource/effect/dark.png')
       .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
   }

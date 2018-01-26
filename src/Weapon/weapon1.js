@@ -1,4 +1,5 @@
 import Bullet from '../Entity/bullet.js';
+import Bullet1 from '../Entity/bullet1.js';
 import EntityManager from '../Stage/entityManager.js';
 import Weapon from './weapon.js';
 import Art from '../art.js';
@@ -25,7 +26,7 @@ export default class Weapon1 extends Weapon{
           x: player.pos.x + 5 * Math.cos(player.arg),
           y: player.pos.y + 5 * Math.sin(player.arg),
         }
-        let bullet = new Bullet(p,v,Art.bulletTexture);
+        let bullet = new Bullet1(p,v);
         EntityManager.addEntity(bullet);
       }
       this.ammunition--;
