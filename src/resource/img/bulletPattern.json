@@ -1,0 +1,20 @@
+{
+  "frames": {
+    "bullet00.png": {
+      "frame": {"x":0, "y":0, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bullet10.png": {
+      "frame": {"x":0, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bullet20.png": {
+      "frame": {"x":0, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    }
+  },
+
+  "meta": {
+    "image": "./bulletPattern.png"
+  }
+}

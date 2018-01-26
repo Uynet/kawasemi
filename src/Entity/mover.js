@@ -10,6 +10,7 @@ export default class Mover extends Entity{
     super(pos);
     this.vel = vel;
     this.acc = acc;
+    this.AIList = [];//AIの配列
     //this.dir; //enum dirrection
   }
 }

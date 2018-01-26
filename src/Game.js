@@ -26,8 +26,6 @@ export default class Game{
     Timer.Init();
     Util.Init();
     WeaponManager.Init();
-
-
     
     /*TODO どっかに移す*/
     MapData.CreateStage(0);
@@ -35,7 +33,6 @@ export default class Game{
     UIManager.Init();
     Game.pause = false;
     Game.select = false;
-
 
     /*TODO EffectManagerを作成*/
     dark = Art.SpriteFactory(Art.darkTexture);
