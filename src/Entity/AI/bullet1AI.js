@@ -28,7 +28,6 @@ export default class Bullet1AI{
         case ENTITY.WALL :
           /*衝突判定*/
           if(Collision.on(this.bullet,l).isHit){
-            l.hp-=this.bullet.atk;
             this.bullet.hp = 0;
           }
           break;

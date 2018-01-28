@@ -9,17 +9,20 @@ export default class Drawer{
   static Init(){
     this.app = new PIXI.Application(PIXI_WIDTH, PIXI_HEIGHT, {backgroundColor : 0x000000});
     this.Stage = this.app.stage;
-      /* コンテナ(レイヤー)は以下の通り
+      /* コンテナ(レイヤー)は以下の通り 下から優先して描画される
       /* Entityコンテナ:Entityを描画するレイヤ
        * Effectコンテナ:画面に適用するエフェクトを描画するレイヤ
+       * foreGround:手前に描画
        * UIコンテナ:UIを描画するレイヤ
        * */
     this.entityContainer = new PIXI.Container();//Entity
     this.effectContainer = new PIXI.Container();//エフェクト
+    this.foreGroundContainer = new PIXI.Container();//手前に表示する
     this.UIContainer = new PIXI.Container();//UI
 
     this.app.stage.addChild(this.entityContainer);
     this.app.stage.addChild(this.effectContainer);
+    this.app.stage.addChild(this.foreGroundContainer);
     this.app.stage.addChild(this.UIContainer);
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);
 
@@ -31,6 +34,8 @@ export default class Drawer{
     this.entityContainer.scale.y = this.magnification;
     this.UIContainer.scale.x = this.magnification;
     this.UIContainer.scale.y = this.magnification;
+    this.foreGroundContainer.scale.x = this.magnification;
+    this.foreGroundContainer.scale.y = this.magnification;
     this.effectContainer.scale.x = this.magnification;
     this.effectContainer.scale.y = this.magnification;
     $("#pixiview").append(this.Renderer.view);
@@ -55,6 +60,9 @@ export default class Drawer{
       case "FILTER":
         this.effectContainer.addChild(sprite);
         break;
+      case "FORE":
+        this.foreGroundContainer.addChild(sprite);
+        break;
     }
   }
 
@@ -70,6 +78,9 @@ export default class Drawer{
       case "FILTER":
         this.effectContainer.removeChild(sprite);
         break;
+      case "FORE":
+        this.foreGroundContainer.removeChild(sprite);
+        break;
     }
   }
 
@@ -81,6 +92,8 @@ export default class Drawer{
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
     this.entityContainer.x = Math.floor(toX);
     this.entityContainer.y = Math.floor(toY);
+    this.foreGroundContainer.x = Math.floor(toX);
+    this.foreGroundContainer.y = Math.floor(toY);
   }
 
   static Yakudo(mag){

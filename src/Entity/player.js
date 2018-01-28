@@ -91,6 +91,7 @@ export default class Player extends Mover{
     }
     /*shot*/
     if(Input.isKeyInput(KEY.X)){
+      this.weapon.Target(this);
       this.weapon.shot(this);
     }
     /*for debug*/

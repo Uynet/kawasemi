@@ -23,7 +23,7 @@ export default class Bullet1 extends Bullet{
     /*パラメータ*/
     this.hp = 1;//弾丸のHP 0になると消滅
     this.atk = 1;//攻撃力
-    this.length = 80;//これは武器がもつ?
+    this.length = 180;//これは武器がもつ?
     this.launchedPos = {x:pos.x,y:pos.y};//射出された座標 射程距離の計算に必要 
     this.type = ENTITY.BULLET;
     /*AI*/
