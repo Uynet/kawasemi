@@ -11,6 +11,10 @@
       "bullet20.png": {
       "frame": {"x":0, "y":32, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+      "bullet30.png": {
+      "frame": {"x":0, "y":48, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
   },
 

@@ -1,16 +1,31 @@
 import Bullet from '../Entity/bullet.js';
 import Bullet1 from '../Entity/bullet1.js';
+import Target from '../Entity/target.js';
 import EntityManager from '../Stage/entityManager.js';
 import Weapon from './weapon.js';
 import Art from '../art.js';
+import UIManager from '../UI/uiManager.js';
 
 export default class Weapon1 extends Weapon{
   /* ammunition : 弾薬数 */
   constructor(){
     super("1",10,10);
+    this.agi = 7;
     this.clock = 0;//最後に撃った時刻
-    this.speed = 10;
-    this.length = 120;//射程距離
+    this.speed = 8;
+    this.length = 180;//射程距離
+    this.target = {x:-999,y:-999};//照準
+  }
+  /*一番近い敵に照準をあわせる*/
+  Target(player){
+    for(let l of EntityManager.enemyList){
+      if(Math.abs(l.pos.x - player.pos.x) < 100){
+        //座標系に注意
+        player.arg = Math.atan((l.pos.y-player.pos.y)/(l.pos.x-player.pos.x));
+        this.target = l.pos;
+      }
+    }
+    EntityManager.target.pos = this.target;
   }
   shot(player){
     //最後に撃ってからclockまで停止
