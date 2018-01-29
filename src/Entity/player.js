@@ -96,7 +96,6 @@ export default class Player extends Mover{
     }
     /*for debug*/
     if(Input.isKeyInput(KEY.SP)){
-      Drawer.Yakudo();
     }
   }
 
