@@ -32,7 +32,8 @@ export default class Game{
     /*for debug */
     UIManager.Init();
     Game.pause = false;
-    Game.select = false;
+    Game.select = false;//
+    Game.seq = false;//ステージ間遷移
 
     /*TODO EffectManagerを作成*/
     dark = Art.SpriteFactory(Art.darkTexture);
@@ -62,9 +63,15 @@ export default class Game{
         Drawer.removeContainer(dark,"FILTER");
       }
     }
+    if(Input.isKeyClick(KEY.SP)){
+      Game.seq = true;
+    }
+  }
+  static RebuildStage(){
+    MapData.DeleteStage();
   }
 
-  static Update(){
+  static UpdateStage(){
     Game.Input();
     /*
      * 各Entityの位置の更新
@@ -91,7 +98,12 @@ export default class Game{
     switch(Scene.state){
       /*更新*/
       case STATE.STAGE :
-        Game.Update();
+        if(!Game.seq){
+          Game.UpdateStage();
+        }else{
+          Game.RebuildStage();
+          Game.seq = false;
+        }
         break;
       default :
         console.warn("unknown state");

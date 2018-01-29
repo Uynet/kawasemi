@@ -38,6 +38,10 @@ export default class EntityManager{
     this.entityList.splice(i,1);
 
     switch(entity.type){
+      case ENTITY.PLAYER :
+        this.player = null;
+        Drawer.removeContainer(entity.sprite,"ENTITY");
+        break;
       case ENTITY.ENEMY :
         let i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
