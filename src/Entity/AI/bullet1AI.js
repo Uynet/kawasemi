@@ -39,11 +39,9 @@ export default class Bullet1AI{
     this.collision();
     this.Phisics();
     /*observer*/
-    if(this.bullet.hp<=0){
-      EntityManager.removeEntity(this.bullet);
-    }
-    //飛行距離判定
-    if(Util.distance(this.bullet.pos , this.bullet.launchedPos) > this.bullet.length){
+    //HP || 飛行距離
+    if(this.bullet.hp<=0 ||
+      Util.distance(this.bullet.pos , this.bullet.launchedPos) > this.bullet.length){
       EntityManager.removeEntity(this.bullet);
     }
     this.bullet.sprite.position = this.bullet.pos;

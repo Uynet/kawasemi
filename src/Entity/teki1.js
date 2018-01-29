@@ -22,7 +22,6 @@ export default class Teki1 extends Enemy{
     this.addAI(new TestAI(this));
     this.atk = ATK_TEKI1;
   }
-
   Hurt(){
     /*衝突判定*/
     if(Collision.on(this,EntityManager.player).isHit){
@@ -30,7 +29,6 @@ export default class Teki1 extends Enemy{
       UIManager.HP.Bar();
     }
   }
-
   //moverが持つ
   UpdatePosition(){
     this.pos.x += this.vel.x;
