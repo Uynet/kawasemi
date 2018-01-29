@@ -60,6 +60,11 @@ export default class MapData{
   }
 
   /*現在開かれているステージを削除*/
-  DeleteStage(){
+  static DeleteStage(){
+    while(EntityManager.entityList.length > 0){
+      EntityManager.removeEntity(EntityManager.entityList[0]);
+    }
+    MapData.CreateStage(1);
   }
+
 }
