@@ -18,10 +18,12 @@ export default class Weapon1 extends Weapon{
   }
   /*一番近い敵に照準をあわせる*/
   Target(player){
+    this.target = {x:-999,y:-999};//照準
     for(let l of EntityManager.enemyList){
       if(Math.abs(l.pos.x - player.pos.x) < 100){
         //座標系に注意
         player.arg = Math.atan((l.pos.y-player.pos.y)/(l.pos.x-player.pos.x));
+        if(player.pos.x > l.pos.x ) player.arg += Math.PI;
         this.target = l.pos;
       }
     }
