@@ -24,10 +24,18 @@ export default class EntityManager{
       case ENTITY.TARGET :
         this.target = entity;
         Drawer.addContainer(entity.sprite,"FORE");
-        cl(entity);
+        break;
+      case ENTITY.WALL :
+        Drawer.addContainer(entity.sprite,"ENTITY");
+        break;
+      case ENTITY.GOAL :
+        Drawer.addContainer(entity.sprite,"ENTITY");
         break;
       default : 
+        if(entity.type!="BULLET"){
+        }
         Drawer.addContainer(entity.sprite,"ENTITY");
+
     }
     this.entityList.push(entity); 
   }
@@ -50,7 +58,12 @@ export default class EntityManager{
       case ENTITY.TARGET :
         Drawer.removeContainer(entity.sprite,"FORE");
         break;
+      case ENTITY.WALL :
+        Drawer.removeContainer(entity.sprite,"ENTITY");
+        break;
       default :
+        if(entity.type!="BULLET"){
+        }
         Drawer.removeContainer(entity.sprite,"ENTITY");
     }
   }

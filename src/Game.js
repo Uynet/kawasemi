@@ -27,14 +27,15 @@ export default class Game{
     Util.Init();
     WeaponManager.Init();
     
-    /*TODO どっかに移す*/
-    MapData.CreateStage(0);
     /*for debug */
     UIManager.Init();
     Game.pause = false;
     Game.select = false;//
     Game.seq = false;//ステージ間遷移
+    Game.stage = 0;//現在のステージ番号
 
+    /*TODO どっかに移す*/
+    MapData.CreateStage(Game.stage);
     /*TODO EffectManagerを作成*/
     dark = Art.SpriteFactory(Art.darkTexture);
 
@@ -101,6 +102,7 @@ export default class Game{
         if(!Game.seq){
           Game.UpdateStage();
         }else{
+          Game.stage++;
           Game.RebuildStage();
           Game.seq = false;
         }

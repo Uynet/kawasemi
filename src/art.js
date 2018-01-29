@@ -4,8 +4,6 @@ export default class Art{
   static Load(resources){
     /*Entity*/
     //cl(PIXI.utils.TextureCache);
-    this.wallTexture = PIXI.utils.TextureCache["src/resource/img/wall.png"];
-    this.teki3Texture = PIXI.utils.TextureCache["src/resource/img/teki3.png"];
     /*Effect*/
     this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
 
@@ -44,7 +42,14 @@ export default class Art{
       PIXI.Texture.fromFrame('bullet10.png'),
       PIXI.Texture.fromFrame('bullet20.png'),
       PIXI.Texture.fromFrame('bullet30.png')//Target
-    ]
+    ];
+    this.enemyPattern = [
+      PIXI.Texture.fromFrame('enemy00.png')
+    ];
+    this.wallPattern = [
+      PIXI.Texture.fromFrame('wall00.png'),
+      PIXI.Texture.fromFrame('wall01.png')
+    ];
   }
 
   static async LoadTexture(){
@@ -53,8 +58,8 @@ export default class Art{
       .add('pattern','src/resource/img/playerPattern.json')
       .add('pattern2','src/resource/img/UIPattern.json')
       .add('pattern3','src/resource/img/bulletPattern.json')
-      .add('src/resource/img/wall.png')
-      .add('src/resource/img/teki3.png')
+      .add('pattern4','src/resource/img/enemyPattern.json')
+      .add('pattern5','src/resource/img/wallPattern.json')
       .add('src/resource/effect/dark.png')
       .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
   }

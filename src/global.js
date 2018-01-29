@@ -44,7 +44,8 @@ const TILE = {
   SPACE : 0,
   WALL :1,
   PLAYER : 2,
-  ENEMY : 3
+  ENEMY : 3,
+  GOAL : 4
 }
 
 /*UI*/

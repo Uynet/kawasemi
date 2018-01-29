@@ -4,6 +4,7 @@ import Wall from '../Entity/wall.js'
 import Mover from '../Entity/mover.js'
 import Player from '../Entity/player.js'
 import Teki1 from '../Entity/teki1.js'
+import Goal from '../Entity/goal.js'
 import Game from '../Game.js'
 
 /*マップデータ*/
@@ -51,6 +52,9 @@ export default class MapData{
           case TILE.ENEMY :
             EntityManager.addEntity(new Teki1({x:16*x,y:16*y}));
             break;
+          case TILE.GOAL :
+            EntityManager.addEntity(new Goal({x:16*x,y:16*y}));
+            break;
           default : 
             console.warn("タイルセットに未実装のチップが使用されています");
         }
@@ -64,7 +68,7 @@ export default class MapData{
     while(EntityManager.entityList.length > 0){
       EntityManager.removeEntity(EntityManager.entityList[0]);
     }
-    MapData.CreateStage(1);
+    MapData.CreateStage(Game.stage);
   }
 
 }
