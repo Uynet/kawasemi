@@ -1,0 +1,11 @@
+{
+  "frames": {
+    "enemy00.png": {
+      "frame": {"x":0, "y":0, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    }
+  },
+  "meta": {
+    "image": "./enemyPattern.png"
+  }
+}
