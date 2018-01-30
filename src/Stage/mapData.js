@@ -22,11 +22,11 @@ export default class MapData{
       let xhr = new XMLHttpRequest();
       xhr.open('GET','src/resource/map/stage'+stageNo+'.json',true);
       xhr.onload = ()=>{
-        let jsonObj = JSON.parse(xhr.responseText);
+        this.jsonObj = JSON.parse(xhr.responseText);
         //BackGroundの読み込み
-        this.data = jsonObj.layers[0].data;
-        this.width = jsonObj.layers[0].width;
-        this.height = jsonObj.layers[0].height;
+        this.data = this.jsonObj.layers[0].data;
+        this.width = this.jsonObj.layers[0].width;
+        this.height = this.jsonObj.layers[0].height;
         resolve();
       }
       xhr.send(null);
@@ -36,13 +36,13 @@ export default class MapData{
 
   static async CreateStage(stageNo){
     await this.Load(stageNo);
+    let tileType = this.jsonObj.tilesets[0].tileproperties;
+    cl(this.jsonObj.tilesets[0]);
 
     for(let y = 0;y<this.height;y++){
       for(let x = 0;x<this.width;x++){
-        switch(this.data[this.width*y + x]){
-          case TILE.SPACE :
-            /*nothing to do*/
-            break;
+        if(this.data[this.width*y + x] == 0)continue;
+        switch(tileType[this.data[this.width*y + x]-1].type){
           case TILE.WALL :
             EntityManager.addEntity(new Wall({x:16*x,y:16*y}));
             break;
