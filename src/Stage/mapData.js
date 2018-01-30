@@ -6,6 +6,7 @@ import Player from '../Entity/player.js'
 import Teki1 from '../Entity/teki1.js'
 import Goal from '../Entity/goal.js'
 import Game from '../Game.js'
+import Art from '../art.js'
 
 /*マップデータ*/
 export default class MapData{
@@ -37,14 +38,17 @@ export default class MapData{
   static async CreateStage(stageNo){
     await this.Load(stageNo);
     let tileType = this.jsonObj.tilesets[0].tileproperties;
-    cl(this.jsonObj.tilesets[0]);
+    let entity;
+    let ID;//tiledに対応漬けられているID
 
     for(let y = 0;y<this.height;y++){
       for(let x = 0;x<this.width;x++){
-        if(this.data[this.width*y + x] == 0)continue;
+        ID = this.data[this.width*y + x]-1;
+        if(ID == -1)continue;//SPACE
         switch(tileType[this.data[this.width*y + x]-1].type){
           case TILE.WALL :
-            EntityManager.addEntity(new Wall({x:16*x,y:16*y}));
+            entity = new Wall({x:16*x,y:16*y},MapData.WallTile(ID));
+            EntityManager.addEntity(entity);
             break;
           case TILE.PLAYER :
             EntityManager.addEntity(new Player({x:16*x,y:16*y}));
@@ -70,5 +74,21 @@ export default class MapData{
     }
     MapData.CreateStage(Game.stage);
   }
-
+  //壁タイルの対応
+  //タイルIDを渡すとテクスチャを返す
+  //やばい
+  static WallTile(i){
+    switch(i){
+      case 52:return Art.wallPattern[13];
+      case 53:return Art.wallPattern[14];
+      case 54:return Art.wallPattern[15];
+      case 60:return Art.wallPattern[20];
+      case 62:return Art.wallPattern[22];
+      case 68:return Art.wallPattern[27];
+      case 69:return Art.wallPattern[28];
+      case 70:return Art.wallPattern[29];
+  }
+    console.warn(i);
+    return Art.wallPattern[0];
+  }
 }

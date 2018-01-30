@@ -6,10 +6,11 @@ import Box from '../Collision/box.js';
 
 
 export default class Wall extends Entity{
-  constructor(pos){
+  constructor(pos,tex){
     super(pos);
     this.type = ENTITY.WALL;
-    this.sprite = Art.SpriteFactory(Art.wallPattern[0]);
+    this.tex = tex
+    this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
   }
