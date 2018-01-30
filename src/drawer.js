@@ -26,8 +26,7 @@ export default class Drawer{
     this.app.stage.addChild(this.UIContainer);
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);
 
-    /*拡大方式をニアレストネイバーに*/
-    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+
     /*拡大率*/
     this.magnification = 2;
     this.entityContainer.scale.x = this.magnification;

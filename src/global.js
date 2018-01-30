@@ -27,6 +27,7 @@ const KEY = {
 /*State*/ 
 const STATE = {
   STAGE : 0,
+  TITLE : 2,
   PAUSE : 1
 }
 

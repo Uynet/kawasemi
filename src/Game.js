@@ -48,8 +48,6 @@ export default class Game{
   }
 
   static Input(){
-    if(Input.isKeyClick(KEY.SP)){
-    }
     /*ポーズ */
     if(Input.isKeyClick(KEY.C)){
       Game.pause = !Game.pause;
@@ -64,12 +62,13 @@ export default class Game{
         Drawer.removeContainer(dark,"FILTER");
       }
     }
-    if(Input.isKeyClick(KEY.SP)){
-      Game.seq = true;
-    }
   }
   static RebuildStage(){
     MapData.DeleteStage();
+  }
+
+  static UpdateTitle(){
+    cl("pe");
   }
 
   static UpdateStage(){
@@ -98,6 +97,12 @@ export default class Game{
 
     switch(Scene.state){
       /*更新*/
+      case STATE.TITLE :
+        Game.UpdateTitle();
+        if(Input.isKeyClick(KEY.SP)){
+          Scene.state = STATE.STAGE;
+        }
+        break;
       case STATE.STAGE :
         if(!Game.seq){
           Game.UpdateStage();
