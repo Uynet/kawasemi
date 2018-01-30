@@ -7,7 +7,128 @@
       "wall01.png": {
       "frame": {"x":16, "y":0, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+
+       "wall20.png": {
+      "frame": {"x":0, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall21.png": {
+      "frame": {"x":16, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall22.png": {
+      "frame": {"x":32, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall23.png": {
+      "frame": {"x":48, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall24.png": {
+      "frame": {"x":64, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall25.png": {
+      "frame": {"x":80, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall26.png": {
+      "frame": {"x":96, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+
+
+        "wall60.png": {
+      "frame": {"x":0, "y":96, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall61.png": {
+      "frame": {"x":16, "y":96, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall62.png": {
+      "frame": {"x":32, "y":96, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall63.png": {
+      "frame": {"x":48, "y":96, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall64.png": {
+      "frame": {"x":64, "y":96, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall65.png": {
+      "frame": {"x":80, "y":96, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall66.png": {
+      "frame": {"x":96, "y":96, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+
+
+        "wall70.png": {
+      "frame": {"x":0, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall71.png": {
+      "frame": {"x":16, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall72.png": {
+      "frame": {"x":32, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall73.png": {
+      "frame": {"x":48, "y":122, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall74.png": {
+      "frame": {"x":64, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall75.png": {
+      "frame": {"x":80, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall76.png": {
+      "frame": {"x":96, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+
+        "wall80.png": {
+      "frame": {"x":0, "y":128, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall81.png": {
+      "frame": {"x":16, "y":128, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall82.png": {
+      "frame": {"x":32, "y":128, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall83.png": {
+      "frame": {"x":48, "y":128, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall84.png": {
+      "frame": {"x":64, "y":128, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall85.png": {
+      "frame": {"x":80, "y":128, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall86.png": {
+      "frame": {"x":96, "y":128, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
+
+
+
   },
   "meta": {
     "image": "./wallPattern.png"

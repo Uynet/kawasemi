@@ -48,7 +48,35 @@ export default class Art{
     ];
     this.wallPattern = [
       PIXI.Texture.fromFrame('wall00.png'),
-      PIXI.Texture.fromFrame('wall01.png')
+      PIXI.Texture.fromFrame('wall01.png'),
+      PIXI.Texture.fromFrame('wall20.png'),
+      PIXI.Texture.fromFrame('wall21.png'),
+      PIXI.Texture.fromFrame('wall22.png'),
+      PIXI.Texture.fromFrame('wall23.png'),
+      PIXI.Texture.fromFrame('wall24.png'),
+      PIXI.Texture.fromFrame('wall25.png'),
+      PIXI.Texture.fromFrame('wall26.png'),
+      PIXI.Texture.fromFrame('wall60.png'),
+      PIXI.Texture.fromFrame('wall61.png'),
+      PIXI.Texture.fromFrame('wall62.png'),
+      PIXI.Texture.fromFrame('wall63.png'),
+      PIXI.Texture.fromFrame('wall64.png'),
+      PIXI.Texture.fromFrame('wall65.png'),
+      PIXI.Texture.fromFrame('wall66.png'),
+      PIXI.Texture.fromFrame('wall70.png'),
+      PIXI.Texture.fromFrame('wall71.png'),
+      PIXI.Texture.fromFrame('wall72.png'),
+      PIXI.Texture.fromFrame('wall73.png'),
+      PIXI.Texture.fromFrame('wall74.png'),
+      PIXI.Texture.fromFrame('wall75.png'),
+      PIXI.Texture.fromFrame('wall76.png'),
+      PIXI.Texture.fromFrame('wall80.png'),
+      PIXI.Texture.fromFrame('wall81.png'),
+      PIXI.Texture.fromFrame('wall82.png'),
+      PIXI.Texture.fromFrame('wall83.png'),
+      PIXI.Texture.fromFrame('wall84.png'),
+      PIXI.Texture.fromFrame('wall85.png'),
+      PIXI.Texture.fromFrame('wall86.png'),
     ];
   }
 
