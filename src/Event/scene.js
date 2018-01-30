@@ -2,7 +2,7 @@
 export default class Scene{
   static Init(){
     this.stack = [];
-    this.state = STATE.STAGE;
+    this.state = STATE.TITLE;
   }
 
   static ChangeState(newState){
