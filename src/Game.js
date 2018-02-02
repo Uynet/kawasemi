@@ -3,6 +3,7 @@ import MapData from './Stage/mapData.js';
 import Drawer from './drawer.js';
 import Art from './art.js';
 import EventManager from './Event/eventmanager.js';
+import StageInEvent from './Event/stageInEvent.js';
 import Scene from './Event/scene.js';
 import Timer from './timer.js';
 import UIManager from './UI/uiManager.js';
@@ -33,6 +34,7 @@ export default class Game{
     Game.select = false;//
     Game.seq = false;//ステージ間遷移
     Game.stage = 0;//現在のステージ番号
+    //Game.state = new Scene();
 
     /*TODO どっかに移す*/
     MapData.CreateStage(Game.stage);
@@ -64,11 +66,11 @@ export default class Game{
     }
   }
   static RebuildStage(){
-    MapData.DeleteStage();
+    //stageResetEvent();
+    MapData.RebuildStage();
   }
 
   static UpdateTitle(){
-    cl("pe");
   }
 
   static UpdateStage(){
@@ -83,24 +85,25 @@ export default class Game{
        UIManager.Update();
      }
 
-     /*イベントの実行*/
-     /*TODO yield*/
-     while(EventManager.eventList.length > 0){
-       EventManager.eventList.pop().Do();
-     }
 
      Timer.IncTime();
   }
 
   static Run(){
     requestAnimationFrame(Game.Run);
+     /*イベントの実行*/
+     /*TODO yield*/
+     while(EventManager.eventList.length > 0){
+       EventManager.eventList.pop().Do();
+     }
 
     switch(Scene.state){
       /*更新*/
       case STATE.TITLE :
         Game.UpdateTitle();
         if(Input.isKeyClick(KEY.SP)){
-          Scene.state = STATE.STAGE;
+          let stageInEvent = new StageInEvent();
+          EventManager.PushEvent(stageInEvent);
         }
         break;
       case STATE.STAGE :

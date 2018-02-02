@@ -7,7 +7,7 @@ import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
 import TestAI from './AI/testAI.js';
 import UIManager from '../UI/uiManager.js'
-
+import Timer from '../timer.js';
 
 const ATK_TEKI1 = 1;
 
@@ -25,12 +25,13 @@ export default class Teki1 extends Enemy{
   Hurt(){
     /*衝突判定*/
     if(Collision.on(this,EntityManager.player).isHit){
-      EntityManager.player.hp-=this.atk;
-      UIManager.HP.Bar();
+      EntityManager.player.Damage(-this.atk);
     }
   }
   //moverが持つ
-  UpdatePosition(){
+  Physics(){
+    this.vel.x += this.acc.x;
+    this.vel.y += this.acc.y;
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
   }
@@ -40,7 +41,7 @@ export default class Teki1 extends Enemy{
     for (let AI of this.AIList){
       AI.Do();
     }
-    this.UpdatePosition();
+    this.Physics();
     this.sprite.position = this.pos;
   }
 }

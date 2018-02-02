@@ -7,14 +7,14 @@ import Art from '../art.js';
 import UIManager from '../UI/uiManager.js';
 
 export default class Weapon1 extends Weapon{
-  /* ammunition : 弾薬数 */
   constructor(){
     super("1",10,10);
-    this.agi = 7;
     this.clock = 0;//最後に撃った時刻
-    this.speed = 8;
-    this.length = 180;//射程距離
     this.target = {x:-999,y:-999};//照準
+    /*parameter*/
+    this.agi = 10;
+    this.speed = 6;
+    this.length = 180;//射程距離
   }
   /*一番近い敵に照準をあわせる*/
   Target(player){
