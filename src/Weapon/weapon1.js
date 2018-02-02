@@ -12,10 +12,10 @@ export default class Weapon1 extends Weapon{
     super("1");
     /*基本情報*/
     this.clock = 0;//最後に撃った時刻
-      this.targetList = [];//targetのリスト
+    this.targetList = [];//targetのリスト
     /*パラメータ*/
     this.agi = 10;//間隔
-      this.speed = 6;//弾速
+    this.speed = 6;//弾速
     this.length = 180;//射程距離
   }
   /*向いてる方向+-π/8の中で近い敵に照準をあわせる*/
@@ -31,9 +31,6 @@ export default class Weapon1 extends Weapon{
         if(this.targetList.length == 0 ||
           //既にロックオンされている敵より近ければ
           Util.distance(l.pos , player.pos) < Util.distance(this.targetList[0].pos,player.pos)){
-          //方向を指定して
-          player.arg = Math.atan((l.pos.y-player.pos.y)/(l.pos.x-player.pos.x));
-        if(player.pos.x > l.pos.x ) player.arg += Math.PI;
         //今のロック先を解除して
         if(this.targetList.length!= 0){
           EntityManager.removeEntity(this.targetList[0]);
@@ -46,7 +43,13 @@ export default class Weapon1 extends Weapon{
         }
       }
     }
-    target = void 0;
+    if(this.targetList.length == 1){
+      //lockしていた敵が消えたら
+        //方向を指定
+        player.arg = Math.atan((this.targetList[0].pos.y-player.pos.y)/(this.targetList[0].pos.x-player.pos.x));
+        if(player.pos.x > this.targetList[0].pos.x ) player.arg += Math.PI;
+    }
+    target = undefined;
   }
   shot(player){
     //最後に撃ってからclockまで停止
@@ -57,6 +60,7 @@ export default class Weapon1 extends Weapon{
           x: vi * Math.cos(player.arg),
           y: vi * Math.sin(player.arg)
         }
+        /* ■ SoundEffect : shot */
         //bulletの出現位置
         let p = {
           x: player.pos.x + 5 * Math.cos(player.arg),

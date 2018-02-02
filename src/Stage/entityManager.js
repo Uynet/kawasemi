@@ -53,6 +53,8 @@ export default class EntityManager{
       case ENTITY.ENEMY :
         i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
+    //メモリ解放?
+    entity.pos.x = 9999;
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
       case ENTITY.EFFECT :
@@ -67,9 +69,8 @@ export default class EntityManager{
         if(entity.type!="BULLET"){
         }
         Drawer.removeContainer(entity.sprite,"ENTITY");
+        break;
     }
-    //メモリ解放?
-    entity = void 0;
   }
   /*Entityの更新*/
   static Update(){
