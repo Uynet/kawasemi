@@ -11,18 +11,20 @@ import Bullet from './bullet.js';
 
 /*bullet1クラス*/
 export default class Target extends Bullet{
-  constructor(pos){
-    super(pos,{x:0,y:0},{x:0,y:0});
+  constructor(pos,enemy){
+    super(pos,{x:0,y:0});
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
     /*スプライト*/
     this.tex = Art.bulletPattern[3];
     this.sprite = Art.SpriteFactory(this.tex);
-    this.sprite.position = pos;
-    /*コライダ*/
+    this.sprite.position = this.pos;
     /*パラメータ*/
-    this.type = ENTITY.TARGET;
+    this.lock = enemy;//ロックしているenemyの情報
   }
 
   Update(){
+    //これいる？
     this.sprite.position = this.pos;
   }
 }

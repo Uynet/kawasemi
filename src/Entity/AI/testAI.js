@@ -12,29 +12,21 @@ export default class TestAI{
 
   Collision(){
     /*TODO リスト分割 */
-    let EntityList = EntityManager.entityList;
+    for(let l of EntityManager.wallList.concat(EntityManager.enemyList)){
+      if(l == this.enemy) continue;
+      /*衝突判定*/
+      if(Collision.on(this.enemy,l).isHit){
+        /* 衝突応答*/
 
-    for(let l of EntityList){
-      switch(l.type){
-        case ENTITY.ENEMY :
-          if(l == this.enemy) break;
-        case ENTITY.WALL :
-          /*衝突判定*/
-          if(Collision.on(this.enemy,l).isHit){
-            /* 衝突応答*/
-            /*TODO Colクラスに核*/
-
-            /*速度*/
-            if(Collision.on(this.enemy,l).n.x != 0) this.enemy.vel.x = 0;
-            if(Collision.on(this.enemy,l).n.y != 0) this.enemy.vel.y *= -0.3;
-            /*押し出し*/
-            while(Collision.on(this.enemy,l).isHit){
-              this.enemy.pos.x += Collision.on(this.enemy,l).n.x/5;
-              this.enemy.pos.y += Collision.on(this.enemy,l).n.y/5;
-            }
-            /*note : now isHit == false*/
-          }
-          break;
+        /*速度*/
+        if(Collision.on(this.enemy,l).n.x != 0) this.enemy.vel.x = 0;
+        if(Collision.on(this.enemy,l).n.y != 0) this.enemy.vel.y *= -0.3;
+        /*押し出し*/
+        while(Collision.on(this.enemy,l).isHit){
+          this.enemy.pos.x += Collision.on(this.enemy,l).n.x/5;
+          this.enemy.pos.y += Collision.on(this.enemy,l).n.y/5;
+        }
+        /*note : now isHit == false*/
       }
     }
   }
@@ -44,7 +36,7 @@ export default class TestAI{
     this.enemy.vel.x = Math.min(this.enemy.vel.x,1);
     this.enemy.acc.y = 0.1;
     if(Timer.timer % (10 + Math.floor(100*Math.random(1))) == 0) this.enemy.vel.y = -3;
-    
+
     /*observer*/
     if(this.enemy.hp<=0){
       EntityManager.removeEntity(this.enemy);

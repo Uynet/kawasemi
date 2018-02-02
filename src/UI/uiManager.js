@@ -44,7 +44,7 @@ import EntityManager from '../Stage/entityManager.js';
      }
         /*セレクトボックス*/
         this.selectBox.sprite.position.x = -32;
-        this.selectBox.sprite.position.y = WICON_Y-2;
+        this.selectBox.sprite.position.y = WICON_Y-3;
         /*装備中の武器*/
         this.weaponEquip.sprite.position.x = 8;
         this.weaponEquip.sprite.position.y = 6;

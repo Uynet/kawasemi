@@ -6,8 +6,8 @@ import Box from '../Collision/box.js';
 
 
 export default class Enemy extends Mover{
-  constructor(pos,vel,acc){
-    super(pos,vel,acc);
+  constructor(pos,vel){
+    super(pos,vel);
     this.type = ENTITY.ENEMY;
     this.hp = 1;
     this.AIList = [];//AIの配列
