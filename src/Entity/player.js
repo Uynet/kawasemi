@@ -23,7 +23,7 @@ const FLICTION = 0.7;
 const POP_PLAYER = -1;
 /*アニメーションのインターバル*/
 const ANIM_RUN = 3;
-const ANIM_WAIT = 6;
+const ANIM_WAIT = 7;
 
 const VX_MAX = 3;
 const VY_MAX = 7;
@@ -168,11 +168,7 @@ export default class Player extends Mover{
   /* 衝突判定 */
   collision(){
     /*TODO リスト分割 */
-    let EntityList = EntityManager.entityList;
-
-    for(let l of EntityList){
-      switch(l.type){
-        case ENTITY.WALL :
+    for(let l of EntityManager.wallList){
           /*衝突判定*/
           if(Collision.on(this,l).isHit){
             /* 衝突応答*/
@@ -192,8 +188,6 @@ export default class Player extends Mover{
             }
             /*note : now isHit == false*/
           }
-          break;
-      }
     }
   }
   Physics(){

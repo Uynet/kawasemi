@@ -37,7 +37,7 @@ const ENTITY = {
   WALL : 1,
   ENEMY : 2,
   BULLET : 3,
-  TARGET : 4
+  EFFECT : 4
 }
 
 /*MapChip*/

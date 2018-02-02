@@ -6,8 +6,8 @@ export default class EntityManager{
   static Init(){
     this.entityList = [];//全Entityのリスト
     this.enemyList = [];//敵のリスト
+    this.wallList = [];//壁のリスト
     this.player;//プレイヤーのインスタンス
-    this.addEntity(new Target({x:-999,y:-999}));//targetのインスタンス
   }
   /*Entityをリストに登録*/
   static addEntity(entity){
@@ -21,11 +21,11 @@ export default class EntityManager{
         this.enemyList.push(entity);
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
-      case ENTITY.TARGET :
-        this.target = entity;
+      case ENTITY.EFFECT :
         Drawer.addContainer(entity.sprite,"FORE");
         break;
       case ENTITY.WALL :
+        this.wallList.push(entity);
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
       case ENTITY.GOAL :
@@ -40,7 +40,7 @@ export default class EntityManager{
     this.entityList.push(entity); 
   }
 
-  /*Entityをリストから削除*/
+  /*Entityをリストから削除しdeleteする*/
   static removeEntity(entity){
     let i = this.entityList.indexOf(entity);
     this.entityList.splice(i,1);
@@ -51,14 +51,16 @@ export default class EntityManager{
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
       case ENTITY.ENEMY :
-        let i = this.enemyList.indexOf(entity);
+        i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
-      case ENTITY.TARGET :
+      case ENTITY.EFFECT :
         Drawer.removeContainer(entity.sprite,"FORE");
         break;
       case ENTITY.WALL :
+        i = this.enemyList.indexOf(entity);
+        this.wallList.splice(i,1);
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
       default :
@@ -66,6 +68,8 @@ export default class EntityManager{
         }
         Drawer.removeContainer(entity.sprite,"ENTITY");
     }
+    //メモリ解放?
+    entity = void 0;
   }
   /*Entityの更新*/
   static Update(){

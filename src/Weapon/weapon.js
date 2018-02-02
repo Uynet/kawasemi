@@ -5,10 +5,8 @@ export default class Weapon{
   /* 
    * ammunition : 弾薬数 
   /* agi : agility*/
-  constructor(name,ammunition,agi){
+  constructor(name){
     this.name = name;
-    this.ammunition = ammunition;
-    this.agi = agi;
   }
   shot(player){ }
 }

@@ -10,7 +10,7 @@ import Util from '../util.js';
 
 export default class Bullet extends Enemy{
   constructor(pos,vel){
-    super(pos,vel,{x:0,y:0});
+    super(pos,vel);
     /*パラメータ*/
     this.hp;//弾丸のHP 0になると消滅
     this.atk;//攻撃力

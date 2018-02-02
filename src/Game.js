@@ -21,7 +21,6 @@ let dark;
 export default class Game{
   static Init(){
     Drawer.Init();
-    Scene.Init();
     EventManager.Init();
     EntityManager.Init();
     Timer.Init();
@@ -34,7 +33,7 @@ export default class Game{
     Game.select = false;//
     Game.seq = false;//ステージ間遷移
     Game.stage = 0;//現在のステージ番号
-    //Game.state = new Scene();
+    Game.scene = new Scene();
 
     /*TODO どっかに移す*/
     MapData.CreateStage(Game.stage);
@@ -65,11 +64,6 @@ export default class Game{
       }
     }
   }
-  static RebuildStage(){
-    //stageResetEvent();
-    MapData.RebuildStage();
-  }
-
   static UpdateTitle(){
   }
 
@@ -84,9 +78,6 @@ export default class Game{
      if(Game.select){
        UIManager.Update();
      }
-
-
-     Timer.IncTime();
   }
 
   static Run(){
@@ -97,7 +88,7 @@ export default class Game{
        EventManager.eventList.pop().Do();
      }
 
-    switch(Scene.state){
+    switch(Game.scene.state){
       /*更新*/
       case STATE.TITLE :
         Game.UpdateTitle();
@@ -111,7 +102,7 @@ export default class Game{
           Game.UpdateStage();
         }else{
           Game.stage++;
-          Game.RebuildStage();
+          MapData.RebuildStage();
           Game.seq = false;
         }
         break;
@@ -120,6 +111,7 @@ export default class Game{
     }
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);
+    Timer.IncTime();
   }
 }
 
