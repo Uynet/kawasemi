@@ -7,23 +7,40 @@ export default class Art{
     /*Effect*/
     this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
     /*Pttern*/
+    /*forにして*/
     this.playerPattern = [
       PIXI.Texture.fromFrame('player00.png'),
       PIXI.Texture.fromFrame('player01.png'),
       PIXI.Texture.fromFrame('player02.png'),
       PIXI.Texture.fromFrame('player03.png'),
+      PIXI.Texture.fromFrame('player04.png'),
+      PIXI.Texture.fromFrame('player05.png'),
+      PIXI.Texture.fromFrame('player06.png'),
+      PIXI.Texture.fromFrame('player07.png'),
       PIXI.Texture.fromFrame('player10.png'),
       PIXI.Texture.fromFrame('player11.png'),
       PIXI.Texture.fromFrame('player12.png'),
-      PIXI.Texture.fromFrame('player12.png'),
+      PIXI.Texture.fromFrame('player13.png'),
+      PIXI.Texture.fromFrame('player14.png'),
+      PIXI.Texture.fromFrame('player15.png'),
+      PIXI.Texture.fromFrame('player16.png'),
+      PIXI.Texture.fromFrame('player17.png'),
       PIXI.Texture.fromFrame('player20.png'),
       PIXI.Texture.fromFrame('player21.png'),
       PIXI.Texture.fromFrame('player22.png'),
       PIXI.Texture.fromFrame('player23.png'),
+      PIXI.Texture.fromFrame('player24.png'),
+      PIXI.Texture.fromFrame('player25.png'),
+      PIXI.Texture.fromFrame('player26.png'),
+      PIXI.Texture.fromFrame('player27.png'),
       PIXI.Texture.fromFrame('player30.png'),
       PIXI.Texture.fromFrame('player31.png'),
       PIXI.Texture.fromFrame('player32.png'),
-      PIXI.Texture.fromFrame('player33.png')
+      PIXI.Texture.fromFrame('player33.png'),
+      PIXI.Texture.fromFrame('player34.png'),
+      PIXI.Texture.fromFrame('player35.png'),
+      PIXI.Texture.fromFrame('player36.png'),
+      PIXI.Texture.fromFrame('player37.png')
     ];
     this.UIPattern = [
       PIXI.Texture.fromFrame('weapon00.png'),
