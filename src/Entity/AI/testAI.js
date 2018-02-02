@@ -11,7 +11,7 @@ export default class TestAI{
   }
 
   Collision(){
-    /*TODO リスト分割 */
+    /*TODO 敵が潰された時にめり込むのでなんとかする*/
     for(let l of EntityManager.wallList.concat(EntityManager.enemyList)){
       if(l == this.enemy) continue;
       /*衝突判定*/
