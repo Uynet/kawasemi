@@ -21,6 +21,9 @@ const PLAYER_GRAVITY = 0.4;
 const PLAYER_HP = 100;
 const FLICTION = 0.7;
 const POP_PLAYER = -1;
+/*アニメーションのインターバル*/
+const ANIM_RUN = 3;
+const ANIM_WAIT = 6;
 
 const VX_MAX = 3;
 const VY_MAX = 7;
@@ -117,26 +120,37 @@ export default class Player extends Mover{
   Animation(){
     switch(this.state){
       case state.WAITING :
+        switch(this.dir){
+          case DIR.RIGHT :
+            this.spid = 16 + (Math.floor(Timer.timer/ANIM_WAIT))%4
+            break;
+          case DIR.LEFT :
+            this.spid = 20 + (Math.floor(Timer.timer/ANIM_WAIT))%4
+            break;
+          case DIR.UP :
+            this.spid = 24 + (Math.floor(Timer.timer/ANIM_WAIT))%4
+            break;
+          case DIR.DOWN :
+            this.spid = 28 + (Math.floor(Timer.timer/ANIM_WAIT))%4
+            break;
+        }
         break;
       case state.RUNNING :
         switch(this.dir){
           case DIR.RIGHT :
-            (this.isRun) ? this.spid = 0 + (Math.floor(Timer.timer/10))%4
-              : this.spid = 0;
+            this.spid = 0 + (Math.floor(Timer.timer/ANIM_RUN))%4
             break;
           case DIR.LEFT :
-            (this.isRun) ? this.spid = 4 + (Math.floor(Timer.timer/10))%4
-              : this.spid = 4;
+            this.spid = 4 + (Math.floor(Timer.timer/ANIM_RUN))%4
             break;
           case DIR.UP :
-            (this.isRun) ? this.spid = 8 + (Math.floor(Timer.timer/10))%4
-              : this.spid = 8;
+            this.spid = 8 + (Math.floor(Timer.timer/ANIM_RUN))%4
             break;
           case DIR.DOWN :
-            (this.isRun) ? this.spid = 12 + (Math.floor(Timer.timer/10))%4
-              : this.spid = 12;
+            this.spid = 12 + (Math.floor(Timer.timer/ANIM_RUN))%4
             break;
         }
+        break;
     }
     this.sprite.texture = this.pattern[this.spid];
   }
@@ -192,8 +206,9 @@ export default class Player extends Mover{
     if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
     if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
     if(this.vel.y > VY_MAX)this.vel.y = VY_MAX;
-    /*摩擦*/
-    if(this.isJump == false){
+    /*摩擦
+     * 地面にいる&&入力がない場合のみ有向*/
+    if(this.state == state.WAITING){
       this.vel.x *= FLICTION;
     }
     this.acc.x = 0;
