@@ -41,7 +41,10 @@ export default class Teki1 extends Enemy{
 
         /*速度*/
         if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-        if(Collision.on(this,l).n.y != 0) this.vel.y *= -0.3;
+        if(Collision.on(this,l).n.y != 0) {
+          this.isJump = false;
+          this.vel.y *= -0.3;
+        }
         /*押し出し*/
         while(Collision.on(this,l).isHit){
           this.pos.x += Collision.on(this,l).n.x/5;

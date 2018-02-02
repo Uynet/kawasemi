@@ -22,7 +22,7 @@ export default class Target extends Bullet{
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.lock = enemy;//ロックしているenemyの情報
+    this.enemy = enemy;//ロックしているenemyの情報
   }
 
   Update(){
