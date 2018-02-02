@@ -60,7 +60,10 @@ export default class Art{
       PIXI.Texture.fromFrame('bullet30.png')//Target
     ];
     this.enemyPattern = [
-      PIXI.Texture.fromFrame('enemy00.png')
+      PIXI.Texture.fromFrame('enemy00.png'),
+      PIXI.Texture.fromFrame('enemy01.png'),
+      PIXI.Texture.fromFrame('enemy02.png'),
+      PIXI.Texture.fromFrame('enemy03.png')
     ];
     this.wallPattern = [
       PIXI.Texture.fromFrame('wall00.png'),
