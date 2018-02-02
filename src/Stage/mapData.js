@@ -7,6 +7,7 @@ import Teki1 from '../Entity/teki1.js'
 import Goal from '../Entity/goal.js'
 import Game from '../Game.js'
 import Art from '../art.js'
+import Drawer from '../drawer.js';
 
 /*マップデータ*/
 export default class MapData{
@@ -64,7 +65,14 @@ export default class MapData{
         }
       }
     }
+    Drawer.ScrollSet(EntityManager.player.pos);
     return;
+  }
+
+  /*マップデータを消して作り直す*/
+  static RebuildStage(){
+    MapData.DeleteStage();
+    MapData.CreateStage(Game.stage);
   }
 
   /*現在開かれているステージを削除*/
@@ -72,7 +80,6 @@ export default class MapData{
     while(EntityManager.entityList.length > 0){
       EntityManager.removeEntity(EntityManager.entityList[0]);
     }
-    MapData.CreateStage(Game.stage);
   }
   //壁タイルの対応
   //タイルIDを渡すとテクスチャを返す

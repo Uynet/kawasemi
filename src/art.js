@@ -6,7 +6,6 @@ export default class Art{
     //cl(PIXI.utils.TextureCache);
     /*Effect*/
     this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
-
     /*Pttern*/
     this.playerPattern = [
       PIXI.Texture.fromFrame('player00.png'),

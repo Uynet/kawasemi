@@ -13,40 +13,49 @@ import Drawer from '../drawer.js';
 import Game from '../Game.js';
 import WeaponManager from '../Weapon/weaponManager.js';
 import Timer from '../timer.js';
+import UIManager from '../UI/uiManager.js';
 
-const JUMP_VEL = 7;//ジャンプ速度
-const RUN_VEL = 0.5;//はしり速度
-const PLAYER_GRAVITY = 0.3;
+const JUMP_VEL = 7;//ジャンプ力
+  const RUN_VEL = 0.5;//はしり速度
+const PLAYER_GRAVITY = 0.4;
 const PLAYER_HP = 100;
 const FLICTION = 0.7;
 const POP_PLAYER = -1;
 
 const VX_MAX = 3;
-const VY_MAX = 3;
+const VY_MAX = 7;
+
+let state = {
+  WAITING : 0,
+  RUNNING  : 1,
+  FALLING : 3
+}
+/*フラグと状態が同じものを意味しててキモい*/
 
 export default class Player extends Mover{
   constructor(pos){
     super(pos,VEC0,{x:0,y:0});
+    /*基本情報*/
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
+    this.initPos = this.pos;
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
-    this.sprite.position = this.pos ;
+    this.sprite.position = this.pos;
     /*パラメータ*/
     this.hp = PLAYER_HP;
     this.gravity = PLAYER_GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
-    /*フラグ*/
-    this.isAlive = true;//生きているか
-    this.isJump = false;//空中にいるか
-    this.isRun = false;//走っているか
     /*状態*/
+    this.state = state.WAITING;
     this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
     this.dir = DIR.RIGHT;//向き
+    /*フラグ*/
+    this.isJump = false;//空中にいるか
+    this.isRun = false;//走っているか
   }
-
   /*キー入力による移動*/
   Input(){
     /*ジャンプ*/
@@ -58,26 +67,31 @@ export default class Player extends Mover{
     }
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
+      this.state = state.RUNNING;
       this.dir = DIR.RIGHT;
       this.isRun = true;
       this.arg = 0;
       this.acc.x = RUN_VEL;
+      /*
       if(!this.isJump){
         this.isJump = true;
         this.vel.y = POP_PLAYER;
       }
+      */
     }
-
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
+      this.state = state.RUNNING;
       this.dir = DIR.LEFT;
       this.isRun = true;
       this.arg = Math.PI;
       this.acc.x = -RUN_VEL;
+      /*
       if(!this.isJump){
         this.isJump = true;
         this.vel.y = POP_PLAYER;
       }
+      */
     }
     /*上向き*/
     if(Input.isKeyInput(KEY.UP)){
@@ -101,23 +115,28 @@ export default class Player extends Mover{
 
   /*状態からアニメーションを行う*/
   Animation(){
-    switch(this.dir){
-      case DIR.RIGHT :
-        (this.isRun) ? this.spid = 0 + (Math.floor(Timer.timer/10))%4
-                     : this.spid = 0;
+    switch(this.state){
+      case state.WAITING :
         break;
-      case DIR.LEFT :
-        (this.isRun) ? this.spid = 4 + (Math.floor(Timer.timer/10))%4
-                     : this.spid = 4;
-        break;
-      case DIR.UP :
-        (this.isRun) ? this.spid = 8 + (Math.floor(Timer.timer/10))%4
-                     : this.spid = 8;
-        break;
-      case DIR.DOWN :
-        (this.isRun) ? this.spid = 12 + (Math.floor(Timer.timer/10))%4
-                     : this.spid = 12;
-        break;
+      case state.RUNNING :
+        switch(this.dir){
+          case DIR.RIGHT :
+            (this.isRun) ? this.spid = 0 + (Math.floor(Timer.timer/10))%4
+              : this.spid = 0;
+            break;
+          case DIR.LEFT :
+            (this.isRun) ? this.spid = 4 + (Math.floor(Timer.timer/10))%4
+              : this.spid = 4;
+            break;
+          case DIR.UP :
+            (this.isRun) ? this.spid = 8 + (Math.floor(Timer.timer/10))%4
+              : this.spid = 8;
+            break;
+          case DIR.DOWN :
+            (this.isRun) ? this.spid = 12 + (Math.floor(Timer.timer/10))%4
+              : this.spid = 12;
+            break;
+        }
     }
     this.sprite.texture = this.pattern[this.spid];
   }
@@ -126,7 +145,12 @@ export default class Player extends Mover{
   ChangeWeapon(name){
     WeaponManager.ChangeWeapon(this,name);
   }
-
+  /*ダメージ*/
+  /*負の値を入れる*/
+  Damage(atk){
+    this.hp+=atk;
+    UIManager.HP.Bar();
+  }
   /* 衝突判定 */
   collision(){
     /*TODO リスト分割 */
@@ -164,26 +188,33 @@ export default class Player extends Mover{
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
     this.vel.y += this.gravity;
+    //最大速度制限:
     if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
     if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
+    if(this.vel.y > VY_MAX)this.vel.y = VY_MAX;
+    /*摩擦*/
     if(this.isJump == false){
       this.vel.x *= FLICTION;
     }
     this.acc.x = 0;
 
+    if(this.vel.y > 1){
+      this.state = state.FALLING;
+    }
   }
 
   Update(){
     this.isRun = false;
+    this.state = state.WAITING; //何も入力がなければWAITINGとみなされる
     this.Input();//入力
     this.Physics();//物理
     this.collision();//衝突
     this.Animation();//状態から画像を更新
-    Drawer.ScrollOnPlayer(this);
+    Drawer.ScrollOn(this.pos);
 
     /*observer*/
     if(this.hp <= 0){
-      let restartEvent = new StageResetEvent(this);
+      let restartEvent = new StageResetEvent();
       EventManager.PushEvent(restartEvent);
     }
 

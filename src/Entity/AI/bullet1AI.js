@@ -40,7 +40,7 @@ export default class Bullet1AI{
     this.Phisics();
     /*observer*/
     //HP || 飛行距離
-    if(//this.bullet.hp<=0 ||
+    if(this.bullet.hp<=0 ||
       Util.distance(this.bullet.pos , this.bullet.launchedPos) > this.bullet.length){
       EntityManager.removeEntity(this.bullet);
     }

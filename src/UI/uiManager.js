@@ -19,9 +19,10 @@ import EntityManager from '../Stage/entityManager.js';
       */
     this.UIList = [];//UI全部のリスト
     this.WeaponIconList = [];//武器アイコンのリスト
-      this.selectBox;
+    this.selectBox;
     this.weaponEquip;
-         this.HP;
+    this.HP;
+    this.HPframe;
     /*各UIの初期化を行う
      * 一度初期化したUIを消す際には
      * ステージから外さず画面外にプールさせる*/
@@ -32,8 +33,28 @@ import EntityManager from '../Stage/entityManager.js';
     UIManager.addUI(new UIWeaponEquip("po"));//武器1のメインアイコン(?)
     UIManager.addUI(new UIHP("frame"));//HP
     UIManager.addUI(new UIHP("bar"));//HP
-
    }
+
+   /*ステージ中でのUI配置に変更*/
+   static SetStage(){
+     /*武器アイコン*/
+     for(let l of this.WeaponIconList){
+       l.sprite.position.x = -32;
+       l.sprite.position.y =  WICON_Y;
+     }
+        /*セレクトボックス*/
+        this.selectBox.sprite.position.x = -32;
+        this.selectBox.sprite.position.y = WICON_Y-2;
+        /*装備中の武器*/
+        this.weaponEquip.sprite.position.x = 8;
+        this.weaponEquip.sprite.position.y = 6;
+        /*HP*/
+        this.HP.sprite.position.x = 56;
+        this.HP.sprite.position.y = 6;
+        this.HPframe.sprite.position.x = 56;
+        this.HPframe.sprite.position.y = 6;
+   }
+
    /*WeaponIconのポップアップ*/
    static OpenWeapon(){
      for(let i = 0;i<this.WeaponIconList.length;i++){
@@ -52,7 +73,6 @@ import EntityManager from '../Stage/entityManager.js';
 
    /*UIをリストに登録*/
    static addUI(ui){
-     /*TODO リストの重複を排除*/
      this.UIList.push(ui); 
      switch (ui.type){
        //weapon icon
@@ -67,8 +87,14 @@ import EntityManager from '../Stage/entityManager.js';
        case UI_.WEQUIP : 
          this.weaponEquip = ui;
          break;
+       //selectbox
        case UI_.HP :
-         this.HP = ui;
+         if(ui.name == "bar") {
+           this.HP = ui;
+         }
+         else if(ui.name == "frame"){
+           this.HPframe = ui;
+         }
          break;
        default :
          console.warn(ui);

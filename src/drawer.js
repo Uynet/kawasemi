@@ -84,11 +84,22 @@ export default class Drawer{
   }
 
   /* プレイヤー中心にスクロール*/
-  static ScrollOnPlayer(player){
-    let centerX = this.magnification*(- player.pos.x-8 + 400/this.magnification);
-    let centerY = this.magnification*(- player.pos.y-8 + 300/this.magnification);
+  static ScrollOn(pos){
+    let centerX = this.magnification*(- pos.x-8 + 400/this.magnification);
+    let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
     let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
+    this.entityContainer.x = Math.floor(toX);
+    this.entityContainer.y = Math.floor(toY);
+    this.foreGroundContainer.x = Math.floor(toX);
+    this.foreGroundContainer.y = Math.floor(toY);
+  }
+  /*スクロール位置を一瞬で移動させる*/
+  static ScrollSet(pos){
+    let centerX = this.magnification*(- pos.x-8 + 400/this.magnification);
+    let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
+    let toX = this.entityContainer.x;
+    let toY = this.entityContainer.y;
     this.entityContainer.x = Math.floor(toX);
     this.entityContainer.y = Math.floor(toY);
     this.foreGroundContainer.x = Math.floor(toX);
