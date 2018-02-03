@@ -1,3 +1,4 @@
+'use strict'
 import Drawer from '../drawer.js';
 import Target from '../Entity/target.js';
 
@@ -53,9 +54,8 @@ export default class EntityManager{
       case ENTITY.ENEMY :
         i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
-    //メモリ解放?
-    entity.pos.x = 9999;
         Drawer.removeContainer(entity.sprite,"ENTITY");
+        entity = void 0;
         break;
       case ENTITY.EFFECT :
         Drawer.removeContainer(entity.sprite,"FORE");

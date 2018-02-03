@@ -12,7 +12,8 @@ export default class Weapon1 extends Weapon{
     super("1");
     /*基本情報*/
     this.clock = 0;//最後に撃った時刻
-    this.targetList = [];//targetのリスト
+    this.target;
+    this.isTargetOn = false;//照準が発生しているか
     /*パラメータ*/
     this.agi = 10;//間隔
     this.speed = 6;//弾速
@@ -21,35 +22,37 @@ export default class Weapon1 extends Weapon{
   /*向いてる方向+-π/8の中で近い敵に照準をあわせる*/
   Target(player){
     /*とりあえず全探索*/
-    let target;
     for(let l of EntityManager.enemyList){
       //既にロックオンされている敵はスキップ
-      if(this.targetList.length != 0 &&
-        l == this.targetList[0].enemy) continue;
+      if(this.isTargetOn &&
+        l == this.target.enemy) continue;
         //射程距離以内かつ
       if(Util.distance(l.pos, player.pos) < this.length){
-        if(this.targetList.length == 0 ||
           //既にロックオンされている敵より近ければ
-          Util.distance(l.pos , player.pos) < Util.distance(this.targetList[0].pos,player.pos)){
+        if(!this.isTargetOn ||
+          Util.distance(l.pos , player.pos) < Util.distance(this.target.pos,player.pos)){
         //今のロック先を解除して
-        if(this.targetList.length!= 0){
-          EntityManager.removeEntity(this.targetList[0]);
-          this.targetList.pop();
+        if(this.isTargetOn){
+          EntityManager.removeEntity(this.target);
         }
         //targetを追加する
-        target = new Target(l.pos,l);
-        this.targetList.push(target);
-        EntityManager.addEntity(target);
+        this.target = new Target(l);
+        EntityManager.addEntity(this.target);
+        this.isTargetOn = true;
         }
       }
     }
-    if(this.targetList.length == 1){
-      //lockしていた敵が消えたら
+    if(this.isTargetOn == true){
+      //lockしていた敵が消えたら消去
+      if(!this.target.enemy.isAlive){
+          EntityManager.removeEntity(this.target);
+          this.isTargetOn = false;
+      }else{
         //方向を指定
-        player.arg = Math.atan((this.targetList[0].pos.y-player.pos.y)/(this.targetList[0].pos.x-player.pos.x));
-        if(player.pos.x > this.targetList[0].pos.x ) player.arg += Math.PI;
+        player.arg = Math.atan((this.target.pos.y-player.pos.y)/(this.target.pos.x-player.pos.x));
+        if(player.pos.x > this.target.pos.x ) player.arg += Math.PI;
+      }
     }
-    target = undefined;
   }
   shot(player){
     //最後に撃ってからclockまで停止

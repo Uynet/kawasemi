@@ -10,10 +10,10 @@ import Util from '../util.js';
 import Bullet from './bullet.js';
 import Timer from '../timer.js';
 
-/*bullet1クラス*/
+/*Targetクラス*/
 export default class Target extends Bullet{
-  constructor(pos,enemy){
-    super(pos,{x:0,y:0});
+  constructor(enemy){
+    super(enemy.pos,{x:0,y:0});
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.frame = 0;
@@ -34,5 +34,6 @@ export default class Target extends Bullet{
     this.sprite.scale.y = 1.5 + 1/this.frame;
     this.sprite.position = {x:this.pos.x+8,y:this.pos.y+8};
     this.frame++;
+    if(this.enemy.pos.x > 9999) cl("草")
   }
 }
