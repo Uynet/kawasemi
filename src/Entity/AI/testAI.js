@@ -23,6 +23,7 @@ export default class TestAI{
 
     /*observer*/
     if(this.enemy.hp<=0){
+      this.enemy.isAlive = false
       EntityManager.removeEntity(this.enemy);
     }
   }

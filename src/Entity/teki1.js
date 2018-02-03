@@ -29,6 +29,7 @@ export default class Teki1 extends Enemy{
     this.atk = ATK_TEKI1;
     /*フラグ*/
     this.isJump = false;
+    this.isAlive = true;
   }
   Collision(){
     /*衝突判定*/
@@ -59,6 +60,7 @@ export default class Teki1 extends Enemy{
       EntityManager.player.Damage(-this.atk);
     }
   }
+
 
   Physics(){
     this.vel.x += this.acc.x;
