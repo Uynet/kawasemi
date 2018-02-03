@@ -6,12 +6,13 @@ import Weapon from './weapon.js';
 import Art from '../art.js';
 import UIManager from '../UI/uiManager.js';
 import Util from '../util.js';
+import BulletShot from '../Entity/bulletShot.js';
 
 export default class Weapon1 extends Weapon{
   constructor(){
     super("1");
     /*基本情報*/
-    this.clock = 0;//最後に撃った時刻
+    this.frame = 0;//最後に撃った時刻
     this.target;
     this.isTargetOn = false;//照準が発生しているか
     /*パラメータ*/
@@ -55,25 +56,25 @@ export default class Weapon1 extends Weapon{
     }
   }
   shot(player){
-    //最後に撃ってからclockまで停止
-    if(this.clock % this.agi == 0){
-      for(let i = 0;i<1;i++){
+    //最後に撃ってからframeまで停止
+    if(this.frame % this.agi == 0){
+        /* ■ SoundEffect : shot */
         let vi = this.speed;
         let v = {
           x: vi * Math.cos(player.arg),
           y: vi * Math.sin(player.arg)
         }
-        /* ■ SoundEffect : shot */
-        //bulletの出現位置
         let p = {
           x: player.pos.x + 5 * Math.cos(player.arg),
           y: player.pos.y + 5 * Math.sin(player.arg),
         }
         let bullet = new Bullet1(p,v);
         EntityManager.addEntity(bullet);
-      }
-      this.ammunition--;
+        //エフェクト
+        p.x += v.x;
+        p.y += v.y;
+        EntityManager.addEntity(new BulletShot(p,{x:0,y:0}));
     }
-    this.clock++;
+    this.frame++;
   }
 }
