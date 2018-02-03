@@ -28,7 +28,10 @@ export default class Weapon1 extends Weapon{
       if(this.isTargetOn &&
         l == this.target.enemy) continue;
         //射程距離以内かつ
-      if(Util.distance(l.pos, player.pos) < this.length){
+      if(Util.distance(l.pos, player.pos) < this.length
+        //dirとなす角がPI/4以内
+      // &&((player.pos.y-l.pos.y)/(player.pos.x-l.pos.x)) < 1
+       ){
           //既にロックオンされている敵より近ければ
         if(!this.isTargetOn ||
           Util.distance(l.pos , player.pos) < Util.distance(this.target.pos,player.pos)){
@@ -58,11 +61,10 @@ export default class Weapon1 extends Weapon{
   shot(player){
     //最後に撃ってからframeまで停止
     if(this.frame % this.agi == 0){
-        /* ■ SoundEffect : shot */
         let vi = this.speed;
         let v = {
-          x: vi * Math.cos(player.arg),
-          y: vi * Math.sin(player.arg)
+          x: vi * Math.cos(player.arg + (Math.random()-0.5)/5),
+          y: vi * Math.sin(player.arg + (Math.random()-0.5)/5)
         }
         let p = {
           x: player.pos.x + 5 * Math.cos(player.arg),
@@ -70,7 +72,8 @@ export default class Weapon1 extends Weapon{
         }
         let bullet = new Bullet1(p,v);
         EntityManager.addEntity(bullet);
-        //エフェクト
+        /* ■ SoundEffect : shot */
+        /* □ Effect : shot */
         p.x += v.x;
         p.y += v.y;
         EntityManager.addEntity(new BulletShot(p,{x:0,y:0}));

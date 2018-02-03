@@ -9,17 +9,20 @@ import TestAI from './AI/testAI.js';
 import Util from '../util.js';
 import Bullet1AI from './AI/bullet1AI.js';
 import Bullet from './bullet.js';
+import BulletBlur from './bulletBlur.js';
 
 /*bullet1クラス*/
 export default class Bullet1 extends Bullet{
   constructor(pos,vel){
     super(pos,vel,{x:0,y:0});
+    /*基本情報*/
+    this.frame = 0;
     /*スプライト*/
     this.tex = Art.bulletPattern[0];
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
     /*コライダ*/
-    this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
     /*パラメータ*/
     this.hp = 1;//弾丸のHP 0になると消滅
     this.atk = 1;//攻撃力
@@ -35,5 +38,10 @@ export default class Bullet1 extends Bullet{
     for (let AI of this.AIList){
       AI.Do();
     }
+    /*□Effect BulletBulr*/
+    if(this.frame%2 == 0){
+      EntityManager.addEntity(new BulletBlur(this.pos,{x:0,y:0}));
+    }
+    this.frame++;
   }
 }
