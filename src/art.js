@@ -61,7 +61,15 @@ export default class Art{
       PIXI.Texture.fromFrame('bullet40.png'),//bullet shot
       PIXI.Texture.fromFrame('bullet41.png'),//bullet shot
       PIXI.Texture.fromFrame('bullet42.png'),//bullet shot
-      PIXI.Texture.fromFrame('bullet43.png') //bullet shot
+      PIXI.Texture.fromFrame('bullet43.png'),//bullet shot
+      PIXI.Texture.fromFrame('bullet50.png'),//bullet hit at wall
+      PIXI.Texture.fromFrame('bullet51.png'),//bullet hit at wall
+      PIXI.Texture.fromFrame('bullet52.png'),//bullet hit at wall
+      PIXI.Texture.fromFrame('bullet53.png'),//bullet hit at wall
+      PIXI.Texture.fromFrame('bullet60.png'),//bullet blur
+      PIXI.Texture.fromFrame('bullet61.png'),//bullet blur
+      PIXI.Texture.fromFrame('bullet62.png'),//bullet blur
+      PIXI.Texture.fromFrame('bullet63.png') //bullet blur
     ];
     this.enemyPattern = [
       PIXI.Texture.fromFrame('enemy00.png'),
