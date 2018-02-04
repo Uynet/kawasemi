@@ -39,8 +39,16 @@ export default class Bullet1 extends Bullet{
       AI.Do();
     }
     /*□Effect BulletBulr*/
-    if(this.frame%2 == 0){
-      EntityManager.addEntity(new BulletBlur(this.pos,{x:0,y:0}));
+    if(this.frame%1 == 0){
+      let p ={
+        x:this.pos.x + 10 * (Math.random()-0.5),
+        y:this.pos.y + 10 *(Math.random()-0.5)
+      }
+      let v ={
+        x:3 * (Math.random()-0.5),
+        y:3 *(Math.random()-0.5)
+      }
+      EntityManager.addEntity(new BulletBlur(p,v));
     }
     this.frame++;
   }

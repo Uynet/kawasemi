@@ -26,14 +26,14 @@ export default class Game{
     Timer.Init();
     Util.Init();
     WeaponManager.Init();
-    
+
     /*for debug */
     UIManager.Init();
     Game.pause = false;
     Game.select = false;//
-    Game.seq = false;//ステージ間遷移
+      Game.seq = false;//ステージ間遷移
     Game.stage = 0;//現在のステージ番号
-    Game.scene = new Scene();
+      Game.scene = new Scene();
 
     /*TODO どっかに移す*/
     MapData.CreateStage(Game.stage);
@@ -82,12 +82,21 @@ export default class Game{
 
   static Run(){
     requestAnimationFrame(Game.Run);
-     /*イベントの実行*/
-     /*TODO yield*/
-     while(EventManager.eventList.length > 0){
-       EventManager.eventList.pop().Do();
-     }
+    /*イベントの実行*/
+    /*TODO yield*/
+    /*
+    while(EventManager.eventList.length > 0){
+      EventManager.eventList.pop().Do();
+    }
+     */
 
+     for (let l of EventManager.eventList){
+       let ya = l.Do().done;
+       if(ya){
+         let i = EventManager.eventList.indexOf(l);
+         EventManager.eventList.splice(i,1);
+       }
+     }
     switch(Game.scene.state){
       /*更新*/
       case STATE.TITLE :
@@ -98,20 +107,31 @@ export default class Game{
         }
         break;
       case STATE.STAGE :
-        if(!Game.seq){
-          Game.UpdateStage();
-        }else{
-          Game.stage++;
-          MapData.RebuildStage();
-          Game.seq = false;
-        }
+        switch(Game.seq){
+          case false: 
+            //プレイ画面中
+            Game.UpdateStage();
+            break;
+          case true :
+            //遷移画面でやるべきことは
+            //一定時間待ってゲーム画面に復帰すること
+            //遷移画面を呼び出すのは、死んだ場合とゴールした場合o
+            //ゴールしたらステージクリアイベントをプッシュ
+            //ステージクリアイベントで時間を止め,
+            //stage++,遷移エフェクト呼び出し
+            //画面がくらい間に後ろでステージinイベントをプッシュ
+            //遷移画面中
+            MapData.RebuildStage();
+            Game.seq = false;
+            break;
+      }
         break;
       default :
         console.warn("unknown state");
-    }
-    /*描画*/
-    Drawer.Renderer.render(Drawer.Stage);
-    Timer.IncTime();
   }
+  /*描画*/
+  Drawer.Renderer.render(Drawer.Stage);
+  Timer.IncTime();
+}
 }
 

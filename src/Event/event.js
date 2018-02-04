@@ -5,6 +5,6 @@ export default class Event{
   }
   Do(){
     //?
-    this.func.apply(this);
+    return this.func.next();
   }
 }
