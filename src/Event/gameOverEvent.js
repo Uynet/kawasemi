@@ -11,10 +11,13 @@ export default class GameOverEvent extends Event{
   constructor(){
     super(1);
     function* Posreset(){
-      let frame = 0;
-      let spid = 0;
-      let pattern = Art.seqPattern;
-      let seq = new Array(400);
+
+      //画面遷移エフェクトの♢
+      let frame = 0;//経過フレーム数 途中で0にしているので注意
+      let spid = 0;//スプライト番号
+      let pattern = Art.seqPattern;//パターン
+      let seq = new Array(400);//各♢
+      //♢を初期化して追加
       for(let i = 0; i < 400; i++) {
           let sp = Art.SpriteFactory(pattern[spid]);
           let y = Math.floor(i/20);
@@ -24,8 +27,27 @@ export default class GameOverEvent extends Event{
           seq[i] = sp;
           Drawer.addContainer(sp,"FILTER");
       }
-      while(frame < 100){
-        spid = Math.min(Math.floor(frame/2),31);
+      /*フェードアウト*/
+      while(frame < 50){
+        spid = Math.min(Math.floor(frame/2),15);
+        for(let i = 0; i < 400; i++) {
+          seq[i].texture = pattern[spid];
+        }
+        frame++;
+        yield;
+      }
+      /*ここでマップをロード*/
+        Game.seq = true;
+
+      /*ちょっと待つ*/
+      frame = 0;
+      while(frame < 20){
+        frame++;
+      }
+      frame = 0;
+      /*フェードin*/
+      while(frame < 50){
+        spid = 16 + Math.min(Math.floor(frame/2),15);
         for(let i = 0; i < 400; i++) {
           seq[i].texture = pattern[spid];
         }
@@ -33,7 +55,6 @@ export default class GameOverEvent extends Event{
         yield;
       }
       for(let i = 0; i < 400; i++) {
-        Game.seq = true;
         Drawer.removeContainer(seq[i],"FILTER");
       }
       yield;
