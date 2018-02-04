@@ -117,6 +117,41 @@ export default class Art{
       PIXI.Texture.fromFrame('wall85.png'),
       PIXI.Texture.fromFrame('wall86.png'),
     ];
+
+    this.seqPattern = [
+      PIXI.Texture.fromFrame('seq00.png'),
+      PIXI.Texture.fromFrame('seq01.png'),
+      PIXI.Texture.fromFrame('seq02.png'),
+      PIXI.Texture.fromFrame('seq03.png'),
+      PIXI.Texture.fromFrame('seq04.png'),
+      PIXI.Texture.fromFrame('seq05.png'),
+      PIXI.Texture.fromFrame('seq06.png'),
+      PIXI.Texture.fromFrame('seq07.png'),
+      PIXI.Texture.fromFrame('seq10.png'),
+      PIXI.Texture.fromFrame('seq11.png'),
+      PIXI.Texture.fromFrame('seq12.png'),
+      PIXI.Texture.fromFrame('seq13.png'),
+      PIXI.Texture.fromFrame('seq14.png'),
+      PIXI.Texture.fromFrame('seq15.png'),
+      PIXI.Texture.fromFrame('seq16.png'),
+      PIXI.Texture.fromFrame('seq17.png'),
+      PIXI.Texture.fromFrame('seq20.png'),
+      PIXI.Texture.fromFrame('seq21.png'),
+      PIXI.Texture.fromFrame('seq22.png'),
+      PIXI.Texture.fromFrame('seq23.png'),
+      PIXI.Texture.fromFrame('seq24.png'),
+      PIXI.Texture.fromFrame('seq25.png'),
+      PIXI.Texture.fromFrame('seq26.png'),
+      PIXI.Texture.fromFrame('seq27.png'),
+      PIXI.Texture.fromFrame('seq30.png'),
+      PIXI.Texture.fromFrame('seq31.png'),
+      PIXI.Texture.fromFrame('seq32.png'),
+      PIXI.Texture.fromFrame('seq33.png'),
+      PIXI.Texture.fromFrame('seq34.png'),
+      PIXI.Texture.fromFrame('seq35.png'),
+      PIXI.Texture.fromFrame('seq36.png'),
+      PIXI.Texture.fromFrame('seq37.png')
+    ];
   }
 
   static async LoadTexture(){
@@ -127,6 +162,7 @@ export default class Art{
       .add('pattern3','src/resource/img/bulletPattern.json')
       .add('pattern4','src/resource/img/enemyPattern.json')
       .add('pattern5','src/resource/img/wallPattern.json')
+      .add('pattern6','src/resource/img/seqPattern.json')
       .add('src/resource/effect/dark.png')
       .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
   }

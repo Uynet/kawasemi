@@ -170,32 +170,34 @@ export default class Player extends Mover{
   /*ダメージ*/
   /*負の値を入れる*/
   Damage(atk){
-    this.hp+=atk;
-    UIManager.HP.Bar();
+    if(this.isAlive){
+      this.hp+=atk;
+      UIManager.HP.Bar();
+    }
   }
   /* 衝突判定 */
   collision(){
     /*TODO リスト分割 */
     for(let l of EntityManager.wallList){
-          /*衝突判定*/
-          if(Collision.on(this,l).isHit){
-            /* 衝突応答*/
-            /*TODO Colクラスに核*/
+      /*衝突判定*/
+      if(Collision.on(this,l).isHit){
+        /* 衝突応答*/
+        /*TODO Colクラスに核*/
 
-            /*フラグの解除*/
-            if(Collision.on(this,l).n.y == -1){
-              this.isJump = 0;
-            }
-            /*速度*/
-            if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-            if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
-            /*押し出し*/
-            while(Collision.on(this,l).isHit){
-              this.pos.x += Collision.on(this,l).n.x/5;
-              this.pos.y += Collision.on(this,l).n.y/5;
-            }
-            /*note : now isHit == false*/
-          }
+        /*フラグの解除*/
+        if(Collision.on(this,l).n.y == -1){
+          this.isJump = 0;
+        }
+        /*速度*/
+        if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
+        if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
+        /*押し出し*/
+        while(Collision.on(this,l).isHit){
+          this.pos.x += Collision.on(this,l).n.x/5;
+          this.pos.y += Collision.on(this,l).n.y/5;
+        }
+        /*note : now isHit == false*/
+      }
     }
   }
   Physics(){
