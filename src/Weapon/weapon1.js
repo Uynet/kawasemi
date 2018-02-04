@@ -74,8 +74,8 @@ export default class Weapon1 extends Weapon{
         EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
         /* □ Effect : shot */
-        p.x += v.x;
-        p.y += v.y;
+        p.x += v.x + Math.floor(Math.random()-0.5);
+        p.y += v.y + Math.floor(Math.random()-0.5);
         EntityManager.addEntity(new BulletShot(p,{x:0,y:0}));
     }
     this.frame++;
