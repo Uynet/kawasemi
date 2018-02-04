@@ -33,7 +33,8 @@ let state = {
   WAITING : 0,
   RUNNING  : 1,
   FALLING : 3,
-  DEAD : 4
+  DYING : 4,//死んでから遷移開始するまでの操作不能状態
+  DEAD : 5
 }
 /*フラグと状態が同じものを意味しててキモい*/
 
