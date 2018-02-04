@@ -1,19 +1,18 @@
 import Event from './event.js';
 import UIManager from '../UI/uiManager.js';
 import MapData from '../Stage/mapData.js';
+import EventManager from '../Event/eventmanager.js';
 
 export default class StageResetEvent extends Event{
   //「マップをリセットする関数」を返す
   constructor(){
     super(1);
-    let PositionReset = this.ReturnFunc();
-    this.func = PositionReset;
-  }
-
-  ReturnFunc(){
-    let posreset = () =>{
+    function* po(){
       MapData.RebuildStage();
+      //EventManager.eventList.pop();
+      yield "end";
     }
-    return posreset;
+    let itt = po();
+    this.func = itt;
   }
 }

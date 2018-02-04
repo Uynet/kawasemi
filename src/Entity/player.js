@@ -9,6 +9,7 @@ import Util from '../util.js';
 import EventManager from '../Event/eventmanager.js';
 import Event from '../Event/event.js';
 import StageResetEvent from '../Event/stageResetEvent.js';
+import gameOverEvent from '../Event/gameOverEvent.js';
 import Drawer from '../drawer.js';
 import Game from '../Game.js';
 import WeaponManager from '../Weapon/weaponManager.js';
@@ -154,13 +155,9 @@ export default class Player extends Mover{
             break;
         }
         break;
+        //死亡
       case state.DEAD :
-        this.spid = 32 + (Math.floor((this.frame - this.frameDead)/ANIM_RUN));
-        if(this.spid == 40){
-          this.spid = 39;
-          let restartEvent = new StageResetEvent();
-          EventManager.PushEvent(restartEvent);
-        }
+        this.spid = 32 + (Math.floor((this.frame - this.frameDead)/4))%4;
         break;
     }
     this.sprite.texture = this.pattern[this.spid];
@@ -228,23 +225,24 @@ export default class Player extends Mover{
       if(this.isAlive){
         this.state = state.WAITING; //何も入力がなければWAITINGとみなされる
         this.Input();//入力
+        this.Physics();//物理
       }
-    this.Physics();//物理
     this.collision();//衝突
     this.Animation();//状態から画像を更新
     Drawer.ScrollOn(this.pos);
 
     /*observer*/
     if(this.hp <= 0){
-      //死亡時刻を設定
+      //死亡時に一回だけ呼ばれる部分
+      //
       if(this.isAlive){
         this.frameDead = this.frame;
+        let event = new gameOverEvent();
+        EventManager.PushEvent(event);
       }
       this.isAlive = false;
       this.state = state.DEAD;
 
-//      let restartEvent = new StageResetEvent();
- //     EventManager.PushEvent(restartEvent);
     }
 
     this.sprite.position = this.pos;

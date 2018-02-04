@@ -41,7 +41,7 @@ export default class EntityManager{
     this.entityList.push(entity); 
   }
 
-  /*Entityをリストから削除しdeleteする*/
+  /*Entityをリストから削除する*/
   static removeEntity(entity){
     let i = this.entityList.indexOf(entity);
     this.entityList.splice(i,1);

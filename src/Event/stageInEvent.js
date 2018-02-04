@@ -1,6 +1,7 @@
 import Event from './event.js';
 import UIManager from '../UI/uiManager.js';
 import Game from '../Game.js';
+import EventManager from './eventmanager.js';
 
 /*タイトル画面からゲーム開始画面に移行するイベント
  * (UIの退避)
@@ -9,15 +10,13 @@ import Game from '../Game.js';
 export default class StageResetEvent extends Event{
   constructor(){
     super(1);
-    let func = this.ReturnFunc();
-    this.func = func;
-  }
-
-  ReturnFunc(){
-    let func = () =>{
+    function* po(){
       Game.scene.ChangeState(STATE.STAGE);
       UIManager.SetStage();
+      EventManager.eventList.pop();
+      yield "end";
     }
-    return func;
+    let itt = po();
+    this.func = itt;
   }
 }
