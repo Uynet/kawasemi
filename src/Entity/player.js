@@ -31,7 +31,8 @@ const VY_MAX = 7;
 let state = {
   WAITING : 0,
   RUNNING  : 1,
-  FALLING : 3
+  FALLING : 3,
+  DEAD : 4
 }
 /*フラグと状態が同じものを意味しててキモい*/
 
@@ -41,7 +42,8 @@ export default class Player extends Mover{
     /*基本情報*/
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
-    this.initPos = this.pos;
+    this.frame = 0;
+    this.frameDead;//死んだ時刻
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
@@ -58,6 +60,7 @@ export default class Player extends Mover{
     /*フラグ*/
     this.isJump = false;//空中にいるか
     this.isRun = false;//走っているか
+    this.isAlive = true;//
   }
   /*キー入力による移動*/
   Input(){
@@ -147,8 +150,16 @@ export default class Player extends Mover{
             this.spid = 8 + (Math.floor(Timer.timer/ANIM_RUN))%4
             break;
           case DIR.DOWN :
-            this.spid = 12 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.spid = 12 + (Math.floor(this.frame/ANIM_RUN))%4
             break;
+        }
+        break;
+      case state.DEAD :
+        this.spid = 32 + (Math.floor((this.frame - this.frameDead)/ANIM_RUN));
+        if(this.spid == 40){
+          this.spid = 39;
+          let restartEvent = new StageResetEvent();
+          EventManager.PushEvent(restartEvent);
         }
         break;
     }
@@ -214,8 +225,10 @@ export default class Player extends Mover{
 
   Update(){
     this.isRun = false;
-    this.state = state.WAITING; //何も入力がなければWAITINGとみなされる
-    this.Input();//入力
+      if(this.isAlive){
+        this.state = state.WAITING; //何も入力がなければWAITINGとみなされる
+        this.Input();//入力
+      }
     this.Physics();//物理
     this.collision();//衝突
     this.Animation();//状態から画像を更新
@@ -223,11 +236,19 @@ export default class Player extends Mover{
 
     /*observer*/
     if(this.hp <= 0){
-      let restartEvent = new StageResetEvent();
-      EventManager.PushEvent(restartEvent);
+      //死亡時刻を設定
+      if(this.isAlive){
+        this.frameDead = this.frame;
+      }
+      this.isAlive = false;
+      this.state = state.DEAD;
+
+//      let restartEvent = new StageResetEvent();
+ //     EventManager.PushEvent(restartEvent);
     }
 
     this.sprite.position = this.pos;
+    this.frame++;
   }
 }
 

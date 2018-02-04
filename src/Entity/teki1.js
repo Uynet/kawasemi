@@ -27,6 +27,7 @@ export default class Teki1 extends Enemy{
     /*パラメータ*/
     this.addAI(new TestAI(this));
     this.atk = ATK_TEKI1;
+    this.hp = 10;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;

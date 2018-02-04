@@ -134,6 +134,38 @@
     "player37.png": {
       "frame": {"x":112, "y":48, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+    "player40.png": {
+      "frame": {"x":0, "y":64, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "player41.png": {
+      "frame": {"x":16, "y":64, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "player42.png": {
+      "frame": {"x":32, "y":64, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "player43.png": {
+      "frame": {"x":48, "y":64, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "player44.png": {
+      "frame": {"x":64, "y":64, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "player45.png": {
+      "frame": {"x":80, "y":64, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "player46.png": {
+      "frame": {"x":96, "y":64, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "player47.png": {
+      "frame": {"x":112, "y":64, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
   },
 
