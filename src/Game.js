@@ -36,7 +36,7 @@ export default class Game{
       Game.scene = new Scene();
 
     /*TODO どっかに移す*/
-    MapData.CreateStage(Game.stage);
+    //MapData.CreateStage(Game.stage);
     /*TODO EffectManagerを作成*/
     dark = Art.SpriteFactory(Art.darkTexture);
 
@@ -121,8 +121,8 @@ export default class Game{
             //stage++,遷移エフェクト呼び出し
             //画面がくらい間に後ろでステージinイベントをプッシュ
             //遷移画面中
-            MapData.RebuildStage();
-            Game.seq = false;
+            //MapData.RebuildStage();
+            //Game.seq = false;
             break;
       }
         break;
