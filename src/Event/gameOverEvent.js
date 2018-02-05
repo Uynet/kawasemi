@@ -12,6 +12,9 @@ export default class GameOverEvent extends Event{
     super(1);
     function* Posreset(){
 
+      //note : Game.seqがtrueの間はEntityは更新されない
+
+      //やっぱり画面移動中も敵動いてて欲しい...
       Game.seq = true;
       //画面遷移エフェクトの♢
       let frame = 0;//経過フレーム数 途中で0にしているので注意
@@ -29,9 +32,10 @@ export default class GameOverEvent extends Event{
           Drawer.addContainer(sp,"FILTER");
       }
       /*フェードアウト*/
-      while(frame < 50){
-        spid = Math.min(Math.floor(frame/2),15);
+      while(frame < 40){
         for(let i = 0; i < 400; i++) {
+          //上から下へ
+          spid = Math.max(0,Math.min(Math.floor(frame - i/8),15));
           seq[i].texture = pattern[spid];
         }
         frame++;
@@ -42,14 +46,15 @@ export default class GameOverEvent extends Event{
 
       /*ちょっと待つ*/
       frame = 0;
-      while(frame < 20){
+      while(frame < 0){
         frame++;
       }
       frame = 0;
       /*フェードin*/
-      while(frame < 50){
-        spid = 16 + Math.min(Math.floor(frame/2),15);
+      while(frame < 40){
+        Game.seq = false;
         for(let i = 0; i < 400; i++) {
+          spid = 16 + Math.max(0,Math.min(Math.floor(frame -i/8),15));
           seq[i].texture = pattern[spid];
         }
         frame++;
