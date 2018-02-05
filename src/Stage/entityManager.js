@@ -52,16 +52,17 @@ export default class EntityManager{
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
       case ENTITY.ENEMY :
+        //敵リストから排除
         i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
         Drawer.removeContainer(entity.sprite,"ENTITY");
-        entity = void 0;
         break;
       case ENTITY.EFFECT :
         Drawer.removeContainer(entity.sprite,"FORE");
         break;
       case ENTITY.WALL :
-        i = this.enemyList.indexOf(entity);
+        //壁リストから排除
+        i = this.wallList.indexOf(entity);
         this.wallList.splice(i,1);
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;

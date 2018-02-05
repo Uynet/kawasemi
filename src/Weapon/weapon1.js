@@ -24,13 +24,33 @@ export default class Weapon1 extends Weapon{
   Target(player){
     /*とりあえず全探索*/
     for(let l of EntityManager.enemyList){
-      //既にロックオンされている敵はスキップ
+      //既にロックオンされている敵が射程外に出たら解除
       if(this.isTargetOn &&
-        l == this.target.enemy) continue;
+        l == this.target.enemy){
+        if(Util.distance(l.pos, player.pos) < this.length
+          && (
+            player.dir == DIR.UP && (player.pos.y-l.pos.y)/Math.abs((player.pos.x-l.pos.x)) > 1
+              || player.dir == DIR.DOWN && (player.pos.y-l.pos.y)/Math.abs((player.pos.x-l.pos.x)) <-1
+                || player.dir == DIR.RIGHT && (player.pos.x-l.pos.x)/Math.abs((player.pos.y-l.pos.y)) <-1
+                  || player.dir == DIR.LEFT && (player.pos.x-l.pos.x)/Math.abs((player.pos.y-l.pos.y)) >1
+          )
+        ){
+          continue;
+        }
+          EntityManager.removeEntity(this.target);
+          this.isTargetOn = false;
+          continue;
+      }
         //射程距離以内かつ
       if(Util.distance(l.pos, player.pos) < this.length
         //dirとなす角がPI/4以内
       // &&((player.pos.y-l.pos.y)/(player.pos.x-l.pos.x)) < 1
+      && (
+        player.dir == DIR.UP && (player.pos.y-l.pos.y)/Math.abs((player.pos.x-l.pos.x)) > 1
+        || player.dir == DIR.DOWN && (player.pos.y-l.pos.y)/Math.abs((player.pos.x-l.pos.x)) <-1
+        || player.dir == DIR.RIGHT && (player.pos.x-l.pos.x)/Math.abs((player.pos.y-l.pos.y)) <-1
+        || player.dir == DIR.LEFT && (player.pos.x-l.pos.x)/Math.abs((player.pos.y-l.pos.y)) >1
+          )
        ){
           //既にロックオンされている敵より近ければ
         if(!this.isTargetOn ||
@@ -38,6 +58,7 @@ export default class Weapon1 extends Weapon{
         //今のロック先を解除して
         if(this.isTargetOn){
           EntityManager.removeEntity(this.target);
+          //this.isTargetOn = false;
         }
         //targetを追加する
         this.target = new Target(l);
@@ -45,6 +66,13 @@ export default class Weapon1 extends Weapon{
         this.isTargetOn = true;
         }
       }
+      
+      
+      
+      
+      
+      
+      
     }
     if(this.isTargetOn == true){
       //lockしていた敵が消えたら消去
