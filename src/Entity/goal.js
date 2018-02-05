@@ -6,7 +6,10 @@ import EntityManager from '../Stage/entityManager.js';
 import Circle from '../Collision/circle.js';
 import Box from '../Collision/box.js';
 import Game from '../Game.js';
+import GameOverEvent from '../Event/gameOverEvent.js';
+import EventManager from '../Event/eventmanager.js';
 
+let isgoal = false;
 
 export default class Goal extends Entity{
   constructor(pos){
@@ -19,7 +22,12 @@ export default class Goal extends Entity{
   Update(){
     if(Collision.on(this,EntityManager.player).isHit){
       /*ステージ遷移処理*/
-      Game.seq = true;
+      if(!isgoal){
+        Game.stage++;
+        let g = new GameOverEvent();
+        EventManager.eventList.push(g);
+        isgoal = true;
+      }
     }
   }
 }

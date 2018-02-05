@@ -12,6 +12,7 @@ export default class GameOverEvent extends Event{
     super(1);
     function* Posreset(){
 
+      Game.seq = true;
       //画面遷移エフェクトの♢
       let frame = 0;//経過フレーム数 途中で0にしているので注意
       let spid = 0;//スプライト番号
@@ -37,7 +38,7 @@ export default class GameOverEvent extends Event{
         yield;
       }
       /*ここでマップをロード*/
-        Game.seq = true;
+        MapData.RebuildStage();
 
       /*ちょっと待つ*/
       frame = 0;
@@ -57,6 +58,7 @@ export default class GameOverEvent extends Event{
       for(let i = 0; i < 400; i++) {
         Drawer.removeContainer(seq[i],"FILTER");
       }
+      Game.seq = false;
       yield;
     }
     let itt = Posreset();

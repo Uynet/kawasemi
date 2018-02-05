@@ -21,8 +21,8 @@ export default class Drawer{
     this.UIContainer = new PIXI.Container();//UI
 
     this.app.stage.addChild(this.entityContainer);
-    this.app.stage.addChild(this.effectContainer);
     this.app.stage.addChild(this.foreGroundContainer);
+    this.app.stage.addChild(this.effectContainer);
     this.app.stage.addChild(this.UIContainer);
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);
 
@@ -98,12 +98,10 @@ export default class Drawer{
   static ScrollSet(pos){
     let centerX = this.magnification*(- pos.x-8 + 400/this.magnification);
     let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
-    let toX = this.entityContainer.x;
-    let toY = this.entityContainer.y;
-    this.entityContainer.x = Math.floor(toX);
-    this.entityContainer.y = Math.floor(toY);
-    this.foreGroundContainer.x = Math.floor(toX);
-    this.foreGroundContainer.y = Math.floor(toY);
+    this.entityContainer.x = Math.floor(centerX);
+    this.entityContainer.y = Math.floor(centerY);
+    this.foreGroundContainer.x = Math.floor(centerX);
+    this.foreGroundContainer.y = Math.floor(centerY);
   }
 
   static Yakudo(mag){
