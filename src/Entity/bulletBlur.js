@@ -21,7 +21,8 @@ export default class BulletBlur extends EFFECT{
   Update(){
     this.sprite.texture = Art.bulletPattern[this.spid];
     this.spid = 12 + Math.floor(this.frame/2);
-    if(this.spid == 16){
+    if(this.spid >= 16){
+      this.spid = 15;
       EntityManager.removeEntity(this);
     }
     this.frame++;
