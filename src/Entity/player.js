@@ -9,7 +9,7 @@ import Util from '../util.js';
 import EventManager from '../Event/eventmanager.js';
 import Event from '../Event/event.js';
 import StageResetEvent from '../Event/stageResetEvent.js';
-import gameOverEvent from '../Event/gameOverEvent.js';
+import GameOverEvent from '../Event/gameOverEvent.js';
 import Drawer from '../drawer.js';
 import Game from '../Game.js';
 import WeaponManager from '../Weapon/weaponManager.js';
@@ -157,8 +157,8 @@ export default class Player extends Mover{
         }
         break;
         //死亡
-      case state.DEAD :
-        this.spid = 32 + (Math.floor((this.frame - this.frameDead)/4))%4;
+      case state.DYING:
+        this.spid = 32 + Math.min((Math.floor((this.frame - this.frameDead)/4)),7);
         break;
     }
     this.sprite.texture = this.pattern[this.spid];
@@ -236,16 +236,28 @@ export default class Player extends Mover{
 
     /*observer*/
     if(this.hp <= 0){
-      //死亡時に一回だけ呼ばれる部分
-      //
+      //死亡開始時に一回だけ呼ばれる部分
       if(this.isAlive){
         this.frameDead = this.frame;
-        let event = new gameOverEvent();
-        EventManager.PushEvent(event);
+        this.isDying = true;
+        this.isAlive = false;
       }
-      this.isAlive = false;
-      this.state = state.DEAD;
-
+      this.state = state.DYING;
+    }
+    //死亡中
+    if(this.isDying){
+      if(this.frame - this.frameDead < 50){
+        //まだ死んでない  
+      }else{
+        //完全に死んだ
+        //完全死亡時に一回だけ呼ばれる部分
+        if(this.isDying){
+        //this.state = state.DEAD
+          let g = new GameOverEvent();
+          EventManager.eventList.push(g);
+        }
+        this.isDying = false;
+      }
     }
 
     this.sprite.position = this.pos;
