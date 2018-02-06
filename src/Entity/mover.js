@@ -8,7 +8,10 @@ export default class Mover extends Entity{
    * */
   constructor(pos,vel){
     super(pos);
-    this.vel = vel;
+    this.vel = {
+      x:vel.x,
+      y:vel.y
+    }
     this.acc = {x:0,y:0};
     this.AIList = [];//AIの配列
     //this.dir; //enum dirrection

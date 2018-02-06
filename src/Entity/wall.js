@@ -4,10 +4,11 @@ import CollisionShape from '../Collision/collisionShape.js';
 import Circle from '../Collision/circle.js';
 import Box from '../Collision/box.js';
 
+let VEC0 = {x:0,y:0};
 
 export default class Wall extends Entity{
   constructor(pos,tex){
-    super(pos);
+    super(pos,{x:0,y:0});
     this.type = ENTITY.WALL;
     this.tex = tex
     this.sprite = Art.SpriteFactory(this.tex);

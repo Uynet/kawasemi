@@ -2,6 +2,7 @@ import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
 import Util from '../../util.js';
 import BulletHitWall from '../bulletHitWall.js';
+import Timer from '../../timer.js';
 
 export default class Bullet1AI{
   /*bulletの参照を受け取り関数を実行する*/
@@ -24,16 +25,16 @@ export default class Bullet1AI{
             this.bullet.hp = 0;
             /* ■ SoundEffect : hitWall */
             /* □ Effect : hitWall */
-            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}));
+//            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}),Timer.timer);
           }
           break;
- case ENTITY.WALL :
-   if(Collision.on(this.bullet,l).isHit){
-     this.bullet.hp = 0;
-     /* ■ SoundEffect : hitWall */
-     /* □ Effect : hitWall */
-     EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}));
-   }
+        case ENTITY.WALL :
+          if(Collision.on(this.bullet,l).isHit){
+            this.bullet.hp = 0;
+            /* ■ SoundEffect : hitWall */
+            /* □ Effect : hitWall */
+ //          EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}),Timer.timer);
+          }
    break;
       }
     }

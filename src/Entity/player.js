@@ -1,4 +1,4 @@
-import Mover from './mover.js'
+import Entity from './entity.js'
 import Art from '../art.js'
 import CollisionShape from '../Collision/collisionShape.js';
 import Collision from '../Collision/collision.js';
@@ -15,6 +15,7 @@ import Game from '../Game.js';
 import WeaponManager from '../Weapon/weaponManager.js';
 import Timer from '../timer.js';
 import UIManager from '../UI/uiManager.js';
+import Font from './font.js';
 
 const JUMP_VEL = 7;//ジャンプ力
   const RUN_VEL = 0.5;//はしり速度
@@ -22,6 +23,7 @@ const PLAYER_GRAVITY = 0.4;
 const PLAYER_HP = 100;
 const FLICTION = 0.7;
 const POP_PLAYER = -1;
+const INV_TIME = 5;//無敵時間
 /*アニメーションのインターバル*/
 const ANIM_RUN = 3;
 const ANIM_WAIT = 7;
@@ -32,20 +34,22 @@ const VY_MAX = 7;
 let state = {
   WAITING : 0,
   RUNNING  : 1,
+  JUMPING : 2,
   FALLING : 3,
   DYING : 4,//死んでから遷移開始するまでの操作不能状態
   DEAD : 5
 }
 /*フラグと状態が同じものを意味しててキモい*/
 
-export default class Player extends Mover{
+export default class Player extends Entity{
   constructor(pos){
-    super(pos,VEC0,{x:0,y:0});
+    super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
     this.frame = 0;
     this.frameDead;//死んだ時刻
+    this.frameDamaged;//最後に攻撃を食らった時間 無敵時間の計算に必要
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
@@ -63,6 +67,7 @@ export default class Player extends Mover{
     this.isJump = false;//空中にいるか
     this.isRun = false;//走っているか
     this.isAlive = true;//
+    this.isInvincible = false//無敵時間
   }
   /*キー入力による移動*/
   Input(){
@@ -71,6 +76,7 @@ export default class Player extends Mover{
       if(this.isJump == false){
         this.vel.y = -JUMP_VEL;
         this.isJump = true;
+        this.state = state.JUMPING;
       }
     }
     /*右向き*/
@@ -82,7 +88,6 @@ export default class Player extends Mover{
       this.acc.x = RUN_VEL;
       /*
       if(!this.isJump){
-        this.isJump = true;
         this.vel.y = POP_PLAYER;
       }
       */
@@ -118,6 +123,7 @@ export default class Player extends Mover{
     }
     /*for debug*/
     if(Input.isKeyInput(KEY.SP)){
+      this.Damage(-100000);
     }
   }
 
@@ -137,6 +143,22 @@ export default class Player extends Mover{
             break;
           case DIR.DOWN :
             this.spid = 28 + (Math.floor(Timer.timer/ANIM_WAIT))%4
+            break;
+        }
+        break;
+      case state.JUMPING :
+        switch(this.dir){
+          case DIR.RIGHT :
+            this.spid = 44 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            break;
+          case DIR.LEFT :
+            this.spid = 40 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            break;
+          case DIR.UP :
+            this.spid = 44 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            break;
+          case DIR.DOWN :
+            this.spid = 40 + (Math.floor(this.frame/ANIM_RUN))%4
             break;
         }
         break;
@@ -171,16 +193,32 @@ export default class Player extends Mover{
   /*ダメージ*/
   /*負の値を入れる*/
   Damage(atk){
-    if(this.isAlive){
-      this.hp+=atk;
-      UIManager.HP.Bar();
+    //無敵時間は攻撃を受けない
+    if(!this.isInvincible){
+      if(this.isAlive){
+        this.hp+=atk;
+        //ダメージをポップ
+        //ここ値渡しにしないとプレイヤーと同じ座標を指してしまう
+        let p = {
+          x:this.pos.x,
+          y:this.pos.y
+        }
+        let v = {
+          x:0,
+          y:-5
+        }
+        //フォントはダメージ数に応じて数字を表示する　
+        EntityManager.addEntity(new Font(p,v,-atk));
+        UIManager.HP.Bar();
+        //ダメージを受けて一定時間無敵になる
+        this.isInvincible = true;
+        this.frameDamaged = this.frame;
+      }
     }
   }
   /* 衝突判定 */
   collision(){
-    /*TODO リスト分割 */
     for(let l of EntityManager.wallList){
-      /*衝突判定*/
       if(Collision.on(this,l).isHit){
         /* 衝突応答*/
         /*TODO Colクラスに核*/
@@ -211,6 +249,7 @@ export default class Player extends Mover{
     if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
     if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
     if(this.vel.y > VY_MAX)this.vel.y = VY_MAX;
+    if(this.vel.y < -VY_MAX)this.vel.y = -VY_MAX;
     /*摩擦
      * 地面にいる&&入力がない場合のみ有向*/
     if(this.state == state.WAITING){
@@ -224,10 +263,13 @@ export default class Player extends Mover{
   }
 
   Update(){
-    this.isRun = false;
       if(this.isAlive){
         this.state = state.WAITING; //何も入力がなければWAITINGとみなされる
+          this.isRun = false;
         this.Input();//入力
+        if(this.isJump){
+          this.state = state.JUMPING;
+        }
         this.Physics();//物理
       }
     this.collision();//衝突
@@ -245,21 +287,26 @@ export default class Player extends Mover{
       this.state = state.DYING;
     }
     //死亡中
-    if(this.isDying){
+    if(this.isDying){       //まだ死んでない  
       if(this.frame - this.frameDead < 50){
-        //まだ死んでない  
+        this.isDying = true;
       }else{
         //完全に死んだ
         //完全死亡時に一回だけ呼ばれる部分
         if(this.isDying){
         //this.state = state.DEAD
+        cl("o")
           let g = new GameOverEvent();
           EventManager.eventList.push(g);
         }
         this.isDying = false;
       }
     }
-
+    //無敵時間の有向時間
+      if(this.frame - this.frameDamaged > INV_TIME){
+        this.isInvincible = false;
+      }
+    //
     this.sprite.position = this.pos;
     this.frame++;
   }

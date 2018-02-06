@@ -10,6 +10,7 @@ import Util from '../util.js';
 import Bullet1AI from './AI/bullet1AI.js';
 import Bullet from './bullet.js';
 import BulletBlur from './bulletBlur.js';
+import Timer from '../timer.js';
 
 /*bullet1クラス*/
 export default class Bullet1 extends Bullet{
@@ -35,9 +36,6 @@ export default class Bullet1 extends Bullet{
   }
 
   Update(){
-    for (let AI of this.AIList){
-      AI.Do();
-    }
     /*□Effect BulletBulr*/
     if(this.frame%1 == 0){
       let p ={
@@ -48,7 +46,10 @@ export default class Bullet1 extends Bullet{
         x:3 * (Math.random()-0.5),
         y:3 *(Math.random()-0.5)
       }
-      EntityManager.addEntity(new BulletBlur(p,v));
+      EntityManager.addEntity(new BulletBlur(p,v),Timer.timer);
+    }
+    for (let AI of this.AIList){
+      AI.Do();
     }
     this.frame++;
   }

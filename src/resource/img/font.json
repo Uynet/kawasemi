@@ -1,0 +1,53 @@
+{
+  "frames": {
+    "font00.png": {
+      "frame": {"x":0, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font01.png": {
+      "frame": {"x":8, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font02.png": {
+      "frame": {"x":16, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font03.png": {
+      "frame": {"x":24, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font04.png": {
+      "frame": {"x":32, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font05.png": {
+      "frame": {"x":40, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font06.png": {
+      "frame": {"x":48, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font07.png": {
+      "frame": {"x":56, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font08.png": {
+      "frame": {"x":64, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font09.png": {
+      "frame": {"x":72, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font0a.png": {
+      "frame": {"x":80, "y":0, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    }
+
+  },
+
+  "meta": {
+    "image": "./font.png"
+  }
+}

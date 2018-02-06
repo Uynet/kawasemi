@@ -10,6 +10,7 @@ export default class Target extends EFFECT{
     super(enemy.pos,{x:0,y:0});
     /*基本情報*/
     this.type = ENTITY.EFFECT;
+    this.name = "target";
     this.frame = 0;
     /*スプライト*/
     this.tex = Art.bulletPattern[3];
@@ -24,9 +25,9 @@ export default class Target extends EFFECT{
     this.sprite.anchor.set(0.5);
     this.sprite.rotation = this.frame/50;
     //シュッてなるやつ
-    //最初一瞬ゼロ除算してて怖い
-    this.sprite.scale.x = 1.5 + 1.5/this.frame;
-    this.sprite.scale.y = 1.5 + 1.5/this.frame;
+    //ゼロ除算回避
+    this.sprite.scale.x = 1.5 + 1.5/(this.frame+1);
+    this.sprite.scale.y = 1.5 + 1.5/(this.frame+1);
     this.sprite.position = {x:this.pos.x+8,y:this.pos.y+8};
     this.frame++;
   }
