@@ -8,7 +8,6 @@ import UIManager from '../UI/uiManager.js';
 import Util from '../util.js';
 import BulletShot from '../Entity/bulletShot.js';
 import Timer from '../timer.js';
-let po = 0;
 
 export default class Weapon1 extends Weapon{
   constructor(){
@@ -32,6 +31,7 @@ export default class Weapon1 extends Weapon{
   }
 
   Target(player){
+    console.assert(this.isTargetOn == (this.target === undefined))
     /*とりあえず全探索*/
     for(let l of EntityManager.enemyList){
       //既にロックオンされている敵が射程外に出たら解除
@@ -43,7 +43,6 @@ export default class Weapon1 extends Weapon{
         ){
           continue;
         }
-        //⭐
           EntityManager.removeEntity(this.target);
           this.isTargetOn = false;
           continue;
@@ -56,13 +55,11 @@ export default class Weapon1 extends Weapon{
           Util.distance(l.pos , player.pos) < Util.distance(this.target.pos,player.pos)){
         //今のロック先を解除して
         if(this.isTargetOn){
-        //⭐
           EntityManager.removeEntity(this.target);
           this.isTargetOn = false;
         }
         //targetを追加する
         this.target = new Target(l);
-        //⭐
         EntityManager.addEntity(this.target,Timer.timer);
         this.isTargetOn = true;
         }
@@ -71,7 +68,6 @@ export default class Weapon1 extends Weapon{
     if(this.isTargetOn == true){
       //lockしていた敵が視界から消えたら消去
       if(!this.target.enemy.isAlive){
-        //⭐
           EntityManager.removeEntity(this.target);
           this.isTargetOn = false;
       }else{
@@ -100,7 +96,7 @@ export default class Weapon1 extends Weapon{
         /* □ Effect : shot */
         EntityManager.addEntity(new BulletShot(p,{x:0,y:0}));
         //反動
-        player.vel.x -= v.x/6;
+        player.vel.x -= v.x/11;
         player.vel.y -= v.y/4;
     }
     this.frame++;

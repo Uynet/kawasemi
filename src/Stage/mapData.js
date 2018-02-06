@@ -73,8 +73,8 @@ export default class MapData{
   static RebuildStage(){
     MapData.DeleteStage();
     MapData.CreateStage(Game.stage);
-      cl(WeaponManager.weaponList[0].isTargetOn);
-      WeaponManager.weaponList[0].isTargetOn = false;
+    /*🍉 parameter initialization*/
+    WeaponManager.weaponList[0].isTargetOn = false;
   }
 
   /*現在開かれているステージを削除*/

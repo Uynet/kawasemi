@@ -91,6 +91,22 @@
     "font2b.png": {
       "frame": {"x":88, "y":16, "w":8, "h":8},
       "sourceSize": {"w": 8, "h": 8}
+    },
+    "font2c.png": {
+      "frame": {"x":96, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font2d.png": {
+      "frame": {"x":102, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font2e.png": {
+      "frame": {"x":110, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font2f.png": {
+      "frame": {"x":118, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
     }
 
 

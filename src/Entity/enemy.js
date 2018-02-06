@@ -1,6 +1,6 @@
 import Entity from './entity.js';
 import Art from '../art.js';
-import CollisionShape from '../Collision/collisionShape.js';
+import Collider from '../Collision/collider.js';
 import Circle from '../Collision/circle.js';
 import Box from '../Collision/box.js';
 

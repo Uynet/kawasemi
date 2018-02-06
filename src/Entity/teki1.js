@@ -1,7 +1,7 @@
 import Mover from './mover.js';
 import Enemy from './enemy.js';
 import Art from '../art.js';
-import CollisionShape from '../Collision/collisionShape.js';
+import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
@@ -17,7 +17,7 @@ export default class Teki1 extends Enemy{
   constructor(pos){
     super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
-    this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.frame = 0;
     /*スプライト*/
     this.pattern = Art.enemyPattern;

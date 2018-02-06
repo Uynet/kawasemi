@@ -11,9 +11,9 @@ export default class Collision{
 
       let n = {x:99999,y:0}; // 押し出すべき方向(法線) 衝突していなければundefined
     /*円同士の衝突判定*/
-    if(e1.collisionShape.shape == SHAPE.CIRCLE && e2.collisionShape.shape == SHAPE.CIRCLE){
-      let circ1 = e1.collisionShape.hitbox;
-      let circ2 = e2.collisionShape.hitbox;
+    if(e1.collider.shape == SHAPE.CIRCLE && e2.collider.shape == SHAPE.CIRCLE){
+      let circ1 = e1.collider.hitbox;
+      let circ2 = e2.collider.hitbox;
       if(Util.distance(circ1.pos,circ2.pos) < circ1.r + circ2.r){
         isHit = true;
         n = Util.nomalize({x:circ1.pos.x-circ2.pos.x , y:circ1.pos.y-circ2.pos.y});
@@ -26,9 +26,9 @@ export default class Collision{
     /*矩形同士*/
     /*とりあえず正方形*/
     /*下記途中*/
-    if(e1.collisionShape.shape == SHAPE.BOX && e2.collisionShape.shape == SHAPE.BOX){
-      let box1 = e1.collisionShape.hitbox;
-      let box2 = e2.collisionShape.hitbox;
+    if(e1.collider.shape == SHAPE.BOX && e2.collider.shape == SHAPE.BOX){
+      let box1 = e1.collider.hitbox;
+      let box2 = e2.collider.hitbox;
       if(box1.pos.x < box2.pos.x + box2.height &&
         box2.pos.x < box1.pos.x + box1.height &&
         box1.pos.y < box2.pos.y + box2.width &&
