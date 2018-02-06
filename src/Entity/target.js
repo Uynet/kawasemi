@@ -18,6 +18,7 @@ export default class Target extends EFFECT{
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.enemy = enemy;//ロックしているenemyの情報
+      this.spid = 0;
   }
 
   Update(){

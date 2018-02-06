@@ -8,7 +8,7 @@ import Goal from '../Entity/goal.js'
 import Game from '../Game.js'
 import Art from '../art.js'
 import Drawer from '../drawer.js';
-
+import WeaponManager from '../Weapon/weaponManager.js';
 /*マップデータ*/
 export default class MapData{
   constructor(){
@@ -73,6 +73,8 @@ export default class MapData{
   static RebuildStage(){
     MapData.DeleteStage();
     MapData.CreateStage(Game.stage);
+      cl(WeaponManager.weaponList[0].isTargetOn);
+      WeaponManager.weaponList[0].isTargetOn = false;
   }
 
   /*現在開かれているステージを削除*/
