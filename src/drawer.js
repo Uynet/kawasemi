@@ -68,7 +68,7 @@ export default class Drawer{
   }
 
   /*コンテナからスプライトを削除*/
-  static removeContainer(sprite,CONTAINER,id){
+  static removeContainer(sprite,CONTAINER){//,id){
     switch (CONTAINER){
       case "UI" :
         this.UIContainer.removeChild(sprite);
@@ -81,11 +81,13 @@ export default class Drawer{
         break;
       case "FORE":
         this.foreGroundContainer.removeChild(sprite);
+        /*
         console.assert(sprite.id == id);
         if(this.foreGroundContainer.children.length != EntityManager.effectList.length){
           //this.foreGroundContainer.children[0].position.x = 400;
-          cl("jnvori");
+       //   cl("jnvori");
         }
+        */
         break;
       default :
         console.warn("container");

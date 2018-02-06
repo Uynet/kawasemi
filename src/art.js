@@ -161,19 +161,28 @@ export default class Art{
       PIXI.Texture.fromFrame('seq37.png')
     ];
 
-    this.font = [
-      PIXI.Texture.fromFrame('font00.png'),
-      PIXI.Texture.fromFrame('font01.png'),
-      PIXI.Texture.fromFrame('font02.png'),
-      PIXI.Texture.fromFrame('font03.png'),
-      PIXI.Texture.fromFrame('font04.png'),
-      PIXI.Texture.fromFrame('font05.png'),
-      PIXI.Texture.fromFrame('font06.png'),
-      PIXI.Texture.fromFrame('font07.png'),
-      PIXI.Texture.fromFrame('font08.png'),
-      PIXI.Texture.fromFrame('font09.png'),
-      PIXI.Texture.fromFrame('font0a.png'),
-    ]
+    this.font = new Array(256);
+    this.font["0"] = PIXI.Texture.fromFrame('font00.png');
+    this.font["1"] = PIXI.Texture.fromFrame('font01.png');
+    this.font["2"] = PIXI.Texture.fromFrame('font02.png');
+    this.font["3"] = PIXI.Texture.fromFrame('font03.png');
+    this.font["4"] = PIXI.Texture.fromFrame('font04.png');
+    this.font["5"] = PIXI.Texture.fromFrame('font05.png');
+    this.font["6"] = PIXI.Texture.fromFrame('font06.png');
+    this.font["7"] = PIXI.Texture.fromFrame('font07.png');
+    this.font["8"] = PIXI.Texture.fromFrame('font08.png');
+    this.font["9"] = PIXI.Texture.fromFrame('font0a.png');
+    this.font["あ"] = PIXI.Texture.fromFrame('font20.png');
+    this.font["い"] = PIXI.Texture.fromFrame('font21.png');
+    this.font["う"] = PIXI.Texture.fromFrame('font22.png');
+    this.font["え"] = PIXI.Texture.fromFrame('font23.png');
+    this.font["お"] = PIXI.Texture.fromFrame('font24.png');
+    this.font["か"] = PIXI.Texture.fromFrame('font25.png');
+    this.font["き"] = PIXI.Texture.fromFrame('font26.png');
+    this.font["く"] = PIXI.Texture.fromFrame('font27.png');
+    this.font["け"] = PIXI.Texture.fromFrame('font28.png');
+    this.font["こ"] = PIXI.Texture.fromFrame('font29.png');
+    this.font["さ"] = PIXI.Texture.fromFrame('font2a.png');
   }
 
   static async LoadTexture(){
