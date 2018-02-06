@@ -183,6 +183,11 @@ export default class Art{
     this.font["け"] = PIXI.Texture.fromFrame('font28.png');
     this.font["こ"] = PIXI.Texture.fromFrame('font29.png');
     this.font["さ"] = PIXI.Texture.fromFrame('font2a.png');
+    this.font["し"] = PIXI.Texture.fromFrame('font2b.png');
+    this.font["す"] = PIXI.Texture.fromFrame('font2c.png');
+    this.font["せ"] = PIXI.Texture.fromFrame('font2d.png');
+    this.font["そ"] = PIXI.Texture.fromFrame('font2e.png');
+    this.font["た"] = PIXI.Texture.fromFrame('font2f.png');
   }
 
   static async LoadTexture(){

@@ -31,13 +31,7 @@ export default class EntityManager{
         //エフェクト
       case ENTITY.EFFECT :
         this.effectList.push(entity);
-        entity.sprite.id = Math.random();
-        if(entity.name == "target"){
-          entity.sprite.id *= 100;
-        }else if(entity.name == "blur"){
-          entity.sprite.id *= 10000;
-          }
-        Drawer.addContainer(entity.sprite,"FORE",entity.sprite.id);
+        Drawer.addContainer(entity.sprite,"FORE");
         break;
         //壁
       case ENTITY.WALL :
@@ -79,7 +73,7 @@ export default class EntityManager{
       case ENTITY.EFFECT :
         let m = this.effectList.indexOf(entity);
         this.effectList.splice(m,1);
-        Drawer.removeContainer(entity.sprite,"FORE",entity.sprite.id);
+        Drawer.removeContainer(entity.sprite,"FORE");
         break;
         //壁
       case ENTITY.WALL :

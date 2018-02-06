@@ -1,6 +1,6 @@
 import Entity from './entity.js'
 import Art from '../art.js'
-import CollisionShape from '../Collision/collisionShape.js';
+import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/Box.js';
 import Input from '../input.js';
@@ -45,7 +45,7 @@ export default class Player extends Entity{
   constructor(pos){
     super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
-    this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
     this.frame = 0;
     this.frameDead;//死んだ時刻

@@ -52,20 +52,20 @@
     },
 
     "player14.png": {
-      "frame": {"x":64, "y":14, "w":16, "h":18},
-      "sourceSize": {"w": 16, "h": 18}
+      "frame": {"x":64, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     },
     "player15.png": {
-      "frame": {"x":80, "y":14, "w":16, "h":18},
-      "sourceSize": {"w": 16, "h": 18}
+      "frame": {"x":80, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     },
     "player16.png": {
-      "frame": {"x":96, "y":14, "w":16, "h":18},
-      "sourceSize": {"w": 16, "h": 18}
+      "frame": {"x":96, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     },
     "player17.png": {
-      "frame": {"x":112, "y":14, "w":16, "h":18},
-      "sourceSize": {"w": 16, "h": 18}
+      "frame": {"x":112, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     },
 
     "player20.png": {
