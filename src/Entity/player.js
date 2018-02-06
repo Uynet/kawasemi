@@ -123,7 +123,18 @@ export default class Player extends Entity{
     }
     /*for debug*/
     if(Input.isKeyInput(KEY.SP)){
-      this.Damage(-100000);
+        let p = {
+          x:this.pos.x,
+          y:this.pos.y
+        }
+        let v = {
+          x:0,
+          y:-5
+        }
+        //EntityManager.addEntity(new Font(p,v,"あ"));
+        //EntityManager.addEntity(new Font(p,v,"い"));
+        //EntityManager.addEntity(new Font(p,v,"う"));
+        //EntityManager.addEntity(new Font(p,v,"え"));
     }
   }
 
@@ -209,6 +220,7 @@ export default class Player extends Entity{
         }
         //フォントはダメージ数に応じて数字を表示する　
         EntityManager.addEntity(new Font(p,v,-atk));
+        this.hp = Math.max(this.hp,0);
         UIManager.HP.Bar();
         //ダメージを受けて一定時間無敵になる
         this.isInvincible = true;
@@ -295,7 +307,6 @@ export default class Player extends Entity{
         //完全死亡時に一回だけ呼ばれる部分
         if(this.isDying){
         //this.state = state.DEAD
-        cl("o")
           let g = new GameOverEvent();
           EventManager.eventList.push(g);
         }

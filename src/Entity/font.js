@@ -19,7 +19,7 @@ export default class Font extends EFFECT{
     this.isAlive = true;//消えたらfalse
     this.collisionShape = new CollisionShape(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
       /*スプライト*/
-    this.spid = str; //0~9 🔥ここはヤバイので必ず直す
+    this.spid = str; //0~9 🔥num型をstring型にキャストしているので必ず直す
     this.tex = Art.font[this.spid];
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = this.pos;
@@ -33,7 +33,7 @@ export default class Font extends EFFECT{
       if(Collision.on(this,l).isHit){
         /*速度*/
         if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-        if(Collision.on(this,l).n.y != 0) this.vel.y *= -1;
+        if(Collision.on(this,l).n.y != 0) this.vel.y *= 0.3;
         /*押し出し*/
         while(Collision.on(this,l).isHit){
           this.pos.x += Collision.on(this,l).n.x/5;
@@ -52,7 +52,7 @@ export default class Font extends EFFECT{
     this.pos.y += this.vel.y;
     this.vel.y += this.gravity;
     this.sprite.position = this.pos;
-    if(this.frame > 20){
+    if(this.frame > 30){
       EntityManager.removeEntity(this);
     }
     this.frame++;
