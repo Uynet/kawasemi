@@ -48,7 +48,15 @@ export default class Art{
       PIXI.Texture.fromFrame('player44.png'),//36 死亡エフェクト
       PIXI.Texture.fromFrame('player45.png'),//37 死亡エフェクト
       PIXI.Texture.fromFrame('player46.png'),//38 死亡エフェクト
-      PIXI.Texture.fromFrame('player47.png')//39  死亡エフェクト
+      PIXI.Texture.fromFrame('player47.png'),//39  死亡エフェクト
+      PIXI.Texture.fromFrame('player50.png'),//40 ジャンプ
+      PIXI.Texture.fromFrame('player51.png'),//41 
+      PIXI.Texture.fromFrame('player52.png'),//42 
+      PIXI.Texture.fromFrame('player53.png'),//43 
+      PIXI.Texture.fromFrame('player54.png'),//44 
+      PIXI.Texture.fromFrame('player55.png'),//45 
+      PIXI.Texture.fromFrame('player56.png'),//46 
+      PIXI.Texture.fromFrame('player57.png')//47  
     ];
     this.UIPattern = [
       PIXI.Texture.fromFrame('weapon00.png'),
@@ -152,6 +160,20 @@ export default class Art{
       PIXI.Texture.fromFrame('seq36.png'),
       PIXI.Texture.fromFrame('seq37.png')
     ];
+
+    this.font = [
+      PIXI.Texture.fromFrame('font00.png'),
+      PIXI.Texture.fromFrame('font01.png'),
+      PIXI.Texture.fromFrame('font02.png'),
+      PIXI.Texture.fromFrame('font03.png'),
+      PIXI.Texture.fromFrame('font04.png'),
+      PIXI.Texture.fromFrame('font05.png'),
+      PIXI.Texture.fromFrame('font06.png'),
+      PIXI.Texture.fromFrame('font07.png'),
+      PIXI.Texture.fromFrame('font08.png'),
+      PIXI.Texture.fromFrame('font09.png'),
+      PIXI.Texture.fromFrame('font0a.png'),
+    ]
   }
 
   static async LoadTexture(){
@@ -163,6 +185,7 @@ export default class Art{
       .add('pattern4','src/resource/img/enemyPattern.json')
       .add('pattern5','src/resource/img/wallPattern.json')
       .add('pattern6','src/resource/img/seqPattern.json')
+      .add('pattern7','src/resource/img/font.json')
       .add('src/resource/effect/dark.png')
       .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
   }

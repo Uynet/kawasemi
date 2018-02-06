@@ -1,11 +1,11 @@
-import Mover from './mover.js';
+import Entity from './entity.js';
 import Art from '../art.js';
 import CollisionShape from '../Collision/collisionShape.js';
 import Circle from '../Collision/circle.js';
 import Box from '../Collision/box.js';
 
 
-export default class Enemy extends Mover{
+export default class Enemy extends Entity{
   constructor(pos,vel){
     super(pos,vel);
     this.type = ENTITY.ENEMY;

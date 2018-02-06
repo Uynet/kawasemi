@@ -58,7 +58,8 @@ export default class Teki1 extends Enemy{
   }
   Hurt(){
     if(Collision.on(this,EntityManager.player).isHit){
-      EntityManager.player.Damage(-this.atk);
+      let damage = this.atk + Math.floor(10 * Math.random());
+      EntityManager.player.Damage(-damage);
     }
   }
 

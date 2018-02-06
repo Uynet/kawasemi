@@ -1,4 +1,5 @@
 import Timer from './timer.js';
+import EntityManager from './Stage/entityManager.js';
 
 const PIXI_WIDTH = 800;
 const PIXI_HEIGHT = 600;
@@ -48,7 +49,7 @@ export default class Drawer{
   }
 
   /*コンテナにスプライトを追加*/
-  static addContainer(sprite,CONTAINER){
+  static addContainer(sprite,CONTAINER,id){
     switch (CONTAINER){
       case "UI" :
         this.UIContainer.addChild(sprite);
@@ -60,13 +61,14 @@ export default class Drawer{
         this.effectContainer.addChild(sprite);
         break;
       case "FORE":
+        console.assert(sprite.id == id);
         this.foreGroundContainer.addChild(sprite);
         break;
     }
   }
 
   /*コンテナからスプライトを削除*/
-  static removeContainer(sprite,CONTAINER){
+  static removeContainer(sprite,CONTAINER,id){
     switch (CONTAINER){
       case "UI" :
         this.UIContainer.removeChild(sprite);
@@ -79,7 +81,14 @@ export default class Drawer{
         break;
       case "FORE":
         this.foreGroundContainer.removeChild(sprite);
+        console.assert(sprite.id == id);
+        if(this.foreGroundContainer.children.length != EntityManager.effectList.length){
+          //this.foreGroundContainer.children[0].position.x = 400;
+          cl("jnvori");
+        }
         break;
+      default :
+        console.warn("container");
     }
   }
 

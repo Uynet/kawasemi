@@ -7,6 +7,8 @@ import Art from '../art.js';
 import UIManager from '../UI/uiManager.js';
 import Util from '../util.js';
 import BulletShot from '../Entity/bulletShot.js';
+import Timer from '../timer.js';
+let po = 0;
 
 export default class Weapon1 extends Weapon{
   constructor(){
@@ -16,11 +18,19 @@ export default class Weapon1 extends Weapon{
     this.target;
     this.isTargetOn = false;//照準が発生しているか
     /*パラメータ*/
-    this.agi = 15;//間隔
+    this.agi = 4;//間隔
     this.speed = 6;//弾速
     this.length = 180;//射程距離
   }
-  /*向いてる方向+-π/8の中で近い敵に照準をあわせる*/
+
+  //敵が視界に入っているか
+  isSeen(player,enemy){
+    return  player.dir == DIR.UP && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 1
+      || player.dir == DIR.DOWN && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) <-1
+        || player.dir == DIR.RIGHT && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) <-1
+          || player.dir == DIR.LEFT && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >1
+  }
+
   Target(player){
     /*とりあえず全探索*/
     for(let l of EntityManager.enemyList){
@@ -28,55 +38,40 @@ export default class Weapon1 extends Weapon{
       if(this.isTargetOn &&
         l == this.target.enemy){
         if(Util.distance(l.pos, player.pos) < this.length
-          && (
-            player.dir == DIR.UP && (player.pos.y-l.pos.y)/Math.abs((player.pos.x-l.pos.x)) > 1
-              || player.dir == DIR.DOWN && (player.pos.y-l.pos.y)/Math.abs((player.pos.x-l.pos.x)) <-1
-                || player.dir == DIR.RIGHT && (player.pos.x-l.pos.x)/Math.abs((player.pos.y-l.pos.y)) <-1
-                  || player.dir == DIR.LEFT && (player.pos.x-l.pos.x)/Math.abs((player.pos.y-l.pos.y)) >1
-          )
+          //各方向+-45度まで許容
+          && this.isSeen(player,l)
         ){
           continue;
         }
+        //⭐
           EntityManager.removeEntity(this.target);
           this.isTargetOn = false;
           continue;
       }
-        //射程距離以内かつ
-      if(Util.distance(l.pos, player.pos) < this.length
-        //dirとなす角がPI/4以内
-      // &&((player.pos.y-l.pos.y)/(player.pos.x-l.pos.x)) < 1
-      && (
-        player.dir == DIR.UP && (player.pos.y-l.pos.y)/Math.abs((player.pos.x-l.pos.x)) > 1
-        || player.dir == DIR.DOWN && (player.pos.y-l.pos.y)/Math.abs((player.pos.x-l.pos.x)) <-1
-        || player.dir == DIR.RIGHT && (player.pos.x-l.pos.x)/Math.abs((player.pos.y-l.pos.y)) <-1
-        || player.dir == DIR.LEFT && (player.pos.x-l.pos.x)/Math.abs((player.pos.y-l.pos.y)) >1
-          )
+        //射程距離以内かつ視界
+      if(Util.distance(l.pos, player.pos) < this.length && this.isSeen(player,l)
        ){
           //既にロックオンされている敵より近ければ
         if(!this.isTargetOn ||
           Util.distance(l.pos , player.pos) < Util.distance(this.target.pos,player.pos)){
         //今のロック先を解除して
         if(this.isTargetOn){
+        //⭐
           EntityManager.removeEntity(this.target);
-          //this.isTargetOn = false;
+          this.isTargetOn = false;
         }
         //targetを追加する
         this.target = new Target(l);
-        EntityManager.addEntity(this.target);
+        //⭐
+        EntityManager.addEntity(this.target,Timer.timer);
         this.isTargetOn = true;
         }
       }
-      
-      
-      
-      
-      
-      
-      
     }
     if(this.isTargetOn == true){
-      //lockしていた敵が消えたら消去
+      //lockしていた敵が視界から消えたら消去
       if(!this.target.enemy.isAlive){
+        //⭐
           EntityManager.removeEntity(this.target);
           this.isTargetOn = false;
       }else{
@@ -99,15 +94,14 @@ export default class Weapon1 extends Weapon{
           y: player.pos.y + 5 * Math.sin(player.arg),
         }
         let bullet = new Bullet1(p,v);
+        bullet.atk = 1;
         EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
         /* □ Effect : shot */
-        p.x += v.x + Math.floor(Math.random()-0.5);
-        p.y += v.y + Math.floor(Math.random()-0.5);
         EntityManager.addEntity(new BulletShot(p,{x:0,y:0}));
         //反動
-        player.vel.x -= v.x/10;
-        player.vel.y -= v.y/2;
+        player.vel.x -= v.x/6;
+        player.vel.y -= v.y/4;
     }
     this.frame++;
   }

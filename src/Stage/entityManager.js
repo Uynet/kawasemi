@@ -1,77 +1,102 @@
 'use strict'
 import Drawer from '../drawer.js';
 import Target from '../Entity/target.js';
-
+import Timer from '../timer.js';
 /*エンティティマネージャ*/
+let ya = 0;
+let yu = 0;
 export default class EntityManager{
   static Init(){
     this.entityList = [];//全Entityのリスト
     this.enemyList = [];//敵のリスト
     this.wallList = [];//壁のリスト
     this.player;//プレイヤーのインスタンス
+    this.effectList = []//本当はいらないけど何故か消えないバグがあるから..
   }
   /*Entityをリストに登録*/
   static addEntity(entity){
     //各entityの参照を保持する
+    this.entityList.push(entity); 
     switch(entity.type){
+      //プレイヤー
       case ENTITY.PLAYER :
         this.player = entity;
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
-      case ENTITY.ENEMY :
+        //敵
+      case ENTITY.ENEMY : 
         this.enemyList.push(entity);
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
+        //エフェクト
       case ENTITY.EFFECT :
-        Drawer.addContainer(entity.sprite,"FORE");
+        this.effectList.push(entity);
+        entity.sprite.id = Math.random();
+        if(entity.name == "target"){
+          entity.sprite.id *= 100;
+        }else if(entity.name == "blur"){
+          entity.sprite.id *= 10000;
+          }
+        Drawer.addContainer(entity.sprite,"FORE",entity.sprite.id);
         break;
+        //壁
       case ENTITY.WALL :
         this.wallList.push(entity);
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
+        //ゴール?
       case ENTITY.GOAL :
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
+        //その他
       default : 
         if(entity.type!="BULLET"){
         }
         Drawer.addContainer(entity.sprite,"ENTITY");
-
     }
-    this.entityList.push(entity); 
+  }
+  
+  static ri(entity){
+    return this.effectList.indexOf(entity);
   }
 
   /*Entityをリストから削除する*/
   static removeEntity(entity){
-    let i = this.entityList.indexOf(entity);
-    this.entityList.splice(i,1);
 
     switch(entity.type){
+      //プレイヤー
       case ENTITY.PLAYER :
         this.player = null;
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
+        //敵
       case ENTITY.ENEMY :
-        //敵リストから排除
-        i = this.enemyList.indexOf(entity);
+        let i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
+        //エフェクト
       case ENTITY.EFFECT :
-        Drawer.removeContainer(entity.sprite,"FORE");
+        let m = this.effectList.indexOf(entity);
+        this.effectList.splice(m,1);
+        Drawer.removeContainer(entity.sprite,"FORE",entity.sprite.id);
         break;
+        //壁
       case ENTITY.WALL :
-        //壁リストから排除
-        i = this.wallList.indexOf(entity);
-        this.wallList.splice(i,1);
+        let j = this.wallList.indexOf(entity);
+        this.wallList.splice(j,1);
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
+        //その他
       default :
-        if(entity.type!="BULLET"){
+        if( entity.type!=ENTITY.BULLET){
+          console.warn(entity);
         }
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
     }
+    let k = this.entityList.indexOf(entity);
+    this.entityList.splice(k,1);
   }
   /*Entityの更新*/
   static Update(){
