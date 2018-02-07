@@ -48,10 +48,9 @@ export default class Teki1 extends Enemy{
           this.vel.y *= -0.3;
         }
         /*押し出し*/
-        while(Collision.on(this,l).isHit){
-          this.pos.x += Collision.on(this,l).n.x/5;
-          this.pos.y += Collision.on(this,l).n.y/5;
-        }
+          let c = Collision.on(this,l)
+          this.pos.x += c.n.x * c.depth;
+          this.pos.y += c.n.y * c.depth;
         /*note : now isHit == false*/
       }
     }

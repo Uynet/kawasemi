@@ -10,6 +10,7 @@ export default class Collision{
       //プレイヤー側の押し出しの途中で法線が拾えてない(?)事がある
 
       let n = {x:99999,y:0}; // 押し出すべき方向(法線) 衝突していなければundefined
+    let depth;
     /*円同士の衝突判定*/
     if(e1.collider.shape == SHAPE.CIRCLE && e2.collider.shape == SHAPE.CIRCLE){
       let circ1 = e1.collider.hitbox;
@@ -20,7 +21,7 @@ export default class Collision{
       }else{
         isHit = false;
       }
-      return new CollisionInfo(isHit , n);
+      return new CollisionInfo(isHit , n , meri);
     }
 
     /*矩形同士*/
@@ -44,39 +45,61 @@ export default class Collision{
           box1.pos.y+box1.height - box2.pos.y ,
           box1.pos.x+box1.width - box2.pos.x
         ];
-
         let maxI = Util.maxIndex(meri);
-        //       console.log(meri);
+        let minI = Util.minIndex(meri);
+        //console.log(meri);
         isHit = true;
         switch(maxI){
           case 2: n = {x:0 , y:1};break;
           case 3: n = {x:1 , y:0};break;
-          case 0:n = {x:0 , y:-1};break;
-          case 1:n = {x:-1 , y:0};break;
+          case 0: n = {x:0 , y:-1};break;
+          case 1: n = {x:-1 , y:0};break;
         }
+        depth = meri[minI];
       }else{
         isHit = false;
       }
-      return new CollisionInfo(isHit , n);
+      return new CollisionInfo(isHit , n , depth);
     }
-    throw new Error("po");
+
+    //線分単体
+    if(e1.collider.shape == SHAPE.LINE && e2.collider.shape == SHAPE.LINE){
+      return new CollisionInfo(isHit , n , depth);
+    }
+
+    //4つ線分の集合体
+    if(e1.collider.shape == SHAPE.LINES && e2.collider.shape == SHAPE.LINES){
+      return new CollisionInfo(isHit , n , depth);
+    }
+    //どれでもないパターン
+    throw new Error("衝突判定がバグってます");
   }
 
-  static push(box1,box2){
-    if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-    if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
-    while(Collision.on(this,l).isHit){
-      this.pos.x += Collision.on(this,l).n.x;
-      this.pos.y += Collision.on(this,l).n.y;
-    }
+  /*
+  
+  🍉 衝突応答
+  
+  */
+
+  /*衝突応答 矩形同士*/
+  static Resolve(e1,e2){
+    /*速度*/
+    if(Collision.on(e1,e2).n.x != 0) e1.vel.x = 0;
+    if(Collision.on(e1,e2).n.y != 0) e1.vel.y *= -e1.e ;
+    //while(Collision.on(e1,e2).isHit){
+      let l = Collision.on(e1,e2);
+      e1.pos.x += l.n.x*l.depth;
+      e1.pos.y += l.n.y*l.depth;
+    //}
     /*note : now isHit == false*/
   }
 }
 
 //衝突判定クラス
 class CollisionInfo{
-  constructor(isHit,n){
+  constructor(isHit,n,depth){
     this.isHit = isHit; // 衝突したかどうか bool
       this.n = n //衝突したならば法線
+        this.depth = depth;//めり込み量
   }
 }

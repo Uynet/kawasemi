@@ -50,6 +50,7 @@ export default class Player extends Entity{
     this.frame = 0;
     this.frameDead;//死んだ時刻
     this.frameDamaged;//最後に攻撃を食らった時間 無敵時間の計算に必要
+    this.e = 0.1;
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
@@ -128,13 +129,27 @@ export default class Player extends Entity{
           y:this.pos.y
         }
         let v = {
-          x:0,
+          x:Math.random()*2,
           y:-5
         }
-        //EntityManager.addEntity(new Font(p,v,"あ"));
-        //EntityManager.addEntity(new Font(p,v,"い"));
-        //EntityManager.addEntity(new Font(p,v,"う"));
-        //EntityManager.addEntity(new Font(p,v,"え"));
+        switch(Math.floor(16*Math.random())){
+          case 0 :EntityManager.addEntity(new Font(p,v,"あ"));break;
+          case 1 :EntityManager.addEntity(new Font(p,v,"い"));break;
+          case 2 :EntityManager.addEntity(new Font(p,v,"う"));break;
+          case 3 :EntityManager.addEntity(new Font(p,v,"え"));break;
+          case 4 :EntityManager.addEntity(new Font(p,v,"お"));break;
+          case 5 :EntityManager.addEntity(new Font(p,v,"か"));break;
+          case 6 :EntityManager.addEntity(new Font(p,v,"き"));break;
+          case 7 :EntityManager.addEntity(new Font(p,v,"く"));break;
+          case 8 :EntityManager.addEntity(new Font(p,v,"け"));break;
+          case 9 :EntityManager.addEntity(new Font(p,v,"こ"));break;
+          case 10 :EntityManager.addEntity(new Font(p,v,"さ"));break;
+          case 11 :EntityManager.addEntity(new Font(p,v,"し"));break;
+          case 12 :EntityManager.addEntity(new Font(p,v,"す"));break;
+          case 13 :EntityManager.addEntity(new Font(p,v,"せ"));break;
+          case 14 :EntityManager.addEntity(new Font(p,v,"そ"));break;
+          case 15 :EntityManager.addEntity(new Font(p,v,"た"));break;
+        }
     }
   }
 
@@ -144,57 +159,71 @@ export default class Player extends Entity{
       case state.WAITING :
         switch(this.dir){
           case DIR.RIGHT :
-            this.spid = 16 + (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.sprite.texture = this.pattern.waitR[this.spid];
             break;
           case DIR.LEFT :
-            this.spid = 20 + (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.sprite.texture = this.pattern.waitL[this.spid];
             break;
           case DIR.UP :
-            this.spid = 24 + (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.sprite.texture = this.pattern.waitU[this.spid];
+            break;
             break;
           case DIR.DOWN :
-            this.spid = 28 + (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.sprite.texture = this.pattern.waitD[this.spid];
             break;
         }
         break;
       case state.JUMPING :
         switch(this.dir){
           case DIR.RIGHT :
-            this.spid = 44 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.sprite.texture = this.pattern.jumpR[this.spid];
             break;
           case DIR.LEFT :
-            this.spid = 40 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.sprite.texture = this.pattern.jumpL[this.spid];
             break;
           case DIR.UP :
-            this.spid = 44 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.sprite.texture = this.pattern.jumpR[this.spid];
             break;
           case DIR.DOWN :
-            this.spid = 40 + (Math.floor(this.frame/ANIM_RUN))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.sprite.texture = this.pattern.jumpL[this.spid];
             break;
         }
         break;
       case state.RUNNING :
         switch(this.dir){
           case DIR.RIGHT :
-            this.spid = 0 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
+            this.sprite.texture = this.pattern.runR[this.spid];
             break;
           case DIR.LEFT :
-            this.spid = 4 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
+            this.sprite.texture = this.pattern.runL[this.spid];
             break;
           case DIR.UP :
-            this.spid = 8 + (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
+            this.sprite.texture = this.pattern.runU[this.spid];
             break;
           case DIR.DOWN :
-            this.spid = 12 + (Math.floor(this.frame/ANIM_RUN))%4
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
+            this.sprite.texture = this.pattern.runD[this.spid];
             break;
         }
         break;
         //死亡
       case state.DYING:
-        this.spid = 32 + Math.min((Math.floor((this.frame - this.frameDead)/4)),7);
+        this.spid = Math.min(7,(Math.floor(Timer.timer/ANIM_RUN))%8);
+          this.sprite.texture = this.pattern.dying[this.spid];
         break;
     }
-    this.sprite.texture = this.pattern[this.spid];
+    //this.sprite.texture = this.pattern[this.spid];
   }
 
   /*武器チェンジ*/
@@ -215,8 +244,8 @@ export default class Player extends Entity{
           y:this.pos.y
         }
         let v = {
-          x:0,
-          y:-5
+          x:1*Math.random(),
+          y:-3
         }
         //フォントはダメージ数に応じて数字を表示する　
         EntityManager.addEntity(new Font(p,v,-atk));
@@ -233,20 +262,19 @@ export default class Player extends Entity{
     for(let l of EntityManager.wallList){
       if(Collision.on(this,l).isHit){
         /* 衝突応答*/
-        /*TODO Colクラスに核*/
-
         /*フラグの解除*/
         if(Collision.on(this,l).n.y == -1){
           this.isJump = 0;
         }
+        Collision.Resolve(this,l);
         /*速度*/
-        if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-        if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
+        //if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
+        //if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
         /*押し出し*/
-        while(Collision.on(this,l).isHit){
-          this.pos.x += Collision.on(this,l).n.x/5;
-          this.pos.y += Collision.on(this,l).n.y/5;
-        }
+        //while(Collision.on(this,l).isHit){
+         // this.pos.x += Collision.on(this,l).n.x/5;
+         // this.pos.y += Collision.on(this,l).n.y/5;
+        //}
         /*note : now isHit == false*/
       }
     }

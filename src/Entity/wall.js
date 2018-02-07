@@ -3,6 +3,7 @@ import Art from '../art.js';
 import Collider from '../Collision/collider.js';
 import Circle from '../Collision/circle.js';
 import Box from '../Collision/box.js';
+import EntityManaer from '../Stage/entityManager.js';
 
 let VEC0 = {x:0,y:0};
 
@@ -17,5 +18,7 @@ export default class Wall extends Entity{
   }
   Update(){
     /*nothing to do*/
+    let player = EntityManaer.player;
+    this.sprite.position = this.pos;
   }
 }
