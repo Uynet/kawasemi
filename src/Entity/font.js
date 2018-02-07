@@ -19,14 +19,12 @@ export default class Font extends EFFECT{
     this.isAlive = true;//消えたらfalse
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
       /*スプライト*/
-      /*TODO 🔥num型をstring型にキャストしているので必ず直す*/
+      /*TODO 🔥 num型をstring型にキャストしているので必ず直す*/
     this.spid = str; //0~9
     this.tex = Art.font[this.spid];
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = this.pos;
     this.gravity = 0.2;
-    this.vel.y = -2;
-    this.vel.x = 1*(Math.random()-0.5);
   }
 
   Collision(){

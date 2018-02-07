@@ -75,6 +75,7 @@ export default class MapData{
     MapData.CreateStage(Game.stage);
     /*🍉 parameter initialization*/
     WeaponManager.weaponList[0].isTargetOn = false;
+    WeaponManager.weaponList[0].target = null;//これ大丈夫か??
   }
 
   /*現在開かれているステージを削除*/

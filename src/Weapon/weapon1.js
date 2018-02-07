@@ -31,7 +31,6 @@ export default class Weapon1 extends Weapon{
   }
 
   Target(player){
-    console.assert(this.isTargetOn == (this.target === undefined))
     /*とりあえず全探索*/
     for(let l of EntityManager.enemyList){
       //既にロックオンされている敵が射程外に出たら解除

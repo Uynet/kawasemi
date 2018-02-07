@@ -8,56 +8,86 @@ export default class Art{
     this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
     /*Pttern*/
     /*forにして*/
-    this.playerPattern = [
-      PIXI.Texture.fromFrame('player00.png'),//0
-      PIXI.Texture.fromFrame('player01.png'),//1
-      PIXI.Texture.fromFrame('player02.png'),//2
-      PIXI.Texture.fromFrame('player03.png'),//3
-      PIXI.Texture.fromFrame('player04.png'),//4
-      PIXI.Texture.fromFrame('player05.png'),//5
-      PIXI.Texture.fromFrame('player06.png'),//6
-      PIXI.Texture.fromFrame('player07.png'),//7
-      PIXI.Texture.fromFrame('player10.png'),//8
-      PIXI.Texture.fromFrame('player11.png'),//9
-      PIXI.Texture.fromFrame('player12.png'),//10
-      PIXI.Texture.fromFrame('player13.png'),//11
-      PIXI.Texture.fromFrame('player14.png'),//12
-      PIXI.Texture.fromFrame('player15.png'),//13
-      PIXI.Texture.fromFrame('player16.png'),//14
-      PIXI.Texture.fromFrame('player17.png'),//15
-      PIXI.Texture.fromFrame('player20.png'),//16
-      PIXI.Texture.fromFrame('player21.png'),//17
-      PIXI.Texture.fromFrame('player22.png'),//18
-      PIXI.Texture.fromFrame('player23.png'),//19
-      PIXI.Texture.fromFrame('player24.png'),//20
-      PIXI.Texture.fromFrame('player25.png'),//21
-      PIXI.Texture.fromFrame('player26.png'),//22
-      PIXI.Texture.fromFrame('player27.png'),//23
-      PIXI.Texture.fromFrame('player30.png'),//24
-      PIXI.Texture.fromFrame('player31.png'),//25
-      PIXI.Texture.fromFrame('player32.png'),//26
-      PIXI.Texture.fromFrame('player33.png'),//27
-      PIXI.Texture.fromFrame('player34.png'),//28
-      PIXI.Texture.fromFrame('player35.png'),//29
-      PIXI.Texture.fromFrame('player36.png'),//30
-      PIXI.Texture.fromFrame('player37.png'),//31
-      PIXI.Texture.fromFrame('player40.png'),//32 死亡エフェクト
-      PIXI.Texture.fromFrame('player41.png'),//33 死亡エフェクト
-      PIXI.Texture.fromFrame('player42.png'),//34 死亡エフェクト
-      PIXI.Texture.fromFrame('player43.png'),//35 死亡エフェクト
-      PIXI.Texture.fromFrame('player44.png'),//36 死亡エフェクト
-      PIXI.Texture.fromFrame('player45.png'),//37 死亡エフェクト
-      PIXI.Texture.fromFrame('player46.png'),//38 死亡エフェクト
-      PIXI.Texture.fromFrame('player47.png'),//39  死亡エフェクト
-      PIXI.Texture.fromFrame('player50.png'),//40 ジャンプ
-      PIXI.Texture.fromFrame('player51.png'),//41 
-      PIXI.Texture.fromFrame('player52.png'),//42 
-      PIXI.Texture.fromFrame('player53.png'),//43 
-      PIXI.Texture.fromFrame('player54.png'),//44 
-      PIXI.Texture.fromFrame('player55.png'),//45 
-      PIXI.Texture.fromFrame('player56.png'),//46 
-      PIXI.Texture.fromFrame('player57.png')//47  
-    ];
+    this.playerPattern = {
+      runR : [
+        PIXI.Texture.fromFrame('player00.png'),//0
+        PIXI.Texture.fromFrame('player01.png'),//1
+        PIXI.Texture.fromFrame('player02.png'),//2
+        PIXI.Texture.fromFrame('player03.png'),//3
+        PIXI.Texture.fromFrame('player04.png'),//3
+        PIXI.Texture.fromFrame('player05.png'),//3
+      ],
+      runL : [
+        PIXI.Texture.fromFrame('player06.png'),//4
+        PIXI.Texture.fromFrame('player07.png'),//5
+        PIXI.Texture.fromFrame('player08.png'),//6
+        PIXI.Texture.fromFrame('player09.png'),//7
+        PIXI.Texture.fromFrame('player0a.png'),//7
+        PIXI.Texture.fromFrame('player0b.png'),//7
+      ],
+      runU : [
+        PIXI.Texture.fromFrame('player10.png'),//8
+        PIXI.Texture.fromFrame('player11.png'),//9
+        PIXI.Texture.fromFrame('player12.png'),//10
+        PIXI.Texture.fromFrame('player13.png'),//11
+        PIXI.Texture.fromFrame('player14.png'),//11
+        PIXI.Texture.fromFrame('player15.png'),//11
+      ],
+      runD : [
+        PIXI.Texture.fromFrame('player16.png'),//12
+        PIXI.Texture.fromFrame('player17.png'),//13
+        PIXI.Texture.fromFrame('player18.png'),//14
+        PIXI.Texture.fromFrame('player19.png'),//15
+        PIXI.Texture.fromFrame('player1a.png'),//11
+        PIXI.Texture.fromFrame('player1b.png'),//11
+      ],
+      waitR :[
+        PIXI.Texture.fromFrame('player20.png'),//16
+        PIXI.Texture.fromFrame('player21.png'),//17
+        PIXI.Texture.fromFrame('player22.png'),//18
+        PIXI.Texture.fromFrame('player23.png'),//19
+      ],
+      waitL : [
+        PIXI.Texture.fromFrame('player24.png'),//20
+        PIXI.Texture.fromFrame('player25.png'),//21
+        PIXI.Texture.fromFrame('player26.png'),//22
+        PIXI.Texture.fromFrame('player27.png'),//23
+      ],
+      waitU : [
+        PIXI.Texture.fromFrame('player30.png'),//24
+        PIXI.Texture.fromFrame('player31.png'),//25
+        PIXI.Texture.fromFrame('player32.png'),//26
+        PIXI.Texture.fromFrame('player33.png'),//27
+      ],
+      waitD : [
+        PIXI.Texture.fromFrame('player34.png'),//28
+        PIXI.Texture.fromFrame('player35.png'),//29
+        PIXI.Texture.fromFrame('player36.png'),//30
+        PIXI.Texture.fromFrame('player37.png'),//31
+      ],
+      dying : [
+        PIXI.Texture.fromFrame('player40.png'),//32 死亡エフェクト
+        PIXI.Texture.fromFrame('player41.png'),//33 死亡エフェクト
+        PIXI.Texture.fromFrame('player42.png'),//34 死亡エフェクト
+        PIXI.Texture.fromFrame('player43.png'),//35 死亡エフェクト
+        PIXI.Texture.fromFrame('player44.png'),//36 死亡エフェクト
+        PIXI.Texture.fromFrame('player45.png'),//37 死亡エフェクト
+        PIXI.Texture.fromFrame('player46.png'),//38 死亡エフェクト
+        PIXI.Texture.fromFrame('player47.png'),//39  死亡エフェクト
+      ],
+      jumpR : [
+        PIXI.Texture.fromFrame('player50.png'),//40 ジャンプ
+        PIXI.Texture.fromFrame('player51.png'),//41 
+        PIXI.Texture.fromFrame('player52.png'),//42 
+        PIXI.Texture.fromFrame('player53.png'),//43 
+      ],
+      jumpL : [
+        PIXI.Texture.fromFrame('player54.png'),//44 
+        PIXI.Texture.fromFrame('player55.png'),//45 
+        PIXI.Texture.fromFrame('player56.png'),//46 
+        PIXI.Texture.fromFrame('player57.png')//47  
+      ]
+    };
     this.UIPattern = [
       PIXI.Texture.fromFrame('weapon00.png'),
       PIXI.Texture.fromFrame('weapon01.png'),

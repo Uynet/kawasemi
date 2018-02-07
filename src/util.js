@@ -58,6 +58,17 @@ export default class Util{
     }
     return maxI;
   }
+  static minIndex(arr){
+    let min = arr[0];
+    let minI = 0;
+    for(let i = 1;i<arr.length;i++){
+      if(min > arr[i]){
+        min = arr[i];
+        minI = i;
+      }
+    }
+    return minI;
+  }
 
   static advec(v1,v2){
     return {x:v1.x + v2.x ,y:v1.y + v2.y};
