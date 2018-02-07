@@ -7,7 +7,7 @@ import EntityManager from '../Stage/entityManager.js';
 import TestAI from './AI/testAI.js';
 import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
-
+import Font from './font.js';
 const ATK_TEKI1 = 1;
 
 let EntityList = EntityManager.entityList;
@@ -31,10 +31,28 @@ export default class Teki1 extends Enemy{
     this.isJump = false;
     this.isAlive = true;
   }
+  Damage(atk){
+    this.hp += atk;
+    //ダメージをポップ
+    //ここ値渡しにしないとプレイヤーと同じ座標を指してしまう
+    let p = {
+      x:this.pos.x,
+      y:this.pos.y
+    }
+    let v = {
+      x:1*Math.random(),
+      y:-3
+    }
+    //フォントはダメージ数に応じて数字を表示する　
+    cl(-atk+"r");
+    EntityManager.addEntity(new Font(p,v,-atk+"r"));
+    this.hp = Math.max(this.hp,0);
+    UIManager.HP.Bar();
+  }
   Collision(){
     /*衝突判定*/
     /*TODO 敵が潰された時にめり込むのでなんとかする*/
-    for(let l of EntityManager.wallList.concat(EntityManager.enemyList)){
+    for(let l of EntityManager.wallList){
       if(l == this) continue;
       /*衝突判定*/
       if(Collision.on(this,l).isHit){
@@ -50,6 +68,25 @@ export default class Teki1 extends Enemy{
           let c = Collision.on(this,l)
           this.pos.x += c.n.x * c.depth;
           this.pos.y += c.n.y * c.depth;
+        /*note : now isHit == false*/
+      }
+    }
+    for(let l of EntityManager.enemyList){
+      if(l == this) continue;
+      /*衝突判定*/
+      if(Collision.on(this,l).isHit){
+        /* 衝突応答*/
+
+        /*速度*/
+        if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
+        if(Collision.on(this,l).n.y != 0) {
+          this.isJump = false;
+          this.vel.y *= -0.3;
+        }
+        /*押し出し*/
+          let c = Collision.on(this,l)
+          this.pos.x += c.n.x * c.depth/2;
+          this.pos.y += c.n.y * c.depth/2;
         /*note : now isHit == false*/
       }
     }

@@ -26,5 +26,6 @@ export default class UIHP extends UI{
   }
   Bar(hp){
     this.sprite.scale.x = EntityManager.player.hp/100;
+    this.sprite.alpha = 0.9;
   }
 }
