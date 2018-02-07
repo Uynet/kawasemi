@@ -9,6 +9,15 @@ import Util from '../util.js';
 import BulletShot from '../Entity/bulletShot.js';
 import Timer from '../timer.js';
 
+const DIR = {
+  UR : "UR",
+  UL : "UL",
+  DR : "DR",
+  DL : "DL",
+  R : "R",
+  L : "L",
+};
+
 export default class Weapon1 extends Weapon{
   constructor(){
     super("1");
@@ -17,17 +26,17 @@ export default class Weapon1 extends Weapon{
     this.target;
     this.isTargetOn = false;//照準が発生しているか
     /*パラメータ*/
-    this.agi = 6;//間隔
+    this.agi = 16;//間隔
     this.speed = 6;//弾速
     this.length = 180;//射程距離
   }
 
   //敵が視界に入っているか
   isSeen(player,enemy){
-    return  player.dir == DIR.UP && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 1
-      || player.dir == DIR.DOWN && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) <-1
-        || player.dir == DIR.RIGHT && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) <-1
-          || player.dir == DIR.LEFT && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >1
+    return (player.dir == DIR.UR || player.dir ==  DIR.UL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 1
+        || (player.dir == DIR.DR || player.dir == DIR.DL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) <-1
+        || player.dir == DIR.R && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) <-1
+        || player.dir == DIR.L && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >1
   }
 
   Target(player){

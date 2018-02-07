@@ -44,7 +44,6 @@ export default class Teki1 extends Enemy{
       y:-3
     }
     //フォントはダメージ数に応じて数字を表示する　
-    cl(-atk+"r");
     EntityManager.addEntity(new Font(p,v,-atk+"r"));
     this.hp = Math.max(this.hp,0);
     UIManager.HP.Bar();
