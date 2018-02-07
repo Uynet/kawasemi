@@ -219,7 +219,7 @@ export default class Player extends Entity{
         break;
         //死亡
       case state.DYING:
-        this.spid = Math.min(7,(Math.floor(Timer.timer/ANIM_RUN))%8);
+        this.spid = Math.min(7,(Math.floor((this.frame - this.frameDead)/ANIM_RUN)));
           this.sprite.texture = this.pattern.dying[this.spid];
         break;
     }

@@ -1,4 +1,3 @@
-import Mover from './mover.js';
 import Enemy from './enemy.js';
 import Art from '../art.js';
 import Collider from '../Collision/collider.js';

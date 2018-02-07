@@ -1,7 +1,6 @@
 import EntityManager from './entityManager.js'
 import Entity from '../Entity/entity.js'
 import Wall from '../Entity/wall.js'
-import Mover from '../Entity/mover.js'
 import Player from '../Entity/player.js'
 import Teki1 from '../Entity/teki1.js'
 import Goal from '../Entity/goal.js'
