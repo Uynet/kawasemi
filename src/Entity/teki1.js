@@ -8,6 +8,7 @@ import TestAI from './AI/testAI.js';
 import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
 import Font from './font.js';
+import FontManager from '../Effect/FontManager.js';
 const ATK_TEKI1 = 1;
 
 let EntityList = EntityManager.entityList;
@@ -34,17 +35,7 @@ export default class Teki1 extends Enemy{
   Damage(atk){
     this.hp += atk;
     //ダメージをポップ
-    //ここ値渡しにしないとプレイヤーと同じ座標を指してしまう
-    let p = {
-      x:this.pos.x,
-      y:this.pos.y
-    }
-    let v = {
-      x:1*Math.random(),
-      y:-3
-    }
-    //フォントはダメージ数に応じて数字を表示する　
-    EntityManager.addEntity(new Font(p,v,-atk+"r"));
+    FontManager.PopDamageEffect(-atk+"",this);
     this.hp = Math.max(this.hp,0);
     UIManager.HP.Bar();
   }
@@ -92,7 +83,7 @@ export default class Teki1 extends Enemy{
   }
   Hurt(){
     if(Collision.on(this,EntityManager.player).isHit){
-      let damage = this.atk + Math.floor(10 * Math.random());
+      let damage = this.atk + 10 + Math.floor(10 * Math.random());
       EntityManager.player.Damage(-damage);
     }
   }

@@ -80,16 +80,16 @@ export default class Art{
         PIXI.Texture.fromFrame('player37.png'),//27
       ],
       waitDR : [
-        PIXI.Texture.fromFrame('player34.png'),//28
-        PIXI.Texture.fromFrame('player35.png'),//29
-        PIXI.Texture.fromFrame('player36.png'),//30
-        PIXI.Texture.fromFrame('player37.png'),//31
+        PIXI.Texture.fromFrame('player38.png'),//28
+        PIXI.Texture.fromFrame('player39.png'),//29
+        PIXI.Texture.fromFrame('player3a.png'),//30
+        PIXI.Texture.fromFrame('player3b.png'),//31
       ],
       waitDL : [
-        PIXI.Texture.fromFrame('player34.png'),//28
-        PIXI.Texture.fromFrame('player35.png'),//29
-        PIXI.Texture.fromFrame('player36.png'),//30
-        PIXI.Texture.fromFrame('player37.png'),//31
+        PIXI.Texture.fromFrame('player3c.png'),//28
+        PIXI.Texture.fromFrame('player3d.png'),//29
+        PIXI.Texture.fromFrame('player3e.png'),//30
+        PIXI.Texture.fromFrame('player3f.png'),//31
       ],
       dying : [
         PIXI.Texture.fromFrame('player40.png'),//32 死亡エフェクト
@@ -125,24 +125,38 @@ export default class Art{
       PIXI.Texture.fromFrame('HP00.png'),
       PIXI.Texture.fromFrame('HP01.png')
     ];
-    this.bulletPattern = [
-      PIXI.Texture.fromFrame('bullet00.png'),
-      PIXI.Texture.fromFrame('bullet10.png'),
-      PIXI.Texture.fromFrame('bullet20.png'),
-      PIXI.Texture.fromFrame('bullet30.png'),//Target
-      PIXI.Texture.fromFrame('bullet40.png'),//bullet shot
-      PIXI.Texture.fromFrame('bullet41.png'),//bullet shot
-      PIXI.Texture.fromFrame('bullet42.png'),//bullet shot
-      PIXI.Texture.fromFrame('bullet43.png'),//bullet shot
-      PIXI.Texture.fromFrame('bullet50.png'),//bullet hit at wall
-      PIXI.Texture.fromFrame('bullet51.png'),//bullet hit at wall
-      PIXI.Texture.fromFrame('bullet52.png'),//bullet hit at wall
-      PIXI.Texture.fromFrame('bullet53.png'),//bullet hit at wall
-      PIXI.Texture.fromFrame('bullet60.png'),//bullet blur
-      PIXI.Texture.fromFrame('bullet61.png'),//bullet blur
-      PIXI.Texture.fromFrame('bullet62.png'),//bullet blur
-      PIXI.Texture.fromFrame('bullet63.png') //bullet blur
-    ];
+    this.bulletPattern = {
+      bullet1 : [
+        PIXI.Texture.fromFrame('bullet00.png'),
+      ],
+      bullet2 : [
+        PIXI.Texture.fromFrame('bullet10.png'),
+      ],
+      bullet3 : [
+        PIXI.Texture.fromFrame('bullet20.png'),
+      ],
+      target : [
+        PIXI.Texture.fromFrame('bullet30.png'),//Target
+      ],
+      shot : [
+        PIXI.Texture.fromFrame('bullet40.png'),//bullet shot
+        PIXI.Texture.fromFrame('bullet41.png'),//bullet shot
+        PIXI.Texture.fromFrame('bullet42.png'),//bullet shot
+        PIXI.Texture.fromFrame('bullet43.png'),//bullet shot
+      ],
+      hitWall : [
+        PIXI.Texture.fromFrame('bullet50.png'),//bullet hit at wall
+        PIXI.Texture.fromFrame('bullet51.png'),//bullet hit at wall
+        PIXI.Texture.fromFrame('bullet52.png'),//bullet hit at wall
+        PIXI.Texture.fromFrame('bullet53.png'),//bullet hit at wall
+      ],
+      blur : [ 
+        PIXI.Texture.fromFrame('bullet60.png'),//bullet blur
+        PIXI.Texture.fromFrame('bullet61.png'),//bullet blur
+        PIXI.Texture.fromFrame('bullet62.png'),//bullet blur
+        PIXI.Texture.fromFrame('bullet63.png') //bullet blur
+      ]
+    }
     this.enemyPattern = [
       PIXI.Texture.fromFrame('enemy00.png'),
       PIXI.Texture.fromFrame('enemy01.png'),

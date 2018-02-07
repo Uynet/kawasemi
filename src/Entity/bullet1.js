@@ -18,8 +18,9 @@ export default class Bullet1 extends Bullet{
     /*基本情報*/
     this.frame = 0;
     /*スプライト*/
-    this.tex = Art.bulletPattern[0];
-    this.sprite = Art.SpriteFactory(this.tex);
+    this.pattern = Art.bulletPattern.bullet1;
+    this.spid = 0;
+    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = pos;
     /*コライダ*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状

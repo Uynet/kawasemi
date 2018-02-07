@@ -16,6 +16,7 @@ import WeaponManager from '../Weapon/weaponManager.js';
 import Timer from '../timer.js';
 import UIManager from '../UI/uiManager.js';
 import Font from './font.js';
+import FontManager from '../Effect/FontManager.js';
 
 const JUMP_VEL = 7;//ジャンプ力
 const RUN_VEL = 0.5;//はしり速度
@@ -25,7 +26,7 @@ const FLICTION = 0.7;
 const POP_PLAYER = -1;
 const INV_TIME = 5;//無敵時間
 /*アニメーションのインターバル*/
-const ANIM_RUN = 3;
+const ANIM_RUN = 7;
 const ANIM_WAIT = 7;
 
 const VX_MAX = 3;
@@ -108,18 +109,21 @@ export default class Player extends Entity{
     /*上向き*/
     if(Input.isKeyInput(KEY.UP)){
       //右向き上 or 左向き上
-      if(this.dir == DIR.R || this.dir == DIR.UR){
+      if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.UR;
-      }else if(this.dir == DIR.L || this.dir == DIR.UL){
+      }else if(this.dir == DIR.L || this.dir == DIR.UL || this.dir == DIR.DL){
         this.dir = DIR.UL;
-      }else{
-        console.warn();
       }
       this.arg = -Math.PI/2;
     }
     /*下向き*/
     if(Input.isKeyInput(KEY.DOWN)){
-      this.dir = DIR.DR;
+      //右向き下 or 左向き下
+      if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
+        this.dir = DIR.DR;
+      }else if(this.dir == DIR.L || this.dir == DIR.UL || this.dir == DIR.DL){
+        this.dir = DIR.DL;
+      }
       this.arg = Math.PI/2;
     }
     /*shot*/
@@ -193,6 +197,7 @@ export default class Player extends Entity{
             this.sprite.texture = this.pattern.waitDR[this.spid];
             break;
           case DIR.DL :
+            cl("po");
             this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
             this.sprite.texture = this.pattern.waitDL[this.spid];
             break;
@@ -274,18 +279,8 @@ export default class Player extends Entity{
     if(!this.isInvincible){
       if(this.isAlive){
         this.hp+=atk;
-        //ダメージをポップ
-        //ここ値渡しにしないとプレイヤーと同じ座標を指してしまう
-        let p = {
-          x:this.pos.x,
-          y:this.pos.y
-        }
-        let v = {
-          x:1*Math.random(),
-          y:-3
-        }
         //フォントはダメージ数に応じて数字を表示する　
-        EntityManager.addEntity(new Font(p,v,-atk));
+        FontManager.PopDamageEffect(-atk+"",this);
         this.hp = Math.max(this.hp,0);
         UIManager.HP.Bar();
         //ダメージを受けて一定時間無敵になる

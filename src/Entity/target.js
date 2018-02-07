@@ -13,8 +13,9 @@ export default class Target extends EFFECT{
     this.name = "target";
     this.frame = 0;
     /*スプライト*/
-    this.tex = Art.bulletPattern[3];
-    this.sprite = Art.SpriteFactory(this.tex);
+    this.spid = 0;
+    this.pattern = Art.bulletPattern.target;
+    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.alpha = 1;
     this.sprite.position = this.pos;
     /*パラメータ*/
