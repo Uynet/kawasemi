@@ -15,6 +15,7 @@ export default class Target extends EFFECT{
     /*スプライト*/
     this.tex = Art.bulletPattern[3];
     this.sprite = Art.SpriteFactory(this.tex);
+    this.sprite.alpha = 1;
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.enemy = enemy;//ロックしているenemyの情報

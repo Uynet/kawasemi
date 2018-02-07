@@ -52,6 +52,9 @@ export default class Font extends EFFECT{
     this.vel.y += this.gravity;
     this.sprite.position = this.pos;
     if(this.frame > 30){
+      this.sprite.alpha -=0.05; 
+    }
+    if(this.frame > 90){
       EntityManager.removeEntity(this);
     }
     this.frame++;
