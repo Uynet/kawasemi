@@ -137,15 +137,51 @@
       "sourceSize": {"w": 8, "h": 8}
     },
     "font2d.png": {
-      "frame": {"x":102, "y":16, "w":8, "h":8},
+      "frame": {"x":104, "y":16, "w":8, "h":8},
       "sourceSize": {"w": 8, "h": 8}
     },
     "font2e.png": {
-      "frame": {"x":110, "y":16, "w":8, "h":8},
+      "frame": {"x":112, "y":16, "w":8, "h":8},
       "sourceSize": {"w": 8, "h": 8}
     },
     "font2f.png": {
-      "frame": {"x":118, "y":16, "w":8, "h":8},
+      "frame": {"x":120, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+      "font210.png": {
+      "frame": {"x":128, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font211.png": {
+      "frame": {"x":136, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font212.png": {
+      "frame": {"x":144, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font213.png": {
+      "frame": {"x":152, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font214.png": {
+      "frame": {"x":160, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font215.png": {
+      "frame": {"x":168, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+        "font216.png": {
+      "frame": {"x":176, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+        "font217.png": {
+      "frame": {"x":184, "y":16, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+        "font218.png": {
+      "frame": {"x":192, "y":16, "w":8, "h":8},
       "sourceSize": {"w": 8, "h": 8}
     }
 

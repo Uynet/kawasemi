@@ -2,11 +2,7 @@ import Game from './Game.js';
 
 export default class Art{
   static Load(resources){
-    /*Entity*/
-    //cl(PIXI.utils.TextureCache);
-    /*Effect*/
     this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
-    /*Pttern*/
     /*forにして*/
     this.playerPattern = {
       runR : [
@@ -25,7 +21,7 @@ export default class Art{
         PIXI.Texture.fromFrame('player0a.png'),//7
         PIXI.Texture.fromFrame('player0b.png'),//7
       ],
-      runU : [
+      runUR : [
         PIXI.Texture.fromFrame('player10.png'),//8
         PIXI.Texture.fromFrame('player11.png'),//9
         PIXI.Texture.fromFrame('player12.png'),//10
@@ -33,7 +29,23 @@ export default class Art{
         PIXI.Texture.fromFrame('player14.png'),//11
         PIXI.Texture.fromFrame('player15.png'),//11
       ],
-      runD : [
+      runUL : [
+        PIXI.Texture.fromFrame('player10.png'),//8
+        PIXI.Texture.fromFrame('player11.png'),//9
+        PIXI.Texture.fromFrame('player12.png'),//10
+        PIXI.Texture.fromFrame('player13.png'),//11
+        PIXI.Texture.fromFrame('player14.png'),//11
+        PIXI.Texture.fromFrame('player15.png'),//11
+      ],
+      runDR : [
+        PIXI.Texture.fromFrame('player16.png'),//12
+        PIXI.Texture.fromFrame('player17.png'),//13
+        PIXI.Texture.fromFrame('player18.png'),//14
+        PIXI.Texture.fromFrame('player19.png'),//15
+        PIXI.Texture.fromFrame('player1a.png'),//11
+        PIXI.Texture.fromFrame('player1b.png'),//11
+      ],
+      runDL : [
         PIXI.Texture.fromFrame('player16.png'),//12
         PIXI.Texture.fromFrame('player17.png'),//13
         PIXI.Texture.fromFrame('player18.png'),//14
@@ -53,13 +65,27 @@ export default class Art{
         PIXI.Texture.fromFrame('player26.png'),//22
         PIXI.Texture.fromFrame('player27.png'),//23
       ],
-      waitU : [
+      //上向き右
+      waitUR : [
         PIXI.Texture.fromFrame('player30.png'),//24
         PIXI.Texture.fromFrame('player31.png'),//25
         PIXI.Texture.fromFrame('player32.png'),//26
         PIXI.Texture.fromFrame('player33.png'),//27
       ],
-      waitD : [
+      //上向き左
+      waitUL : [
+        PIXI.Texture.fromFrame('player34.png'),//24
+        PIXI.Texture.fromFrame('player35.png'),//25
+        PIXI.Texture.fromFrame('player36.png'),//26
+        PIXI.Texture.fromFrame('player37.png'),//27
+      ],
+      waitDR : [
+        PIXI.Texture.fromFrame('player34.png'),//28
+        PIXI.Texture.fromFrame('player35.png'),//29
+        PIXI.Texture.fromFrame('player36.png'),//30
+        PIXI.Texture.fromFrame('player37.png'),//31
+      ],
+      waitDL : [
         PIXI.Texture.fromFrame('player34.png'),//28
         PIXI.Texture.fromFrame('player35.png'),//29
         PIXI.Texture.fromFrame('player36.png'),//30
@@ -156,40 +182,15 @@ export default class Art{
       PIXI.Texture.fromFrame('wall86.png'),
     ];
 
-    this.seqPattern = [
-      PIXI.Texture.fromFrame('seq00.png'),
-      PIXI.Texture.fromFrame('seq01.png'),
-      PIXI.Texture.fromFrame('seq02.png'),
-      PIXI.Texture.fromFrame('seq03.png'),
-      PIXI.Texture.fromFrame('seq04.png'),
-      PIXI.Texture.fromFrame('seq05.png'),
-      PIXI.Texture.fromFrame('seq06.png'),
-      PIXI.Texture.fromFrame('seq07.png'),
-      PIXI.Texture.fromFrame('seq10.png'),
-      PIXI.Texture.fromFrame('seq11.png'),
-      PIXI.Texture.fromFrame('seq12.png'),
-      PIXI.Texture.fromFrame('seq13.png'),
-      PIXI.Texture.fromFrame('seq14.png'),
-      PIXI.Texture.fromFrame('seq15.png'),
-      PIXI.Texture.fromFrame('seq16.png'),
-      PIXI.Texture.fromFrame('seq17.png'),
-      PIXI.Texture.fromFrame('seq20.png'),
-      PIXI.Texture.fromFrame('seq21.png'),
-      PIXI.Texture.fromFrame('seq22.png'),
-      PIXI.Texture.fromFrame('seq23.png'),
-      PIXI.Texture.fromFrame('seq24.png'),
-      PIXI.Texture.fromFrame('seq25.png'),
-      PIXI.Texture.fromFrame('seq26.png'),
-      PIXI.Texture.fromFrame('seq27.png'),
-      PIXI.Texture.fromFrame('seq30.png'),
-      PIXI.Texture.fromFrame('seq31.png'),
-      PIXI.Texture.fromFrame('seq32.png'),
-      PIXI.Texture.fromFrame('seq33.png'),
-      PIXI.Texture.fromFrame('seq34.png'),
-      PIXI.Texture.fromFrame('seq35.png'),
-      PIXI.Texture.fromFrame('seq36.png'),
-      PIXI.Texture.fromFrame('seq37.png')
-    ];
+    /*画面遷移エフェクト*/
+    this.seqPattern = [];
+    for(let y=0;y<4;y++){
+      for (let x=0;x<8;x++){
+        let str = "seq" + y + "" + x +".png";
+        let i = 8*y+x;
+        this.seqPattern[i] = PIXI.Texture.fromFrame(str);
+      }
+    }
 
     this.font = new Array(256);
     this.font["0"] = PIXI.Texture.fromFrame('font00.png');
@@ -228,6 +229,15 @@ export default class Art{
     this.font["せ"] = PIXI.Texture.fromFrame('font2d.png');
     this.font["そ"] = PIXI.Texture.fromFrame('font2e.png');
     this.font["た"] = PIXI.Texture.fromFrame('font2f.png');
+    this.font["ち"] = PIXI.Texture.fromFrame('font210.png');
+    this.font["つ"] = PIXI.Texture.fromFrame('font211.png');
+    this.font["て"] = PIXI.Texture.fromFrame('font212.png');
+    this.font["と"] = PIXI.Texture.fromFrame('font213.png');
+    this.font["な"] = PIXI.Texture.fromFrame('font214.png');
+    this.font["に"] = PIXI.Texture.fromFrame('font215.png');
+    this.font["ぬ"] = PIXI.Texture.fromFrame('font216.png');
+    this.font["ね"] = PIXI.Texture.fromFrame('font217.png');
+    this.font["の"] = PIXI.Texture.fromFrame('font218.png');
   }
 
   static async LoadTexture(){

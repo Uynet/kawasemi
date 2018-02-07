@@ -18,7 +18,7 @@ import UIManager from '../UI/uiManager.js';
 import Font from './font.js';
 
 const JUMP_VEL = 7;//ジャンプ力
-  const RUN_VEL = 0.5;//はしり速度
+const RUN_VEL = 0.5;//はしり速度
 const PLAYER_GRAVITY = 0.4;
 const PLAYER_HP = 100;
 const FLICTION = 0.7;
@@ -31,7 +31,7 @@ const ANIM_WAIT = 7;
 const VX_MAX = 3;
 const VY_MAX = 7;
 
-let state = {
+const STATE = {
   WAITING : 0,
   RUNNING  : 1,
   JUMPING : 2,
@@ -39,6 +39,15 @@ let state = {
   DYING : 4,//死んでから遷移開始するまでの操作不能状態
   DEAD : 5
 }
+
+const DIR = {
+  UR : "UR",
+  UL : "UL",
+  DR : "DR",
+  DL : "DL",
+  R : "R",
+  L : "L",
+};
 /*フラグと状態が同じものを意味しててキモい*/
 
 export default class Player extends Entity{
@@ -61,9 +70,9 @@ export default class Player extends Entity{
     this.gravity = PLAYER_GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
     /*状態*/
-    this.state = state.WAITING;
+    this.state = STATE.WAITING;
     this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
-    this.dir = DIR.RIGHT;//向き
+    this.dir = DIR.R;//向き
     /*フラグ*/
     this.isJump = false;//空中にいるか
     this.isRun = false;//走っているか
@@ -77,53 +86,48 @@ export default class Player extends Entity{
       if(this.isJump == false){
         this.vel.y = -JUMP_VEL;
         this.isJump = true;
-        this.state = state.JUMPING;
+        this.state = STATE.JUMPING;
       }
     }
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
-      this.state = state.RUNNING;
-      this.dir = DIR.RIGHT;
+      this.state = STATE.RUNNING;
+      this.dir = DIR.R;
       this.isRun = true;
       this.arg = 0;
       this.acc.x = RUN_VEL;
-      /*
-      if(!this.isJump){
-        this.vel.y = POP_PLAYER;
-      }
-      */
     }
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
-      this.state = state.RUNNING;
-      this.dir = DIR.LEFT;
+      this.state = STATE.RUNNING;
+      this.dir = DIR.L;
       this.isRun = true;
       this.arg = Math.PI;
       this.acc.x = -RUN_VEL;
-      /*
-      if(!this.isJump){
-        this.isJump = true;
-        this.vel.y = POP_PLAYER;
-      }
-      */
     }
     /*上向き*/
     if(Input.isKeyInput(KEY.UP)){
-      this.dir = DIR.UP;
+      //右向き上 or 左向き上
+      if(this.dir == DIR.R || this.dir == DIR.UR){
+        this.dir = DIR.UR;
+      }else if(this.dir == DIR.L || this.dir == DIR.UL){
+        this.dir = DIR.UL;
+      }else{
+        console.warn();
+      }
       this.arg = -Math.PI/2;
     }
     /*下向き*/
     if(Input.isKeyInput(KEY.DOWN)){
-      this.dir = DIR.DOWN;
+      this.dir = DIR.DR;
       this.arg = Math.PI/2;
     }
     /*shot*/
     if(Input.isKeyInput(KEY.X)){
-      this.weapon.Target(this);
       this.weapon.shot(this);
     }
     /*for debug*/
-    if(Input.isKeyInput(KEY.SP)){
+    if(Input.isKeyInput(KEY.SP) && this.frame%10 == 0){
         let p = {
           x:this.pos.x,
           y:this.pos.y
@@ -132,7 +136,7 @@ export default class Player extends Entity{
           x:Math.random()*2,
           y:-5
         }
-        switch(Math.floor(16*Math.random())){
+        switch(Math.floor(25*Math.random())){
           case 0 :EntityManager.addEntity(new Font(p,v,"あ"));break;
           case 1 :EntityManager.addEntity(new Font(p,v,"い"));break;
           case 2 :EntityManager.addEntity(new Font(p,v,"う"));break;
@@ -149,6 +153,16 @@ export default class Player extends Entity{
           case 13 :EntityManager.addEntity(new Font(p,v,"せ"));break;
           case 14 :EntityManager.addEntity(new Font(p,v,"そ"));break;
           case 15 :EntityManager.addEntity(new Font(p,v,"た"));break;
+          case 16 :EntityManager.addEntity(new Font(p,v,"ち"));break;
+          case 17 :EntityManager.addEntity(new Font(p,v,"つ"));break;
+          case 18 :EntityManager.addEntity(new Font(p,v,"て"));break;
+          case 19 :EntityManager.addEntity(new Font(p,v,"と"));break;
+          case 19 :EntityManager.addEntity(new Font(p,v,"な"));break;
+          case 20 :EntityManager.addEntity(new Font(p,v,"に"));break;
+          case 21 :EntityManager.addEntity(new Font(p,v,"ぬ"));break;
+          case 22 :EntityManager.addEntity(new Font(p,v,"ね"));break;
+          case 23 :EntityManager.addEntity(new Font(p,v,"の"));break;
+          case 24 :EntityManager.addEntity(new Font(p,v,"は"));break;
         }
     }
   }
@@ -156,69 +170,92 @@ export default class Player extends Entity{
   /*状態からアニメーションを行う*/
   Animation(){
     switch(this.state){
-      case state.WAITING :
+      case STATE.WAITING :
         switch(this.dir){
-          case DIR.RIGHT :
+          case DIR.R :
             this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
             this.sprite.texture = this.pattern.waitR[this.spid];
             break;
-          case DIR.LEFT :
+          case DIR.L :
             this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
             this.sprite.texture = this.pattern.waitL[this.spid];
             break;
-          case DIR.UP :
+          case DIR.UR :
             this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
-            this.sprite.texture = this.pattern.waitU[this.spid];
+            this.sprite.texture = this.pattern.waitUR[this.spid];
             break;
-            break;
-          case DIR.DOWN :
+          case DIR.UL :
             this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
-            this.sprite.texture = this.pattern.waitD[this.spid];
+            this.sprite.texture = this.pattern.waitUL[this.spid];
+            break;
+          case DIR.DR :
+            this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.sprite.texture = this.pattern.waitDR[this.spid];
+            break;
+          case DIR.DL :
+            this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
+            this.sprite.texture = this.pattern.waitDL[this.spid];
             break;
         }
         break;
-      case state.JUMPING :
+      case STATE.JUMPING :
         switch(this.dir){
-          case DIR.RIGHT :
+          case DIR.R :
             this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
             this.sprite.texture = this.pattern.jumpR[this.spid];
             break;
-          case DIR.LEFT :
+          case DIR.L :
             this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
             this.sprite.texture = this.pattern.jumpL[this.spid];
             break;
-          case DIR.UP :
+          case DIR.UR :
             this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
             this.sprite.texture = this.pattern.jumpR[this.spid];
             break;
-          case DIR.DOWN :
+          case DIR.UL :
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.sprite.texture = this.pattern.jumpR[this.spid];
+            break;
+          case DIR.DR :
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
+            this.sprite.texture = this.pattern.jumpL[this.spid];
+            break;
+          case DIR.DL :
             this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
             this.sprite.texture = this.pattern.jumpL[this.spid];
             break;
         }
         break;
-      case state.RUNNING :
+      case STATE.RUNNING :
         switch(this.dir){
-          case DIR.RIGHT :
+          case DIR.R :
             this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
             this.sprite.texture = this.pattern.runR[this.spid];
             break;
-          case DIR.LEFT :
+          case DIR.L :
             this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
             this.sprite.texture = this.pattern.runL[this.spid];
             break;
-          case DIR.UP :
+          case DIR.UR :
             this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
-            this.sprite.texture = this.pattern.runU[this.spid];
+            this.sprite.texture = this.pattern.runUR[this.spid];
             break;
-          case DIR.DOWN :
+          case DIR.UL :
             this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
-            this.sprite.texture = this.pattern.runD[this.spid];
+            this.sprite.texture = this.pattern.runUL[this.spid];
+            break;
+          case DIR.DR :
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
+            this.sprite.texture = this.pattern.runDR[this.spid];
+            break;
+          case DIR.DL :
+            this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
+            this.sprite.texture = this.pattern.runDL[this.spid];
             break;
         }
         break;
         //死亡
-      case state.DYING:
+      case STATE.DYING:
         this.spid = Math.min(7,(Math.floor((this.frame - this.frameDead)/ANIM_RUN)));
           this.sprite.texture = this.pattern.dying[this.spid];
         break;
@@ -292,29 +329,45 @@ export default class Player extends Entity{
     if(this.vel.y < -VY_MAX)this.vel.y = -VY_MAX;
     /*摩擦
      * 地面にいる&&入力がない場合のみ有向*/
-    if(this.state == state.WAITING){
+    if(this.state == STATE.WAITING){
       this.vel.x *= FLICTION;
     }
     this.acc.x = 0;
 
     if(this.vel.y > 1){
-      this.state = state.FALLING;
+      this.state = STATE.FALLING;
     }
   }
 
   Update(){
+    //照準を自動でやってる
+
       if(this.isAlive){
-        this.state = state.WAITING; //何も入力がなければWAITINGとみなされる
-          this.isRun = false;
+        this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
+
+        this.isRun = false;
         this.Input();//入力
+        this.weapon.Target(this);
         if(this.isJump){
-          this.state = state.JUMPING;
+          this.state = STATE.JUMPING;
         }
         this.Physics();//物理
       }
     this.collision();//衝突
     this.Animation();//状態から画像を更新
-    Drawer.ScrollOn(this.pos);
+
+    //向きに応じてスクロール位置を変更
+    /*
+    switch(this.dir){
+      case DIR.UR :
+      case DIR.UL :
+        Drawer.ScrollOn({x:this.pos.x,y:this.pos.y-40});
+        break;
+      default :
+        Drawer.ScrollOn(this.pos);
+    }
+    */
+        Drawer.ScrollOn(this.pos);
 
     /*observer*/
     if(this.hp <= 0){
@@ -324,7 +377,7 @@ export default class Player extends Entity{
         this.isDying = true;
         this.isAlive = false;
       }
-      this.state = state.DYING;
+      this.state = STATE.DYING;
     }
     //死亡中
     if(this.isDying){       //まだ死んでない  
@@ -334,7 +387,7 @@ export default class Player extends Entity{
         //完全に死んだ
         //完全死亡時に一回だけ呼ばれる部分
         if(this.isDying){
-        //this.state = state.DEAD
+        //this.state = STATE.DEAD
           let g = new GameOverEvent();
           EventManager.eventList.push(g);
         }
