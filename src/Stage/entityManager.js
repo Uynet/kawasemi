@@ -28,7 +28,7 @@ export default class EntityManager{
         break;
         //エフェクト
       case ENTITY.EFFECT :
-        if(entity.name == "damageFontEffect"){
+        if(entity.name == "FontEffect"){
           this.effectList.push(entity);
           for(let i=0 ;i < entity.sprite.length ; i++){
             Drawer.addContainer(entity.sprite[i],"FORE");
@@ -79,7 +79,7 @@ export default class EntityManager{
         let m = this.effectList.indexOf(entity);
         this.effectList.splice(m,1);
         //複数スプライトを持つオブジェクトの処理
-        if(entity.name == "damageFontEffect"){
+        if(entity.name == "FontEffect"){
           for(let j = 0;j<entity.sprite.length;j++){
             console.assert(entity.sprite[j] != undefined);
             Drawer.removeContainer(entity.sprite[j],"FORE");

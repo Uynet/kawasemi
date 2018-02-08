@@ -16,8 +16,7 @@ import WeaponManager from '../Weapon/weaponManager.js';
 import Timer from '../timer.js';
 import UIManager from '../UI/uiManager.js';
 import Font from './font.js';
-import DamageFontEffect from './damageFontEffect.js';
-import FontManager from '../Effect/FontManager.js';
+import FontEffect from './fontEffect.js';
 
 const JUMP_VEL = 7;//ジャンプ力
   const RUN_VEL = 0.5;//はしり速度
@@ -239,7 +238,15 @@ export default class Player extends Entity{
       if(this.isAlive){
         this.hp+=atk;
         //フォントはダメージ数に応じて数字を表示する　
-        FontManager.PopDamageEffect(-atk+"",this);
+        let p = {
+          x:this.pos.x,
+          y:this.pos.y
+        }
+        let v = {
+          x:1.5 * (Math.random()-0.5),
+          y:-2
+        }
+        EntityManager.addEntity(new FontEffect({x:p.x,y:p.y},{x:v.x,y:v.y},-atk+""));
         this.hp = Math.max(this.hp,0);
         UIManager.HP.Bar();
         //ダメージを受けて一定時間無敵になる

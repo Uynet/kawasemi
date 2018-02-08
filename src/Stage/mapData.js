@@ -2,7 +2,7 @@ import EntityManager from './entityManager.js'
 import Entity from '../Entity/entity.js'
 import Wall from '../Entity/wall.js'
 import Player from '../Entity/player.js'
-import Teki1 from '../Entity/teki1.js'
+import Enemy1 from '../Entity/enemy1.js'
 import Goal from '../Entity/goal.js'
 import Game from '../Game.js'
 import Art from '../art.js'
@@ -54,7 +54,7 @@ export default class MapData{
             EntityManager.addEntity(new Player({x:16*x,y:16*y}));
             break;
           case TILE.ENEMY :
-            EntityManager.addEntity(new Teki1({x:16*x,y:16*y}));
+            EntityManager.addEntity(new Enemy1({x:16*x,y:16*y}));
             break;
           case TILE.GOAL :
             EntityManager.addEntity(new Goal({x:16*x,y:16*y}));
