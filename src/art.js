@@ -114,17 +114,28 @@ export default class Art{
         PIXI.Texture.fromFrame('player57.png')//47  
       ]
     };
-    this.UIPattern = [
-      PIXI.Texture.fromFrame('weapon00.png'),
-      PIXI.Texture.fromFrame('weapon01.png'),
-      PIXI.Texture.fromFrame('weapon02.png'),
-      PIXI.Texture.fromFrame('weapon10.png'),
-      PIXI.Texture.fromFrame('weapon11.png'),
-      PIXI.Texture.fromFrame('weapon12.png'),
-      PIXI.Texture.fromFrame('selectbox.png'),
-      PIXI.Texture.fromFrame('HP00.png'),
-      PIXI.Texture.fromFrame('HP01.png')
-    ];
+    this.UIPattern = {
+      wEq1 : PIXI.Texture.fromFrame('weapon00.png'),
+      wEq2 : PIXI.Texture.fromFrame('weapon01.png'),
+      wEq3 : PIXI.Texture.fromFrame('weapon02.png'),
+      wIcon1 : [
+        PIXI.Texture.fromFrame('weapon10.png'),
+        PIXI.Texture.fromFrame('weapon11.png'),
+      ],
+      wIcon2 : [
+        PIXI.Texture.fromFrame('weapon12.png'),
+        PIXI.Texture.fromFrame('weapon13.png'),
+      ],
+      wIcon3 : [
+        PIXI.Texture.fromFrame('weapon14.png'),
+        PIXI.Texture.fromFrame('weapon15.png'),
+      ],
+      sel : PIXI.Texture.fromFrame('selectbox.png'),//廃止予定
+      HP : [
+        PIXI.Texture.fromFrame('HP00.png'),
+        PIXI.Texture.fromFrame('HP01.png'),
+      ]
+    };
     this.bulletPattern = {
       bullet1 : [
         PIXI.Texture.fromFrame('bullet00.png'),

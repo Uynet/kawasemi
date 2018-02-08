@@ -12,8 +12,10 @@ export default class StageResetEvent extends Event{
   constructor(){
     super(1);
     function* po(){
-      Game.scene.ChangeState(STATE.STAGE);
+      /*ゲーム画面用 UIの作成*/
       UIManager.SetStage();
+
+      Game.scene.ChangeState(STATE.STAGE);
       MapData.CreateStage(Game.stage);
       yield ;
     }
