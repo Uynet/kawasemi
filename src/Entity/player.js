@@ -16,6 +16,7 @@ import WeaponManager from '../Weapon/weaponManager.js';
 import Timer from '../timer.js';
 import UIManager from '../UI/uiManager.js';
 import Font from './font.js';
+import DamageFontEffect from './damageFontEffect.js';
 import FontManager from '../Effect/FontManager.js';
 
 const JUMP_VEL = 7;//ジャンプ力
@@ -26,7 +27,7 @@ const FLICTION = 0.7;
 const POP_PLAYER = -1;
 const INV_TIME = 5;//無敵時間
   /*アニメーションのインターバル*/
-  const ANIM_RUN = 7;
+  const ANIM_RUN = 4;
 const ANIM_WAIT = 7;
 
 const VX_MAX = 3;

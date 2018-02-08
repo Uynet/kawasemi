@@ -3,8 +3,6 @@ import Drawer from '../drawer.js';
 import Target from '../Entity/target.js';
 import Timer from '../timer.js';
 /*エンティティマネージャ*/
-let ya = 0;
-let yu = 0;
 export default class EntityManager{
   static Init(){
     this.entityList = [];//全Entityのリスト
@@ -30,8 +28,15 @@ export default class EntityManager{
         break;
         //エフェクト
       case ENTITY.EFFECT :
-        this.effectList.push(entity);
-        Drawer.addContainer(entity.sprite,"FORE");
+        if(entity.name == "damageFontEffect"){
+          this.effectList.push(entity);
+          for(let i=0 ;i < entity.sprite.length ; i++){
+            Drawer.addContainer(entity.sprite[i],"FORE");
+          }
+        }else{
+          this.effectList.push(entity);
+          Drawer.addContainer(entity.sprite,"FORE");
+        }
         break;
         //壁
       case ENTITY.WALL :
@@ -73,7 +78,16 @@ export default class EntityManager{
       case ENTITY.EFFECT :
         let m = this.effectList.indexOf(entity);
         this.effectList.splice(m,1);
-        Drawer.removeContainer(entity.sprite,"FORE");
+        //複数スプライトを持つオブジェクトの処理
+        if(entity.name == "damageFontEffect"){
+          for(let j = 0;j<entity.sprite.length;j++){
+            console.assert(entity.sprite[j] != undefined);
+            Drawer.removeContainer(entity.sprite[j],"FORE");
+          }
+        }else{
+          console.assert(entity.sprite != undefined);
+          Drawer.removeContainer(entity.sprite,"FORE");
+        }
         break;
         //壁
       case ENTITY.WALL :
