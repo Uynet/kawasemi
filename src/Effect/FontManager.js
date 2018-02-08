@@ -11,7 +11,6 @@ export default class FontManager{
   //str:文字(ここでは数字のみ)
   static PopDamageEffect(str,e){
     let d = str.length;//桁数
-      cl(str);
     let p = e.pos;
     let v = {
       x:1.5 * (Math.random()-0.5),
