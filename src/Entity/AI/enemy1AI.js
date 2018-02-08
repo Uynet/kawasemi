@@ -4,7 +4,7 @@ import Timer from '../../timer.js';
 
 
 
-export default class TestAI{
+export default class Enemy1AI{
   /*enemyの参照を受け取り関数を実行する*/
 
   constructor(enemy){
