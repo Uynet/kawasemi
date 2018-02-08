@@ -30,7 +30,6 @@ import EntityManager from '../Stage/entityManager.js';
     UIManager.addUI(new UIWeaponIcon("2"));//武器2のサブアイコン
     UIManager.addUI(new UIWeaponIcon("3"));//武器3のサブアイコン
     UIManager.addUI(new UISelectBox());//セレクトボックス
-    UIManager.addUI(new UIWeaponEquip("po"));//武器1のメインアイコン(?)
     UIManager.addUI(new UIHP("frame"));//HP
     UIManager.addUI(new UIHP("bar"));//HP
    }
@@ -46,6 +45,7 @@ import EntityManager from '../Stage/entityManager.js';
         this.selectBox.sprite.position.x = -32;
         this.selectBox.sprite.position.y = WICON_Y-3;
         /*装備中の武器*/
+    UIManager.addUI(new UIWeaponEquip("po"));//武器1のメインアイコン(?)
         this.weaponEquip.sprite.position.x = 8;
         this.weaponEquip.sprite.position.y = 6;
         /*HP*/
