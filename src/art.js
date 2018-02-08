@@ -6,113 +6,174 @@ export default class Art{
     /*forにして*/
     this.playerPattern = {
       runR : [
-        PIXI.Texture.fromFrame('player00.png'),//0
-        PIXI.Texture.fromFrame('player01.png'),//1
-        PIXI.Texture.fromFrame('player02.png'),//2
-        PIXI.Texture.fromFrame('player03.png'),//3
-        PIXI.Texture.fromFrame('player04.png'),//3
-        PIXI.Texture.fromFrame('player05.png'),//3
+        PIXI.Texture.fromFrame('player00.png'),
+        PIXI.Texture.fromFrame('player01.png'),
+        PIXI.Texture.fromFrame('player02.png'),
+        PIXI.Texture.fromFrame('player03.png'),
+        PIXI.Texture.fromFrame('player04.png'),
+        PIXI.Texture.fromFrame('player05.png'),
       ],
       runL : [
-        PIXI.Texture.fromFrame('player06.png'),//4
-        PIXI.Texture.fromFrame('player07.png'),//5
-        PIXI.Texture.fromFrame('player08.png'),//6
-        PIXI.Texture.fromFrame('player09.png'),//7
-        PIXI.Texture.fromFrame('player0a.png'),//7
-        PIXI.Texture.fromFrame('player0b.png'),//7
+        PIXI.Texture.fromFrame('player10.png'),
+        PIXI.Texture.fromFrame('player11.png'),
+        PIXI.Texture.fromFrame('player12.png'),
+        PIXI.Texture.fromFrame('player13.png'),
+        PIXI.Texture.fromFrame('player14.png'),
+        PIXI.Texture.fromFrame('player15.png'),
       ],
       runUR : [
-        PIXI.Texture.fromFrame('player10.png'),//8
-        PIXI.Texture.fromFrame('player11.png'),//9
-        PIXI.Texture.fromFrame('player12.png'),//10
-        PIXI.Texture.fromFrame('player13.png'),//11
-        PIXI.Texture.fromFrame('player14.png'),//11
-        PIXI.Texture.fromFrame('player15.png'),//11
+        PIXI.Texture.fromFrame('player20.png'),
+        PIXI.Texture.fromFrame('player21.png'),
+        PIXI.Texture.fromFrame('player22.png'),
+        PIXI.Texture.fromFrame('player23.png'),
+        PIXI.Texture.fromFrame('player24.png'),
+        PIXI.Texture.fromFrame('player25.png'),
       ],
       runUL : [
-        PIXI.Texture.fromFrame('player10.png'),//8
-        PIXI.Texture.fromFrame('player11.png'),//9
-        PIXI.Texture.fromFrame('player12.png'),//10
-        PIXI.Texture.fromFrame('player13.png'),//11
-        PIXI.Texture.fromFrame('player14.png'),//11
-        PIXI.Texture.fromFrame('player15.png'),//11
+        PIXI.Texture.fromFrame('player30.png'),
+        PIXI.Texture.fromFrame('player31.png'),
+        PIXI.Texture.fromFrame('player32.png'),
+        PIXI.Texture.fromFrame('player33.png'),
+        PIXI.Texture.fromFrame('player34.png'),
+        PIXI.Texture.fromFrame('player35.png'),
       ],
       runDR : [
-        PIXI.Texture.fromFrame('player16.png'),//12
-        PIXI.Texture.fromFrame('player17.png'),//13
-        PIXI.Texture.fromFrame('player18.png'),//14
-        PIXI.Texture.fromFrame('player19.png'),//15
-        PIXI.Texture.fromFrame('player1a.png'),//11
-        PIXI.Texture.fromFrame('player1b.png'),//11
+        PIXI.Texture.fromFrame('player40.png'),
+        PIXI.Texture.fromFrame('player41.png'),
+        PIXI.Texture.fromFrame('player42.png'),
+        PIXI.Texture.fromFrame('player43.png'),
+        PIXI.Texture.fromFrame('player44.png'),
+        PIXI.Texture.fromFrame('player45.png'),
       ],
       runDL : [
-        PIXI.Texture.fromFrame('player16.png'),//12
-        PIXI.Texture.fromFrame('player17.png'),//13
-        PIXI.Texture.fromFrame('player18.png'),//14
-        PIXI.Texture.fromFrame('player19.png'),//15
-        PIXI.Texture.fromFrame('player1a.png'),//11
-        PIXI.Texture.fromFrame('player1b.png'),//11
+        PIXI.Texture.fromFrame('player50.png'),
+        PIXI.Texture.fromFrame('player51.png'),
+        PIXI.Texture.fromFrame('player52.png'),
+        PIXI.Texture.fromFrame('player53.png'),
+        PIXI.Texture.fromFrame('player54.png'),
+        PIXI.Texture.fromFrame('player55.png'),
       ],
       waitR :[
-        PIXI.Texture.fromFrame('player20.png'),//16
-        PIXI.Texture.fromFrame('player21.png'),//17
-        PIXI.Texture.fromFrame('player22.png'),//18
-        PIXI.Texture.fromFrame('player23.png'),//19
+        PIXI.Texture.fromFrame('player60.png'),
+        PIXI.Texture.fromFrame('player61.png'),
+        PIXI.Texture.fromFrame('player62.png'),
+        PIXI.Texture.fromFrame('player63.png'),
       ],
       waitL : [
-        PIXI.Texture.fromFrame('player24.png'),//20
-        PIXI.Texture.fromFrame('player25.png'),//21
-        PIXI.Texture.fromFrame('player26.png'),//22
-        PIXI.Texture.fromFrame('player27.png'),//23
+        PIXI.Texture.fromFrame('player64.png'),
+        PIXI.Texture.fromFrame('player65.png'),
+        PIXI.Texture.fromFrame('player66.png'),
+        PIXI.Texture.fromFrame('player67.png'),
       ],
       //上向き右
       waitUR : [
-        PIXI.Texture.fromFrame('player30.png'),//24
-        PIXI.Texture.fromFrame('player31.png'),//25
-        PIXI.Texture.fromFrame('player32.png'),//26
-        PIXI.Texture.fromFrame('player33.png'),//27
+        PIXI.Texture.fromFrame('player70.png'),
+        PIXI.Texture.fromFrame('player71.png'),
+        PIXI.Texture.fromFrame('player72.png'),
+        PIXI.Texture.fromFrame('player73.png'),
       ],
       //上向き左
       waitUL : [
-        PIXI.Texture.fromFrame('player34.png'),//24
-        PIXI.Texture.fromFrame('player35.png'),//25
-        PIXI.Texture.fromFrame('player36.png'),//26
-        PIXI.Texture.fromFrame('player37.png'),//27
+        PIXI.Texture.fromFrame('player74.png'),
+        PIXI.Texture.fromFrame('player75.png'),
+        PIXI.Texture.fromFrame('player76.png'),
+        PIXI.Texture.fromFrame('player77.png'),
       ],
       waitDR : [
-        PIXI.Texture.fromFrame('player38.png'),//28
-        PIXI.Texture.fromFrame('player39.png'),//29
-        PIXI.Texture.fromFrame('player3a.png'),//30
-        PIXI.Texture.fromFrame('player3b.png'),//31
+        PIXI.Texture.fromFrame('player80.png'),
+        PIXI.Texture.fromFrame('player81.png'),
+        PIXI.Texture.fromFrame('player82.png'),
+        PIXI.Texture.fromFrame('player83.png'),
       ],
       waitDL : [
-        PIXI.Texture.fromFrame('player3c.png'),//28
-        PIXI.Texture.fromFrame('player3d.png'),//29
-        PIXI.Texture.fromFrame('player3e.png'),//30
-        PIXI.Texture.fromFrame('player3f.png'),//31
+        PIXI.Texture.fromFrame('player84.png'),
+        PIXI.Texture.fromFrame('player85.png'),
+        PIXI.Texture.fromFrame('player86.png'),
+        PIXI.Texture.fromFrame('player87.png'),
       ],
+      //死亡エフェクト
       dying : [
-        PIXI.Texture.fromFrame('player40.png'),//32 死亡エフェクト
-        PIXI.Texture.fromFrame('player41.png'),//33 死亡エフェクト
-        PIXI.Texture.fromFrame('player42.png'),//34 死亡エフェクト
-        PIXI.Texture.fromFrame('player43.png'),//35 死亡エフェクト
-        PIXI.Texture.fromFrame('player44.png'),//36 死亡エフェクト
-        PIXI.Texture.fromFrame('player45.png'),//37 死亡エフェクト
-        PIXI.Texture.fromFrame('player46.png'),//38 死亡エフェクト
-        PIXI.Texture.fromFrame('player47.png'),//39  死亡エフェクト
+        PIXI.Texture.fromFrame('player90.png'),
+        PIXI.Texture.fromFrame('player91.png'),
+        PIXI.Texture.fromFrame('player92.png'),
+        PIXI.Texture.fromFrame('player93.png'),
+        PIXI.Texture.fromFrame('player94.png'),
+        PIXI.Texture.fromFrame('player95.png'),
+        PIXI.Texture.fromFrame('player96.png'),
+        PIXI.Texture.fromFrame('player97.png'),
       ],
       jumpR : [
-        PIXI.Texture.fromFrame('player50.png'),//40 ジャンプ
-        PIXI.Texture.fromFrame('player51.png'),//41 
-        PIXI.Texture.fromFrame('player52.png'),//42 
-        PIXI.Texture.fromFrame('player53.png'),//43 
+        PIXI.Texture.fromFrame('playerA0.png'),
+        PIXI.Texture.fromFrame('playerA1.png'),
+        PIXI.Texture.fromFrame('playerA2.png'),
+        PIXI.Texture.fromFrame('playerA3.png'),
       ],
       jumpL : [
-        PIXI.Texture.fromFrame('player54.png'),//44 
-        PIXI.Texture.fromFrame('player55.png'),//45 
-        PIXI.Texture.fromFrame('player56.png'),//46 
-        PIXI.Texture.fromFrame('player57.png')//47  
-      ]
+        PIXI.Texture.fromFrame('playerA4.png'),
+        PIXI.Texture.fromFrame('playerA5.png'),
+        PIXI.Texture.fromFrame('playerA6.png'),
+        PIXI.Texture.fromFrame('playerA7.png'),
+      ],
+      jumpUR : [
+        PIXI.Texture.fromFrame('playerB0.png'),
+        PIXI.Texture.fromFrame('playerB1.png'),
+        PIXI.Texture.fromFrame('playerB2.png'),
+        PIXI.Texture.fromFrame('playerB3.png'),
+      ],
+      jumpUL : [
+        PIXI.Texture.fromFrame('playerB4.png'),
+        PIXI.Texture.fromFrame('playerB5.png'),
+        PIXI.Texture.fromFrame('playerB6.png'),
+        PIXI.Texture.fromFrame('playerB7.png'),
+      ],
+      jumpDR : [
+        PIXI.Texture.fromFrame('playerC0.png'),
+        PIXI.Texture.fromFrame('playerC1.png'),
+        PIXI.Texture.fromFrame('playerC2.png'),
+        PIXI.Texture.fromFrame('playerC3.png'),
+      ],
+      jumpDL : [
+        PIXI.Texture.fromFrame('playerC4.png'),
+        PIXI.Texture.fromFrame('playerC5.png'),
+        PIXI.Texture.fromFrame('playerC6.png'),
+        PIXI.Texture.fromFrame('playerC7.png'),
+      ],
+      fallR : [
+        PIXI.Texture.fromFrame('playerD0.png'),
+        PIXI.Texture.fromFrame('playerD1.png'),
+        PIXI.Texture.fromFrame('playerD2.png'),
+        PIXI.Texture.fromFrame('playerD3.png'),
+      ],
+      fallL : [
+        PIXI.Texture.fromFrame('playerD4.png'),
+        PIXI.Texture.fromFrame('playerD5.png'),
+        PIXI.Texture.fromFrame('playerD6.png'),
+        PIXI.Texture.fromFrame('playerD7.png'),
+      ],
+      fallUR : [
+        PIXI.Texture.fromFrame('playerE0.png'),
+        PIXI.Texture.fromFrame('playerE1.png'),
+        PIXI.Texture.fromFrame('playerE2.png'),
+        PIXI.Texture.fromFrame('playerE3.png'),
+      ],
+      fallUL : [
+        PIXI.Texture.fromFrame('playerE4.png'),
+        PIXI.Texture.fromFrame('playerE5.png'),
+        PIXI.Texture.fromFrame('playerE6.png'),
+        PIXI.Texture.fromFrame('playerE7.png'),
+      ],
+      fallDR : [
+        PIXI.Texture.fromFrame('playerF0.png'),
+        PIXI.Texture.fromFrame('playerF1.png'),
+        PIXI.Texture.fromFrame('playerF2.png'),
+        PIXI.Texture.fromFrame('playerF3.png'),
+      ],
+      fallDL : [
+        PIXI.Texture.fromFrame('playerF4.png'),
+        PIXI.Texture.fromFrame('playerF5.png'),
+        PIXI.Texture.fromFrame('playerF6.png'),
+        PIXI.Texture.fromFrame('playerF7.png'),
+      ],
     };
     this.UIPattern = {
       wEq1 : PIXI.Texture.fromFrame('weapon00.png'),
