@@ -8,13 +8,13 @@ import Collision from '../Collision/collision.js';
 import Collider from '../Collision/collider.js';
 import Box from '../Collision/box.js';
 /*文字*/
-export default class DamageFontEffect extends EFFECT{
+export default class FontEffect extends EFFECT{
   //strは表示する文字(今は数字のみ)
   constructor(pos,vel,str){
     super(pos,vel);
     /*基本情報*/
     this.type = ENTITY.EFFECT;
-    this.name = "damageFontEffect";
+    this.name = "FontEffect";
     this.frame = 0;
     this.isAlive = true;//消えたらfalse
     this.e = 0.0;

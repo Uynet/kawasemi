@@ -9,11 +9,11 @@ import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
 import Font from './font.js';
 import FontManager from '../Effect/FontManager.js';
-const ATK_TEKI1 = 1;
+const ATK_ENEMY1 = 1;
 
 let EntityList = EntityManager.entityList;
 
-export default class Teki1 extends Enemy{
+export default class Enemy1 extends Enemy{
   constructor(pos){
     super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
@@ -26,7 +26,7 @@ export default class Teki1 extends Enemy{
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.addAI(new TestAI(this));
-    this.atk = ATK_TEKI1;
+    this.atk = ATK_ENEMY1;
     this.hp = 10;
     /*フラグ*/
     this.isJump = false;
