@@ -1,5 +1,6 @@
 import EntityManager from '../Stage/entityManager.js';
 import Font from '../Entity/font.js';
+import DamageFontEffect from '../Entity/damageFontEffect.js';
 
 //今のところ用途が文字エフェクトしかない
 export default class FontManager{
@@ -18,10 +19,7 @@ export default class FontManager{
     }
     //自分へのダメージ
     if(e.type == ENTITY.PLAYER){
-      for(let i = 0;i<d;i++){
-        //ここ値渡しにしないとプレイヤーと同じ座標を指してしまう
-        EntityManager.addEntity(new Font({x:p.x+6*i,y:p.y},{x:v.x,y:v.y},str[i]+"r"));
-      }
+      EntityManager.addEntity(new DamageFontEffect({x:p.x,y:p.y},{x:v.x,y:v.y},str));
       //敵へのダメージ
     }else{
       for(let i = 0;i<d;i++){

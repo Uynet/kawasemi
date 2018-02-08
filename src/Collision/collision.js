@@ -82,9 +82,11 @@ export default class Collision{
   */
 
   /*衝突応答 矩形同士*/
+  //e1が呼び出し側
   static Resolve(e1,e2){
+    console.assert(e1.e != undefined);
     /*速度*/
-    if(Collision.on(e1,e2).n.x != 0) e1.vel.x = 0;
+    if(Collision.on(e1,e2).n.x != 0) e1.vel.x *= -e1.e ;
     if(Collision.on(e1,e2).n.y != 0) e1.vel.y *= -e1.e ;
     //while(Collision.on(e1,e2).isHit){
       let l = Collision.on(e1,e2);

@@ -61,7 +61,6 @@ export default class Drawer{
         this.effectContainer.addChild(sprite);
         break;
       case "FORE":
-        console.assert(sprite.id == id);
         this.foreGroundContainer.addChild(sprite);
         break;
     }
@@ -81,13 +80,6 @@ export default class Drawer{
         break;
       case "FORE":
         this.foreGroundContainer.removeChild(sprite);
-        /*
-        console.assert(sprite.id == id);
-        if(this.foreGroundContainer.children.length != EntityManager.effectList.length){
-          //this.foreGroundContainer.children[0].position.x = 400;
-       //   cl("jnvori");
-        }
-        */
         break;
       default :
         console.warn("container");
