@@ -4,8 +4,6 @@ import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
-import TestAI from './AI/testAI.js';
-import Util from '../util.js';
 import Bullet1AI from './AI/bullet1AI.js';
 import Bullet from './bullet.js';
 import BulletBlur from './bulletBlur.js';

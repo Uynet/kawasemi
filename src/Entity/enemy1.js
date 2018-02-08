@@ -4,11 +4,11 @@ import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
-import TestAI from './AI/testAI.js';
+import Enemy1AI from './AI/enemy1AI.js';
 import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
 import Font from './font.js';
-import FontManager from '../Effect/FontManager.js';
+import FontEffect from './fontEffect.js';
 const ATK_ENEMY1 = 1;
 
 let EntityList = EntityManager.entityList;
@@ -18,24 +18,25 @@ export default class Enemy1 extends Enemy{
     super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-      this.frame = 0;
+    this.frame = 0;
     /*スプライト*/
     this.pattern = Art.enemyPattern;
-    this.spid = 0; // spriteIndex 現在のスプライト番号
-      this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+    this.spid = 0; //spriteIndex 現在のスプライト番号
+    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.addAI(new TestAI(this));
+    this.addAI(new Enemy1AI(this));
     this.atk = ATK_ENEMY1;
     this.hp = 10;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
   }
+  //自分がダメージを食らう
   Damage(atk){
     this.hp += atk;
     //ダメージをポップ
-    FontManager.PopDamageEffect(-atk+"",this);
+    EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));
     this.hp = Math.max(this.hp,0);
     UIManager.HP.Bar();
   }

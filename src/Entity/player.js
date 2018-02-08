@@ -238,15 +238,7 @@ export default class Player extends Entity{
       if(this.isAlive){
         this.hp+=atk;
         //フォントはダメージ数に応じて数字を表示する　
-        let p = {
-          x:this.pos.x,
-          y:this.pos.y
-        }
-        let v = {
-          x:1.5 * (Math.random()-0.5),
-          y:-2
-        }
-        EntityManager.addEntity(new FontEffect({x:p.x,y:p.y},{x:v.x,y:v.y},-atk+""));
+        EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
         this.hp = Math.max(this.hp,0);
         UIManager.HP.Bar();
         //ダメージを受けて一定時間無敵になる

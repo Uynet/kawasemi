@@ -10,8 +10,12 @@ import Box from '../Collision/box.js';
 /*文字*/
 export default class FontEffect extends EFFECT{
   //strは表示する文字(今は数字のみ)
-  constructor(pos,vel,str){
-    super(pos,vel);
+  constructor(pos,str,type){
+    let v = {
+      x:1.5 * (Math.random()-0.5),
+      y:-2
+    }
+    super({x:pos.x,y:pos.y},v);
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.name = "FontEffect";
@@ -25,7 +29,13 @@ export default class FontEffect extends EFFECT{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
-      let tex = Art.font[spid + "r"];
+      let tex;
+      switch(type){
+        case "player" : tex = Art.font[spid + "r"];
+          break;
+        case "enemy" : tex = Art.font[spid];
+          break;
+      }
       this.sprite[i] = Art.SpriteFactory(tex);
       this.sprite[i].position = {x:this.pos.x + i*6,y:this.pos.y};
     }
