@@ -15,10 +15,10 @@ export default class UIHP extends UI{
   constructor(name){
     switch (name){
       case "frame" : 
-        super(Art.UIPattern[7],UI_.HP); 
+        super(Art.UIPattern.HP[0],UI_.HP); 
         break;
       case "bar" :
-        super(Art.UIPattern[8],UI_.HP); 
+        super(Art.UIPattern.HP[1],UI_.HP); 
         break;
     }
     this.name = name;

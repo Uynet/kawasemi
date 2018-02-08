@@ -11,9 +11,9 @@ export default class UIWeaponIcon extends UI{
   constructor(name){
     let tex;
     switch(name){
-      case "1" : tex = Art.UIPattern[3];break;
-      case "2" : tex = Art.UIPattern[4];break;
-      case "3" : tex = Art.UIPattern[5];break;
+      case "1" : tex = Art.UIPattern.wIcon1[0];break;
+      case "2" : tex = Art.UIPattern.wIcon2[0];break;
+      case "3" : tex = Art.UIPattern.wIcon3[0];break;
     }
     super(tex,UI_.WICON); 
     this.name = name;

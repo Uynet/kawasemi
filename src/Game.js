@@ -3,7 +3,7 @@ import MapData from './Stage/mapData.js';
 import Drawer from './drawer.js';
 import Art from './art.js';
 import EventManager from './Event/eventmanager.js';
-import StageInEvent from './Event/stageInEvent.js';
+import startStageEvent from './Event/startStageEvent.js';
 import Scene from './Event/scene.js';
 import Timer from './timer.js';
 import UIManager from './UI/uiManager.js';
@@ -39,6 +39,7 @@ export default class Game{
     //MapData.CreateStage(Game.stage);
     /*TODO EffectManagerを作成*/
     dark = Art.SpriteFactory(Art.darkTexture);
+    dark.alpha = 0.7;
 
     Game.Run();
   }
@@ -102,8 +103,8 @@ export default class Game{
       case STATE.TITLE :
         Game.UpdateTitle();
         if(Input.isKeyClick(KEY.SP)){
-          let stageInEvent = new StageInEvent();
-          EventManager.PushEvent(stageInEvent);
+          let event = new startStageEvent();
+          EventManager.PushEvent(event);
         }
         break;
       case STATE.STAGE :

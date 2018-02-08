@@ -137,7 +137,7 @@ export default class Player extends Entity{
           y:this.pos.y
         }
         let v = {
-          x:Math.random()*2,
+          x:(Math.random()-0.5)*2,
           y:-5
         }
         switch(Math.floor(25*Math.random())){
@@ -197,7 +197,6 @@ export default class Player extends Entity{
             this.sprite.texture = this.pattern.waitDR[this.spid];
             break;
           case DIR.DL :
-            cl("po");
             this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
             this.sprite.texture = this.pattern.waitDL[this.spid];
             break;
