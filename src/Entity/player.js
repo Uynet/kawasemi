@@ -21,7 +21,7 @@ import FontEffect from './fontEffect.js';
 const JUMP_VEL = 7;//ジャンプ力
   const RUN_VEL = 0.5;//はしり速度
 const PLAYER_GRAVITY = 0.4;
-const PLAYER_HP = 10000007;
+const PLAYER_HP = 10000;
 const FLICTION = 0.7;
 const POP_PLAYER = -1;
 const INV_TIME = 5;//無敵時間
@@ -67,7 +67,8 @@ export default class Player extends Entity{
       this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.hp = PLAYER_HP;
+    this.maxHP = PLAYER_HP;
+    this.hp = this.maxHP;
     this.gravity = PLAYER_GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
       /*状態*/
@@ -140,6 +141,8 @@ export default class Player extends Entity{
         x:(Math.random()-0.5)*2,
         y:-5
       }
+
+      /*
       switch(Math.floor(25*Math.random())){
         case 0 :EntityManager.addEntity(new Font(p,v,"あ"));break;
         case 1 :EntityManager.addEntity(new Font(p,v,"い"));break;
@@ -168,6 +171,8 @@ export default class Player extends Entity{
         case 23 :EntityManager.addEntity(new Font(p,v,"の"));break;
         case 24 :EntityManager.addEntity(new Font(p,v,"は"));break;
       }
+      */
+    EntityManager.addEntity(new FontEffect(this.pos,"こんにちは","pop"));
     }
   }
 
@@ -240,7 +245,7 @@ export default class Player extends Entity{
         //フォントはダメージ数に応じて数字を表示する　
         EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
         this.hp = Math.max(this.hp,0);
-        UIManager.HP.Bar();
+        UIManager.HP.Update();
         //ダメージを受けて一定時間無敵になる
         this.isInvincible = true;
         this.frameDamaged = this.frame;

@@ -8,6 +8,20 @@ import UISelectBox from './uiSelectBox.js';
 import UIHP from './uiHP.js';
 import EntityManager from '../Stage/entityManager.js';
 
+
+const HPF = {
+  x : 56, 
+  y : 8, 
+};
+const HPB = {
+  x : 56, 
+  y : 8, 
+};
+const WEQ = {
+  x : 8, 
+  y : 8, 
+};
+
  /*UIクラス*/
  /*TODO リファクタリング*/
  export default class UIManager{
@@ -26,33 +40,29 @@ import EntityManager from '../Stage/entityManager.js';
     /*各UIの初期化を行う
      * 一度初期化したUIを消す際には
      * ステージから外さず画面外にプールさせる*/
-    UIManager.addUI(new UIWeaponIcon("1"));//武器1のサブアイコン
-    UIManager.addUI(new UIWeaponIcon("2"));//武器2のサブアイコン
-    UIManager.addUI(new UIWeaponIcon("3"));//武器3のサブアイコン
-    UIManager.addUI(new UISelectBox());//セレクトボックス
-    UIManager.addUI(new UIHP("frame"));//HP
-    UIManager.addUI(new UIHP("bar"));//HP
+    //UIManager.addUI(new UIWeaponIcon("1"));//武器1のサブアイコン
+    //UIManager.addUI(new UIWeaponIcon("2"));//武器2のサブアイコン
+    //UIManager.addUI(new UIWeaponIcon("3"));//武器3のサブアイコン
+    //UIManager.addUI(new UISelectBox());//セレクトボックス
+    UIManager.addUI(new UIHP(HPF,"frame"));//HP
+    UIManager.addUI(new UIHP(HPB,"bar"));//HP
    }
 
    /*ステージ中でのUI配置に変更*/
    static SetStage(){
      /*武器アイコン*/
+     /*
      for(let l of this.WeaponIconList){
        l.sprite.position.x = -32;
        l.sprite.position.y =  WICON_Y;
      }
+     */
         /*セレクトボックス*/
-        this.selectBox.sprite.position.x = -32;
-        this.selectBox.sprite.position.y = WICON_Y-3;
+        //this.selectBox.sprite.position.x = -32;
+        //this.selectBox.sprite.position.y = WICON_Y-3;
         /*装備中の武器*/
-    UIManager.addUI(new UIWeaponEquip("po"));//武器1のメインアイコン(?)
-        this.weaponEquip.sprite.position.x = 8;
-        this.weaponEquip.sprite.position.y = 6;
+        UIManager.addUI(new UIWeaponEquip(WEQ,"po"));//武器1のメインアイコン(?)
         /*HP*/
-        this.HP.sprite.position.x = 56;
-        this.HP.sprite.position.y = 6;
-        this.HPframe.sprite.position.x = 56;
-        this.HPframe.sprite.position.y = 6;
    }
 
    /*WeaponIconのポップアップ*/
@@ -87,7 +97,7 @@ import EntityManager from '../Stage/entityManager.js';
        case UI_.WEQUIP : 
          this.weaponEquip = ui;
          break;
-       //selectbox
+       //HP
        case UI_.HP :
          if(ui.name == "bar") {
            this.HP = ui;

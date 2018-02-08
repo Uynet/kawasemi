@@ -10,13 +10,14 @@ import Box from '../Collision/box.js';
 /*文字*/
 export default class FontEffect extends EFFECT{
   //strは表示する文字(今は数字のみ)
-  constructor(pos,str,type){
+  constructor(pos,str,fonttype){
     let v = {
       x:1.5 * (Math.random()-0.5),
       y:-2
     }
     super({x:pos.x,y:pos.y},v);
     /*基本情報*/
+    this.fonttype = fonttype;
     this.type = ENTITY.EFFECT;
     this.name = "FontEffect";
     this.frame = 0;
@@ -30,11 +31,12 @@ export default class FontEffect extends EFFECT{
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
       let tex;
-      switch(type){
+      switch(this.fonttype){
         case "player" : tex = Art.font[spid + "r"];
           break;
         case "enemy" : tex = Art.font[spid];
           break;
+        case "pop" : tex = Art.font[spid];
       }
       this.sprite[i] = Art.SpriteFactory(tex);
       this.sprite[i].position = {x:this.pos.x + i*6,y:this.pos.y};
@@ -62,7 +64,13 @@ export default class FontEffect extends EFFECT{
     this.pos.y += this.vel.y;
     this.vel.y += this.gravity;
     for(let i = 0;i<this.d;i++){
-      this.sprite[i].position = {x:this.pos.x + i * 6,y:this.pos.y};
+      //ここはあとで書き直す
+      //というか別クラスにする
+      if(this.fonttype == "pop"){
+        this.sprite[i].position = {x:this.pos.x + i * 9,y:this.pos.y};
+      }else{
+        this.sprite[i].position = {x:this.pos.x + i * 6,y:this.pos.y};
+      }
     }
     for(let i = 0;i<this.d;i++){
       if(this.frame > 30){

@@ -6,8 +6,15 @@ import Timer from '../timer.js';
 import Util from '../util.js';
 
  export default class UIWeaponIcon extends UI{
-   constructor(name){
-     super(Art.UIPattern.wEq1,UI_.WEQUIP); 
-     this.name = name;
+   constructor(pos,name){
+    super(pos); 
+    /*基本情報*/
+    this.name = name;
+    this.type = UI_.WEQUIP;
+    /*スプライト*/
+    this.tex = Art.UIPattern.wEq1,UI_.WEQUIP; 
+    this.sprite = Art.SpriteFactory(this.tex);
+    this.sprite.position = this.pos;
+    cl(this.pos);
    }
  }
