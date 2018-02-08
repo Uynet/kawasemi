@@ -37,8 +37,6 @@ export default class Enemy1 extends Enemy{
     this.hp += atk;
     //ダメージをポップ
     EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));
-    this.hp = Math.max(this.hp,0);
-    UIManager.HP.Bar();
   }
   Collision(){
     /*衝突判定*/
@@ -46,18 +44,18 @@ export default class Enemy1 extends Enemy{
     for(let l of EntityManager.wallList){
       if(l == this) continue;
       /*衝突判定*/
-      if(Collision.on(this,l).isHit){
+      let c = Collision.on(this,l);
+      if(c.isHit){
         /* 衝突応答*/
 
         /*速度*/
-        if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-        if(Collision.on(this,l).n.y != 0) {
+        if(c.n.x != 0) this.vel.x = 0;
+        if(c.n.y != 0) {
           this.isJump = false;
           this.vel.y *= -0.3;
         }
         /*押し出し*/
-        let c = Collision.on(this,l)
-          this.pos.x += c.n.x * c.depth;
+        this.pos.x += c.n.x * c.depth;
         this.pos.y += c.n.y * c.depth;
         /*note : now isHit == false*/
       }

@@ -324,6 +324,36 @@ export default class Art{
     this.font["ぬ"] = PIXI.Texture.fromFrame('font216.png');
     this.font["ね"] = PIXI.Texture.fromFrame('font217.png');
     this.font["の"] = PIXI.Texture.fromFrame('font218.png');
+    this.font["は"] = PIXI.Texture.fromFrame('font30.png');
+    this.font["ひ"] = PIXI.Texture.fromFrame('font31.png');
+    this.font["ふ"] = PIXI.Texture.fromFrame('font32.png');
+    this.font["へ"] = PIXI.Texture.fromFrame('font33.png');
+    this.font["ほ"] = PIXI.Texture.fromFrame('font34.png');
+    this.font["ま"] = PIXI.Texture.fromFrame('font35.png');
+    this.font["み"] = PIXI.Texture.fromFrame('font36.png');
+    this.font["む"] = PIXI.Texture.fromFrame('font37.png');
+    this.font["め"] = PIXI.Texture.fromFrame('font38.png');
+    this.font["も"] = PIXI.Texture.fromFrame('font39.png');
+    this.font["や"] = PIXI.Texture.fromFrame('font3a.png');
+    this.font["欠番1"] = PIXI.Texture.fromFrame('font3b.png');
+    this.font["ゆ"] = PIXI.Texture.fromFrame('font3c.png');
+    this.font["欠番2"] = PIXI.Texture.fromFrame('font3d.png');
+    this.font["よ"] = PIXI.Texture.fromFrame('font3e.png');
+    this.font["ら"] = PIXI.Texture.fromFrame('font3f.png');
+    this.font["り"] = PIXI.Texture.fromFrame('font310.png');
+    this.font["る"] = PIXI.Texture.fromFrame('font311.png');
+    this.font["れ"] = PIXI.Texture.fromFrame('font312.png');
+    this.font["ろ"] = PIXI.Texture.fromFrame('font313.png');
+    this.font["わ"] = PIXI.Texture.fromFrame('font314.png');
+    this.font["欠番3"] = PIXI.Texture.fromFrame('font315.png');
+    this.font["を"] = PIXI.Texture.fromFrame('font316.png');
+    this.font["欠番4"] = PIXI.Texture.fromFrame('font317.png');
+    this.font["ん"] = PIXI.Texture.fromFrame('font318.png');
+    this.font["!"] = PIXI.Texture.fromFrame('font319.png');
+    this.font["!!"] = PIXI.Texture.fromFrame('font31a.png');
+    this.font["?"] = PIXI.Texture.fromFrame('font31b.png');
+    this.font["。"] = PIXI.Texture.fromFrame('font31c.png');
+    this.font["、"] = PIXI.Texture.fromFrame('font31d.png');
   }
 
   static async LoadTexture(){

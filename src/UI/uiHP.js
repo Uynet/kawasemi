@@ -6,26 +6,30 @@ import Input from '../input.js';
 import Timer from '../timer.js';
 import Util from '../util.js';
 
-const UIPt = {
-  HP : 6,
-  HPbar : 7,
-}
-
 export default class UIHP extends UI{
-  constructor(name){
+  constructor(pos,name){
+    super(pos);
+    /*基本情報*/
+    this.frame = 0;
+    this.isAlive = true;//消えたらfalse
+    this.type = UI_.HP; 
+    /*スプライト*/
     switch (name){
       case "frame" : 
-        super(Art.UIPattern.HP[0],UI_.HP); 
+        this.spid = 0;
         break;
       case "bar" :
-        super(Art.UIPattern.HP[1],UI_.HP); 
+        this.spid = 1;
         break;
     }
+    this.tex = Art.UIPattern.HP[this.spid];
+    this.sprite = Art.SpriteFactory(this.tex);
+    this.sprite.position = this.pos;
     this.name = name;
-    this.max = 10;
+    this.max = 10000;//EntityManager.player.maxHP;
   }
-  Bar(hp){
-    this.sprite.scale.x = EntityManager.player.hp/100;
+  Update(hp){
+    this.sprite.scale.x = EntityManager.player.hp/this.max;
     this.sprite.alpha = 0.9;
   }
 }
