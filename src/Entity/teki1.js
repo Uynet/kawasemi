@@ -18,11 +18,11 @@ export default class Teki1 extends Enemy{
     super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    this.frame = 0;
+      this.frame = 0;
     /*スプライト*/
     this.pattern = Art.enemyPattern;
     this.spid = 0; // spriteIndex 現在のスプライト番号
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+      this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.addAI(new TestAI(this));
@@ -55,13 +55,14 @@ export default class Teki1 extends Enemy{
           this.vel.y *= -0.3;
         }
         /*押し出し*/
-          let c = Collision.on(this,l)
+        let c = Collision.on(this,l)
           this.pos.x += c.n.x * c.depth;
-          this.pos.y += c.n.y * c.depth;
+        this.pos.y += c.n.y * c.depth;
         /*note : now isHit == false*/
       }
     }
     for(let l of EntityManager.enemyList){
+      //これないと自分と衝突判定してバグ
       if(l == this) continue;
       /*衝突判定*/
       if(Collision.on(this,l).isHit){
@@ -74,15 +75,19 @@ export default class Teki1 extends Enemy{
           this.vel.y *= -0.3;
         }
         /*押し出し*/
-          let c = Collision.on(this,l)
-          this.pos.x += c.n.x * c.depth/2;
-          this.pos.y += c.n.y * c.depth/2;
+        let c = Collision.on(this,l);
+        this.pos.x += c.n.x * c.depth/2;
+        this.pos.y += c.n.y * c.depth/2;
         /*note : now isHit == false*/
       }
     }
   }
+  //プレイヤーにダメージを与える
   Hurt(){
-    if(Collision.on(this,EntityManager.player).isHit){
+    let player = EntityManager.player; 
+    let c = Collision.on(this,player);
+    if(c.isHit && c.n.y != 1){
+      //ダメージ
       let damage = this.atk + 10 + Math.floor(10 * Math.random());
       EntityManager.player.Damage(-damage);
     }

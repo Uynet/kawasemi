@@ -21,7 +21,7 @@ import FontManager from '../Effect/FontManager.js';
 const JUMP_VEL = 7;//ジャンプ力
 const RUN_VEL = 0.5;//はしり速度
 const PLAYER_GRAVITY = 0.4;
-const PLAYER_HP = 100;
+const PLAYER_HP = 10000007;
 const FLICTION = 0.7;
 const POP_PLAYER = -1;
 const INV_TIME = 5;//無敵時間
@@ -290,6 +290,18 @@ export default class Player extends Entity{
   }
   /* 衝突判定 */
   collision(){
+    for(let l of EntityManager.enemyList){
+      let c = Collision.on(this,l)
+      if(c.isHit){
+        /* 衝突応答*/
+        /*フラグの解除*/
+        if(c.n.y == -1){
+          this.isJump = 0;
+          Collision.Resolve(this,l);
+        }
+        /*note : now isHit == false*/
+      }
+    }
     for(let l of EntityManager.wallList){
       if(Collision.on(this,l).isHit){
         /* 衝突応答*/
@@ -298,14 +310,6 @@ export default class Player extends Entity{
           this.isJump = 0;
         }
         Collision.Resolve(this,l);
-        /*速度*/
-        //if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-        //if(Collision.on(this,l).n.y != 0) this.vel.y = 0;
-        /*押し出し*/
-        //while(Collision.on(this,l).isHit){
-         // this.pos.x += Collision.on(this,l).n.x/5;
-         // this.pos.y += Collision.on(this,l).n.y/5;
-        //}
         /*note : now isHit == false*/
       }
     }
