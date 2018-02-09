@@ -12,7 +12,7 @@ export default class UIHP extends UI{
     /*基本情報*/
     this.frame = 0;
     this.isAlive = true;//消えたらfalse
-    this.type = UI_.HP; 
+      this.type = UI_.HP; 
     /*スプライト*/
     switch (name){
       case "frame" : 
@@ -26,10 +26,20 @@ export default class UIHP extends UI{
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = this.pos;
     this.name = name;
-    this.max = 10000;//EntityManager.player.maxHP;
+    this.max = 100;//EntityManager.player.maxHP;
   }
-  Update(hp){
-    this.sprite.scale.x = EntityManager.player.hp/this.max;
-    this.sprite.alpha = 0.9;
+  UpdateBar(){
+    //playerの読み込みが終わっていないと駄目?
+    if(this.name == "bar"){
+      /*debug*/
+      if(!EntityManager.player){
+        console.warn("player undefined");
+      }else{
+        this.sprite.scale.x = EntityManager.player.hp/this.max;
+        this.sprite.alpha = 0.9;
+      }
+    }
+  }
+  Update(){
   }
 }

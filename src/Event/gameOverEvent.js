@@ -18,18 +18,18 @@ export default class GameOverEvent extends Event{
       Game.seq = true;
       //画面遷移エフェクトの♢
       let frame = 0;//経過フレーム数 途中で0にしているので注意
-      let spid = 0;//スプライト番号
+        let spid = 0;//スプライト番号
       let pattern = Art.seqPattern;//パターン
-      let seq = new Array(400);//各♢
+        let seq = new Array(400);//各♢
       //♢を初期化して追加
       for(let i = 0; i < 400; i++) {
-          let sp = Art.SpriteFactory(pattern[spid]);
-          let y = Math.floor(i/20);
-          let x = i%20;
-          sp.position.x = x*16-8;
-          sp.position.y = y*16-8;
-          seq[i] = sp;
-          Drawer.addContainer(sp,"FILTER");
+        let sp = Art.SpriteFactory(pattern[spid]);
+        let y = Math.floor(i/20);
+        let x = i%20;
+        sp.position.x = x*16-8;
+        sp.position.y = y*16-8;
+        seq[i] = sp;
+        Drawer.addContainer(sp,"FILTER");
       }
       /*フェードアウト*/
       while(frame < 40){
@@ -42,12 +42,13 @@ export default class GameOverEvent extends Event{
         yield;
       }
       /*ここでマップをロード*/
-        MapData.RebuildStage();
+      MapData.RebuildStage();
 
       /*ちょっと待つ*/
       frame = 0;
-      while(frame < 0){
+      while(frame < 10){
         frame++;
+        yield
       }
       frame = 0;
       /*フェードin*/

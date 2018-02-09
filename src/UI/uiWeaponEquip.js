@@ -16,4 +16,7 @@ import Util from '../util.js';
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = this.pos;
    }
+   Update(){
+     /*nothing to do*/
+   }
  }

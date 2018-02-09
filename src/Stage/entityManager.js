@@ -98,7 +98,7 @@ export default class EntityManager{
         //その他
       default :
         if( entity.type!=ENTITY.BULLET){
-          console.warn(entity);
+          //console.warn(entity);
         }
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
