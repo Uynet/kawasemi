@@ -44,8 +44,16 @@ const WEQ = {
     //UIManager.addUI(new UIWeaponIcon("2"));//武器2のサブアイコン
     //UIManager.addUI(new UIWeaponIcon("3"));//武器3のサブアイコン
     //UIManager.addUI(new UISelectBox());//セレクトボックス
-    UIManager.addUI(new UIHP(HPF,"frame"));//HP
-    UIManager.addUI(new UIHP(HPB,"bar"));//HP
+   }
+
+   /*タイトルでのUI配置に変更*/
+   static SetTitle(){
+     UIManager.addUI(new UIWeaponEquip(HPB,"po"));//武器1のメインアイコン(?)
+     cl(this.weaponEquip);
+   }
+   static CleanTitle(){
+     cl(this.weaponEquip);
+     UIManager.removeUI(this.weaponEquip);
    }
 
    /*ステージ中でのUI配置に変更*/
@@ -63,6 +71,8 @@ const WEQ = {
         /*装備中の武器*/
         UIManager.addUI(new UIWeaponEquip(WEQ,"po"));//武器1のメインアイコン(?)
         /*HP*/
+        UIManager.addUI(new UIHP(HPF,"frame"));//HP
+        UIManager.addUI(new UIHP(HPB,"bar"));//HP
    }
 
    /*WeaponIconのポップアップ*/
@@ -91,7 +101,6 @@ const WEQ = {
          break;
        //selectbox
        case UI_.SELBOX : 
-         this.selectBox = ui;
          break;
        //equip
        case UI_.WEQUIP : 
@@ -112,6 +121,7 @@ const WEQ = {
      Drawer.addContainer(ui.sprite,"UI");
    }
    /*UIをリストから削除*/
+   //参照の開放をする
    static removeUI(ui){
      let i = this.UIList.indexOf(ui);
      Drawer.removeContainer(ui.sprite,"UI");
