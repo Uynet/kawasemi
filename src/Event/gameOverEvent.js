@@ -1,5 +1,6 @@
 import Event from './event.js';
 import UIManager from '../UI/uiManager.js';
+import EntityManager from '../Stage/entityManager.js';
 import MapData from '../Stage/mapData.js';
 import Game from '../Game.js';
 import Timer from '../timer.js';
@@ -50,6 +51,7 @@ export default class GameOverEvent extends Event{
         frame++;
         yield
       }
+      UIManager.HP.UpdateBar(100);
       frame = 0;
       /*フェードin*/
       while(frame < 40){

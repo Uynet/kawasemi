@@ -1,61 +1,43 @@
-import Enemy from './enemy.js';
-import EFFECT from './effect.js';
 import Art from '../art.js';
-import EntityManager from '../Stage/entityManager.js';
-import Util from '../util.js';
 import Drawer from '../drawer.js';
-import Collision from '../Collision/collision.js';
-import Collider from '../Collision/collider.js';
-import Box from '../Collision/box.js';
-/*UI 文字*/
-export default class UIFont extends EFFECT{
+import UI from './ui.js';
+import Input from '../input.js';
+/*文字*/
+export default class UIFont extends UI{
+  //strは表示する文字(今は数字のみ)
   constructor(pos,str){
-    super(pos,vel);
+    super({x:pos.x,y:pos.y});
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
-    this.name = "string";
-    this.frame = 0;
+    this.type = UI_.HP;
+    this.name = "font";
     this.isAlive = true;//消えたらfalse
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
       /*スプライト*/
-      /*TODO 🔥 num型をstring型にキャストしているので必ず直す*/
-    this.spid = str; //0~9
-    this.tex = Art.font[this.spid];
-    this.sprite = Art.SpriteFactory(this.tex);
-    this.sprite.position = this.pos;
-    this.gravity = 0.2;
+      this.str = str; //0~9
+    this.sprite = [];//スプライトを配列で持っている
+      this.d = this.str.length;//桁数
+    for(let i = 0;i<this.d;i++){
+      let spid = this.str[i] + "";//str型にすること
+        let tex = Art.font[spid];
+      this.sprite[i] = Art.SpriteFactory(tex);
+      this.sprite[i].position = {x:this.pos.x + i*7,y:this.pos.y};
+    }
   }
 
-  Collision(){
-    for(let l of EntityManager.wallList){
-      if(Collision.on(this,l).isHit){
-        /*速度*/
-        if(Collision.on(this,l).n.x != 0) this.vel.x = 0;
-        if(Collision.on(this,l).n.y != 0) this.vel.y *= 0.3;
-        /*押し出し*/
-        while(Collision.on(this,l).isHit){
-          this.pos.x += Collision.on(this,l).n.x/5;
-          this.pos.y += Collision.on(this,l).n.y/5;
-        }
-        /*note : now isHit == false*/
-      }
+  UpdateFont(hp){
+    //phys
+    //文字列型にすること
+    this.str = hp + "";
+    //0埋め
+    while(this.str.length <3){
+      this.str = "0" + this.str;
+    }
+    for(let i = 0;i<this.d;i++){
+      let spid = this.str[i] + "";//str型にすること
+        this.sprite[i].texture = Art.font[spid];
     }
   }
 
   Update(){
-    // this.sprite.texture = this.pattern[this.spid];
-    this.Collision();
-    //phys
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
-    this.vel.y += this.gravity;
-    this.sprite.position = this.pos;
-    if(this.frame > 30){
-      this.sprite.alpha -=0.05; 
-    }
-    if(this.frame > 90){
-      EntityManager.removeEntity(this);
-    }
-    this.frame++;
+    /*nothing to do*/
   }
 }

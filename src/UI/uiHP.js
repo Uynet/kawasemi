@@ -28,14 +28,14 @@ export default class UIHP extends UI{
     this.name = name;
     this.max = 100;//EntityManager.player.maxHP;
   }
-  UpdateBar(){
-    //playerの読み込みが終わっていないと駄目?
+  UpdateBar(hp){
     if(this.name == "bar"){
       /*debug*/
       if(!EntityManager.player){
         console.warn("player undefined");
       }else{
-        this.sprite.scale.x = EntityManager.player.hp/this.max;
+        this.sprite.scale.x = hp/this.max;
+        UIManager.HPfont.UpdateFont(hp);
         this.sprite.alpha = 0.9;
       }
     }

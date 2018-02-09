@@ -6,16 +6,25 @@ import UIWeaponIcon from './uiWeaponIcon.js';
 import UIWeaponEquip from './uiWeaponEquip.js';
 import UISelectBox from './uiSelectBox.js';
 import UIHP from './uiHP.js';
+import UIFont from './uiFont.js';
+
 import EntityManager from '../Stage/entityManager.js';
 
 
+//HP frame
 const HPF = {
   x : 56, 
   y : 8, 
 };
+//HP bar
 const HPB = {
   x : 56, 
   y : 8, 
+};
+//HP font 
+const HPFont = {
+  x : 80, 
+  y : 12, 
 };
 const WEQ = {
   x : 8, 
@@ -67,6 +76,7 @@ export default class UIManager{
     /*HP*/
     UIManager.addUI(new UIHP(HPF,"frame"));//HP
     UIManager.addUI(new UIHP(HPB,"bar"));//HP
+    UIManager.addUI(new UIFont(HPFont,"100"));//HP
   }
 
   /*WeaponIconのポップアップ*/
@@ -117,19 +127,34 @@ export default class UIManager{
               }
               else if(ui.name == "frame"){
                 this.HPframe = ui;
+              }else if(ui.name == "font"){
+                this.HPfont = ui;
               }
               break;
  default :
    console.warn(ui);
     }
-    Drawer.addContainer(ui.sprite,"UI");
+    //fontはスプライトを複数持っているので特別
+    if(ui.name == "font"){
+      for(let i = 0;i<ui.sprite.length;i++){
+        Drawer.addContainer(ui.sprite[i],"UI");
+      }
+    }else{
+      Drawer.addContainer(ui.sprite,"UI");
+    }
   }
   /*UIをリストから削除*/
   //参照の開放をする
   static removeUI(ui){
     let i = this.UIList.indexOf(ui);
-    Drawer.removeContainer(ui.sprite,"UI");
     this.UIList.splice(i,1);
+    if(ui.name == "font"){
+      for(let i = 0;i<ui.sprite.length;i++){
+        Drawer.removeContainer(ui.sprite[i],"UI");
+      }
+    }else{
+      Drawer.removeContainer(ui.sprite,"UI");
+    }
   }
   /*UIの更新*/
   static Update(){

@@ -74,7 +74,11 @@ export default class Player extends Entity{
       /*状態*/
       this.state = STATE.WAITING;
     this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
-      this.dir = DIR.R;//向き
+    this.weapon.isTargetOn = false;
+    this.weapon.target = null;//これ大丈夫か??
+    this.dir = DIR.R;//向き
+      if(UIManager.HP){
+      }
     /*フラグ*/
     this.isJump = false;//空中にいるか
       this.isRun = false;//走っているか
@@ -195,7 +199,7 @@ export default class Player extends Entity{
           switch(this.dir){
             case DIR.R : this.sprite.texture = this.pattern.jumpR[this.spid]; break;
             case DIR.L : this.sprite.texture = this.pattern.jumpL[this.spid]; break;
-            case DIR.UR : cl(this.dir);this.sprite.texture = this.pattern.jumpUR[this.spid]; break;
+            case DIR.UR : this.sprite.texture = this.pattern.jumpUR[this.spid]; break;
             case DIR.UL : this.sprite.texture = this.pattern.jumpUL[this.spid]; break;
             case DIR.DR : this.sprite.texture = this.pattern.jumpDR[this.spid]; break;
             case DIR.DL : this.sprite.texture = this.pattern.jumpDL[this.spid]; break;
@@ -206,7 +210,7 @@ export default class Player extends Entity{
         switch(this.dir){
           case DIR.R : this.sprite.texture = this.pattern.fallR[this.spid]; break;
           case DIR.L : this.sprite.texture = this.pattern.fallL[this.spid]; break;
-          case DIR.UR : ;this.sprite.texture = this.pattern.fallUR[this.spid]; break;
+          case DIR.UR : this.sprite.texture = this.pattern.fallUR[this.spid]; break;
           case DIR.UL : this.sprite.texture = this.pattern.fallUL[this.spid]; break;
           case DIR.DR : this.sprite.texture = this.pattern.fallDR[this.spid]; break;
           case DIR.DL : this.sprite.texture = this.pattern.fallDL[this.spid]; break;
@@ -245,7 +249,7 @@ export default class Player extends Entity{
         //フォントはダメージ数に応じて数字を表示する　
         EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
         this.hp = Math.max(this.hp,0);
-        UIManager.HP.UpdateBar();
+        UIManager.HP.UpdateBar(this.hp);
         //ダメージを受けて一定時間無敵になる
         this.isInvincible = true;
         this.frameDamaged = this.frame;
