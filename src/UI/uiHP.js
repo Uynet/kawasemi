@@ -21,6 +21,12 @@ export default class UIHP extends UI{
       case "bar" :
         this.spid = 1;
         break;
+      case "icon" :
+        this.spid = 2;
+        break;
+      default :
+        console.warn("UI");
+        break;
     }
     this.tex = Art.UIPattern.HP[this.spid];
     this.sprite = Art.SpriteFactory(this.tex);

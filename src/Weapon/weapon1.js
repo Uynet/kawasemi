@@ -23,22 +23,21 @@ export default class Weapon1 extends Weapon{
   constructor(){
     super("1");
     /*基本情報*/
-    this.frame = 0;//最後に撃った時刻
     this.target;
     this.isTargetOn = false;//照準が発生しているか
-    /*パラメータ*/
-    this.agi = 16;//間隔
-      this.cost = 10;
+      /*パラメータ*/
+      this.agi = 16;//間隔
+    this.cost = 10;
     this.speed = 6;//弾速
-    this.length = 180;//射程距離
+      this.length = 180;//射程距離
   }
 
   //敵が視界に入っているか
   isSeen(player,enemy){
     return (player.dir == DIR.UR || player.dir ==  DIR.UL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 1
-        || (player.dir == DIR.DR || player.dir == DIR.DL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) <-1
+      || (player.dir == DIR.DR || player.dir == DIR.DL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) <-1
         || player.dir == DIR.R && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) <-1
-        || player.dir == DIR.L && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >1
+          || player.dir == DIR.L && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >1
   }
 
   Target(player){
@@ -53,33 +52,33 @@ export default class Weapon1 extends Weapon{
         ){
           continue;
         }
-          EntityManager.removeEntity(this.target);
-          this.isTargetOn = false;
-          continue;
+        EntityManager.removeEntity(this.target);
+        this.isTargetOn = false;
+        continue;
       }
-        //射程距離以内かつ視界
+      //射程距離以内かつ視界
       if(Util.distance(l.pos, player.pos) < this.length && this.isSeen(player,l)
-       ){
-          //既にロックオンされている敵より近ければ
+      ){
+        //既にロックオンされている敵より近ければ
         if(!this.isTargetOn ||
           Util.distance(l.pos , player.pos) < Util.distance(this.target.pos,player.pos)){
-        //今のロック先を解除して
-        if(this.isTargetOn){
-          EntityManager.removeEntity(this.target);
-          this.isTargetOn = false;
-        }
-        //targetを追加する
-        this.target = new Target(l);
-        EntityManager.addEntity(this.target,Timer.timer);
-        this.isTargetOn = true;
+          //今のロック先を解除して
+          if(this.isTargetOn){
+            EntityManager.removeEntity(this.target);
+            this.isTargetOn = false;
+          }
+          //targetを追加する
+          this.target = new Target(l);
+          EntityManager.addEntity(this.target,Timer.timer);
+          this.isTargetOn = true;
         }
       }
     }
     if(this.isTargetOn == true){
       //lockしていた敵が視界から消えたら消去
       if(!this.target.enemy.isAlive){
-          EntityManager.removeEntity(this.target);
-          this.isTargetOn = false;
+        EntityManager.removeEntity(this.target);
+        this.isTargetOn = false;
       }else{
         //方向を指定
         player.arg = Math.atan((this.target.pos.y-player.pos.y)/(this.target.pos.x-player.pos.x));
@@ -89,13 +88,17 @@ export default class Weapon1 extends Weapon{
   }
   shot(player){
     //最後に撃ってからframeまで停止
-    if(this.frame % this.agi == 0){
-    //playerの弾薬が残っているなければ打てない
+    if((player.frame - player.frameShot) > this.agi){
+      //shot時刻
+      player.frameShot = player.frame;
+      //playerの弾薬が残っていなければ打てない
       if(player.bullet < this.cost){
-        EntityManager.addEntity(new FontEffect(player.pos,"ないよ!","pop"));
+        EntityManager.addEntity(new FontEffect(player.pos,"たりないよ!","pop"));
       }else{
+
+        //弾薬消費
+        player.bullet -= this.cost;
         console.assert(player.bullet >=0 );
-      player.bullet -= this.cost;
 
         let vi = this.speed;
         let v = {
@@ -117,6 +120,5 @@ export default class Weapon1 extends Weapon{
         player.vel.y -= v.y/4;
       }
     }
-    this.frame++;
   }
 }

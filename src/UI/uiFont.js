@@ -34,9 +34,11 @@ export default class UIFont extends UI{
     this.str = hp + "";
     //0埋め
     while(this.str.length <3){
-      //スペースの代わりに欠番フォントを使っている
+      //スペースの代わりに欠番フォント(ゐ)を使っている←クソ
       this.str = "ゐ" + this.str;
     }
+    //000は特殊
+    if(this.str == "ゐゐ0")this.str = "ゐゐゐ";
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
         this.sprite[i].texture = Art.font[spid];
