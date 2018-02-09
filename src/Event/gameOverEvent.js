@@ -51,7 +51,7 @@ export default class GameOverEvent extends Event{
         frame++;
         yield
       }
-      UIManager.HP.UpdateBar(100);
+      UIManager.HP.bar.UpdateBar(100);
       frame = 0;
       /*フェードin*/
       while(frame < 40){
