@@ -5,10 +5,15 @@ import Input from '../input.js';
 /*文字*/
 export default class UIFont extends UI{
   //strは表示する文字(今は数字のみ)
-  constructor(pos,str){
+  constructor(pos,str,fonttype){
     super({x:pos.x,y:pos.y});
     /*基本情報*/
-    this.type = UI_.HP;
+    //HPとBulletでtypeを分ける必要がある
+    if(fonttype == "HP"){
+      this.type = UI_.HP;
+    }else if(fonttype == "bullet"){
+      this.type = UI_.BULLET;
+    }
     this.name = "font";
     this.isAlive = true;//消えたらfalse
       /*スプライト*/

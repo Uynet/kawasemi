@@ -65,7 +65,8 @@ const UI_ = {
   SELBOX : "SELBOX",
   WEQUIP : "WEQUIP",
   HP : "HP",
-  BULLET : "BULLET"
+  BULLET : "BULLET",
+  FONT : "FONT"
 }
 const WICON_X = 8;
 const WICON_Y = 40;
