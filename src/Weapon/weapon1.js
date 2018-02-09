@@ -8,6 +8,7 @@ import UIManager from '../UI/uiManager.js';
 import Util from '../util.js';
 import BulletShot from '../Entity/bulletShot.js';
 import Timer from '../timer.js';
+import FontEffect from '../Entity/fontEffect.js';
 
 const DIR = {
   UR : "UR",
@@ -27,6 +28,7 @@ export default class Weapon1 extends Weapon{
     this.isTargetOn = false;//照準が発生しているか
     /*パラメータ*/
     this.agi = 16;//間隔
+      this.cost = 10;
     this.speed = 6;//弾速
     this.length = 180;//射程距離
   }
@@ -88,6 +90,13 @@ export default class Weapon1 extends Weapon{
   shot(player){
     //最後に撃ってからframeまで停止
     if(this.frame % this.agi == 0){
+    //playerの弾薬が残っているなければ打てない
+      if(player.bullet < this.cost){
+        EntityManager.addEntity(new FontEffect(player.pos,"ないよ!","pop"));
+      }else{
+        console.assert(player.bullet >=0 );
+      player.bullet -= this.cost;
+
         let vi = this.speed;
         let v = {
           x: vi * Math.cos(player.arg + (Math.random()-0.5)/5),
@@ -106,6 +115,7 @@ export default class Weapon1 extends Weapon{
         //反動
         player.vel.x -= v.x/11;
         player.vel.y -= v.y/4;
+      }
     }
     this.frame++;
   }

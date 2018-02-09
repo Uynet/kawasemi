@@ -11,7 +11,7 @@ export default class UIFont extends UI{
     //HPとBulletでtypeを分ける必要がある
     if(fonttype == "HP"){
       this.type = UI_.HP;
-    }else if(fonttype == "bullet"){
+    }else if(fonttype == "BULLET"){
       this.type = UI_.BULLET;
     }
     this.name = "font";

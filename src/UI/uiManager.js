@@ -27,7 +27,7 @@ const HPB = {
 };
 //HP font 
 const HPFont = {
-  x : HPF.x+32, 
+  x : HPF.x+22, 
   y : HPF.y+4, 
 };
 //bullet frame
@@ -42,7 +42,7 @@ const BulB = {
 };
 //Bullet font 
 const BulFont = {
-  x : BulF.x+32, 
+  x : BulF.x+22, 
   y : BulF.y+4, 
 };
 
@@ -146,12 +146,13 @@ export default class UIManager{
               }
               break;
               //Bulletゲージ
-            case UI_.Bullet :
+              case UI_.BULLET :
               if(ui.name == "bar") {
                 this.bullet.bar = ui;
               }else if(ui.name == "frame"){
                 this.bullet.frame = ui;
               }else if(ui.name == "font"){
+                cl("i")
                 this.bullet.font = ui;
               }
               break;

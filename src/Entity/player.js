@@ -22,6 +22,7 @@ const JUMP_VEL = 7;//ジャンプ力
   const RUN_VEL = 0.5;//はしり速度
 const PLAYER_GRAVITY = 0.4;
 const PLAYER_HP = 100;
+const PLAYER_BULLET = 100;
 const FLICTION = 0.7;
 const POP_PLAYER = -1;
 const INV_TIME = 5;//無敵時間
@@ -69,6 +70,8 @@ export default class Player extends Entity{
     /*パラメータ*/
     this.maxHP = PLAYER_HP;
     this.hp = this.maxHP;
+    this.maxBullet = PLAYER_BULLET;
+    this.bullet = this.maxBullet;
     this.gravity = PLAYER_GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
       /*状態*/
@@ -174,7 +177,6 @@ export default class Player extends Entity{
         case 24 :EntityManager.addEntity(new Font(p,v,"は"));break;
       }
       */
-    EntityManager.addEntity(new FontEffect(this.pos,"こんにちは","pop"));
     }
   }
 
@@ -364,6 +366,12 @@ export default class Player extends Entity{
     if(this.frame - this.frameDamaged > INV_TIME){
       this.isInvincible = false;
     }
+
+    //bulletのかいふく　
+    if(this.frame%10 ==1){
+      this.bullet = Math.min(this.maxBullet,this.bullet+1);
+    }
+    UIManager.bullet.bar.UpdateBar(this.bullet);
     //
     this.sprite.position = this.pos;
     this.frame++;

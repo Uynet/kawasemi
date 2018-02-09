@@ -28,14 +28,14 @@ export default class UIBullet extends UI{
     this.name = name;
     this.max = 100;//EntityManager.player.maxbullet;
   }
-  UpdateBar(hp){
+  UpdateBar(bullet){
     if(this.name == "bar"){
       /*debug*/
       if(!EntityManager.player){
         console.warn("player undefined");
       }else{
-        this.sprite.scale.x = hp/this.max;
-        UIManager.bulletfont.UpdateFont(hp);
+        this.sprite.scale.x = bullet/this.max;
+        UIManager.bullet.font.UpdateFont(bullet);
       }
     }
   }
