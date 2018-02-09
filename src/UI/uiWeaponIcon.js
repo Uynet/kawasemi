@@ -7,21 +7,24 @@ import Util from '../util.js';
 
  
 export default class UIWeaponIcon extends UI{
-
-  constructor(name){
-    let tex;
+  constructor(pos,name){
+    super(pos); 
+    /*基本情報*/
+    this.type = UI_.WICON;
+    this.tex;
     switch(name){
-      case "1" : tex = Art.UIPattern.wIcon1[0];break;
-      case "2" : tex = Art.UIPattern.wIcon2[0];break;
-      case "3" : tex = Art.UIPattern.wIcon3[0];break;
+      case "1" : this.tex = Art.UIPattern.wIcon.w1[0];break;
+      case "2" : this.tex = Art.UIPattern.wIcon.w2[0];break;
+      case "3" : this.tex = Art.UIPattern.wIcon.w3[0];break;
     }
-    super(tex,UI_.WICON); 
     this.name = name;
     this.index = 0;
+    /*スプライト*/
+    this.sprite = Art.SpriteFactory(this.tex);
+    this.sprite.position = this.pos;
   }
   Update(){
-       let to = WICON_X + 20*this.index;
-       let dif = to - this.sprite.x;
-       this.sprite.x += dif * 0.6;
+    this.pos.x++; 
+    this.sprite.position = this.pos;
   }
 }

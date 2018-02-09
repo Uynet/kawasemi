@@ -73,6 +73,8 @@ export default class MapData{
     MapData.DeleteStage();
     MapData.CreateStage(Game.stage);
     /*🍉 parameter initialization*/
+    //プレイヤーに紐付いている情報なのでプレイヤーを作る時に
+    //プレイヤー初期化用の関数を作りそこでやる必要がある
     WeaponManager.weaponList[0].isTargetOn = false;
     WeaponManager.weaponList[0].target = null;//これ大丈夫か??
   }

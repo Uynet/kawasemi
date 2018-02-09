@@ -83,6 +83,7 @@ export default class Game{
      * ポーズ中は停止させる*/
      if(!Game.isPause){
        EntityManager.Update();
+       UIManager.Update();
      }
      if(Game.isSelect){
        UIManager.Update();

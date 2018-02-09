@@ -21,7 +21,7 @@ import FontEffect from './fontEffect.js';
 const JUMP_VEL = 7;//ジャンプ力
   const RUN_VEL = 0.5;//はしり速度
 const PLAYER_GRAVITY = 0.4;
-const PLAYER_HP = 10000;
+const PLAYER_HP = 100;
 const FLICTION = 0.7;
 const POP_PLAYER = -1;
 const INV_TIME = 5;//無敵時間
@@ -245,7 +245,7 @@ export default class Player extends Entity{
         //フォントはダメージ数に応じて数字を表示する　
         EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
         this.hp = Math.max(this.hp,0);
-        UIManager.HP.Update();
+        UIManager.HP.UpdateBar();
         //ダメージを受けて一定時間無敵になる
         this.isInvincible = true;
         this.frameDamaged = this.frame;

@@ -179,18 +179,20 @@ export default class Art{
       wEq1 : PIXI.Texture.fromFrame('weapon00.png'),
       wEq2 : PIXI.Texture.fromFrame('weapon01.png'),
       wEq3 : PIXI.Texture.fromFrame('weapon02.png'),
-      wIcon1 : [
+      wIcon : {
+        w1 : [
         PIXI.Texture.fromFrame('weapon10.png'),
         PIXI.Texture.fromFrame('weapon11.png'),
-      ],
-      wIcon2 : [
+        ],
+        w2 : [
         PIXI.Texture.fromFrame('weapon12.png'),
         PIXI.Texture.fromFrame('weapon13.png'),
-      ],
-      wIcon3 : [
+        ],
+        w3 : [
         PIXI.Texture.fromFrame('weapon14.png'),
         PIXI.Texture.fromFrame('weapon15.png'),
-      ],
+        ]
+      },
       sel : PIXI.Texture.fromFrame('selectbox.png'),//廃止予定
       HP : [
         PIXI.Texture.fromFrame('HP00.png'),
