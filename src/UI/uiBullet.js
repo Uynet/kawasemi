@@ -15,12 +15,10 @@ export default class UIBullet extends UI{
     this.type = UI_.BULLET;;
     /*スプライト*/
     switch (name){
-      case "frame" : 
-        this.spid = 0;
-        break;
-      case "bar" :
-        this.spid = 1;
-        break;
+      case "frame" : this.spid = 0; break;
+      case "bar" : this.spid = 1; break;
+      case "icon" : this.spid = 2; break;
+      default : console.warn("bullet"); break;
     }
     this.tex = Art.UIPattern.bullet[this.spid];
     this.sprite = Art.SpriteFactory(this.tex);

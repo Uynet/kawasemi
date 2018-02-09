@@ -60,7 +60,8 @@ export default class Player extends Entity{
       this.type = ENTITY.PLAYER;
     this.frame = 0;
     this.frameDead;//死んだ時刻
-    this.frameDamaged;//最後に攻撃を食らった時間 無敵時間の計算に必要
+    this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
+    this.frameShot = 0;//最後にshotした時刻
     this.e = 0.1;
     /*スプライト*/
     this.pattern = Art.playerPattern;
@@ -368,9 +369,13 @@ export default class Player extends Entity{
     }
 
     //bulletのかいふく　
-    if(this.frame%10 ==1){
-      this.bullet = Math.min(this.maxBullet,this.bullet+1);
-    }
+    //最後に撃った時刻から経過するほど早くなる
+    let t = (this.frame-this.frameShot);
+    if(t<=100 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+    else if(t>100 && t<=200 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+    else if(t>200 && t<=300 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+    else if(t>300) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+
     UIManager.bullet.bar.UpdateBar(this.bullet);
     //
     this.sprite.position = this.pos;

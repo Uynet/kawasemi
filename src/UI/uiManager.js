@@ -30,6 +30,11 @@ const HPFont = {
   x : HPF.x+22, 
   y : HPF.y+4, 
 };
+//HP Icon
+const HPIC = {
+  x : HPF.x-16, 
+  y : HPF.y, 
+};
 //bullet frame
 const BulF = {
   x : HPF.x, 
@@ -44,6 +49,11 @@ const BulB = {
 const BulFont = {
   x : BulF.x+22, 
   y : BulF.y+4, 
+};
+//Bullet icon 
+const BulIC = {
+  x : BulF.x-16, 
+  y : BulF.y, 
 };
 
 /*UIクラス*/
@@ -63,12 +73,14 @@ export default class UIManager{
     this.HP = {
       bar : undefined,
       frame : undefined,
-      font : undefined
+      font : undefined,
+      icon : undefined
     };
     this.bullet = {
       bar : undefined,
       frame : undefined,
-      font : undefined
+      font : undefined,
+      icon : undefined
     };
   }
 
@@ -88,10 +100,12 @@ export default class UIManager{
     UIManager.addUI(new UIHP(HPF,"frame"));//外枠
     UIManager.addUI(new UIHP(HPB,"bar"));//中
     UIManager.addUI(new UIFont(HPFont,"100","HP"));//数字
+    UIManager.addUI(new UIHP(HPIC,"icon"));//
     /*bullet*/
     UIManager.addUI(new UIBullet(BulF,"frame"));//外枠
     UIManager.addUI(new UIBullet(BulB,"bar"));//中
     UIManager.addUI(new UIFont(BulFont,"100","BULLET"));//数字
+    UIManager.addUI(new UIBullet(BulIC,"icon"));//
   }
 
   /*WeaponIconのポップアップ*/
@@ -143,6 +157,8 @@ export default class UIManager{
                 this.HP.frame = ui;
               }else if(ui.name == "font"){
                 this.HP.font = ui;
+              }else if(ui.name == "icon"){
+                this.HP.icon = ui;
               }
               break;
               //Bulletゲージ
@@ -152,8 +168,9 @@ export default class UIManager{
               }else if(ui.name == "frame"){
                 this.bullet.frame = ui;
               }else if(ui.name == "font"){
-                cl("i")
                 this.bullet.font = ui;
+              }else if(ui.name == "icon"){
+                this.bullet.icon = ui;
               }
               break;
  default :
