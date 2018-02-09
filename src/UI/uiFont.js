@@ -29,7 +29,8 @@ export default class UIFont extends UI{
     this.str = hp + "";
     //0埋め
     while(this.str.length <3){
-      this.str = "0" + this.str;
+      //スペースの代わりに欠番フォントを使っている
+      this.str = "ゐ" + this.str;
     }
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること

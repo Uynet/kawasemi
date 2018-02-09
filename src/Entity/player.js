@@ -77,8 +77,6 @@ export default class Player extends Entity{
     this.weapon.isTargetOn = false;
     this.weapon.target = null;//これ大丈夫か??
     this.dir = DIR.R;//向き
-      if(UIManager.HP){
-      }
     /*フラグ*/
     this.isJump = false;//空中にいるか
       this.isRun = false;//走っているか
@@ -249,7 +247,7 @@ export default class Player extends Entity{
         //フォントはダメージ数に応じて数字を表示する　
         EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
         this.hp = Math.max(this.hp,0);
-        UIManager.HP.UpdateBar(this.hp);
+        UIManager.HP.bar.UpdateBar(this.hp);
         //ダメージを受けて一定時間無敵になる
         this.isInvincible = true;
         this.frameDamaged = this.frame;

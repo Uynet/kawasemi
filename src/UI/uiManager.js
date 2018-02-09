@@ -6,29 +6,44 @@ import UIWeaponIcon from './uiWeaponIcon.js';
 import UIWeaponEquip from './uiWeaponEquip.js';
 import UISelectBox from './uiSelectBox.js';
 import UIHP from './uiHP.js';
+import UIBullet from './uiBullet.js';
 import UIFont from './uiFont.js';
 
 import EntityManager from '../Stage/entityManager.js';
 
-
+const WEQ = {
+  x : 8, 
+  y : 1, 
+};
 //HP frame
 const HPF = {
-  x : 56, 
-  y : 8, 
+  x : WEQ.x + 48, 
+  y : WEQ.y, 
 };
 //HP bar
 const HPB = {
-  x : 56, 
-  y : 8, 
+  x : HPF.x, 
+  y : HPF.y, 
 };
 //HP font 
 const HPFont = {
-  x : 80, 
-  y : 12, 
+  x : HPF.x+32, 
+  y : HPF.y+4, 
 };
-const WEQ = {
-  x : 8, 
-  y : 8, 
+//bullet frame
+const BulF = {
+  x : HPF.x, 
+  y : HPF.y+16, 
+};
+//bullet bar
+const BulB = {
+  x : BulF.x, 
+  y : BulF.y, 
+};
+//Bullet font 
+const BulFont = {
+  x : BulF.x+32, 
+  y : BulF.y+4, 
 };
 
 /*UIクラス*/
@@ -44,12 +59,18 @@ export default class UIManager{
       this.WeaponIconList = [];//武器アイコンのリスト
     this.selectBox;
     this.weaponEquip;
-    this.HP;
-    this.HPframe;
-    /*各UIの初期化を行う
-     * 一度初期化したUIを消す際には
-     * ステージから外さず画面外にプールさせる*/
-     }
+    //オブジェクトの初期化分からん
+    this.HP = {
+      bar : undefined,
+      frame : undefined,
+      font : undefined
+    };
+    this.bullet = {
+      bar : undefined,
+      frame : undefined,
+      font : undefined
+    };
+  }
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
@@ -61,22 +82,16 @@ export default class UIManager{
 
   /*ステージ中でのUI配置に変更*/
   static SetStage(){
-    /*武器アイコン*/
-    /*
-     for(let l of this.WeaponIconList){
-     l.sprite.position.x = -32;
-     l.sprite.position.y =  WICON_Y;
-     }
-     */
-    /*セレクトボックス*/
-    //this.selectBox.sprite.position.x = -32;
-    //this.selectBox.sprite.position.y = WICON_Y-3;
     /*装備中の武器*/
     UIManager.addUI(new UIWeaponEquip(WEQ,"po"));//武器1のメインアイコン(?)
     /*HP*/
-    UIManager.addUI(new UIHP(HPF,"frame"));//HP
-    UIManager.addUI(new UIHP(HPB,"bar"));//HP
-    UIManager.addUI(new UIFont(HPFont,"100"));//HP
+    UIManager.addUI(new UIHP(HPF,"frame"));//外枠
+    UIManager.addUI(new UIHP(HPB,"bar"));//中
+    UIManager.addUI(new UIFont(HPFont,"114"));//数字
+    /*bullet*/
+    UIManager.addUI(new UIBullet(BulF,"frame"));//外枠
+    UIManager.addUI(new UIBullet(BulB,"bar"));//中
+    UIManager.addUI(new UIFont(BulFont,"514"));//数字
   }
 
   /*WeaponIconのポップアップ*/
@@ -120,15 +135,24 @@ export default class UIManager{
           case UI_.WEQUIP : 
             this.weaponEquip = ui;
             break;
-            //HP
+            //HPゲージ
             case UI_.HP :
               if(ui.name == "bar") {
-                this.HP = ui;
-              }
-              else if(ui.name == "frame"){
-                this.HPframe = ui;
+                this.HP.bar = ui;
+              }else if(ui.name == "frame"){
+                this.HP.frame = ui;
               }else if(ui.name == "font"){
-                this.HPfont = ui;
+                this.HP.font = ui;
+              }
+              break;
+              //Bulletゲージ
+            case UI_.Bullet :
+              if(ui.name == "bar") {
+                this.bullet.bar = ui;
+              }else if(ui.name == "frame"){
+                this.bullet.frame = ui;
+              }else if(ui.name == "font"){
+                this.bullet.font = ui;
               }
               break;
  default :
@@ -148,10 +172,12 @@ export default class UIManager{
   static removeUI(ui){
     let i = this.UIList.indexOf(ui);
     this.UIList.splice(i,1);
+    //複数スプライトを持つオブジェクト
     if(ui.name == "font"){
       for(let i = 0;i<ui.sprite.length;i++){
         Drawer.removeContainer(ui.sprite[i],"UI");
       }
+    //単スプライト
     }else{
       Drawer.removeContainer(ui.sprite,"UI");
     }

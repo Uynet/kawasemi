@@ -197,6 +197,12 @@ export default class Art{
       HP : [
         PIXI.Texture.fromFrame('HP00.png'),
         PIXI.Texture.fromFrame('HP01.png'),
+        PIXI.Texture.fromFrame('HP02.png'),
+      ],
+      bullet : [
+        PIXI.Texture.fromFrame('UI70.png'),
+        PIXI.Texture.fromFrame('UI76.png'),
+        PIXI.Texture.fromFrame('UI7a.png'),
       ]
     };
     this.bulletPattern = {
@@ -337,7 +343,7 @@ export default class Art{
     this.font["め"] = PIXI.Texture.fromFrame('font38.png');
     this.font["も"] = PIXI.Texture.fromFrame('font39.png');
     this.font["や"] = PIXI.Texture.fromFrame('font3a.png');
-    this.font["欠番1"] = PIXI.Texture.fromFrame('font3b.png');
+    this.font["ゐ"] = PIXI.Texture.fromFrame('font3b.png');
     this.font["ゆ"] = PIXI.Texture.fromFrame('font3c.png');
     this.font["欠番2"] = PIXI.Texture.fromFrame('font3d.png');
     this.font["よ"] = PIXI.Texture.fromFrame('font3e.png');

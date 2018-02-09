@@ -21,6 +21,10 @@ const KEY = {
   Z : 90,
   X : 88,
   C : 67,
+  H : 72,
+  J : 74,
+  K : 75,
+  L : 76,
   SP : 32
 }
 
@@ -50,12 +54,18 @@ const TILE = {
   GOAL : 4
 }
 
+const CONTAINER = {
+  ENTITY : "ENTITY",
+  FILTER : "FILTER"
+}
+
 /*UI*/
 const UI_ = {
   WICON : "WICON",
   SELBOX : "SELBOX",
   WEQUIP : "WEQUIP",
-  HP : "HP"
+  HP : "HP",
+  BULLET : "BULLET"
 }
 const WICON_X = 8;
 const WICON_Y = 40;
