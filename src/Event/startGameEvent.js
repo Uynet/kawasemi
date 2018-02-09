@@ -4,16 +4,15 @@ import Game from '../Game.js';
 import EventManager from './eventmanager.js';
 import MapData from '../Stage/mapData.js';
 
-/*タイトル画面からゲーム開始画面に移行するイベント
+/*初期状態タイトル画面に移行するイベント
  * (UIの退避)
  * UIのセット
  */
-export default class StartStageEvent extends Event{
+export default class StartGameEvent extends Event{
   constructor(){
     super(1);
     function* po(){
-      Game.scene.ChangeState(STATE.TITLE,STATE.STAGE);
-      MapData.CreateStage(Game.stage);
+      Game.scene.ChangeState(STATE.INIT,STATE.TITLE);
       yield ;
     }
     let itt = po();

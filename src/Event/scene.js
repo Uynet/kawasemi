@@ -1,11 +1,23 @@
+import UIManager from '../UI/uiManager.js';
 /*state*/
 export default class Scene{
   constructor(){
     this.stack = [];
-    this.state = STATE.TITLE;
+    this.state = STATE.INIT;
   }
 
-  ChangeState(newState){
+  ChangeState(oldState,newState){
+    //UIのクリア
+    switch(oldState){
+      case "TITLE" : UIManager.CleanTitle() ;break;
+      case "STAGE" : UIManager.CleanStage() ;break;
+    }
+    switch(newState){
+      /*ゲーム画面用 UIの作成*/
+      case "TITLE" : UIManager.SetTitle(); break;
+      case "STAGE" : UIManager.SetStage(); break;
+    }
+
     this.state = newState;
   }
 

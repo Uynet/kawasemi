@@ -15,6 +15,5 @@ import Util from '../util.js';
     this.tex = Art.UIPattern.wEq1,UI_.WEQUIP; 
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = this.pos;
-    cl(this.pos);
    }
  }

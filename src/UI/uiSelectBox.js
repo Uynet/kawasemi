@@ -10,6 +10,7 @@ let shift = false;
 /*イテレータ*/
 let it;
 
+//廃止予定
  export default class UISelectBox extends UI{
    constructor(){
      super(Art.UIPattern.sel,UI_.SELBOX); 
