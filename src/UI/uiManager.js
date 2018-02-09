@@ -87,11 +87,11 @@ export default class UIManager{
     /*HP*/
     UIManager.addUI(new UIHP(HPF,"frame"));//外枠
     UIManager.addUI(new UIHP(HPB,"bar"));//中
-    UIManager.addUI(new UIFont(HPFont,"114"));//数字
+    UIManager.addUI(new UIFont(HPFont,"100","HP"));//数字
     /*bullet*/
     UIManager.addUI(new UIBullet(BulF,"frame"));//外枠
     UIManager.addUI(new UIBullet(BulB,"bar"));//中
-    UIManager.addUI(new UIFont(BulFont,"514"));//数字
+    UIManager.addUI(new UIFont(BulFont,"100","BULLET"));//数字
   }
 
   /*WeaponIconのポップアップ*/
