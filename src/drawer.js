@@ -16,28 +16,32 @@ export default class Drawer{
        * foreGround:手前に描画
        * UIコンテナ:UIを描画するレイヤ
        * */
+    this.backGroundContainer = new PIXI.Container();//Entity
     this.entityContainer = new PIXI.Container();//Entity
-    this.effectContainer = new PIXI.Container();//エフェクト
-    this.foreGroundContainer = new PIXI.Container();//手前に表示する
+    this.filterContainer = new PIXI.Container();//画面遷移フィルター
+    this.foreGroundContainer = new PIXI.Container();//手前に表示する 文字エフェクトなど
     this.UIContainer = new PIXI.Container();//UI
 
+    this.app.stage.addChild(this.backGroundContainer);
     this.app.stage.addChild(this.entityContainer);
     this.app.stage.addChild(this.foreGroundContainer);
-    this.app.stage.addChild(this.effectContainer);
+    this.app.stage.addChild(this.filterContainer);
     this.app.stage.addChild(this.UIContainer);
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);
 
 
     /*拡大率*/
     this.magnification = 3;
+    this.backGroundContainer.scale.x = this.magnification;
+    this.backGroundContainer.scale.y = this.magnification;
     this.entityContainer.scale.x = this.magnification;
     this.entityContainer.scale.y = this.magnification;
     this.UIContainer.scale.x = this.magnification;
     this.UIContainer.scale.y = this.magnification;
     this.foreGroundContainer.scale.x = this.magnification;
     this.foreGroundContainer.scale.y = this.magnification;
-    this.effectContainer.scale.x = this.magnification;
-    this.effectContainer.scale.y = this.magnification;
+    this.filterContainer.scale.x = this.magnification;
+    this.filterContainer.scale.y = this.magnification;
     $("#pixiview").append(this.Renderer.view);
 
     /*-----*/
@@ -58,11 +62,16 @@ export default class Drawer{
         this.entityContainer.addChild(sprite);
         break;
       case "FILTER":
-        this.effectContainer.addChild(sprite);
+        this.filterContainer.addChild(sprite);
         break;
       case "FORE":
         this.foreGroundContainer.addChild(sprite);
         break;
+      case "BG":
+        this.backGroundContainer.addChild(sprite);
+        break;
+      default :
+        console.warn("po");
     }
   }
 
@@ -76,10 +85,13 @@ export default class Drawer{
         this.entityContainer.removeChild(sprite);
         break;
       case "FILTER":
-        this.effectContainer.removeChild(sprite);
+        this.filterContainer.removeChild(sprite);
         break;
       case "FORE":
         this.foreGroundContainer.removeChild(sprite);
+        break;
+      case "BG":
+        this.backGroundContainer.removeChild(sprite);
         break;
       default :
         console.warn("container");
@@ -92,6 +104,8 @@ export default class Drawer{
     let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
     let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
+    this.backGroundContainer.x = Math.floor(toX);
+    this.backGroundContainer.y = Math.floor(toY);
     this.entityContainer.x = Math.floor(toX);
     this.entityContainer.y = Math.floor(toY);
     this.foreGroundContainer.x = Math.floor(toX);
@@ -101,6 +115,8 @@ export default class Drawer{
   static ScrollSet(pos){
     let centerX = this.magnification*(- pos.x-8 + 400/this.magnification);
     let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
+    this.backGroundContainer.x = Math.floor(centerX);
+    this.backGroundContainer.y = Math.floor(centerY);
     this.entityContainer.x = Math.floor(centerX);
     this.entityContainer.y = Math.floor(centerY);
     this.foreGroundContainer.x = Math.floor(centerX);
@@ -111,8 +127,8 @@ export default class Drawer{
     this.magnification = mag;
     this.entityContainer.scale.x = this.magnification;
     this.entityContainer.scale.y = this.magnification;
-    this.effectContainer.scale.x = this.magnification;
-    this.effectContainer.scale.y = this.magnification;
+    this.filterContainer.scale.x = this.magnification;
+    this.filterContainer.scale.y = this.magnification;
   }
 
 

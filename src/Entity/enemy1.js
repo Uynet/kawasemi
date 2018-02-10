@@ -87,7 +87,7 @@ export default class Enemy1 extends Enemy{
     let c = Collision.on(this,player);
     if(c.isHit && c.n.y != 1){
       //ダメージ
-      let damage = this.atk + 10 + Math.floor(10 * Math.random());
+      let damage = this.atk+  Math.floor(10 * Math.random());
       EntityManager.player.Damage(-damage);
     }
   }

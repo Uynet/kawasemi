@@ -259,12 +259,24 @@ export default class Art{
           PIXI.Texture.fromFrame('wall86.png')//
         ],
       },
-      steel : [
-        PIXI.Texture.fromFrame('wall90.png'),//
-        PIXI.Texture.fromFrame('wall91.png'),//
-        PIXI.Texture.fromFrame('wall92.png'),//
-      ]
-    };
+      //鉄骨
+      steel : {
+        //entity
+        entity : [
+        PIXI.Texture.fromFrame('wall90.png'),
+        PIXI.Texture.fromFrame('wall91.png'),
+        PIXI.Texture.fromFrame('wall92.png'),
+        PIXI.Texture.fromFrame('wall93.png'),
+        ],
+        //background
+        back : [
+        PIXI.Texture.fromFrame('wall94.png'),
+        PIXI.Texture.fromFrame('wall95.png'),
+        PIXI.Texture.fromFrame('wall96.png'),
+        PIXI.Texture.fromFrame('wall97.png'),
+        ]
+      }
+    }
 
     /*画面遷移エフェクト*/
     this.seqPattern = [];
