@@ -1,6 +1,7 @@
 import EntityManager from './entityManager.js'
 import Entity from '../Entity/entity.js'
 import Wall from '../Entity/wall.js'
+import Background from '../Entity/background.js';
 import Player from '../Entity/player.js'
 import Enemy1 from '../Entity/enemy1.js'
 import Goal from '../Entity/goal.js'
@@ -37,6 +38,9 @@ export default class MapData{
 
   static async CreateStage(stageNo){
     await this.Load(stageNo);
+    /*タイルに割り当てるtype
+     * 1 : 壁
+     * 2 : 背景*/
     let tileType = this.jsonObj.tilesets[0].tileproperties;
     let entity;
     let ID;//tiledに対応漬けられているID
@@ -44,10 +48,14 @@ export default class MapData{
     for(let y = 0;y<this.height;y++){
       for(let x = 0;x<this.width;x++){
         ID = this.data[this.width*y + x]-1;
-        if(ID == -1)continue;//SPACE
+        //tiledのIDとjsonデータがズレてるので1引く
+        if(ID == -1)continue;//空白はtiledIDが0なのでjsonで-1となる
         switch(tileType[this.data[this.width*y + x]-1].type){
           case TILE.WALL :
             entity = new Wall({x:16*x,y:16*y},MapData.WallTile(ID));
+            EntityManager.addEntity(entity); break;
+          case TILE.BG :
+            entity = new Background({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
           case TILE.PLAYER : EntityManager.addEntity(new Player({x:16*x,y:16*y})); break;
           case TILE.ENEMY : EntityManager.addEntity(new Enemy1({x:16*x,y:16*y})); break;
@@ -90,10 +98,14 @@ export default class MapData{
       case 69:return out[6];
       case 70:return out[7];
       //
-      case 72:return steel[0]; 
-      case 73:return steel[1]; 
-      case 74:return steel[2]; 
-      case 75:return steel[3]; 
+      case 72:return steel.entity[0]; 
+      case 73:return steel.entity[1]; 
+      case 74:return steel.entity[2]; 
+      case 75:return steel.entity[3]; 
+      case 76:return steel.back[0];
+      case 77:return steel.back[1];
+      case 78:return steel.back[2];
+      case 79:return steel.back[3];
   }
     console.warn(i);
     return Art.wallPattern.block;

@@ -38,11 +38,12 @@ const STATE = {
 
 /*Entity*/
 const ENTITY = {
-  PLAYER  : 0,
-  WALL : 1,
-  ENEMY : 2,
-  BULLET : 3,
-  EFFECT : 4
+  PLAYER  : "PLAYER",
+  WALL : "WALL",
+  ENEMY : "ENEMY",
+  BULLET : "BULLET",
+  EFFECT : "EFFECT",
+  BG : "BG"
 }
 
 /*MapChip*/
@@ -51,7 +52,8 @@ const TILE = {
   WALL :1,
   PLAYER : 2,
   ENEMY : 3,
-  GOAL : 4
+  GOAL : 4,
+  BG : 5
 }
 
 const CONTAINER = {
@@ -123,10 +125,10 @@ window.onload = function() {
   getAudioBuffer('src/boss.mp3', function(buffer) {
     // 読み込み完了後にボタンにクリックイベントを登録
       // サウンドを再生
-      console.log(a)
+    //  console.log(a)
       if(a){
-      console.log("po")
-      playSound(buffer);
+   //   console.log("po")
+    //  playSound(buffer);
       a = false;
     };
   });

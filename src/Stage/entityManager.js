@@ -43,6 +43,11 @@ export default class EntityManager{
         this.wallList.push(entity);
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
+        //背景
+      case ENTITY.BG :
+        //リストには追加してない
+        Drawer.addContainer(entity.sprite,"BG");
+        break;
         //ゴール?
       case ENTITY.GOAL :
         Drawer.addContainer(entity.sprite,"ENTITY");
@@ -95,6 +100,9 @@ export default class EntityManager{
         this.wallList.splice(j,1);
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
+        //背景
+      case ENTITY.WALL :
+        Drawer.removeContainer(entity.sprite,"BG");
         //その他
       default :
         if( entity.type!=ENTITY.BULLET){
