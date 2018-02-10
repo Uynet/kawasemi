@@ -357,11 +357,45 @@ export default class Art{
     this.font["を"] = PIXI.Texture.fromFrame('font316.png');
     this.font["欠番4"] = PIXI.Texture.fromFrame('font317.png');
     this.font["ん"] = PIXI.Texture.fromFrame('font318.png');
-    this.font["!"] = PIXI.Texture.fromFrame('font319.png');
-    this.font["!!"] = PIXI.Texture.fromFrame('font31a.png');
+    this.font["ー"] = PIXI.Texture.fromFrame('font319.png');
+    this.font["!"] = PIXI.Texture.fromFrame('font31a.png');
     this.font["?"] = PIXI.Texture.fromFrame('font31b.png');
     this.font["。"] = PIXI.Texture.fromFrame('font31c.png');
     this.font["、"] = PIXI.Texture.fromFrame('font31d.png');
+    this.font["が"] = PIXI.Texture.fromFrame('font40.png');
+    this.font["ぎ"] = PIXI.Texture.fromFrame('font41.png');
+    this.font["ぐ"] = PIXI.Texture.fromFrame('font42.png');
+    this.font["げ"] = PIXI.Texture.fromFrame('font43.png');
+    this.font["ご"] = PIXI.Texture.fromFrame('font44.png');
+    this.font["ざ"] = PIXI.Texture.fromFrame('font45.png');
+    this.font["じ"] = PIXI.Texture.fromFrame('font46.png');
+    this.font["ず"] = PIXI.Texture.fromFrame('font47.png');
+    this.font["ぜ"] = PIXI.Texture.fromFrame('font48.png');
+    this.font["ぞ"] = PIXI.Texture.fromFrame('font49.png');
+    this.font["だ"] = PIXI.Texture.fromFrame('font4a.png');
+    this.font["ぢ"] = PIXI.Texture.fromFrame('font4b.png');
+    this.font["づ"] = PIXI.Texture.fromFrame('font4c.png');
+    this.font["で"] = PIXI.Texture.fromFrame('font4d.png');
+    this.font["ど"] = PIXI.Texture.fromFrame('font4e.png');
+    this.font["ば"] = PIXI.Texture.fromFrame('font4f.png');
+    this.font["び"] = PIXI.Texture.fromFrame('font410.png');
+    this.font["ぶ"] = PIXI.Texture.fromFrame('font411.png');
+    this.font["べ"] = PIXI.Texture.fromFrame('font412.png');
+    this.font["ぼ"] = PIXI.Texture.fromFrame('font413.png');
+    this.font["ぱ"] = PIXI.Texture.fromFrame('font414.png');
+    this.font["ぴ"] = PIXI.Texture.fromFrame('font415.png');
+    this.font["ぷ"] = PIXI.Texture.fromFrame('font416.png');
+    this.font["ぺ"] = PIXI.Texture.fromFrame('font417.png');
+    this.font["ぽ"] = PIXI.Texture.fromFrame('font418.png');
+    this.font["ぁ"] = PIXI.Texture.fromFrame('font50.png');
+    this.font["ぃ"] = PIXI.Texture.fromFrame('font51.png');
+    this.font["ぅ"] = PIXI.Texture.fromFrame('font52.png');
+    this.font["ぇ"] = PIXI.Texture.fromFrame('font53.png');
+    this.font["ぉ"] = PIXI.Texture.fromFrame('font54.png');
+    this.font["っ"] = PIXI.Texture.fromFrame('font55.png');
+    this.font["ゃ"] = PIXI.Texture.fromFrame('font56.png');
+    this.font["ゅ"] = PIXI.Texture.fromFrame('font57.png');
+    this.font["ょ"] = PIXI.Texture.fromFrame('font58.png');
   }
 
   static async LoadTexture(){
