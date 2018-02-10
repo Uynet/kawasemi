@@ -125,6 +125,22 @@
        "wall86.png": {
       "frame": {"x":96, "y":128, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall90.png": {
+      "frame": {"x":0, "y":144, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall91.png": {
+      "frame": {"x":16, "y":144, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall92.png": {
+      "frame": {"x":32, "y":144, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+       "wall93.png": {
+      "frame": {"x":48, "y":144, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
 
 

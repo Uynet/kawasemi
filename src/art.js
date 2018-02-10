@@ -258,7 +258,12 @@ export default class Art{
           PIXI.Texture.fromFrame('wall85.png'),//
           PIXI.Texture.fromFrame('wall86.png')//
         ],
-      }
+      },
+      steel : [
+        PIXI.Texture.fromFrame('wall90.png'),//
+        PIXI.Texture.fromFrame('wall91.png'),//
+        PIXI.Texture.fromFrame('wall92.png'),//
+      ]
     };
 
     /*画面遷移エフェクト*/
