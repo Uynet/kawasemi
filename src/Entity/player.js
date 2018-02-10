@@ -34,12 +34,12 @@ const VX_MAX = 3;
 const VY_MAX = 7;
 
 const STATE = {
-  WAITING : 0,
-  RUNNING  : 1,
-  JUMPING : 2,
-  FALLING : 3,
-  DYING : 4,//死んでから遷移開始するまでの操作不能状態
-  DEAD : 5
+  WAITING : "WAITING",
+  RUNNING  : "RUNNING",
+  JUMPING : "JUMPING",
+  FALLING : "FALLING",
+  DYING : "DYING",//死んでから遷移開始するまでの操作不能状態
+  DEAD : "DEAD"
 }
 
 const DIR = {
@@ -97,6 +97,21 @@ export default class Player extends Entity{
         this.state = STATE.JUMPING;
       }
     }
+    /*空中ジャンプ*/
+    //空中でZ押すとbulletを消費してジャンプできる
+    if(Input.isKeyInput(KEY.Z)){
+      if(this.state == STATE.FALLING){
+            let jumpCost = 20
+          if(this.bullet >= jumpCost){
+            this.frameShot = this.frame;
+            this.vel.y = -JUMP_VEL;
+            this.bullet -= 20;
+            this.state = STATE.JUMPING;
+          }else{
+            EntityManager.addEntity(new FontEffect(this.pos,"たりないよ","player"));
+          }
+      }
+    }
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
       this.state = STATE.RUNNING;
@@ -139,45 +154,7 @@ export default class Player extends Entity{
     }
     /*for debug*/
     if(Input.isKeyInput(KEY.SP) && this.frame%10 == 0){
-      let p = {
-        x:this.pos.x,
-        y:this.pos.y
-      }
-      let v = {
-        x:(Math.random()-0.5)*2,
-        y:-5
-      }
 
-      /*
-      switch(Math.floor(25*Math.random())){
-        case 0 :EntityManager.addEntity(new Font(p,v,"あ"));break;
-        case 1 :EntityManager.addEntity(new Font(p,v,"い"));break;
-        case 2 :EntityManager.addEntity(new Font(p,v,"う"));break;
-        case 3 :EntityManager.addEntity(new Font(p,v,"え"));break;
-        case 4 :EntityManager.addEntity(new Font(p,v,"お"));break;
-        case 5 :EntityManager.addEntity(new Font(p,v,"か"));break;
-        case 6 :EntityManager.addEntity(new Font(p,v,"き"));break;
-        case 7 :EntityManager.addEntity(new Font(p,v,"く"));break;
-        case 8 :EntityManager.addEntity(new Font(p,v,"け"));break;
-        case 9 :EntityManager.addEntity(new Font(p,v,"こ"));break;
-        case 10 :EntityManager.addEntity(new Font(p,v,"さ"));break;
-        case 11 :EntityManager.addEntity(new Font(p,v,"し"));break;
-        case 12 :EntityManager.addEntity(new Font(p,v,"す"));break;
-        case 13 :EntityManager.addEntity(new Font(p,v,"せ"));break;
-        case 14 :EntityManager.addEntity(new Font(p,v,"そ"));break;
-        case 15 :EntityManager.addEntity(new Font(p,v,"た"));break;
-        case 16 :EntityManager.addEntity(new Font(p,v,"ち"));break;
-        case 17 :EntityManager.addEntity(new Font(p,v,"つ"));break;
-        case 18 :EntityManager.addEntity(new Font(p,v,"て"));break;
-        case 19 :EntityManager.addEntity(new Font(p,v,"と"));break;
-        case 19 :EntityManager.addEntity(new Font(p,v,"な"));break;
-        case 20 :EntityManager.addEntity(new Font(p,v,"に"));break;
-        case 21 :EntityManager.addEntity(new Font(p,v,"ぬ"));break;
-        case 22 :EntityManager.addEntity(new Font(p,v,"ね"));break;
-        case 23 :EntityManager.addEntity(new Font(p,v,"の"));break;
-        case 24 :EntityManager.addEntity(new Font(p,v,"は"));break;
-      }
-      */
     }
   }
 
@@ -265,7 +242,7 @@ export default class Player extends Entity{
           /* 衝突応答*/
           /*フラグの解除*/
           if(c.n.y == -1){
-            this.isJump = 0;
+            this.isJump = false;
             Collision.Resolve(this,l);
           }
           /*note : now isHit == false*/
@@ -276,7 +253,7 @@ export default class Player extends Entity{
         /* 衝突応答*/
         /*フラグの解除*/
         if(Collision.on(this,l).n.y == -1){
-          this.isJump = 0;
+          this.isJump = false;
         }
         Collision.Resolve(this,l);
         /*note : now isHit == false*/
@@ -301,25 +278,24 @@ export default class Player extends Entity{
      }
      this.acc.x = 0;
 
-     if(this.vel.y > 2){
+
+     //jumping state
+     if(this.isJump && this.vel.y <= -1){
+       this.state = STATE.JUMPING;
+     }
+     if(this.vel.y > 0 && this.isJump){
        this.state = STATE.FALLING;
      }
   }
 
   Update(){
     //照準を自動でやってる
-
     if(this.isAlive){
-      this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
-
-        this.isRun = false;
+      if(!this.isJump) this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
+      this.isRun = false;
       this.Input();//入力
       this.weapon.Target(this);
 
-      //jumping state
-      if(this.isJump && this.vel.y <= -1){
-        this.state = STATE.JUMPING;
-      }
       this.Physics();//物理
     }
     this.collision();//衝突
@@ -330,7 +306,11 @@ export default class Player extends Entity{
      switch(this.dir){
      case DIR.UR :
      case DIR.UL :
-     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y-40});
+     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y-60});
+     break;
+     case DIR.DR :
+     case DIR.DL :
+     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+60});
      break;
      default :
      Drawer.ScrollOn(this.pos);
@@ -375,7 +355,6 @@ export default class Player extends Entity{
     else if(t>100 && t<=200 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
     else if(t>200 && t<=300 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
     else if(t>300) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-
     UIManager.bullet.bar.UpdateBar(this.bullet);
     //
     this.sprite.position = this.pos;
