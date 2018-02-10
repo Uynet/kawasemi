@@ -1,8 +1,9 @@
 import Timer from './timer.js';
 import EntityManager from './Stage/entityManager.js';
 
-const PIXI_WIDTH = 800;
-const PIXI_HEIGHT = 600;
+let PIXI_WIDTH = 600;
+let PIXI_HEIGHT = 700;
+let size = 1;
 
 export default class Drawer{
 
@@ -36,20 +37,18 @@ export default class Drawer{
     this.backGroundContainer.scale.y = this.magnification;
     this.entityContainer.scale.x = this.magnification;
     this.entityContainer.scale.y = this.magnification;
-    this.UIContainer.scale.x = this.magnification;
-    this.UIContainer.scale.y = this.magnification;
+    this.UIContainer.scale.x = this.magnification -1
+    this.UIContainer.scale.y = this.magnification -1
     this.foreGroundContainer.scale.x = this.magnification;
     this.foreGroundContainer.scale.y = this.magnification;
     this.filterContainer.scale.x = this.magnification;
     this.filterContainer.scale.y = this.magnification;
     $("#pixiview").append(this.Renderer.view);
-
-    /*-----*/
-    /*なぜかyieldがstaticにできないのでココにかく*/
-
-    this.Animator = function*(start,num,startTime,rate){
-      yield (start + Math.floor((Timer.timer - startTime)/rate))%num;
-    }
+  }
+  static ChangeSize(i){
+    size = i;
+    let PIXI_WIDTH = 600 * i;
+    let PIXI_HEIGHT = 600 * i;
   }
 
   /*コンテナにスプライトを追加*/
@@ -100,8 +99,8 @@ export default class Drawer{
 
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
-    let centerX = this.magnification*(- pos.x-8 + 400/this.magnification);
-    let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
+    let centerX = this.magnification*(- pos.x-8 + 300/this.magnification);
+    let centerY = this.magnification*(- pos.y-8 + 400/this.magnification);
     let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
     this.backGroundContainer.x = Math.floor(toX);
@@ -113,8 +112,8 @@ export default class Drawer{
   }
   /*スクロール位置を一瞬で移動させる*/
   static ScrollSet(pos){
-    let centerX = this.magnification*(- pos.x-8 + 400/this.magnification);
-    let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
+    let centerX = this.magnification*(- (pos.x-8) + 300/this.magnification);
+    let centerY = this.magnification*(- (pos.y-8) + 400/this.magnification);
     this.backGroundContainer.x = Math.floor(centerX);
     this.backGroundContainer.y = Math.floor(centerY);
     this.entityContainer.x = Math.floor(centerX);
