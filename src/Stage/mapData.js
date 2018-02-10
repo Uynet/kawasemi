@@ -78,7 +78,9 @@ export default class MapData{
   //やばい
   static WallTile(i){
     let out = Art.wallPattern.edge.out;
+    let steel = Art.wallPattern.steel;
     switch(i){
+      //edge out
       case 52:return out[0];
       case 53:return out[1];
       case 54:return out[2];
@@ -87,6 +89,11 @@ export default class MapData{
       case 68:return out[5];
       case 69:return out[6];
       case 70:return out[7];
+      //
+      case 72:return steel[0]; 
+      case 73:return steel[1]; 
+      case 74:return steel[2]; 
+      case 75:return steel[3]; 
   }
     console.warn(i);
     return Art.wallPattern.block;
