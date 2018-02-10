@@ -78,3 +78,56 @@ let VEC0 = {x:0,y:0};
 /*for debug*/
 let po = ()=>{console.log("po")};
 let cl = console.log;
+
+//audio test
+let a = true;
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+let context = new AudioContext();
+
+// Audio 用の buffer を読み込む
+let getAudioBuffer = function(url, fn) {  
+  let req = new XMLHttpRequest();
+  // array buffer を指定
+  req.responseType = 'arraybuffer';
+  req.onreadystatechange = function() {
+    if (req.readyState === 4) {
+      if (req.status === 0 || req.status === 200) {
+        // array buffer を audio buffer に変換
+        context.decodeAudioData(req.response, function(buffer) {
+          // コールバックを実行
+          fn(buffer);
+        });
+      }
+    }
+  };
+  req.open('GET', url, true);
+  req.send('');
+};
+
+// サウンドを再生
+let playSound = function(buffer) {
+  // source を作成
+  let source = context.createBufferSource();
+  // buffer をセット
+  source.buffer = buffer;
+  // context に connect
+  source.connect(context.destination);
+  source.loop = true;
+  // 再生
+  source.start(1);
+};
+
+// main
+window.onload = function() {
+  // サウンドを読み込む
+  getAudioBuffer('src/boss.mp3', function(buffer) {
+    // 読み込み完了後にボタンにクリックイベントを登録
+      // サウンドを再生
+      console.log(a)
+      if(a){
+      console.log("po")
+      playSound(buffer);
+      a = false;
+    };
+  });
+};
