@@ -19,7 +19,7 @@ import Font from './font.js';
 import FontEffect from './fontEffect.js';
 
 const JUMP_VEL = 7;//ジャンプ力
-  const RUN_VEL = 0.5;//はしり速度
+const RUN_VEL = 0.4;//はしり速度
 const PLAYER_GRAVITY = 0.4;
 const PLAYER_HP = 100;
 const PLAYER_BULLET = 100;
@@ -154,7 +154,7 @@ export default class Player extends Entity{
     }
     /*for debug*/
     if(Input.isKeyInput(KEY.SP) && this.frame%10 == 0){
-      EntityManager.addEntity(new FontEffect(this.pos,"からっぽ!","pop"));
+      EntityManager.addEntity(new FontEffect(this.pos,"そばや","pop"));
     }
   }
 
@@ -227,7 +227,6 @@ export default class Player extends Entity{
         //フォントはダメージ数に応じて数字を表示する　
         EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
         this.hp = Math.max(this.hp,0);
-        UIManager.HP.bar.UpdateBar(this.hp);
         //ダメージを受けて一定時間無敵になる
         this.isInvincible = true;
         this.frameDamaged = this.frame;
@@ -356,8 +355,19 @@ export default class Player extends Entity{
     else if(t>200 && t<=300 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
     else if(t>300) this.bullet = Math.min(this.maxBullet,this.bullet+1);
     UIManager.bullet.bar.UpdateBar(this.bullet);
-    //
-    this.sprite.position = this.pos;
+    //HPbarの更新
+    UIManager.HP.bar.UpdateBar(this.hp);
+    //走り中は画像をちょっとだけ跳ねさせる
+    //スプライト位置を動かしているだけなので当たり判定は変化していない
+    if(this.state == STATE.RUNNING){
+      let a = 2;//振幅
+      let l = 9;//周期
+      let f = (Math.abs((this.frame%l -l/2))-l/2);
+      this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
+      this.sprite.position.x = this.pos.x ;
+    }else{
+      this.sprite.position = this.pos;
+    }
     this.frame++;
   }
 }

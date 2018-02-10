@@ -42,7 +42,6 @@ export default class UIHP extends UI{
       }else{
         this.sprite.scale.x = hp/this.max;
         UIManager.HP.font.UpdateFont(hp);
-        this.sprite.alpha = 0.9;
       }
     }
   }

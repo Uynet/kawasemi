@@ -21,7 +21,7 @@ export default class Bullet1 extends Bullet{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = pos;
     /*コライダ*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
     /*パラメータ*/
     this.hp = 1;//弾丸のHP 0になると消滅
     this.atk = 1;//攻撃力

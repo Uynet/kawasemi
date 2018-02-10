@@ -77,17 +77,18 @@ export default class MapData{
   //タイルIDを渡すとテクスチャを返す
   //やばい
   static WallTile(i){
+    let out = Art.wallPattern.edge.out;
     switch(i){
-      case 52:return Art.wallPattern[13];
-      case 53:return Art.wallPattern[14];
-      case 54:return Art.wallPattern[15];
-      case 60:return Art.wallPattern[20];
-      case 62:return Art.wallPattern[22];
-      case 68:return Art.wallPattern[27];
-      case 69:return Art.wallPattern[28];
-      case 70:return Art.wallPattern[29];
+      case 52:return out[0];
+      case 53:return out[1];
+      case 54:return out[2];
+      case 60:return out[3];
+      case 62:return out[4];
+      case 68:return out[5];
+      case 69:return out[6];
+      case 70:return out[7];
   }
     console.warn(i);
-    return Art.wallPattern[0];
+    return Art.wallPattern.block;
   }
 }
