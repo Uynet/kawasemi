@@ -303,6 +303,142 @@
         "font31d.png": {
       "frame": {"x":232, "y":24, "w":8, "h":8},
       "sourceSize": {"w": 8, "h": 8}
+    },
+     "font40.png": {
+      "frame": {"x":0, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font41.png": {
+      "frame": {"x":8, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font42.png": {
+      "frame": {"x":16, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font43.png": {
+      "frame": {"x":24, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font44.png": {
+      "frame": {"x":32, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font45.png": {
+      "frame": {"x":40, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font46.png": {
+      "frame": {"x":48, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font47.png": {
+      "frame": {"x":56, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font48.png": {
+      "frame": {"x":64, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font49.png": {
+      "frame": {"x":72, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font4a.png": {
+      "frame": {"x":80, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font4b.png": {
+      "frame": {"x":88, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font4c.png": {
+      "frame": {"x":96, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font4d.png": {
+      "frame": {"x":104, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font4e.png": {
+      "frame": {"x":112, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font4f.png": {
+      "frame": {"x":120, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+      "font410.png": {
+      "frame": {"x":128, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font411.png": {
+      "frame": {"x":136, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font412.png": {
+      "frame": {"x":144, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font413.png": {
+      "frame": {"x":152, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font414.png": {
+      "frame": {"x":160, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font415.png": {
+      "frame": {"x":168, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+        "font416.png": {
+      "frame": {"x":176, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+        "font417.png": {
+      "frame": {"x":184, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+        "font418.png": {
+      "frame": {"x":192, "y":32, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font50.png": {
+      "frame": {"x":0, "y":40, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font51.png": {
+      "frame": {"x":8, "y":40, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font52.png": {
+      "frame": {"x":16, "y":40, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font53.png": {
+      "frame": {"x":24, "y":40, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font54.png": {
+      "frame": {"x":32, "y":40, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font55.png": {
+      "frame": {"x":40, "y":40, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "font56.png": {
+      "frame": {"x":48, "y":40, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font57.png": {
+      "frame": {"x":56, "y":40, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "font58.png": {
+      "frame": {"x":64, "y":40, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
     }
 
 

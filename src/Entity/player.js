@@ -99,7 +99,7 @@ export default class Player extends Entity{
     }
     /*空中ジャンプ*/
     //空中でZ押すとbulletを消費してジャンプできる
-    if(Input.isKeyInput(KEY.Z)){
+    if(Input.isKeyClick(KEY.Z)){
       if(this.state == STATE.FALLING){
             let jumpCost = 20
           if(this.bullet >= jumpCost){
@@ -108,7 +108,7 @@ export default class Player extends Entity{
             this.bullet -= 20;
             this.state = STATE.JUMPING;
           }else{
-            EntityManager.addEntity(new FontEffect(this.pos,"たりないよ","player"));
+            EntityManager.addEntity(new FontEffect(this.pos,"がぎぐげご","pop"));
           }
       }
     }
@@ -154,7 +154,7 @@ export default class Player extends Entity{
     }
     /*for debug*/
     if(Input.isKeyInput(KEY.SP) && this.frame%10 == 0){
-
+      EntityManager.addEntity(new FontEffect(this.pos,"からっぽ!","pop"));
     }
   }
 
