@@ -4,12 +4,11 @@ import MapData from '../Stage/mapData.js';
 import Game from '../Game.js';
 
 
-/*現状使われてない*/
-export default class GameClearEvent extends Event{
+export default class MessageEvent extends Event{
   //Gameのstateを遷移状態に移行
   constructor(){
     super(1);
-    let PositionReset = this.ReturnFunc();
+    let f = this.ReturnFunc();
     this.func = PositionReset;
   }
 

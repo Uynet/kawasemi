@@ -14,7 +14,7 @@ export default class Goal extends Entity{
   constructor(pos){
     super(pos);
     this.type = ENTITY.GOAL;
-    this.sprite = Art.SpriteFactory(Art.wallPattern[1]);
+    this.sprite = Art.SpriteFactory(Art.wallPattern.goal);
     this.sprite.position = pos;
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.isgoal = false;//??

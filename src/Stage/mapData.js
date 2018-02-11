@@ -2,6 +2,7 @@ import EntityManager from './entityManager.js'
 import Entity from '../Entity/entity.js'
 import Wall from '../Entity/wall.js'
 import Background from '../Entity/background.js';
+import Signboard from '../Entity/signboard.js';
 import Player from '../Entity/player.js'
 import Enemy1 from '../Entity/enemy1.js'
 import Goal from '../Entity/goal.js'
@@ -57,6 +58,10 @@ export default class MapData{
           case TILE.BG :
             entity = new Background({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
+            //看板
+          case TILE.SIGN :
+            entity = new Signboard({x:16*x,y:16*y},MapData.WallTile(ID));
+            EntityManager.addEntity(entity); break;
           case TILE.PLAYER : EntityManager.addEntity(new Player({x:16*x,y:16*y})); break;
           case TILE.ENEMY : EntityManager.addEntity(new Enemy1({x:16*x,y:16*y})); break;
           case TILE.GOAL : EntityManager.addEntity(new Goal({x:16*x,y:16*y})); break;
@@ -97,7 +102,7 @@ export default class MapData{
       case 68:return out[5];
       case 69:return out[6];
       case 70:return out[7];
-      //
+      //steel
       case 72:return steel.entity[0]; 
       case 73:return steel.entity[1]; 
       case 74:return steel.entity[2]; 
@@ -106,6 +111,9 @@ export default class MapData{
       case 77:return steel.back[1];
       case 78:return steel.back[2];
       case 79:return steel.back[3];
+      //signboard
+      cl("sig");
+      case 4:return Art.wallPattern.signboard;
   }
     console.warn(i);
     return Art.wallPattern.block;

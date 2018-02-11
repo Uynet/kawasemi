@@ -245,6 +245,8 @@ export default class Art{
     ];
     this.wallPattern = {
       block : PIXI.Texture.fromFrame('wall00.png'),
+      goal : PIXI.Texture.fromFrame('wall01.png'),
+      signboard : PIXI.Texture.fromFrame('wall02.png'),
       //壁縁あり
       edge : {
         //外向き枠
