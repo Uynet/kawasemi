@@ -154,7 +154,6 @@ export default class Player extends Entity{
     }
     /*for debug*/
     if(Input.isKeyInput(KEY.SP) && this.frame%10 == 0){
-      EntityManager.addEntity(new FontEffect(this.pos,"そばや","pop"));
     }
   }
 

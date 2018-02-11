@@ -13,10 +13,13 @@ import MessageEvent from '../Event/messageEvent.js';
 let VEC0 = {x:0,y:0};
 
 export default class Signboard extends Entity{
-  constructor(pos,tex){
+  constructor(pos,text){
     super(pos,{x:0,y:0});
     this.type = ENTITY.BG
-    this.tex = tex
+      /*テキスト*/
+    this.text = text;
+      /*スプライト*/
+    this.tex = Art.wallPattern.signboard;//テクスチャ
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
 
@@ -26,9 +29,9 @@ export default class Signboard extends Entity{
   Update(){
     /*nothing to do*/
     let player = EntityManaer.player;
-    if(Util.distance(player.pos,this.pos) < 10){
-        if(Input.isKeyClick(KEY.UP)){
-          let event = new MessageEvent();
+    if(Util.distance(player.pos,this.pos) < 16){
+        if(Input.isKeyClick(KEY.SP)){
+          let event = new MessageEvent(this.text);
           EventManager.eventList.push(event);
         }
     }

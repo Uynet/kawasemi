@@ -14,7 +14,7 @@ import WeaponManager from '../Weapon/weaponManager.js';
 export default class MapData{
   constructor(){
     this.stageNo;
-    this.data;
+    this.entityData;
     this.width;
     this.height;
   }
@@ -26,8 +26,10 @@ export default class MapData{
       xhr.open('GET','src/resource/map/stage'+stageNo+'.json',true);
       xhr.onload = ()=>{
         this.jsonObj = JSON.parse(xhr.responseText);
-        //BackGroundの読み込み
-        this.data = this.jsonObj.layers[0].data;
+        //entityの読み込み
+        this.entityData = this.jsonObj.layers[0].data;
+        //objの読み込み(今は看板だけ)
+        this.objData = this.jsonObj.layers[1].objects;
         this.width = this.jsonObj.layers[0].width;
         this.height = this.jsonObj.layers[0].height;
         resolve();
@@ -39,6 +41,8 @@ export default class MapData{
 
   static async CreateStage(stageNo){
     await this.Load(stageNo);
+
+    //entityの生成
     /*タイルに割り当てるtype
      * 1 : 壁
      * 2 : 背景*/
@@ -48,20 +52,17 @@ export default class MapData{
 
     for(let y = 0;y<this.height;y++){
       for(let x = 0;x<this.width;x++){
-        ID = this.data[this.width*y + x]-1;
-        //tiledのIDとjsonデータがズレてるので1引く
-        if(ID == -1)continue;//空白はtiledIDが0なのでjsonで-1となる
-        switch(tileType[this.data[this.width*y + x]-1].type){
+        ID = this.entityData[this.width*y + x]-1;
+        //tiledのIDがjsonデータより1小さいので引く
+        if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
+        switch(tileType[this.entityData[this.width*y + x]-1].type){
           case TILE.WALL :
             entity = new Wall({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
           case TILE.BG :
             entity = new Background({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
-            //看板
-          case TILE.SIGN :
-            entity = new Signboard({x:16*x,y:16*y},MapData.WallTile(ID));
-            EntityManager.addEntity(entity); break;
+          case TILE.SIGN : cl(y*16);EntityManager.addEntity(new Signboard({x:16*x,y:16*y})); break;
           case TILE.PLAYER : EntityManager.addEntity(new Player({x:16*x,y:16*y})); break;
           case TILE.ENEMY : EntityManager.addEntity(new Enemy1({x:16*x,y:16*y})); break;
           case TILE.GOAL : EntityManager.addEntity(new Goal({x:16*x,y:16*y})); break;
@@ -69,6 +70,15 @@ export default class MapData{
             console.warn("タイルセットに未実装のチップが使用されています");
         }
       }
+    }
+    //objectの生成
+    for(let i = 0;i < this.objData.length;i++){
+      let objx = this.objData[i].x;
+      let objy = this.objData[i].y -16 ;//なぜかyだけずれるので引く
+        let p = {x:objx , y:objy};
+      let text = this.objData[i].properties.text;
+      let obj = new Signboard(p,text);
+      EntityManager.addEntity(obj);
     }
     Drawer.ScrollSet(EntityManager.player.pos);
     return;
@@ -88,7 +98,6 @@ export default class MapData{
   }
   //壁タイルの対応
   //タイルIDを渡すとテクスチャを返す
-  //やばい
   static WallTile(i){
     let out = Art.wallPattern.edge.out;
     let steel = Art.wallPattern.steel;
@@ -112,7 +121,6 @@ export default class MapData{
       case 78:return steel.back[2];
       case 79:return steel.back[3];
       //signboard
-      cl("sig");
       case 4:return Art.wallPattern.signboard;
   }
     console.warn(i);

@@ -7,11 +7,11 @@ import Game from '../Game.js';
 //現在未使用
 export default class MessageEvent extends Event{
   //「マップをリセットする関数」を返す
-  constructor(){
+  constructor(text){
     super(1);
     function* po(){
       Game.isMes = true;
-      UIManager.PopMessage("めっせーじがでるよ");
+      UIManager.PopMessage(text);
       //EventManager.eventList.pop();
       yield ;
     }

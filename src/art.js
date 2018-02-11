@@ -203,7 +203,10 @@ export default class Art{
         PIXI.Texture.fromFrame('UI70.png'),
         PIXI.Texture.fromFrame('UI76.png'),
         PIXI.Texture.fromFrame('UI7a.png'),
-      ]
+      ],
+      message : {
+        frame : PIXI.Texture.fromFrame('UI80.png'),
+      }
     };
     this.bulletPattern = {
       bullet1 : [
