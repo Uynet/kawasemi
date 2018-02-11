@@ -113,7 +113,7 @@ export default class Game{
         else if(Game.isMes){
           //メッセージ画面中
 
-          if(Input.isKeyClick(KEY.UP)){
+          if(Input.isKeyClick(KEY.SP)){
             Game.isMes = false;
             UIManager.CloseMessage();
           }

@@ -265,11 +265,11 @@
       "sourceSize": {"w": 8, "h": 8}
     },
     "font314.png": {
-      "frame": {"x":240, "y":24, "w":8, "h":8},
+      "frame": {"x":160, "y":24, "w":8, "h":8},
       "sourceSize": {"w": 8, "h": 8}
     },
     "font315.png": {
-      "frame": {"x":248, "y":24, "w":8, "h":8},
+      "frame": {"x":168, "y":24, "w":8, "h":8},
       "sourceSize": {"w": 8, "h": 8}
     },
         "font316.png": {

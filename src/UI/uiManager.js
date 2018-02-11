@@ -8,6 +8,7 @@ import UISelectBox from './uiSelectBox.js';
 import UIHP from './uiHP.js';
 import UIBullet from './uiBullet.js';
 import UIFont from './uiFont.js';
+import UIMessage from './uiMessage.js';
 
 import EntityManager from '../Stage/entityManager.js';
 
@@ -57,9 +58,13 @@ const BulIC = {
 };
 
 //message
-const MES = {
-  x:70,
-  y:150
+const MES_FRAME = {
+  x:48,
+  y:80
+}
+const MES_TEXT = {
+  x:MES_FRAME.x +8,
+  y:MES_FRAME.y +8
 }
 /*UIクラス*/
 /*TODO リファクタリング*/
@@ -118,12 +123,13 @@ export default class UIManager{
   }
 
   //メッセージイベント
-  static PopMessage(str){
-    //UIManager.addUI(new UIFont(HPFont,"100","HP"));//数字
-    UIManager.addUI(new UIFont(MES,str,"MES"));//武器1のメインアイコン(?)
+  static PopMessage(text){
+    UIManager.addUI(new UIMessage(MES_FRAME,"frame"));//枠
+    UIManager.addUI(new UIFont(MES_TEXT,text,"MES"));//テキスト 
   }
   static CloseMessage(){
     UIManager.removeUI(this.message.text);
+    UIManager.removeUI(this.message.frame);
   }
 
   /*WeaponIconのポップアップ*/
@@ -181,18 +187,22 @@ export default class UIManager{
               break;
               //Bulletゲージ
               case UI_.BULLET :
-              if(ui.name == "bar") {
-                this.bullet.bar = ui;
-              }else if(ui.name == "frame"){
-                this.bullet.frame = ui;
-              }else if(ui.name == "font"){
-                this.bullet.font = ui;
-              }else if(ui.name == "icon"){
-                this.bullet.icon = ui;
-              }
-              break;
+                if(ui.name == "bar") {
+                  this.bullet.bar = ui;
+                }else if(ui.name == "frame"){
+                  this.bullet.frame = ui;
+                }else if(ui.name == "font"){
+                  this.bullet.font = ui;
+                }else if(ui.name == "icon"){
+                  this.bullet.icon = ui;
+                }
+                break;
  case "MES" : 
-   this.message.text = ui;
+   if(ui.name == "font"){
+     this.message.text = ui;
+   }else if(ui.name == "frame"){
+     this.message.frame = ui;
+   }
    break;
  default :
    console.warn(ui);
@@ -216,10 +226,10 @@ export default class UIManager{
       for(let i = 0;i<ui.sprite.length;i++){
         Drawer.removeContainer(ui.sprite[i],"UI");
       }
-    //単スプライト
-    }else{
-      Drawer.removeContainer(ui.sprite,"UI");
-    }
+      //単スプライト
+      }else{
+        Drawer.removeContainer(ui.sprite,"UI");
+      }
   }
   /*UIの更新*/
   static Update(){
