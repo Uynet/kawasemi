@@ -56,6 +56,11 @@ const BulIC = {
   y : BulF.y, 
 };
 
+//message
+const MES = {
+  x:70,
+  y:150
+}
 /*UIクラス*/
 /*TODO リファクタリング*/
 export default class UIManager{
@@ -82,6 +87,10 @@ export default class UIManager{
       font : undefined,
       icon : undefined
     };
+    this.message = {
+      frame : undefined,
+      text : undefined
+    }
   }
 
   /*タイトルでのUI配置に変更*/
@@ -106,6 +115,15 @@ export default class UIManager{
     UIManager.addUI(new UIBullet(BulB,"bar"));//中
     UIManager.addUI(new UIFont(BulFont,"100","BULLET"));//数字
     UIManager.addUI(new UIBullet(BulIC,"icon"));//
+  }
+
+  //メッセージイベント
+  static PopMessage(str){
+    //UIManager.addUI(new UIFont(HPFont,"100","HP"));//数字
+    UIManager.addUI(new UIFont(MES,str,"MES"));//武器1のメインアイコン(?)
+  }
+  static CloseMessage(){
+    UIManager.removeUI(this.message.text);
   }
 
   /*WeaponIconのポップアップ*/
@@ -173,6 +191,9 @@ export default class UIManager{
                 this.bullet.icon = ui;
               }
               break;
+ case "MES" : 
+   this.message.text = ui;
+   break;
  default :
    console.warn(ui);
     }

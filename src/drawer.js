@@ -37,8 +37,8 @@ export default class Drawer{
     this.backGroundContainer.scale.y = this.magnification;
     this.entityContainer.scale.x = this.magnification;
     this.entityContainer.scale.y = this.magnification;
-    this.UIContainer.scale.x = this.magnification -1
-    this.UIContainer.scale.y = this.magnification -1
+    this.UIContainer.scale.x = this.magnification
+    this.UIContainer.scale.y = this.magnification
     this.foreGroundContainer.scale.x = this.magnification;
     this.foreGroundContainer.scale.y = this.magnification;
     this.filterContainer.scale.x = this.magnification;

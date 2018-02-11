@@ -53,7 +53,8 @@ const TILE = {
   PLAYER : 2,
   ENEMY : 3,
   GOAL : 4,
-  BG : 5
+  BG : 5,
+  SIGN : 6
 }
 
 const CONTAINER = {

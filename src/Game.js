@@ -33,6 +33,7 @@ export default class Game{
     Game.isPause = false;
     Game.isSelect = false;//
     Game.isSeq = false;//ステージ間遷移しているかどうか
+    Game.isMes = false;//メッセージイベント中か
     Game.stage = 0;//現在のステージ番号
     Game.scene = new Scene();
     //Gameにタイトル画面状態をプッシュ
@@ -106,23 +107,19 @@ export default class Game{
         Game.UpdateTitle();
         break;
       case STATE.STAGE :
-        switch(Game.isSeq){
-          case false: 
-            //プレイ画面中
+        if(Game.isSeq){
+        //遷移画面中
+        }
+        else if(Game.isMes){
+          //メッセージ画面中
+
+          if(Input.isKeyClick(KEY.UP)){
+            Game.isMes = false;
+            UIManager.CloseMessage();
+          }
+        }else{
+        //プレイ画面中
             Game.UpdateStage();
-            break;
-          case true :
-            //遷移画面中
-            //遷移画面でやるべきことは
-            //一定時間待ってゲーム画面に復帰すること
-            //遷移画面を呼び出すのは、死んだ場合とゴールした場合
-            //ゴールしたらステージクリアイベントをプッシュ
-            //ステージクリアイベントで時間を止め,
-            //stage++,遷移エフェクト呼び出し
-            //画面がくらい間に後ろでステージinイベントをプッシュ
-            //MapData.RebuildStage();
-            //Game.isSeq = false;
-            break;
         }
         break;
       default :
