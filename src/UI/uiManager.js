@@ -59,8 +59,8 @@ const BulIC = {
 
 //message
 const MES_FRAME = {
-  x:48,
-  y:80
+  x:24,
+  y:70
 }
 const MES_TEXT = {
   x:MES_FRAME.x +8,
@@ -76,7 +76,7 @@ export default class UIManager{
      * セレクトボックス
      */
     this.UIList = [];//UI全部のリスト
-      this.WeaponIconList = [];//武器アイコンのリスト
+    this.WeaponIconList = [];//武器アイコンのリスト
     this.selectBox;
     this.weaponEquip;
     //オブジェクトの初期化分からん
@@ -94,7 +94,8 @@ export default class UIManager{
     };
     this.message = {
       frame : undefined,
-      text : undefined
+      text : undefined,
+      sentence : []
     }
   }
 
@@ -123,12 +124,32 @@ export default class UIManager{
   }
 
   //メッセージイベント
+  /* text : 入力文字列
+   * sentence : textを改行文字で区切った配列
+   * c : 行*/
   static PopMessage(text){
     UIManager.addUI(new UIMessage(MES_FRAME,"frame"));//枠
-    UIManager.addUI(new UIFont(MES_TEXT,text,"MES"));//テキスト 
+    //文字の長さに応じて枠を調整
+    this.message.frame.sprite.scale.x *= 1.5;
+    //yは固定
+    this.message.frame.sprite.scale.y *= 1.5; 
+    let p = 
+      {
+        x:MES_TEXT.x,
+        y:MES_TEXT.y
+      };
+      // sentenceには改行されたテキストの配列が入る
+      cl(text);
+      let sentence = text.split("\n");
+      for(let i = 0;i<sentence.length;i++){
+        p.y = MES_TEXT.y + i*10;
+        UIManager.addUI(new UIFont(p,sentence[i],"MES"));//テキスト 
+      }
   }
   static CloseMessage(){
-    UIManager.removeUI(this.message.text);
+    for(let i=0;i<this.message.sentence.length;i++){
+      UIManager.removeUI(this.message.sentence[i]);
+    }
     UIManager.removeUI(this.message.frame);
   }
 
@@ -199,7 +220,7 @@ export default class UIManager{
                 break;
  case "MES" : 
    if(ui.name == "font"){
-     this.message.text = ui;
+     this.message.sentence.push(ui);
    }else if(ui.name == "frame"){
      this.message.frame = ui;
    }
