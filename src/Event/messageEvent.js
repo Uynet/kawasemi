@@ -12,7 +12,6 @@ export default class MessageEvent extends Event{
     function* po(){
       Game.isMes = true;
       UIManager.PopMessage(text);
-      //EventManager.eventList.pop();
       yield ;
     }
     let itt = po();

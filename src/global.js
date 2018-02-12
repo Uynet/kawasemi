@@ -69,7 +69,8 @@ const UI_ = {
   WEQUIP : "WEQUIP",
   HP : "HP",
   BULLET : "BULLET",
-  FONT : "FONT"
+  FONT : "FONT",
+  MSSSAGE : "MES"
 }
 const WICON_X = 8;
 const WICON_Y = 40;
