@@ -14,18 +14,18 @@ export default class Drawer{
       /* コンテナ(レイヤー)は以下の通り 下から優先して描画される
       /* Entityコンテナ:Entityを描画するレイヤ
        * Effectコンテナ:画面に適用するエフェクトを描画するレイヤ
-       * foreGround:手前に描画
+       * fore:手前に描画
        * UIコンテナ:UIを描画するレイヤ
        * */
-    this.backGroundContainer = new PIXI.Container();//Entity
+    this.backContainer = new PIXI.Container();//Entity
     this.entityContainer = new PIXI.Container();//Entity
     this.filterContainer = new PIXI.Container();//画面遷移フィルター
-    this.foreGroundContainer = new PIXI.Container();//手前に表示する 文字エフェクトなど
+    this.foreContainer = new PIXI.Container();//手前に表示する 文字エフェクトなど
     this.UIContainer = new PIXI.Container();//UI
 
-    this.app.stage.addChild(this.backGroundContainer);
+    this.app.stage.addChild(this.backContainer);
     this.app.stage.addChild(this.entityContainer);
-    this.app.stage.addChild(this.foreGroundContainer);
+    this.app.stage.addChild(this.foreContainer);
     this.app.stage.addChild(this.filterContainer);
     this.app.stage.addChild(this.UIContainer);
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);
@@ -33,14 +33,14 @@ export default class Drawer{
 
     /*拡大率*/
     this.magnification = 3;
-    this.backGroundContainer.scale.x = this.magnification;
-    this.backGroundContainer.scale.y = this.magnification;
+    this.backContainer.scale.x = this.magnification;
+    this.backContainer.scale.y = this.magnification;
     this.entityContainer.scale.x = this.magnification;
     this.entityContainer.scale.y = this.magnification;
     this.UIContainer.scale.x = this.magnification
     this.UIContainer.scale.y = this.magnification
-    this.foreGroundContainer.scale.x = this.magnification;
-    this.foreGroundContainer.scale.y = this.magnification;
+    this.foreContainer.scale.x = this.magnification;
+    this.foreContainer.scale.y = this.magnification;
     this.filterContainer.scale.x = this.magnification;
     this.filterContainer.scale.y = this.magnification;
     $("#pixiview").append(this.Renderer.view);
@@ -64,10 +64,10 @@ export default class Drawer{
         this.filterContainer.addChild(sprite);
         break;
       case "FORE":
-        this.foreGroundContainer.addChild(sprite);
+        this.foreContainer.addChild(sprite);
         break;
-      case "BG":
-        this.backGroundContainer.addChild(sprite);
+      case "BACK":
+        this.backContainer.addChild(sprite);
         break;
       default :
         console.warn("po");
@@ -87,10 +87,10 @@ export default class Drawer{
         this.filterContainer.removeChild(sprite);
         break;
       case "FORE":
-        this.foreGroundContainer.removeChild(sprite);
+        this.foreContainer.removeChild(sprite);
         break;
-      case "BG":
-        this.backGroundContainer.removeChild(sprite);
+      case "BACK":
+        this.backContainer.removeChild(sprite);
         break;
       default :
         console.warn("container");
@@ -103,23 +103,23 @@ export default class Drawer{
     let centerY = this.magnification*(- pos.y-8 + 400/this.magnification);
     let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
-    this.backGroundContainer.x = Math.floor(toX);
-    this.backGroundContainer.y = Math.floor(toY);
+    this.backContainer.x = Math.floor(toX);
+    this.backContainer.y = Math.floor(toY);
     this.entityContainer.x = Math.floor(toX);
     this.entityContainer.y = Math.floor(toY);
-    this.foreGroundContainer.x = Math.floor(toX);
-    this.foreGroundContainer.y = Math.floor(toY);
+    this.foreContainer.x = Math.floor(toX);
+    this.foreContainer.y = Math.floor(toY);
   }
   /*スクロール位置を一瞬で移動させる*/
   static ScrollSet(pos){
     let centerX = this.magnification*(- (pos.x-8) + 300/this.magnification);
     let centerY = this.magnification*(- (pos.y-8) + 400/this.magnification);
-    this.backGroundContainer.x = Math.floor(centerX);
-    this.backGroundContainer.y = Math.floor(centerY);
+    this.backContainer.x = Math.floor(centerX);
+    this.backContainer.y = Math.floor(centerY);
     this.entityContainer.x = Math.floor(centerX);
     this.entityContainer.y = Math.floor(centerY);
-    this.foreGroundContainer.x = Math.floor(centerX);
-    this.foreGroundContainer.y = Math.floor(centerY);
+    this.foreContainer.x = Math.floor(centerX);
+    this.foreContainer.y = Math.floor(centerY);
   }
 
   static Yakudo(mag){

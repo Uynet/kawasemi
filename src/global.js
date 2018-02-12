@@ -43,7 +43,7 @@ const ENTITY = {
   ENEMY : "ENEMY",
   BULLET : "BULLET",
   EFFECT : "EFFECT",
-  BG : "BG"
+  BACK : "BACK"
 }
 
 /*MapChip*/
@@ -53,7 +53,7 @@ const TILE = {
   PLAYER : 2,
   ENEMY : 3,
   GOAL : 4,
-  BG : 5,
+  BACK : 5,
   SIGN : 6
 }
 
