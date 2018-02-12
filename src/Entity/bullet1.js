@@ -6,7 +6,7 @@ import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
 import Bullet1AI from './AI/bullet1AI.js';
 import Bullet from './bullet.js';
-import BulletBlur from './bulletBlur.js';
+import BulletBlur from './Effect/bulletBlur.js';
 import Timer from '../timer.js';
 
 /*bullet1クラス*/

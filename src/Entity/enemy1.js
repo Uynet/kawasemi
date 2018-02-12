@@ -7,8 +7,8 @@ import EntityManager from '../Stage/entityManager.js';
 import Enemy1AI from './AI/enemy1AI.js';
 import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
-import Font from './font.js';
-import FontEffect from './fontEffect.js';
+import Font from './Effect/font.js';
+import FontEffect from './Effect/fontEffect.js';
 const ATK_ENEMY1 = 1;
 
 let EntityList = EntityManager.entityList;

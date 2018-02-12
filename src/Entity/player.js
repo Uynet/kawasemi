@@ -15,8 +15,8 @@ import Game from '../Game.js';
 import WeaponManager from '../Weapon/weaponManager.js';
 import Timer from '../timer.js';
 import UIManager from '../UI/uiManager.js';
-import Font from './font.js';
-import FontEffect from './fontEffect.js';
+import Font from './Effect/font.js';
+import FontEffect from './Effect/fontEffect.js';
 
 const JUMP_VEL = 7;//ジャンプ力
 const RUN_VEL = 0.4;//はしり速度

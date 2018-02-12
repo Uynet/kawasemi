@@ -1,8 +1,8 @@
-import Enemy from './enemy.js';
+import Enemy from '../enemy.js';
 import EFFECT from './effect.js';
-import Art from '../art.js';
-import EntityManager from '../Stage/entityManager.js';
-import Util from '../util.js';
+import Art from '../../art.js';
+import EntityManager from '../../Stage/entityManager.js';
+import Util from '../../util.js';
 
 /*Targetクラス*/
 export default class Target extends EFFECT{

@@ -101,10 +101,10 @@ export default class UIManager{
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
-    UIManager.addUI(new UIWeaponEquip(HPB,"po"));//武器1のメインアイコン(?)
+    this.PopMessage("うんこもりもりもりおうがい ");
   }
   static CleanTitle(){
-    UIManager.removeUI(this.weaponEquip);
+    this.CloseMessage();
   }
 
   /*ステージ中でのUI配置に変更*/
@@ -139,7 +139,6 @@ export default class UIManager{
         y:MES_TEXT.y
       };
       // sentenceには改行されたテキストの配列が入る
-      cl(text);
       let sentence = text.split("\n");
       for(let i = 0;i<sentence.length;i++){
         p.y = MES_TEXT.y + i*10;

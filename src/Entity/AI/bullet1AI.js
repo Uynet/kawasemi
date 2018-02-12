@@ -1,7 +1,7 @@
 import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
 import Util from '../../util.js';
-import BulletHitWall from '../bulletHitWall.js';
+import BulletHitWall from '../Effect/bulletHitWall.js';
 import Timer from '../../timer.js';
 
 export default class Bullet1AI{
