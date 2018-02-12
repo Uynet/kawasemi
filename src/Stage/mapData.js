@@ -59,7 +59,7 @@ export default class MapData{
           case TILE.WALL :
             entity = new Wall({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
-          case TILE.BG :
+          case TILE.BACK :
             entity = new Background({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
           case TILE.SIGN : cl(y*16);EntityManager.addEntity(new Signboard({x:16*x,y:16*y})); break;

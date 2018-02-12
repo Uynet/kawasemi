@@ -11,11 +11,10 @@ let VEC0 = {x:0,y:0};
 export default class Background extends Entity{
   constructor(pos,tex){
     super(pos,{x:0,y:0});
-    this.type = ENTITY.BG;
+    this.type = ENTITY.BACK;
     this.tex = tex
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
-    cl("bg");
     //this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
   }
   Update(){
