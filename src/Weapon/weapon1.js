@@ -1,14 +1,14 @@
 import Bullet from '../Entity/bullet.js';
 import Bullet1 from '../Entity/bullet1.js';
-import Target from '../Entity/target.js';
+import Target from '../Entity/Effect/target.js';
 import EntityManager from '../Stage/entityManager.js';
 import Weapon from './weapon.js';
 import Art from '../art.js';
 import UIManager from '../UI/uiManager.js';
 import Util from '../util.js';
-import BulletShot from '../Entity/bulletShot.js';
+import BulletShot from '../Entity/Effect/bulletShot.js';
 import Timer from '../timer.js';
-import FontEffect from '../Entity/fontEffect.js';
+import FontEffect from '../Entity/Effect/fontEffect.js';
 
 const DIR = {
   UR : "UR",

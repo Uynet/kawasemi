@@ -1,9 +1,9 @@
-import Enemy from './enemy.js';
+import Enemy from '../enemy.js';
 import EFFECT from './effect.js';
-import Art from '../art.js';
-import EntityManager from '../Stage/entityManager.js';
-import Util from '../util.js';
-import Drawer from '../drawer.js';
+import Art from '../../art.js';
+import EntityManager from '../../Stage/entityManager.js';
+import Util from '../../util.js';
+import Drawer from '../../drawer.js';
 
 /*bullet1残像*/
 export default class BulletBlur extends EFFECT{
