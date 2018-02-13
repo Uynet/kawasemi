@@ -14,10 +14,9 @@ export default class Enemy1AI{
   Do(){
     this.enemy.acc.x = (this.enemy.pos.x < EntityManager.player.pos.x)? 0.01 : -0.01;
     this.enemy.vel.x = Math.min(this.enemy.vel.x,1);
-    this.enemy.acc.y = 0.1;
     //たまにジャンプする
     if(!this.enemy.isJump && Timer.timer % (10 + Math.floor(100*Math.random(1))) == 0){
-      this.enemy.vel.y = -3;
+      this.enemy.acc.y += -3;
       this.enemy.isJump = true;
     }
 

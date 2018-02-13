@@ -9,7 +9,7 @@ export default class Collision{
       //衝突がtrueなら必ず法線が帰ってくるはずなのに
       //プレイヤー側の押し出しの途中で法線が拾えてない(?)事がある
 
-      let n = {x:99999,y:0}; // 押し出すべき方向(法線) 衝突していなければundefined
+      let n;// = {x:99999,y:0}; // 押し出すべき方向(法線) 衝突していなければundefined
     let depth;
     /*円同士の衝突判定*/
     if(e1.collider.shape == SHAPE.CIRCLE && e2.collider.shape == SHAPE.CIRCLE){
@@ -86,8 +86,9 @@ export default class Collision{
   static Resolve(e1,e2){
     console.assert(e1.e != undefined);
     /*速度*/
-    if(Collision.on(e1,e2).n.x != 0) e1.vel.x *= -e1.e ;
-    if(Collision.on(e1,e2).n.y != 0) e1.vel.y *= -e1.e ;
+    if(Collision.on(e1,e2).n.x != 0) e1.vel.x = 0;
+    if(Collision.on(e1,e2).n.y == -1) e1.vel.y *= -e1.e ;
+    if(Collision.on(e1,e2).n.y == 1) e1.vel.y =0;
     //while(Collision.on(e1,e2).isHit){
       let l = Collision.on(e1,e2);
       e1.pos.x += l.n.x*l.depth;

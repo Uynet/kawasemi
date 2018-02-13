@@ -24,7 +24,6 @@ const PLAYER_GRAVITY = 0.4;
 const PLAYER_HP = 100;
 const PLAYER_BULLET = 100;
 const FLICTION = 0.7;
-const POP_PLAYER = -1;
 const INV_TIME = 5;//無敵時間
   /*アニメーションのインターバル*/
   const ANIM_RUN = 4;
@@ -208,6 +207,13 @@ export default class Player extends Entity{
           case DIR.DR : this.sprite.texture = this.pattern.runDR[this.spid]; break;
           case DIR.DL : this.sprite.texture = this.pattern.runDL[this.spid]; break;
         }
+        //走り中は画像をちょっとだけ跳ねさせる
+        //スプライト位置を動かしているだけなので当たり判定は変化していない
+        let a = 2;//振幅
+        let l = 9;//周期
+        let f = (Math.abs((this.frame%l -l/2))-l/2);
+        this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
+        this.sprite.position.x = this.pos.x ;
         break;
         //死亡
         case STATE.DYING:
@@ -267,10 +273,10 @@ export default class Player extends Entity{
     }
   }
   Physics(){
-    this.pos.x += this.vel.x; 
-    this.pos.y += this.vel.y; 
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
+    this.pos.x += this.vel.x; 
+    this.pos.y += this.vel.y; 
     this.vel.y += this.gravity;
     //最大速度制限:
     if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
@@ -336,6 +342,16 @@ Dying(){
   }
 }
 
+//bulletのかいふく
+Supply(){
+      //最後に撃った時刻から経過するほど早くなる
+      let t = (this.frame-this.frameShot);
+      if(t<=100 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      else if(t>100 && t<=200 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      else if(t>200 && t<=300 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      else if(t>300) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+}
+
   Update(){
       if(this.isAlive){
         if(!this.isJump) {
@@ -357,29 +373,13 @@ Dying(){
         this.isInvincible = false;
       }
 
-      //bulletのかいふく　
-      //最後に撃った時刻から経過するほど早くなる
-      let t = (this.frame-this.frameShot);
-      if(t<=100 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      else if(t>100 && t<=200 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      else if(t>200 && t<=300 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      else if(t>300) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      UIManager.bullet.bar.UpdateBar(this.bullet);
-      //HPbarの更新
-      UIManager.HP.bar.UpdateBar(this.hp);
-      //走り中は画像をちょっとだけ跳ねさせる
-      //スプライト位置を動かしているだけなので当たり判定は変化していない
-      if(this.state == STATE.RUNNING){
-        let a = 2;//振幅
-          let l = 9;//周期
-        let f = (Math.abs((this.frame%l -l/2))-l/2);
-        this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        this.sprite.position.x = this.pos.x ;
-      }else{
-        this.sprite.position = this.pos;
-      }
+      
+      this.Supply();//bulletのかいふく　
+      UIManager.bullet.bar.UpdateBar(this.bullet); //BulletBarの更新
+      UIManager.HP.bar.UpdateBar(this.hp);//HPbarの更新
+      this.sprite.position = this.pos;
       this.frame++;
-    this.Animation();//状態から画像を更新
+      this.Animation();//状態から画像を更新
   }
 }
 
