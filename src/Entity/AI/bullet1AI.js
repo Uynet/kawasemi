@@ -49,6 +49,7 @@ export default class Bullet1AI{
     /*observer*/
     //HP || 飛行距離
     if(this.bullet.hp<=0 ||
+      this.bullet.frame > 100 || 
       Util.distance(this.bullet.pos , this.bullet.launchedPos) > this.bullet.length){
       EntityManager.removeEntity(this.bullet);
     }

@@ -7,8 +7,8 @@ import Drawer from '../../drawer.js';
 
 /*bullet1残像*/
 export default class BulletBlur extends EFFECT{
-  constructor(pos){
-    super(pos,{x:0,y:0});
+  constructor(pos,vel){
+    super(pos,vel);
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.name = "blur";
@@ -23,6 +23,9 @@ export default class BulletBlur extends EFFECT{
 
   Update(){
     if(this.isAlive){
+      //pys
+      this.pos.x += this.vel.x;
+      this.pos.y += this.vel.y;
       this.sprite.texture = this.pattern[this.spid];
       this.spid = Math.floor(this.frame/2);
       if(this.spid >= 4){
@@ -34,6 +37,7 @@ export default class BulletBlur extends EFFECT{
           this.isAlive = false
         }
       }
+      this.sprite.position = this.pos;
       this.frame++;
     }
   }
