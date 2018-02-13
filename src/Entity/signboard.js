@@ -8,6 +8,7 @@ import Util from '../util.js';
 import Input from '../input.js';
 import EventManager from '../Event/eventmanager.js';
 import MessageEvent from '../Event/messageEvent.js';
+import Game from '../Game.js';
 
 
 let VEC0 = {x:0,y:0};
@@ -15,7 +16,7 @@ let VEC0 = {x:0,y:0};
 export default class Signboard extends Entity{
   constructor(pos,text){
     super(pos,{x:0,y:0});
-    this.type = ENTITY.BG
+    this.type = ENTITY.BACK;
       /*テキスト*/
     this.text = text;
       /*スプライト*/
@@ -30,7 +31,7 @@ export default class Signboard extends Entity{
     /*nothing to do*/
     let player = EntityManaer.player;
     if(Util.distance(player.pos,this.pos) < 16){
-        if(Input.isKeyClick(KEY.SP)){
+        if(!Game.isMes && Input.isKeyClick(KEY.SP)){
           let event = new MessageEvent(this.text);
           EventManager.eventList.push(event);
         }
