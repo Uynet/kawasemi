@@ -1,4 +1,4 @@
-import Enemy from './enemy.js';
+import Enemy from './Enemy.js';
 import Art from '../art.js';
 import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
@@ -27,6 +27,7 @@ export default class Enemy1 extends Enemy{
     this.addAI(new Enemy1AI(this));
     this.atkMax = ATK_ENEMY1;
     this.hp = 10;
+    this.gravity = 0.1;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
@@ -39,7 +40,6 @@ export default class Enemy1 extends Enemy{
   }
   Collision(){
     /*衝突判定*/
-    /*TODO 敵が潰された時にめり込むのでなんとかする*/
     for(let l of EntityManager.wallList){
       if(l == this) continue;
       /*衝突判定*/
@@ -98,15 +98,16 @@ export default class Enemy1 extends Enemy{
     this.vel.y += this.acc.y;
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
+    this.acc.y = this.gravity;
   }
 
   Update(){
-    this.Collision();
-    this.Hurt();
     for (let AI of this.AIList){
       AI.Do();
     }
+    this.Collision();
     this.Physics();
+    this.Hurt();
     this.sprite.position = this.pos;
     //アニメーション
     this.spid = Math.floor(this.frame/2)%4;

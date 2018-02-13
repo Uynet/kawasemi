@@ -15,7 +15,6 @@ export default class Background extends Entity{
     this.tex = tex
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
-    //this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
   }
   Update(){
     /*nothing to do*/
