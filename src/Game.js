@@ -126,6 +126,7 @@ export default class Game{
         }
         else if(Game.isMes){
           //メッセージ画面中
+//            Game.UpdateStage();
 
           if(Input.isKeyClick(KEY.SP)){
             Game.isMes = false;

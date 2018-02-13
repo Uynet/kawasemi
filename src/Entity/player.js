@@ -19,7 +19,7 @@ import FontEffect from './Effect/fontEffect.js';
 import BulletShot from './Effect/bulletShot.js';
 
 const JUMP_VEL = 7;//ジャンプ力
-const RUN_VEL = 0.4;//はしり速度
+  const RUN_VEL = 0.4;//はしり速度
 const PLAYER_GRAVITY = 0.4;
 const PLAYER_HP = 100;
 const PLAYER_BULLET = 100;
@@ -62,7 +62,7 @@ export default class Player extends Entity{
     this.frameDead;//死んだ時刻
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
     this.frameShot = 0;//最後にshotした時刻
-    this.e = 0.1;
+      this.e = 0.1;
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
@@ -78,9 +78,9 @@ export default class Player extends Entity{
       /*状態*/
       this.state = STATE.WAITING;
     this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
-    this.weapon.isTargetOn = false;
+      this.weapon.isTargetOn = false;
     this.weapon.target = null;//これ大丈夫か??
-    this.dir = DIR.R;//向き
+      this.dir = DIR.R;//向き
     /*フラグ*/
     this.isJump = false;//空中にいるか
       this.isRun = false;//走っているか
@@ -101,7 +101,7 @@ export default class Player extends Entity{
     //空中でZ押すとbulletを消費してジャンプできる
     if(Input.isKeyClick(KEY.Z)){
       if(this.state == STATE.FALLING){
-            let jumpCost = 20
+        let jumpCost = 20
           if(this.bullet >= jumpCost){
             this.frameShot = this.frame;
             this.vel.y = -JUMP_VEL;
@@ -111,7 +111,7 @@ export default class Player extends Entity{
               {x : this.pos.x,
                 y: this.pos.y
               }
-            EntityManager.addEntity(new BulletShot(p,{x:0,y:1}));
+              EntityManager.addEntity(new BulletShot(p,{x:0,y:1}));
           }else{
             EntityManager.addEntity(new FontEffect(this.pos,"たりないよ！","pop"));
           }
@@ -224,6 +224,9 @@ export default class Player extends Entity{
   /*ダメージ*/
   /*負の値を入れる*/
   Damage(atk){
+    if(atk>0){
+      console.warn(atk);
+    }
     //無敵時間は攻撃を受けない
     if(!this.isInvincible){
       if(this.isAlive){
@@ -280,8 +283,6 @@ export default class Player extends Entity{
        this.vel.x *= FLICTION;
      }
      this.acc.x = 0;
-
-
      //jumping state
      if(this.isJump && this.vel.y <= -1){
        this.state = STATE.JUMPING;
@@ -291,89 +292,94 @@ export default class Player extends Entity{
      }
   }
 
-  Update(){
-    //照準を自動でやってる
+ScrollByDir(){
+   switch(this.dir){
+   case DIR.UR :
+   case DIR.UL :
+   Drawer.ScrollOn({x:this.pos.x,y:this.pos.y-60});
+   break;
+   case DIR.DR :
+   case DIR.DL :
+   Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+60});
+   break;
+   default :
+   Drawer.ScrollOn(this.pos);
+   }
+}
+
+Observer(){
+  if(this.hp <= 0){
+    //死亡開始時に一回だけ呼ばれる部分
     if(this.isAlive){
-      if(!this.isJump) this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
-      this.isRun = false;
-      this.Input();//入力
-      this.weapon.Target(this);
-
-      this.Physics();//物理
+      this.frameDead = this.frame;
+      this.isDying = true;
+      this.isAlive = false;
     }
-    this.collision();//衝突
-    this.Animation();//状態から画像を更新
-
-    //向きに応じてスクロール位置を変更
-    /*
-     switch(this.dir){
-     case DIR.UR :
-     case DIR.UL :
-     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y-60});
-     break;
-     case DIR.DR :
-     case DIR.DL :
-     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+60});
-     break;
-     default :
-     Drawer.ScrollOn(this.pos);
-     }
-     */
-    Drawer.ScrollOn(this.pos);
-
-    /*observer*/
-    if(this.hp <= 0){
-      //死亡開始時に一回だけ呼ばれる部分
-      if(this.isAlive){
-        this.frameDead = this.frame;
-        this.isDying = true;
-        this.isAlive = false;
-      }
-      this.state = STATE.DYING;
-    }
-    //死亡中
-    if(this.isDying){       //まだ死んでない  
-      if(this.frame - this.frameDead < 50){
-        this.isDying = true;
-      }else{
-        //完全に死んだ
-        //完全死亡時に一回だけ呼ばれる部分
-        if(this.isDying){
-          //this.state = STATE.DEAD
-          let g = new GameOverEvent();
-          EventManager.eventList.push(g);
-        }
-        this.isDying = false;
-      }
-    }
-    //無敵時間の有向時間
-    if(this.frame - this.frameDamaged > INV_TIME){
-      this.isInvincible = false;
-    }
-
-    //bulletのかいふく　
-    //最後に撃った時刻から経過するほど早くなる
-    let t = (this.frame-this.frameShot);
-    if(t<=100 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-    else if(t>100 && t<=200 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-    else if(t>200 && t<=300 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-    else if(t>300) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-    UIManager.bullet.bar.UpdateBar(this.bullet);
-    //HPbarの更新
-    UIManager.HP.bar.UpdateBar(this.hp);
-    //走り中は画像をちょっとだけ跳ねさせる
-    //スプライト位置を動かしているだけなので当たり判定は変化していない
-    if(this.state == STATE.RUNNING){
-      let a = 2;//振幅
-      let l = 9;//周期
-      let f = (Math.abs((this.frame%l -l/2))-l/2);
-      this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-      this.sprite.position.x = this.pos.x ;
+    this.state = STATE.DYING;
+  }
+}
+Dying(){
+  //死亡中
+  if(this.isDying){       //まだ死んでない  
+    if(this.frame - this.frameDead < 50){
+      this.isDying = true;
     }else{
-      this.sprite.position = this.pos;
+      //完全に死んだ
+      //完全死亡時に一回だけ呼ばれる部分
+      if(this.isDying){
+        //this.state = STATE.DEAD
+        let g = new GameOverEvent();
+        EventManager.eventList.push(g);
+      }
+      this.isDying = false;
     }
+  }
+}
 
-    this.frame++;
+  Update(){
+      if(this.isAlive){
+        if(!this.isJump) {
+          this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
+        }
+        this.isRun = false;
+        this.Input();//入力
+        this.weapon.Target(this);//照準を自動でやってる
+        this.Physics();//物理
+        this.collision();//衝突
+      }
+      
+      //this.ScrollByDir();//向きに応じてスクロール位置を変更
+      Drawer.ScrollOn(this.pos);//プレイヤー中心にスクロール
+      this.Observer(); //死亡チェック
+      this.Dying();//死亡中
+      //無敵時間の有向時間
+      if(this.frame - this.frameDamaged > INV_TIME){
+        this.isInvincible = false;
+      }
+
+      //bulletのかいふく　
+      //最後に撃った時刻から経過するほど早くなる
+      let t = (this.frame-this.frameShot);
+      if(t<=100 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      else if(t>100 && t<=200 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      else if(t>200 && t<=300 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      else if(t>300) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      UIManager.bullet.bar.UpdateBar(this.bullet);
+      //HPbarの更新
+      UIManager.HP.bar.UpdateBar(this.hp);
+      //走り中は画像をちょっとだけ跳ねさせる
+      //スプライト位置を動かしているだけなので当たり判定は変化していない
+      if(this.state == STATE.RUNNING){
+        let a = 2;//振幅
+          let l = 9;//周期
+        let f = (Math.abs((this.frame%l -l/2))-l/2);
+        this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
+        this.sprite.position.x = this.pos.x ;
+      }else{
+        this.sprite.position = this.pos;
+      }
+      this.frame++;
+    this.Animation();//状態から画像を更新
   }
 }
 

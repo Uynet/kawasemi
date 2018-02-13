@@ -8,7 +8,7 @@ import Enemy1AI from './AI/enemy1AI.js';
 import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
 import FontEffect from './Effect/fontEffect.js';
-const ATK_ENEMY1 = 1;
+const ATK_ENEMY1 = 10;
 
 let EntityList = EntityManager.entityList;
 

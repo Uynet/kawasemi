@@ -9,6 +9,7 @@ export default class Entity{
     
     this.sprite;
     this.type;//enum
+    this.isMove = true;
   }
 }
 
