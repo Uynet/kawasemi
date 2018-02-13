@@ -124,7 +124,7 @@ let playSound = function(buffer) {
 // main
 window.onload = function() {
   // サウンドを読み込む
-  getAudioBuffer('src/boss.mp3', function(buffer) {
+  getAudioBuffer('src/resource/boss.mp3', function(buffer) {
     // 読み込み完了後にボタンにクリックイベントを登録
       // サウンドを再生
     //  console.log(a)

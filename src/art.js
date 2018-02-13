@@ -240,12 +240,18 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet63.png') //bullet blur
       ]
     }
-    this.enemyPattern = [
-      PIXI.Texture.fromFrame('enemy00.png'),
-      PIXI.Texture.fromFrame('enemy01.png'),
-      PIXI.Texture.fromFrame('enemy02.png'),
-      PIXI.Texture.fromFrame('enemy03.png')
-    ];
+    this.enemyPattern = {
+      enemy1 : [
+        PIXI.Texture.fromFrame('enemy00.png'),
+        PIXI.Texture.fromFrame('enemy01.png'),
+        PIXI.Texture.fromFrame('enemy02.png'),
+        PIXI.Texture.fromFrame('enemy03.png')
+      ],
+      //壊せる木箱
+      woodbox : [
+        PIXI.Texture.fromFrame('enemy10.png')
+      ]
+    }
     this.wallPattern = {
       block : PIXI.Texture.fromFrame('wall00.png'),
       goal : PIXI.Texture.fromFrame('wall01.png'),
@@ -273,12 +279,16 @@ export default class Art{
         PIXI.Texture.fromFrame('wall92.png'),
         PIXI.Texture.fromFrame('wall93.png'),
         ],
-        //background
+        //backentity
         back : [
         PIXI.Texture.fromFrame('wall94.png'),
         PIXI.Texture.fromFrame('wall95.png'),
         PIXI.Texture.fromFrame('wall96.png'),
         PIXI.Texture.fromFrame('wall97.png'),
+        ],
+        //back
+        backGround : [
+        PIXI.Texture.fromFrame('wallA0.png'),
         ]
       }
     }

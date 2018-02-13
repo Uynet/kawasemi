@@ -16,6 +16,7 @@ import WeaponManager from '../Weapon/weaponManager.js';
 import Timer from '../timer.js';
 import UIManager from '../UI/uiManager.js';
 import FontEffect from './Effect/fontEffect.js';
+import BulletShot from './Effect/bulletShot.js';
 
 const JUMP_VEL = 7;//ジャンプ力
 const RUN_VEL = 0.4;//はしり速度
@@ -106,8 +107,13 @@ export default class Player extends Entity{
             this.vel.y = -JUMP_VEL;
             this.bullet -= 20;
             this.state = STATE.JUMPING;
+            let p = 
+              {x : this.pos.x,
+                y: this.pos.y
+              }
+            EntityManager.addEntity(new BulletShot(p,{x:0,y:1}));
           }else{
-            EntityManager.addEntity(new FontEffect(this.pos,"がぎぐげご","pop"));
+            EntityManager.addEntity(new FontEffect(this.pos,"たりないよ！","pop"));
           }
       }
     }
@@ -366,6 +372,7 @@ export default class Player extends Entity{
     }else{
       this.sprite.position = this.pos;
     }
+
     this.frame++;
   }
 }

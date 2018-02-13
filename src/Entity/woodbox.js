@@ -4,38 +4,30 @@ import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
-import Enemy1AI from './AI/enemy1AI.js';
 import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
 import FontEffect from './Effect/fontEffect.js';
-const ATK_ENEMY1 = 1;
-
 let EntityList = EntityManager.entityList;
 
-export default class Enemy1 extends Enemy{
+//壊せる木箱
+export default class WoodBox extends Enemy{
   constructor(pos){
     super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    this.frame = 0;
     /*スプライト*/
-    this.pattern = Art.enemyPattern.enemy1;
+    this.pattern = Art.enemyPattern.woodbox;
     this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.addAI(new Enemy1AI(this));
-    this.atkMax = ATK_ENEMY1;
     this.hp = 10;
     /*フラグ*/
-    this.isJump = false;
     this.isAlive = true;
   }
   //自分がダメージを食らう
   Damage(atkMax){
     this.hp += atkMax;
-    //ダメージをポップ
-    EntityManager.addEntity(new FontEffect(this.pos,-atkMax+"","enemy"));
   }
   Collision(){
     /*衝突判定*/
@@ -80,17 +72,6 @@ export default class Enemy1 extends Enemy{
       }
     }
   }
-  //プレイヤーにダメージを与える
-  Hurt(){
-    let player = EntityManager.player; 
-    let c = Collision.on(this,player);
-    if(c.isHit && c.n.y != 1){
-      //ダメージ
-      let damage = this.atkMax  +  Math.floor(-this.vel.y * Math.random());
-      EntityManager.player.Damage(-damage);
-    }
-  }
-
 
   Physics(){
     this.vel.x += this.acc.x;
@@ -101,15 +82,7 @@ export default class Enemy1 extends Enemy{
 
   Update(){
     this.Collision();
-    this.Hurt();
-    for (let AI of this.AIList){
-      AI.Do();
-    }
     this.Physics();
     this.sprite.position = this.pos;
-    //アニメーション
-    this.spid = Math.floor(this.frame/2)%4;
-    this.sprite.texture = this.pattern[this.spid];
-    this.frame++;
   }
 }
