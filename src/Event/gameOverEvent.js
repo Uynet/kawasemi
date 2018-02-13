@@ -26,9 +26,11 @@ export default class GameOverEvent extends Event{
       for(let i = 0; i < 400; i++) {
         let sp = Art.SpriteFactory(pattern[spid]);
         let y = Math.floor(i/20);
-        let x = i%20;
+        let x = i%20 - 4;
         sp.position.x = x*16-8;
-        sp.position.y = y*16-8;
+        sp.position.y = y*20-8;
+        sp.scale.x = 1.5;
+        sp.scale.y = 1.5;
         seq[i] = sp;
         Drawer.addContainer(sp,"FILTER");
       }

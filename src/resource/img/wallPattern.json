@@ -161,6 +161,10 @@
     "wall97.png": {
       "frame": {"x":112, "y":144, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+    "wallA0.png": {
+      "frame": {"x":0, "y":160, "w":32, "h":32},
+      "sourceSize": {"w": 32, "h": 32}
     }
 
 

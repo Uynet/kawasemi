@@ -101,7 +101,7 @@ export default class UIManager{
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
-    this.PopMessage("うんこもりもりもりおうがい ");
+    this.PopMessage("たいとるがめん");
   }
   static CleanTitle(){
     this.CloseMessage();

@@ -17,7 +17,9 @@ import Timer from './timer.js';
 import Util from './util.js';
 
 
+//大嘘
 let dark;
+let back;
 
 export default class Game{
   static Init(){
@@ -74,6 +76,18 @@ export default class Game{
     if(Input.isKeyClick(KEY.SP)){
       let event = new StartStageEvent();
       EventManager.PushEvent(event);
+      let w = 20;
+      let h = 20;
+      for(let y = 0;y<h;y++){
+        for(let x = 0;x<w;x++){
+          back = Art.SpriteFactory(Art.wallPattern.steel.backGround[0]);
+          back.scale.x = 2;
+          back.scale.y = 2;
+          back.position.x = (x - w/2)*32
+            back.position.y = (y - h/2)*32;
+          Drawer.addContainer(back,"BG");
+        }
+      }
     }
   }
 

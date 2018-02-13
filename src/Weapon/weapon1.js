@@ -26,7 +26,7 @@ export default class Weapon1 extends Weapon{
     this.target;
     this.isTargetOn = false;//照準が発生しているか
       /*パラメータ*/
-      this.agi = 10;//間隔
+      this.agi = 3;//間隔
     this.cost = 3;
     this.speed = 6;//弾速
       this.length = 180;//射程距離
@@ -114,10 +114,10 @@ export default class Weapon1 extends Weapon{
         EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
         /* □ Effect : shot */
-        EntityManager.addEntity(new BulletShot(p,{x:0,y:0}));
+        EntityManager.addEntity(new BulletShot({x:p.x,y:p.y},{x:0,y:0}));
         //反動
         player.vel.x -= v.x/11;
-        player.vel.y -= v.y/4;
+        player.vel.y -= v.y/3;
       }
     }
   }
