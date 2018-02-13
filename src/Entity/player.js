@@ -55,7 +55,7 @@ export default class Player extends Entity{
   constructor(pos){
     super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,12,16));//衝突判定の形状
       this.type = ENTITY.PLAYER;
     this.frame = 0;
     this.frameDead;//死んだ時刻
@@ -261,13 +261,14 @@ export default class Player extends Entity{
         }
     }
     for(let l of EntityManager.wallList){
-      if(Collision.on(this,l).isHit){
+      let c = Collision.on(this,l)
+      if(c.isHit){
         /* 衝突応答*/
         /*フラグの解除*/
-        if(Collision.on(this,l).n.y == -1){
+        if(c.n.y == -1){
           this.isJump = false;
         }
-        Collision.Resolve(this,l);
+          Collision.Resolve(this,l);
         /*note : now isHit == false*/
       }
     }

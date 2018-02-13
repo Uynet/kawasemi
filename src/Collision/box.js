@@ -5,7 +5,7 @@ export default class Box{
   //height
   constructor(pos,width,height){
     this.pos = pos;
-    this.height = height;
     this.width = width;
+    this.height = height;
   }
 }

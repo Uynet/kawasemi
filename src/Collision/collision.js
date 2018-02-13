@@ -30,18 +30,21 @@ export default class Collision{
     if(e1.collider.shape == SHAPE.BOX && e2.collider.shape == SHAPE.BOX){
       let box1 = e1.collider.hitbox;
       let box2 = e2.collider.hitbox;
-      if(box1.pos.x < box2.pos.x + box2.height &&
-        box2.pos.x < box1.pos.x + box1.height &&
-        box1.pos.y < box2.pos.y + box2.width &&
-        box2.pos.y < box1.pos.y + box1.width
-      ){
+
+      if(
+        box1.pos.x < box2.pos.x + box2.width &&
+        box2.pos.x < box1.pos.x + box1.width &&
+        box1.pos.y < box2.pos.y + box2.height &&
+        box2.pos.y < box1.pos.y + box1.height
+      )
+        {
         //0 ↓ 0   1
         //1 → 1   0
         //2 ↑ 0   -1
         //3 ← -1  0
         let meri = [
           box2.pos.y+box2.height - box1.pos.y , 
-          box2.pos.x+box2.width-box1.pos.x , 
+          box2.pos.x+box2.width - box1.pos.x , 
           box1.pos.y+box1.height - box2.pos.y ,
           box1.pos.x+box1.width - box2.pos.x
         ];
@@ -49,11 +52,11 @@ export default class Collision{
         let minI = Util.minIndex(meri);
         //console.log(meri);
         isHit = true;
-        switch(maxI){
-          case 2: n = {x:0 , y:1};break;
-          case 3: n = {x:1 , y:0};break;
-          case 0: n = {x:0 , y:-1};break;
-          case 1: n = {x:-1 , y:0};break;
+        switch(minI){
+          case 0: n = {x:0 , y:1};break;
+          case 1: n = {x:1 , y:0};break;
+          case 2: n = {x:0 , y:-1};break;
+          case 3: n = {x:-1 , y:0};break;
         }
         depth = meri[minI];
       }else{
@@ -86,11 +89,11 @@ export default class Collision{
   static Resolve(e1,e2){
     console.assert(e1.e != undefined);
     /*速度*/
-    if(Collision.on(e1,e2).n.x != 0) e1.vel.x = 0;
-    if(Collision.on(e1,e2).n.y == -1) e1.vel.y *= -e1.e ;
-    if(Collision.on(e1,e2).n.y == 1) e1.vel.y =0;
+    let l = Collision.on(e1,e2);
+    if(l.n.x != 0) e1.vel.x = 0;
+    if(l.n.y == -1) e1.vel.y *= -e1.e ;
+    if(l.n.y == 1) e1.vel.y =0;
     //while(Collision.on(e1,e2).isHit){
-      let l = Collision.on(e1,e2);
       e1.pos.x += l.n.x*l.depth;
       e1.pos.y += l.n.y*l.depth;
     //}
