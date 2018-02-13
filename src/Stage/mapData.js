@@ -10,6 +10,7 @@ import Game from '../Game.js'
 import Art from '../art.js'
 import Drawer from '../drawer.js';
 import WeaponManager from '../Weapon/weaponManager.js';
+import Woodbox from '../Entity/woodbox.js';
 /*マップデータ*/
 export default class MapData{
   constructor(){
@@ -55,10 +56,15 @@ export default class MapData{
         ID = this.entityData[this.width*y + x]-1;
         //tiledのIDがjsonデータより1小さいので引く
         if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
-        switch(tileType[this.entityData[this.width*y + x]-1].type){
+        switch(tileType[ID].type){
           case TILE.WALL :
-            entity = new Wall({x:16*x,y:16*y},MapData.WallTile(ID));
-            EntityManager.addEntity(entity); break;
+            if(tileType[ID].name == "woodbox"){
+              entity = new Woodbox({x:16*x,y:16*y});
+            }else{
+              entity = new Wall({x:16*x,y:16*y},MapData.WallTile(ID));
+            }
+            EntityManager.addEntity(entity);
+            break;
           case TILE.BACK :
             entity = new Background({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
