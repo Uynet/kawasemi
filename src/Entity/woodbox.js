@@ -7,14 +7,16 @@ import EntityManager from '../Stage/entityManager.js';
 import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
 import FontEffect from './Effect/fontEffect.js';
+import Wall from './wall.js';
 let EntityList = EntityManager.entityList;
 
 //壊せる木箱
-export default class WoodBox extends Enemy{
+export default class WoodBox extends Wall{
   constructor(pos){
-    super(pos,{x:0,y:0},{x:0,y:0});
+    super(pos,Art.enemyPattern.woodbox[0]);
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+      this.type = ENTITY.WALL;
     /*スプライト*/
     this.pattern = Art.enemyPattern.woodbox;
     this.spid = 0; //spriteIndex 現在のスプライト番号
