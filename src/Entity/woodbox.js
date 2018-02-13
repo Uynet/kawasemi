@@ -16,14 +16,15 @@ export default class WoodBox extends Wall{
     super(pos,Art.enemyPattern.woodbox[0]);
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-      this.type = ENTITY.WALL;
+    this.type = ENTITY.WALL;
+    this.name = "woodbox";
     /*スプライト*/
     this.pattern = Art.enemyPattern.woodbox;
     this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.hp = 10;
+    this.hp = 1;
     /*フラグ*/
     this.isAlive = true;
   }
@@ -86,5 +87,10 @@ export default class WoodBox extends Wall{
     this.Collision();
     this.Physics();
     this.sprite.position = this.pos;
+
+    /*observer*/
+if(this.hp<=0){
+  EntityManager.removeEntity(this);
+}
   }
 }

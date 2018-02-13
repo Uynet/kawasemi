@@ -25,17 +25,20 @@ export default class Bullet1AI{
             this.bullet.hp = 0;
             /* ■ SoundEffect : hitWall */
             /* □ Effect : hitWall */
-            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}),Timer.timer);
-          }
+            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}));
+          };
           break;
         case ENTITY.WALL :
           if(Collision.on(this.bullet,l).isHit){
+            if(l.name == "woodbox"){
+              l.Damage(-this.bullet.atk );
+            }
             this.bullet.hp = 0;
             /* ■ SoundEffect : hitWall */
             /* □ Effect : hitWall */
-            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}),Timer.timer);
-          }
-   break;
+            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}));
+          };
+          break;
       }
     }
   }
