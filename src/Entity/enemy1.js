@@ -59,9 +59,10 @@ export default class Enemy1 extends Enemy{
         /*note : now isHit == false*/
       }
     }
-    for(let l of EntityManager.enemyList){
+    for(let i=0;i<EntityManager.enemyList.length;i++){
       //これないと自分と衝突判定してバグ
-      if(l == this) continue;
+      let l = EntityManager.enemyList[i];
+      if(i == EntityManager.enemyList.indexOf(this))continue;
       /*衝突判定*/
       if(Collision.on(this,l).isHit){
         /* 衝突応答*/
