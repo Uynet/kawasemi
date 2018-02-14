@@ -11,6 +11,7 @@ import Art from '../art.js'
 import Drawer from '../drawer.js';
 import WeaponManager from '../Weapon/weaponManager.js';
 import Woodbox from '../Entity/woodbox.js';
+import Needle from '../Entity/needle.js';
 /*マップデータ*/
 export default class MapData{
   constructor(){
@@ -72,6 +73,7 @@ export default class MapData{
           case TILE.PLAYER : EntityManager.addEntity(new Player({x:16*x,y:16*y})); break;
           case TILE.ENEMY : EntityManager.addEntity(new Enemy1({x:16*x,y:16*y})); break;
           case TILE.GOAL : EntityManager.addEntity(new Goal({x:16*x,y:16*y})); break;
+          case TILE.NEEDLE : EntityManager.addEntity(new Needle({x:16*x,y:16*y})); break;
           default : 
             console.warn("タイルセットに未実装のチップが使用されています");
         }
@@ -127,7 +129,9 @@ export default class MapData{
       case 78:return steel.back[2];
       case 79:return steel.back[3];
       //signboard
-      case 4:return Art.wallPattern.signboard;
+      case 4 :return Art.wallPattern.signboard;
+        //needle
+      case 8 : return Art.wallPattern.needle;
   }
     console.warn(i);
     return Art.wallPattern.block;

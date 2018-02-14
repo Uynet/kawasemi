@@ -253,9 +253,10 @@ export default class Art{
       ]
     }
     this.wallPattern = {
-      block : PIXI.Texture.fromFrame('wall00.png'),
-      goal : PIXI.Texture.fromFrame('wall01.png'),
-      signboard : PIXI.Texture.fromFrame('wall02.png'),
+      block : PIXI.Texture.fromFrame('wall00.png'),//未使用
+      goal : PIXI.Texture.fromFrame('wall01.png'),//ゴール
+      signboard : PIXI.Texture.fromFrame('wall02.png'),//看板
+      needle : PIXI.Texture.fromFrame('wall10.png'),//トゲ
       //壁縁あり
       edge : {
         //外向き枠
@@ -289,7 +290,7 @@ export default class Art{
         //back
         backGround : [
         PIXI.Texture.fromFrame('wallA0.png'),
-        ]
+        ],
       }
     }
 

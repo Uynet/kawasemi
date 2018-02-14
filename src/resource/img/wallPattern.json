@@ -12,6 +12,10 @@
       "frame": {"x":32, "y":0, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
+      "wall10.png": {
+      "frame": {"x":0, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
 
        "wall20.png": {
       "frame": {"x":0, "y":32, "w":16, "h":16},
@@ -164,6 +168,10 @@
     },
     "wallA0.png": {
       "frame": {"x":0, "y":160, "w":32, "h":32},
+      "sourceSize": {"w": 32, "h": 32}
+    },
+    "wallA1.png": {
+      "frame": {"x":32, "y":160, "w":32, "h":32},
       "sourceSize": {"w": 32, "h": 32}
     }
 
