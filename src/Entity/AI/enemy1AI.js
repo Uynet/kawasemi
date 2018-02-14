@@ -19,12 +19,5 @@ export default class Enemy1AI{
       //this.enemy.acc.y += -3;
       //this.enemy.isJump = true;
     }
-
-    /*observer*/
-    if(this.enemy.hp<=0){
-      this.enemy.isAlive = false
-      EntityManager.removeEntity(this.enemy);
-    }
   }
-
 }
