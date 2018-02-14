@@ -290,7 +290,7 @@ export default class Player extends Entity{
     this.vel.y += this.acc.y;
     this.pos.x += this.vel.x; 
     this.pos.y += this.vel.y; 
-    this.vel.y += this.gravity;
+    this.acc.y = this.gravity;
     //最大速度制限:
     if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
     if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;

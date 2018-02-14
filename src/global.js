@@ -54,7 +54,8 @@ const TILE = {
   ENEMY : 3,
   GOAL : 4,
   BACK : 5,
-  SIGN : 6
+  SIGN : 6,
+  NEEDLE : 7
 }
 
 const CONTAINER = {
