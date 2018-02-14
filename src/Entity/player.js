@@ -55,7 +55,11 @@ export default class Player extends Entity{
   constructor(pos){
     super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,12,16));//衝突判定の形状
+    let p = {
+      x : pos.x,
+      y : pos.y
+    }
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,16));//衝突判定の形状
       this.type = ENTITY.PLAYER;
     this.frame = 0;
     this.frameDead;//死んだ時刻
@@ -66,7 +70,10 @@ export default class Player extends Entity{
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
       this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
-    this.sprite.position = this.pos;
+    this.sprite.position = {
+      x : this.pos.x-40,
+      y : this.pos.y
+    }
     /*パラメータ*/
     this.maxHP = PLAYER_HP;
     this.hp = this.maxHP;
@@ -157,7 +164,8 @@ export default class Player extends Entity{
       this.weapon.shot(this);
     }
     /*for debug*/
-    if(Input.isKeyInput(KEY.SP) && this.frame%10 == 0){
+    if(Input.isKeyInput(KEY.J) && this.frame%10 == 0){
+      this.Damage(-999);
     }
   }
 
@@ -213,7 +221,11 @@ export default class Player extends Entity{
         let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        this.sprite.position.x = this.pos.x ;
+        this.sprite.position.x = this.pos.x - 4;
+        if(a*4*f*f/l/l == 0 ){;
+          //■ SE : foot
+        }
+
         break;
         //死亡
         case STATE.DYING:
@@ -230,7 +242,7 @@ export default class Player extends Entity{
   /*ダメージ*/
   /*負の値を入れる*/
   Damage(atk){
-    if(atk>0){
+    if(atk>0 && atk%1>0){
       console.warn(atk);
     }
     //無敵時間は攻撃を受けない
@@ -378,7 +390,11 @@ Supply(){
       this.Supply();//bulletのかいふく　
       UIManager.bullet.bar.UpdateBar(this.bullet); //BulletBarの更新
       UIManager.HP.bar.UpdateBar(this.hp);//HPbarの更新
-      this.sprite.position = this.pos;
+      this.sprite.position = {
+      x : this.pos.x-4,
+      y : this.pos.y
+    }
+    /*パラメータ*/
       this.frame++;
       this.Animation();//状態から画像を更新
   }

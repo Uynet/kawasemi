@@ -49,9 +49,14 @@ export default class Enemy1 extends Enemy{
 
         /*速度*/
         if(c.n.x != 0) this.vel.x = 0;
-        if(c.n.y != 0) {
+        //地面との衝突
+        if(c.n.y == -1){ 
           this.isJump = false;
-          this.vel.y *= -0.3;
+          this.vel.y = Math.min(0,this.vel.y * -0.3);
+        }
+        //天井との衝突
+        if(c.n.y == 1 ){
+          this.vel.y = Math.max(0,this.vel.y * -0.3)
         }
         /*押し出し*/
         this.pos.x += c.n.x * c.depth;
