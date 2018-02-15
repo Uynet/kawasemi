@@ -4,15 +4,15 @@ import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
-import Enemy1AI from './AI/enemy1AI.js';
+import Enemy2AI from './AI/enemy2AI.js';
 import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
 import FontEffect from './Effect/fontEffect.js';
-const ATK_ENEMY1 = 10;
+const ATK_ENEMY2 = 10;
 
 let EntityList = EntityManager.entityList;
 
-export default class Enemy1 extends Enemy{
+export default class Enemy2 extends Enemy{
   constructor(pos){
     super(pos,{x:0,y:0},{x:0,y:0});
     /*基本情報*/
@@ -24,8 +24,8 @@ export default class Enemy1 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.addAI(new Enemy1AI(this));
-    this.atkMax = ATK_ENEMY1;
+    this.addAI(new Enemy2AI(this));
+    this.atkMax = ATK_ENEMY2;
     this.hp = 10;
     this.gravity = 0.1;
     /*フラグ*/
@@ -132,5 +132,6 @@ export default class Enemy1 extends Enemy{
       this.isAlive = false
       EntityManager.removeEntity(this);
     }
+    this.frame++;
   }
 }

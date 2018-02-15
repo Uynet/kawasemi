@@ -60,16 +60,16 @@ export default class Player extends Entity{
       y : pos.y
     }
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,16));//衝突判定の形状
-      this.type = ENTITY.PLAYER;
+    this.type = ENTITY.PLAYER;
     this.frame = 0;
     this.frameDead;//死んだ時刻
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
     this.frameShot = 0;//最後にshotした時刻
-      this.e = 0.1;
+    this.e = 0.1;
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
-      this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.maxHP = PLAYER_HP;
@@ -78,17 +78,23 @@ export default class Player extends Entity{
     this.bullet = this.maxBullet;
     this.gravity = PLAYER_GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
-      /*状態*/
-      this.state = STATE.WAITING;
+    /*状態*/
+    this.state = STATE.WAITING;
     this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
-      this.weapon.isTargetOn = false;
+    this.weapon.isTargetOn = false;
     this.weapon.target = null;//これ大丈夫か??
-      this.dir = DIR.R;//向き
+    this.dir = DIR.R;//向き
     /*フラグ*/
     this.isJump = false;//空中にいるか
-      this.isRun = false;//走っているか
+    this.isRun = false;//走っているか
     this.isAlive = true;//
-      this.isInvincible = false//無敵時間
+    this.isInvincible = false//無敵時間
+    /*床の親子関係*/
+    this.floor = {
+      on : false,//乗っているか
+      under : null,//自分の下
+      over : null//自分の上
+    }
   }
   /*キー入力による移動*/
   Input(){
@@ -255,38 +261,57 @@ export default class Player extends Entity{
     }
   }
   /* 衝突判定 */
-  collision(){
+  Collision(){
+    //下からしか通れない物体
     for(let l of EntityManager.enemyList){
-      let c = Collision.on(this,l)
-        if(c.isHit){
-          /* 衝突応答*/
-          /*フラグの解除*/
-          if(c.n.y == -1){
-            this.isJump = false;
-            Collision.Resolve(this,l);
-          }
-          /*note : now isHit == false*/
-        }
-    }
-    for(let l of EntityManager.wallList){
-      let c = Collision.on(this,l)
+      let c = Collision.on(this,l);
+      this.floor.on = false;
+      this.floor.under = l;
       if(c.isHit){
         /* 衝突応答*/
         /*フラグの解除*/
+
+        //床との衝突
+        if(c.n.y == -1){
+          this.isJump = false;
+          Collision.Resolve(this,l);
+          this.floor.on = true;
+          this.floor.under = l;
+        }
+        /*note : now isHit == false*/
+      }
+    }
+    //壁
+    for(let l of EntityManager.wallList){
+      let c = Collision.on(this,l);
+      if(c.isHit){
+        /* 衝突応答*/
+        /*フラグの解除*/
+
+        //床との衝突
         if(c.n.y == -1){
           this.isJump = false;
         }
-          Collision.Resolve(this,l);
+        Collision.Resolve(this,l);
         /*note : now isHit == false*/
       }
     }
   }
   Physics(){
-    this.vel.x += this.acc.x;
-    this.vel.y += this.acc.y;
-    this.pos.x += this.vel.x; 
-    this.pos.y += this.vel.y; 
-    this.acc.y = this.gravity;
+     //動く床に乗っている時
+    if(this.floor.on){
+      this.vel.x += this.acc.x;
+      this.vel.y += this.acc.y;
+      this.pos.x += this.vel.x + this.floor.under.vel.x; 
+      this.pos.y += this.vel.y + this.floor.under.vel.y; 
+      this.acc.y = this.gravity;
+    }else{
+      this.vel.x += this.acc.x;
+      this.vel.y += this.acc.y;
+      this.pos.x += this.vel.x; 
+      this.pos.y += this.vel.y; 
+      this.acc.y = this.gravity;
+    }
     //最大速度制限:
     if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
     if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
@@ -371,7 +396,7 @@ Supply(){
         this.Input();//入力
         this.weapon.Target(this);//照準を自動でやってる
         this.Physics();//物理
-        this.collision();//衝突
+        this.Collision();//衝突
       }
       
       //this.ScrollByDir();//向きに応じてスクロール位置を変更
@@ -382,8 +407,6 @@ Supply(){
       if(this.frame - this.frameDamaged > INV_TIME){
         this.isInvincible = false;
       }
-
-      
       this.Supply();//bulletのかいふく　
       UIManager.bullet.bar.UpdateBar(this.bullet); //BulletBarの更新
       UIManager.HP.bar.UpdateBar(this.hp);//HPbarの更新

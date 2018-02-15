@@ -30,11 +30,16 @@ export default class Bullet1AI{
           break;
         case ENTITY.WALL :
           if(Collision.on(this.bullet,l).isHit){
+            //breakable object
             if(l.name == "woodbox"){
+              /* ■ SoundEffect : hitWood */
               l.Damage(-this.bullet.atk );
+              this.bullet.hp--;
+            //wall
+            }else{
+              /* ■ SoundEffect : hitWall */
+              this.bullet.hp = 0;
             }
-            this.bullet.hp--;
-            /* ■ SoundEffect : hitWall */
             /* □ Effect : hitWall */
             EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}));
           };

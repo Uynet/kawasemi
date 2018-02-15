@@ -5,6 +5,7 @@ import Background from '../Entity/background.js';
 import Signboard from '../Entity/signboard.js';
 import Player from '../Entity/player.js'
 import Enemy1 from '../Entity/enemy1.js'
+import Enemy2 from '../Entity/enemy2.js'
 import Goal from '../Entity/goal.js'
 import Game from '../Game.js'
 import Art from '../art.js'
@@ -104,7 +105,7 @@ export default class MapData{
             EntityManager.addEntity(obj);
             break;
           case 170 :
-            obj = new Enemy1(p);
+            obj = new Enemy2(p);
             EntityManager.addEntity(obj);
             break;
       }
