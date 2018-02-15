@@ -15,15 +15,16 @@ let EntityList = EntityManager.entityList;
 
 //トゲ
 export default class Needle extends BackGround{
-  constructor(pos){
-    super(pos,0);
+  constructor(pos,tex){
+    super(pos,tex);
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box({x:pos.x+4,y:pos.y+12},8,8));//衝突判定の形状
     this.name = "needle";
     /*スプライト*/
     this.pattern = Art.wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号
-    this.tex = Art.wallPattern.needle;
+    //this.pattern = Art.wallPattern.needle;
+    //this.tex = this.pattern[0];
     this.sprite = Art.SpriteFactory(this.tex);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/

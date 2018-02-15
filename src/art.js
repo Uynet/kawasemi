@@ -256,9 +256,20 @@ export default class Art{
       block : PIXI.Texture.fromFrame('wall00.png'),//未使用
       goal : PIXI.Texture.fromFrame('wall01.png'),//ゴール
       signboard : PIXI.Texture.fromFrame('wall02.png'),//看板
-      needle : PIXI.Texture.fromFrame('wall10.png'),//トゲ
+      needle : [
+        PIXI.Texture.fromFrame('wall10.png'),//∧
+        PIXI.Texture.fromFrame('wall11.png'),//>
+        PIXI.Texture.fromFrame('wall12.png'),//<
+        PIXI.Texture.fromFrame('wall13.png'),//V
+      ],
       //壁縁あり
       edge : {
+        inner : [
+          PIXI.Texture.fromFrame('wall61.png'),
+          PIXI.Texture.fromFrame('wall63.png'),
+          PIXI.Texture.fromFrame('wall81.png'),
+          PIXI.Texture.fromFrame('wall83.png'),
+        ],
         //外向き枠
         out : [
           PIXI.Texture.fromFrame('wall64.png'),//

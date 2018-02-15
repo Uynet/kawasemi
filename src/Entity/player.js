@@ -20,7 +20,7 @@ import BulletShot from './Effect/bulletShot.js';
 
 const JUMP_VEL = 7;//ジャンプ力
   const RUN_VEL = 0.4;//はしり速度
-const PLAYER_GRAVITY = 0.4;
+const PLAYER_GRAVITY = 0.2;
 const PLAYER_HP = 100;
 const PLAYER_BULLET = 100;
 const FLICTION = 0.7;
@@ -30,7 +30,7 @@ const INV_TIME = 5;//無敵時間
 const ANIM_WAIT = 7;
 
 const VX_MAX = 3;
-const VY_MAX = 7;
+const VY_MAX = 5;
 
 const STATE = {
   WAITING : "WAITING",
@@ -70,10 +70,7 @@ export default class Player extends Entity{
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
       this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
-    this.sprite.position = {
-      x : this.pos.x-40,
-      y : this.pos.y
-    }
+    this.sprite.position = this.pos;
     /*パラメータ*/
     this.maxHP = PLAYER_HP;
     this.hp = this.maxHP;
@@ -221,7 +218,6 @@ export default class Player extends Entity{
         let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        this.sprite.position.x = this.pos.x - 4;
         if(a*4*f*f/l/l == 0 ){;
           //■ SE : foot
         }

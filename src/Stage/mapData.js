@@ -59,6 +59,7 @@ export default class MapData{
         if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
         switch(tileType[ID].type){
           case TILE.WALL :
+            //直せ
             if(tileType[ID].name == "woodbox"){
               entity = new Woodbox({x:16*x,y:16*y});
             }else{
@@ -73,7 +74,10 @@ export default class MapData{
           case TILE.PLAYER : EntityManager.addEntity(new Player({x:16*x,y:16*y})); break;
           case TILE.ENEMY : EntityManager.addEntity(new Enemy1({x:16*x,y:16*y})); break;
           case TILE.GOAL : EntityManager.addEntity(new Goal({x:16*x,y:16*y})); break;
-          case TILE.NEEDLE : EntityManager.addEntity(new Needle({x:16*x,y:16*y})); break;
+          case TILE.NEEDLE :
+            entity = new Needle({x:16*x,y:16*y},MapData.WallTile(ID));
+            EntityManager.addEntity(entity);
+            break;
           default : 
             console.warn("タイルセットに未実装のチップが使用されています");
         }
@@ -108,8 +112,15 @@ export default class MapData{
   //タイルIDを渡すとテクスチャを返す
   static WallTile(i){
     let out = Art.wallPattern.edge.out;
+    let inner = Art.wallPattern.edge.inner;
     let steel = Art.wallPattern.steel;
+    let needle = Art.wallPattern.needle;
     switch(i){
+      //edge in
+      case 49 : return inner[0];
+      case 51 : return inner[1];
+      case 65 : return inner[2];
+      case 67 : return inner[3];
       //edge out
       case 52:return out[0];
       case 53:return out[1];
@@ -131,7 +142,10 @@ export default class MapData{
       //signboard
       case 4 :return Art.wallPattern.signboard;
         //needle
-      case 8 : return Art.wallPattern.needle;
+      case 8 : return needle[0];
+      case 9 : return needle[1];
+      case 10 : return needle[2];
+      case 11 : return needle[3];
   }
     console.warn(i);
     return Art.wallPattern.block;
