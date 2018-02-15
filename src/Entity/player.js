@@ -263,10 +263,10 @@ export default class Player extends Entity{
   /* 衝突判定 */
   Collision(){
     //下からしか通れない物体
+      this.floor.on = false;
+      this.floor.under = null;
     for(let l of EntityManager.enemyList){
       let c = Collision.on(this,l);
-      this.floor.on = false;
-      this.floor.under = l;
       if(c.isHit){
         /* 衝突応答*/
         /*フラグの解除*/
@@ -298,20 +298,16 @@ export default class Player extends Entity{
     }
   }
   Physics(){
-     //動く床に乗っている時
+    //動く床に乗っている時
     if(this.floor.on){
-      this.vel.x += this.acc.x;
-      this.vel.y += this.acc.y;
-      this.pos.x += this.vel.x + this.floor.under.vel.x; 
-      this.pos.y += this.vel.y + this.floor.under.vel.y; 
-      this.acc.y = this.gravity;
-    }else{
-      this.vel.x += this.acc.x;
-      this.vel.y += this.acc.y;
+      this.pos.x += this.floor.under.vel.x; 
+      this.pos.y += this.floor.under.vel.y; 
+    }
       this.pos.x += this.vel.x; 
       this.pos.y += this.vel.y; 
+      this.vel.x += this.acc.x;
+      this.vel.y += this.acc.y;
       this.acc.y = this.gravity;
-    }
     //最大速度制限:
     if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
     if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
@@ -389,6 +385,7 @@ Supply(){
 
   Update(){
       if(this.isAlive){
+        if(this.floor.on) cl(this.floor.under.vel.x);
         if(!this.isJump) {
           this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
         }

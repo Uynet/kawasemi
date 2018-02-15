@@ -32,8 +32,10 @@ export default class Enemy2 extends Enemy{
     this.isJump = false;
     this.isAlive = true;
     /*床の親子関係*/
-    this.over;//上に乗ってるやつ
-    this.under;//下にある床
+    this.floor = {
+      on : false,
+      under : null
+    }
   }
   //自分がダメージを食らう
   Damage(atkMax){
@@ -67,6 +69,8 @@ export default class Enemy2 extends Enemy{
         /*note : now isHit == false*/
       }
     }
+    this.floor.on  =false ;
+    this.floor.under = null;
     for(let i=0;i<EntityManager.enemyList.length;i++){
       let l = EntityManager.enemyList[i];
       let c = Collision.on(this,l);
@@ -80,6 +84,8 @@ export default class Enemy2 extends Enemy{
         if(c.n.x != 0) this.vel.x = 0;
         //地面との衝突
         if(c.n.y == -1){ 
+          this.floor.on = true;
+          this.floor.under = EntityManager.enemyList[i];
           this.isJump = false;
           this.vel.y = Math.min(1,this.vel.y * -0.3);
         }
@@ -108,10 +114,14 @@ export default class Enemy2 extends Enemy{
 
 
   Physics(){
-    this.vel.x += this.acc.x;
-    this.vel.y += this.acc.y;
+    if(this.floor.on){
+      this.pos.x += this.floor.under.vel.x;
+      this.pos.y += this.floor.under.vel.y;
+    }
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
+    this.vel.x += this.acc.x;
+    this.vel.y += this.acc.y;
     this.acc.y = this.gravity;
   }
 

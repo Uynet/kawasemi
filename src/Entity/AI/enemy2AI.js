@@ -12,13 +12,18 @@ export default class Enemy2AI{
   }
 
   Do(){
-    if(this.enemy.frame%800 < 400){
-      this.enemy.acc.x = 0.1;
-    }else{
-      this.enemy.acc.x = -0.1;
+    if(this.enemy.frame%100 == 0){
+      this.enemy.vel.y = -2;
     }
-    this.enemy.vel.x = Math.min(this.enemy.vel.x,0.5);
-    this.enemy.vel.x = Math.max(this.enemy.vel.x,-0.5);
+    if(this.enemy.frame%100 == 50){
+      this.enemy.vel.y = 2;
+    }
+    if(this.enemy.frame%100 == 25){
+      this.enemy.vel.x = 2;
+    }
+    if(this.enemy.frame%100 == 75){
+      this.enemy.vel.x = -2;
+    }
     //たまにジャンプする
   }
 }

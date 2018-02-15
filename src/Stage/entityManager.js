@@ -35,7 +35,7 @@ export default class EntityManager{
           }
         }else{
           this.effectList.push(entity);
-          Drawer.addContainer(entity.sprite,"FORE");
+          Drawer.addContainer(entity.sprite,"ENTITY");
         }
         break;
         //壁
@@ -52,10 +52,12 @@ export default class EntityManager{
       case ENTITY.GOAL :
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
-        //その他
+        //弾丸
+        case ENTITY.BULLET :
+          Drawer.addContainer(entity.sprite,"FORE");
+          break;
+          //その他
       default : 
-        if(entity.type!="BULLET"){
-        }
         Drawer.addContainer(entity.sprite,"ENTITY");
     }
   }
@@ -91,7 +93,7 @@ export default class EntityManager{
           }
         }else{
           console.assert(entity.sprite != undefined);
-          Drawer.removeContainer(entity.sprite,"FORE");
+          Drawer.removeContainer(entity.sprite,"ENTITY");
         }
         break;
         //壁
@@ -104,11 +106,11 @@ export default class EntityManager{
       case ENTITY.BACK :
         Drawer.removeContainer(entity.sprite,"BACK");
         break;
-        //その他
+ case ENTITY.BULLET :
+   Drawer.removeContainer(entity.sprite,"FORE");
+   break;
+   //その他
       default :
-        if( entity.type!=ENTITY.BULLET){
-          //console.warn(entity);
-        }
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
     }

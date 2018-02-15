@@ -7,7 +7,6 @@ import EntityManager from '../Stage/entityManager.js';
 import Bullet1AI from './AI/bullet1AI.js';
 import Bullet from './bullet.js';
 import BulletBlur from './Effect/bulletBlur.js';
-import Timer from '../timer.js';
 import Util from '../util.js';
 
 /*bullet1クラス*/
@@ -38,14 +37,14 @@ export default class Bullet1 extends Bullet{
     /*□Effect BulletBulr*/
     if(this.frame%1 == 0){
       let p ={
-        x:this.pos.x + 10 * (Math.random()-0.5),
-        y:this.pos.y + 10 *(Math.random()-0.5)
+        x:this.pos.x,// + 10 * (Math.random()-0.5),
+        y:this.pos.y// + 10 *(Math.random()-0.5)
       }
       let v ={
-        x:3 * (Math.random()-0.5),
-        y:3 *(Math.random()-0.5)
+        x:0 * 3 * (Math.random()-0.5),
+        y:0 * 3 *(Math.random()-0.5)
       }
-      EntityManager.addEntity(new BulletBlur(p,v),Timer.timer);
+      EntityManager.addEntity(new BulletBlur(p,v));
     }
     for (let AI of this.AIList){
       AI.Do();
