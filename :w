@@ -23,9 +23,7 @@ export default class BulletBlur extends EFFECT{
 
   Update(){
     if(this.isAlive){
-      this.sprite.alpha = 3 / (3 + this.frame);
-      this.sprite.position.x = this.pos.x+8;
-      this.sprite.position.y = this.pos.y+8;
+      this.sprite.scale.x = Math.atan(this.frame/50);
       //pys
       this.pos.x += this.vel.x;
       this.pos.y += this.vel.y;
