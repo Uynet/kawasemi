@@ -19,6 +19,8 @@ const DIR = {
   L : "L",
 };
 
+const SEEN = 2;
+
 export default class Weapon1 extends Weapon{
   constructor(){
     super("1");
@@ -34,10 +36,18 @@ export default class Weapon1 extends Weapon{
 
   //敵が視界に入っているか
   isSeen(player,enemy){
-    return (player.dir == DIR.UR || player.dir ==  DIR.UL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 1
-      || (player.dir == DIR.DR || player.dir == DIR.DL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) <-1
-        || player.dir == DIR.R && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) <-1
-          || player.dir == DIR.L && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >1
+      switch(player.dir){
+        case DIR.UR : 
+        case DIR.UL : 
+          return (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 2
+        case DIR.DR :
+        case DIR.DL :
+          return (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) <-2
+        case DIR.R :
+          return (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) <-2
+        case DIR.L :
+          return (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >2
+      }
   }
 
   Target(player){

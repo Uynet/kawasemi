@@ -16,6 +16,18 @@
       "frame": {"x":0, "y":16, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
+      "wall11.png": {
+      "frame": {"x":16, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "wall12.png": {
+      "frame": {"x":32, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "wall13.png": {
+      "frame": {"x":48, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
 
        "wall20.png": {
       "frame": {"x":0, "y":32, "w":16, "h":16},
