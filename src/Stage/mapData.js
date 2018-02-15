@@ -72,33 +72,44 @@ export default class MapData{
             entity = new Background({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
           case TILE.SIGN : EntityManager.addEntity(new Signboard({x:16*x,y:16*y})); break;
-          case TILE.PLAYER : EntityManager.addEntity(new Player({x:16*x,y:16*y})); break;
-          case TILE.ENEMY : EntityManager.addEntity(new Enemy1({x:16*x,y:16*y})); break;
           case TILE.GOAL : EntityManager.addEntity(new Goal({x:16*x,y:16*y})); break;
           case TILE.NEEDLE :
             entity = new Needle({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity);
             break;
           default : 
-            console.warn("タイルセットに未実装のチップが使用されています");
+            console.warn("タイルセットに未実装のチップが使用されています ID : " + wallTiletype[ID].type);
         }
       }
     }
+    let obj;
     //objectの生成
     for(let i = 0;i < this.objData.length;i++){
       ID = this.objData[i].gid;
-      switch(ID){
-        case 162 :
         let objx = this.objData[i].x;
         let objy = this.objData[i].y -16 ;//なぜかyだけずれるので引く
         let p = {x:objx , y:objy};
-        let text = this.objData[i].properties.text;
-        let obj = new Signboard(p,text);
-        EntityManager.addEntity(obj);
-        break;
+        switch(ID){
+          case 161 :
+            obj = new Player(p);
+            EntityManager.addEntity(obj);
+            break;
+          case 162 :
+            let text = this.objData[i].properties.text;
+            obj = new Signboard(p,text);
+            EntityManager.addEntity(obj);
+            break;
+          case 169 :
+            obj = new Enemy1(p);
+            EntityManager.addEntity(obj);
+            break;
+          case 170 :
+            obj = new Enemy1(p);
+            EntityManager.addEntity(obj);
+            break;
       }
-      Drawer.ScrollSet(EntityManager.player.pos);
     }
+    Drawer.ScrollSet(EntityManager.player.pos);
   }
 
   /*マップデータを消して作り直す*/
