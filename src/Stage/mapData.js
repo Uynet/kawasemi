@@ -48,7 +48,8 @@ export default class MapData{
     /*タイルに割り当てるtype
      * 1 : 壁
      * 2 : 背景*/
-    let tileType = this.jsonObj.tilesets[0].tileproperties;
+    let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
+    let moverTiletype = this.jsonObj.tilesets[1].tileproperties;
     let entity;
     let ID;//tiledに対応漬けられているID
 
@@ -57,10 +58,10 @@ export default class MapData{
         ID = this.entityData[this.width*y + x]-1;
         //tiledのIDがjsonデータより1小さいので引く
         if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
-        switch(tileType[ID].type){
+        switch(wallTiletype[ID].type){
           case TILE.WALL :
             //直せ
-            if(tileType[ID].name == "woodbox"){
+            if(wallTiletype[ID].name == "woodbox"){
               entity = new Woodbox({x:16*x,y:16*y});
             }else{
               entity = new Wall({x:16*x,y:16*y},MapData.WallTile(ID));
@@ -70,7 +71,7 @@ export default class MapData{
           case TILE.BACK :
             entity = new Background({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
-          case TILE.SIGN : cl(y*16);EntityManager.addEntity(new Signboard({x:16*x,y:16*y})); break;
+          case TILE.SIGN : EntityManager.addEntity(new Signboard({x:16*x,y:16*y})); break;
           case TILE.PLAYER : EntityManager.addEntity(new Player({x:16*x,y:16*y})); break;
           case TILE.ENEMY : EntityManager.addEntity(new Enemy1({x:16*x,y:16*y})); break;
           case TILE.GOAL : EntityManager.addEntity(new Goal({x:16*x,y:16*y})); break;
@@ -85,15 +86,19 @@ export default class MapData{
     }
     //objectの生成
     for(let i = 0;i < this.objData.length;i++){
-      let objx = this.objData[i].x;
-      let objy = this.objData[i].y -16 ;//なぜかyだけずれるので引く
+      ID = this.objData[i].gid;
+      switch(ID){
+        case 162 :
+        let objx = this.objData[i].x;
+        let objy = this.objData[i].y -16 ;//なぜかyだけずれるので引く
         let p = {x:objx , y:objy};
-      let text = this.objData[i].properties.text;
-      let obj = new Signboard(p,text);
-      EntityManager.addEntity(obj);
+        let text = this.objData[i].properties.text;
+        let obj = new Signboard(p,text);
+        EntityManager.addEntity(obj);
+        break;
+      }
+      Drawer.ScrollSet(EntityManager.player.pos);
     }
-    Drawer.ScrollSet(EntityManager.player.pos);
-    return;
   }
 
   /*マップデータを消して作り直す*/

@@ -354,11 +354,12 @@ Dying(){
 //bulletのかいふく
 Supply(){
       //最後に撃った時刻から経過するほど早くなる
+      //let t1 = 100;
       let t = (this.frame-this.frameShot);
-      if(t<=100 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      else if(t>100 && t<=200 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      else if(t>200 && t<=300 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      else if(t>300) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      if(t<=50 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      else if(t>50 && t<=100 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      else if(t>100 && t<=150 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+      else if(t>150) this.bullet = Math.min(this.maxBullet,this.bullet+1);
 }
 
   Update(){

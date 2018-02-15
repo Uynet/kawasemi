@@ -22,7 +22,7 @@ export default class Bullet1AI{
         case ENTITY.ENEMY :
           if(Collision.on(this.bullet,l).isHit){
             l.Damage(-this.bullet.atk - Math.floor(5*Math.random()) );
-            this.bullet.hp = 0;
+            this.bullet.hp--;
             /* ■ SoundEffect : hitWall */
             /* □ Effect : hitWall */
             EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}));
@@ -33,7 +33,7 @@ export default class Bullet1AI{
             if(l.name == "woodbox"){
               l.Damage(-this.bullet.atk );
             }
-            this.bullet.hp = 0;
+            this.bullet.hp--;
             /* ■ SoundEffect : hitWall */
             /* □ Effect : hitWall */
             EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}));
@@ -46,13 +46,5 @@ export default class Bullet1AI{
   Do(){
     this.collision();
     this.Phisics();
-    /*observer*/
-    //HP || 飛行距離
-    if(this.bullet.hp<=0 ||
-      this.bullet.frame > 100 || 
-      Util.distance(this.bullet.pos , this.bullet.launchedPos) > this.bullet.length){
-      EntityManager.removeEntity(this.bullet);
-    }
-    this.bullet.sprite.position = this.bullet.pos;
   }
 }

@@ -8,6 +8,7 @@ import Bullet1AI from './AI/bullet1AI.js';
 import Bullet from './bullet.js';
 import BulletBlur from './Effect/bulletBlur.js';
 import Timer from '../timer.js';
+import Util from '../util.js';
 
 /*bullet1クラス*/
 export default class Bullet1 extends Bullet{
@@ -23,7 +24,7 @@ export default class Bullet1 extends Bullet{
     /*コライダ*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
     /*パラメータ*/
-    this.hp = 1;//弾丸のHP 0になると消滅
+    this.hp = 10;//弾丸のHP 0になると消滅
     this.atk = 1;//攻撃力
     this.length = 180;//これは武器がもつ?
     this.launchedPos = {x:pos.x,y:pos.y};//射出された座標 射程距離の計算に必要 
@@ -49,6 +50,14 @@ export default class Bullet1 extends Bullet{
     for (let AI of this.AIList){
       AI.Do();
     }
+    /*observer*/
+    //HP || 飛行距離
+    if(this.hp<=0 ||
+      this.frame > 100 || 
+      Util.distance(this.pos , this.launchedPos) > this.length){
+      EntityManager.removeEntity(this);
+    }
+    this.sprite.position = this.pos;
     this.frame++;
   }
 }
