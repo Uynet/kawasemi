@@ -121,6 +121,10 @@ export default class EntityManager{
   static Update(){
     for(let l of this.entityList){
       l.Update(); 
+      if(l.type == ENTITY.ENEMY){
+      }
+      if(l.type == ENTITY.PLAYER){
+      }
     }
   }
 }

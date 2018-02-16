@@ -27,7 +27,7 @@ export default class Enemy2 extends Enemy{
     this.addAI(new Enemy2AI(this));
     this.atkMax = ATK_ENEMY2;
     this.hp = 10;
-    this.gravity = 0.1;
+    this.gravity = 0.3;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
@@ -69,6 +69,7 @@ export default class Enemy2 extends Enemy{
         /*note : now isHit == false*/
       }
     }
+    // 敵同士の衝突
     this.floor.on  =false ;
     this.floor.under = null;
     for(let i=0;i<EntityManager.enemyList.length;i++){
@@ -76,11 +77,11 @@ export default class Enemy2 extends Enemy{
       let c = Collision.on(this,l);
       //これないと自分と衝突判定してバグ
       if(i == EntityManager.enemyList.indexOf(this))continue;
-      /*衝突判定*/
+      //衝突判定
       if(c.isHit){
-        /* 衝突応答*/
+        // 衝突応答
 
-        /*速度*/
+        //速度
         if(c.n.x != 0) this.vel.x = 0;
         //地面との衝突
         if(c.n.y == -1){ 
@@ -93,11 +94,11 @@ export default class Enemy2 extends Enemy{
         if(c.n.y == 1 ){
           this.vel.y = Math.max(1,this.vel.y * -0.3)
         }
-        /*押し出し*/
+        //押し出し
         let l = EntityManager.enemyList[i];
         this.pos.x += c.n.x * c.depth/2;
         this.pos.y += c.n.y * c.depth/2;
-        /*note : now isHit == false*/
+        //note : now isHit == false
       }
     }
   }

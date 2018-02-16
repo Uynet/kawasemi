@@ -108,7 +108,7 @@ export default class Weapon1 extends Weapon{
           y: vi * Math.sin(player.arg + (Math.random()-0.5)/5)
         }
         let p = {
-          x: player.pos.x + 5 * Math.cos(player.arg),
+          x: player.pos.x -4 + 5 * Math.cos(player.arg),
           y: player.pos.y + 5 * Math.sin(player.arg),
         }
         let bullet = new Bullet1(p,v);
