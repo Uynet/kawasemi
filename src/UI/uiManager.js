@@ -99,7 +99,7 @@ export default class UIManager{
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
-    this.PopMessage("たいとるがめん");
+    this.PopMessage("タイトルがめん","POP");
   }
   static CleanTitle(){
     this.CloseMessage();
@@ -124,13 +124,25 @@ export default class UIManager{
   //メッセージイベント
   /* text : 入力文字列
    * sentence : textを改行文字で区切った配列
-   * c : 行*/
-   static PopMessage(text){
-     UIManager.addUI(new UIMessage(MES_FRAME,"frame"));//枠
-     //文字の長さに応じて枠を調整
-     this.message.frame.sprite.scale.x *= 1.5;
-     //yは固定
-     this.message.frame.sprite.scale.y *= 1.5; 
+   */
+   static PopMessage(text,type){
+     /*type : 
+      * POP 新しくフレームを作る
+      * PAGE フレームを作らず改ページのみ
+      */
+     if(type == "POP"){
+       UIManager.addUI(new UIMessage(MES_FRAME,"frame"));//枠
+       //文字の長さに応じて枠を調整
+       this.message.frame.sprite.scale.x *= 1.5;
+       this.message.frame.sprite.scale.y *= 1.5; //yは固定
+     }else if(type == "PAGE"){
+       //改ページするために文字だけを消す
+       for(let i=0;i<this.message.sentence.length;i++){
+         UIManager.removeUI(this.message.sentence[i]);
+       }
+     }else{
+       console.warn("messageEvent");
+     }
      let p = 
        {
          x:MES_TEXT.x,

@@ -52,13 +52,14 @@ export default class Game{
   }
 
   static Input(){
-    /*ポーズ */
+    //ポーズ
     if(Input.isKeyClick(KEY.C)){
       Game.isPause = !Game.isPause;
       Game.isSelect = !Game.isSelect;
-      /*武器選択画面*/
+      //武器選択画面
       if(Game.isSelect){
-        /*ゲーム画面を暗くする*/
+        //ゲーム画面を暗くする
+        //TODO : イベント化　 
         UIManager.OpenWeapon();
         Drawer.addContainer(dark,"FILTER");
       }else{
@@ -72,6 +73,8 @@ export default class Game{
     if(Input.isKeyClick(KEY.SP)){
       let event = new StartStageEvent();
       EventManager.PushEvent(event);
+
+      //TODO なんとかする
       let w = 20;
       let h = 20;
       for(let y = 0;y<h;y++){
