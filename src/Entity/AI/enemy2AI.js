@@ -13,16 +13,7 @@ export default class Enemy2AI{
 
   Do(){
     if(this.enemy.frame%100 == 0){
-      this.enemy.vel.y = -2;
-    }
-    if(this.enemy.frame%100 == 50){
-      this.enemy.vel.y = 2;
-    }
-    if(this.enemy.frame%100 == 25){
-      this.enemy.vel.x = 2;
-    }
-    if(this.enemy.frame%100 == 75){
-      this.enemy.vel.x = -2;
+      this.enemy.vel.y = -4;
     }
     //たまにジャンプする
   }

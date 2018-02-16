@@ -385,7 +385,6 @@ Supply(){
 
   Update(){
       if(this.isAlive){
-        if(this.floor.on) cl(this.floor.under.vel.x);
         if(!this.isJump) {
           this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
         }

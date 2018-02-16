@@ -27,7 +27,7 @@ export default class Enemy1 extends Enemy{
     this.addAI(new Enemy1AI(this));
     this.atkMax = ATK_ENEMY1;
     this.hp = 10;
-    this.gravity = 0.6;
+    this.gravity = 0.1;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
@@ -85,7 +85,7 @@ export default class Enemy1 extends Enemy{
         //地面との衝突
         if(c.n.y == -1){ 
           this.floor.on = true; 
-          this.floor.under = l;
+          this.floor.under = EntityManager.enemyList[i];
           this.isJump = false;
           this.vel.y = Math.min(1,this.vel.y * -0.3);
         }
@@ -115,8 +115,8 @@ export default class Enemy1 extends Enemy{
 
   Physics(){
     if(this.floor.on){
-      this.pos.x += this.floo.under.vel.x;
-      this.pos.y += this.floo.under.vel.y;
+    this.pos.x += this.floor.under.vel.x;
+    this.pos.y += this.floor.under.vel.y;
     }
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
