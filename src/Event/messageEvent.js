@@ -4,17 +4,33 @@ import MapData from '../Stage/mapData.js';
 import EventManager from '../Event/eventmanager.js';
 import Game from '../Game.js';
 
-//現在未使用
+//新しくメッセージ枠を開く
+function* pop(text){
+  Game.isMes = true;
+  UIManager.PopMessage(text,"POP");
+  yield ;
+}
+//メッセージをスクロールする
+function* page(text){
+  Game.isMes = true;
+  UIManager.PopMessage(text,"PAGE");
+  yield ;
+}
+
+let itt;
+//メッセージイベント
 export default class MessageEvent extends Event{
-  //「マップをリセットする関数」を返す
-  constructor(text){
-    super(1);
-    function* po(){
-      Game.isMes = true;
-      UIManager.PopMessage(text);
-      yield ;
+  //text ... 文章の配列
+  //type : 
+  //1 : new message 
+  //2 : scrll page
+  constructor(text,type){
+    super(1); //特に意味はない
+
+    switch(type){
+      case "POP" : itt = pop(text); break;
+      case "PAGE": itt = page(text); break;
     }
-    let itt = po();
     this.func = itt;
   }
 }

@@ -96,8 +96,8 @@ export default class MapData{
             EntityManager.addEntity(obj);
             break;
           case 162 :
-            let text = this.objData[i].properties.text;
-            obj = new Signboard(p,text);
+            let message = this.objData[i].properties;
+            obj = new Signboard(p,message);
             EntityManager.addEntity(obj);
             break;
           case 169 :

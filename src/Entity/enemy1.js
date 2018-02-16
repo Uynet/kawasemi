@@ -126,7 +126,6 @@ export default class Enemy1 extends Enemy{
     this.acc.y = this.gravity;
   }
   Animation(){
-    cl("po");
     this.spid = Math.floor(this.frame/2)%4;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
