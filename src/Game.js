@@ -100,6 +100,10 @@ export default class Game{
        UIManager.Update();
      }
   }
+  static AnimationStage(){
+    EntityManager.Animation();
+    UIManager.Update();
+  }
 
   static Run(){
     requestAnimationFrame(Game.Run);
@@ -122,12 +126,7 @@ export default class Game{
         }
         else if(Game.isMes){
           //メッセージ画面中
-//            Game.UpdateStage();
-
-          if(Input.isKeyClick(KEY.SP)){
-            Game.isMes = false;
-            UIManager.CloseMessage();
-          }
+            Game.AnimationStage();
         }else{
         //プレイ画面中
             Game.UpdateStage();

@@ -121,9 +121,18 @@ export default class EntityManager{
   static Update(){
     for(let l of this.entityList){
       l.Update(); 
-      if(l.type == ENTITY.ENEMY){
-      }
+    }
+  }
+  /*メッセージイベント中にアニメーションだけ行う*/
+  static Animation(){
+    for(let l of this.entityList){
+      //playerはアニメーションのみ
       if(l.type == ENTITY.PLAYER){
+        l.Animation(); 
+      }
+      //看板は読めるようにする
+      if(l.name == "signboard") {
+        l.Update(); 
       }
     }
   }

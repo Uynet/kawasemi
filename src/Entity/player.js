@@ -101,7 +101,7 @@ export default class Player extends Entity{
     /*ジャンプ*/
     if(Input.isKeyInput(KEY.Z)){
       if(this.isJump == false){
-        this.vel.y = -JUMP_VEL;
+        this.acc.y = -JUMP_VEL;
         this.isJump = true;
         this.state = STATE.JUMPING;
       }
@@ -113,7 +113,7 @@ export default class Player extends Entity{
         let jumpCost = 20
           if(this.bullet >= jumpCost){
             this.frameShot = this.frame;
-            this.vel.y = -JUMP_VEL;
+            this.acc.y = -JUMP_VEL;
             this.bullet -= 20;
             this.state = STATE.JUMPING;
             let p = 
@@ -174,9 +174,10 @@ export default class Player extends Entity{
 
   /*状態からアニメーションを行う*/
   Animation(){
+    this.frame++;
     switch(this.state){
       case STATE.WAITING :
-        this.spid = (Math.floor(Timer.timer/ANIM_WAIT))%4
+        this.spid = (Math.floor(this.frame/ANIM_WAIT))%4
           switch(this.dir){
             case DIR.R : this.sprite.texture = this.pattern.waitR[this.spid]; break;
             case DIR.L : this.sprite.texture = this.pattern.waitL[this.spid]; break;
@@ -187,7 +188,7 @@ export default class Player extends Entity{
           }
           break;
       case STATE.JUMPING :
-        this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4
+        this.spid = (Math.floor(this.frame/ANIM_RUN))%4
           switch(this.dir){
             case DIR.R : this.sprite.texture = this.pattern.jumpR[this.spid]; break;
             case DIR.L : this.sprite.texture = this.pattern.jumpL[this.spid]; break;
@@ -198,7 +199,7 @@ export default class Player extends Entity{
           }
           break;
       case STATE.FALLING :
-        this.spid = (Math.floor(Timer.timer/ANIM_RUN))%4;
+        this.spid = (Math.floor(this.frame/ANIM_RUN))%4;
         switch(this.dir){
           case DIR.R : this.sprite.texture = this.pattern.fallR[this.spid]; break;
           case DIR.L : this.sprite.texture = this.pattern.fallL[this.spid]; break;
@@ -209,7 +210,7 @@ export default class Player extends Entity{
         }
         break;
       case STATE.RUNNING :
-        this.spid = (Math.floor(Timer.timer/ANIM_RUN))%6;
+        this.spid = (Math.floor(this.frame/ANIM_RUN))%6;
         switch(this.dir){
           case DIR.R : this.sprite.texture = this.pattern.runR[this.spid]; break;
           case DIR.L : this.sprite.texture = this.pattern.runL[this.spid]; break;
@@ -301,7 +302,7 @@ export default class Player extends Entity{
     //動く床に乗っている時
     if(this.floor.on){
       this.pos.x += this.floor.under.vel.x; 
-      this.pos.y += this.floor.under.vel.y; 
+  //    this.pos.y += this.floor.under.vel.y; 
     }
       this.pos.x += this.vel.x; 
       this.pos.y += this.vel.y; 
@@ -411,7 +412,6 @@ Supply(){
       y : this.pos.y
     }
     /*パラメータ*/
-      this.frame++;
       this.Animation();//状態から画像を更新
   }
 }

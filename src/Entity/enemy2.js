@@ -19,7 +19,7 @@ export default class Enemy2 extends Enemy{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.frame = 0;
     /*スプライト*/
-    this.pattern = Art.enemyPattern.enemy1;
+    this.pattern = Art.enemyPattern.enemy2;
     this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
@@ -117,32 +117,34 @@ export default class Enemy2 extends Enemy{
   Physics(){
     if(this.floor.on){
       this.pos.x += this.floor.under.vel.x;
-      this.pos.y += this.floor.under.vel.y;
+      //this.pos.y += this.floor.under.vel.y;
     }
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
-    this.acc.y = this.gravity;
+   // this.acc.y = this.gravity;
+  }
+  Animation(){
+    this.spid = Math.floor(this.frame/2)%4;
+    this.sprite.texture = this.pattern[this.spid];
+    this.sprite.position = this.pos;
+    this.frame++;
   }
 
   Update(){
     for (let AI of this.AIList){
-      AI.Do();
+      AI.Do(this);
     }
     this.Collision();
     this.Physics();
     this.Hurt();
-    this.sprite.position = this.pos;
-    //アニメーション
-    this.spid = Math.floor(this.frame/2)%4;
-    this.sprite.texture = this.pattern[this.spid];
+    this.Animation();//アニメーション
     this.frame++;
     //observer
     if(this.hp<=0){
       this.isAlive = false
       EntityManager.removeEntity(this);
     }
-    this.frame++;
   }
 }
