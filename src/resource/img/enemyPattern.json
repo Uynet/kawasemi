@@ -19,6 +19,18 @@
     "enemy10.png": {
       "frame": {"x":0, "y":16, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy11.png": {
+      "frame": {"x":16, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy12.png": {
+      "frame": {"x":32, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy13.png": {
+      "frame": {"x":48, "y":16, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
   },
   "meta": {

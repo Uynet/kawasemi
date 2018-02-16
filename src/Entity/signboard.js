@@ -10,6 +10,7 @@ import EventManager from '../Event/eventmanager.js';
 import MessageEvent from '../Event/messageEvent.js';
 import Game from '../Game.js';
 import BackGround from './background.js';
+import UIManager from '../UI/uiManager.js';
 
 
 let VEC0 = {x:0,y:0};
@@ -18,6 +19,7 @@ export default class Signboard extends BackGround{
   constructor(pos,text){
     super(pos,Art.wallPattern.signboard);
     this.type = ENTITY.BACK;
+    this.name = "signboard";
       /*テキスト*/
     this.text = text;
       /*スプライト*/
@@ -32,10 +34,15 @@ export default class Signboard extends BackGround{
     /*nothing to do*/
     let player = EntityManaer.player;
     if(Util.distance(player.pos,this.pos) < 16){
-        if(!Game.isMes && Input.isKeyClick(KEY.SP)){
+      if( Input.isKeyClick(KEY.SP)){
+        if(!Game.isMes){
           let event = new MessageEvent(this.text);
           EventManager.eventList.push(event);
+        }else{
+          Game.isMes = false;
+          UIManager.CloseMessage();
         }
+      }
     }
     // this.sprite.position = this.pos;
   }

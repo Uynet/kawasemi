@@ -11,10 +11,7 @@ export default class Enemy2AI{
     this.enemy = enemy;
   }
 
-  Do(){
-    if(this.enemy.frame%100 == 0){
-      this.enemy.vel.y = -4;
-    }
-    //たまにジャンプする
+  Do(enemy){
+    enemy.vel.y  = -0.05;
   }
 }
