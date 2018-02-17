@@ -73,7 +73,6 @@ export default class MapData{
             entity = new Background({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
           case TILE.SIGN : EntityManager.addEntity(new Signboard({x:16*x,y:16*y})); break;
-          case TILE.GOAL : EntityManager.addEntity(new Goal({x:16*x,y:16*y})); break;
           case TILE.NEEDLE :
             entity = new Needle({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity);
@@ -98,6 +97,10 @@ export default class MapData{
           case 162 :
             let message = this.objData[i].properties;
             obj = new Signboard(p,message);
+            EntityManager.addEntity(obj);
+            break;
+          case 163 :
+            obj = new Goal(p);
             EntityManager.addEntity(obj);
             break;
           case 169 :

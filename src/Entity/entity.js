@@ -6,10 +6,8 @@ export default class Entity{
       x:0,
       y:0
     }
-    
     this.sprite;
     this.type;//enum
-    this.isMove = true;
   }
 }
 

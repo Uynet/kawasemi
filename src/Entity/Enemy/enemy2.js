@@ -8,7 +8,12 @@ import Enemy2AI from '../AI/enemy2AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 
-const ATK_ENEMY2 = 10;
+const ENEMY2 = {
+  HP : 5,
+  ATK_MAX : 10,
+  ATK_MIN : 5,
+  GRAVITY : 0.1
+}
 
 let EntityList = EntityManager.entityList;
 
@@ -25,9 +30,9 @@ export default class Enemy2 extends Enemy{
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.addAI(new Enemy2AI(this));
-    this.atkMax = ATK_ENEMY2;
-    this.hp = 10;
-    this.gravity = 0.3;
+    this.atkMax = ENEMY2.ATK_MAX;
+    this.hp = ENEMY2.HP;
+    this.gravity = ENEMY2.GRAVITY;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
