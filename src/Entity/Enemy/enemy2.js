@@ -7,12 +7,14 @@ import EntityManager from '../../Stage/entityManager.js';
 import Enemy2AI from '../AI/enemy2AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
+import Coin from '../coin.js';
 
 const ENEMY2 = {
   HP : 5,
   ATK_MAX : 10,
   ATK_MIN : 5,
-  GRAVITY : 0.1
+  GRAVITY : 0.1,
+  COIN : 3
 }
 
 let EntityList = EntityManager.entityList;
@@ -33,6 +35,7 @@ export default class Enemy2 extends Enemy{
     this.atkMax = ENEMY2.ATK_MAX;
     this.hp = ENEMY2.HP;
     this.gravity = ENEMY2.GRAVITY;
+    this.coin = ENEMY2.COIN;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
@@ -146,10 +149,15 @@ export default class Enemy2 extends Enemy{
     this.Hurt();
     this.Animation();//アニメーション
     this.frame++;
+
     //observer
     if(this.hp<=0){
       this.isAlive = false
-      EntityManager.removeEntity(this);
+      //死ぬ時にコイン
+      for(let i = 0;i<this.coin;i++){
+        EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
+      }
+        EntityManager.removeEntity(this);
     }
   }
 }
