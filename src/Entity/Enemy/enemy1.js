@@ -57,7 +57,6 @@ export default class Enemy1 extends Enemy{
       if(c.isHit){
         /* 衝突応答*/
 
-        /*速度*/
         if(c.n.x != 0) this.vel.x = 0;
         //地面との衝突
         if(c.n.y == -1){ 

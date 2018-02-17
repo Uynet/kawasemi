@@ -195,33 +195,26 @@ export default class UIManager{
              break;
              //HPゲージ
              case UI_.HP :
-               if(ui.name == "bar") {
-                 this.HP.bar = ui;
-               }else if(ui.name == "frame"){
-                 this.HP.frame = ui;
-               }else if(ui.name == "font"){
-                 this.HP.font = ui;
-               }else if(ui.name == "icon"){
-                 this.HP.icon = ui;
+               switch(ui.name){
+                 case "bar": this.HP.bar = ui; break;
+                 case "frame" : this.HP.frame = ui;break;
+                 case "font" : this.HP.font = ui;break;
+                 case "icon" : this.HP.icon = ui;break;
                }
                break;
                //Bulletゲージ
                case UI_.BULLET :
-                 if(ui.name == "bar") {
-                   this.bullet.bar = ui;
-                 }else if(ui.name == "frame"){
-                   this.bullet.frame = ui;
-                 }else if(ui.name == "font"){
-                   this.bullet.font = ui;
-                 }else if(ui.name == "icon"){
-                   this.bullet.icon = ui;
+                 switch(ui.name){
+                   case "bar" : this.bullet.bar = ui;break;
+                   case "frame" : this.bullet.frame = ui;break;
+                   case "font" : this.bullet.font = ui;break;
+                   case "icon" : this.bullet.icon = ui;break;
                  }
                  break;
  case "MES" : 
-   if(ui.name == "font"){
-     this.message.sentence.push(ui);
-   }else if(ui.name == "frame"){
-     this.message.frame = ui;
+   switch(ui.name){
+     case "font" : this.message.sentence.push(ui);break;
+     case "frame": this.message.frame = ui;break;
    }
    break;
  default :

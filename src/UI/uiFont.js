@@ -5,25 +5,27 @@ import Input from '../input.js';
 /*文字*/
 export default class UIFont extends UI{
   //strは表示する文字(今は数字のみ)
-  constructor(pos,str,fonttype){
+  constructor(pos,str,type){
     super({x:pos.x,y:pos.y});
     /*基本情報*/
     //HPとBulletでtypeを分ける必要がある
     
-    this.type;
     this.space;
-    if(fonttype == "HP"){
-      this.type = UI_.HP;
+    this.type = type;
+    this.name = "font";
+
+    if(type == "HP"){
       this.space = 7;
-    }else if(fonttype == "BULLET"){
+    }else if(type == "BULLET"){
       this.type = UI_.BULLET;
       this.space = 7;
-    }else if(fonttype == "MES"){
+    }else if(type == "MES"){
       this.type = "MES";
       this.space = 9;
-    };
-
-    this.name = "font";
+    }else if(type == "SCORE"){
+      this.type = "SCORE";
+      this.space = 7;
+    }
     this.isAlive = true;//消えたらfalse
       /*スプライト*/
     this.str = str; //0~9
@@ -37,6 +39,7 @@ export default class UIFont extends UI{
     };
   };
 
+  //HP,BULLETの表示用
   UpdateFont(hp){
     //phys
     //文字列型にすること

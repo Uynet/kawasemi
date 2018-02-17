@@ -16,6 +16,7 @@ export default class Coin extends Entity{
     super(pos,{x:2 * (Math.random()-0.5),y:-3});
     /*基本情報*/
     this.frame = 0;
+    this.e = -0.9;
     
     /*スプライト*/
     this.pattern = Art.enemyPattern.coin;
@@ -23,10 +24,9 @@ export default class Coin extends Entity{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = pos;
     /*コライダ*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,9,9));//衝突判定の形状
     /*パラメータ*/
     this.gravity = 0.3;
-    this.e = 1.0;
     this.type = ENTITY.BULLET;
     /*フラグ*/
     this.isJump = false
@@ -48,11 +48,11 @@ export default class Coin extends Entity{
         //地面との衝突
         if(c.n.y == -1){ 
           this.isJump = false;
-          this.vel.y = Math.min(0,this.vel.y * -0.3);
+          this.vel.y = Math.min(0,this.vel.y * -this.e);
         }
         //天井との衝突
         if(c.n.y == 1 ){
-          this.vel.y = Math.max(0,this.vel.y * -0.3)
+          this.vel.y = Math.min(0,this.vel.y * -0.3)
         }
         /*押し出し*/
         this.pos.x += c.n.x * c.depth;
