@@ -306,13 +306,13 @@ export default class Player extends Entity{
     //動く床に乗っている時
     if(this.floor.on){
       this.pos.x += this.floor.under.vel.x; 
-  //    this.pos.y += this.floor.under.vel.y; 
+      this.pos.y += this.floor.under.vel.y; 
     }
+      this.acc.y += this.gravity;
       this.pos.x += this.vel.x; 
       this.pos.y += this.vel.y; 
       this.vel.x += this.acc.x;
       this.vel.y += this.acc.y;
-      this.acc.y = this.gravity;
     //最大速度制限:
     if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
     if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
@@ -323,7 +323,6 @@ export default class Player extends Entity{
      if(this.state == STATE.WAITING){
        this.vel.x *= FLICTION;
      }
-     this.acc.x = 0;
      //jumping state
      if(this.isJump && this.vel.y <= -1){
        this.state = STATE.JUMPING;
@@ -331,6 +330,8 @@ export default class Player extends Entity{
      if(this.vel.y > 0 && this.isJump){
        this.state = STATE.FALLING;
      }
+     this.acc.x = 0;
+     this.acc.y = 0;
   }
 
 ScrollByDir(){
@@ -379,13 +380,13 @@ Dying(){
 
 //bulletのかいふく
 Supply(){
-      //最後に撃った時刻から経過するほど早くなる
-      //let t1 = 100;
-      let t = (this.frame-this.frameShot);
-      if(t<=50 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      else if(t>50 && t<=100 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      else if(t>100 && t<=150 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-      else if(t>150) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+  //最後に撃った時刻から経過するほど早くなる
+  //let t1 = 100;
+  let t = (this.frame-this.frameShot);
+  if(t<=50 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+  else if(t>50 && t<=100 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+  else if(t>100 && t<=150 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+  else if(t>150) this.bullet = Math.min(this.maxBullet,this.bullet+1);
 }
 
 

@@ -44,6 +44,8 @@ export default class Enemy2 extends Enemy{
       on : false,
       under : null
     }
+
+    this.vel.x = 1;
   }
   //自分がダメージを食らう
   Damage(atkMax){
@@ -61,7 +63,9 @@ export default class Enemy2 extends Enemy{
         /* 衝突応答*/
 
         /*速度*/
-        if(c.n.x != 0) this.vel.x = 0;
+        if(c.n.x != 0) {
+          this.vel.x *= -1;
+        }
         //地面との衝突
         if(c.n.y == -1){ 
           this.isJump = false;
@@ -90,7 +94,7 @@ export default class Enemy2 extends Enemy{
         // 衝突応答
 
         //速度
-        if(c.n.x != 0) this.vel.x = 0;
+        if(c.n.x != 0) this.vel.x *= -1;
         //地面との衝突
         if(c.n.y == -1){ 
           this.floor.on = true;
@@ -131,7 +135,10 @@ export default class Enemy2 extends Enemy{
     this.pos.y += this.vel.y;
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
-   // this.acc.y = this.gravity;
+    this.acc.y = 0;
+    this.acc.x = 0;
+    //最大速度制限
+    this.vel.y = Math.max(Math.min(this.vel.y,0.05),-0.05);
   }
   Animation(){
     this.spid = Math.floor(this.frame/2)%4;
