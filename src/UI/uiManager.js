@@ -58,8 +58,8 @@ const BulIC = {
 
 //message
 const MES_FRAME = {
-  x:24,
-  y:70
+  x:40,
+  y:35
 }
 const MES_TEXT = {
   x:MES_FRAME.x +8,

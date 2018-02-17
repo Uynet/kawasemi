@@ -411,6 +411,7 @@ export default class Art{
     this.font["?"] = PIXI.Texture.fromFrame('font31b.png');
     this.font["。"] = PIXI.Texture.fromFrame('font31c.png');
     this.font["、"] = PIXI.Texture.fromFrame('font31d.png');
+    this.font["."] = PIXI.Texture.fromFrame('font31e.png');
     this.font["が"] = PIXI.Texture.fromFrame('font40.png');
     this.font["ぎ"] = PIXI.Texture.fromFrame('font41.png');
     this.font["ぐ"] = PIXI.Texture.fromFrame('font42.png');

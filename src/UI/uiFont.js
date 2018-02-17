@@ -31,11 +31,22 @@ export default class UIFont extends UI{
     this.str = str; //0~9
     this.sprite = [];//スプライトを配列で持っている
     this.d = this.str.length;//桁数
+    let space;
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
       let tex = Art.font[spid];
-    this.sprite[i] = Art.SpriteFactory(tex);
-    this.sprite[i].position = {x:this.pos.x + i*this.space,y:this.pos.y};
+      //文字コードを比較している
+      //日本語以降は半角として識別
+      if(this.str[i] > "z"){
+        space = 9;
+        cl("PO)");
+      }else{
+        space = 7;
+      }
+      let p = this.pos;
+      this.sprite[i] = Art.SpriteFactory(tex);
+      this.sprite[i].position = p;
+      p.x += space;
     };
   };
 
