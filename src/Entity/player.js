@@ -49,7 +49,6 @@ const DIR = {
   R : "R",
   L : "L",
 };
-/*フラグと状態が同じものを意味しててキモい*/
 
 export default class Player extends Entity{
   constructor(pos){
@@ -65,7 +64,7 @@ export default class Player extends Entity{
     this.frameDead;//死んだ時刻
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
     this.frameShot = 0;//最後にshotした時刻
-    this.e = 0.1;
+    this.e = 0.1;//反発係数
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
@@ -93,7 +92,6 @@ export default class Player extends Entity{
     this.floor = {
       on : false,//乗っているか
       under : null,//自分の下
-      over : null//自分の上
     }
   }
   /*キー入力による移動*/
@@ -101,7 +99,7 @@ export default class Player extends Entity{
     /*ジャンプ*/
     if(Input.isKeyInput(KEY.Z)){
       if(this.isJump == false){
-        this.acc.y = -JUMP_VEL;
+        this.vel.y = -JUMP_VEL;
         this.isJump = true;
         this.state = STATE.JUMPING;
       }
@@ -113,7 +111,7 @@ export default class Player extends Entity{
         let jumpCost = 20
           if(this.bullet >= jumpCost){
             this.frameShot = this.frame;
-            this.acc.y = -JUMP_VEL;
+            this.vel.y = -JUMP_VEL;
             this.bullet -= 20;
             this.state = STATE.JUMPING;
             let p = 

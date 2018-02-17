@@ -7,7 +7,13 @@ import EntityManager from '../../Stage/entityManager.js';
 import Enemy1AI from '../AI/enemy1AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
-const ATK_ENEMY1 = 10;
+
+const ENEMY1 = {
+  HP : 5,
+  ATK_MAX : 10,
+  ATK_MIN : 5,
+  GRAVITY : 0.1
+}
 
 let EntityList = EntityManager.entityList;
 
@@ -17,7 +23,7 @@ export default class Enemy1 extends Enemy{
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.frame = 0;
-    this.type = "ENEMY";
+    this.type = ENTITY.ENEMY;
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy1;
     this.spid = 0; //spriteIndex 現在のスプライト番号
@@ -25,9 +31,9 @@ export default class Enemy1 extends Enemy{
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.addAI(new Enemy1AI(this));
-    this.atkMax = ATK_ENEMY1;
-    this.hp = 10;
-    this.gravity = 0.1;
+    this.atkMax = ENEMY1.ATK_MAX;
+    this.hp = ENEMY1.HP;
+    this.gravity = ENEMY1.GRAVITY;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
