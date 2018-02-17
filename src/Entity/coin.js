@@ -5,10 +5,14 @@ import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
 import Util from '../util.js';
 import Entity from './entity.js';
+import BulletHitWall from './Effect/bulletHitWall.js';
+import GetCoin from './Effect/getCoin.js';
 
+let player;
 //コイン
 export default class Coin extends Entity{
   constructor(pos){
+    player = EntityManager.player;
     super(pos,{x:2 * (Math.random()-0.5),y:-3});
     /*基本情報*/
     this.frame = 0;
@@ -22,7 +26,7 @@ export default class Coin extends Entity{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
     /*パラメータ*/
     this.gravity = 0.3;
-    this.e = 0.9;
+    this.e = 1.0;
     this.type = ENTITY.BULLET;
     /*フラグ*/
     this.isJump = false
@@ -74,7 +78,22 @@ export default class Coin extends Entity{
     this.vel.y = Math.min(5,Math.max(this.vel.y,-3));
     this.vel.x = Math.min(3,Math.max(this.vel.x,-3));
   }
-
+  GetByPlayer(){
+    //プレイヤーに回収される
+    if(Util.distance(this.pos,player.pos)<48){
+      let vec = Util.nomalize({
+        x : player.pos.x - this.pos.x,
+        y : player.pos.y - this.pos.y
+      });
+      this.pos.x += 5 * vec.x;
+      this.pos.y += 5 * vec.y;
+      if(Util.distance(this.pos,player.pos)<10){
+        EntityManager.addEntity(new GetCoin(this.pos,{x:0,y:0}));
+        player.GetScore(1);
+        EntityManager.removeEntity(this);
+      }
+    }
+  }
 
   Update(){
     //Animation
@@ -85,8 +104,9 @@ export default class Coin extends Entity{
     //Collision
     this.Collision();
     this.Physics();
-
-    if( this.frame > 100 ){
+    this.GetByPlayer();
+    //時間立つと消える
+    if( this.frame > 500 ){
       EntityManager.removeEntity(this);
     }
 

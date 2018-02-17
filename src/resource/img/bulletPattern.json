@@ -63,6 +63,22 @@
       "bullet63.png": {
       "frame": {"x":48, "y":96, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+     "bullet70.png": {
+      "frame": {"x":0, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bullet71.png": {
+      "frame": {"x":16, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bullet72.png": {
+      "frame": {"x":32, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bullet73.png": {
+      "frame": {"x":48, "y":112, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
   },
 

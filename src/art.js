@@ -238,7 +238,15 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet61.png'),//bullet blur
         PIXI.Texture.fromFrame('bullet62.png'),//bullet blur
         PIXI.Texture.fromFrame('bullet63.png') //bullet blur
-      ]
+      ],
+      coin : {
+        get : [
+          PIXI.Texture.fromFrame('bullet70.png'),
+          PIXI.Texture.fromFrame('bullet71.png'),
+          PIXI.Texture.fromFrame('bullet72.png'),
+          PIXI.Texture.fromFrame('bullet73.png') 
+        ]
+      }
     }
     this.enemyPattern = {
       coin : [
