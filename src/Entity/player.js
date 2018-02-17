@@ -65,6 +65,7 @@ export default class Player extends Entity{
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
     this.frameShot = 0;//最後にshotした時刻
     this.e = 0.1;//反発係数
+      this.score = 0;
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
@@ -236,6 +237,7 @@ export default class Player extends Entity{
     }
   }
 
+  //他から呼ばれる系
   /*武器チェンジ*/
   ChangeWeapon(name){
     WeaponManager.ChangeWeapon(this,name);
@@ -258,6 +260,10 @@ export default class Player extends Entity{
         this.frameDamaged = this.frame;
       }
     }
+  }
+  //コイン取得
+  GetScore(){
+    this.score++;
   }
   /* 衝突判定 */
   Collision(){
@@ -381,6 +387,8 @@ Supply(){
       else if(t>100 && t<=150 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
       else if(t>150) this.bullet = Math.min(this.maxBullet,this.bullet+1);
 }
+
+
 
   Update(){
       if(this.isAlive){
