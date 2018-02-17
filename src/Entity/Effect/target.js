@@ -1,4 +1,4 @@
-import Enemy from '../enemy.js';
+import Enemy from '../Enemy/enemy.js';
 import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
