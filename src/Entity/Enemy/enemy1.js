@@ -49,11 +49,10 @@ export default class Enemy1 extends Enemy{
     //ダメージをポップ
     EntityManager.addEntity(new FontEffect(this.pos,-atkMax+"","enemy"));
   }
+  //衝突判定
   Collision(){
-    /*衝突判定*/
     for(let l of EntityManager.wallList){
       if(l == this) continue;
-      /*衝突判定*/
       let c = Collision.on(this,l);
       if(c.isHit){
         /* 衝突応答*/

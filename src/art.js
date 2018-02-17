@@ -241,6 +241,12 @@ export default class Art{
       ]
     }
     this.enemyPattern = {
+      coin : [
+        PIXI.Texture.fromFrame('enemy20.png'),
+        PIXI.Texture.fromFrame('enemy21.png'),
+        PIXI.Texture.fromFrame('enemy22.png'),
+        PIXI.Texture.fromFrame('enemy23.png')
+      ],
       enemy1 : [
         PIXI.Texture.fromFrame('enemy00.png'),
         PIXI.Texture.fromFrame('enemy01.png'),
