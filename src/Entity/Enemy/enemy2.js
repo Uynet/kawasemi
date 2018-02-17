@@ -1,13 +1,13 @@
 import Enemy from './Enemy.js';
-import Art from '../art.js';
-import Collider from '../Collision/collider.js';
-import Collision from '../Collision/collision.js';
-import Box from '../Collision/box.js';
-import EntityManager from '../Stage/entityManager.js';
-import Enemy2AI from './AI/enemy2AI.js';
-import UIManager from '../UI/uiManager.js'
-import Timer from '../timer.js';
-import FontEffect from './Effect/fontEffect.js';
+import Art from '../../art.js';
+import Collider from '../../Collision/collider.js';
+import Collision from '../../Collision/collision.js';
+import Box from '../../Collision/box.js';
+import EntityManager from '../../Stage/entityManager.js';
+import Enemy2AI from '../AI/enemy2AI.js';
+import UIManager from '../../UI/uiManager.js'
+import FontEffect from '../Effect/fontEffect.js';
+
 const ATK_ENEMY2 = 10;
 
 let EntityList = EntityManager.entityList;

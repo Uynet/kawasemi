@@ -1,4 +1,4 @@
-import Enemy from './enemy.js';
+import Enemy from './Enemy/enemy.js';
 import Art from '../art.js';
 import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';

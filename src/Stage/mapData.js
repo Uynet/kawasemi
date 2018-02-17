@@ -4,8 +4,8 @@ import Wall from '../Entity/wall.js'
 import Background from '../Entity/background.js';
 import Signboard from '../Entity/signboard.js';
 import Player from '../Entity/player.js'
-import Enemy1 from '../Entity/enemy1.js'
-import Enemy2 from '../Entity/enemy2.js'
+import Enemy1 from '../Entity/Enemy/enemy1.js'
+import Enemy2 from '../Entity/Enemy/enemy2.js'
 import Goal from '../Entity/goal.js'
 import Game from '../Game.js'
 import Art from '../art.js'

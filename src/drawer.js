@@ -1,8 +1,8 @@
 import Timer from './timer.js';
 import EntityManager from './Stage/entityManager.js';
 
-let PIXI_WIDTH = 600;
-let PIXI_HEIGHT = 700;
+let PIXI_WIDTH = 800;
+let PIXI_HEIGHT = 600;
 let size = 1;
 
 export default class Drawer{
@@ -106,8 +106,8 @@ export default class Drawer{
 
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
-    let centerX = this.magnification*(- pos.x-8 + 300/this.magnification);
-    let centerY = this.magnification*(- pos.y-8 + 400/this.magnification);
+    let centerX = this.magnification*(- pos.x-8 + 400/this.magnification);
+    let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
     let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
     //背景レイヤ
@@ -125,8 +125,8 @@ export default class Drawer{
   }
   /*スクロール位置を一瞬で移動させる*/
   static ScrollSet(pos){
-    let centerX = this.magnification*(- (pos.x-8) + 300/this.magnification);
-    let centerY = this.magnification*(- (pos.y-8) + 400/this.magnification);
+    let centerX = this.magnification*(- (pos.x-8) + 400/this.magnification);
+    let centerY = this.magnification*(- (pos.y-8) + 300/this.magnification);
     this.backContainer.x = Math.floor(centerX);
     this.backContainer.y = Math.floor(centerY);
     this.entityContainer.x = Math.floor(centerX);

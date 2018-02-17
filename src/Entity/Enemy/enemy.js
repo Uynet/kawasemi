@@ -1,9 +1,4 @@
-import Entity from './entity.js';
-import Art from '../art.js';
-import Collider from '../Collision/collider.js';
-import Circle from '../Collision/circle.js';
-import Box from '../Collision/box.js';
-
+import Entity from '../entity.js';
 
 export default class Enemy extends Entity{
   constructor(pos,vel){
