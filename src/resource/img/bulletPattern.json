@@ -85,15 +85,15 @@
       "sourceSize": {"w": 32, "h": 32}
     },
       "bulletA0.png": {
-      "frame": {"x":0, "y":144, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-      "bulletB0.png": {
       "frame": {"x":0, "y":160, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
-      "bulletC0.png": {
+      "bulletB0.png": {
       "frame": {"x":0, "y":176, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bulletC0.png": {
+      "frame": {"x":0, "y":192, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     }
   },
