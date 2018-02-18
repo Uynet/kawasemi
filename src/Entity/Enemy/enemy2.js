@@ -55,7 +55,15 @@ export default class Enemy2 extends Enemy{
       for(let i = 0;i<this.coin;i++){
         EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
       }
-      EntityManager.addEntity(new Explosion("flash",this.pos));
+      for(let i = 0;i<10;i++){
+        let v = {
+          x:10 * (Math.random()-0.5),
+          y:10 * (Math.random()-0.5)
+        }
+        EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
+      }
+      EntityManager.addEntity(new Explosion("fire",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+      EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
       EntityManager.removeEntity(this);
   }
   //自分がダメージを食らう

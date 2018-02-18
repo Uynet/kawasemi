@@ -47,7 +47,6 @@ export default class Enemy1 extends Enemy{
   //死ぬ
   Die(){
     this.isAlive = false;
-    EntityManager.addEntity(new Explosion("flash",this.pos));
     EntityManager.removeEntity(this);
   }
   //自分がダメージを食らう
