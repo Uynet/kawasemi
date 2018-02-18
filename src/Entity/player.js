@@ -18,6 +18,7 @@ import UIManager from '../UI/uiManager.js';
 import FontEffect from './Effect/fontEffect.js';
 import BulletShot from './Effect/bulletShot.js';
 import Explosion from './Effect/explosion.js';
+import QuakeEvent from '../Event/quakeEvent.js';
 
 const JUMP_VEL = 7;//ジャンプ力
   const RUN_VEL = 0.4;//はしり速度
@@ -112,18 +113,20 @@ export default class Player extends Entity{
       if(this.state == STATE.FALLING){
         let jumpCost = 20
           if(this.bullet >= jumpCost){
-            this.Explosion();
-            this.frameShot = this.frame;
+            this.Explosion();//爆発
+            EventManager.eventList.push(new QuakeEvent(20));
+            this.frameShot = this.frame;//最終ショット時刻
             this.vel.y = -JUMP_VEL;
             this.bullet -= 20;
             this.state = STATE.JUMPING;
             let p = 
               {x : this.pos.x,
-                y: this.pos.y
-              }
+               y : this.pos.y
+              };
               EntityManager.addEntity(new BulletShot(p,{x:0,y:1}));
           }else{
-            EntityManager.addEntity(new FontEffect(this.pos,"たりないよ！","pop"));
+            //足りないとできない
+            EntityManager.addEntity(new FontEffect(this.pos,"たりないよ","pop"));
           }
       }
     }
@@ -261,11 +264,13 @@ export default class Player extends Entity{
         this.isInvincible = true;
         this.frameDamaged = this.frame;
       }
+      EventManager.eventList.push(new QuakeEvent(5));
     }
   }
   //コイン取得
   GetScore(){
     this.score++;
+    this.bullet += 5;//とりあえずbulletも回復しとくか
   }
   /* 衝突判定 */
   Collision(){

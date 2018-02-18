@@ -9,6 +9,8 @@ import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Coin from '../coin.js';
 import Explosion from '../Effect/explosion.js';
+import EventManager from '../../Event/eventmanager.js';
+import QuakeEvent from '../../Event/quakeEvent.js';
 
 const ENEMY2 = {
   HP : 5,
@@ -71,6 +73,7 @@ export default class Enemy2 extends Enemy{
         EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
       }
       //this.Explosion();
+      EventManager.eventList.push(new QuakeEvent(5));//ゆれ
       EntityManager.removeEntity(this);
   }
   //自分がダメージを食らう

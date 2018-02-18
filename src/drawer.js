@@ -1,8 +1,7 @@
 import Timer from './timer.js';
 import EntityManager from './Stage/entityManager.js';
 
-let PIXI_WIDTH = 800;
-let PIXI_HEIGHT = 600;
+let PIXI_WIDTH = 800; let PIXI_HEIGHT = 600;
 let size = 1;
 
 export default class Drawer{
@@ -141,6 +140,11 @@ export default class Drawer{
     this.entityContainer.scale.y = this.magnification;
     this.filterContainer.scale.x = this.magnification;
     this.filterContainer.scale.y = this.magnification;
+  }
+
+  static Quake(diff){
+    this.Stage.x += diff.x;
+    this.Stage.y += diff.y;
   }
 
 

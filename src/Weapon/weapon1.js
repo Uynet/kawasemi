@@ -9,6 +9,8 @@ import Util from '../util.js';
 import BulletShot from '../Entity/Effect/bulletShot.js';
 import Timer from '../timer.js';
 import FontEffect from '../Entity/Effect/fontEffect.js';
+import EventManager from '../Event/eventmanager.js';
+import QuakeEvent from '../Event/quakeEvent.js';
 
 const DIR = {
   UR : "UR",
@@ -120,6 +122,8 @@ export default class Weapon1 extends Weapon{
         //反動
         //player.vel.x -= v.x/11;
         player.acc.y -= v.y/5;
+        //振動
+        EventManager.eventList.push(new QuakeEvent(5));
       }
     }
   }

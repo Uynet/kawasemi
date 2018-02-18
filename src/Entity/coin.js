@@ -75,7 +75,7 @@ export default class Coin extends Entity{
       this.vel.x *= 0.8;
     }
     //最大速度制限
-    this.vel.y = Math.min(5,Math.max(this.vel.y,-3));
+    this.vel.y = Math.min(0.5,Math.max(this.vel.y,-0.5));
     this.vel.x = Math.min(3,Math.max(this.vel.x,-3));
   }
   GetByPlayer(){
