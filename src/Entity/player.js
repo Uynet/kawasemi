@@ -17,6 +17,7 @@ import Timer from '../timer.js';
 import UIManager from '../UI/uiManager.js';
 import FontEffect from './Effect/fontEffect.js';
 import BulletShot from './Effect/bulletShot.js';
+import Explosion from './Effect/explosion.js';
 
 const JUMP_VEL = 7;//ジャンプ力
   const RUN_VEL = 0.4;//はしり速度
@@ -52,7 +53,7 @@ const DIR = {
 
 export default class Player extends Entity{
   constructor(pos){
-    super(pos,{x:0,y:0},{x:0,y:0});
+    super(pos,{ x: 0, y: 0 },{ x: 0,y: 0});
     /*基本情報*/
     let p = {
       x : pos.x,
@@ -111,6 +112,7 @@ export default class Player extends Entity{
       if(this.state == STATE.FALLING){
         let jumpCost = 20
           if(this.bullet >= jumpCost){
+            this.Explosion();
             this.frameShot = this.frame;
             this.vel.y = -JUMP_VEL;
             this.bullet -= 20;
@@ -391,6 +393,21 @@ Supply(){
   else if(t>150) this.bullet = Math.min(this.maxBullet,this.bullet+1);
 }
 
+  //爆発
+  Explosion(){
+    for(let i = 0;i<10;i++){
+      let v = {
+        x:10 * (Math.random()-0.5),
+        y:10 * (Math.random()-0.5)
+      }
+      EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
+    }
+    for(let i = 0;i<2;i++){
+      EntityManager.addEntity(new Explosion("smoke",{x:this.pos.x,y:this.pos.y},{x:1-i*2,y:0}));
+    }
+    EntityManager.addEntity(new Explosion("fire",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+    EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+  }
 
 
   Update(){

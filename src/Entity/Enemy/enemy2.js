@@ -48,6 +48,21 @@ export default class Enemy2 extends Enemy{
 
     this.vel.x = 1;
   }
+  //爆発
+  Explosion(){
+    for(let i = 0;i<10;i++){
+      let v = {
+        x:10 * (Math.random()-0.5),
+        y:10 * (Math.random()-0.5)
+      }
+      EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
+    }
+    for(let i = 0;i<2;i++){
+      EntityManager.addEntity(new Explosion("smoke",{x:this.pos.x,y:this.pos.y},{x:1-i*2,y:0}));
+    }
+    EntityManager.addEntity(new Explosion("fire",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+    EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+  }
   //死ぬ
   Die(){
     this.isAlive = false;
@@ -55,18 +70,7 @@ export default class Enemy2 extends Enemy{
       for(let i = 0;i<this.coin;i++){
         EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
       }
-      for(let i = 0;i<10;i++){
-        let v = {
-          x:10 * (Math.random()-0.5),
-          y:10 * (Math.random()-0.5)
-        }
-        EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
-      }
-      for(let i = 0;i<2;i++){
-        EntityManager.addEntity(new Explosion("smoke",{x:this.pos.x,y:this.pos.y},{x:1-i*2,y:0}));
-      }
-      EntityManager.addEntity(new Explosion("fire",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
-      EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+      //this.Explosion();
       EntityManager.removeEntity(this);
   }
   //自分がダメージを食らう
