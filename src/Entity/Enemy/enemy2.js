@@ -48,8 +48,6 @@ export default class Enemy2 extends Enemy{
       on : false,
       under : null
     }
-
-    this.vel.x = 1;
   }
   //爆発
   Explosion(){
@@ -95,7 +93,7 @@ export default class Enemy2 extends Enemy{
 
         /*速度*/
         if(c.n.x != 0) {
-          this.vel.x *= -1;
+          this.vel.x = 0;
         }
         //地面との衝突
         if(c.n.y == -1){ 

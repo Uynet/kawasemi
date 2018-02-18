@@ -77,4 +77,17 @@ export default class Util{
   static quad(x){
     return x*x;
   }
+
+  //-d ~ +d までの値を返す
+  static Rand(d){
+    return 2 * d * (Math.random()-0.5);
+  }
+  //-d ~ +d までの値を返す
+  static Rand2D(d){
+    let p = {
+      x:this.Rand(d),
+      y:this.Rand(d)
+    }
+    return p;
+  }
 }
