@@ -11,6 +11,7 @@ import Coin from '../coin.js';
 import Explosion from '../Effect/explosion.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
+import Sonic from '../Effect/sonic.js';
 
 const ENEMY2 = {
   HP : 5,
@@ -54,9 +55,10 @@ export default class Enemy2 extends Enemy{
   Explosion(){
     for(let i = 0;i<10;i++){
       let v = {
-        x:10 * (Math.random()-0.5),
-        y:10 * (Math.random()-0.5)
+        x:20 * (Math.random()-0.5),
+        y:20 * (Math.random()-0.5)
       }
+      EntityManager.addEntity(new Sonic(this.pos));
       EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
     }
     for(let i = 0;i<2;i++){
@@ -72,7 +74,7 @@ export default class Enemy2 extends Enemy{
       for(let i = 0;i<this.coin;i++){
         EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
       }
-      //this.Explosion();
+      this.Explosion();
       EventManager.eventList.push(new QuakeEvent(5));//ゆれ
       EntityManager.removeEntity(this);
   }

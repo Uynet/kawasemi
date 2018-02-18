@@ -27,6 +27,7 @@ export default class Explosion extends EFFECT{
 
   Update(){
     //this.sprite.texture = this.pattern[this.spid];
+    this.sprite.anchor.set(0.5);
     switch(this.name){
       case "flash" :
       if(this.frame == 4){
@@ -35,9 +36,9 @@ export default class Explosion extends EFFECT{
       break;
       case "fire" :
         let a = 10;
-        this.sprite.scale.x = 2 - ( a / (this.frame + a)) * ( a / (this.frame + a));
+        this.sprite.scale.x += 1/(this.frame+2);
         this.sprite.scale.y = this.sprite.scale.x;
-        this.sprite.alpha -= 0.03;
+        this.sprite.alpha = 1 - this.frame/10;
       if(this.frame == 40){
         EntityManager.removeEntity(this);
       }
@@ -46,8 +47,8 @@ export default class Explosion extends EFFECT{
         //phys
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
-        this.vel.x *= 0.98;
-        this.vel.y *= 0.98;
+        this.sprite.scale.x *= 0.8;
+        this.sprite.scale.y = this.sprite.scale.x;
         this.vel.y += 0.1;
         this.sprite.alpha -= 0.02;
       if(this.frame == 40){
@@ -58,7 +59,7 @@ export default class Explosion extends EFFECT{
         let b = 10;
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
-        this.sprite.scale.x = 1 + ( b / (this.frame + b)) * ( b / (this.frame + b));
+        this.sprite.scale.x = 10/(this.frame+5);
         this.sprite.scale.y = this.sprite.scale.x;
         this.sprite.alpha -= 0.03;
       if(this.frame == 40){

@@ -239,12 +239,24 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet62.png'),//bullet blur
         PIXI.Texture.fromFrame('bullet63.png') //bullet blur
       ],
+      sonic :[
+        PIXI.Texture.fromFrame('bullet70.png'),//sonic
+        PIXI.Texture.fromFrame('bullet71.png'),//sonic
+        PIXI.Texture.fromFrame('bullet72.png'),//sonic
+        PIXI.Texture.fromFrame('bullet73.png') //sonic
+      ],
       coin : {
         get : [
-          PIXI.Texture.fromFrame('bullet70.png'),
-          PIXI.Texture.fromFrame('bullet71.png'),
-          PIXI.Texture.fromFrame('bullet72.png'),
-          PIXI.Texture.fromFrame('bullet73.png') 
+          PIXI.Texture.fromFrame('bulletD0.png'),
+          PIXI.Texture.fromFrame('bulletD1.png'),
+          PIXI.Texture.fromFrame('bulletD2.png'),
+          PIXI.Texture.fromFrame('bulletD3.png') 
+        ],
+        bright : [
+          PIXI.Texture.fromFrame('bulletD0.png'),
+          PIXI.Texture.fromFrame('bulletD1.png'),
+          PIXI.Texture.fromFrame('bulletD2.png'),
+          PIXI.Texture.fromFrame('bulletD3.png') 
         ]
       },
       explosion : {

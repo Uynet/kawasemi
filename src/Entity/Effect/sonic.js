@@ -3,7 +3,7 @@ import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Util from '../../util.js';
 
-export default class GetCoin extends EFFECT{
+export default class Sonic extends EFFECT{
   constructor(pos){
     super(pos,{x:0,y:0});
     /*基本情報*/
@@ -11,10 +11,10 @@ export default class GetCoin extends EFFECT{
     this.frame = 0;
     /*スプライト*/
     this.spid = 0;
-    this.pattern = Art.bulletPattern.coin.get;
+    this.pattern = Art.bulletPattern.sonic;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
-    this.sprite.alpha = 0.7;
+    this.sprite.anchor.set(0.5);
   }
 
   Update(){
@@ -23,6 +23,10 @@ export default class GetCoin extends EFFECT{
     //phys
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
+
+    this.sprite.scale.x += 2/(this.frame+1);
+    this.sprite.scale.y += 2/(this.frame+1);
+    this.sprite.alpha -= 0.4;
 
     if(this.spid == 4){
       EntityManager.removeEntity(this);

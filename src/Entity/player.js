@@ -114,7 +114,7 @@ export default class Player extends Entity{
         let jumpCost = 20
           if(this.bullet >= jumpCost){
             this.Explosion();//爆発
-            EventManager.eventList.push(new QuakeEvent(20));
+            EventManager.eventList.push(new QuakeEvent(20,5));
             this.frameShot = this.frame;//最終ショット時刻
             this.vel.y = -JUMP_VEL;
             this.bullet -= 20;
@@ -263,8 +263,8 @@ export default class Player extends Entity{
         //ダメージを受けて一定時間無敵になる
         this.isInvincible = true;
         this.frameDamaged = this.frame;
+        EventManager.eventList.push(new QuakeEvent(5,2));
       }
-      EventManager.eventList.push(new QuakeEvent(5));
     }
   }
   //コイン取得
@@ -360,8 +360,9 @@ ScrollByDir(){
 
 Observer(){
   if(this.hp <= 0){
-    //死亡開始時に一回だけ呼ばれる部分
     if(this.isAlive){
+      //死亡開始時に一回だけ呼ばれる部分
+      this.Explosion();
       this.frameDead = this.frame;
       this.isDying = true;
       this.isAlive = false;
@@ -405,10 +406,16 @@ Supply(){
         x:10 * (Math.random()-0.5),
         y:10 * (Math.random()-0.5)
       }
+      //飛散物
       EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
     }
-    for(let i = 0;i<2;i++){
-      EntityManager.addEntity(new Explosion("smoke",{x:this.pos.x,y:this.pos.y},{x:1-i*2,y:0}));
+    //煙
+    for(let i = 0;i<6;i++){
+      let v = {
+        x:1 * (Math.random()-0.5),
+        y:1 * (Math.random())
+      }
+      EntityManager.addEntity(new Explosion("smoke",{x:this.pos.x,y:this.pos.y},v));
     }
     EntityManager.addEntity(new Explosion("fire",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
     EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
