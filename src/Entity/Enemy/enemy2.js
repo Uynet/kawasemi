@@ -62,6 +62,9 @@ export default class Enemy2 extends Enemy{
         }
         EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
       }
+      for(let i = 0;i<2;i++){
+        EntityManager.addEntity(new Explosion("smoke",{x:this.pos.x,y:this.pos.y},{x:1-i*2,y:0}));
+      }
       EntityManager.addEntity(new Explosion("fire",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
       EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
       EntityManager.removeEntity(this);
