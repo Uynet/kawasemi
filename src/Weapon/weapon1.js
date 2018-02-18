@@ -123,7 +123,7 @@ export default class Weapon1 extends Weapon{
         //player.vel.x -= v.x/11;
         player.acc.y -= v.y/5;
         //振動
-        EventManager.eventList.push(new QuakeEvent(5));
+        EventManager.eventList.push(new QuakeEvent(8,2));
       }
     }
   }

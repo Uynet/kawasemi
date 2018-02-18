@@ -44,11 +44,13 @@ export default class Needle extends BackGround{
     let c = Collision.on(this,player);
     if(c.isHit){
       //ダメージ
-      let damage = this.atkMax +  Math.floor(-this.vel.y * Math.random());
+      //速度が大きい程ダメージ大きい
+      let v = player.vel.x * player.vel.x + player.vel.y * player.vel.y;
+      let damage = Math.floor(v) + this.atkMax +  Math.floor(-this.vel.y * Math.random());
       EntityManager.player.Damage(-damage);
       //反動
-      player.vel.y = -6 * c.n.y;
-      player.vel.x = -6 * c.n.x; 
+      //player.vel.y = -6 * c.n.y;
+      //player.vel.x = -6 * c.n.x; 
     }
   }
 

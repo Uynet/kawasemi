@@ -12,7 +12,12 @@ import Drawer from '../drawer.js';
  * UIのセット
  */
 export default class QuakeEvent extends Event{
-  constructor(size){
+  constructor(size,time){
+    //undefined
+    if(!time) {
+      cl("po");
+      time = 5
+    };
     super(1);
     function* gen(){
       let frame = 0;
@@ -20,7 +25,7 @@ export default class QuakeEvent extends Event{
         x:size * (Math.random()-0.5),
         y:size * (Math.random()-0.5)
       };
-      while(frame < 5){
+      while(frame < time){
         Drawer.Quake(d);
         d.x *= 0.6;
         d.y *= 0.6;
@@ -29,7 +34,6 @@ export default class QuakeEvent extends Event{
       }
       Drawer.Stage.x = 0;
       Drawer.Stage.y = 0;
-      cl("x");
       yield ;
     }
     let itt = gen();
