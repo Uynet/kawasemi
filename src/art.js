@@ -246,6 +246,12 @@ export default class Art{
           PIXI.Texture.fromFrame('bullet72.png'),
           PIXI.Texture.fromFrame('bullet73.png') 
         ]
+      },
+      explosion : {
+        flash : PIXI.Texture.fromFrame('bullet80.png'),
+        fire : PIXI.Texture.fromFrame('bulletA0.png'),
+        stone : PIXI.Texture.fromFrame('bulletB0.png'),
+        smoke : PIXI.Texture.fromFrame('bulletC0.png'),
       }
     }
     this.enemyPattern = {
