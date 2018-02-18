@@ -19,6 +19,7 @@ import FontEffect from './Effect/fontEffect.js';
 import BulletShot from './Effect/bulletShot.js';
 import Explosion from './Effect/explosion.js';
 import QuakeEvent from '../Event/quakeEvent.js';
+import Enemy2 from './Enemy/enemy2.js';
 
 const JUMP_VEL = 7;//ジャンプ力
   const RUN_VEL = 0.4;//はしり速度
@@ -171,8 +172,15 @@ export default class Player extends Entity{
       this.weapon.shot(this);
     }
     /*for debug*/
-    if(Input.isKeyInput(KEY.J) && this.frame%10 == 0){
+    if(Input.isKeyInput(KEY.J)){
       this.Damage(-999);
+    }
+    if(Input.isKeyInput(KEY.K) && this.frame%10 == 0){
+      let p = {
+        x:this.pos.x,
+        y:this.pos.y - 32
+      }
+      EntityManager.addEntity(new Enemy2(p));
     }
   }
 

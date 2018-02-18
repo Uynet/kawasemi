@@ -7,6 +7,7 @@ import Util from '../util.js';
 import Entity from './entity.js';
 import BulletHitWall from './Effect/bulletHitWall.js';
 import GetCoin from './Effect/getCoin.js';
+import BrightCoin from './Effect/brightCoin.js';
 
 let player;
 //コイン
@@ -100,6 +101,11 @@ export default class Coin extends Entity{
     if(this.frame%10 == 0){
       this.spid = (this.spid+1)%4;
       this.sprite.texture = this.pattern[this.spid];
+    }
+    //たまに光る
+    if(this.frame%(8 + Math.floor(Util.Rand(1))) == 0){
+      let p = Util.advec(this.pos,Util.Rand2D(5));
+      EntityManager.addEntity(new BrightCoin(p));
     }
     //Collision
     this.Collision();
