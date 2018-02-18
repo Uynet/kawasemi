@@ -7,6 +7,7 @@ import EntityManager from '../../Stage/entityManager.js';
 import Enemy1AI from '../AI/enemy1AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
+import Explosion from '../Effect/explosion.js';
 
 const ENEMY1 = {
   HP : 5,
@@ -42,6 +43,12 @@ export default class Enemy1 extends Enemy{
       on : false,
       under : null
     }
+  }
+  //死ぬ
+  Die(){
+    this.isAlive = false;
+    EntityManager.addEntity(new Explosion("flash",this.pos));
+    EntityManager.removeEntity(this);
   }
   //自分がダメージを食らう
   Damage(atkMax){
@@ -146,8 +153,7 @@ export default class Enemy1 extends Enemy{
     this.Animation();
     //observer
     if(this.hp<=0){
-      this.isAlive = false
-      EntityManager.removeEntity(this);
+      this.Die();
     }
   }
 }

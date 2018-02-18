@@ -8,6 +8,7 @@ import Enemy2AI from '../AI/enemy2AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Coin from '../coin.js';
+import Explosion from '../Effect/explosion.js';
 
 const ENEMY2 = {
   HP : 5,
@@ -46,6 +47,16 @@ export default class Enemy2 extends Enemy{
     }
 
     this.vel.x = 1;
+  }
+  //死ぬ
+  Die(){
+    this.isAlive = false;
+      //死ぬ時にコイン
+      for(let i = 0;i<this.coin;i++){
+        EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
+      }
+      EntityManager.addEntity(new Explosion("flash",this.pos));
+      EntityManager.removeEntity(this);
   }
   //自分がダメージを食らう
   Damage(atkMax){
@@ -159,12 +170,7 @@ export default class Enemy2 extends Enemy{
 
     //observer
     if(this.hp<=0){
-      this.isAlive = false
-      //死ぬ時にコイン
-      for(let i = 0;i<this.coin;i++){
-        EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
-      }
-        EntityManager.removeEntity(this);
+      this.Die();
     }
   }
 }
