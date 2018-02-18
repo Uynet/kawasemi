@@ -13,19 +13,6 @@ export default class UIFont extends UI{
     this.space;
     this.type = type;
     this.name = "font";
-
-    if(type == "HP"){
-      this.space = 7;
-    }else if(type == "BULLET"){
-      this.type = UI_.BULLET;
-      this.space = 7;
-    }else if(type == "MES"){
-      this.type = "MES";
-      this.space = 9;
-    }else if(type == "SCORE"){
-      this.type = "SCORE";
-      this.space = 7;
-    }
     this.isAlive = true;//消えたらfalse
       /*スプライト*/
     this.str = str; //0~9
@@ -37,10 +24,18 @@ export default class UIFont extends UI{
       let tex = Art.font[spid];
       //文字コードを比較している
       //日本語以降は半角として識別
-      if(this.str[i] > "z"){
+      let s = this.str[i];
+      if(s > "z"){
         space = 9;
-        cl("PO)");
-      }else{
+      }else if(
+        s == "!" ||
+          s == "l" ||
+            s == "i" ||
+              s == "j"||
+                s == "."
+      ){
+        space = 4;
+      } else{
         space = 7;
       }
       let p = this.pos;

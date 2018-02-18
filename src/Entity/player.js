@@ -305,6 +305,8 @@ export default class Player extends Entity{
   Physics(){
     //動く床に乗っている時
     if(this.floor.on){
+      this.vel.x += this.floor.under.acc.x; 
+      this.vel.y += this.floor.under.acc.y; 
       this.pos.x += this.floor.under.vel.x; 
       this.pos.y += this.floor.under.vel.y; 
     }
