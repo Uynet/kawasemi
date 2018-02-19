@@ -6,6 +6,7 @@ import Util from '../../util.js';
 //爆発エフェクト
 export default class Explosion extends EFFECT{
   constructor(name,pos,vel){
+    if(!vel) vel = Util.vec0;
     if(name == "stone" || name == "smoke"){
       super(pos,vel);
       //次のparticleを生成するかの変数

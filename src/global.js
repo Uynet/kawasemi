@@ -77,7 +77,7 @@ const WICON_X = 8;
 const WICON_Y = 40;
 
 /*Vector*/
-let VEC0 = {x:0,y:0};
+const VEC0 = ()=>{return {x:0,y:0}};
 
 
 /*for debug*/
