@@ -22,12 +22,37 @@ export default class Util{
     return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
   }
 
+  /*ベクトル系*/
   //ベクトルの正規化
   static nomalize(v){
     let a = Math.sqrt(v.x * v.x + v.y * v.y);
     v.x /= a;
     v.y /= a;
     return v;
+  }
+  //ベクトルの加算
+  static advec(v1,v2){
+    return {x:v1.x + v2.x ,y:v1.y + v2.y};
+  }
+  //-d ~ +d までの値を返す
+  static Rand(d){
+    return 2 * d * (Math.random()-0.5);
+  }
+  //-d ~ +d までの値を返す
+  static Rand2D(d){
+    let p = {
+      x:this.Rand(d),
+      y:this.Rand(d)
+    }
+    return p;
+  }
+  //0ベクトルを返す
+  static Vec0(){
+    let p = {
+      x:0,
+      y:0
+    }
+    return p;
   }
 
   //配列の最大値を取るインデックス番号を返す
@@ -55,24 +80,9 @@ export default class Util{
     return minI;
   }
 
-  static advec(v1,v2){
-    return {x:v1.x + v2.x ,y:v1.y + v2.y};
-  }
 
   static quad(x){
     return x*x;
   }
 
-  //-d ~ +d までの値を返す
-  static Rand(d){
-    return 2 * d * (Math.random()-0.5);
-  }
-  //-d ~ +d までの値を返す
-  static Rand2D(d){
-    let p = {
-      x:this.Rand(d),
-      y:this.Rand(d)
-    }
-    return p;
-  }
 }

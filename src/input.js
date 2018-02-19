@@ -26,7 +26,7 @@ $(document).on("keydown",(e)=> {
     unko = Timer.timer;
   }
   inputedKeyList[event.keyCode] = true;
-  event.preventDefault();
+  if(e.keyCode==KEY.UP || e.keyCode == KEY.DOWN) event.preventDefault();
 });
 $(document).on("keyup",(e)=> {
   clickedKeyList[event.keyCode] = false;

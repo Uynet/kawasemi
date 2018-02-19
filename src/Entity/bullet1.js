@@ -16,7 +16,8 @@ import Explosion from './Effect/explosion.js';
 /*bullet1クラス*/
 export default class Bullet1 extends Bullet{
   constructor(pos,vel){
-    super(pos,vel,{x:0,y:0});
+    super(pos,vel,VEC0());
+    cl(this.acc);
     /*基本情報*/
     this.frame = 0;
     /*スプライト*/
