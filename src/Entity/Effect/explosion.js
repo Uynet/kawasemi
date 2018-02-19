@@ -65,10 +65,8 @@ export default class Explosion extends EFFECT{
       break;
       case "smoke" :
         let b = 10;
-        this.pos.x += this.vel.x;
-        this.pos.y += this.vel.y;
-        this.sprite.scale.x = 10/(this.frame+5);
-        this.sprite.scale.y = this.sprite.scale.x;
+        this.pos = ADV(this.pos,this.vel);
+        this.sprite.scale = VECN(10/(this.frame+5));
         this.sprite.alpha -= 0.03;
       if(this.frame == 40){
         EntityManager.removeEntity(this);

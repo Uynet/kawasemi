@@ -29,9 +29,8 @@ export default class Target extends EFFECT{
     this.sprite.rotation = this.frame/50;
     //シュッてなるやつ
     //ゼロ除算回避
-    this.sprite.scale.x = 1.5 + 1.5/(this.frame+1);
-    this.sprite.scale.y = 1.5 + 1.5/(this.frame+1);
-    this.sprite.position = {x:this.pos.x+8,y:this.pos.y+8};
+    this.sprite.scale = VECN(1.5 + 1.5/(this.frame+1));
+    this.sprite.position = ADV(this.pos,VECN(8));
     this.frame++;
   }
 }
