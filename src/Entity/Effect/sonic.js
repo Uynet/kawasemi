@@ -5,7 +5,7 @@ import Util from '../../util.js';
 
 export default class Sonic extends EFFECT{
   constructor(pos){
-    super(pos,{x:0,y:0});
+    super(pos,VEC0());
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.frame = 0;
@@ -22,11 +22,9 @@ export default class Sonic extends EFFECT{
     this.sprite.texture = this.pattern[this.spid];
     this.spid = Math.floor(this.frame/3);
     //phys
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
+    this.pos = ADV(this.pos,this.vel);
 
-    this.sprite.scale.x += 10/(this.frame+1);
-    this.sprite.scale.y += 10/(this.frame+1);
+    this.sprite.scale = ADV(this.sprite.scale,VECN(10/(this.frame+1)));
     this.sprite.alpha *= 0.8;
 
     if(this.spid == 4){

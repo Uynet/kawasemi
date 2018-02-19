@@ -14,7 +14,7 @@ export default class FontEffect extends EFFECT{
       x:1.5 * (Math.random()-0.5),
       y:-2
     }
-    super({x:pos.x,y:pos.y},v);
+    super(CPV(pos),v);
     /*基本情報*/
     this.fonttype = fonttype;
     this.type = ENTITY.EFFECT;
@@ -59,8 +59,7 @@ export default class FontEffect extends EFFECT{
   Update(){
     this.Collision();
     //phys
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
+    this.pos = ADV(this.pos,this.vel);
     this.vel.y += this.gravity;
     for(let i = 0;i<this.d;i++){
       //ここはあとで書き直す
