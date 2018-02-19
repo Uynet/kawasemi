@@ -21,7 +21,7 @@ export default class Bullet1AI{
       switch(l.type){
         case ENTITY.ENEMY :
           if(Collision.on(this.bullet,l).isHit){
-            l.Damage(-this.bullet.atk - Math.floor(5*Math.random()) );
+            l.Damage(-this.bullet.atk - Math.floor(99*Math.random()) );
             this.bullet.hp--;
             /* ■ SoundEffect : hitWall */
             /* □ Effect : hitWall */
