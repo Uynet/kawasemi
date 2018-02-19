@@ -21,12 +21,9 @@ export default class Explosion extends EFFECT{
     this.spid = 0;
     this.name = name;
     //閃光,火球,飛散物,煙
-    //this.pattern = Art.bulletPattern.explosion[this.name];
     this.pattern = Art.bulletPattern.explosion[this.name];
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
-    //this.sprite = Art.SpriteFactory(this.pattern);
     this.sprite.position = this.pos;
-    if(this.name == "fire")this.sprite.alpha = 0.5;
   }
 
   Update(){
@@ -34,26 +31,27 @@ export default class Explosion extends EFFECT{
     this.sprite.anchor.set(0.5);
     switch(this.name){
       case "flash" :
-      this.sprite.scale.x = 1;
+      this.sprite.scale.x = 1+Util.Rand(1);
       this.sprite.scale.y = this.sprite.scale.x;
-      if(this.frame == 1){
+      this.sprite.alpha = 0.4;
+      if(this.frame == 2){
         EntityManager.removeEntity(this);
       }
       break;
       case "fire" :
         let a = 10;
         this.pos = Util.advec(this.pos,this.vel);
-        this.sprite.scale.x += 1/(this.frame+2);
+        this.sprite.scale.x += 1/(this.frame+4);
         this.sprite.scale.y = this.sprite.scale.x;
-        this.sprite.alpha = 1 - this.frame/20;
-      if(this.frame == 10){
+        this.sprite.alpha = 0.5 - this.frame/20;
+      if(this.frame == 8){
         EntityManager.removeEntity(this);
       }
       break;
       case "stone" :
         //減速
-        this.vel.x *= 0.95;
-        this.vel.y *= 0.95;
+        this.vel.x *= 0.9;
+        this.vel.y *= 0.9;
         this.pos.y += 0.3;//重力
         //this.pos = Util.advec(this.pos,this.vel);
         this.sprite.alpha -= 0.02;
@@ -73,7 +71,7 @@ export default class Explosion extends EFFECT{
         }
         if(this.frame == 1)this.isNext = true;
         //持続時間
-        if(this.frame > 10)EntityManager.removeEntity(this);
+        if(this.frame > 3)EntityManager.removeEntity(this);
       break;
       case "smoke" :
         let b = 10;

@@ -410,10 +410,9 @@ Supply(){
   //爆発
   Explosion(){
     for(let i = 0;i<10;i++){
-      let v = {
-        x:10 * (Math.random()-0.5),
-        y:10 * (Math.random()-0.5)
-      }
+      let v = Util.Rand2D(30);
+      v.x *= 0.3;
+      v.y += 15;
       //飛散物
       EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
     }

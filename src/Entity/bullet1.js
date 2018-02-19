@@ -3,9 +3,12 @@ import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
+import EventManager from '../Event/eventmanager.js';
+import QuakeEvent from '../Event/quakeEvent.js';
 import Bullet1AI from './AI/bullet1AI.js';
 import Bullet from './bullet.js';
 import BulletBlur from './Effect/bulletBlur.js';
+import BrightCoin from'./Effect/brightCoin.js';
 import Util from '../util.js';
 import Sonic from './Effect/sonic.js';
 import Explosion from './Effect/explosion.js';
@@ -24,8 +27,8 @@ export default class Bullet1 extends Bullet{
     /*コライダ*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
     /*パラメータ*/
-    this.hp = 10;//弾丸のHP 0になると消滅
-    this.atk = 1;//攻撃力
+    this.hp = 1;//弾丸のHP 0になると消滅
+    this.atk = 99;//攻撃力
     this.length = 180;//これは武器がもつ?
     this.launchedPos = {x:pos.x,y:pos.y};//射出された座標 射程距離の計算に必要 
     this.type = ENTITY.BULLET;
@@ -36,7 +39,7 @@ export default class Bullet1 extends Bullet{
 
   //爆発
   Explosion(){
-    for(let i = 0;i<10;i++){
+    for(let i = 0;i<8;i++){
       let v = Util.Rand2D(30);
       EntityManager.addEntity(new Sonic(this.pos));
       EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
@@ -49,7 +52,10 @@ export default class Bullet1 extends Bullet{
       let p = Util.advec(v,this.pos);
       EntityManager.addEntity(new Explosion("fire",p,v));
     }
-    EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+    for(let i =0;i<3;i++){
+      let p = Util.advec(this.pos,Util.Rand2D(16));
+      EntityManager.addEntity(new Explosion("flash",p,{x:0,y:0}));
+    }
   }
   Update(){
     /*□Effect BulletBulr*/
