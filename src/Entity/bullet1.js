@@ -17,7 +17,6 @@ import Explosion from './Effect/explosion.js';
 export default class Bullet1 extends Bullet{
   constructor(pos,vel){
     super(pos,vel,VEC0());
-    cl(this.acc);
     /*基本情報*/
     this.frame = 0;
     /*スプライト*/
@@ -31,7 +30,7 @@ export default class Bullet1 extends Bullet{
     this.hp = 1;//弾丸のHP 0になると消滅
     this.atk = 99;//攻撃力
     this.length = 180;//これは武器がもつ?
-    this.launchedPos = {x:pos.x,y:pos.y};//射出された座標 射程距離の計算に必要 
+    this.launchedPos = CPV(pos);//射出された座標 射程距離の計算に必要 
     this.type = ENTITY.BULLET;
     /*AI*/
     this.AIList = [];
@@ -43,32 +42,26 @@ export default class Bullet1 extends Bullet{
     for(let i = 0;i<8;i++){
       let v = Util.Rand2D(30);
       EntityManager.addEntity(new Sonic(this.pos));
-      EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
+      EntityManager.addEntity(new Explosion("stone",CPV(this.pos),v));
     }
-    for(let i = 0;i<2;i++){
-      EntityManager.addEntity(new Explosion("smoke",{x:this.pos.x,y:this.pos.y},{x:1-i*2,y:0}));
+    for(let j = 0;j<2;j++){
+      EntityManager.addEntity(new Explosion("smoke",CPV(this.pos),{x:1-j*2,y:-0.6}));
     }
     for(let i =0;i<3;i++){
       let v = Util.Rand2D(32);
-      let p = Util.advec(v,this.pos);
-      EntityManager.addEntity(new Explosion("fire",p,v));
+      let p = ADV(v,this.pos);
+      EntityManager.addEntity(new Explosion("fire",p));
     }
     for(let i =0;i<3;i++){
-      let p = Util.advec(this.pos,Util.Rand2D(16));
-      EntityManager.addEntity(new Explosion("flash",p,{x:0,y:0}));
+      let p = ADV(this.pos,Util.Rand2D(16));
+      EntityManager.addEntity(new Explosion("flash",p));
     }
   }
   Update(){
     /*□Effect BulletBulr*/
     if(this.frame%1 == 0){
-      let p ={
-        x:this.pos.x,// + 10 * (Math.random()-0.5),
-        y:this.pos.y// + 10 *(Math.random()-0.5)
-      }
-      let v ={
-        x:0 * 3 * (Math.random()-0.5),
-        y:0 * 3 *(Math.random()-0.5)
-      }
+      let p = CPV(this.pos);
+      let v = VEC0();
       EntityManager.addEntity(new BulletBlur(p,v));
     }
     for (let AI of this.AIList){

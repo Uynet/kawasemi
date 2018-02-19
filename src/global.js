@@ -77,8 +77,23 @@ const WICON_X = 8;
 const WICON_Y = 40;
 
 /*Vector*/
-const VEC0 = ()=>{return {x:0,y:0}};
-
+const VEC0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
+const VECN = (n)=>{return {x:n,y:n}};//
+const CPV = (v)=>{return {x:v.x,y:v.y}};//値渡し
+const ADV = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
+const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
+/*Random*/
+let Rand = (d)=>{
+  return 2 * d * (Math.random()-0.5);
+}
+//-d ~ +d までの値を返す
+let Rand2D = (d)=>{
+  let p = {
+    x:Rand(d),
+    y:Rand(d)
+  }
+  return p;
+}
 
 /*for debug*/
 let po = ()=>{console.log("po")};
