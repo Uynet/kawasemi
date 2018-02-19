@@ -15,7 +15,6 @@ export default class QuakeEvent extends Event{
   constructor(size,time){
     //undefined
     if(!time) {
-      cl("po");
       time = 5
     };
     super(1);

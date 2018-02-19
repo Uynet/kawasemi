@@ -7,6 +7,8 @@ import Bullet1AI from './AI/bullet1AI.js';
 import Bullet from './bullet.js';
 import BulletBlur from './Effect/bulletBlur.js';
 import Util from '../util.js';
+import Sonic from './Effect/sonic.js';
+import Explosion from './Effect/explosion.js';
 
 /*bullet1クラス*/
 export default class Bullet1 extends Bullet{
@@ -32,6 +34,23 @@ export default class Bullet1 extends Bullet{
     this.AIList.push(new Bullet1AI(this));
   }
 
+  //爆発
+  Explosion(){
+    for(let i = 0;i<10;i++){
+      let v = Util.Rand2D(30);
+      EntityManager.addEntity(new Sonic(this.pos));
+      EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
+    }
+    for(let i = 0;i<2;i++){
+      EntityManager.addEntity(new Explosion("smoke",{x:this.pos.x,y:this.pos.y},{x:1-i*2,y:0}));
+    }
+    for(let i =0;i<3;i++){
+      let v = Util.Rand2D(32);
+      let p = Util.advec(v,this.pos);
+      EntityManager.addEntity(new Explosion("fire",p,v));
+    }
+    EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+  }
   Update(){
     /*□Effect BulletBulr*/
     if(this.frame%1 == 0){
@@ -54,6 +73,8 @@ export default class Bullet1 extends Bullet{
       this.frame > 100 || 
       Util.distance(this.pos , this.launchedPos) > this.length){
       EntityManager.removeEntity(this);
+      EventManager.eventList.push(new QuakeEvent(6));//ゆれ
+      this.Explosion();
     }
     this.sprite.position = this.pos;
     this.frame++;
