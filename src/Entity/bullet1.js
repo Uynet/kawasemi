@@ -45,7 +45,7 @@ export default class Bullet1 extends Bullet{
       EntityManager.addEntity(new Explosion("stone",CPV(this.pos),v));
     }
     for(let j = 0;j<2;j++){
-      EntityManager.addEntity(new Explosion("smoke",CPV(this.pos),{x:1-j*2,y:-0.6}));
+      EntityManager.addEntity(new Explosion("smoke",CPV(this.pos),{x:Rand(8),y:-0.6}));
     }
     for(let i =0;i<3;i++){
       let v = Util.Rand2D(32);

@@ -65,8 +65,7 @@ export default class Coin extends Entity{
   }
   //phys
   Physics(){
-    this.acc.x = 0;
-    this.acc.y = 0;
+    this.acc = VEC0();
     this.acc.y += this.gravity;
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;

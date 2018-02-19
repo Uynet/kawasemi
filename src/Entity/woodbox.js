@@ -44,7 +44,7 @@ export default class WoodBox extends Wall{
         x : this.pos.x,
         y : this.pos.y
       }
-      EntityManager.addEntity(new BulletShot(p,{x:0,y:0}));
+      EntityManager.addEntity(new BulletShot(p,VEC0()));
     }
   }
 }

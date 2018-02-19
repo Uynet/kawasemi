@@ -66,6 +66,7 @@ export default class Explosion extends EFFECT{
       case "smoke" :
         let b = 10;
         this.pos = ADV(this.pos,this.vel);
+        this.vel.x *= (1-this.frame/10);
         this.sprite.scale = VECN(10/(this.frame+5));
         this.sprite.alpha -= 0.03;
       if(this.frame == 40){
