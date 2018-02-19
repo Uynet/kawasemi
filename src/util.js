@@ -34,23 +34,15 @@ export default class Util{
   static advec(v1,v2){
     return {x:v1.x + v2.x ,y:v1.y + v2.y};
   }
-  //-d ~ +d までの値を返す
+  //廃止予定
   static Rand(d){
     return 2 * d * (Math.random()-0.5);
   }
-  //-d ~ +d までの値を返す
+  //廃止予定
   static Rand2D(d){
     let p = {
       x:this.Rand(d),
       y:this.Rand(d)
-    }
-    return p;
-  }
-  //0ベクトルを返す
-  static Vec0(){
-    let p = {
-      x:0,
-      y:0
     }
     return p;
   }

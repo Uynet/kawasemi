@@ -6,7 +6,7 @@ import Util from '../../util.js';
 /*bullet1壁にぶつかった時した時のエフェクト*/
 export default class BulletHitWall extends EFFECT{
   constructor(pos){
-    super(pos,{x:0,y:0});
+    super(pos,VEC0());
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.frame = 0;

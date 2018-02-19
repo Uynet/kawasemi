@@ -2,7 +2,7 @@ import Timer from './timer.js';
 
 let inputedKeyList = (new Array(256)).fill(false);
 let clickedKeyList = (new Array(256)).fill(false);
-let unko = 0;
+let timer = 0;
 
 export default class Input{
   /*押下状態のときtrue*/
@@ -11,7 +11,7 @@ export default class Input{
   }
   /*押された瞬間のみture*/
   static isKeyClick(key){
-    if(unko == Timer.timer){
+    if(timer == Timer.timer){
       return clickedKeyList[key];
     }else{
       return false;
@@ -23,9 +23,10 @@ $(document).on("keydown",(e)=> {
   clickedKeyList[event.keyCode] = false;
   if(!inputedKeyList[event.keyCode]){
     clickedKeyList[event.keyCode] = true;
-    unko = Timer.timer;
+    timer = Timer.timer;
   }
   inputedKeyList[event.keyCode] = true;
+  //上下キーを封じる
   if(e.keyCode==KEY.UP || e.keyCode == KEY.DOWN) event.preventDefault();
 });
 $(document).on("keyup",(e)=> {

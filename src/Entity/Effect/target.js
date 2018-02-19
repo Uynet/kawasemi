@@ -7,7 +7,7 @@ import Util from '../../util.js';
 /*Targetクラス*/
 export default class Target extends EFFECT{
   constructor(enemy){
-    super(enemy.pos,{x:0,y:0});
+    super(enemy.pos,VEC0());
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.name = "target";

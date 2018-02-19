@@ -21,9 +21,7 @@ export default class BulletShot extends EFFECT{
     this.sprite.texture = this.pattern[this.spid];
     this.spid = Math.floor(this.frame/3);
     //phys
-    
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
+    this.pos = ADV(this.pos,this.vel);
     if(this.spid == 4){
       EntityManager.removeEntity(this);
     }

@@ -20,14 +20,16 @@ export default class BulletBlur extends EFFECT{
     this.sprite.position = this.pos;
   }
 
+  Physics(){
+    this.pos = ADV(this.pos,this.vel);
+  }
+
+
   Update(){
     if(this.isAlive){
       this.sprite.alpha = 3 / (3 + this.frame);
-      this.sprite.position.x = this.pos.x+8;
-      this.sprite.position.y = this.pos.y+8;
-      //pys
-      this.pos.x += this.vel.x;
-      this.pos.y += this.vel.y;
+      this.Physics();
+      this.sprite.position = ADV(this.pos.x,VECN(8));
       this.sprite.texture = this.pattern[this.spid];
       this.spid = Math.floor(this.frame/2);
       if(this.spid >= 4){

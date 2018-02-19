@@ -6,7 +6,6 @@ import Util from '../../util.js';
 export default class BrightCoin extends EFFECT{
   constructor(pos,vel){
     //velが渡されなければ0を渡す
-    if(!vel) vel = {x:0,y:0};
     super(pos,vel);
     /*基本情報*/
     this.type = ENTITY.EFFECT;
