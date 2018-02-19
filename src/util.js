@@ -3,21 +3,6 @@ import Timer from './timer.js';
 //便利関数
 export default class Util{
   static Init(){
-    /* easing function 
-     * d : 必要時間
-     * b : 開始点
-     * c : 移動量
-     * type : 関数を選択 */
-    this.ease = function*(d,b,c,type){
-      let x = 0;
-      let s = Timer.timer;//開始時点の時刻
-        let f = Util.easefunc(type);
-      while(x < 1){
-        x = (Timer.timer - s)/d;
-        yield b + c*f(x);
-      }
-      yield b + c;
-    }
   }
 
   /*easing functionの連想配列的な*/
