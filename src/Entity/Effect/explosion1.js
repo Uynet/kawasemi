@@ -4,7 +4,7 @@ import EntityManager from '../../Stage/entityManager.js';
 import Util from '../../util.js';
 
 //爆発エフェクト
-export default class Explosion extends EFFECT{
+export default class Explosion1 extends EFFECT{
   constructor(name,pos,vel){
     super(pos,vel);
     //次のparticleを生成するかの変数
@@ -53,7 +53,7 @@ export default class Explosion extends EFFECT{
           this.isNext = false;
           let p = Util.advec(this.pos,this.vel);
           this.sprite.scale = MLV(this.sprite.scale,VECN(0.8));
-          let stone = new Explosion("stone",p,this.vel);
+          let stone = new Explosion1("stone",p,this.vel);
           //次の石 : 小さく薄く
           stone.sprite.scale = this.sprite.scale;
           stone.sprite.alpha = this.sprite.alpha;
