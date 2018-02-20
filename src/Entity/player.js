@@ -17,7 +17,7 @@ import Timer from '../timer.js';
 import UIManager from '../UI/uiManager.js';
 import FontEffect from './Effect/fontEffect.js';
 import BulletShot from './Effect/bulletShot.js';
-import Explosion from './Effect/explosion.js';
+import Explosion1 from './Effect/explosion1.js';
 import QuakeEvent from '../Event/quakeEvent.js';
 import Enemy2 from './Enemy/enemy2.js';
 
@@ -53,14 +53,16 @@ const DIR = {
   L : "L",
 };
 
+let po = (i)=>{
+  if(i>0) return 1 + 2 * Math.atan(i-10)/Math.PI;
+  else return -(1 + 2 * Math.atan(-i-10)/Math.PI);
+};
+
 export default class Player extends Entity{
   constructor(pos){
-    super(pos,{ x: 0, y: 0 },{ x: 0,y: 0});
+    super(pos,VEC0(),VEC0());
     /*基本情報*/
-    let p = {
-      x : pos.x,
-      y : pos.y
-    }
+    let p = CPV(this.pos);
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
     this.frame = 0;
@@ -68,7 +70,8 @@ export default class Player extends Entity{
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
     this.frameShot = 0;//最後にshotした時刻
     this.e = 0.1;//反発係数
-      this.score = 0;
+    this.score = 0;
+    this.offset = 0;//↑入力での画面スクロールに使う変数
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
@@ -114,17 +117,12 @@ export default class Player extends Entity{
       if(this.state == STATE.FALLING){
         let jumpCost = 20
           if(this.bullet >= jumpCost){
-            this.Explosion();//爆発
+            //this.Explosion();//爆発
             EventManager.eventList.push(new QuakeEvent(20,5));
             this.frameShot = this.frame;//最終ショット時刻
             this.vel.y = -JUMP_VEL;
             this.bullet -= 20;
             this.state = STATE.JUMPING;
-            let p = 
-              {x : this.pos.x,
-               y : this.pos.y
-              };
-              EntityManager.addEntity(new BulletShot(p,{x:0,y:1}));
           }else{
             //足りないとできない
             EntityManager.addEntity(new FontEffect(this.pos,"たりないよ","pop"));
@@ -147,8 +145,13 @@ export default class Player extends Entity{
       this.arg = Math.PI;
       this.acc.x = -RUN_VEL;
     }
+    if(!Input.isKeyInput(KEY.UP) && !Input.isKeyInput(KEY.DOWN)){
+      this.offset *= 0.99;
+    }
     /*上向き*/
     if(Input.isKeyInput(KEY.UP)){
+      //上向き状態で更に入力された場合オフセットが加算される
+      this.offset = Math.max(this.offset-0.5,-20);
       //右向き上 or 左向き上
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.UR;
@@ -159,6 +162,7 @@ export default class Player extends Entity{
     }
     /*下向き*/
     if(Input.isKeyInput(KEY.DOWN)){
+      this.offset = Math.min(this.offset+0.5,20);
       //右向き下 or 左向き下
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.DR;
@@ -355,14 +359,12 @@ ScrollByDir(){
    switch(this.dir){
    case DIR.UR :
    case DIR.UL :
-   Drawer.ScrollOn({x:this.pos.x,y:this.pos.y-60});
-   break;
    case DIR.DR :
    case DIR.DL :
-   Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+60});
+     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset * 0.5)});
    break;
    default :
-   Drawer.ScrollOn(this.pos);
+     Drawer.ScrollOn(this.pos);
    }
 }
 
@@ -370,7 +372,7 @@ Observer(){
   if(this.hp <= 0){
     if(this.isAlive){
       //死亡開始時に一回だけ呼ばれる部分
-      this.Explosion();
+      //this.Explosion();
       this.frameDead = this.frame;
       this.isDying = true;
       this.isAlive = false;
@@ -408,13 +410,14 @@ Supply(){
 }
 
   //爆発
+  /*
   Explosion(){
     for(let i = 0;i<10;i++){
       let v = Util.Rand2D(30);
       v.x *= 0.3;
       v.y += 15;
       //飛散物
-      EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
+      EntityManager.addEntity(new Explosion1("stone",{x:this.pos.x,y:this.pos.y},v));
     }
     //煙
     for(let i = 0;i<6;i++){
@@ -422,11 +425,12 @@ Supply(){
         x:1 * (Math.random()-0.5),
         y:1 * (Math.random())
       }
-      EntityManager.addEntity(new Explosion("smoke",{x:this.pos.x,y:this.pos.y},v));
+      EntityManager.addEntity(new Explosion1("smoke",{x:this.pos.x,y:this.pos.y},v));
     }
-    EntityManager.addEntity(new Explosion("fire",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
-    EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+    EntityManager.addEntity(new Explosion1("fire",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
+    EntityManager.addEntity(new Explosion1("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
   }
+  */
 
 
   Update(){
@@ -441,7 +445,7 @@ Supply(){
         this.Collision();//衝突
       }
       
-      //this.ScrollByDir();//向きに応じてスクロール位置を変更
+      this.ScrollByDir();//向きに応じてスクロール位置を変更
       Drawer.ScrollOn(this.pos);//プレイヤー中心にスクロール
       this.Observer(); //死亡チェック
       this.Dying();//死亡中

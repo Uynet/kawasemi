@@ -7,7 +7,6 @@ import EntityManager from '../../Stage/entityManager.js';
 import Enemy1AI from '../AI/enemy1AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
-import Explosion from '../Effect/explosion.js';
 
 const ENEMY1 = {
   HP : 5,
@@ -20,7 +19,7 @@ let EntityList = EntityManager.entityList;
 
 export default class Enemy1 extends Enemy{
   constructor(pos){
-    super(pos,{x:0,y:0},{x:0,y:0});
+    super(pos,VEC0(),VEC0());
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.frame = 0;

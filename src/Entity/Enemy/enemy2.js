@@ -8,7 +8,6 @@ import Enemy2AI from '../AI/enemy2AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Coin from '../coin.js';
-import Explosion from '../Effect/explosion.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import Sonic from '../Effect/sonic.js';
@@ -26,7 +25,7 @@ let EntityList = EntityManager.entityList;
 
 export default class Enemy2 extends Enemy{
   constructor(pos){
-    super(pos,{x:0,y:0},{x:0,y:0});
+    super(pos,VEC0(),VEC0());
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.frame = 0;
@@ -50,31 +49,13 @@ export default class Enemy2 extends Enemy{
       under : null
     }
   }
-  //爆発
-  Explosion(){
-    for(let i = 0;i<10;i++){
-      let v = Util.Rand2D(30);
-      EntityManager.addEntity(new Sonic(this.pos));
-      EntityManager.addEntity(new Explosion("stone",{x:this.pos.x,y:this.pos.y},v));
-    }
-    for(let i =0;i<3;i++){
-      let v = Util.Rand2D(32);
-      let p = Util.advec(v,this.pos);
-      EntityManager.addEntity(new Explosion("fire",p));
-      for(let i = 0;i<2;i++){
-        EntityManager.addEntity(new Explosion("smoke",p,{x:1-i*2,y:0}));
-      }
-    }
-    EntityManager.addEntity(new Explosion("flash",{x:this.pos.x,y:this.pos.y}));
-  }
-  //死ぬ
+  //die
   Die(){
     this.isAlive = false;
       //死ぬ時にコイン
       for(let i = 0;i<this.coin;i++){
         EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
       }
-      //this.Explosion();
       EventManager.eventList.push(new QuakeEvent(5));//ゆれ
       EntityManager.removeEntity(this);
   }
