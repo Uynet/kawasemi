@@ -57,6 +57,14 @@ export default class Bullet1 extends Bullet{
       EntityManager.addEntity(new Explosion1("flash",p));
     }
   }
+  //Explosion(){
+    //flash
+    //sonic
+    //fire
+    //stone
+    //somoke
+   // EntityManager.addEntity(new Explosion1(CPV(this.pos),CPV(this.vel)));
+  //}
   Update(){
     /*□Effect BulletBulr*/
     if(this.frame%1 == 0){
