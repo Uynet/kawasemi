@@ -41,34 +41,6 @@ export default class Bullet1 extends Bullet{
     this.AIList.push(new Bullet1AI(this));
   }
 
-  //爆発
-  Explosion(){
-    EntityManager.addEntity(new Sonic(this.pos));
-    for(let i =0;i<3;i++){
-      let p = ADV(this.pos,Util.Rand2D(16));
-      EntityManager.addEntity(new Flash(this.pos));
-    }
-    for(let i = 0;i<8;i++){
-      let v = Util.Rand2D(30);
-      EntityManager.addEntity(new Stone(CPV(this.pos),v));
-    }
-    for(let j = 0;j<2;j++){
-      EntityManager.addEntity(new Smoke(CPV(this.pos),{x:Rand(8),y:-0.6}));
-    }
-    for(let i =0;i<3;i++){
-      let v = Util.Rand2D(16);
-      let p = ADV(v,this.pos);
-      EntityManager.addEntity(new Fire(p));
-    }
-  }
-  //Explosion(){
-    //flash
-    //sonic
-    //fire
-    //stone
-    //somoke
-   // EntityManager.addEntity(new Explosion1(CPV(this.pos),CPV(this.vel)));
-  //}
   Update(){
     /*□Effect BulletBulr*/
     if(this.frame%1 == 0){
@@ -86,7 +58,7 @@ export default class Bullet1 extends Bullet{
       Util.distance(this.pos , this.launchedPos) > this.length){
       EntityManager.removeEntity(this);
       EventManager.eventList.push(new QuakeEvent(6));//ゆれ
-      this.Explosion();
+    EntityManager.addEntity(new Explosion1(CPV(this.pos)));
     }
     this.sprite.position = this.pos;
     this.frame++;
