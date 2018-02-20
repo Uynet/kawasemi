@@ -11,6 +11,10 @@ import BulletBlur from './Effect/bulletBlur.js';
 import BrightCoin from'./Effect/brightCoin.js';
 import Util from '../util.js';
 import Sonic from './Effect/sonic.js';
+import Stone from './Effect/stone.js';
+import Flash from './Effect/flash.js';
+import Fire from './Effect/fire.js';
+import Smoke from './Effect/smoke.js';
 import Explosion1 from './Effect/explosion1.js';
 
 /*bullet1クラス*/
@@ -39,22 +43,22 @@ export default class Bullet1 extends Bullet{
 
   //爆発
   Explosion(){
-    for(let i = 0;i<8;i++){
-      let v = Util.Rand2D(30);
-      EntityManager.addEntity(new Sonic(this.pos));
-      EntityManager.addEntity(new Explosion1("stone",CPV(this.pos),v));
-    }
-    for(let j = 0;j<2;j++){
-      EntityManager.addEntity(new Explosion1("smoke",CPV(this.pos),{x:Rand(8),y:-0.6}));
-    }
-    for(let i =0;i<3;i++){
-      let v = Util.Rand2D(32);
-      let p = ADV(v,this.pos);
-      EntityManager.addEntity(new Explosion1("fire",p));
-    }
+    EntityManager.addEntity(new Sonic(this.pos));
     for(let i =0;i<3;i++){
       let p = ADV(this.pos,Util.Rand2D(16));
-      EntityManager.addEntity(new Explosion1("flash",p));
+      EntityManager.addEntity(new Flash(this.pos));
+    }
+    for(let i = 0;i<8;i++){
+      let v = Util.Rand2D(30);
+      EntityManager.addEntity(new Stone(CPV(this.pos),v));
+    }
+    for(let j = 0;j<2;j++){
+      EntityManager.addEntity(new Smoke(CPV(this.pos),{x:Rand(8),y:-0.6}));
+    }
+    for(let i =0;i<3;i++){
+      let v = Util.Rand2D(16);
+      let p = ADV(v,this.pos);
+      EntityManager.addEntity(new Fire(p));
     }
   }
   //Explosion(){

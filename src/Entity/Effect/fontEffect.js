@@ -22,9 +22,10 @@ export default class FontEffect extends EFFECT{
     this.frame = 0;
     this.isAlive = true;//消えたらfalse
     this.e = 0.0;
+    this.isMultiple = true;//このEntityは複数スプライトを持つか
     /*スプライト*/
     this.str = str; //0~9
-    this.sprite = [];//スプライトを配列で持っている
+    this.sprites = [];//スプライトを配列で持っている
     this.d = this.str.length;//桁数
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
     for(let i = 0;i<this.d;i++){
@@ -37,8 +38,8 @@ export default class FontEffect extends EFFECT{
           break;
         case "pop" : tex = Art.font[spid];
       }
-      this.sprite[i] = Art.SpriteFactory(tex);
-      this.sprite[i].position = {x:this.pos.x + i*6,y:this.pos.y};
+      this.sprites[i] = Art.SpriteFactory(tex);
+      this.sprites[i].position = {x:this.pos.x + i*6,y:this.pos.y};
     }
     this.gravity = 0.2;
   }
@@ -65,14 +66,14 @@ export default class FontEffect extends EFFECT{
       //ここはあとで書き直す
       //というか別クラスにする
       if(this.fonttype == "pop"){
-        this.sprite[i].position = {x:this.pos.x + i * 9,y:this.pos.y};
+        this.sprites[i].position = {x:this.pos.x + i * 9,y:this.pos.y};
       }else{
-        this.sprite[i].position = {x:this.pos.x + i * 6,y:this.pos.y};
+        this.sprites[i].position = {x:this.pos.x + i * 6,y:this.pos.y};
       }
     }
     for(let i = 0;i<this.d;i++){
       if(this.frame > 30){
-        this.sprite[i].alpha -=0.05; 
+        this.sprites[i].alpha -=0.05; 
       }
     }
     if(this.frame > 90){

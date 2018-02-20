@@ -3,7 +3,8 @@ import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Util from '../../util.js';
 
-export default class Sonic extends EFFECT{
+//閃光
+export default class Flash extends EFFECT{
   constructor(pos){
     super(pos,VEC0());
     /*基本情報*/
@@ -11,23 +12,17 @@ export default class Sonic extends EFFECT{
     this.frame = 0;
     /*スプライト*/
     this.spid = 0;
-    this.pattern = Art.bulletPattern.sonic;
+    this.pattern = Art.bulletPattern.explosion.flash;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
-    this.sprite.alpha = 0.16;
   }
 
   Update(){
-    this.sprite.texture = this.pattern[this.spid];
-    this.spid = Math.floor(this.frame/3);
-    //phys
-    this.pos = ADV(this.pos,this.vel);
-
-    this.sprite.scale = ADV(this.sprite.scale,VECN(10/(this.frame+1)));
-    this.sprite.alpha *= 0.8;
-
-    if(this.spid == 4){
+    //this.sprite.texture = this.pattern[this.spid];
+    this.sprite.scale = ADV(VECN(1),Rand2D(1));
+    this.sprite.alpha = 0.4;
+    if(this.frame == 2){
       EntityManager.removeEntity(this);
     }
     this.sprite.position = this.pos;
