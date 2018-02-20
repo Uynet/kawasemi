@@ -29,10 +29,13 @@ export default class EntityManager{
         //エフェクト
       case ENTITY.EFFECT :
         if(entity.isMultiple){
+          //複数スプライトを持つ
           this.effectList.push(entity);
           for(let i=0 ;i < entity.sprites.length ; i++){
             Drawer.addContainer(entity.sprites[i],"FORE");
           }
+        }else if(entity.isNoSprite){
+          //何も持たない
         }else{
           this.effectList.push(entity);
           Drawer.addContainer(entity.sprite,"ENTITY");
@@ -85,12 +88,14 @@ export default class EntityManager{
       case ENTITY.EFFECT :
         let m = this.effectList.indexOf(entity);
         this.effectList.splice(m,1);
-        //複数スプライトを持つオブジェクトの処理
         if(entity.isMultiple){
+        //複数スプライトを持つオブジェクトの処理
           for(let j = 0;j<entity.sprites.length;j++){
             console.assert(entity.sprites[j] != undefined);
             Drawer.removeContainer(entity.sprites[j],"FORE");
           }
+        }else if(entity.isNoSprite){
+          //何もスプライトを持たない
         }else{
           console.assert(entity.sprite != undefined);
           Drawer.removeContainer(entity.sprite,"ENTITY");

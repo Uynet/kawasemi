@@ -239,12 +239,6 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet62.png'),//bullet blur
         PIXI.Texture.fromFrame('bullet63.png') //bullet blur
       ],
-      sonic :[
-        PIXI.Texture.fromFrame('bullet70.png'),//sonic
-        PIXI.Texture.fromFrame('bullet71.png'),//sonic
-        PIXI.Texture.fromFrame('bullet72.png'),//sonic
-        PIXI.Texture.fromFrame('bullet73.png') //sonic
-      ],
       coin : {
         get : [
           PIXI.Texture.fromFrame('bulletD0.png'),
@@ -264,6 +258,12 @@ export default class Art{
         fire : [PIXI.Texture.fromFrame('bulletA0.png')],
         stone : [PIXI.Texture.fromFrame('bulletB0.png')],
         smoke : [PIXI.Texture.fromFrame('bulletC0.png')],
+        sonic :[
+          PIXI.Texture.fromFrame('bullet70.png'),//sonic
+          PIXI.Texture.fromFrame('bullet71.png'),//sonic
+          PIXI.Texture.fromFrame('bullet72.png'),//sonic
+          PIXI.Texture.fromFrame('bullet73.png') //sonic
+        ]
       }
     }
     this.enemyPattern = {

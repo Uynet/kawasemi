@@ -11,7 +11,7 @@ export default class Sonic extends EFFECT{
     this.frame = 0;
     /*スプライト*/
     this.spid = 0;
-    this.pattern = Art.bulletPattern.sonic;
+    this.pattern = Art.bulletPattern.explosion.sonic;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
@@ -24,7 +24,7 @@ export default class Sonic extends EFFECT{
     //phys
     this.pos = ADV(this.pos,this.vel);
 
-    this.sprite.scale = ADV(this.sprite.scale,VECN(10/(this.frame+1)));
+    this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+1)));
     this.sprite.alpha *= 0.8;
 
     if(this.spid == 4){
