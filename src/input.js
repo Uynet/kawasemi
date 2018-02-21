@@ -27,7 +27,7 @@ $(document).on("keydown",(e)=> {
   }
   inputedKeyList[event.keyCode] = true;
   //上下キーを封じる
-  if(e.keyCode==KEY.UP || e.keyCode == KEY.DOWN) event.preventDefault();
+  if(e.keyCode==KEY.UP || e.keyCode == KEY.DOWN || e.keyCode == KEY.SP) event.preventDefault();
 });
 $(document).on("keyup",(e)=> {
   clickedKeyList[event.keyCode] = false;

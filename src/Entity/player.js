@@ -18,12 +18,13 @@ import UIManager from '../UI/uiManager.js';
 import FontEffect from './Effect/fontEffect.js';
 import BulletShot from './Effect/bulletShot.js';
 import Explosion1 from './Effect/explosion1.js';
+import Explosion2 from './Effect/explosion2.js';
 import QuakeEvent from '../Event/quakeEvent.js';
 import Enemy2 from './Enemy/enemy2.js';
 
-const JUMP_VEL = 7;//ジャンプ力
+const JUMP_VEL = 5;//ジャンプ力
   const RUN_VEL = 0.4;//はしり速度
-const PLAYER_GRAVITY = 0.2;
+const PLAYER_GRAVITY = 0.15;
 const PLAYER_HP = 100;
 const PLAYER_BULLET = 100;
 const FLICTION = 0.7;
@@ -33,7 +34,7 @@ const INV_TIME = 5;//無敵時間
 const ANIM_WAIT = 7;
 
 const VX_MAX = 3;
-const VY_MAX = 5;
+const VY_MAX = 11;
 
 const STATE = {
   WAITING : "WAITING",
@@ -117,7 +118,7 @@ export default class Player extends Entity{
       if(this.state == STATE.FALLING){
         let jumpCost = 20
           if(this.bullet >= jumpCost){
-            //this.Explosion();//爆発
+            EntityManager.addEntity(new Explosion2(CPV(this.pos)));
             EventManager.eventList.push(new QuakeEvent(20,5));
             this.frameShot = this.frame;//最終ショット時刻
             this.vel.y = -JUMP_VEL;
@@ -145,13 +146,9 @@ export default class Player extends Entity{
       this.arg = Math.PI;
       this.acc.x = -RUN_VEL;
     }
-    if(!Input.isKeyInput(KEY.UP) && !Input.isKeyInput(KEY.DOWN)){
-      this.offset *= 0.99;
-    }
     /*上向き*/
     if(Input.isKeyInput(KEY.UP)){
-      //上向き状態で更に入力された場合オフセットが加算される
-      this.offset = Math.max(this.offset-0.5,-20);
+      if(Input.isKeyInput(KEY.SP)) this.offset = Math.max(this.offset-0.5,-20);
       //右向き上 or 左向き上
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.UR;
@@ -162,7 +159,7 @@ export default class Player extends Entity{
     }
     /*下向き*/
     if(Input.isKeyInput(KEY.DOWN)){
-      this.offset = Math.min(this.offset+0.5,20);
+      if(Input.isKeyInput(KEY.SP)) this.offset = Math.min(this.offset+0.5,20);
       //右向き下 or 左向き下
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.DR;
@@ -361,10 +358,8 @@ ScrollByDir(){
    case DIR.UL :
    case DIR.DR :
    case DIR.DL :
-     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset * 0.5)});
-   break;
    default :
-     Drawer.ScrollOn(this.pos);
+     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
    }
 }
 
@@ -372,7 +367,7 @@ Observer(){
   if(this.hp <= 0){
     if(this.isAlive){
       //死亡開始時に一回だけ呼ばれる部分
-      //this.Explosion();
+      EntityManager.addEntity(new Explosion1(CPV(this.pos)));
       this.frameDead = this.frame;
       this.isDying = true;
       this.isAlive = false;
@@ -409,29 +404,6 @@ Supply(){
   else if(t>150) this.bullet = Math.min(this.maxBullet,this.bullet+1);
 }
 
-  //爆発
-  /*
-  Explosion(){
-    for(let i = 0;i<10;i++){
-      let v = Util.Rand2D(30);
-      v.x *= 0.3;
-      v.y += 15;
-      //飛散物
-      EntityManager.addEntity(new Explosion1("stone",{x:this.pos.x,y:this.pos.y},v));
-    }
-    //煙
-    for(let i = 0;i<6;i++){
-      let v = {
-        x:1 * (Math.random()-0.5),
-        y:1 * (Math.random())
-      }
-      EntityManager.addEntity(new Explosion1("smoke",{x:this.pos.x,y:this.pos.y},v));
-    }
-    EntityManager.addEntity(new Explosion1("fire",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
-    EntityManager.addEntity(new Explosion1("flash",{x:this.pos.x,y:this.pos.y},{x:0,y:0}));
-  }
-  */
-
 
   Update(){
       if(this.isAlive){
@@ -461,6 +433,7 @@ Supply(){
       y : this.pos.y
     }
     /*パラメータ*/
+    this.offset *= 0.99;
       this.Animation();//状態から画像を更新
   }
 }

@@ -30,8 +30,8 @@ export default class Weapon1 extends Weapon{
     this.target;
     this.isTargetOn = false;//照準が発生しているか
       /*パラメータ*/
-      this.agi = 7;//間隔
-    this.cost = 2;
+      this.agi = 19;//間隔
+    this.cost = 5;
     this.speed = 6;//弾速
       this.length = 180;//射程距離
   }
@@ -118,10 +118,11 @@ export default class Weapon1 extends Weapon{
         EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
         /* □ Effect : shot */
-        EntityManager.addEntity(new BulletShot({x:p.x,y:p.y},{x:0,y:0}));
+        EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
         //反動
         //player.vel.x -= v.x/11;
-        player.acc.y -= v.y/5;
+        //player.acc.y -= v.y/5;
+        if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
         //振動
         EventManager.eventList.push(new QuakeEvent(8,2));
       }

@@ -10,7 +10,6 @@ export default class UIFont extends UI{
     /*基本情報*/
     //HPとBulletでtypeを分ける必要がある
     
-    this.space;
     this.type = type;
     this.name = "font";
     this.isAlive = true;//消えたらfalse
