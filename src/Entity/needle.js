@@ -7,13 +7,12 @@ import UIManager from '../UI/uiManager.js'
 import Timer from '../timer.js';
 import FontEffect from './Effect/fontEffect.js';
 import Wall from './wall.js';
-import BackGround from './background.js';
+import BackEntity from './backEntity.js';
 import BulletShot from './Effect/bulletShot.js';
 
 let EntityList = EntityManager.entityList;
-
 //トゲ
-export default class Needle extends BackGround{
+export default class Needle extends BackEntity{
   constructor(pos,tex){
     super(pos,tex);
     /*基本情報*/

@@ -1,7 +1,8 @@
 import EntityManager from './entityManager.js'
 import Entity from '../Entity/entity.js'
 import Wall from '../Entity/wall.js'
-import Background from '../Entity/background.js';
+import BackEntity from '../Entity/backEntity.js';
+import BackGround from '../Entity/backGround.js';
 import Signboard from '../Entity/signboard.js';
 import Player from '../Entity/player.js'
 import Enemy1 from '../Entity/Enemy/enemy1.js'
@@ -42,9 +43,15 @@ export default class MapData{
     });
   }
 
-  static async CreateStage(stageNo){
+  /* state 
+   * ENTER : 新しいステージに入った時
+   * RESET : 死んでやり直す時
+   */
+  static async CreateStage(stageNo,state){
     await this.Load(stageNo);
 
+    //
+    if(state == "ENTER") this.AddBackGround();
     //entityの生成
     /*タイルに割り当てるtype
      * 1 : 壁
@@ -70,7 +77,7 @@ export default class MapData{
             EntityManager.addEntity(entity);
             break;
           case TILE.BACK :
-            entity = new Background({x:16*x,y:16*y},MapData.WallTile(ID));
+            entity = new BackEntity({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
           case TILE.SIGN : EntityManager.addEntity(new Signboard({x:16*x,y:16*y})); break;
           case TILE.NEEDLE :
@@ -119,7 +126,8 @@ export default class MapData{
   /*マップデータを消して作り直す*/
   static RebuildStage(){
     MapData.DeleteStage();
-    MapData.CreateStage(Game.stage);
+    let state = "RESET";
+    MapData.CreateStage(Game.stage,state);
   }
 
   /*現在開かれているステージを削除*/
@@ -169,5 +177,23 @@ export default class MapData{
   }
     console.warn(i);
     return Art.wallPattern.block;
+  }
+
+  //背景を追加
+  static AddBackGround(){
+    cl("po");
+    let back;
+    let w = 20;
+    let h = 20;
+    for(let y = 0;y<h;y++){
+      for(let x = 0;x<w;x++){
+        let tex = Art.wallPattern.steel.backGround[0];
+        let p = {
+          x : (x - w/2)*32,
+          y : (y - h/2)*32
+        }
+        EntityManager.addEntity(new BackGround(CPV(p),tex));
+      }
+    }
   }
 }

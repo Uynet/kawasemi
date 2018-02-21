@@ -1,15 +1,17 @@
 import Entity from './entity.js';
 import Art from '../art.js';
+import Collider from '../Collision/collider.js';
+import Circle from '../Collision/circle.js';
+import Box from '../Collision/box.js';
 import EntityManaer from '../Stage/entityManager.js';
 
-//真の背景であり背景オブジェクトではない
+//背景オブジェクト 何もしない
 export default class BackEntity extends Entity{
   constructor(pos,tex){
     super(pos,VEC0());
-    this.type = ENTITY.BG;
-    this.tex = tex;
+    this.type = ENTITY.BACK;
+    this.tex = tex
     this.sprite = Art.SpriteFactory(this.tex);
-    this.sprite.scale = VECN(2);
     this.sprite.position = pos;
   }
   Update(){

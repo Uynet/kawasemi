@@ -15,14 +15,6 @@ export default class StartStageEvent extends Event{
   constructor(){
     super(1);
     function* gen(){
-      /*先にplayerを作らないとUIがバグるのでawait*/
-      MapData.CreateStage(Game.stage);
-      cl("x");
-      Game.scene.ChangeState(STATE.TITLE,STATE.STAGE);
-      yield ;
-    }
-
-    function* po(){
 
       //note : Game.seqがtrueの間はEntityは更新されない
 
@@ -59,7 +51,7 @@ export default class StartStageEvent extends Event{
       }
       */
       /*ここでマップをロード*/
-      MapData.RebuildStage();
+      MapData.CreateStage(Game.stage,"ENTER");
 
       /*マップデータを生成するのでちょっと待つ*/
       frame = 0;
@@ -89,7 +81,7 @@ export default class StartStageEvent extends Event{
       Game.seq = false;
       yield;
     }
-    let itt = po();
+    let itt = gen();
     this.func = itt;
   }
 }
