@@ -6,10 +6,9 @@ import Input from '../input.js';
 export default class UIFont extends UI{
   //strは表示する文字(今は数字のみ)
   constructor(pos,str,type){
-    super({x:pos.x,y:pos.y});
+    super(CPV(pos));
     /*基本情報*/
     //HPとBulletでtypeを分ける必要がある
-    
     this.type = type;
     this.name = "font";
     this.isAlive = true;//消えたらfalse
@@ -28,10 +27,10 @@ export default class UIFont extends UI{
         space = 9;
       }else if(
         s == "!" ||
-          s == "l" ||
-            s == "i" ||
-              s == "j"||
-                s == "."
+        s == "l" ||
+        s == "i" ||
+        s == "j"||
+        s == "."
       ){
         space = 4;
       } else{

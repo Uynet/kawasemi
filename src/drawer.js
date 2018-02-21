@@ -114,12 +114,12 @@ export default class Drawer{
     this.backGroundContainer.x = Math.floor(toX/4);
     this.backGroundContainer.y = Math.floor(toY/4);
     //Entityレイヤ
-    this.backContainer.x = Math.floor(toX);
-    this.backContainer.y = Math.floor(toY);
-    this.entityContainer.x = Math.floor(toX);
-    this.entityContainer.y = Math.floor(toY);
-    this.foreContainer.x = Math.floor(toX);
-    this.foreContainer.y = Math.floor(toY);
+    this.backContainer.x = toX;
+    this.backContainer.y = toY;
+    this.entityContainer.x = toX;
+    this.entityContainer.y = toY;
+    this.foreContainer.x = toX;
+    this.foreContainer.y = toY;
     //UIは動かない
   }
   /*スクロール位置を一瞬で移動させる*/
