@@ -30,7 +30,7 @@ export default class Weapon1 extends Weapon{
     this.target;
     this.isTargetOn = false;//照準が発生しているか
       /*パラメータ*/
-      this.agi = 19;//間隔
+      this.agi = 15;//間隔
     this.cost = 5;
     this.speed = 6;//弾速
       this.length = 180;//射程距離

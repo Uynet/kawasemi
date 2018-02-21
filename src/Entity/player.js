@@ -88,6 +88,8 @@ export default class Player extends Entity{
       on : false,//乗っているか
       under : null,//自分の下
     }
+
+    this.score = 0;
   }
   /*キー入力による移動*/
   Input(){
@@ -265,8 +267,10 @@ export default class Player extends Entity{
   }
   //コイン取得
   GetScore(){
-    this.score++;
+    this.score+=1;
     this.bullet += 5;//とりあえずbulletも回復しとくか
+    UIManager.score.font.UpdateFont(this.score);
+    cl( UIManager.score.font.str );
   }
   /* 衝突判定 */
   Collision(){

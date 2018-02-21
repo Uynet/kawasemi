@@ -271,7 +271,11 @@ export default class Art{
         PIXI.Texture.fromFrame('enemy20.png'),
         PIXI.Texture.fromFrame('enemy21.png'),
         PIXI.Texture.fromFrame('enemy22.png'),
-        PIXI.Texture.fromFrame('enemy23.png')
+        PIXI.Texture.fromFrame('enemy23.png'),
+        PIXI.Texture.fromFrame('enemy24.png'),
+        PIXI.Texture.fromFrame('enemy25.png'),
+        PIXI.Texture.fromFrame('enemy26.png'),
+        PIXI.Texture.fromFrame('enemy27.png')
       ],
       enemy1 : [
         PIXI.Texture.fromFrame('enemy00.png'),
@@ -412,7 +416,7 @@ export default class Art{
     this.font["や"] = PIXI.Texture.fromFrame('font3a.png');
     this.font["ゐ"] = PIXI.Texture.fromFrame('font3b.png');
     this.font["ゆ"] = PIXI.Texture.fromFrame('font3c.png');
-    this.font["欠番2"] = PIXI.Texture.fromFrame('font3d.png');
+    this.font[" "] = PIXI.Texture.fromFrame('font3d.png');
     this.font["よ"] = PIXI.Texture.fromFrame('font3e.png');
     this.font["ら"] = PIXI.Texture.fromFrame('font3f.png');
     this.font["り"] = PIXI.Texture.fromFrame('font310.png');
