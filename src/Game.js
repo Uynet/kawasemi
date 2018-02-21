@@ -11,6 +11,7 @@ import Drawer from './drawer.js';
 import Input from './input.js';
 import Timer from './timer.js';
 import Util from './util.js';
+import Param from './param.js';
 
 
 //大嘘
@@ -26,6 +27,7 @@ export default class Game{
     Util.Init();
     WeaponManager.Init();
     UIManager.Init();
+    Param.Init();
 
     /*initialize Game state*/
     Game.isPause = false;
