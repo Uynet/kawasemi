@@ -21,20 +21,7 @@ import Explosion1 from './Effect/explosion1.js';
 import Explosion2 from './Effect/explosion2.js';
 import QuakeEvent from '../Event/quakeEvent.js';
 import Enemy2 from './Enemy/enemy2.js';
-
-const JUMP_VEL = 5;//ジャンプ力
-  const RUN_VEL = 0.4;//はしり速度
-const PLAYER_GRAVITY = 0.15;
-const PLAYER_HP = 100;
-const PLAYER_BULLET = 100;
-const FLICTION = 0.7;
-const INV_TIME = 5;//無敵時間
-  /*アニメーションのインターバル*/
-  const ANIM_RUN = 4;
-const ANIM_WAIT = 7;
-
-const VX_MAX = 3;
-const VY_MAX = 11;
+import Param from '../param.js';
 
 const STATE = {
   WAITING : "WAITING",
@@ -79,11 +66,11 @@ export default class Player extends Entity{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.maxHP = PLAYER_HP;
+    this.maxHP = Param.PLAYER.HP;
     this.hp = this.maxHP;
-    this.maxBullet = PLAYER_BULLET;
+    this.maxBullet = Param.PLAYER.BULLET;
     this.bullet = this.maxBullet;
-    this.gravity = PLAYER_GRAVITY;
+    this.gravity = Param.PLAYER.GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
     /*状態*/
     this.state = STATE.WAITING;
@@ -107,7 +94,7 @@ export default class Player extends Entity{
     /*ジャンプ*/
     if(Input.isKeyInput(KEY.Z)){
       if(this.isJump == false){
-        this.vel.y = -JUMP_VEL;
+        this.vel.y = - Param.PLAYER.JUMP_VEL;
         this.isJump = true;
         this.state = STATE.JUMPING;
       }
@@ -121,7 +108,7 @@ export default class Player extends Entity{
             EntityManager.addEntity(new Explosion2(CPV(this.pos)));
             EventManager.eventList.push(new QuakeEvent(20,5));
             this.frameShot = this.frame;//最終ショット時刻
-            this.vel.y = -JUMP_VEL;
+              this.vel.y = - Param.PLAYER.JUMP_VEL;
             this.bullet -= 20;
             this.state = STATE.JUMPING;
           }else{
@@ -136,7 +123,7 @@ export default class Player extends Entity{
       this.dir = DIR.R;
       this.isRun = true;
       this.arg = 0;
-      this.acc.x = RUN_VEL;
+      this.acc.x = Param.PLAYER.RUN_VEL;
     }
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
@@ -144,7 +131,7 @@ export default class Player extends Entity{
       this.dir = DIR.L;
       this.isRun = true;
       this.arg = Math.PI;
-      this.acc.x = -RUN_VEL;
+      this.acc.x = -Param.PLAYER.RUN_VEL;
     }
     /*上向き*/
     if(Input.isKeyInput(KEY.UP)){
@@ -190,7 +177,7 @@ export default class Player extends Entity{
     this.frame++;
     switch(this.state){
       case STATE.WAITING :
-        this.spid = (Math.floor(this.frame/ANIM_WAIT))%4
+        this.spid = (Math.floor(this.frame/Param.PLAYER.ANIM_WAIT))%4
           switch(this.dir){
             case DIR.R : this.sprite.texture = this.pattern.waitR[this.spid]; break;
             case DIR.L : this.sprite.texture = this.pattern.waitL[this.spid]; break;
@@ -201,7 +188,7 @@ export default class Player extends Entity{
           }
           break;
       case STATE.JUMPING :
-        this.spid = (Math.floor(this.frame/ANIM_RUN))%4
+        this.spid = (Math.floor(this.frame/Param.PLAYER.ANIM_RUN))%4
           switch(this.dir){
             case DIR.R : this.sprite.texture = this.pattern.jumpR[this.spid]; break;
             case DIR.L : this.sprite.texture = this.pattern.jumpL[this.spid]; break;
@@ -212,7 +199,7 @@ export default class Player extends Entity{
           }
           break;
       case STATE.FALLING :
-        this.spid = (Math.floor(this.frame/ANIM_RUN))%4;
+        this.spid = (Math.floor(this.frame/Param.PLAYER.ANIM_RUN))%4;
         switch(this.dir){
           case DIR.R : this.sprite.texture = this.pattern.fallR[this.spid]; break;
           case DIR.L : this.sprite.texture = this.pattern.fallL[this.spid]; break;
@@ -223,7 +210,7 @@ export default class Player extends Entity{
         }
         break;
       case STATE.RUNNING :
-        this.spid = (Math.floor(this.frame/ANIM_RUN))%6;
+        this.spid = (Math.floor(this.frame/Param.PLAYER.ANIM_RUN))%6;
         switch(this.dir){
           case DIR.R : this.sprite.texture = this.pattern.runR[this.spid]; break;
           case DIR.L : this.sprite.texture = this.pattern.runL[this.spid]; break;
@@ -245,7 +232,7 @@ export default class Player extends Entity{
         break;
         //死亡
         case STATE.DYING:
-          this.spid = Math.min(7,(Math.floor((this.frame - this.frameDead)/ANIM_RUN)));
+          this.spid = Math.min(7,(Math.floor((this.frame - this.frameDead)/Param.PLAYER.ANIM_RUN)));
           this.sprite.texture = this.pattern.dying[this.spid];
           break;
     }
@@ -332,14 +319,14 @@ export default class Player extends Entity{
       this.vel.x += this.acc.x;
       this.vel.y += this.acc.y;
     //最大速度制限:
-    if(this.vel.x > VX_MAX)this.vel.x = VX_MAX;
-    if(this.vel.x < -VX_MAX)this.vel.x = -VX_MAX;
-    if(this.vel.y > VY_MAX)this.vel.y = VY_MAX;
-    if(this.vel.y < -VY_MAX)this.vel.y = -VY_MAX;
+    if(this.vel.x > Param.PLAYER.VX_MAX)this.vel.x = Param.PLAYER.VX_MAX;
+    if(this.vel.x < -Param.PLAYER.VX_MAX)this.vel.x = -Param.PLAYER.VX_MAX;
+    if(this.vel.y > Param.PLAYER.VY_MAX)this.vel.y = Param.PLAYER.VY_MAX;
+    if(this.vel.y < -Param.PLAYER.VY_MAX)this.vel.y = -Param.PLAYER.VY_MAX;
     /*摩擦
      * 地面にいる&&入力がない場合のみ有向*/
      if(this.state == STATE.WAITING){
-       this.vel.x *= FLICTION;
+       this.vel.x *= Param.PLAYER.FLICTION;
      }
      //jumping state
      if(this.isJump && this.vel.y <= -1){
@@ -422,7 +409,7 @@ Supply(){
       this.Observer(); //死亡チェック
       this.Dying();//死亡中
       //無敵時間の有向時間
-      if(this.frame - this.frameDamaged > INV_TIME){
+      if(this.frame - this.frameDamaged > Param.PLAYER.INV_TIME){
         this.isInvincible = false;
       }
       this.Supply();//bulletのかいふく　
