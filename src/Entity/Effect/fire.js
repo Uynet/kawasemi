@@ -19,13 +19,12 @@ export default class Fire extends EFFECT{
   }
 
   Update(){
-    //this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
     let a = 10;
     this.pos = ADV(this.pos,this.vel);
     this.sprite.scale = ADV(this.sprite.scale, VECN(1/(this.frame+4)));
-    this.sprite.alpha = 0.5 - this.frame/20;
-    if(this.frame == 8){
+    this.sprite.alpha = 0.5 - this.frame/40;
+    if(this.frame == 16){
       EntityManager.removeEntity(this);
     }
     this.frame++;

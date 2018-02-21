@@ -57,8 +57,8 @@ export default class Bullet1 extends Bullet{
       this.frame > 100 || 
       Util.distance(this.pos , this.launchedPos) > this.length){
       EntityManager.removeEntity(this);
-      EventManager.eventList.push(new QuakeEvent(6));//ゆれ
-    EntityManager.addEntity(new Explosion1(CPV(this.pos)));
+ //     EventManager.eventList.push(new QuakeEvent(6));//ゆれ
+//    EntityManager.addEntity(new Explosion1(CPV(this.pos)));
     }
     this.sprite.position = this.pos;
     this.frame++;
