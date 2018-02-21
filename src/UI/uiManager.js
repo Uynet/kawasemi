@@ -13,7 +13,7 @@ import EntityManager from '../Stage/entityManager.js';
 
 const WEQ = {
   x : 8, 
-  y : 1, 
+  y : 160, 
 };
 //HP frame
 const HPF = {
