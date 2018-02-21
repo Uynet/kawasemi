@@ -97,8 +97,8 @@ export default class Coin extends Entity{
 
   Update(){
     //Animation
-    if(this.frame%10 == 0){
-      this.spid = (this.spid+1)%4;
+    if(this.frame%3 == 0){
+      this.spid = (this.spid+1)%6;
       this.sprite.texture = this.pattern[this.spid];
     }
     //たまに光る

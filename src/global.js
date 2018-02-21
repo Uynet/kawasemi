@@ -72,6 +72,7 @@ const UI_ = {
   HP : "HP",
   BULLET : "BULLET",
   FONT : "FONT",
+  SCORE : "SCORE",
   MSSSAGE : "MES"
 }
 const WICON_X = 8;
