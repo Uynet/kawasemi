@@ -43,7 +43,8 @@ const ENTITY = {
   ENEMY : "ENEMY",
   BULLET : "BULLET",
   EFFECT : "EFFECT",
-  BACK : "BACK"
+  BACK : "BACK" ,
+  BG : "BG"
 }
 
 /*MapChip*/

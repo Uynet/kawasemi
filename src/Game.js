@@ -13,10 +13,8 @@ import Timer from './timer.js';
 import Util from './util.js';
 import Param from './param.js';
 
-
 //大嘘
 let dark;
-let back;
 
 export default class Game{
   static Init(){
@@ -36,6 +34,7 @@ export default class Game{
     Game.isMes = false;//メッセージイベント中か
     Game.stage = 0;//現在のステージ番号
     Game.scene = new Scene();
+
     //Gameにタイトル画面状態をプッシュ
     let event = new StartGameEvent();
     EventManager.PushEvent(event);
@@ -75,20 +74,6 @@ export default class Game{
     if(Input.isKeyClick(KEY.SP)){
       let event = new StartStageEvent();
       EventManager.PushEvent(event);
-
-      //TODO なんとかする
-      let w = 20;
-      let h = 20;
-      for(let y = 0;y<h;y++){
-        for(let x = 0;x<w;x++){
-          back = Art.SpriteFactory(Art.wallPattern.steel.backGround[0]);
-          back.scale.x = 2;
-          back.scale.y = 2;
-          back.position.x = (x - w/2)*32
-            back.position.y = (y - h/2)*32;
-          Drawer.addContainer(back,"BG");
-        }
-      }
     }
   }
 

@@ -1,5 +1,4 @@
 //パラメータ管理クラス
-//セーブデータの保存にも使う
 export default class Param{
   static Init(){
     this.PLAYER = {
@@ -10,13 +9,18 @@ export default class Param{
       BULLET : 100,
       FLICTION : 0.7,
       INV_TIME : 5,//無敵時間
-      /*アニメーションのインターバル*/
+      
       ANIM_RUN : 4,
       ANIM_WAIT : 7,
 
       VX_MAX : 3,
       VY_MAX : 11
     }
-
+    this.ENEMY1 = {
+      HP : 5,
+      ATK_MAX : 10,
+      ATK_MIN : 5,
+      GRAVITY : 0.1
+    }
   }
 }

@@ -9,13 +9,11 @@ import Input from '../input.js';
 import EventManager from '../Event/eventmanager.js';
 import MessageEvent from '../Event/messageEvent.js';
 import Game from '../Game.js';
-import BackGround from './background.js';
+import BackEntity from './backEntity.js';
 import UIManager from '../UI/uiManager.js';
 
 
-let VEC0 = {x:0,y:0};
-
-export default class Signboard extends BackGround{
+export default class Signboard extends BackEntity{
   constructor(pos,message){
     super(pos,Art.wallPattern.signboard);
     this.type = ENTITY.BACK;

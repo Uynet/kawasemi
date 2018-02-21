@@ -2,6 +2,7 @@
 import Drawer from '../drawer.js';
 import Target from '../Entity/Effect/target.js';
 import Timer from '../timer.js';
+import Art from '../art.js';
 /*エンティティマネージャ*/
 export default class EntityManager{
   static Init(){
@@ -9,7 +10,7 @@ export default class EntityManager{
     this.enemyList = [];//敵のリスト
     this.wallList = [];//壁のリスト
     this.player;//プレイヤーのインスタンス
-    this.effectList = []//本当はいらないけど何故か消えないバグがあるから..
+    this.effectList = [];//本当はいらないけど何故か消えないバグがあるから..
   }
   /*Entityをリストに登録*/
   static addEntity(entity){
@@ -29,13 +30,13 @@ export default class EntityManager{
         //エフェクト
       case ENTITY.EFFECT :
         if(entity.isMultiple){
-          //複数スプライトを持つ
+        //複数スプライトを持つ
           this.effectList.push(entity);
           for(let i=0 ;i < entity.sprites.length ; i++){
             Drawer.addContainer(entity.sprites[i],"FORE");
           }
         }else if(entity.isNoSprite){
-          //何も持たない
+        //何も持たない
         }else{
           this.effectList.push(entity);
           Drawer.addContainer(entity.sprite,"ENTITY");
@@ -46,32 +47,30 @@ export default class EntityManager{
         this.wallList.push(entity);
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
-        //背景
       case ENTITY.BACK :
-        //リストには追加してない
+        //背景Entityであり背景ではない
         Drawer.addContainer(entity.sprite,"BACK");
+        break;
+      case ENTITY.BG :
+        //真の背景
+        Drawer.addContainer(entity.sprite,"BG");
         break;
         //ゴール?
       case ENTITY.GOAL :
         Drawer.addContainer(entity.sprite,"ENTITY");
         break;
         //弾丸
-        case ENTITY.BULLET :
-          Drawer.addContainer(entity.sprite,"FORE");
+      case ENTITY.BULLET :
+          Drawer.addContainer(entity.sprite,"ENTITY");
           break;
-          //その他
+        //その他
       default : 
         Drawer.addContainer(entity.sprite,"ENTITY");
     }
   }
-  
-  static ri(entity){
-    return this.effectList.indexOf(entity);
-  }
 
   /*Entityをリストから削除する*/
   static removeEntity(entity){
-
     switch(entity.type){
       //プレイヤー
       case ENTITY.PLAYER :
@@ -107,14 +106,18 @@ export default class EntityManager{
         this.wallList.splice(j,1);
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
-        //背景entity
       case ENTITY.BACK :
+        //背景entity
         Drawer.removeContainer(entity.sprite,"BACK");
         break;
- case ENTITY.BULLET :
-   Drawer.removeContainer(entity.sprite,"FORE");
-   break;
-   //その他
+      case ENTITY.BG :
+        //真の背景
+        Drawer.removeContainer(entity.sprite,"BG");
+        break;
+      case ENTITY.BULLET :
+        Drawer.removeContainer(entity.sprite,"ENTITY");
+        break;
+        //その他
       default :
         Drawer.removeContainer(entity.sprite,"ENTITY");
         break;

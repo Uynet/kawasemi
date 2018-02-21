@@ -7,13 +7,8 @@ import EntityManager from '../../Stage/entityManager.js';
 import Enemy1AI from '../AI/enemy1AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
+import Param from '../../param.js';
 
-const ENEMY1 = {
-  HP : 5,
-  ATK_MAX : 10,
-  ATK_MIN : 5,
-  GRAVITY : 0.1
-}
 
 let EntityList = EntityManager.entityList;
 
@@ -31,9 +26,9 @@ export default class Enemy1 extends Enemy{
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.addAI(new Enemy1AI(this));
-    this.atkMax = ENEMY1.ATK_MAX;
-    this.hp = ENEMY1.HP;
-    this.gravity = ENEMY1.GRAVITY;
+    this.atkMax = Param.ENEMY1.ATK_MAX;
+    this.hp = Param.ENEMY1.HP;
+    this.gravity = Param.ENEMY1.GRAVITY;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
