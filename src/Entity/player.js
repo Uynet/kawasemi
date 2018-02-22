@@ -8,7 +8,6 @@ import EntityManager from '../Stage/entityManager.js';
 import Util from '../util.js';
 import EventManager from '../Event/eventmanager.js';
 import Event from '../Event/event.js';
-import StageResetEvent from '../Event/stageResetEvent.js';
 import GameOverEvent from '../Event/gameOverEvent.js';
 import Drawer from '../drawer.js';
 import Game from '../Game.js';
@@ -270,7 +269,6 @@ export default class Player extends Entity{
     this.score+=1;
     this.bullet += 5;//とりあえずbulletも回復しとくか
     UIManager.score.font.UpdateFont(this.score);
-    cl( UIManager.score.font.str );
   }
   /* 衝突判定 */
   Collision(){

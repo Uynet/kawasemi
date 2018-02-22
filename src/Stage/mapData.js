@@ -50,8 +50,9 @@ export default class MapData{
   static async CreateStage(stageNo,state){
     await this.Load(stageNo);
 
-    //
-    if(state == "ENTER") this.AddBackGround();
+    //背景の生成
+    //if(state == "ENTER")
+      this.AddBackGround();
     //entityの生成
     /*タイルに割り当てるtype
      * 1 : 壁
@@ -181,7 +182,6 @@ export default class MapData{
 
   //背景を追加
   static AddBackGround(){
-    cl("po");
     let back;
     let w = 20;
     let h = 20;

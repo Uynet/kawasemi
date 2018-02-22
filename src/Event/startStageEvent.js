@@ -51,6 +51,7 @@ export default class StartStageEvent extends Event{
       }
       */
       /*ここでマップをロード*/
+      MapData.DeleteStage();
       MapData.CreateStage(Game.stage,"ENTER");
 
       /*マップデータを生成するのでちょっと待つ*/

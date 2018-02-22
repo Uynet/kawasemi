@@ -19,6 +19,7 @@ export default class UIFont extends UI{
     switch(this.type){
       case "HP" :
       case "BULLET" :
+      case "MES" :
         this.isPadding = true;
         this.d = this.str.length;//桁数
         break
@@ -56,7 +57,6 @@ export default class UIFont extends UI{
 
   //HP,BULLETの表示用
   UpdateFont(hp){
-    cl(hp);
     //phys
     //文字列型にすること
     this.str = hp + "";
