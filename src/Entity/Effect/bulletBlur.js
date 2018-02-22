@@ -27,7 +27,7 @@ export default class BulletBlur extends EFFECT{
 
   Update(){
     if(this.isAlive){
-      this.sprite.alpha = 3 / (3 + this.frame);
+      this.sprite.alpha = 2 / (3 + this.frame);
       this.Physics();
       this.sprite.position = ADV(this.pos.x,VECN(8));
       this.sprite.texture = this.pattern[this.spid];
