@@ -21,10 +21,6 @@ export default class Explosion1 extends EFFECT{
   }
   Bomb(){
     EntityManager.addEntity(new Sonic(this.pos));
-    for(let i =0;i<3;i++){
-      let p = ADV(this.pos,Util.Rand2D(16));
-      EntityManager.addEntity(new Flash(this.pos));
-    }
     for(let i = 0;i<8;i++){
       let v = Util.Rand2D(30);
       EntityManager.addEntity(new Stone(CPV(this.pos),v));
@@ -36,6 +32,10 @@ export default class Explosion1 extends EFFECT{
       let v = Util.Rand2D(16);
       let p = ADV(v,this.pos);
       EntityManager.addEntity(new Fire(p));
+    }
+    for(let i =0;i<3;i++){
+      let p = ADV(this.pos,Util.Rand2D(16));
+      EntityManager.addEntity(new Flash(this.pos));
     }
   }
 

@@ -19,10 +19,13 @@ import Explosion1 from './Effect/explosion1.js';
 
 /*bullet1クラス*/
 export default class Bullet1 extends Bullet{
-  constructor(pos,vel){
-    super(pos,vel,VEC0());
+  constructor(pos,vi,arg,target){
+    super(pos,{x:vi * Math.cos(arg) , y:vi * Math.sin(arg)},VEC0());
     /*基本情報*/
     this.frame = 0;
+    this.arg = arg;
+    this.vi = vi;
+    if(target) this.targetedEnemy = target.enemy;
     /*スプライト*/
     this.pattern = Art.bulletPattern.bullet1;
     this.spid = 0;
@@ -57,8 +60,8 @@ export default class Bullet1 extends Bullet{
       this.frame > 100 || 
       Util.distance(this.pos , this.launchedPos) > this.length){
       EntityManager.removeEntity(this);
-//    EventManager.eventList.push(new QuakeEvent(6));//ゆれ
-//    EntityManager.addEntity(new Explosion1(CPV(this.pos)));
+    EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
+    EntityManager.addEntity(new Explosion1(CPV(this.pos)));
     }
     this.sprite.position = this.pos;
     this.frame++;

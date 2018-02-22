@@ -47,7 +47,9 @@ export default class Drawer{
 
     //フィルタ
     this.blurFilter = new PIXI.filters.BlurFilter();
-    this.blurFilter.blur = 3;
+    this.blurFilter.blur = 7;
+    this.noiseFilter = new PIXI.filters.NoiseFilter(0.3);
+
   }
 
   /*コンテナにスプライトを追加*/
@@ -139,8 +141,6 @@ export default class Drawer{
     this.entityContainer.scale.y = this.magnification;
     this.filterContainer.scale.x = this.magnification;
     this.filterContainer.scale.y = this.magnification;
-  }
-  static Blur(){
   }
 
   static Quake(diff){

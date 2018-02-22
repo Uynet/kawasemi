@@ -25,7 +25,7 @@ export default class Bullet1AI{
             this.bullet.hp--;
             /* ■ SoundEffect : hitWall */
             /* □ Effect : hitWall */
-            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}));
+            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,VEC0()));
           };
           break;
         case ENTITY.WALL :
@@ -41,7 +41,7 @@ export default class Bullet1AI{
               this.bullet.hp = 0;
             }
             /* □ Effect : hitWall */
-            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,{x:0,y:0}));
+            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,VEC0()));
           };
           break;
       }
@@ -49,6 +49,16 @@ export default class Bullet1AI{
   }
 
   Do(){
+    this.bullet.vel = {
+      x: this.bullet.vi * Math.cos(this.bullet.arg),
+      y: this.bullet.vi * Math.sin(this.bullet.arg),
+    };
+    let to = ADV(this.bullet.targetedEnemy.pos , MLV(VECN(-1),this.bullet.pos));
+    let closs = this.bullet.vel.x * to.y - this.bullet.vel.y * to.x; 
+
+    if(closs>0) this.bullet.arg += 0.1;
+    else if(closs<0) this.bullet.arg -= 0.1;
+
     this.collision();
     this.Phisics();
   }

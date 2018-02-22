@@ -52,7 +52,7 @@ export default class MapData{
 
     //背景の生成
     //if(state == "ENTER")
-      this.AddBackGround();
+    this.AddBackGround();
     //entityの生成
     /*タイルに割り当てるtype
      * 1 : 壁

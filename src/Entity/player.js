@@ -135,7 +135,6 @@ export default class Player extends Entity{
     }
     /*上向き*/
     if(Input.isKeyInput(KEY.UP)){
-      if(Input.isKeyInput(KEY.SP)) this.offset = Math.max(this.offset-0.5,-20);
       //右向き上 or 左向き上
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.UR;
@@ -146,7 +145,6 @@ export default class Player extends Entity{
     }
     /*下向き*/
     if(Input.isKeyInput(KEY.DOWN)){
-      if(Input.isKeyInput(KEY.SP)) this.offset = Math.min(this.offset+0.5,20);
       //右向き下 or 左向き下
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.DR;
@@ -346,8 +344,14 @@ ScrollByDir(){
    switch(this.dir){
    case DIR.UR :
    case DIR.UL :
+      if(Input.isKeyInput(KEY.X)) this.offset = Math.max(this.offset-0.2,-20);
+     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
+      break;
    case DIR.DR :
    case DIR.DL :
+      if(Input.isKeyInput(KEY.X)) this.offset = Math.min(this.offset+0.2,20);
+     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
+     break;
    default :
      Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
    }
