@@ -10,10 +10,10 @@ import FontEffect from '../Effect/fontEffect.js';
 import Coin from '../coin.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
-import Sonic from '../Effect/sonic.js';
 import Util from '../../util.js';
+import Param from '../../param.js';
 
-const ENEMY2 = {
+let ENEMY2 = {
   HP : 5,
   ATK_MAX : 10,
   ATK_MIN : 5,
@@ -35,6 +35,7 @@ export default class Enemy2 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
+    ENEMY2 = Param.ENEMY2;
     this.addAI(new Enemy2AI(this));
     this.atkMax = ENEMY2.ATK_MAX;
     this.hp = ENEMY2.HP;
@@ -56,7 +57,7 @@ export default class Enemy2 extends Enemy{
       for(let i = 0;i<this.coin;i++){
         EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
       }
-      EventManager.eventList.push(new QuakeEvent(5));//ゆれ
+      //EventManager.eventList.push(new QuakeEvent(5));//ゆれ
       EntityManager.removeEntity(this);
   }
   //自分がダメージを食らう

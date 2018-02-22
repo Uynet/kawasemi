@@ -38,10 +38,11 @@ export default class Signboard extends BackEntity{
   }
 
   Update(){
-    /*nothing to do*/
     let player = EntityManaer.player;
-    if(Util.distance(player.pos,this.pos) < 16){
+    if(Util.distance(player.pos,this.pos) < 16 && player.isAlive){
       //キーを押すと読む
+      //メッセージ文が"EVENT"ならばイベントを発生させる
+      //page : 現在のページ番号
       if( Input.isKeyClick(KEY.SP)){
         if(!this.isRead){
           this.isRead = true;
@@ -49,6 +50,13 @@ export default class Signboard extends BackEntity{
           EventManager.eventList.push(event);
           this.page++;
         }else{
+          //イベント発生用メッセージの時
+          //イベントを発生させてページを読み進める
+          if(this.message[this.page] == "EVENT"){;
+            let event = new MessageEvent(this.message[this.page],"EVENT");
+            EventManager.eventList.push(event);
+            this.page++;
+          }
           if(this.page < this.message.length){
             let event = new MessageEvent(this.message[this.page],"PAGE");
             EventManager.eventList.push(event);
@@ -57,7 +65,7 @@ export default class Signboard extends BackEntity{
           }else{
             //なければ終了
             Game.isMes = false;
-            UIManager.CloseMessage();
+            UIManager.CloseMessage();//枠を閉じる
             this.isRead = false;
             this.page = 0;
           }

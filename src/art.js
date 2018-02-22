@@ -428,12 +428,6 @@ export default class Art{
     this.font["を"] = PIXI.Texture.fromFrame('font316.png');
     this.font["欠番4"] = PIXI.Texture.fromFrame('font317.png');
     this.font["ん"] = PIXI.Texture.fromFrame('font318.png');
-    this.font["ー"] = PIXI.Texture.fromFrame('font319.png');
-    this.font["!"] = PIXI.Texture.fromFrame('font31a.png');
-    this.font["?"] = PIXI.Texture.fromFrame('font31b.png');
-    this.font["。"] = PIXI.Texture.fromFrame('font31c.png');
-    this.font["、"] = PIXI.Texture.fromFrame('font31d.png');
-    this.font["."] = PIXI.Texture.fromFrame('font31e.png');
     this.font["が"] = PIXI.Texture.fromFrame('font40.png');
     this.font["ぎ"] = PIXI.Texture.fromFrame('font41.png');
     this.font["ぐ"] = PIXI.Texture.fromFrame('font42.png');
@@ -604,6 +598,20 @@ export default class Art{
     this.font["x"] = PIXI.Texture.fromFrame('fontB17.png');
     this.font["y"] = PIXI.Texture.fromFrame('fontB18.png');
     this.font["z"] = PIXI.Texture.fromFrame('fontB19.png');
+    this.font["ー"] = PIXI.Texture.fromFrame('fontC0.png');
+    this.font["!"] = PIXI.Texture.fromFrame('fontC1.png');
+    this.font["?"] = PIXI.Texture.fromFrame('fontC2.png');
+    this.font["。"] = PIXI.Texture.fromFrame('fontC3.png');
+    this.font["、"] = PIXI.Texture.fromFrame('fontC4.png');
+    this.font["."] = PIXI.Texture.fromFrame('fontC5.png');
+    this.font["("] = PIXI.Texture.fromFrame('fontC6.png');
+    this.font[")"] = PIXI.Texture.fromFrame('fontC7.png');
+    this.font["["] = PIXI.Texture.fromFrame('fontC8.png');
+    this.font["]"] = PIXI.Texture.fromFrame('fontC9.png');
+    this.font["→"] = PIXI.Texture.fromFrame('fontCa.png');
+    this.font["←"] = PIXI.Texture.fromFrame('fontCb.png');
+    this.font["↑"] = PIXI.Texture.fromFrame('fontCc.png');
+    this.font["↓"] = PIXI.Texture.fromFrame('fontCd.png');
   }
 
   static async LoadTexture(){
