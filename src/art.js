@@ -606,8 +606,8 @@ export default class Art{
     this.font["."] = PIXI.Texture.fromFrame('fontC5.png');
     this.font["("] = PIXI.Texture.fromFrame('fontC6.png');
     this.font[")"] = PIXI.Texture.fromFrame('fontC7.png');
-    this.font["["] = PIXI.Texture.fromFrame('fontC8.png');
-    this.font["]"] = PIXI.Texture.fromFrame('fontC9.png');
+    this.font["-"] = PIXI.Texture.fromFrame('fontC8.png');
+    this.font["+"] = PIXI.Texture.fromFrame('fontC9.png');
     this.font["→"] = PIXI.Texture.fromFrame('fontCa.png');
     this.font["←"] = PIXI.Texture.fromFrame('fontCb.png');
     this.font["↑"] = PIXI.Texture.fromFrame('fontCc.png');

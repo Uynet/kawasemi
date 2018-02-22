@@ -5,6 +5,7 @@ import StartStageEvent from './Event/startStageEvent.js';
 import StartGameEvent from './Event/startGameEvent.js';
 import Scene from './Event/scene.js';
 import UIManager from './UI/uiManager.js';
+import UIFont from './UI/uiFont.js';
 import WeaponManager from './Weapon/weaponManager.js';
 import Art from './art.js';
 import Drawer from './drawer.js';
@@ -61,10 +62,25 @@ export default class Game{
       if(Game.isSelect){
         //ゲーム画面を暗くする
         //TODO : イベント化　 
-        UIManager.OpenWeapon();
+        //UIManager.OpenWeapon();
+        
+        //pause の文字をだす　
+        let p = {
+          x : 112,
+          y : 64
+        }
+        UIManager.addUI(new UIFont(p,"-PAUSE-","MES"));//テキスト 
+
+        Drawer.entityContainer.filters = [Drawer.blurFilter];
+        Drawer.backContainer.filters = [Drawer.blurFilter];
+        Drawer.foreContainer.filters = [Drawer.blurFilter];
         Drawer.addContainer(dark,"FILTER");
       }else{
-        UIManager.CloseWeapon();
+        UIManager.CloseMessage();
+        //UIManager.CloseWeapon();
+        Drawer.entityContainer.filters = [0];
+        Drawer.backContainer.filters = [0];
+        Drawer.foreContainer.filters = [0];
         Drawer.removeContainer(dark,"FILTER");
       }
     }
