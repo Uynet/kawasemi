@@ -23,6 +23,13 @@ const DIR = {
 
 const SEEN = 2;
 
+const WEAPON1 = {
+  AGI : 18,
+  COST : 5,
+  SPEED : 10, 
+  LENGTH : 180,
+}
+
 export default class Weapon1 extends Weapon{
   constructor(){
     super("1");
@@ -30,10 +37,10 @@ export default class Weapon1 extends Weapon{
     this.target;
     this.isTargetOn = false;//照準が発生しているか
       /*パラメータ*/
-      this.agi = 15;//間隔
-    this.cost = 5;
-    this.speed = 6;//弾速
-      this.length = 180;//射程距離
+      this.agi = WEAPON1.AGI;//間隔
+    this.cost = WEAPON1.COST;
+    this.speed = WEAPON1.SPEED;//弾速
+      this.length = WEAPON1.LENGTH;//射程距離
   }
 
   //敵が視界に入っているか

@@ -17,6 +17,13 @@ import Fire from './Effect/fire.js';
 import Smoke from './Effect/smoke.js';
 import Explosion1 from './Effect/explosion1.js';
 
+const BULLET1 = {
+  HP : 1,
+  ATK_MAX : 99,
+  LENGTH : 180,
+  CURVE : 0.2,
+}
+
 /*bullet1クラス*/
 export default class Bullet1 extends Bullet{
   constructor(pos,vi,arg,target){
@@ -31,12 +38,14 @@ export default class Bullet1 extends Bullet{
     this.spid = 0;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = pos;
+    this.sprite.anchor.set(0.5);
     /*コライダ*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
     /*パラメータ*/
-    this.hp = 1;//弾丸のHP 0になると消滅
-    this.atk = 99;//攻撃力
-    this.length = 180;//これは武器がもつ?
+    this.hp = BULLET1.HP;//弾丸のHP 0になると消滅
+    this.atk = BULLET1.ATK_MAX;//攻撃力
+    this.curve = BULLET1.CURVE;
+    this.length = BULLET1.LENGTH;//これは武器がもつ?
     this.launchedPos = CPV(pos);//射出された座標 射程距離の計算に必要 
     this.type = ENTITY.BULLET;
     /*AI*/
@@ -63,7 +72,9 @@ export default class Bullet1 extends Bullet{
     EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
     EntityManager.addEntity(new Explosion1(CPV(this.pos)));
     }
-    this.sprite.position = this.pos;
+    this.sprite.position = ADV(this.pos,VECN(8));
+    this.sprite.rotation = this.arg + Math.PI/2;
+
     this.frame++;
   }
 }

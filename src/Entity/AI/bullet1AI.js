@@ -47,8 +47,7 @@ export default class Bullet1AI{
       }
     }
   }
-
-  Do(){
+  Horming(){
     this.bullet.vel = {
       x: this.bullet.vi * Math.cos(this.bullet.arg),
       y: this.bullet.vi * Math.sin(this.bullet.arg),
@@ -56,9 +55,12 @@ export default class Bullet1AI{
     let to = ADV(this.bullet.targetedEnemy.pos , MLV(VECN(-1),this.bullet.pos));
     let closs = this.bullet.vel.x * to.y - this.bullet.vel.y * to.x; 
 
-    if(closs>0) this.bullet.arg += 0.1;
-    else if(closs<0) this.bullet.arg -= 0.1;
+    if(closs>50) this.bullet.arg += this.bullet.curve;
+    else if(closs<-50) this.bullet.arg -= this.bullet.curve;
+  }
 
+  Do(){
+this.Horming();
     this.collision();
     this.Phisics();
   }
