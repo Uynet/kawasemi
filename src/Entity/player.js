@@ -77,6 +77,7 @@ export default class Player extends Entity{
     this.weapon.isTargetOn = false;
     this.weapon.target = null;//これ大丈夫か??
     this.dir = DIR.R;//向き
+    this.score = 0;
     /*フラグ*/
     this.isJump = false;//空中にいるか
     this.isRun = false;//走っているか
@@ -87,8 +88,6 @@ export default class Player extends Entity{
       on : false,//乗っているか
       under : null,//自分の下
     }
-
-    this.score = 0;
   }
   /*キー入力による移動*/
   Input(){

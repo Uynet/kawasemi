@@ -21,7 +21,6 @@ export default class StartStageEvent extends Event{
       Game.isSeq = true;
       //画面遷移エフェクトの♢
       let frame = 0;//経過フレーム数 途中で0にしているので注意
-
       let spid = 0;//スプライト番号
       let pattern = Art.seqPattern;//パターン
       let seq = new Array(400);//各♢

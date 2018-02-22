@@ -1009,8 +1009,87 @@
     "fontB19.png": {
       "frame": {"x":200, "y":88, "w":8, "h":8},
       "sourceSize": {"w": 8, "h": 8}
+    },
+     "fontC0.png": {
+      "frame": {"x":0, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontC1.png": {
+      "frame": {"x":8, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontC2.png": {
+      "frame": {"x":16, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "fontC3.png": {
+      "frame": {"x":24, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "fontC4.png": {
+      "frame": {"x":32, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontC5.png": {
+      "frame": {"x":40, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "fontC6.png": {
+      "frame": {"x":48, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontC7.png": {
+      "frame": {"x":56, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontC8.png": {
+      "frame": {"x":64, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "fontC9.png": {
+      "frame": {"x":72, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+     "fontCa.png": {
+      "frame": {"x":80, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontCb.png": {
+      "frame": {"x":88, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontCc.png": {
+      "frame": {"x":96, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontCd.png": {
+      "frame": {"x":104, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontCe.png": {
+      "frame": {"x":112, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontCf.png": {
+      "frame": {"x":120, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+      "fontC10.png": {
+      "frame": {"x":128, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontC11.png": {
+      "frame": {"x":136, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontC12.png": {
+      "frame": {"x":144, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "fontC13.png": {
+      "frame": {"x":152, "y":96, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
     }
-
 
 
   },

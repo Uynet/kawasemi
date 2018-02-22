@@ -15,19 +15,17 @@ export default class QuakeEvent extends Event{
   constructor(size,time){
     //undefined
     if(!time) {
+      console.warn("invalid time : " + time);
       time = 5
     };
     super(1);
     function* gen(){
       let frame = 0;
-      let d = {
-        x:size * (Math.random()-0.5),
-        y:size * (Math.random()-0.5)
-      };
+      let d;
       while(frame < time){
+        d = Rand2D(size);
         Drawer.Quake(d);
-        d.x *= 0.6;
-        d.y *= 0.6;
+        size *= 0.9;
         frame++;
         yield ;
       }

@@ -4,6 +4,7 @@ import MapData from '../Stage/mapData.js';
 import EventManager from './eventmanager.js';
 import QuakeEvent from './quakeEvent.js';
 import Game from '../Game.js';
+import EntityManager from '../Stage/entityManager.js';
 
 //新しくメッセージ枠を開く
 function* pop(text){
@@ -20,8 +21,8 @@ function* page(text){
 //イベントを発生させる
 function* event(){
   let e = new QuakeEvent(5,10);
+  EntityManager.player.Damage(-999);
   EventManager.eventList.push(e);
-  Game.isMes = true;
   yield ;
 }
 

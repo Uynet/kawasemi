@@ -22,5 +22,12 @@ export default class Param{
       ATK_MIN : 5,
       GRAVITY : 0.1
     }
+    this.ENEMY2 = {
+      HP : 5,
+      ATK_MAX : 10,
+      ATK_MIN : 5,
+      GRAVITY : 0.1,
+      COIN : 3
+    }
   }
 }
