@@ -105,15 +105,12 @@ export default class Weapon1 extends Weapon{
         console.assert(player.bullet >=0 );
 
         let vi = this.speed;
-        let v = {
-          x: vi * Math.cos(player.arg + (Math.random()-0.5)/5),
-          y: vi * Math.sin(player.arg + (Math.random()-0.5)/5)
-        }
+        let arg = player.arg;
         let p = {
-          x: player.pos.x -4 + 5 * Math.cos(player.arg),
-          y: player.pos.y + 5 * Math.sin(player.arg),
+          x: player.pos.x -4 + 5 * Math.cos(arg),
+          y: player.pos.y + 5 * Math.sin(arg),
         }
-        let bullet = new Bullet1(p,v);
+        let bullet = new Bullet1(p,vi,arg,this.target);
         bullet.atk = 1;
         EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */

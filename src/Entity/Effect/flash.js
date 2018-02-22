@@ -21,8 +21,8 @@ export default class Flash extends EFFECT{
   Update(){
     //this.sprite.texture = this.pattern[this.spid];
     this.sprite.scale = ADV(VECN(1),Rand2D(1));
-    this.sprite.alpha = 0.4;
-    if(this.frame == 2){
+    this.sprite.alpha = 1;
+    if(this.frame == 1){
       EntityManager.removeEntity(this);
     }
     this.sprite.position = this.pos;

@@ -41,11 +41,6 @@ export default class Explosion2 extends EFFECT{
       let smoke = new Smoke(CPV(this.pos),v,Rand(10)); 
       EntityManager.addEntity(smoke);
     }
-    for(let i =0;i<3;i++){
-      let v = Util.Rand2D(16);
-      let p = ADV(v,this.pos);
-      EntityManager.addEntity(new Fire(p));
-    }
   }
 
   Update(){

@@ -71,17 +71,20 @@ export default class Game{
         }
         UIManager.addUI(new UIFont(p,"-PAUSE-","MES"));//テキスト 
 
-        Drawer.entityContainer.filters = [Drawer.blurFilter];
-        Drawer.backContainer.filters = [Drawer.blurFilter];
-        Drawer.foreContainer.filters = [Drawer.blurFilter];
-        Drawer.addContainer(dark,"FILTER");
+        let filters = [Drawer.noiseFilter,Drawer.blurFilter];
+        Drawer.entityContainer.filters = filters;
+        Drawer.backContainer.filters = filters;
+        Drawer.foreContainer.filters = filters
+        Drawer.backGroundContainer.filters = filters
+     //   Drawer.addContainer(dark,"FILTER");
       }else{
         UIManager.CloseMessage();
         //UIManager.CloseWeapon();
         Drawer.entityContainer.filters = [0];
         Drawer.backContainer.filters = [0];
+        Drawer.backGroundContainer.filters = [0];
         Drawer.foreContainer.filters = [0];
-        Drawer.removeContainer(dark,"FILTER");
+      //  Drawer.removeContainer(dark,"FILTER");
       }
     }
   }

@@ -5,8 +5,8 @@ import Util from '../../util.js';
 
 //閃光
 export default class Fire extends EFFECT{
-  constructor(pos){
-    super(pos,VEC0());
+  constructor(pos,vel){
+    super(pos,vel);
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.frame = 0;
