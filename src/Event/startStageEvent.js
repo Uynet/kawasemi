@@ -1,5 +1,4 @@
 import Event from './event.js';
-import UIManager from '../UI/uiManager.js';
 import EntityManager from '../Stage/entityManager.js';
 import Game from '../Game.js';
 import EventManager from './eventmanager.js';
@@ -19,7 +18,7 @@ export default class StartStageEvent extends Event{
       //note : Game.seqがtrueの間はEntityは更新されない
 
       //やっぱり画面移動中も敵動いてて欲しい...
-      Game.seq = true;
+      Game.isSeq = true;
       //画面遷移エフェクトの♢
       let frame = 0;//経過フレーム数 途中で0にしているので注意
 
@@ -79,7 +78,7 @@ export default class StartStageEvent extends Event{
         Drawer.removeContainer(seq[i],"FILTER");
       }
       */
-      Game.seq = false;
+      Game.isSeq = false;
       yield;
     }
     let itt = gen();
