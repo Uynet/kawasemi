@@ -108,7 +108,14 @@ export default class Game{
     switch(Game.scene.state){
       /*更新*/
       case STATE.TITLE :
-        Game.UpdateTitle();
+        if(Game.isSeq){
+          //遷移画面中
+          //2018/2/22
+          //キー入力できないようにする
+          //スタート画面で遷移中にキー連打されると開始イベントが複数発生してバグるため
+        }else{
+          Game.UpdateTitle();
+        }
         break;
       case STATE.STAGE :
         if(Game.isSeq){
