@@ -50,9 +50,11 @@ export default class Signboard extends BackEntity{
           EventManager.eventList.push(event);
           this.page++;
         }else{
-          //イベント発生用メッセージの時
+          /*イベント発生用メッセージ*/
           //イベントを発生させてページを読み進める
+          //テスト用イベント(死ぬ)
           if(this.message[this.page] == "EVENT"){;
+            //第一引数いらんのでは?
             let event = new MessageEvent(this.message[this.page],"EVENT");
             EventManager.eventList.push(event);
             this.page++;

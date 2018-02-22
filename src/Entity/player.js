@@ -250,7 +250,7 @@ export default class Player extends Entity{
       console.warn(atk);
     }
     //無敵時間は攻撃を受けない
-    if(!this.isInvincible){
+    //if(!this.isInvincible){
       if(this.isAlive){
         this.hp+=atk;
         //フォントはダメージ数に応じて数字を表示する　
@@ -261,13 +261,15 @@ export default class Player extends Entity{
         this.frameDamaged = this.frame;
         EventManager.eventList.push(new QuakeEvent(5,2));
       }
-    }
+    //}
   }
   //コイン取得
   GetScore(){
-    this.score+=1;
-    this.bullet += 5;//とりあえずbulletも回復しとくか
-    UIManager.score.font.UpdateFont(this.score);
+    if(this.isAlive){
+      this.score+=1;
+      this.bullet += 5;//とりあえずbulletも回復しとくか
+      UIManager.score.font.UpdateFont(this.score);
+    }
   }
   /* 衝突判定 */
   Collision(){

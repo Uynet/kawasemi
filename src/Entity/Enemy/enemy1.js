@@ -112,7 +112,7 @@ export default class Enemy1 extends Enemy{
     if(c.isHit && c.n.y != 1){
       //ダメージ
       let damage = this.atkMax  +  Math.floor(-this.vel.y * Math.random());
-      EntityManager.player.Damage(-damage);
+      if(!player.isInvincible)player.Damage(-damage);
     }
   }
 

@@ -36,7 +36,7 @@ export default class Drawer{
 
     /*拡大率*/
     this.magnification = 3;
-    let po = {x:3,y:3};
+    let po = VECN(this.magnification);
     this.backGroundContainer.scale = po;
     this.backContainer.scale = po;
     this.entityContainer.scale = po;
@@ -44,11 +44,10 @@ export default class Drawer{
     this.foreContainer.scale = po;
     this.filterContainer.scale = po;
     $("#pixiview").append(this.Renderer.view);
-  }
-  static ChangeSize(i){
-    size = i;
-    let PIXI_WIDTH = 600 * i;
-    let PIXI_HEIGHT = 600 * i;
+
+    //フィルタ
+    this.blurFilter = new PIXI.filters.BlurFilter();
+    this.blurFilter.blur = 3;
   }
 
   /*コンテナにスプライトを追加*/
@@ -140,6 +139,8 @@ export default class Drawer{
     this.entityContainer.scale.y = this.magnification;
     this.filterContainer.scale.x = this.magnification;
     this.filterContainer.scale.y = this.magnification;
+  }
+  static Blur(){
   }
 
   static Quake(diff){
