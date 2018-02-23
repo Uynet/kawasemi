@@ -5,36 +5,64 @@ import Art from '../art.js';
 import Input from '../input.js';
 import Timer from '../timer.js';
 import Util from '../util.js';
+import Font from './Font.js';
+
+const P_AMOUNT = {
+  x : 22, 
+  y : 4, 
+};
+//HP Icon
+const P_ICON = {
+  x : -16, 
+  y : 0, 
+};
 
 export default class Bullet extends UI{
   constructor(pos,name){
     super(pos);
     /*基本情報*/
     this.isAlive = true;//消えたらfalse
-    this.type = "BULLET";
-    /*スプライト*/
-    switch (name){
-      case "outer" : this.spid = 0; break;
-      case "bar" : this.spid = 1; break;
-      case "icon" : this.spid = 2; break;
-      default : console.warn("bullet"); break;
-    }
-    this.tex = Art.UIPattern.bullet[this.spid];
-    this.sprite = Art.SpriteFactory(this.tex);
-    this.sprite.position = this.pos;
+    this.type = "BULLET"; 
+    this.isMultiple = true;
     this.name = name;
-    this.max = 100;//EntityManager.player.maxbullet;
+    this.pos = pos;
+    /*child*/
+    this.outer = {pos:CPV(pos)};
+    this.bar = {pos:CPV(pos)};
+    this.icon = {pos:ADV(pos,P_ICON)};
+    this.amount = new Font(ADV(pos,P_AMOUNT),"100","BULLET");//数字
+
+    //pos
+    /*スプライト*/
+    this.spid = 0;
+    this.sprites = [];
+    let s;
+    //outer
+    s = Art.SpriteFactory(Art.UIPattern.bullet[this.spid]);
+    s.position = this.outer.pos; 
+    this.sprites.push(s);
+    this.spid++;
+    //bar
+    s = Art.SpriteFactory(Art.UIPattern.bullet[this.spid]);
+    s.position = this.bar.pos; 
+    this.sprites.push(s);
+    this.spid++;
+    //icon
+    s = Art.SpriteFactory(Art.UIPattern.bullet[this.spid]);
+    s.position = this.icon.pos; 
+    this.sprites.push(s);
+    //amount
+    for(let l of this.amount.sprites){
+      this.sprites.push(l);
+    }
+    /*パラメータ*/
+    this.max = 100;
   }
   UpdateBar(bullet){
-    if(this.name == "bar"){
-      /*debug*/
-      if(!EntityManager.player){
-        console.warn("player undefined");
-      }else{
-        this.sprite.scale.x = bullet/this.max;
-        UIManager.bullet.font.UpdateFont(bullet);
-      }
-    }
+    //barの長さを更新
+    this.sprites[1].scale.x = bullet/this.max;
+    //bullet数字の更新
+    this.amount.UpdateFont(bullet);
   }
   Update(){
   }

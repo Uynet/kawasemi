@@ -11,49 +11,15 @@ import Message from './Message.js';
 
 import EntityManager from '../Stage/entityManager.js';
 
-const WEQ = {
-  x : 8, 
-  y : 160, 
-};
 //HP outer
 const HPF = {
   x : 24, 
   y : 160
 };
-//HP bar
-const HPB = {
-  x : HPF.x, 
-  y : HPF.y, 
-};
-//HP font 
-const HPFont = {
-  x : HPF.x+22, 
-  y : HPF.y+4, 
-};
-//HP Icon
-const HPIC = {
-  x : HPF.x-16, 
-  y : HPF.y, 
-};
 //bullet outer
 const BulF = {
   x : HPF.x, 
   y : HPF.y+16, 
-};
-//bullet bar
-const BulB = {
-  x : BulF.x, 
-  y : BulF.y, 
-};
-//Bullet font 
-const BulFont = {
-  x : BulF.x+22, 
-  y : BulF.y+4, 
-};
-//Bullet icon 
-const BulIC = {
-  x : BulF.x-16, 
-  y : BulF.y, 
 };
 //score font
 const SCORE = {
@@ -75,7 +41,6 @@ export default class UIManager{
   static Init(){
     this.UIList = [];//UI全部のリスト
     this.WeaponIconList = [];//武器アイコンのリスト
-    //this.weaponEquip;
     this.HP = {
       bar : undefined,
       outer : undefined,
@@ -114,9 +79,9 @@ export default class UIManager{
     UIManager.addUI(new HP(HPF));//
     /*bullet*/
     UIManager.addUI(new Bullet(BulF,"outer"));//外枠
-    UIManager.addUI(new Bullet(BulB,"bar"));//中
-    UIManager.addUI(new Font(BulFont,"100","BULLET"));//数字
-    UIManager.addUI(new Bullet(BulIC,"icon"));//
+   // UIManager.addUI(new Bullet(BulB,"bar"));//中
+   // UIManager.addUI(new Font(BulFont,"100","BULLET"));//数字
+   // UIManager.addUI(new Bullet(BulIC,"icon"));//
     /*score*/
     UIManager.addUI(new Font(SCORE,"0","SCORE"));//数字
   }
@@ -161,21 +126,9 @@ export default class UIManager{
   static addUI(ui){
     this.UIList.push(ui); 
     switch (ui.type){
-      case "HP" :
-        this.HP = ui; break;
-        //Bulletゲージ
-      case "BULLET" :
-        switch(ui.name){
-          case "bar" : this.bullet.bar = ui;break;
-          case "outer" : this.bullet.outer = ui;break;
-          case "font" : this.bullet.font = ui;break;
-          case "icon" : this.bullet.icon = ui;break;
-        }
-        break;
-        //スコア表示
-      case "SCORE" :
-        this.score.font = ui;break;
-        //メッセージ
+      case "HP" : this.HP = ui; break;
+      case "BULLET" : this.bullet = ui; break;
+      case "SCORE" : this.score.font = ui;break;
       case "MES" : 
         switch(ui.name){
           case "font" : this.message.sentence.push(ui);break;
