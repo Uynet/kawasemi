@@ -21,13 +21,14 @@ const BULLET1 = {
   HP : 1,
   ATK_MAX : 99,
   LENGTH : 180,
-  CURVE : 0.2,
+  CURVE : 0.1,
 }
 
 /*bullet1クラス*/
+//Missile
 export default class Bullet1 extends Bullet{
   constructor(pos,vi,arg,target){
-    super(pos,{x:vi * Math.cos(arg) , y:vi * Math.sin(arg)},VEC0());
+    super(pos,{x:vi * Math.cos(arg) , y:vi * Math.sin(arg)});
     /*基本情報*/
     this.frame = 0;
     this.arg = arg;
@@ -57,7 +58,7 @@ export default class Bullet1 extends Bullet{
     /*□Effect BulletBulr*/
     if(this.frame%1 == 0){
       let p = CPV(this.pos);
-      let v = VEC0();
+      let v = Rand2D(1);
       EntityManager.addEntity(new BulletBlur(p,v));
     }
     for (let AI of this.AIList){
@@ -69,14 +70,14 @@ export default class Bullet1 extends Bullet{
       this.frame > 100 || 
       Util.distance(this.pos , this.launchedPos) > this.length){
       EntityManager.removeEntity(this);
-    EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
-    EntityManager.addEntity(new Explosion1(CPV(this.pos)));
+      EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
+      EntityManager.addEntity(new Explosion1(CPV(this.pos)));
     }
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.rotation = this.arg + Math.PI/2;
     this.sprite.texture = this.pattern[this.spid];
 
-    this.spid = this.spid%4;
+    this.spid = (this.spid+0)%4;
     this.frame++;
   }
 }

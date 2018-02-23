@@ -25,8 +25,8 @@ const SEEN = 2;
 
 const WEAPON1 = {
   AGI : 18,
-  COST : 5,
-  SPEED : 5, 
+  COST : 10000,
+  SPEED : 9, 
   LENGTH : 180,
 }
 
@@ -125,8 +125,9 @@ export default class Weapon1 extends Weapon{
         EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
         //反動
         //player.vel.x -= v.x/11;
-        //player.acc.y -= v.y/5;
-        if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
+        let v = POV(arg,vi);
+        player.acc.y -= v.y/5;
+        //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
         //振動
         //EventManager.eventList.push(new QuakeEvent(8,2));
       }

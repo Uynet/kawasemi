@@ -115,6 +115,7 @@ export default class Enemy2 extends Enemy{
           this.floor.under = EntityManager.enemyList[i];
           this.isJump = false;
           this.vel.y = Math.min(1,this.vel.y * -0.3);
+this.vel.x *= -1;
         }
         //天井との衝突
         if(c.n.y == 1 ){

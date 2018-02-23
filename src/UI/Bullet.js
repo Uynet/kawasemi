@@ -10,12 +10,11 @@ export default class Bullet extends UI{
   constructor(pos,name){
     super(pos);
     /*基本情報*/
-    this.frame = 0;
     this.isAlive = true;//消えたらfalse
     this.type = "BULLET";
     /*スプライト*/
     switch (name){
-      case "frame" : this.spid = 0; break;
+      case "outer" : this.spid = 0; break;
       case "bar" : this.spid = 1; break;
       case "icon" : this.spid = 2; break;
       default : console.warn("bullet"); break;
