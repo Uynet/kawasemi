@@ -266,7 +266,7 @@ export default class Player extends Entity{
     if(this.isAlive){
       this.score+=1;
       this.bullet += 5;//とりあえずbulletも回復しとくか
-      UIManager.score.font.UpdateFont(this.score);
+      UIManager.score.UpdateFont(this.score);
     }
   }
   /* 衝突判定 */

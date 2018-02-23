@@ -4,19 +4,73 @@ import Art from '../art.js';
 import Input from '../input.js';
 import Timer from '../timer.js';
 import Util from '../util.js';
+import Font from './Font.js';
 
- export default class Message extends UI{
-   constructor(pos,name){
+const P_TEXT = VECN(8);//テキストの相対位置
+const COLUMN = 10;//行間
+
+export default class Message extends UI{
+  constructor(pos,text){
     super(pos); 
     /*基本情報*/
-    this.name = name;
-    this.type = "MES";
+    this.text = text;
+    let sentence = this.text.split("\n");
+    this.sentence = [];//Font
+      this.type = "MES";
+    /*child*/
+    this.outer = {
+      sprite : Art.SpriteFactory(Art.UIPattern.message.frame), 
+    }
+    //文字の長さに応じて枠を調整
+    this.outer.sprite.scale.x *= 1.5;
+    this.outer.sprite.scale.y *= 1.5; //yは固定
     /*スプライト*/
-    this.tex = Art.UIPattern.message.frame;
-    this.sprite = Art.SpriteFactory(this.tex);
-    this.sprite.position = this.pos;
-   }
-   Update(){
-     /*nothing to do*/
-   }
- }
+    this.isMultiple = true;
+    this.sprites = [];
+    //枠スプライト追加
+    let p = CPV(pos);
+    this.outer.sprite.position = p;
+    this.sprites.push(this.outer.sprite);
+    p = ADV(p,P_TEXT);
+    //テキスト
+    for(let i = 0;i<sentence.length;i++){
+      this.sentence.push(new Font(p,sentence[i],"MES"));//テキスト 
+      p.y += COLUMN;
+    }
+    //各行各文字のスプライトを追加
+    for(let i=0;i<this.sentence.length;i++){
+      for(let l of this.sentence[i].sprites){
+        this.sprites.push(l);
+      }
+    }
+  }
+  Page(text){
+    //改ページするために文字だけを消す
+    for(let i=0;i<this.sentence.length;i++){
+      UIManager.removeUI(this.sentence[i]);
+    }
+    //これをすると先頭以外の要素が消える
+    //つまり枠スプライトを残し他の文字を消す
+    this.sprites.length = 1;//は？
+      //新しい文字
+      this.text = text;
+    let sentence = this.text.split("\n");
+    this.sentence = [];//Font
+      let p = CPV(this.pos);
+    p = ADV(p,P_TEXT);
+    //テキスト
+    for(let i = 0;i<sentence.length;i++){
+      this.sentence.push(new Font(p,sentence[i],"MES"));//テキスト 
+      p.y += COLUMN;
+    }
+    //各行各文字のスプライトを追加
+    for(let i=0;i<this.sentence.length;i++){
+      for(let l of this.sentence[i].sprites){
+        this.sprites.push(l);
+      }
+    }
+    UIManager.addUI(this);
+  }
+  Update(){
+  }
+}
