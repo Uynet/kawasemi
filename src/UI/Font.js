@@ -11,22 +11,25 @@ export default class Font extends UI{
     this.type = type;
     this.name = "font";
     this.isAlive = true;//消えたらfalse
-    this.isMultiple = true;
-      /*スプライト*/
+      this.isMultiple = true;
+    /*スプライト*/
     this.str = str; //0~9
-    this.sprites = [];//スプライトを配列で持っている
+      this.sprites = [];//スプライトを配列で持っている
     //0埋めをするかしないか
     switch(this.type){
       case "HP" :
       case "BULLET" :
       case "MES" :
+      case "MENU" :
         this.isPadding = true;
         this.d = this.str.length;//桁数
-        break
+          break;
       case "SCORE" :
         this.isPadding = false;
         this.d = 6;//決め打ち
-        break
+          break;
+        defaut :
+        console.warn(this.type);
     }
     let space;
     for(let i = 0;i<this.d;i++){

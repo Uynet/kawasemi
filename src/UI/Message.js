@@ -14,7 +14,7 @@ export default class Message extends UI{
     super(pos); 
     /*基本情報*/
     this.text = text;
-    let sentence = this.text.split("\n");
+    let sent = this.text.split("\n");
     this.sentence = [];//Font
       this.type = "MES";
     /*child*/
@@ -33,8 +33,8 @@ export default class Message extends UI{
     this.sprites.push(this.outer.sprite);
     p = ADV(p,P_TEXT);
     //テキスト
-    for(let i = 0;i<sentence.length;i++){
-      this.sentence.push(new Font(p,sentence[i],"MES"));//テキスト 
+    for(let i = 0;i<sent.length;i++){
+      this.sentence.push(new Font(p,sent[i],"MES"));//テキスト 
       p.y += COLUMN;
     }
     //各行各文字のスプライトを追加
@@ -54,13 +54,13 @@ export default class Message extends UI{
     this.sprites.length = 1;//は？
       //新しい文字
       this.text = text;
-    let sentence = this.text.split("\n");
+    let sent = this.text.split("\n");
     this.sentence = [];//Font
       let p = CPV(this.pos);
     p = ADV(p,P_TEXT);
     //テキスト
-    for(let i = 0;i<sentence.length;i++){
-      this.sentence.push(new Font(p,sentence[i],"MES"));//テキスト 
+    for(let i = 0;i<sent.length;i++){
+      this.sentence.push(new Font(p,sent[i],"MES"));//テキスト 
       p.y += COLUMN;
     }
     //各行各文字のスプライトを追加
