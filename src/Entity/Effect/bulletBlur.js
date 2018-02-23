@@ -22,6 +22,7 @@ export default class BulletBlur extends EFFECT{
 
   Physics(){
     this.pos = ADV(this.pos,this.vel);
+    this.vel = MLV(this.vel,VECN(0.9));
   }
 
 
@@ -31,12 +32,10 @@ export default class BulletBlur extends EFFECT{
       this.Physics();
       this.sprite.position = ADV(this.pos.x,VECN(8));
       this.sprite.texture = this.pattern[this.spid];
-      this.spid = Math.floor(this.frame/2);
-      if(this.spid >= 4){
+      this.spid = Math.floor(this.frame/10)%4;
+      if(this.frame >= 40){
         //消える時に一回だけ呼ばれる
         if(this.isAlive){
-          this.spid = 4;
-          
           EntityManager.removeEntity(this);
           this.isAlive = false
         }

@@ -5,7 +5,7 @@ import Input from '../input.js';
 import Timer from '../timer.js';
 import Util from '../util.js';
 
- export default class UIMessage extends UI{
+ export default class Message extends UI{
    constructor(pos,name){
     super(pos); 
     /*基本情報*/

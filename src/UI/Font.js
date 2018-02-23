@@ -8,12 +8,12 @@ export default class Font extends UI{
   constructor(pos,str,type){
     super(CPV(pos));
     /*基本情報*/
-    //HPとBulletでtypeを分ける必要がある
     this.type = type;
     this.name = "font";
     this.isAlive = true;//消えたらfalse
+    this.isMultiple = true;
       /*スプライト*/
-      this.str = str; //0~9
+    this.str = str; //0~9
     this.sprite = [];//スプライトを配列で持っている
     //0埋めをするかしないか
     switch(this.type){

@@ -8,10 +8,7 @@ export default class Scene{
 
   ChangeState(oldState,newState){
     //UIのクリア
-    switch(oldState){
-      case "TITLE" : UIManager.CleanTitle() ;break;
-      case "STAGE" : UIManager.CleanStage() ;break;
-    }
+    UIManager.Clean(); 
     switch(newState){
       /*ゲーム画面用 UIの作成*/
       case "TITLE" : UIManager.SetTitle(); break;

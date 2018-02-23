@@ -52,11 +52,12 @@ export default class Bullet1AI{
       x: this.bullet.vi * Math.cos(this.bullet.arg),
       y: this.bullet.vi * Math.sin(this.bullet.arg),
     };
+    //敵方向へのベクトル
     let to = ADV(this.bullet.targetedEnemy.pos , MLV(VECN(-1),this.bullet.pos));
+    //外積を取って正負を判定
     let closs = this.bullet.vel.x * to.y - this.bullet.vel.y * to.x; 
-
-    if(closs>50) this.bullet.arg += this.bullet.curve;
-    else if(closs<-50) this.bullet.arg -= this.bullet.curve;
+    if(closs>0) this.bullet.arg += this.bullet.curve;
+    else if(closs<-0) this.bullet.arg -= this.bullet.curve;
   }
 
   Do(){

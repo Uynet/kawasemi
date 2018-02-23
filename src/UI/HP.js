@@ -5,17 +5,44 @@ import Art from '../art.js';
 import Input from '../input.js';
 import Timer from '../timer.js';
 import Util from '../util.js';
+import Font from './Font.js';
+
+//HP outer
+const HPF = {
+  x : 24, 
+  y : 160
+};
+//HP bar
+const HPB = {
+  x : HPF.x, 
+  y : HPF.y, 
+};
+//HP font 
+const HPFont = {
+  x : HPF.x+22, 
+  y : HPF.y+4, 
+};
+//HP Icon
+const HPIC = {
+  x : HPF.x-16, 
+  y : HPF.y, 
+};
 
 export default class HP extends UI{
   constructor(pos,name){
     super(pos);
     /*基本情報*/
-    this.frame = 0;
     this.isAlive = true;//消えたらfalse
-      this.type = "HP"; 
+    this.type = "HP"; 
+
+    this.outer;
+    this.bar;
+    this.icon;
+    this.amount = new Font(HPFont,"100","HP");//数字
+
     /*スプライト*/
     switch (name){
-      case "frame" : 
+      case "outer" : 
         this.spid = 0;
         break;
       case "bar" :
@@ -41,6 +68,7 @@ export default class HP extends UI{
         console.warn("player undefined");
       }else{
         this.sprite.scale.x = hp/this.max;
+        //this.amount.UpdateFont(hp);
         UIManager.HP.font.UpdateFont(hp);
       }
     }

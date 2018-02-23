@@ -84,6 +84,7 @@ const VECN = (n)=>{return {x:n,y:n}};//
 const CPV = (v)=>{return {x:v.x,y:v.y}};//値渡し
 const ADV = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
 const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
+const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
 /*Random*/
 let Rand = (d)=>{
   return 2 * d * (Math.random()-0.5);

@@ -16,6 +16,8 @@ export default class Sonic extends EFFECT{
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     this.sprite.alpha = 0.16;
+
+    this.arg = ADV(VECN(2),Rand2D(1));
   }
 
   Update(){
@@ -24,7 +26,7 @@ export default class Sonic extends EFFECT{
     //phys
     this.pos = ADV(this.pos,this.vel);
 
-    this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+1)));
+    this.sprite.scale = ADV(this.sprite.scale,MLV(this.arg,VECN(4/(this.frame+4))));
     this.sprite.alpha *= 0.8;
 
     if(this.spid == 4){

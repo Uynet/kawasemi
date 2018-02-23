@@ -16,13 +16,14 @@ export default class Flash extends EFFECT{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
+    this.sprite.alpha = 0.4;
   }
 
   Update(){
     //this.sprite.texture = this.pattern[this.spid];
-    this.sprite.scale = ADV(VECN(1),Rand2D(1));
-    this.sprite.alpha = 1;
-    if(this.frame == 1){
+    this.sprite.alpha *=0.8;
+    this.sprite.scale = VECN(2);
+    if(this.frame == 4){
       EntityManager.removeEntity(this);
     }
     this.sprite.position = this.pos;

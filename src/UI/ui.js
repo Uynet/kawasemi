@@ -5,6 +5,7 @@ export default class UI{
     this.pos = pos;
     this.sprite;
     this.type;//enum
+    this.isMultiple = false;
   }
 }
 
