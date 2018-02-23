@@ -24,8 +24,8 @@ const DIR = {
 const SEEN = 2;
 
 const WEAPON1 = {
-  AGI : 18,
-  COST : 10000,
+  AGI : 100,
+  COST : 3,
   SPEED : 9, 
   LENGTH : 180,
 }

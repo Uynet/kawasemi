@@ -7,25 +7,14 @@ import Timer from '../timer.js';
 import Util from '../util.js';
 import Font from './Font.js';
 
-//HP outer
-const HPF = {
-  x : 24, 
-  y : 160
-};
-//HP bar
-const HPB = {
-  x : HPF.x, 
-  y : HPF.y, 
-};
-//HP font 
-const HPFont = {
-  x : HPF.x+22, 
-  y : HPF.y+4, 
+const P_AMOUNT = {
+  x : 22, 
+  y : 4, 
 };
 //HP Icon
-const HPIC = {
-  x : HPF.x-16, 
-  y : HPF.y, 
+const P_ICON = {
+  x : -16, 
+  y : 0, 
 };
 
 export default class HP extends UI{
@@ -36,28 +25,31 @@ export default class HP extends UI{
     this.type = "HP"; 
     this.isMultiple = true;
     this.name = name;
+    this.pos = pos;
     /*child*/
-    this.outer;
-    this.bar;
-    this.icon;
-    this.amount = new Font(HPFont,"100","HP");//数字
+    this.outer = {pos:CPV(pos)};
+    this.bar = {pos:CPV(pos)};
+    this.icon = {pos:ADV(pos,P_ICON)};
+    this.amount = new Font(ADV(pos,P_AMOUNT),"100","HP");//数字
+
+    //pos
     /*スプライト*/
     this.spid = 0;
     this.sprites = [];
     let s;
     //outer
     s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
-    s.position = HPF; 
+    s.position = this.outer.pos; 
     this.sprites.push(s);
     this.spid++;
     //bar
     s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
-    s.position = HPB; 
+    s.position = this.bar.pos; 
     this.sprites.push(s);
     this.spid++;
     //icon
     s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
-    s.position = HPIC; 
+    s.position = this.icon.pos; 
     this.sprites.push(s);
     //amount
     for(let l of this.amount.sprites){
