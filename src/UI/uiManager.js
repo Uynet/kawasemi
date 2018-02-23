@@ -2,12 +2,12 @@ import Drawer from '../drawer.js';
 import UI from './ui.js';
 import Input from '../input.js';
 import Timer from '../timer.js';
-import UIWeaponIcon from './uiWeaponIcon.js';
-import UIWeaponEquip from './uiWeaponEquip.js';
-import UIHP from './uiHP.js';
-import UIBullet from './uiBullet.js';
-import UIFont from './uiFont.js';
-import UIMessage from './uiMessage.js';
+import WeaponIcon from './WeaponIcon.js';
+import WeaponEquip from './WeaponEquip.js';
+import HP from './HP.js';
+import Bullet from './Bullet.js';
+import Font from './Font.js';
+import Message from './Message.js';
 
 import EntityManager from '../Stage/entityManager.js';
 
@@ -117,17 +117,17 @@ export default class UIManager{
     /*装備中の武器*/
     //UIManager.addUI(new UIWeaponEquip(WEQ,"po"));//武器1のメインアイコン(?)
     /*HP*/
-    UIManager.addUI(new UIHP(HPF,"frame"));//外枠
-    UIManager.addUI(new UIHP(HPB,"bar"));//中
-    UIManager.addUI(new UIFont(HPFont,"100","HP"));//数字
-    UIManager.addUI(new UIHP(HPIC,"icon"));//
+    UIManager.addUI(new HP(HPF,"frame"));//外枠
+    UIManager.addUI(new HP(HPB,"bar"));//中
+    UIManager.addUI(new Font(HPFont,"100","HP"));//数字
+    UIManager.addUI(new HP(HPIC,"icon"));//
     /*bullet*/
-    UIManager.addUI(new UIBullet(BulF,"frame"));//外枠
-    UIManager.addUI(new UIBullet(BulB,"bar"));//中
-    UIManager.addUI(new UIFont(BulFont,"100","BULLET"));//数字
-    UIManager.addUI(new UIBullet(BulIC,"icon"));//
+    UIManager.addUI(new Bullet(BulF,"frame"));//外枠
+    UIManager.addUI(new Bullet(BulB,"bar"));//中
+    UIManager.addUI(new Font(BulFont,"100","BULLET"));//数字
+    UIManager.addUI(new Bullet(BulIC,"icon"));//
     /*score*/
-    UIManager.addUI(new UIFont(SCORE,"0","SCORE"));//数字
+    UIManager.addUI(new Font(SCORE,"0","SCORE"));//数字
   }
   //メッセージイベント
   /* text : 入力文字列
@@ -139,7 +139,7 @@ export default class UIManager{
       * PAGE フレームを作らず改ページのみ
       */
      if(type == "POP"){
-       UIManager.addUI(new UIMessage(MES_FRAME,"frame"));//枠
+       UIManager.addUI(new Message(MES_FRAME,"frame"));//枠
        //文字の長さに応じて枠を調整
        this.message.frame.sprite.scale.x *= 1.5;
        this.message.frame.sprite.scale.y *= 1.5; //yは固定
@@ -160,7 +160,7 @@ export default class UIManager{
       let sentence = text.split("\n");
     for(let i = 0;i<sentence.length;i++){
       p.y = MES_TEXT.y + i*10;
-      UIManager.addUI(new UIFont(p,sentence[i],"MES"));//テキスト 
+      UIManager.addUI(new Font(p,sentence[i],"MES"));//テキスト 
     }
   }
   static CloseMessage(){
@@ -178,9 +178,9 @@ export default class UIManager{
       x:16,
       y:16
     }
-    UIManager.addUI(new UIWeaponIcon(p,"1"));//武器1のサブアイコン
-    UIManager.addUI(new UIWeaponIcon(p,"2"));//武器2のサブアイコン
-    UIManager.addUI(new UIWeaponIcon(p,"3"));//武器3のサブアイコン
+    UIManager.addUI(new WeaponIcon(p,"1"));//武器1のサブアイコン
+    UIManager.addUI(new WeaponIcon(p,"2"));//武器2のサブアイコン
+    UIManager.addUI(new WeaponIcon(p,"3"));//武器3のサブアイコン
   }
   /*ポップアップの逆(?)*/
   static CloseWeapon(){
@@ -194,15 +194,15 @@ export default class UIManager{
     this.UIList.push(ui); 
     switch (ui.type){
       //weapon icon
-      case UI_.WICON : 
+      case "WICON" : 
         this.WeaponIconList.push(ui);
         break;
           //equip
-          case UI_.WEQUIP : 
+          case "WEQUIP" : 
             this.weaponEquip = ui;
             break;
             //HPゲージ
-            case UI_.HP :
+            case "HP" :
               switch(ui.name){
                 case "bar": this.HP.bar = ui; break;
                  case "frame" : this.HP.frame = ui;break;
@@ -211,7 +211,7 @@ export default class UIManager{
                }
                break;
                //Bulletゲージ
-               case UI_.BULLET :
+               case "BULLET" :
                  switch(ui.name){
                    case "bar" : this.bullet.bar = ui;break;
                    case "frame" : this.bullet.frame = ui;break;
@@ -219,7 +219,7 @@ export default class UIManager{
                    case "icon" : this.bullet.icon = ui;break;
                  }
                  break;
-      case UI_.SCORE :
+      case "SCORE" :
         this.score.font = ui;break;
       case "MES" : 
         switch(ui.name){

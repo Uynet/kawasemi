@@ -211,6 +211,9 @@ export default class Art{
     this.bulletPattern = {
       bullet1 : [
         PIXI.Texture.fromFrame('bullet00.png'),
+        PIXI.Texture.fromFrame('bullet01.png'),
+        PIXI.Texture.fromFrame('bullet02.png'),
+        PIXI.Texture.fromFrame('bullet03.png'),
       ],
       bullet2 : [
         PIXI.Texture.fromFrame('bullet10.png'),

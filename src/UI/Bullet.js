@@ -6,42 +6,34 @@ import Input from '../input.js';
 import Timer from '../timer.js';
 import Util from '../util.js';
 
-export default class UIHP extends UI{
+export default class Bullet extends UI{
   constructor(pos,name){
     super(pos);
     /*基本情報*/
     this.frame = 0;
     this.isAlive = true;//消えたらfalse
-      this.type = UI_.HP; 
+    this.type = "BULLET";
     /*スプライト*/
     switch (name){
-      case "frame" : 
-        this.spid = 0;
-        break;
-      case "bar" :
-        this.spid = 1;
-        break;
-      case "icon" :
-        this.spid = 2;
-        break;
-      default :
-        console.warn("UI");
-        break;
+      case "frame" : this.spid = 0; break;
+      case "bar" : this.spid = 1; break;
+      case "icon" : this.spid = 2; break;
+      default : console.warn("bullet"); break;
     }
-    this.tex = Art.UIPattern.HP[this.spid];
+    this.tex = Art.UIPattern.bullet[this.spid];
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = this.pos;
     this.name = name;
-    this.max = 100;//EntityManager.player.maxHP;
+    this.max = 100;//EntityManager.player.maxbullet;
   }
-  UpdateBar(hp){
+  UpdateBar(bullet){
     if(this.name == "bar"){
       /*debug*/
       if(!EntityManager.player){
         console.warn("player undefined");
       }else{
-        this.sprite.scale.x = hp/this.max;
-        UIManager.HP.font.UpdateFont(hp);
+        this.sprite.scale.x = bullet/this.max;
+        UIManager.bullet.font.UpdateFont(bullet);
       }
     }
   }
