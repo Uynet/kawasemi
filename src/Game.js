@@ -5,7 +5,7 @@ import StartStageEvent from './Event/startStageEvent.js';
 import StartGameEvent from './Event/startGameEvent.js';
 import Scene from './Event/scene.js';
 import UIManager from './UI/uiManager.js';
-import UIFont from './UI/uiFont.js';
+import Font from './UI/Font.js';
 import WeaponManager from './Weapon/weaponManager.js';
 import Art from './art.js';
 import Drawer from './drawer.js';
@@ -65,13 +65,14 @@ export default class Game{
         //UIManager.OpenWeapon();
         
         //pause の文字をだす　
-        let p = {
+        let PAUSE = {
           x : 112,
-          y : 64
+          y : 32
         }
-        UIManager.addUI(new UIFont(p,"-PAUSE-","MES"));//テキスト 
+        UIManager.addUI(new Font(PAUSE,"-PAUSE-","MES"));//テキスト 
 
-        let filters = [Drawer.noiseFilter,Drawer.blurFilter];
+        let filters = [];
+        filters = [Drawer.noiseFilter,Drawer.blurFilter];
         Drawer.entityContainer.filters = filters;
         Drawer.backContainer.filters = filters;
         Drawer.foreContainer.filters = filters
@@ -80,10 +81,10 @@ export default class Game{
       }else{
         UIManager.CloseMessage();
         //UIManager.CloseWeapon();
-        Drawer.entityContainer.filters = [0];
-        Drawer.backContainer.filters = [0];
-        Drawer.backGroundContainer.filters = [0];
-        Drawer.foreContainer.filters = [0];
+        Drawer.entityContainer.filters = [];
+        Drawer.backContainer.filters = [];
+        Drawer.backGroundContainer.filters = [];
+        Drawer.foreContainer.filters = [];
       //  Drawer.removeContainer(dark,"FILTER");
       }
     }

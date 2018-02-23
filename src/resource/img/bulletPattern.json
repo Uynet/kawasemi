@@ -4,6 +4,18 @@
       "frame": {"x":0, "y":0, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
+    "bullet01.png": {
+      "frame": {"x":16, "y":0, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "bullet02.png": {
+      "frame": {"x":32, "y":0, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "bullet03.png": {
+      "frame": {"x":48, "y":0, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
       "bullet10.png": {
       "frame": {"x":0, "y":16, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}

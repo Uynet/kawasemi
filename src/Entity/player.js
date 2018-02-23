@@ -344,12 +344,12 @@ ScrollByDir(){
    switch(this.dir){
    case DIR.UR :
    case DIR.UL :
-      if(Input.isKeyInput(KEY.X)) this.offset = Math.max(this.offset-0.2,-20);
+      if(Input.isKeyInput(KEY.SP)) this.offset = Math.max(this.offset-0.5,-20);
      Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
       break;
    case DIR.DR :
    case DIR.DL :
-      if(Input.isKeyInput(KEY.X)) this.offset = Math.min(this.offset+0.2,20);
+      if(Input.isKeyInput(KEY.SP)) this.offset = Math.min(this.offset+0.5,20);
      Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
      break;
    default :

@@ -6,11 +6,11 @@ import Timer from '../timer.js';
 import Util from '../util.js';
 
  
-export default class UIWeaponIcon extends UI{
+export default class WeaponIcon extends UI{
   constructor(pos,name){
     super(pos); 
     /*基本情報*/
-    this.type = UI_.WICON;
+    this.type = "WICON";
     this.tex;
     switch(name){
       case "1" : this.tex = Art.UIPattern.wIcon.w1[0] ; break;

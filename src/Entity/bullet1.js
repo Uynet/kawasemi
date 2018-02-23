@@ -74,7 +74,9 @@ export default class Bullet1 extends Bullet{
     }
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.rotation = this.arg + Math.PI/2;
+    this.sprite.texture = this.pattern[this.spid];
 
+    this.spid = this.spid%4;
     this.frame++;
   }
 }

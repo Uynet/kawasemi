@@ -3,7 +3,7 @@ import Drawer from '../drawer.js';
 import UI from './ui.js';
 import Input from '../input.js';
 /*文字*/
-export default class UIFont extends UI{
+export default class Font extends UI{
   //strは表示する文字(今は数字のみ)
   constructor(pos,str,type){
     super(CPV(pos));
