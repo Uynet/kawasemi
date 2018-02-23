@@ -176,9 +176,6 @@ export default class Art{
       ],
     };
     this.UIPattern = {
-      wEq1 : PIXI.Texture.fromFrame('weapon00.png'),
-      wEq2 : PIXI.Texture.fromFrame('weapon01.png'),
-      wEq3 : PIXI.Texture.fromFrame('weapon02.png'),
       wIcon : {
         w1 : [
         PIXI.Texture.fromFrame('weapon10.png'),
@@ -193,7 +190,6 @@ export default class Art{
         PIXI.Texture.fromFrame('weapon15.png'),
         ]
       },
-      sel : PIXI.Texture.fromFrame('selectbox.png'),//廃止予定
       HP : [
         PIXI.Texture.fromFrame('HP00.png'),
         PIXI.Texture.fromFrame('HP01.png'),

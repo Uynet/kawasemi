@@ -8,7 +8,7 @@ import HP from './HP.js';
 import Bullet from './Bullet.js';
 import Font from './Font.js';
 import Message from './Message.js';
-
+import Menu from './Menu.js';
 import EntityManager from '../Stage/entityManager.js';
 
 //HP
@@ -31,6 +31,11 @@ const P_MES = {
   x:40,
   y:35
 }
+//Menu
+let P_MENU = {
+  x : 112,
+  y : 64
+}
 /*UIクラス*/
 export default class UIManager{
   static Init(){
@@ -40,23 +45,29 @@ export default class UIManager{
     this.bullet;
     this.score;
     this.message;
+    this.menu;
   }
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
     this.PopMessage("タイトルがめん","POP");
   }
-  //UIをすべて削除
-  static Clean(){
-    while(this.UIList.length>0){
-      this.removeUI(this.UIList[0]);
-    }
-  }
   /*ステージ中でのUI配置に変更*/
   static SetStage(){
     UIManager.addUI(new HP(P_HP));//HP
     UIManager.addUI(new Bullet(P_BUL));//BULLET
     UIManager.addUI(new Font(P_SCORE,"0","SCORE"));//SCORE
+  }
+  //メニューを開く
+  static SetMenu(){
+    UIManager.addUI(new Font(P_MENU,"-PAUSE-","MES"));//テキスト 
+    UIManager.addUI(new Menu(ADV(P_MENU,{x:0,y:16})));
+  }
+  //UIをすべて削除
+  static Clean(){
+    while(this.UIList.length>0){
+      this.removeUI(this.UIList[0]);
+    }
   }
   //メッセージイベント
   /* text : 入力文字列
@@ -85,6 +96,7 @@ export default class UIManager{
       case "BULLET" : this.bullet = ui; break;
       case "SCORE" : this.score = ui;break;
       case "MES" : this.message = ui;break;
+      case "MENU" : this.menu = ui;break;
       default : console.warn(ui);
     }
     //スプライトの追加

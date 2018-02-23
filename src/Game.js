@@ -13,6 +13,7 @@ import Input from './input.js';
 import Timer from './timer.js';
 import Util from './util.js';
 import Param from './param.js';
+import Menu from './UI/Menu.js';
 
 //大嘘
 let dark;
@@ -30,7 +31,6 @@ export default class Game{
 
     /*initialize Game state*/
     Game.isPause = false;
-    Game.isSelect = false;//
     Game.isSeq = false;//ステージ間遷移しているかどうか
     Game.isMes = false;//メッセージイベント中か
     Game.stage = 0;//現在のステージ番号
@@ -57,35 +57,31 @@ export default class Game{
     //ポーズ
     if(Input.isKeyClick(KEY.C)){
       Game.isPause = !Game.isPause;
-      Game.isSelect = !Game.isSelect;
       //武器選択画面
-      if(Game.isSelect){
+      if(Game.isPause){
         //ゲーム画面を暗くする
         //TODO : イベント化　 
         //UIManager.OpenWeapon();
         
-        //pause の文字をだす　
-        let PAUSE = {
-          x : 112,
-          y : 32
-        }
-        UIManager.addUI(new Font(PAUSE,"-PAUSE-","MES"));//テキスト 
+        UIManager.SetMenu();
 
-        let filters = [];
-        filters = [Drawer.noiseFilter,Drawer.blurFilter];
-        Drawer.entityContainer.filters = filters;
-        Drawer.backContainer.filters = filters;
-        Drawer.foreContainer.filters = filters
-        Drawer.backGroundContainer.filters = filters
-     //   Drawer.addContainer(dark,"FILTER");
+        let filters = [Drawer.blurFilter,Drawer.noiseFilter];
+        //Drawer.entityContainer.filters = filters;
+        //Drawer.backContainer.filters = filters;
+        //Drawer.foreContainer.filters = filters
+        //Drawer.backGroundContainer.filters = filters
+        //Drawer.filterContainer.filters = filters
+        Drawer.addContainer(dark,"FILTER");
       }else{
         UIManager.CloseMessage();
         //UIManager.CloseWeapon();
-        Drawer.entityContainer.filters = [];
-        Drawer.backContainer.filters = [];
-        Drawer.backGroundContainer.filters = [];
-        Drawer.foreContainer.filters = [];
-      //  Drawer.removeContainer(dark,"FILTER");
+        //Drawer.entityContainer.filters = [];
+        //Drawer.backContainer.filters = [];
+        //Drawer.backGroundContainer.filters = [];
+        //Drawer.foreContainer.filters = [];
+        //Drawer.filterContainer.filters = [];
+        Drawer.removeContainer(dark,"FILTER");
+        UIManager.removeUI(UIManager.menu);
       }
     }
   }
@@ -106,7 +102,7 @@ export default class Game{
        EntityManager.Update();
        UIManager.Update();
      }
-     if(Game.isSelect){
+     if(Game.isPause){
        UIManager.Update();
      }
   }
