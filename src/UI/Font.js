@@ -14,7 +14,7 @@ export default class Font extends UI{
     this.isMultiple = true;
       /*スプライト*/
     this.str = str; //0~9
-    this.sprite = [];//スプライトを配列で持っている
+    this.sprites = [];//スプライトを配列で持っている
     //0埋めをするかしないか
     switch(this.type){
       case "HP" :
@@ -49,8 +49,8 @@ export default class Font extends UI{
         space = 7;
       }
       let p = this.pos;
-      this.sprite[i] = Art.SpriteFactory(tex);
-      this.sprite[i].position = p;
+      this.sprites[i] = Art.SpriteFactory(tex);
+      this.sprites[i].position = p;
       p.x += space;
     };
   };
@@ -76,7 +76,7 @@ export default class Font extends UI{
     if(this.str == "ゐゐ0")this.str = "ゐゐゐ";
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
-        this.sprite[i].texture = Art.font[spid];
+        this.sprites[i].texture = Art.font[spid];
     };
   };
 

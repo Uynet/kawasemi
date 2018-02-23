@@ -34,44 +34,43 @@ export default class HP extends UI{
     /*基本情報*/
     this.isAlive = true;//消えたらfalse
     this.type = "HP"; 
-
+    this.isMultiple = true;
+    this.name = name;
+    /*child*/
     this.outer;
     this.bar;
     this.icon;
     this.amount = new Font(HPFont,"100","HP");//数字
-
     /*スプライト*/
-    switch (name){
-      case "outer" : 
-        this.spid = 0;
-        break;
-      case "bar" :
-        this.spid = 1;
-        break;
-      case "icon" :
-        this.spid = 2;
-        break;
-      default :
-        console.warn("UI");
-        break;
+    this.spid = 0;
+    this.sprites = [];
+    let s;
+    //outer
+    s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
+    s.position = HPF; 
+    this.sprites.push(s);
+    this.spid++;
+    //bar
+    s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
+    s.position = HPB; 
+    this.sprites.push(s);
+    this.spid++;
+    //icon
+    s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
+    s.position = HPIC; 
+    this.sprites.push(s);
+    //amount
+    for(let l of this.amount.sprites){
+      this.sprites.push(l);
     }
-    this.tex = Art.UIPattern.HP[this.spid];
-    this.sprite = Art.SpriteFactory(this.tex);
-    this.sprite.position = this.pos;
-    this.name = name;
+    /*パラメータ*/
     this.max = 100;//EntityManager.player.maxHP;
   }
   UpdateBar(hp){
-    if(this.name == "bar"){
-      /*debug*/
-      if(!EntityManager.player){
-        console.warn("player undefined");
-      }else{
-        this.sprite.scale.x = hp/this.max;
-        //this.amount.UpdateFont(hp);
-        UIManager.HP.font.UpdateFont(hp);
-      }
-    }
+    //barの長さを更新
+    this.sprites[1].scale.x = hp/this.max;
+    //HP数字の更新
+    this.amount.UpdateFont(hp);
   }
   Update(){
   }

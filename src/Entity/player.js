@@ -421,7 +421,7 @@ Supply(){
       }
       this.Supply();//bulletのかいふく　
       UIManager.bullet.bar.UpdateBar(this.bullet); //BulletBarの更新
-      UIManager.HP.bar.UpdateBar(this.hp);//HPbarの更新
+      UIManager.HP.UpdateBar(this.hp);//HPbarの更新
       this.sprite.position = {
       x : this.pos.x-4,
       y : this.pos.y

@@ -101,7 +101,6 @@ export default class UIManager{
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
     this.PopMessage("タイトルがめん","POP");
-    this.Clean();
   }
   //UIをすべて削除
   static Clean(){
@@ -111,15 +110,8 @@ export default class UIManager{
   }
   /*ステージ中でのUI配置に変更*/
   static SetStage(){
-    /*装備中の武器*/
-    //UIManager.addUI(new UIWeaponEquip(WEQ,"po"));//武器1のメインアイコン(?)
     /*HP*/
-    //UIManager.addUI(new HP(HPF));//
-
-    UIManager.addUI(new HP(HPF,"outer"));//外枠
-    UIManager.addUI(new HP(HPB,"bar"));//中
-    UIManager.addUI(new Font(HPFont,"100","HP"));//数字
-    UIManager.addUI(new HP(HPIC,"icon"));//
+    UIManager.addUI(new HP(HPF));//
     /*bullet*/
     UIManager.addUI(new Bullet(BulF,"outer"));//外枠
     UIManager.addUI(new Bullet(BulB,"bar"));//中
@@ -165,49 +157,12 @@ export default class UIManager{
     UIManager.removeUI(this.message.outer);
   }
 
-  /*WeaponIconのポップアップ*/
-  /*
-   static OpenWeapon(){
-   let p = {
-   x:16,
-   y:16
-   }
-   UIManager.addUI(new WeaponIcon(p,"1"));//武器1のサブアイコン
-   UIManager.addUI(new WeaponIcon(p,"2"));//武器2のサブアイコン
-   UIManager.addUI(new WeaponIcon(p,"3"));//武器3のサブアイコン
-   }
-   //ポップアップの逆(?)
-   static CloseWeapon(){
-   for(let l of this.WeaponIconList){
-   UIManager.removeUI(l);//武器1のサブアイコン
-   }
-   }
-   */
-
   //UIをリストに登録
   static addUI(ui){
     this.UIList.push(ui); 
     switch (ui.type){
-      //weapon icon
-      case "WICON" : 
-        this.WeaponIconList.push(ui);
-        break;
-        //equip
-        /*
-         case "WEQUIP" : 
-         this.weaponEquip = ui;
-         break;
-         */
-        //HPゲージ
       case "HP" :
-        //this.HP = ui;
-        switch(ui.name){
-          case "bar": this.HP.bar = ui; break;
-          case "outer" : this.HP.outer = ui;break;
-          case "font" : this.HP.font = ui;break;
-          case "icon" : this.HP.icon = ui;break;
-        }
-        break;
+        this.HP = ui; break;
         //Bulletゲージ
       case "BULLET" :
         switch(ui.name){
@@ -233,8 +188,8 @@ export default class UIManager{
     //スプライトの追加
     if(ui.isMultiple){
       //複スプライト
-      for(let i = 0;i<ui.sprite.length;i++){
-        Drawer.addContainer(ui.sprite[i],"UI");
+      for(let i = 0;i<ui.sprites.length;i++){
+        Drawer.addContainer(ui.sprites[i],"UI");
       }
     }else{
       //単スプライト
@@ -248,8 +203,8 @@ export default class UIManager{
     this.UIList.splice(i,1);
     if(ui.isMultiple){
       //複数スプライトを持つオブジェクト
-      for(let i = 0;i<ui.sprite.length;i++){
-        Drawer.removeContainer(ui.sprite[i],"UI");
+      for(let i = 0;i<ui.sprites.length;i++){
+        Drawer.removeContainer(ui.sprites[i],"UI");
       }
     }else{
       //単スプライト
