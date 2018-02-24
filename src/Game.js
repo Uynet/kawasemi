@@ -30,9 +30,6 @@ export default class Game{
     Param.Init();
 
     /*initialize Game state*/
-    Game.isPause = false;
-    Game.isSeq = false;//ステージ間遷移しているかどうか
-    Game.isMes = false;//メッセージイベント中か
     Game.stage = 0;//現在のステージ番号
     Game.scene = new Scene();
 
@@ -53,35 +50,6 @@ export default class Game{
     Game.Init();
   }
 
-  static Input(){
-    //ポーズ
-    if(Input.isKeyClick(KEY.C)){
-      Game.isPause = !Game.isPause;
-      //武器選択画面
-      if(Game.isPause){
-        //ゲーム画面を暗くする
-        //TODO : イベント化　 
-        UIManager.SetMenu();
-        let filters = [Drawer.blurFilter];
-        filters = [];
-        Drawer.entityContainer.filters = filters;
-        Drawer.backContainer.filters = filters;
-        Drawer.foreContainer.filters = filters
-        Drawer.backGroundContainer.filters = filters
-        //Drawer.filterContainer.filters = filters
-        Drawer.addContainer(dark,"FILTER");
-      }else{
-        UIManager.CloseMessage();
-        Drawer.entityContainer.filters = [];
-        Drawer.backContainer.filters = [];
-        Drawer.backGroundContainer.filters = [];
-        Drawer.foreContainer.filters = [];
-        //Drawer.filterContainer.filters = [];
-        Drawer.removeContainer(dark,"FILTER");
-        UIManager.removeUI(UIManager.menu);
-      }
-    }
-  }
   //タイトル画面中の処理
   static UpdateTitle(){
     if(Input.isKeyClick(KEY.SP)){
@@ -92,21 +60,31 @@ export default class Game{
 
   //ステージ中の処理
   static UpdateStage(){
-    Game.Input();
-    /*
-     * 各Entityの更新
-     * ポーズ中は停止させる*/
-     if(!Game.isPause){
-       EntityManager.Update();
-       UIManager.Update();
-     }
-     if(Game.isPause){
-       UIManager.Update();
+    /*Entityの更新*/
+     EntityManager.Update();
+     UIManager.Update();
+
+     /*ポーズ状態に遷移*/
+     if(Input.isKeyClick(KEY.C)){
+       let filters = [Drawer.blurFilter];
+       filters = [];
+       Drawer.addContainer(dark,"FILTER");
+       UIManager.SetMenu();
+       Game.scene.PushSubState("PAUSE");
      }
   }
-
+  static UpdatePause(){
+    UIManager.Update();
+    //メニュー画面を抜ける
+    if(Input.isKeyClick(KEY.C)){
+      UIManager.CloseMessage();
+      Drawer.removeContainer(dark,"FILTER");
+      UIManager.removeUI(UIManager.menu);
+      Game.scene.PopSubState();
+    }
+  }
   //看板を読んでいるときにアニメーションだけを行う
-  static AnimationStage(){
+  static UpdateMes(){
     EntityManager.Animation();
     UIManager.Update();
   }
@@ -124,25 +102,17 @@ export default class Game{
     switch(Game.scene.state){
       /*更新*/
       case STATE.TITLE :
-        if(Game.isSeq){
-          //遷移画面中
-          //2018/2/22
-          //キー入力できないようにする
-          //スタート画面で遷移中にキー連打されると開始イベントが複数発生してバグるため
-        }else{
-          Game.UpdateTitle();
+        switch(Game.scene.substate[0]){
+          case  "SEQ" : /*Nothing to do*/ break;
+          default : Game.UpdateTitle();
         }
         break;
       case STATE.STAGE :
-        if(Game.isSeq){
-        //遷移画面中
-        }
-        else if(Game.isMes){
-          //メッセージ画面中
-            Game.AnimationStage();
-        }else{
-        //プレイ画面中
-            Game.UpdateStage();
+        switch(Game.scene.substate[0]){
+          case  "PAUSE" : Game.UpdatePause();break;
+          case  "MES" : Game.UpdateMes(); break;
+          case  "SEQ" : /*Nothing to do*/ break;
+          default : Game.UpdateStage();
         }
         break;
       default :

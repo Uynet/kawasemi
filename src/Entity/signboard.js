@@ -66,7 +66,7 @@ export default class Signboard extends BackEntity{
             //続きがあれば読む
           }else{
             //なければ終了
-            Game.isMes = false;
+            Game.scene.PopSubState();
             UIManager.CloseMessage();//枠を閉じる
             this.isRead = false;
             this.page = 0;

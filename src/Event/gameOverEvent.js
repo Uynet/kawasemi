@@ -16,7 +16,7 @@ export default class GameOverEvent extends Event{
       //note : Game.seqがtrueの間はEntityは更新されない
 
       //やっぱり画面移動中も敵動いてて欲しい...
-      Game.seq = true;
+      Game.scene.PushSubState("SEQ");
       //画面遷移エフェクトの♢
       let frame = 0;//経過フレーム数 途中で0にしているので注意
         let spid = 0;//スプライト番号
@@ -68,7 +68,7 @@ export default class GameOverEvent extends Event{
       for(let i = 0; i < 400; i++) {
         Drawer.removeContainer(seq[i],"FILTER");
       }
-      Game.seq = false;
+      Game.scene.PopSubState();
       yield;
     }
     let itt = Posreset();

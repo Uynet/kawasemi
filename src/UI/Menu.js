@@ -6,6 +6,8 @@ import Timer from '../timer.js';
 import Util from '../util.js';
 import Font from './Font.js';
 import Game from '../Game.js';
+import EventManager from '../Event/eventmanager.js';
+import QuitGameEvent from '../Event/quakeEvent.js';
 
 const COLUMN = 12;
 const INDENT = {x:-8,y:0};
@@ -51,11 +53,11 @@ export default class Menu extends UI{
     }
   }
   Update(){
-    if(Input.isKeyClick(KEY.DOWN)){
+    if(Input.isKeyClick(KEY.DOWN)||(Input.isKeyClick(KEY.RIGHT))){
       this.index = Math.min(this.index+1,this.items.length-1);
       this.Select(this.index);
     }
-    if(Input.isKeyClick(KEY.UP)){
+    if(Input.isKeyClick(KEY.UP) || Input.isKeyClick(KEY.LEFT)){
       this.index = Math.max(this.index-1,0);
       this.Select(this.index);
     }
@@ -64,7 +66,8 @@ export default class Menu extends UI{
         case "さいかい" : break;
         case "ぶき" : break;
         case "やめる" :
-          Game.scene.ChangeState(STATE.STAGE,STATE.TITLE);
+          //let e  = new QuitGameEvent();
+          //EventManager.eventList.push(e);
           break;
       }
     }

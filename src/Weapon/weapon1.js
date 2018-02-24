@@ -25,7 +25,7 @@ const SEEN = 2;
 
 const WEAPON1 = {
   AGI : 20,
-  COST : 3,
+  COST : 300,
   SPEED : 9, 
   LENGTH : 180,
 }

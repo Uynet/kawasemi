@@ -166,7 +166,7 @@ export default class Player extends Entity{
         x:this.pos.x,
         y:this.pos.y - 32
       }
-      EntityManager.addEntity(new Enemy2(p));
+      //EntityManager.addEntity(new Enemy2(p));
     }
   }
 
