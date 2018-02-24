@@ -29,5 +29,14 @@ export default class Param{
       GRAVITY : 0.1,
       COIN : 3
     }
+    this.weapon1 = {
+      agi : 20,
+      cost : 3,
+      speed : 9, 
+      length : 180,
+    }
+  }
+  GetParam(entity){
+    return this.weapon1;
   }
 }

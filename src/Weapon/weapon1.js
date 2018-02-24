@@ -11,6 +11,7 @@ import Timer from '../timer.js';
 import FontEffect from '../Entity/Effect/fontEffect.js';
 import EventManager from '../Event/eventmanager.js';
 import QuakeEvent from '../Event/quakeEvent.js';
+import Param from '../param.js';
 
 const DIR = {
   UR : "UR",
@@ -23,24 +24,20 @@ const DIR = {
 
 const SEEN = 2;
 
-const WEAPON1 = {
-  AGI : 20,
-  COST : 3,
-  SPEED : 9, 
-  LENGTH : 180,
-}
 
 export default class Weapon1 extends Weapon{
   constructor(){
     super("1");
     /*基本情報*/
-    this.target;
+    this.target = null;
     this.isTargetOn = false;//照準が発生しているか
-      /*パラメータ*/
-      this.agi = WEAPON1.AGI;//間隔
-    this.cost = WEAPON1.COST;
-    this.speed = WEAPON1.SPEED;//弾速
-      this.length = WEAPON1.LENGTH;//射程距離
+    this.arg = 0;
+    /*パラメータ*/
+    this.param = Param.weapon1;
+    this.agi = this.param.agi;//間隔
+    this.cost = this.param.cost;
+    this.speed = this.param.speed;//弾速
+    this.length = this.param.length;//射程距離
   }
 
   //敵が視界に入っているか
@@ -111,21 +108,19 @@ export default class Weapon1 extends Weapon{
         player.bullet -= this.cost;
         console.assert(player.bullet >=0 );
 
-        let vi = this.speed;
-        let arg = player.arg;
+        this.arg = player.arg;
         let p = {
-          x: player.pos.x -4 + 5 * Math.cos(arg),
-          y: player.pos.y + 5 * Math.sin(arg),
+          x: player.pos.x -4 + 5 * Math.cos(this.arg),
+          y: player.pos.y + 5 * Math.sin(this.arg),
         }
-        let bullet = new Bullet1(p,vi,arg,this.target);
-        bullet.atk = 1;
+        let bullet = new Bullet1(p,this.speed,this.arg,this);
         EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
         /* □ Effect : shot */
         EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
         //反動
         //player.vel.x -= v.x/11;
-        let v = POV(arg,vi);
+        let v = POV(this.arg,this.speed);
         player.acc.y -= v.y/5;
         //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
         //振動
