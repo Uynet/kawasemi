@@ -33,8 +33,8 @@ const P_MES = {
 }
 //Menu
 let P_MENU = {
-  x : 112,
-  y : 64
+  x : 104,
+  y : 48
 }
 /*UIクラス*/
 export default class UIManager{
@@ -50,7 +50,7 @@ export default class UIManager{
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
-    this.PopMessage("タイトルがめん","POP");
+    this.PopMessage("PRESS SPACE","POP");
   }
   /*ステージ中でのUI配置に変更*/
   static SetStage(){
@@ -60,7 +60,7 @@ export default class UIManager{
   }
   //メニューを開く
   static SetMenu(){
-    UIManager.addUI(new Font(P_MENU,"-PAUSE-","MES"));//テキスト 
+    //UIManager.addUI(new Font(P_MENU,"-PAUSE-","MES"));//テキスト 
     UIManager.addUI(new Menu(ADV(P_MENU,{x:0,y:16})));
   }
   //UIをすべて削除

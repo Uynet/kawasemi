@@ -31,34 +31,11 @@ export default class Font extends UI{
         defaut :
         console.warn(this.type);
     }
-    let space;
-    for(let i = 0;i<this.d;i++){
-      let spid = this.str[i] + "";//str型にすること
-        let tex = Art.font[spid];
-      //文字コードを比較している
-      //日本語以降は半角として識別
-      let s = this.str[i];
-      if(s > "z"){
-        space = 9;
-      }else if(
-        s == "!" ||
-          s == "l" ||
-            s == "i" ||
-              s == "j"||
-                s == "."
-      ){
-        space = 4;
-      } else{
-        space = 7;
-      }
-      let p = this.pos;
-      this.sprites[i] = Art.SpriteFactory(tex);
-      this.sprites[i].position = p;
-      p.x += space;
-    };
+    this.SetPos(this.pos);
   };
 
   //HP,BULLETの表示用
+  //HP,BULLETの中から呼ばれている
   UpdateFont(hp){
     //phys
     //文字列型にすること
@@ -82,8 +59,42 @@ export default class Font extends UI{
         this.sprites[i].texture = Art.font[spid];
     };
   };
+  Move(pos){
+    /*TODO コンテナ*/
+    for(let i=0;i<4;i++){
+      this.sprites[0].position = pos;
+    }
+  }
 
+  SetPos(pos){
+    let space;
+    for(let i = 0;i<this.d;i++){
+      let spid = this.str[i] + "";//str型にすること
+        let tex = Art.font[spid];
+      //文字コードを比較している
+      //日本語以降は半角として識別
+      let s = this.str[i];
+      if(s > "z"){
+        space = 9;
+      }else if(
+        s == "!" ||
+          s == "l" ||
+            s == "i" ||
+              s == "j"||
+                s == "."
+      ){
+        space = 4;
+      } else{
+        space = 7;
+      }
+      this.sprites[i] = Art.SpriteFactory(tex);
+      this.sprites[i].position = pos;
+      pos.x += space;
+    };
+  }
+
+  //UIManagerから直接呼ばれているのはScoreのみ(それも廃止予定
+  //各UIの内部から呼ぶ必要がある
   Update(){
-    /*nothing to do*/
   };
 };
