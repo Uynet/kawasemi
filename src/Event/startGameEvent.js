@@ -11,11 +11,11 @@ import MapData from '../Stage/mapData.js';
 export default class StartGameEvent extends Event{
   constructor(){
     super(1);
-    function* po(){
+    function* gen(){
       Game.scene.ChangeState(STATE.INIT,STATE.TITLE);
       yield ;
     }
-    let itt = po();
+    let itt = gen();
     this.func = itt;
   }
 }

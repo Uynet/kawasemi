@@ -8,12 +8,13 @@ import Box from '../Collision/box.js';
 import Game from '../Game.js';
 import GameOverEvent from '../Event/gameOverEvent.js';
 import EventManager from '../Event/eventmanager.js';
+import GameClearEvent from '../Event/gameClearEvent.js';
 
 
 export default class Goal extends Entity{
   constructor(pos){
     super(pos);
-    this.type = ENTITY.GOAL;
+    this.type = ENTITY.GOAL;//これいらない　
     this.sprite = Art.SpriteFactory(Art.wallPattern.goal);
     this.sprite.position = pos;
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
@@ -23,8 +24,7 @@ export default class Goal extends Entity{
     if(Collision.on(this,EntityManager.player).isHit){
       /*ステージ遷移処理*/
       if(!this.isgoal){
-        Game.stage++;
-        let g = new GameOverEvent();
+        let g = new GameClearEvent();
         EventManager.eventList.push(g);
         this.isgoal = true;
       }

@@ -1,23 +1,25 @@
 import Event from './event.js';
 import UIManager from '../UI/uiManager.js';
+import EntityManager from '../Stage/entityManager.js';
 import MapData from '../Stage/mapData.js';
 import Game from '../Game.js';
+import Timer from '../timer.js';
+import Drawer from '../drawer.js';
+import Art from '../art.js';
+import EventManager from './eventmanager.js';
+import FadeEvent from './FadeEvent.js';
 
-
-export default class MessageEvent extends Event{
-  //Gameのstateを遷移状態に移行
+export default class GameClearEvent extends Event{
   constructor(){
-    super(1);
-    let f = this.ReturnFunc();
-    this.func = PositionReset;
+    super();
+    function* gen(){
+      Game.scene.PushSubState("SEQ");
+      Game.stage++;
+      EventManager.eventList.push(new FadeEvent("fadeout"));
+      yield;
+    }
+    let itt = gen();
+    this.func = itt;
   }
 
-  ReturnFunc(){
-    cl("こんにちは")
-    let posreset = () =>{
-      Game.stage++;
-      Game.seq = true;
-    }
-    return posreset;
-  }
 }

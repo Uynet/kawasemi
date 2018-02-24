@@ -15,9 +15,6 @@ import Util from './util.js';
 import Param from './param.js';
 import Menu from './UI/Menu.js';
 
-//大嘘
-let dark;
-
 export default class Game{
   static Init(){
     Drawer.Init();
@@ -36,11 +33,6 @@ export default class Game{
     //Gameにタイトル画面状態をプッシュ
     let event = new StartGameEvent();
     EventManager.PushEvent(event);
-
-    /*for debug */
-    /*TODO EffectManagerを作成*/
-    dark = Art.SpriteFactory(Art.darkTexture);
-    dark.alpha = 0.7;
 
     Game.Run();
   }
@@ -66,9 +58,9 @@ export default class Game{
 
      /*ポーズ状態に遷移*/
      if(Input.isKeyClick(KEY.C)){
-       let filters = [Drawer.blurFilter];
-       filters = [];
-       Drawer.addContainer(dark,"FILTER");
+       let filters = [Drawer.noiseFilter];
+       //filters = [Drawer.blurFilter];
+       Drawer.entityContainer.filters = filters;
        UIManager.SetMenu();
        Game.scene.PushSubState("PAUSE");
      }
@@ -78,7 +70,7 @@ export default class Game{
     //メニュー画面を抜ける
     if(Input.isKeyClick(KEY.C)){
       UIManager.CloseMessage();
-      Drawer.removeContainer(dark,"FILTER");
+      Drawer.entityContainer.filters = [];
       UIManager.removeUI(UIManager.menu);
       Game.scene.PopSubState();
     }
@@ -87,6 +79,9 @@ export default class Game{
   static UpdateMes(){
     EntityManager.Animation();
     UIManager.Update();
+  }
+
+  static UpdateSeq(){
   }
 
   static Run(){
@@ -101,14 +96,15 @@ export default class Game{
     }
     switch(Game.scene.state){
       /*更新*/
+      /*Note : Lastは自前関数*/
       case STATE.TITLE :
-        switch(Game.scene.substate[0]){
+        switch(Game.scene.substate.Last()){
           case  "SEQ" : /*Nothing to do*/ break;
           default : Game.UpdateTitle();
         }
         break;
       case STATE.STAGE :
-        switch(Game.scene.substate[0]){
+        switch(Game.scene.substate.Last()){
           case  "PAUSE" : Game.UpdatePause();break;
           case  "MES" : Game.UpdateMes(); break;
           case  "SEQ" : /*Nothing to do*/ break;

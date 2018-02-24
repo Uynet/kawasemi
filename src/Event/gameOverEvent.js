@@ -6,72 +6,24 @@ import Game from '../Game.js';
 import Timer from '../timer.js';
 import Drawer from '../drawer.js';
 import Art from '../art.js';
+import EventManager from './eventmanager.js';
+import FadeEvent from './FadeEvent.js';
 
 export default class GameOverEvent extends Event{
-  //Gameのstateを遷移状態に移行
   constructor(){
-    super(1);
-    function* Posreset(){
+    super();
+    function* gen(){
+      let frame = 0;
+      EventManager.eventList.push(new FadeEvent("fadeout"));
 
-      //note : Game.seqがtrueの間はEntityは更新されない
-
-      //やっぱり画面移動中も敵動いてて欲しい...
+      while(frame<30){
+        frame++;
+        yield;
+      }
       Game.scene.PushSubState("SEQ");
-      //画面遷移エフェクトの♢
-      let frame = 0;//経過フレーム数 途中で0にしているので注意
-        let spid = 0;//スプライト番号
-      let pattern = Art.seqPattern;//パターン
-        let seq = new Array(400);//各♢
-      //♢を初期化して追加
-      for(let i = 0; i < 400; i++) {
-        let sp = Art.SpriteFactory(pattern[spid]);
-        let y = Math.floor(i/20);
-        let x = i%20 - 4;
-        sp.position.x = x*16-8;
-        sp.position.y = y*20-8;
-        sp.scale.x = 1.5;
-        sp.scale.y = 1.5;
-        seq[i] = sp;
-        Drawer.addContainer(sp,"FILTER");
-      }
-      /*フェードアウト*/
-      while(frame < 40){
-        for(let i = 0; i < 400; i++) {
-          //上から下へ
-          spid = Math.max(0,Math.min(Math.floor(frame - i/8),15));
-          seq[i].texture = pattern[spid];
-        }
-        frame++;
-        yield;
-      }
-      /*ここでマップをロード*/
-      MapData.RebuildStage();
-
-      /*ちょっと待つ*/
-      frame = 0;
-      while(frame < 10){
-        frame++;
-        yield
-      }
-      UIManager.HP.UpdateBar(100);
-      frame = 0;
-      /*フェードin*/
-      while(frame < 40){
-        Game.seq = false;
-        for(let i = 0; i < 400; i++) {
-          spid = 16 + Math.max(0,Math.min(Math.floor(frame -i/8),15));
-          seq[i].texture = pattern[spid];
-        }
-        frame++;
-        yield;
-      }
-      for(let i = 0; i < 400; i++) {
-        Drawer.removeContainer(seq[i],"FILTER");
-      }
-      Game.scene.PopSubState();
       yield;
     }
-    let itt = Posreset();
+    let itt = gen();
     this.func = itt;
   }
 
