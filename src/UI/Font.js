@@ -3,6 +3,9 @@ import Drawer from '../drawer.js';
 import UI from './ui.js';
 import Input from '../input.js';
 /*文字*/
+let small = [
+  ",",".","!","l","i","j","っ","ぁ","ぃ","ぅ","ぇ","ぉ",
+]
 export default class Font extends UI{
   //strは表示する文字(今は数字のみ)
   constructor(pos,str,type){
@@ -61,8 +64,9 @@ export default class Font extends UI{
   };
   Move(pos){
     /*TODO コンテナ*/
-    for(let i=0;i<4;i++){
-      this.sprites[0].position = pos;
+    for(let i=0;i<this.sprites.length;i++){
+      this.sprites[i].position = pos;
+      this.sprites[i].position.x += 10 * i;
     }
   }
 
@@ -76,13 +80,7 @@ export default class Font extends UI{
       let s = this.str[i];
       if(s > "z"){
         space = 9;
-      }else if(
-        s == "!" ||
-          s == "l" ||
-            s == "i" ||
-              s == "j"||
-                s == "."
-      ){
+      }else if( small.indexOf(s) >= 0 ) {
         space = 4;
       } else{
         space = 7;

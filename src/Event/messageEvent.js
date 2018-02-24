@@ -8,13 +8,12 @@ import EntityManager from '../Stage/entityManager.js';
 
 //新しくメッセージ枠を開く
 function* pop(text){
-  Game.isMes = true;
+  Game.scene.PushSubState("MES");
   UIManager.PopMessage(text,"POP");
   yield ;
 }
 //メッセージをスクロールする
 function* page(text){
-  Game.isMes = true;
   UIManager.PopMessage(text,"PAGE");
   yield ;
 }
@@ -31,8 +30,9 @@ let itt;
 export default class MessageEvent extends Event{
   //text ... 文章の配列
   //type : 
-  //1 : new message 
-  //2 : scrll page
+  //pop : new message 
+  //page : scrll page
+  //event : trriger event
   constructor(text,type){
     super(); //特に意味はない
     switch(type){

@@ -60,7 +60,6 @@ export default class UIManager{
   }
   //メニューを開く
   static SetMenu(){
-    //UIManager.addUI(new Font(P_MENU,"-PAUSE-","MES"));//テキスト 
     UIManager.addUI(new Menu(ADV(P_MENU,{x:0,y:16})));
   }
   //UIをすべて削除

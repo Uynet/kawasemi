@@ -32,7 +32,7 @@ export default class BulletBlur extends EFFECT{
       this.Physics();
       this.sprite.position = ADV(this.pos.x,VECN(8));
       this.sprite.texture = this.pattern[this.spid];
-      this.spid = Math.floor(this.frame/10)%4;
+      this.spid = Math.floor(this.frame/4)%4;
       if(this.frame >= 40){
         //消える時に一回だけ呼ばれる
         if(this.isAlive){
