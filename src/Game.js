@@ -61,24 +61,21 @@ export default class Game{
       if(Game.isPause){
         //ゲーム画面を暗くする
         //TODO : イベント化　 
-        //UIManager.OpenWeapon();
-        
         UIManager.SetMenu();
-
-        let filters = [Drawer.blurFilter,Drawer.noiseFilter];
-        //Drawer.entityContainer.filters = filters;
-        //Drawer.backContainer.filters = filters;
-        //Drawer.foreContainer.filters = filters
-        //Drawer.backGroundContainer.filters = filters
+        let filters = [Drawer.blurFilter];
+        filters = [];
+        Drawer.entityContainer.filters = filters;
+        Drawer.backContainer.filters = filters;
+        Drawer.foreContainer.filters = filters
+        Drawer.backGroundContainer.filters = filters
         //Drawer.filterContainer.filters = filters
         Drawer.addContainer(dark,"FILTER");
       }else{
         UIManager.CloseMessage();
-        //UIManager.CloseWeapon();
-        //Drawer.entityContainer.filters = [];
-        //Drawer.backContainer.filters = [];
-        //Drawer.backGroundContainer.filters = [];
-        //Drawer.foreContainer.filters = [];
+        Drawer.entityContainer.filters = [];
+        Drawer.backContainer.filters = [];
+        Drawer.backGroundContainer.filters = [];
+        Drawer.foreContainer.filters = [];
         //Drawer.filterContainer.filters = [];
         Drawer.removeContainer(dark,"FILTER");
         UIManager.removeUI(UIManager.menu);
@@ -93,6 +90,7 @@ export default class Game{
     }
   }
 
+  //ステージ中の処理
   static UpdateStage(){
     Game.Input();
     /*
@@ -106,6 +104,8 @@ export default class Game{
        UIManager.Update();
      }
   }
+
+  //看板を読んでいるときにアニメーションだけを行う
   static AnimationStage(){
     EntityManager.Animation();
     UIManager.Update();

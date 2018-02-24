@@ -5,8 +5,10 @@ import Input from '../input.js';
 import Timer from '../timer.js';
 import Util from '../util.js';
 import Font from './Font.js';
+import Game from '../Game.js';
 
-const COLUMN = 10;
+const COLUMN = 12;
+const INDENT = {x:-8,y:0};
  
 export default class Menu extends UI{
   constructor(pos){
@@ -15,22 +17,56 @@ export default class Menu extends UI{
     this.type = "MENU";
     this.isMultiple = true;
     let p = CPV(pos);
+    this.title = new Font({x:p.x,y:p.y + -1 * COLUMN},"-PAUSE-","MENU"),
+    this.index = 0;
     this.items = [
-      new Font({x:p.x,y:p.y + 0 * COLUMN},"リスタート","MENU"),
-      new Font({x:p.x,y:p.y + 1 * COLUMN},"ぶき","MENU"),
-      new Font({x:p.x,y:p.y + 2 * COLUMN},"やめる","MENU"),
+      new Font({x:p.x + 0,y:p.y + 1 * COLUMN},"さいかい","MENU"),
+      new Font({x:p.x + 0,y:p.y + 2 * COLUMN},"ぶき","MENU"),
+      new Font({x:p.x + 0,y:p.y + 3 * COLUMN},"やめる","MENU"),
     ];
+    this.Select(this.index);
     /*スプライト*/
     this.sprites = [];
+    for(let l of this.title.sprites){
+      this.sprites.push(l);
+    }
     for(let i = 0;i<this.items.length;i++){
       for(let l of this.items[i].sprites){
         this.sprites.push(l);
       }
     }
   }
+  Select(i){
+    for(let j=0;j<this.items.length;j++){
+      let p = {
+        x : this.pos.x, 
+        y : this.pos.y + (j+1)*COLUMN,
+      }
+      if(j==i){
+        this.items[j].Move(ADV(p,INDENT));
+      }
+      else {
+        this.items[j].Move(p);
+      }
+    }
+  }
   Update(){
-    if(Input.isKeyInput(KEY.DONW)){
-
+    if(Input.isKeyClick(KEY.DOWN)){
+      this.index = Math.min(this.index+1,this.items.length-1);
+      this.Select(this.index);
+    }
+    if(Input.isKeyClick(KEY.UP)){
+      this.index = Math.max(this.index-1,0);
+      this.Select(this.index);
+    }
+    if(Input.isKeyClick(KEY.Z) || Input.isKeyClick(KEY.X)|| Input.isKeyClick(KEY.SP)){
+      switch(this.items[this.index].str){
+        case "さいかい" : break;
+        case "ぶき" : break;
+        case "やめる" :
+          Game.scene.ChangeState(STATE.STAGE,STATE.TITLE);
+          break;
+      }
     }
   }
 }
