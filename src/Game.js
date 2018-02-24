@@ -17,14 +17,14 @@ import Menu from './UI/Menu.js';
 
 export default class Game{
   static Init(){
+    Param.Init();
     Drawer.Init();
     EventManager.Init();
     EntityManager.Init();
     Timer.Init();
     Util.Init();
-    WeaponManager.Init();
     UIManager.Init();
-    Param.Init();
+    WeaponManager.Init();
 
     /*initialize Game state*/
     Game.stage = 0;//現在のステージ番号

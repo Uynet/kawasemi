@@ -48,10 +48,7 @@ export default class Bullet1AI{
     }
   }
   Horming(){
-    this.bullet.vel = {
-      x: this.bullet.vi * Math.cos(this.bullet.arg),
-      y: this.bullet.vi * Math.sin(this.bullet.arg),
-    };
+    this.bullet.vel = POV(this.bullet.arg,this.bullet.vi);
     //敵方向へのベクトル
     let to = ADV(this.bullet.targetedEnemy.pos , MLV(VECN(-1),this.bullet.pos));
     //外積を取って正負を判定
@@ -61,7 +58,7 @@ export default class Bullet1AI{
   }
 
   Do(){
-this.Horming();
+    if(this.bullet.isTargetOn) this.Horming();
     this.collision();
     this.Phisics();
   }

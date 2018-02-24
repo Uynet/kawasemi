@@ -20,20 +20,20 @@ import Explosion1 from './Effect/explosion1.js';
 const BULLET1 = {
   HP : 1,
   ATK_MAX : 99,
-  LENGTH : 180,
   CURVE : 0.1,
 }
 
 /*bullet1クラス*/
 //Missile
 export default class Bullet1 extends Bullet{
-  constructor(pos,vi,arg,target){
-    super(pos,{x:vi * Math.cos(arg) , y:vi * Math.sin(arg)});
+  constructor(pos,vi,arg,weapon){
+    super(pos,POV(arg,vi));
     /*基本情報*/
     this.frame = 0;
     this.arg = arg;
     this.vi = vi;
-    if(target) this.targetedEnemy = target.enemy;
+    this.isTargetOn = weapon.isTargetOn;
+    if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
     /*スプライト*/
     this.pattern = Art.bulletPattern.bullet1;
     this.spid = 0;
@@ -46,8 +46,6 @@ export default class Bullet1 extends Bullet{
     this.hp = BULLET1.HP;//弾丸のHP 0になると消滅
     this.atk = BULLET1.ATK_MAX;//攻撃力
     this.curve = BULLET1.CURVE;
-    this.length = BULLET1.LENGTH;//これは武器がもつ?
-    this.launchedPos = CPV(pos);//射出された座標 射程距離の計算に必要 
     this.type = ENTITY.BULLET;
     /*AI*/
     this.AIList = [];
@@ -65,10 +63,9 @@ export default class Bullet1 extends Bullet{
       AI.Do();
     }
     /*observer*/
-    //HP || 飛行距離
+    //HP || 経過時間
     if(this.hp<=0 ||
-      this.frame > 100 || 
-      Util.distance(this.pos , this.launchedPos) > this.length){
+      this.frame > 100) {
       EntityManager.removeEntity(this);
       EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
