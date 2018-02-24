@@ -60,6 +60,8 @@ export default class UIManager{
   }
   //メニューを開く
   static SetMenu(){
+    let filters = [Drawer.blurFilter];
+    Drawer.entityContainer.filters = filters;
     UIManager.addUI(new Menu(ADV(P_MENU,{x:0,y:16})));
   }
   //UIをすべて削除
@@ -113,7 +115,8 @@ export default class UIManager{
   //参照の開放をする
   static removeUI(ui){
     let i = this.UIList.indexOf(ui);
-    this.UIList.splice(i,1);
+    //要素の子であるFontはリストに無いため参照を消さない
+    if(i != -1) this.UIList.splice(i,1);
     if(ui.isMultiple){
       //複数スプライトを持つオブジェクト
       for(let i = 0;i<ui.sprites.length;i++){
