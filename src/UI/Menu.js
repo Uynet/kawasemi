@@ -7,7 +7,8 @@ import Util from '../util.js';
 import Font from './Font.js';
 import Game from '../Game.js';
 import EventManager from '../Event/eventmanager.js';
-import QuitGameEvent from '../Event/quakeEvent.js';
+import QuitGameEvent from '../Event/quitGameEvent.js';
+import Drawer from '../drawer.js';
 
 const COLUMN = 12;
 const INDENT = {x:-8,y:0};
@@ -52,6 +53,12 @@ export default class Menu extends UI{
       }
     }
   }
+  Close(){
+    Drawer.entityContainer.filters = [];
+    UIManager.removeUI(UIManager.menu);
+    Game.scene.PopSubState();
+  }
+
   Update(){
     if(Input.isKeyClick(KEY.DOWN)||(Input.isKeyClick(KEY.RIGHT))){
       this.index = Math.min(this.index+1,this.items.length-1);
@@ -61,13 +68,16 @@ export default class Menu extends UI{
       this.index = Math.max(this.index-1,0);
       this.Select(this.index);
     }
-    if(Input.isKeyClick(KEY.Z) || Input.isKeyClick(KEY.X)|| Input.isKeyClick(KEY.SP)){
+    if(Input.isKeyClick(KEY.C) || Input.isKeyClick(KEY.X)|| Input.isKeyClick(KEY.SP)){
       switch(this.items[this.index].str){
-        case "さいかい" : break;
+        case "さいかい" : 
+          this.Close();
+          break;
         case "ぶき" : break;
         case "やめる" :
-          //let e  = new QuitGameEvent();
-          //EventManager.eventList.push(e);
+          this.Close();
+          let qe  = new QuitGameEvent();
+          EventManager.eventList.push(qe);
           break;
       }
     }

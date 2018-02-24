@@ -58,22 +58,12 @@ export default class Game{
 
      /*ポーズ状態に遷移*/
      if(Input.isKeyClick(KEY.C)){
-       let filters = [Drawer.noiseFilter];
-       //filters = [Drawer.blurFilter];
-       Drawer.entityContainer.filters = filters;
        UIManager.SetMenu();
        Game.scene.PushSubState("PAUSE");
      }
   }
   static UpdatePause(){
     UIManager.Update();
-    //メニュー画面を抜ける
-    if(Input.isKeyClick(KEY.C)){
-      UIManager.CloseMessage();
-      Drawer.entityContainer.filters = [];
-      UIManager.removeUI(UIManager.menu);
-      Game.scene.PopSubState();
-    }
   }
   //看板を読んでいるときにアニメーションだけを行う
   static UpdateMes(){
@@ -86,10 +76,8 @@ export default class Game{
 
   static Run(){
     requestAnimationFrame(Game.Run);
-    /*イベントをyieldで実行*/
     for (let l of EventManager.eventList){
-      let d = l.Do().done;
-      if(d){
+      if(l.Do().done){
         let i = EventManager.eventList.indexOf(l);
         EventManager.eventList.splice(i,1);
       }
@@ -99,16 +87,16 @@ export default class Game{
       /*Note : Lastは自前関数*/
       case STATE.TITLE :
         switch(Game.scene.substate.Last()){
-          case  "SEQ" : /*Nothing to do*/ break;
-          default : Game.UpdateTitle();
+          case "DEFAULT" : Game.UpdateTitle();break;
+          case  "TRANS" : /*Nothing to do*/ break;
         }
         break;
       case STATE.STAGE :
         switch(Game.scene.substate.Last()){
+          case "DEFAULT" : Game.UpdateStage();break;
           case  "PAUSE" : Game.UpdatePause();break;
           case  "MES" : Game.UpdateMes(); break;
-          case  "SEQ" : /*Nothing to do*/ break;
-          default : Game.UpdateStage();
+          case  "TRANS" : /*Nothing to do*/ break;
         }
         break;
       default :

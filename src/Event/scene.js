@@ -13,7 +13,7 @@ const STATE = {
 export default class Scene{
   constructor(){
     this.state = STATE.INIT;
-    this.substate = [];
+    this.substate = ["DEFAULT"];
   }
 
   ChangeState(oldState,newState){

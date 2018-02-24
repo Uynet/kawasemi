@@ -3,6 +3,7 @@ import UIManager from '../UI/uiManager.js';
 import Game from '../Game.js';
 import EventManager from './eventmanager.js';
 import MapData from '../Stage/mapData.js';
+import Drawer from '../drawer.js';
 
 /*初期状態タイトル画面に移行するイベント
  * (UIの退避)
@@ -13,6 +14,13 @@ export default class QuitGameEvent extends Event{
     super(1);
     function* gen(){
       Game.scene.ChangeState(STATE.STAGE,STATE.TITLE);
+      /*delete all entities*/
+      MapData.DeleteStage();
+      UIManager.Clean();
+      /*Reinitialize Game*/
+      Game.stage = 0;
+      /*Setting Title*/
+      UIManager.SetTitle();
       yield ;
     }
     let itt = gen();

@@ -13,7 +13,7 @@ export default class GameClearEvent extends Event{
   constructor(){
     super();
     function* gen(){
-      Game.scene.PushSubState("SEQ");
+      Game.scene.PushSubState("TRANS");
       Game.stage++;
       EventManager.eventList.push(new FadeEvent("fadeout"));
       yield;
@@ -21,5 +21,4 @@ export default class GameClearEvent extends Event{
     let itt = gen();
     this.func = itt;
   }
-
 }
