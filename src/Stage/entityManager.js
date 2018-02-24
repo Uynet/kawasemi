@@ -55,10 +55,6 @@ export default class EntityManager{
         //真の背景
         Drawer.addContainer(entity.sprite,"BG");
         break;
-        //ゴール?
-      case ENTITY.GOAL :
-        Drawer.addContainer(entity.sprite,"ENTITY");
-        break;
         //弾丸
       case ENTITY.BULLET :
           Drawer.addContainer(entity.sprite,"ENTITY");

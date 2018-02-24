@@ -10,35 +10,26 @@ import Drawer from '../drawer.js';
  * (UIの退避)
  * UIのセット
  */
-export default class StartStageEvent extends Event{
-  constructor(){
-    super(1);
-    function* gen(){
-
-      //note : Game.seqがtrueの間はEntityは更新されない
-
-      //やっぱり画面移動中も敵動いてて欲しい...
-      Game.scene.PushSubState("SEQ");
-      //画面遷移エフェクトの♢
-      let frame = 0;//経過フレーム数 途中で0にしているので注意
-      let spid = 0;//スプライト番号
-      let pattern = Art.seqPattern;//パターン
-      let seq = new Array(400);//各♢
-
+export default class FadeEvent extends Event{
+  constructor(type){
+    super();//どうでもいい
+    function* FadeOut(){
+      let pattern = Art.seqPattern;
+      let seq = new Array(400);
+      let spid = 0;
+      let frame = 0;
       //♢を初期化して追加
-      /*
       for(let i = 0; i < 400; i++) {
-          let sp = Art.SpriteFactory(pattern[spid]);
-          let y = Math.floor(i/20);
-          let x = i%20;
-          sp.position.x = x*16-8;
-          sp.position.y = y*16-8;
-          seq[i] = sp;
-          Drawer.addContainer(sp,"FILTER");
-      }
-      */
+      let sp = Art.SpriteFactory(pattern[spid]);
+      let y = Math.floor(i/20);
+      let x = i%20;
+      sp.scale = VECN(2);
+      sp.position.x = x*16-24;
+      sp.position.y = y*16-24;
+      seq[i] = sp;
+      Drawer.addContainer(sp,"FILTER");
+    }
       /*フェードアウト*/
-      /*
       while(frame < 40){
         for(let i = 0; i < 400; i++) {
           //上から下へ
@@ -48,7 +39,6 @@ export default class StartStageEvent extends Event{
         frame++;
         yield;
       }
-      */
       /*ここでマップをロード*/
       MapData.DeleteStage();
       MapData.CreateStage(Game.stage,"ENTER");
@@ -59,12 +49,9 @@ export default class StartStageEvent extends Event{
         frame++;
         yield
       }
-      Game.scene.ChangeState(STATE.TITLE,STATE.STAGE);
-      frame = 0;
       /*フェードin*/
-      /*
       while(frame < 40){
-        Game.seq = false;
+        Game.scene.PopSubState();
         for(let i = 0; i < 400; i++) {
           spid = 16 + Math.max(0,Math.min(Math.floor(frame -i/8),15));
           seq[i].texture = pattern[spid];
@@ -72,17 +59,14 @@ export default class StartStageEvent extends Event{
         frame++;
         yield;
       }
-      */
-     /*
       for(let i = 0; i < 400; i++) {
         Drawer.removeContainer(seq[i],"FILTER");
       }
-      */
-      //Game.isSeq = false;
-      Game.scene.PopSubState("SEQ");
       yield;
     }
-    let itt = gen();
+
+    let itt;
+    itt = FadeOut();
     this.func = itt;
   }
 }

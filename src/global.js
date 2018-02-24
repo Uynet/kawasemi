@@ -1,3 +1,13 @@
+/*meta*/
+Array.prototype.Last = function(){
+  if(this.length == 0){
+    return undefined;
+  }
+  else{
+    return this[this.length-1];
+  }
+}
+
 const DIR = {
   UP : 0,
   DOWN : 1,

@@ -49,7 +49,10 @@ export default class Drawer{
     this.blurFilter = new PIXI.filters.BlurFilter();
     this.blurFilter.blur = 1;
     this.noiseFilter = new PIXI.filters.NoiseFilter(0.3);
+    //this.sepia =filter = new PIXI.filters.SepiaFilter();
     //this.tiltShiftFilter = new PIXI.filters.TiltShiftFilter()
+    //this.sepiaFilter = new PIXI.filters.SepiaFilter();
+    //this.sepiaFilter.sepia = 0.5;
 
   }
 
