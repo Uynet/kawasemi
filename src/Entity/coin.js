@@ -14,11 +14,11 @@ let player;
 export default class Coin extends Entity{
   constructor(pos){
     player = EntityManager.player;
-    super(pos,{x:2 * (Math.random()-0.5),y:-3});
+    super(pos,{x:Rand(2),y:-3});
     /*基本情報*/
     this.frame = 0;
     this.e = 0.9;
-    
+    this.isUpdater = true;    
     /*スプライト*/
     this.pattern = Art.enemyPattern.coin;
     this.spid = 0;
@@ -29,11 +29,7 @@ export default class Coin extends Entity{
     /*パラメータ*/
     this.gravity = 0.3;
     this.type = ENTITY.BULLET;
-    /*フラグ*/
-    this.isJump = false
     /*AI*/
-    //this.AIList = [];
-    //this.AIList.push(new Bullet1AI(this));
     this.vel.y = 0.3;
   }
   Collision(){
@@ -70,10 +66,6 @@ export default class Coin extends Entity{
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
     this.vel.x += this.acc.x;
-    //摩擦
-    if(!this.isJump){
-      this.vel.x *= 0.8;
-    }
     //最大速度制限
     this.vel.y = Math.min(0.5,Math.max(this.vel.y,-0.5));
     this.vel.x = Math.min(3,Math.max(this.vel.x,-3));

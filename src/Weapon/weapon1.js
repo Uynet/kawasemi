@@ -121,7 +121,7 @@ export default class Weapon1 extends Weapon{
         //反動
         //player.vel.x -= v.x/11;
         let v = POV(this.arg,this.speed);
-        player.acc.y -= v.y/5;
+        player.acc.y -= Math.max(v.y/5,0);
         //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
         //振動
         //EventManager.eventList.push(new QuakeEvent(8,2));

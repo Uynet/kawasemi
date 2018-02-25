@@ -47,7 +47,6 @@ export default class Message extends UI{
   Page(text){
     //改ページするために文字だけを消す
     for(let i=0;i<this.sentence.length;i++){
-      cl(this.sentence[i]);
       UIManager.removeUI(this.sentence[i]);
     }
     //これをすると先頭以外の要素が消える

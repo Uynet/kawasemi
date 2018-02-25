@@ -96,9 +96,14 @@ const ADV = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加�
 const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
 const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
 /*Random*/
-let Rand = (d)=>{
+const Rand = (d)=>{
   return 2 * d * (Math.random()-0.5);
 }
+/*maxmin*/
+const BET = (min,x,max)=>{
+  return Math.min(Math.max(x,min),max);
+}
+
 //-d ~ +d までの値を返す
 let Rand2D = (d)=>{
   let p = {

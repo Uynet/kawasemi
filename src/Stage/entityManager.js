@@ -11,11 +11,13 @@ export default class EntityManager{
     this.wallList = [];//壁のリスト
     this.player;//プレイヤーのインスタンス
     this.effectList = [];//本当はいらないけど何故か消えないバグがあるから..
+    this.updaterList = [];//更新が必要なEntity
   }
   /*Entityをリストに登録*/
   static addEntity(entity){
     //各entityの参照を保持する
     this.entityList.push(entity); 
+    //更新が必要なEntityのみリストに追加
     switch(entity.type){
       //プレイヤー
       case ENTITY.PLAYER :
@@ -124,7 +126,7 @@ export default class EntityManager{
   /*Entityの更新*/
   static Update(){
     for(let l of this.entityList){
-      l.Update(); 
+      if(l.isUpdater) l.Update(); 
     }
   }
   /*メッセージイベント中にアニメーションだけ行う*/

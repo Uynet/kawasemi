@@ -15,6 +15,5 @@ export default class Bullet extends Entity{
     this.hp;//弾丸のHP 0になると消滅
     this.atk;//攻撃力
     this.length;//これは武器がもつ?
-    this.launchedPos = {x:pos.x,y:pos.y};//射出された座標 射程距離の計算に必要 
   }
 }
