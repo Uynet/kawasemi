@@ -34,6 +34,7 @@ export default class Bullet1 extends Bullet{
     this.vi = vi;
     this.isTargetOn = weapon.isTargetOn;
     if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
+      this.isUpdater  =true;
     /*スプライト*/
     this.pattern = Art.bulletPattern.bullet1;
     this.spid = 0;

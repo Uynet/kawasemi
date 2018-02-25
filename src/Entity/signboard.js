@@ -3,7 +3,7 @@ import Art from '../art.js';
 import Collider from '../Collision/collider.js';
 import Circle from '../Collision/circle.js';
 import Box from '../Collision/box.js';
-import EntityManaer from '../Stage/entityManager.js';
+import EntityManager from '../Stage/entityManager.js';
 import Util from '../util.js';
 import Input from '../input.js';
 import EventManager from '../Event/eventmanager.js';
@@ -16,9 +16,11 @@ import UIManager from '../UI/uiManager.js';
 export default class Signboard extends BackEntity{
   constructor(pos,message){
     super(pos,Art.wallPattern.signboard);
+    /*基本情報*/
     this.type = ENTITY.BACK;
     this.name = "signboard";
-      /*
+    this.isUpdater = true;
+      /* 固有情報
        * message : 複数のページからなる文章
        * text : 1つのページの文章
        * sentense : 1行の文章
@@ -31,49 +33,50 @@ export default class Signboard extends BackEntity{
     }
     this.page = 0;//現在のページ番号
     this.isRead = false;//会話中かどうか
-      /*スプライト*/
+    /*スプライト*/
     this.tex = Art.wallPattern.signboard;//テクスチャ
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
   }
+  Read(){
+    if(!this.isRead){
+      this.isRead = true;
+      let event = new MessageEvent(this.message[this.page],"POP");
+      EventManager.eventList.push(event);
+      this.page++;
+    }else{
+      /*イベント発生用メッセージ*/
+      //イベントを発生させてページを読み進める
+      //テスト用イベント(死ぬ)
+      if(this.message[this.page] == "EVENT"){;
+        //第一引数いらんのでは?
+        let event = new MessageEvent(this.message[this.page],"EVENT");
+        EventManager.eventList.push(event);
+        this.page++;
+      }
+      if(this.page < this.message.length){
+        let event = new MessageEvent(this.message[this.page],"PAGE");
+        EventManager.eventList.push(event);
+        this.page++;
+        //続きがあれば読む
+        }else{
+          //なければ終了
+          Game.scene.PopSubState();
+          UIManager.CloseMessage();//枠を閉じる
+          this.isRead = false;
+          this.page = 0;
+        }
+    }
+  }
 
   Update(){
-    let player = EntityManaer.player;
+    //メッセージ文が"EVENT"ならばイベントを発生させる
+    //page : 現在のページ番号
+    let player = EntityManager.player;
     if(Util.distance(player.pos,this.pos) < 16 && player.isAlive){
-      //キーを押すと読む
-      //メッセージ文が"EVENT"ならばイベントを発生させる
-      //page : 現在のページ番号
-      if( Input.isKeyClick(KEY.SP)){
-        if(!this.isRead){
-          this.isRead = true;
-          let event = new MessageEvent(this.message[this.page],"POP");
-          EventManager.eventList.push(event);
-          this.page++;
-        }else{
-          /*イベント発生用メッセージ*/
-          //イベントを発生させてページを読み進める
-          //テスト用イベント(死ぬ)
-          if(this.message[this.page] == "EVENT"){;
-            //第一引数いらんのでは?
-            let event = new MessageEvent(this.message[this.page],"EVENT");
-            EventManager.eventList.push(event);
-            this.page++;
-          }
-          if(this.page < this.message.length){
-            let event = new MessageEvent(this.message[this.page],"PAGE");
-            EventManager.eventList.push(event);
-            this.page++;
-            //続きがあれば読む
-          }else{
-            //なければ終了
-            Game.scene.PopSubState();
-            UIManager.CloseMessage();//枠を閉じる
-            this.isRead = false;
-            this.page = 0;
-          }
-        }
+      if( Input.isKeyClick(KEY.UP)){
+        this.Read();
       }
     }
-    // this.sprite.position = this.pos;
   }
 }

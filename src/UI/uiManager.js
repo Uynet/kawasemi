@@ -62,6 +62,7 @@ export default class UIManager{
   static SetMenu(){
     let filters = [Drawer.blurFilter];
     Drawer.entityContainer.filters = filters;
+    Drawer.entityContainer.r = 255;
     UIManager.addUI(new Menu(ADV(P_MENU,{x:0,y:16})));
   }
   //UIをすべて削除

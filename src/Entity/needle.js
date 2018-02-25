@@ -18,6 +18,7 @@ export default class Needle extends BackEntity{
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box({x:pos.x+4,y:pos.y+12},8,8));//衝突判定の形状
     this.name = "needle";
+    this.isUpdater  =true;
     /*スプライト*/
     this.pattern = Art.wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号
@@ -62,11 +63,8 @@ export default class Needle extends BackEntity{
     /*observer*/
     if(this.hp<=0){
       EntityManager.removeEntity(this);
-      let p = {
-        x : this.pos.x,
-        y : this.pos.y
-      }
-      EntityManager.addEntity(new BulletShot(p,{x:0,y:0}));
+      let p = CPV(this.pos);
+      EntityManager.addEntity(new BulletShot(p,VEC0()));
     }
   }
 }

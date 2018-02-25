@@ -1,7 +1,7 @@
 //パラメータ管理クラス
 export default class Param{
   static Init(){
-    this.PLAYER = {
+    this.player = {
       JUMP_VEL : 5,//ジャンプ力
       RUN_VEL : 0.4,//はしり速度
       GRAVITY : 0.15,
@@ -14,7 +14,7 @@ export default class Param{
       ANIM_WAIT : 7,
 
       VX_MAX : 3,
-      VY_MAX : 11
+      VY_MAX : 8
     }
     this.ENEMY1 = {
       HP : 5,

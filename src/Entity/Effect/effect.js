@@ -6,5 +6,6 @@ export default class EFFECT extends Entity{
     if(!vel) vel = VEC0();
     super(pos,vel);
     this.type = ENTITY.EFFECT;
+    this.isUpdater = true;
   }
 }
