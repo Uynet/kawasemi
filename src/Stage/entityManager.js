@@ -35,7 +35,7 @@ export default class EntityManager{
         //複数スプライトを持つ
           this.effectList.push(entity);
           for(let i=0 ;i < entity.sprites.length ; i++){
-            Drawer.addContainer(entity.sprites[i],"FORE");
+            Drawer.addContainer(entity.sprites[i],"ENTITY");
           }
         }else if(entity.isNoSprite){
         //何も持たない
@@ -52,6 +52,10 @@ export default class EntityManager{
       case ENTITY.BACK :
         //背景Entityであり背景ではない
         Drawer.addContainer(entity.sprite,"BACK");
+        break;
+      case ENTITY.FORE :
+        //手前Entity
+        Drawer.addContainer(entity.sprite,"FORE");
         break;
       case ENTITY.BG :
         //真の背景
@@ -89,7 +93,7 @@ export default class EntityManager{
         //複数スプライトを持つオブジェクトの処理
           for(let j = 0;j<entity.sprites.length;j++){
             console.assert(entity.sprites[j] != undefined);
-            Drawer.removeContainer(entity.sprites[j],"FORE");
+            Drawer.removeContainer(entity.sprites[j],"ENTITY");
           }
         }else if(entity.isNoSprite){
           //何もスプライトを持たない
@@ -107,6 +111,10 @@ export default class EntityManager{
       case ENTITY.BACK :
         //背景entity
         Drawer.removeContainer(entity.sprite,"BACK");
+        break;
+      case ENTITY.FORE :
+        //手前entity
+        Drawer.removeContainer(entity.sprite,"FORE");
         break;
       case ENTITY.BG :
         //真の背景

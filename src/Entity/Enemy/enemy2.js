@@ -5,6 +5,7 @@ import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Enemy2AI from '../AI/enemy2AI.js';
+import moveReflect from '../AI/moveReflect.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Coin from '../coin.js';
@@ -36,7 +37,7 @@ export default class Enemy2 extends Enemy{
     this.sprite.position = this.pos;
     /*パラメータ*/
     ENEMY2 = Param.ENEMY2;
-    this.addAI(new Enemy2AI(this));
+    this.addAI(new moveReflect(this));
     this.atkMax = ENEMY2.ATK_MAX;
     this.hp = ENEMY2.HP;
     this.gravity = ENEMY2.GRAVITY;
@@ -49,7 +50,7 @@ export default class Enemy2 extends Enemy{
       on : false,
       under : null
     }
-    this.vel.x = 3;
+    this.vel = Rand2D(1);
   }
   //die
   Die(){
@@ -66,68 +67,6 @@ export default class Enemy2 extends Enemy{
     this.hp += atkMax;
     //ダメージをポップ
     EntityManager.addEntity(new FontEffect(this.pos,-atkMax+"","enemy"));
-  }
-  Collision(){
-    /*衝突判定*/
-    for(let l of EntityManager.wallList){
-      if(l == this) continue;
-      /*衝突判定*/
-      let c = Collision.on(this,l);
-      if(c.isHit){
-        /* 衝突応答*/
-
-        /*速度*/
-        if(c.n.x != 0) {
-          this.vel.x *=-1;
-        }
-        //地面との衝突
-        if(c.n.y == -1){ 
-          this.isJump = false;
-          this.vel.y = Math.min(0,this.vel.y * -0.3);
-        }
-        //天井との衝突
-        if(c.n.y == 1 ){
-          this.vel.y = Math.max(0,this.vel.y * -0.3)
-        }
-        /*押し出し*/
-        this.pos.x += c.n.x * c.depth;
-        this.pos.y += c.n.y * c.depth;
-        /*note : now isHit == false*/
-      }
-    }
-    // 敵同士の衝突
-    this.floor.on  =false ;
-    this.floor.under = null;
-    for(let i=0;i<EntityManager.enemyList.length;i++){
-      let l = EntityManager.enemyList[i];
-      let c = Collision.on(this,l);
-      //これないと自分と衝突判定してバグ
-      if(i == EntityManager.enemyList.indexOf(this))continue;
-      //衝突判定
-      if(c.isHit){
-        // 衝突応答
-
-        //速度
-        if(c.n.x != 0) this.vel.x *= -1;
-        //地面との衝突
-        if(c.n.y == -1){ 
-          this.floor.on = true;
-          this.floor.under = EntityManager.enemyList[i];
-          this.isJump = false;
-          this.vel.y = Math.min(1,this.vel.y * -0.3);
-this.vel.x *= -1;
-        }
-        //天井との衝突
-        if(c.n.y == 1 ){
-          this.vel.y = Math.max(1,this.vel.y * -0.3)
-        }
-        //押し出し
-        let l = EntityManager.enemyList[i];
-        this.pos.x += c.n.x * c.depth/2;
-        this.pos.y += c.n.y * c.depth/2;
-        //note : now isHit == false
-      }
-    }
   }
   //プレイヤーにダメージを与える
   Hurt(){
@@ -153,25 +92,21 @@ this.vel.x *= -1;
     this.acc.y = 0;
     this.acc.x = 0;
     //最大速度制限
-    this.vel.y = Math.max(Math.min(this.vel.y,0.05),-0.05);
   }
   Animation(){
     this.spid = Math.floor(this.frame/2)%4;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
-    this.frame++;
   }
 
   Update(){
     for (let AI of this.AIList){
-      AI.Do(this);
+      AI.Do();
     }
-    this.Collision();
     this.Physics();
     this.Hurt();
-    this.Animation();//アニメーション
+    this.Animation();
     this.frame++;
-
     //observer
     if(this.hp<=0){
       this.Die();

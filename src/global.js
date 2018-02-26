@@ -54,6 +54,7 @@ const ENTITY = {
   BULLET : "BULLET",
   EFFECT : "EFFECT",
   BACK : "BACK" ,
+  FORE : "FORE",
   BG : "BG"
 }
 
@@ -66,7 +67,8 @@ const TILE = {
   GOAL : 4,
   BACK : 5,
   SIGN : 6,
-  NEEDLE : 7
+  NEEDLE : 7,
+  FORE : 8,
 }
 
 const CONTAINER = {
