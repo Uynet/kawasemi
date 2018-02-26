@@ -12,7 +12,6 @@ export default class Enemy2AI{
   }
 
   Do(enemy){
-    enemy.acc.y  = -0.05;
     //enemy.acc.x = 1;
   }
 }

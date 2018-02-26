@@ -2,8 +2,7 @@ import Timer from './timer.js';
 import EntityManager from './Stage/entityManager.js';
 
 let PIXI_WIDTH = 800; let PIXI_HEIGHT = 600;
-let size = 1;
-
+let size = 1; 
 export default class Drawer{
 
   /*setting stage*/
@@ -78,7 +77,7 @@ export default class Drawer{
         this.backGroundContainer.addChild(sprite);
         break;
       default :
-        console.warn("po");
+        console.warn(CONTAINER);
     }
   }
 
@@ -123,8 +122,8 @@ export default class Drawer{
     this.backContainer.y = toY;
     this.entityContainer.x = toX;
     this.entityContainer.y = toY;
-    this.foreContainer.x = toX;
-    this.foreContainer.y = toY;
+    this.foreContainer.x = toX*1;
+    this.foreContainer.y = toY*1
     //UIは動かない
   }
   /*スクロール位置を一瞬で移動させる*/
@@ -137,14 +136,6 @@ export default class Drawer{
     this.entityContainer.y = Math.floor(centerY);
     this.foreContainer.x = Math.floor(centerX);
     this.foreContainer.y = Math.floor(centerY);
-  }
-
-  static Yakudo(mag){
-    this.magnification = mag;
-    this.entityContainer.scale.x = this.magnification;
-    this.entityContainer.scale.y = this.magnification;
-    this.filterContainer.scale.x = this.magnification;
-    this.filterContainer.scale.y = this.magnification;
   }
 
   static Quake(diff){

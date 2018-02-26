@@ -80,6 +80,10 @@ export default class MapData{
           case TILE.BACK :
             entity = new BackEntity({x:16*x,y:16*y},MapData.WallTile(ID));
             EntityManager.addEntity(entity); break;
+          case TILE.FORE :
+            entity = new BackEntity({x:16*x,y:16*y},MapData.WallTile(ID));
+            entity.type = "FORE";
+            EntityManager.addEntity(entity); break;
           case TILE.SIGN : EntityManager.addEntity(new Signboard({x:16*x,y:16*y})); break;
           case TILE.NEEDLE :
             entity = new Needle({x:16*x,y:16*y},MapData.WallTile(ID));
