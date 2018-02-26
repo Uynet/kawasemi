@@ -1,5 +1,5 @@
 import Bullet from '../Entity/bullet.js';
-import Bullet1 from '../Entity/bullet1.js';
+import Bullet2 from '../Entity/bullet2.js';
 import Target from '../Entity/Effect/target.js';
 import EntityManager from '../Stage/entityManager.js';
 import Weapon from './weapon.js';
@@ -11,6 +11,8 @@ import Timer from '../timer.js';
 import FontEffect from '../Entity/Effect/fontEffect.js';
 import EventManager from '../Event/eventmanager.js';
 import QuakeEvent from '../Event/quakeEvent.js';
+import Param from '../param.js';
+import Explosion1 from '../Entity/Effect/explosion1.js';
 
 const DIR = {
   UR : "UR",
@@ -23,24 +25,20 @@ const DIR = {
 
 const SEEN = 2;
 
-const WEAPON2 = {
-  AGI : 18,
-  COST : 100,
-  SPEED : 9, 
-  LENGTH : 180,
-}
+let weapon2 = Param.weapon2;
 
 export default class Weapon2 extends Weapon{
   constructor(){
-    super("1");
+    super("2");
     /*基本情報*/
     this.target;
     this.isTargetOn = false;//照準が発生しているか
       /*パラメータ*/
-      this.agi = WEAPON2.AGI;//間隔
-    this.cost = WEAPON2.COST;
-    this.speed = WEAPON2.SPEED;//弾速
-      this.length = WEAPON2.LENGTH;//射程距離
+      weapon2 = Param.weapon2;
+      this.agi = weapon2.agi;//間隔
+      this.cost = weapon2.cost;
+      this.speed = weapon2.speed;//弾速
+      this.length = weapon2.length;//射程距離
   }
 
   //敵が視界に入っているか
@@ -109,27 +107,27 @@ export default class Weapon2 extends Weapon{
 
         //弾薬消費
         player.bullet -= this.cost;
-        console.assert(player.bullet >=0 );
 
-        let vi = this.speed;
         let arg = player.arg;
-        let p = {
-          x: player.pos.x -4 + 5 * Math.cos(arg),
-          y: player.pos.y + 5 * Math.sin(arg),
+        let p = ADV(POV(arg,48),CPV(player.pos));
+        let bullet;
+        EntityManager.addEntity(new Explosion1(CPV(p)));
+        for(let i = 0;i<10;i++){
+          p = ADV(player.pos,POV(arg,16*(i+1)));
+          bullet = new Bullet2(p,arg,this.target);
+          EntityManager.addEntity(bullet);
         }
-        let bullet = new Bullet1(p,vi,arg,this.target);
-        bullet.atk = 1;
-        EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
         /* □ Effect : shot */
         EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
+        EntityManager.addEntity(new Explosion1(CPV(p)));
         //反動
         //player.vel.x -= v.x/11;
-        let v = POV(arg,vi);
-        player.acc.y -= v.y/5;
+        //let v = POV(arg,vi);
+        //player.acc.y -= v.y/5;
         //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
         //振動
-        //EventManager.eventList.push(new QuakeEvent(8,2));
+        EventManager.eventList.push(new QuakeEvent(17,5));
       }
     }
   }

@@ -213,6 +213,13 @@ export default class Art{
       ],
       bullet2 : [
         PIXI.Texture.fromFrame('bullet10.png'),
+        PIXI.Texture.fromFrame('bullet11.png'),
+        PIXI.Texture.fromFrame('bullet12.png'),
+        PIXI.Texture.fromFrame('bullet13.png'),
+        PIXI.Texture.fromFrame('bullet14.png'),
+        PIXI.Texture.fromFrame('bullet15.png'),
+        PIXI.Texture.fromFrame('bullet16.png'),
+        PIXI.Texture.fromFrame('bullet17.png'),
       ],
       bullet3 : [
         PIXI.Texture.fromFrame('bullet20.png'),
