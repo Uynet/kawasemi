@@ -6,8 +6,7 @@ import Util from '../../util.js';
 export default class Sonic extends EFFECT{
   constructor(pos){
     super(pos,VEC0());
-    /*基本情報*/
-    this.type = ENTITY.EFFECT;
+    /*基本情報*/ this.type = ENTITY.EFFECT;
     this.frame = 0;
     /*スプライト*/
     this.spid = 0;
@@ -16,7 +15,6 @@ export default class Sonic extends EFFECT{
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     this.sprite.alpha = 0.16;
-
     this.arg = ADV(VECN(2),Rand2D(1));
   }
 

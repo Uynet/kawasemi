@@ -32,8 +32,19 @@ export default class Param{
     this.weapon1 = {
       agi : 20,
       cost : 3,
-      speed : 9, 
+      speed : 8, 
       length : 180,
+    }
+    this.weapon11 = {
+      agi : 2,
+      cost : 3,
+      speed : 0.0001, 
+      length : 180,
+    }
+    this.bullet1 = {
+      atkMax : 99,
+      hp : 1,
+      curve : 0.1
     }
   }
   GetParam(entity){

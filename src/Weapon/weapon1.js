@@ -12,6 +12,8 @@ import FontEffect from '../Entity/Effect/fontEffect.js';
 import EventManager from '../Event/eventmanager.js';
 import QuakeEvent from '../Event/quakeEvent.js';
 import Param from '../param.js';
+import Explosion1 from '../Entity/Effect/explosion1.js';
+import Sonic from '../Entity/Effect/sonic.js';
 
 const DIR = {
   UR : "UR",
@@ -110,8 +112,8 @@ export default class Weapon1 extends Weapon{
 
         this.arg = player.arg;
         let p = {
-          x: player.pos.x -4 + 5 * Math.cos(this.arg),
-          y: player.pos.y + 5 * Math.sin(this.arg),
+          x: player.pos.x -4 + 10 * Math.cos(this.arg),
+          y: player.pos.y + 10 * Math.sin(this.arg),
         }
         let bullet = new Bullet1(p,this.speed,this.arg,this);
         EntityManager.addEntity(bullet);
