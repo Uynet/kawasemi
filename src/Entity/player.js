@@ -71,6 +71,8 @@ export default class Player extends Entity{
     this.bullet = this.maxBullet;
     this.gravity = Param.player.GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
+    this.scArg = 0;//スクロール用
+    this.scPos = VEC0();//スクロール位置
 
     this.vxMax = Param.player.VX_MAX;
     this.vyMax = Param.player.VY_MAX;
@@ -347,24 +349,17 @@ export default class Player extends Entity{
   }
 
 ScrollByDir(){
-   switch(this.dir){
-   case DIR.R :
-      if(Input.isKeyInput(KEY.SP)) Drawer.ScrollOn({x:this.pos.x+150,y:this.pos.y});
-      break;
-   case DIR.L :
-      if(Input.isKeyInput(KEY.SP)) Drawer.ScrollOn({x:this.pos.x-150,y:this.pos.y});
-     break;
-   case DIR.UR :
-   case DIR.UL :
-      if(Input.isKeyInput(KEY.SP)) Drawer.ScrollOn({x:this.pos.x,y:this.pos.y-150});
-      break;
-   case DIR.DR :
-   case DIR.DL :
-      if(Input.isKeyInput(KEY.SP)) Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+150});
-     break;
-   default :
-     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
-   }
+  if(Input.isKeyInput(KEY.SP)) {
+    let p = ADV(this.pos,POV(this.arg,150*po(this.offset)));
+    let to = ADV(p,MLV(this.scPos,VECN(-1)));
+    this.scPos = ADV(this.scPos , MLV(to,VECN(1/20)));
+    this.offset = Math.min(this.offset+0.5,20);
+    Drawer.ScrollOn(this.scPos);
+  }else{
+    let p = ADV(this.pos,POV(this.arg,120*po(this.offset)));
+    this.scPos = p;
+    this.offset = 0;
+  }
 }
 
 Observer(){

@@ -17,7 +17,6 @@ export default class Font extends UI{
       this.isMultiple = true;
     /*スプライト*/
     this.str = str; //0~9
-      this.sprites = [];//スプライトを配列で持っている
     this.container = new PIXI.Container();
     //0埋めをするかしないか
     switch(this.type){
@@ -40,10 +39,10 @@ export default class Font extends UI{
 
   //HP,BULLETの表示用
   //HP,BULLETの中から呼ばれている
-  UpdateFont(hp){
+  UpdateFont(value){
     //phys
     //文字列型にすること
-    this.str = hp + "";
+    this.str = value + "";
     //0埋め
     if(this.isPadding){
       while(this.str.length < this.d){
@@ -60,15 +59,12 @@ export default class Font extends UI{
     if(this.str == "ゐゐ0")this.str = "ゐゐゐ";
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
-        this.sprites[i].texture = Art.font[spid];
-    //  this.container.children[i].texture = Art.font[spid];
+        this.container.children[i].texture = Art.font[spid];
     };
   };
   Move(pos){
     /*TODO コンテナ*/
-    for(let i=0;i<this.sprites.length;i++){
-      this.sprites[i].position = pos;
-      this.sprites[i].position.x += 10 * i;
+    for(let i=0;i<this.container.children.length;i++){
       this.container.children[i].position = pos;
       this.container.children[i].position.x += 10 * i;
     }
@@ -93,7 +89,6 @@ export default class Font extends UI{
       }
       sprite = new PIXI.Sprite(tex);
       sprite.position = this.pos;
-      this.sprites[i] = sprite;
       this.container.addChild(sprite);
       pos.x += space;
     };
