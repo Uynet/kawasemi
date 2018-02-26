@@ -11,6 +11,7 @@ import MessageEvent from '../Event/messageEvent.js';
 import Game from '../Game.js';
 import BackEntity from './backEntity.js';
 import UIManager from '../UI/uiManager.js';
+import Signpop from './Effect/signpop.js';
 
 
 export default class Signboard extends BackEntity{
@@ -37,6 +38,11 @@ export default class Signboard extends BackEntity{
     this.tex = Art.wallPattern.signboard;//テクスチャ
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
+    //pop
+    let p = CPV(this.pos);
+    p.y -= 16;
+    this.popup = new Signpop(p);
+    EntityManager.addEntity(this.popup);
   }
   Read(){
     if(!this.isRead){
@@ -64,7 +70,9 @@ export default class Signboard extends BackEntity{
           Game.scene.PopSubState();
           UIManager.CloseMessage();//枠を閉じる
           this.isRead = false;
+          this.isNear = false;
           this.page = 0;
+          this.popup;
         }
     }
   }
@@ -73,7 +81,7 @@ export default class Signboard extends BackEntity{
     //メッセージ文が"EVENT"ならばイベントを発生させる
     //page : 現在のページ番号
     let player = EntityManager.player;
-    if(Util.distance(player.pos,this.pos) < 16 && player.isAlive){
+    if(Util.distance(player.pos,this.pos) <  16 && player.isAlive){
       if( Input.isKeyClick(KEY.SP)){
         this.Read();
       }
