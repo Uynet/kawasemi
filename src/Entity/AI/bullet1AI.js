@@ -10,6 +10,7 @@ export default class Bullet1AI{
     this.bullet = bullet;
   }
   Phisics(){
+    this.bullet.vel = POV(this.bullet.arg,this.bullet.vi);
     this.bullet.pos.x += this.bullet.vel.x;
     this.bullet.pos.y += this.bullet.vel.y;
   }
@@ -40,15 +41,13 @@ export default class Bullet1AI{
               /* ■ SoundEffect : hitWall */
               this.bullet.hp = 0;
             }
-            /* □ Effect : hitWall */
-            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,VEC0()));
+            /* □ Effect : Exp */
           };
           break;
       }
     }
   }
   Horming(){
-    this.bullet.vel = POV(this.bullet.arg,this.bullet.vi);
     //敵方向へのベクトル
     let to = ADV(this.bullet.targetedEnemy.pos , MLV(VECN(-1),this.bullet.pos));
     //外積を取って正負を判定
@@ -61,5 +60,6 @@ export default class Bullet1AI{
     if(this.bullet.isTargetOn) this.Horming();
     this.collision();
     this.Phisics();
+    this.bullet.arg += 0.1*Math.sin(this.bullet.frame);
   }
 }

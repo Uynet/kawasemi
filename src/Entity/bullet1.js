@@ -8,20 +8,11 @@ import QuakeEvent from '../Event/quakeEvent.js';
 import Bullet1AI from './AI/bullet1AI.js';
 import Bullet from './bullet.js';
 import BulletBlur from './Effect/bulletBlur.js';
-import BrightCoin from'./Effect/brightCoin.js';
 import Util from '../util.js';
-import Sonic from './Effect/sonic.js';
-import Stone from './Effect/stone.js';
-import Flash from './Effect/flash.js';
-import Fire from './Effect/fire.js';
-import Smoke from './Effect/smoke.js';
 import Explosion1 from './Effect/explosion1.js';
+import Param from '../param.js';
 
-const BULLET1 = {
-  HP : 1,
-  ATK_MAX : 99,
-  CURVE : 0.1,
-}
+const bullet1 = Param.bullet1;
 
 /*bullet1クラス*/
 //Missile
@@ -44,9 +35,10 @@ export default class Bullet1 extends Bullet{
     /*コライダ*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
     /*パラメータ*/
-    this.hp = BULLET1.HP;//弾丸のHP 0になると消滅
-    this.atk = BULLET1.ATK_MAX;//攻撃力
-    this.curve = BULLET1.CURVE;
+    this.hp = Param.bullet1.hp;//弾丸のHP 0になると消滅
+    this.atk = Param.bullet1.atkMax;//攻撃力
+    this.curve = Param.bullet1.curve;
+    //this.boost = 1.5;
     this.type = ENTITY.BULLET;
     /*AI*/
     this.AIList = [];
@@ -57,8 +49,11 @@ export default class Bullet1 extends Bullet{
     /*□Effect BulletBulr*/
     if(this.frame%1 == 0){
       let p = CPV(this.pos);
-      let v = Rand2D(1);
-      EntityManager.addEntity(new BulletBlur(p,v));
+      let d = ADV(Rand2D(5),POV(this.frame,3))
+      p = ADV(p,d);
+      let v = POV(this.arg+Math.PI,4);
+      let blur = new BulletBlur(p,v);
+      EntityManager.addEntity(blur);
     }
     for (let AI of this.AIList){
       AI.Do();

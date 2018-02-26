@@ -12,7 +12,6 @@ import GameOverEvent from '../Event/gameOverEvent.js';
 import Drawer from '../drawer.js';
 import Game from '../Game.js';
 import WeaponManager from '../Weapon/weaponManager.js';
-import Timer from '../timer.js';
 import UIManager from '../UI/uiManager.js';
 import FontEffect from './Effect/fontEffect.js';
 import BulletShot from './Effect/bulletShot.js';
@@ -87,6 +86,7 @@ export default class Player extends Entity{
     this.isRun = false;//走っているか
     this.isAlive = true;//
     this.isInvincible = false//無敵時間
+    this.isNearBoard = false;
     /*床の親子関係*/
     this.floor = {
       on : false,//乗っているか
@@ -348,15 +348,19 @@ export default class Player extends Entity{
 
 ScrollByDir(){
    switch(this.dir){
+   case DIR.R :
+      if(Input.isKeyInput(KEY.SP)) Drawer.ScrollOn({x:this.pos.x+150,y:this.pos.y});
+      break;
+   case DIR.L :
+      if(Input.isKeyInput(KEY.SP)) Drawer.ScrollOn({x:this.pos.x-150,y:this.pos.y});
+     break;
    case DIR.UR :
    case DIR.UL :
-      if(Input.isKeyInput(KEY.SP)) this.offset = Math.max(this.offset-0.5,-20);
-     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
+      if(Input.isKeyInput(KEY.SP)) Drawer.ScrollOn({x:this.pos.x,y:this.pos.y-150});
       break;
    case DIR.DR :
    case DIR.DL :
-      if(Input.isKeyInput(KEY.SP)) this.offset = Math.min(this.offset+0.5,20);
-     Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
+      if(Input.isKeyInput(KEY.SP)) Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+150});
      break;
    default :
      Drawer.ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
@@ -407,10 +411,12 @@ Supply(){
 
   Update(){
       if(this.isAlive){
+        /*Init*/
         if(!this.isJump) {
           this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
         }
         this.isRun = false;
+
         this.Input();//入力
         this.weapon.Target(this);//照準を自動でやってる
         this.Physics();//物理
@@ -434,7 +440,9 @@ Supply(){
     }
     /*パラメータ*/
     this.offset *= 0.99;
-      this.Animation();//状態から画像を更新
+    this.Animation();//状態から画像を更新
+    /*reset*/
+    this.isNearBoard = false;
   }
 }
 

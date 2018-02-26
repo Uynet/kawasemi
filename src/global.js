@@ -114,7 +114,6 @@ let Rand2D = (d)=>{
 }
 
 /*for debug*/
-let po = ()=>{console.log("po")};
 let cl = console.log;
 
 //audio test
@@ -161,10 +160,8 @@ window.onload = function() {
   getAudioBuffer('src/resource/boss.mp3', function(buffer) {
     // 読み込み完了後にボタンにクリックイベントを登録
       // サウンドを再生
-    //  console.log(a)
       if(a){
-   //   console.log("po")
-    //  playSound(buffer);
+     // playSound(buffer);
       a = false;
     };
   });
