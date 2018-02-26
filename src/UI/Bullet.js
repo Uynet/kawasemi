@@ -35,35 +35,38 @@ export default class Bullet extends UI{
     //pos
     /*スプライト*/
     this.spid = 0;
-    this.sprites = [];
+    this.container = new PIXI.Container();
     let s;
     //outer
     s = Art.SpriteFactory(Art.UIPattern.bullet[this.spid]);
     s.position = this.outer.pos; 
-    this.sprites.push(s);
+    this.container.addChild(s);
     this.spid++;
     //bar
     s = Art.SpriteFactory(Art.UIPattern.bullet[this.spid]);
     s.position = this.bar.pos; 
-    this.sprites.push(s);
+    this.container.addChild(s);
     this.spid++;
     //icon
     s = Art.SpriteFactory(Art.UIPattern.bullet[this.spid]);
     s.position = this.icon.pos; 
-    this.sprites.push(s);
+    this.container.addChild(s);
     //amount
-    for(let l of this.amount.sprites){
-      this.sprites.push(l);
+    for(let s of this.amount.sprites){
+      this.container.addChild(s);
     }
     /*パラメータ*/
     this.max = 100;
   }
   UpdateBar(bullet){
     //barの長さを更新
-    this.sprites[1].scale.x = bullet/this.max;
+    this.container.children[1].scale.x = bullet/this.max;
     //bullet数字の更新
     this.amount.UpdateFont(bullet);
   }
   Update(){
+    let to  = (56-this.pos.x);
+    this.pos.x += to/8;
+    this.container.position.x = this.pos.x;
   }
 }

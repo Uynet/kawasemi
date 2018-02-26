@@ -13,6 +13,7 @@ import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import Util from '../../util.js';
 import Param from '../../param.js';
+import Explosion2 from '../Effect/explosion2.js';
 
 let ENEMY2 = {
   HP : 5,
@@ -61,6 +62,7 @@ export default class Enemy2 extends Enemy{
       }
       //EventManager.eventList.push(new QuakeEvent(5));//ゆれ
       EntityManager.removeEntity(this);
+      EntityManager.addEntity(new Explosion2(this.pos));
   }
   //自分がダメージを食らう
   Damage(atkMax){
