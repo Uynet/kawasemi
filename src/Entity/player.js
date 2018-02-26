@@ -76,7 +76,7 @@ export default class Player extends Entity{
     this.vyMax = Param.player.VY_MAX;
     /*状態*/
     this.state = STATE.WAITING;
-    this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
+    this.weapon = WeaponManager.weaponList[1];//選択中の武器のインスタンス
     this.weapon.isTargetOn = false;
     this.weapon.target = null;//これ大丈夫か??
     this.dir = DIR.R;//向き

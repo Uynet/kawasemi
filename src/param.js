@@ -41,10 +41,23 @@ export default class Param{
       speed : 0.0001, 
       length : 180,
     }
+    this.weapon2 = {
+      agi : 20,
+      cost : 10,
+      length : 300,
+    }
+    //Missile
     this.bullet1 = {
-      atkMax : 99,
+      atkMax : 50,
+      atkMin : 10,
       hp : 1,
       curve : 0.1
+    }
+    //Laser
+    this.bullet2 = {
+      atkMax : 10,
+      atkMin : 10,
+      hp : 99999,
     }
   }
   GetParam(entity){
