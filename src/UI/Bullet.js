@@ -52,9 +52,7 @@ export default class Bullet extends UI{
     s.position = this.icon.pos; 
     this.container.addChild(s);
     //amount
-    for(let s of this.amount.sprites){
-      this.container.addChild(s);
-    }
+    this.container.addChild(this.amount.container);
     /*パラメータ*/
     this.max = 100;
   }

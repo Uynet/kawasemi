@@ -103,15 +103,7 @@ export default class UIManager{
     //スプライトの追加
     if(ui.isMultiple){
       //複スプライト
-      if(ui.type == "MENU" || ui.type == "MES" || ui.type == "HP" || ui.type == "BULLET"){
-
         Drawer.addContainer(ui.container,"UI");
-      }
-        else{
-          for(let i = 0;i<ui.sprites.length;i++){
-            Drawer.addContainer(ui.sprites[i],"UI");
-          }
-        }
     }else{
       //単スプライト
       Drawer.addContainer(ui.sprite,"UI");
@@ -125,13 +117,7 @@ export default class UIManager{
     if(i != -1) this.UIList.splice(i,1);
     if(ui.isMultiple){
       //複数スプライトを持つオブジェクト
-      if(ui.type = "MENU" || ui.type == "MES" || ui.type == "HP" || ui.type == "BULLET"){
         Drawer.removeContainer(ui.container,"UI");
-      }else{
-        for(let i = 0;i<ui.sprites.length;i++){
-          Drawer.removeContainer(ui.sprites[i],"UI");
-        }
-      }
     }else{
       //単スプライト
       Drawer.removeContainer(ui.sprite,"UI");

@@ -30,13 +30,9 @@ export default class Menu extends UI{
     this.Select(this.index);
     /*スプライト*/
     this.container = new PIXI.Container;
-    for(let l of this.title.sprites){
-      this.container.addChild(l);
-    }
-    for(let i = 0;i<this.items.length;i++){
-      for(let l of this.items[i].sprites){
-       this.container.addChild(l);
-      }
+    this.container.addChild(this.title.container);
+    for(let l of this.items){
+      this.container.addChild(l.container);
     }
   }
   Select(i){

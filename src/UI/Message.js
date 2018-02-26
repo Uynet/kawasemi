@@ -38,10 +38,8 @@ export default class Message extends UI{
       p.y += COLUMN;
     }
     //各行各文字のスプライトを追加
-    for(let i=0;i<this.sentence.length;i++){
-      for(let l of this.sentence[i].sprites){
-        this.container.addChild(l);
-      }
+    for(let l of this.sentence){
+      this.container.addChild(l.container);
     }
   }
   Page(text){
@@ -64,10 +62,8 @@ export default class Message extends UI{
       p.y += COLUMN;
     }
     //各行各文字のスプライトを追加
-    for(let i=0;i<this.sentence.length;i++){
-      for(let s of this.sentence[i].sprites){
-        this.container.addChild(s);
-      }
+    for(let l of this.sentence){
+      this.container.addChild(l.container);
     }
     UIManager.addUI(this);
   }
