@@ -29,13 +29,13 @@ export default class Menu extends UI{
     ];
     this.Select(this.index);
     /*スプライト*/
-    this.sprites = [];
+    this.container = new PIXI.Container;
     for(let l of this.title.sprites){
-      this.sprites.push(l);
+      this.container.addChild(l);
     }
     for(let i = 0;i<this.items.length;i++){
       for(let l of this.items[i].sprites){
-        this.sprites.push(l);
+       this.container.addChild(l);
       }
     }
   }

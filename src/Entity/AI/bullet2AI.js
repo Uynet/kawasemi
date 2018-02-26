@@ -23,7 +23,6 @@ export default class Bullet2AI{
             this.bullet.hp--;
             /* ■ SoundEffect : hitWall */
             /* □ Effect : hitWall */
-            EntityManager.addEntity(new Explosion1(this.bullet.pos));
           };
           break;
         case ENTITY.WALL :

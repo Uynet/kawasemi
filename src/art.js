@@ -281,7 +281,12 @@ export default class Art{
         PIXI.Texture.fromFrame('enemy24.png'),
         PIXI.Texture.fromFrame('enemy25.png'),
         PIXI.Texture.fromFrame('enemy26.png'),
-        PIXI.Texture.fromFrame('enemy27.png')
+        PIXI.Texture.fromFrame('enemy27.png'),
+        PIXI.Texture.fromFrame('enemy28.png'),
+        PIXI.Texture.fromFrame('enemy29.png'),
+        PIXI.Texture.fromFrame('enemy2a.png'),
+        PIXI.Texture.fromFrame('enemy2b.png'),
+        PIXI.Texture.fromFrame('enemy2c.png'),
       ],
       enemy1 : [
         PIXI.Texture.fromFrame('enemy00.png'),

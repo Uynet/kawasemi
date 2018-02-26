@@ -109,10 +109,10 @@ export default class Weapon2 extends Weapon{
         player.bullet -= this.cost;
 
         let arg = player.arg;
-        let p = ADV(POV(arg,48),CPV(player.pos));
+        let p = ADV(POV(arg,32),CPV(player.pos));
         let bullet;
         EntityManager.addEntity(new Explosion1(CPV(p)));
-        for(let i = 0;i<10;i++){
+        for(let i = 0;i<16;i++){
           p = ADV(player.pos,POV(arg,16*(i+1)));
           bullet = new Bullet2(p,arg,this.target);
           EntityManager.addEntity(bullet);

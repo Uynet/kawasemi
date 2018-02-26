@@ -16,6 +16,7 @@ export default class Fire extends EFFECT{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 
   Update(){

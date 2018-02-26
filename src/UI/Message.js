@@ -26,11 +26,11 @@ export default class Message extends UI{
     this.outer.sprite.scale.y *= 1.5; //yは固定
     /*スプライト*/
     this.isMultiple = true;
-    this.sprites = [];
     //枠スプライト追加
     let p = CPV(pos);
     this.outer.sprite.position = p;
-    this.sprites.push(this.outer.sprite);
+    this.container = new PIXI.Container();
+    this.container.addChild(this.outer.sprite);
     p = ADV(p,P_TEXT);
     //テキスト
     for(let i = 0;i<sent.length;i++){
@@ -40,7 +40,7 @@ export default class Message extends UI{
     //各行各文字のスプライトを追加
     for(let i=0;i<this.sentence.length;i++){
       for(let l of this.sentence[i].sprites){
-        this.sprites.push(l);
+        this.container.addChild(l);
       }
     }
   }
@@ -51,7 +51,7 @@ export default class Message extends UI{
     }
     //これをすると先頭以外の要素が消える
     //つまり枠スプライトを残し他の文字を消す
-    this.sprites.length = 1;//は？
+    this.container.children.length = 1;//は？
       //新しい文字
       this.text = text;
     let sent = this.text.split("\n");
@@ -65,8 +65,8 @@ export default class Message extends UI{
     }
     //各行各文字のスプライトを追加
     for(let i=0;i<this.sentence.length;i++){
-      for(let l of this.sentence[i].sprites){
-        this.sprites.push(l);
+      for(let s of this.sentence[i].sprites){
+        this.container.addChild(s);
       }
     }
     UIManager.addUI(this);

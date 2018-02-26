@@ -67,8 +67,8 @@ export default class Coin extends Entity{
     this.pos.y += this.vel.y;
     this.vel.x += this.acc.x;
     //最大速度制限
-    this.vel.y = Math.min(0.5,Math.max(this.vel.y,-0.5));
-    this.vel.x = Math.min(3,Math.max(this.vel.x,-3));
+    this.vel.y = BET(-0.5,this.vel.y,0.5);
+    this.vel.x = BET(-3,this.vel.x,3);
   }
   GetByPlayer(){
     //プレイヤーに回収される
@@ -90,24 +90,27 @@ export default class Coin extends Entity{
   Update(){
     //Animation
     if(this.frame%3 == 0){
-      this.spid = (this.spid+1)%6;
-      this.sprite.texture = this.pattern[this.spid];
+      this.spid = (this.spid+1)%12;
     }
     //たまに光る
     if(this.frame%(8 + Math.floor(Util.Rand(1))) == 0){
       let p = Util.advec(this.pos,Util.Rand2D(5));
+      console.assert(p);
       EntityManager.addEntity(new BrightCoin(p));
     }
     //Collision
     this.Collision();
     this.Physics();
     this.GetByPlayer();
-    //時間立つと消える
-    if( this.frame > 500 ){
+    //時間立つと点滅
+    if( this.frame > 300 && this.frame%8 <4) this.sprite.texture = this.pattern[12];
+    else this.sprite.texture = this.pattern[this.spid];
+    //消える
+    if( this.frame > 450 ){
       EntityManager.removeEntity(this);
     }
-
     this.sprite.position = this.pos;
+
     this.frame++;
   }
 }

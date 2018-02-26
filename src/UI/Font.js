@@ -18,6 +18,7 @@ export default class Font extends UI{
     /*スプライト*/
     this.str = str; //0~9
       this.sprites = [];//スプライトを配列で持っている
+    this.container = new PIXI.Container();
     //0埋めをするかしないか
     switch(this.type){
       case "HP" :
@@ -60,6 +61,7 @@ export default class Font extends UI{
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
         this.sprites[i].texture = Art.font[spid];
+    //  this.container.children[i].texture = Art.font[spid];
     };
   };
   Move(pos){
@@ -67,6 +69,8 @@ export default class Font extends UI{
     for(let i=0;i<this.sprites.length;i++){
       this.sprites[i].position = pos;
       this.sprites[i].position.x += 10 * i;
+      this.container.children[i].position = pos;
+      this.container.children[i].position.x += 10 * i;
     }
   }
 
@@ -85,8 +89,10 @@ export default class Font extends UI{
       } else{
         space = 7;
       }
-      this.sprites[i] = Art.SpriteFactory(tex);
-      this.sprites[i].position = pos;
+      let sp = new PIXI.Sprite(tex);
+      sp.position = this.pos;
+      this.sprites[i] = sp;
+      this.container.addChild(sp);
       pos.x += space;
     };
   }

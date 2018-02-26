@@ -2,8 +2,7 @@ import Drawer from '../drawer.js';
 import UI from './ui.js';
 import Input from '../input.js';
 import Timer from '../timer.js';
-import WeaponIcon from './WeaponIcon.js';
-import WeaponEquip from './WeaponEquip.js';
+import WeaponIcon from './weaponIcon.js';
 import HP from './HP.js';
 import Bullet from './Bullet.js';
 import Font from './Font.js';
@@ -13,7 +12,7 @@ import EntityManager from '../Stage/entityManager.js';
 
 //HP
 const P_HP = {
-  x : 24, 
+  x : -32, 
   y : 160
 };
 //bullet
@@ -104,9 +103,15 @@ export default class UIManager{
     //スプライトの追加
     if(ui.isMultiple){
       //複スプライト
-      for(let i = 0;i<ui.sprites.length;i++){
-        Drawer.addContainer(ui.sprites[i],"UI");
+      if(ui.type == "MENU" || ui.type == "MES" || ui.type == "HP" || ui.type == "BULLET"){
+
+        Drawer.addContainer(ui.container,"UI");
       }
+        else{
+          for(let i = 0;i<ui.sprites.length;i++){
+            Drawer.addContainer(ui.sprites[i],"UI");
+          }
+        }
     }else{
       //単スプライト
       Drawer.addContainer(ui.sprite,"UI");
@@ -120,8 +125,12 @@ export default class UIManager{
     if(i != -1) this.UIList.splice(i,1);
     if(ui.isMultiple){
       //複数スプライトを持つオブジェクト
-      for(let i = 0;i<ui.sprites.length;i++){
-        Drawer.removeContainer(ui.sprites[i],"UI");
+      if(ui.type = "MENU" || ui.type == "MES" || ui.type == "HP" || ui.type == "BULLET"){
+        Drawer.removeContainer(ui.container,"UI");
+      }else{
+        for(let i = 0;i<ui.sprites.length;i++){
+          Drawer.removeContainer(ui.sprites[i],"UI");
+        }
       }
     }else{
       //単スプライト

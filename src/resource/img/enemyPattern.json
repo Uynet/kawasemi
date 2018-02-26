@@ -63,6 +63,26 @@
     "enemy27.png": {
       "frame": {"x":112, "y":32, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy28.png": {
+      "frame": {"x":128, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy29.png": {
+      "frame": {"x":144, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy2a.png": {
+      "frame": {"x":160, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy2b.png": {
+      "frame": {"x":176, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy2c.png": {
+      "frame": {"x":192, "y":32, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
   },
   "meta": {

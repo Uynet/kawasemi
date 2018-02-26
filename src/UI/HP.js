@@ -31,39 +31,48 @@ export default class HP extends UI{
     this.bar = {pos:CPV(pos)};
     this.icon = {pos:ADV(pos,P_ICON)};
     this.amount = new Font(ADV(pos,P_AMOUNT),"100","HP");//数字
-
-    //pos
     /*スプライト*/
     this.spid = 0;
-    this.sprites = [];
+    this.container = new PIXI.Container();
     let s;
     //outer
     s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
     s.position = this.outer.pos; 
-    this.sprites.push(s);
+    this.container.addChild(s);
     this.spid++;
     //bar
     s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
     s.position = this.bar.pos; 
-    this.sprites.push(s);
+    this.container.addChild(s);
     this.spid++;
     //icon
     s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
     s.position = this.icon.pos; 
-    this.sprites.push(s);
+    this.container.addChild(s);
     //amount
-    for(let l of this.amount.sprites){
-      this.sprites.push(l);
+    for(let s of this.amount.sprites){
+      this.container.addChild(s);
     }
     /*パラメータ*/
     this.max = 100;//EntityManager.player.maxHP;
+    /*state*/
+    this.isPopIn = true;
   }
   UpdateBar(hp){
     //barの長さを更新
-    this.sprites[1].scale.x = hp/this.max;
+    this.container.children[1].scale.x = hp/this.max;
     //HP数字の更新
     this.amount.UpdateFont(hp);
   }
   Update(){
+    if(this.isPopIn){
+      let to  = (56-this.pos.x);
+      this.pos.x += to/8;
+    }
+    if(this.pos.x > 56){
+      this.pos.x = 56;
+      this.isPopIn = false;
+    }
+    this.container.position.x = this.pos.x;
   }
 }
