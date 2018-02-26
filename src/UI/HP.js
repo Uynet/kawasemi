@@ -50,9 +50,8 @@ export default class HP extends UI{
     s.position = this.icon.pos; 
     this.container.addChild(s);
     //amount
-    for(let s of this.amount.sprites){
-      this.container.addChild(s);
-    }
+    //向こうの配列も動いているっぽい
+    this.container.addChild(this.amount.container);
     /*パラメータ*/
     this.max = 100;//EntityManager.player.maxHP;
     /*state*/

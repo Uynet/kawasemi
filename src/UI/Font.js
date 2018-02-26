@@ -76,9 +76,11 @@ export default class Font extends UI{
 
   SetPos(pos){
     let space;
+    let sprite;
+    let tex;
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
-        let tex = Art.font[spid];
+      tex = Art.font[spid];
       //文字コードを比較している
       //日本語以降は半角として識別
       let s = this.str[i];
@@ -89,10 +91,10 @@ export default class Font extends UI{
       } else{
         space = 7;
       }
-      let sp = new PIXI.Sprite(tex);
-      sp.position = this.pos;
-      this.sprites[i] = sp;
-      this.container.addChild(sp);
+      sprite = new PIXI.Sprite(tex);
+      sprite.position = this.pos;
+      this.sprites[i] = sprite;
+      this.container.addChild(sprite);
       pos.x += space;
     };
   }
