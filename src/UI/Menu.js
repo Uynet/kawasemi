@@ -50,7 +50,7 @@ export default class Menu extends UI{
     }
   }
   Close(){
-    Drawer.entityContainer.filters = [];
+    UIManager.SetFilter([]);
     UIManager.removeUI(UIManager.menu);
     Game.scene.PopSubState();
   }

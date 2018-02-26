@@ -57,11 +57,16 @@ export default class UIManager{
     UIManager.addUI(new Bullet(P_BUL));//BULLET
     UIManager.addUI(new Font(P_SCORE,"0","SCORE"));//SCORE
   }
+  //フィルタ
+  static SetFilter(filters){
+    Drawer.entityContainer.filters = filters;
+    Drawer.backContainer.filters = filters;
+    Drawer.backGroundContainer.filters = filters;
+    Drawer.foreContainer.filters = filters;
+  }
   //メニューを開く
   static SetMenu(){
-    let filters = [Drawer.blurFilter];
-    Drawer.entityContainer.filters = filters;
-    Drawer.entityContainer.r = 255;
+    UIManager.SetFilter([Drawer.noiseFilter]);
     UIManager.addUI(new Menu(ADV(P_MENU,{x:0,y:16})));
   }
   //UIをすべて削除
@@ -69,6 +74,8 @@ export default class UIManager{
     while(this.UIList.length>0){
       this.removeUI(this.UIList[0]);
     }
+    let filters = [];
+    UIManager.SetFilter(filters);
   }
   //メッセージイベント
   /* text : 入力文字列
