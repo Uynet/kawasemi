@@ -257,8 +257,15 @@ export default class Art{
           PIXI.Texture.fromFrame('bulletD1.png'),
           PIXI.Texture.fromFrame('bulletD2.png'),
           PIXI.Texture.fromFrame('bulletD3.png') 
-        ]
+        ],
       },
+        //看板のポップ
+        signpop : [
+          PIXI.Texture.fromFrame('bulletE0.png'),
+          PIXI.Texture.fromFrame('bulletE1.png'),
+          PIXI.Texture.fromFrame('bulletE2.png'),
+          PIXI.Texture.fromFrame('bulletE3.png'), 
+        ],
       explosion : {
         flash : [PIXI.Texture.fromFrame('bullet80.png')],
         fire : [PIXI.Texture.fromFrame('bulletA0.png')],
