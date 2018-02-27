@@ -10,7 +10,6 @@ export default class EntityManager{
     this.enemyList = [];//敵のリスト
     this.wallList = [];//壁のリスト
     this.player;//プレイヤーのインスタンス
-    this.effectList = [];//本当はいらないけど何故か消えないバグがあるから..
     this.updaterList = [];//更新が必要なEntity
   }
   /*Entityをリストに登録*/
@@ -33,14 +32,10 @@ export default class EntityManager{
       case ENTITY.EFFECT :
         if(entity.isMultiple){
         //複数スプライトを持つ
-          this.effectList.push(entity);
-          for(let i=0 ;i < entity.sprites.length ; i++){
-            Drawer.addContainer(entity.sprites[i],"ENTITY");
-          }
+        Drawer.addContainer(entity.container,"ENTITY");
         }else if(entity.isNoSprite){
         //何も持たない
         }else{
-          this.effectList.push(entity);
           Drawer.addContainer(entity.sprite,"ENTITY");
         }
         break;
@@ -87,18 +82,12 @@ export default class EntityManager{
         break;
         //エフェクト
       case ENTITY.EFFECT :
-        let m = this.effectList.indexOf(entity);
-        this.effectList.splice(m,1);
         if(entity.isMultiple){
         //複数スプライトを持つオブジェクトの処理
-          for(let j = 0;j<entity.sprites.length;j++){
-            console.assert(entity.sprites[j] != undefined);
-            Drawer.removeContainer(entity.sprites[j],"ENTITY");
-          }
+        Drawer.removeContainer(entity.container,"ENTITY");
         }else if(entity.isNoSprite){
           //何もスプライトを持たない
         }else{
-          console.assert(entity.sprite != undefined);
           Drawer.removeContainer(entity.sprite,"ENTITY");
         }
         break;

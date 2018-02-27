@@ -349,14 +349,11 @@ export default class Player extends Entity{
   }
 
 ScrollByDir(){
-    let d = {
-      x:100*po(this.offset)*Math.cos(this.arg),
-      y:100*po(this.offset)*Math.sin(this.arg),
-    }
+    let d = POV(this.arg,100*po(this.offset));
     let p = ADV(this.pos,d);
   if(Input.isKeyInput(KEY.SP)) {
     let to = ADV(p,MLV(this.scPos,VECN(-1)));
-    this.scPos = ADV(this.scPos , MLV(to,VECN(1/40)));
+    this.scPos = ADV(this.scPos , MLV(to,VECN(1/20)));
     this.offset = Math.min(this.offset+0.5,20);
     Drawer.ScrollOn(this.scPos);
   }else{

@@ -13,6 +13,7 @@ import EventManager from '../Event/eventmanager.js';
 import QuakeEvent from '../Event/quakeEvent.js';
 import Param from '../param.js';
 import Explosion1 from '../Entity/Effect/explosion1.js';
+import Sonic from '../Entity/Effect/sonic.js';
 
 const DIR = {
   UR : "UR",
