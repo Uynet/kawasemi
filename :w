@@ -212,7 +212,7 @@ export default class MapData{
     }
     //うねうね
     let grid = {
-      x : 3,
+      x : 0,
       y : this.height,
     }
     let dist;//移動距離
@@ -234,10 +234,8 @@ export default class MapData{
         case "ULI": return 67;break;
       }
     }
-    let dirs = ["R","D","L","U"];
-    function rot(dir,side){
-      if(side == "R") return dirs[(dirs.indexOf(dir)+1)%4];
-      else if(side == "L")return dirs[(dirs.indexOf(dir)-1+4)%4];
+    function rot(dim,dir,side){
+
     };
 
     function dirToV(dir){
@@ -254,24 +252,15 @@ export default class MapData{
     for(let i=0;i<100;i++){
       //step
       grid = ADV(grid,dirToV(dir));
-      //rot
-      if(Dice(5)==0){
-        let side;
-        if(Dice(2)==0)side = "R";
-        else side = "L";
-
-        //区間指定
-        if(this.dir == "L")side = "R";
-        if(this.dir == "R")side = "L";
-        if(this.dir == "D")console.warn("D");
-        //if(grid.x<0 && this.dir == "L")side = "R";
-        //if(grid.x<0 && this.dir == "U")side = "R";
-        dir = rot(dir,side);
-      }
+      /*rot
+      if(Dice(2)==0)side = "R";
+      else side = "L";
+      rot(dim,dir,side);
+      */
       //put
-      dim = rot(dir,"R");
-      let ID = dimToID(dim);
-      let entity = new Wall(MLV(VECN(16),grid),MapData.WallTile(ID));
+      //let ID = dimToID(dim);
+      //ID = 62
+      let entity = new Wall(grid,MapData.WallTile(62));
       EntityManager.addEntity(entity);
     }
   }

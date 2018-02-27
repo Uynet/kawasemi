@@ -96,6 +96,13 @@ const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表�
 const Rand = (d)=>{
   return 2 * d * (Math.random()-0.5);
 }
+const Dice = (d)=>{
+  return Math.floor(d * (Math.random()));
+}
+//random between
+const RandBET = (min,max)=>{
+  return Math.floor((max-min)*Math.random())+min;
+}
 /*maxmin*/
 const BET = (min,x,max)=>{
   return Math.min(Math.max(x,min),max);
