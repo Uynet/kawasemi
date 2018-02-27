@@ -202,17 +202,9 @@ export default class MapData{
   }
 
   static AutoStageCreate(){
-    for(let y = 0;y<this.height;y++){
-      for(let x = 0;x<this.width;x++){
-        if(Rand(10)>9){
-          let entity = new Enemy2({x:16*x,y:16*y});
-          EntityManager.addEntity(entity);
-        }
-      }
-    }
     //うねうね
     let grid = {
-      x : 3,
+      x : 12,
       y : this.height,
     }
     let dist;//移動距離
@@ -220,24 +212,38 @@ export default class MapData{
     let dim = "R";//U,UR,R,DR,D,DL,L,UL
     function dimToID(dim){
       switch(dim){
-        case "U"  : return 53;break;
-        case "URO": return 54;break;
-        case "URI": return 49;break;
-        case "R"  : return 62;break;
-        case "DRO": return 70;break;
         case "DRI": return 49;break;
-        case "D"  : return 69;break;
-        case "DLO": return 68;break;
         case "DLI": return 51;break;
-        case "L"  : return 60;break;
-        case "ULO": return 52;break;
+        case "URI": return 65;break;
         case "ULI": return 67;break;
+        case "ULO": return 52;break;
+        case "URO": return 54;break;
+        case "DLO": return 68;break;
+        case "DRO": return 70;break;
+        case "U"  : return 53;break;
+        case "L"  : return 60;break;
+        case "R"  : return 62;break;
+        case "D"  : return 69;break;
       }
     }
     let dirs = ["R","D","L","U"];
     function rot(dir,side){
-      if(side == "R") return dirs[(dirs.indexOf(dir)+1)%4];
-      else if(side == "L")return dirs[(dirs.indexOf(dir)-1+4)%4];
+      if(side == "R") {
+        switch(dir){
+          case "R" :return "D";
+          case "D" :return "L";
+          case "L" :return "U";
+          case "U" :return "R";
+        }
+      }
+      if(side == "L") {
+        switch(dir){
+          case "R" :return "U";
+          case "D" :return "R";
+          case "L" :return "D";
+          case "U" :return "L";
+        }
+      }
     };
 
     function dirToV(dir){
@@ -248,31 +254,95 @@ export default class MapData{
         case "U": return {x:0,y:-1};break;
       }
     }
-    //すすめる
     //回す
     //置く
+    //すすめる
+    
+    //left
+      let leftSide = 8;
+      let rightSide = 16;
     for(let i=0;i<100;i++){
-      //step
-      grid = ADV(grid,dirToV(dir));
+      dim = rot(dir,"R");
       //rot
-      if(Dice(5)==0){
+      if(Dice(2)==0 || grid.x < leftSide || grid.x > rightSide){
         let side;
         if(Dice(2)==0)side = "R";
         else side = "L";
 
         //区間指定
-        if(this.dir == "L")side = "R";
-        if(this.dir == "R")side = "L";
-        if(this.dir == "D")console.warn("D");
-        //if(grid.x<0 && this.dir == "L")side = "R";
-        //if(grid.x<0 && this.dir == "U")side = "R";
+        if(dir == "L")side = "R";
+        if(dir == "R")side = "L";
+        if(grid.x<leftSide && this.dir == "U")side = "R";
+        if(grid.x>rightSide && this.dir == "U")side = "L";
+        if(dir =="U" && side =="L") dim = "URO";
+        if(dir =="U" && side =="R") dim = "DRI";
+        //if(dir =="D" && side =="L") dim = "URO";
+        //if(dir =="D" && side =="R") dim = "DRI";
+        if(dir =="R") dim = "DRO";
+        if(dir =="L") dim = "URI";
         dir = rot(dir,side);
       }
       //put
-      dim = rot(dir,"R");
       let ID = dimToID(dim);
       let entity = new Wall(MLV(VECN(16),grid),MapData.WallTile(ID));
       EntityManager.addEntity(entity);
+      //fill
+      if(dir == "U"){
+        let i = grid.x-1;
+        while(i>0){
+          let back = new BackEntity({x:16*i,y:16*(grid.y)},MapData.WallTile(79));
+          EntityManager.addEntity(back);
+          i--;
+        }
+      }
+      //step
+      grid = ADV(grid,dirToV(dir));
+    }
+    //right
+    grid = {
+      x : 20,
+      y : this.height,
+    }
+    dir = "U";//移動方向 
+    dim = "L";//U,UR,R,DR,D,DL,L,UL
+      leftSide = 18;
+      rightSide = 25;
+    for(let i=0;i<100;i++){
+      dim = rot(dir,"L");
+      //rot
+      if(Dice(2)==0 || grid.x > rightSide || grid.x < leftSide){
+        let side;
+        if(Dice(2)==0)side = "R";
+        else side = "L";
+
+        //区間指定
+        if(dir == "L")side = "R";
+        if(dir == "R")side = "L";
+        if(grid.x<leftSide && this.dir == "U")side = "R";
+        if(grid.x>rightSide && this.dir == "U")side = "L";
+        if(dir =="U" && side =="L") dim = "DLI";
+        if(dir =="U" && side =="R") dim = "ULO";
+        //if(dir =="D" && side =="L") dim = "URO";
+        //if(dir =="D" && side =="R") dim = "DRI";
+        if(dir =="R") dim = "ULI";
+        if(dir =="L") dim = "DLO";
+        dir = rot(dir,side);
+      }
+      //put
+      let ID = dimToID(dim);
+      let entity = new Wall(MLV(VECN(16),grid),MapData.WallTile(ID));
+      EntityManager.addEntity(entity);
+      //fill
+      if(dir == "U"){
+        let i = grid.x+1;
+        while(i<32){
+          let back = new BackEntity({x:16*i,y:16*(grid.y)},MapData.WallTile(79));
+          EntityManager.addEntity(back);
+          i++;
+        }
+      }
+      //step
+      grid = ADV(grid,dirToV(dir));
     }
   }
 }

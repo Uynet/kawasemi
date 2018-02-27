@@ -25,7 +25,7 @@
       "sourceSize": {"w": 16, "h": 16}
     },
       "bullet12.png": {
-      "frame": {"x":32, "y":32, "w":16, "h":16},
+      "frame": {"x":32, "y":16, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
       "bullet13.png": {

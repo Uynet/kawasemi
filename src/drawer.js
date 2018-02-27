@@ -110,8 +110,7 @@ export default class Drawer{
 
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
-    //let centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
-    let centerX = this.magnification*(- pos.x-8 + 400/this.magnification);
+    let centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
     let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
     let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
