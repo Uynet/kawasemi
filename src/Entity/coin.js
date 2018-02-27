@@ -28,7 +28,6 @@ export default class Coin extends Entity{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,9,9));//衝突判定の形状
     /*パラメータ*/
     this.gravity = 0.3;
-    this.type = ENTITY.BULLET;
     this.layer = "ENTITY";
     /*AI*/
     this.vel.y = 0.3;

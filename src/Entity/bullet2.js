@@ -21,9 +21,7 @@ export default class Bullet2 extends Bullet{
     /*基本情報*/
     this.frame = 0;
     this.arg = arg;
-    this.isTargetOn = weapon.isTargetOn;
-    if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
-      this.isUpdater  =true;
+    this.isUpdater  =true;
     /*スプライト*/
     this.pattern = Art.bulletPattern.bullet2;
     this.spid = 0;

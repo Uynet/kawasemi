@@ -41,7 +41,7 @@ export default class Drawer{
     this.backContainer.scale = po;
     this.entityContainer.scale = po;
     this.UIContainer.scale = po;
-    this.foreContainer.scale = po;
+    this.foreContainer.scale.set(4);
     this.filterContainer.scale = po;
     $("#pixiview").append(this.Renderer.view);
 
@@ -123,8 +123,8 @@ export default class Drawer{
     this.backContainer.y = toY;
     this.entityContainer.x = toX;
     this.entityContainer.y = toY;
-    this.foreContainer.x = toX*1;
-    this.foreContainer.y = toY*1
+    this.foreContainer.x = toX*4/3;
+    this.foreContainer.y = toY*4/3;
     //UIは動かない
 
   }

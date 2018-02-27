@@ -53,6 +53,7 @@ export default class MapData{
     //背景の生成
     //if(state == "ENTER")
     this.AddBackGround();
+    this.AutoStageCreate();
     //entityの生成
     /*タイルに割り当てるtype
      * 1 : 壁
@@ -196,6 +197,18 @@ export default class MapData{
           y : (y - h/2)*32
         }
         EntityManager.addEntity(new BackGround(CPV(p),tex));
+      }
+    }
+  }
+
+  static AutoStageCreate(){
+    for(let y = 0;y<this.height;y++){
+      for(let x = 0;x<this.width;x++){
+        if(Rand(10)<-8){
+          let entity = new BackEntity({x:16*x,y:16*y},MapData.WallTile(77));
+          entity.layer = "FORE";
+          EntityManager.addEntity(entity);
+        }
       }
     }
   }
