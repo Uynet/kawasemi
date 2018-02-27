@@ -32,7 +32,8 @@ export default class Bullet2 extends Bullet{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
     /*パラメータ*/
     this.hp = Param.bullet2.hp;//弾丸のHP 0になると消滅
-    this.atk = Param.bullet2.atkMax;//攻撃力
+    this.atkMax = Param.bullet2.atkMax;//攻撃力
+    this.atkMin = Param.bullet2.atkMin;//攻撃力
     /*AI*/
     this.AIList = [];
     this.AIList.push(new Bullet2AI(this));

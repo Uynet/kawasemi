@@ -15,7 +15,7 @@ export default class Bullet2AI{
   collision(){
     for(let l of EntityManager.enemyList){
       if(Collision.on(this.bullet,l).isHit){
-        l.Damage(-this.bullet.atk - Math.floor(99*Math.random()) );
+        l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
         this.bullet.hp--;
         /* ■ SoundEffect : hitWall */
         /* □ Effect : hitWall */
@@ -26,7 +26,7 @@ export default class Bullet2AI{
         //breakable object
         if(l.name == "woodbox"){
           /* ■ SoundEffect : hitWood */
-          l.Damage(-this.bullet.atk );
+          l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
           this.bullet.hp--;
           //wall
           }else{

@@ -23,7 +23,7 @@ export default class Param{
       GRAVITY : 0.1
     }
     this.ENEMY2 = {
-      HP : 5,
+      HP : 50,
       ATK_MAX : 10,
       ATK_MIN : 5,
       GRAVITY : 0.1,
@@ -56,7 +56,7 @@ export default class Param{
     //Laser
     this.bullet2 = {
       atkMax : 10,
-      atkMin : 10,
+      atkMin : 5,
       hp : 99999,
     }
   }
