@@ -10,7 +10,6 @@ export default class Bullet extends Entity{
   constructor(pos,vel){
     super(pos,vel);
     /*基本情報*/
-    this.type = ENTITY.BULLET;
     this.layer = "ENTITY";
     this.isMultiple = false;
     /*パラメータ*/

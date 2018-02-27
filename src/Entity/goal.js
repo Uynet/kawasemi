@@ -14,7 +14,6 @@ import GameClearEvent from '../Event/gameClearEvent.js';
 export default class Goal extends Entity{
   constructor(pos){
     super(pos);
-    this.type = ENTITY.GOAL;//これいらない　
     this.layer = "ENTITY";
     this.sprite = Art.SpriteFactory(Art.wallPattern.goal);
     this.sprite.position = pos;

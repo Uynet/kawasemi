@@ -11,11 +11,14 @@ export default class EntityManager{
     this.wallList = [];//壁のリスト
     this.player;//プレイヤーのインスタンス
     this.updaterList = [];//更新が必要なEntity
+
+    this.entityIndex = 0;
   }
   /*Entityをリストに登録*/
   static addEntity(entity){
     //各entityの参照を保持する
-    this.entityList.push(entity); 
+    this.entityList[this.entityIndex] = entity; 
+    this.entityIndex++;
     //更新が必要なEntityのみリストに追加
     switch(entity.type){
       case ENTITY.PLAYER : this.player = entity; break;
@@ -43,6 +46,7 @@ export default class EntityManager{
     }
     let k = this.entityList.indexOf(entity);
     this.entityList.splice(k,1);
+    this.entityIndex--;
 
     if(entity.isMultiple) Drawer.removeContainer(entity.container,entity.layer);
     else if(entity.isNoSprite)/*Nothing to do*/;
@@ -50,13 +54,15 @@ export default class EntityManager{
   }
   /*Entityの更新*/
   static Update(){
-    for(let l of this.entityList){
+    for(let i=0;i<this.entityIndex;i++){
+      let l = this.entityList[i];
       if(l.isUpdater) l.Update(); 
     }
   }
   /*メッセージイベント中にアニメーションだけ行う*/
   static Animation(){
-    for(let l of this.entityList){
+    for(let i=0;i<this.entityIndex;i++){
+      let l = this.entityList[i];
       //playerはアニメーションのみ
       if(l.type == ENTITY.PLAYER){
         l.Animation(); 

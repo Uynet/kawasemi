@@ -1,4 +1,4 @@
-/*meta*/
+/*meta*/entityIndex = 0;
 Array.prototype.Last = function(){
   if(this.length == 0){
     return undefined;
@@ -51,11 +51,6 @@ const ENTITY = {
   PLAYER  : "PLAYER",
   WALL : "WALL",
   ENEMY : "ENEMY",
-  BULLET : "BULLET",
-  EFFECT : "EFFECT",
-  BACK : "BACK" ,
-  FORE : "FORE",
-  BG : "BG"
 }
 
 /*MapChip*/

@@ -6,7 +6,6 @@ import EntityManaer from '../Stage/entityManager.js';
 export default class BackEntity extends Entity{
   constructor(pos,tex){
     super(pos,VEC0());
-    this.type = ENTITY.BG;
     this.layer = "BG";
     this.isUpdater = false;
     this.tex = tex;
