@@ -9,8 +9,10 @@ import FontEffect from './Effect/fontEffect.js';
 import Wall from './wall.js';
 import BackEntity from './backEntity.js';
 import BulletShot from './Effect/bulletShot.js';
+import Param from '../param.js';
 
 let EntityList = EntityManager.entityList;
+
 //トゲ
 export default class Needle extends BackEntity{
   constructor(pos,tex){
@@ -18,6 +20,7 @@ export default class Needle extends BackEntity{
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box({x:pos.x+4,y:pos.y+12},8,8));//衝突判定の形状
     this.name = "needle";
+    this.layer = "ENTITY";
     this.isUpdater  =true;
     /*スプライト*/
     this.pattern = Art.wallPattern.steel.entity;

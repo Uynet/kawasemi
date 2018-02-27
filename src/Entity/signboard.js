@@ -19,6 +19,7 @@ export default class Signboard extends BackEntity{
     super(pos,Art.wallPattern.signboard);
     /*基本情報*/
     this.type = ENTITY.BACK;
+    this.layer= "BACK";
     this.name = "signboard";
     this.isUpdater = true;
       /* 固有情報

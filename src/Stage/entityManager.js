@@ -7,7 +7,7 @@ import Art from '../art.js';
 export default class EntityManager{
   static Init(){
     this.entityList = [];//全Entityのリスト
-    this.enemyList = [];//敵のリスト
+    this.enemyList = [];//敵のリスト(moverList?)
     this.wallList = [];//壁のリスト
     this.player;//プレイヤーのインスタンス
     this.updaterList = [];//更新が必要なEntity
@@ -18,107 +18,35 @@ export default class EntityManager{
     this.entityList.push(entity); 
     //更新が必要なEntityのみリストに追加
     switch(entity.type){
-      //プレイヤー
-      case ENTITY.PLAYER :
-        this.player = entity;
-        Drawer.addContainer(entity.sprite,"ENTITY");
-        break;
-        //敵
-      case ENTITY.ENEMY : 
-        this.enemyList.push(entity);
-        Drawer.addContainer(entity.sprite,"ENTITY");
-        break;
-        //エフェクト
-      case ENTITY.EFFECT :
-        if(entity.isMultiple){
-        //複数スプライトを持つ
-        Drawer.addContainer(entity.container,"ENTITY");
-        }else if(entity.isNoSprite){
-        //何も持たない
-        }else{
-          Drawer.addContainer(entity.sprite,"ENTITY");
-        }
-        break;
-        //壁
-      case ENTITY.WALL :
-        this.wallList.push(entity);
-        Drawer.addContainer(entity.sprite,"ENTITY");
-        break;
-      case ENTITY.BACK :
-        //背景Entityであり背景ではない
-        Drawer.addContainer(entity.sprite,"BACK");
-        break;
-      case ENTITY.FORE :
-        //手前Entity
-        Drawer.addContainer(entity.sprite,"FORE");
-        break;
-      case ENTITY.BG :
-        //真の背景
-        Drawer.addContainer(entity.sprite,"BG");
-        break;
-        //弾丸
-      case ENTITY.BULLET :
-          Drawer.addContainer(entity.sprite,"ENTITY");
-          break;
-        //その他
-      default : 
-        Drawer.addContainer(entity.sprite,"ENTITY");
+      case ENTITY.PLAYER : this.player = entity; break;
+      case ENTITY.ENEMY : this.enemyList.push(entity); break;
+      case ENTITY.WALL : this.wallList.push(entity); break;
     }
+
+    if(entity.isMultiple) Drawer.addContainer(entity.container,entity.layer);
+    else if(entity.isNoSprite);
+    else Drawer.addContainer(entity.sprite,entity.layer);
   }
 
   /*Entityをリストから削除する*/
   static removeEntity(entity){
     switch(entity.type){
-      //プレイヤー
-      case ENTITY.PLAYER :
-        this.player = null;
-        Drawer.removeContainer(entity.sprite,"ENTITY");
-        break;
-        //敵
+      case ENTITY.PLAYER : this.player = null; break;
       case ENTITY.ENEMY :
         let i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
-        Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
-        //エフェクト
-      case ENTITY.EFFECT :
-        if(entity.isMultiple){
-        //複数スプライトを持つオブジェクトの処理
-        Drawer.removeContainer(entity.container,"ENTITY");
-        }else if(entity.isNoSprite){
-          //何もスプライトを持たない
-        }else{
-          Drawer.removeContainer(entity.sprite,"ENTITY");
-        }
-        break;
-        //壁
       case ENTITY.WALL :
         let j = this.wallList.indexOf(entity);
         this.wallList.splice(j,1);
-        Drawer.removeContainer(entity.sprite,"ENTITY");
-        break;
-      case ENTITY.BACK :
-        //背景entity
-        Drawer.removeContainer(entity.sprite,"BACK");
-        break;
-      case ENTITY.FORE :
-        //手前entity
-        Drawer.removeContainer(entity.sprite,"FORE");
-        break;
-      case ENTITY.BG :
-        //真の背景
-        Drawer.removeContainer(entity.sprite,"BG");
-        break;
-      case ENTITY.BULLET :
-        Drawer.removeContainer(entity.sprite,"ENTITY");
-        break;
-        //その他
-      default :
-        Drawer.removeContainer(entity.sprite,"ENTITY");
         break;
     }
     let k = this.entityList.indexOf(entity);
     this.entityList.splice(k,1);
+
+    if(entity.isMultiple) Drawer.removeContainer(entity.container,entity.layer);
+    else if(entity.isNoSprite)/*Nothing to do*/;
+    else Drawer.removeContainer(entity.sprite,entity.layer);
   }
   /*Entityの更新*/
   static Update(){

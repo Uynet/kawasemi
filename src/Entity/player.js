@@ -51,6 +51,7 @@ export default class Player extends Entity{
     let p = CPV(this.pos);
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
+    this.layer = "ENTITY";
     this.frame = 0;
     this.frameDead;//死んだ時刻
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要

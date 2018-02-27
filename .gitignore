@@ -1,3 +1,7 @@
 *.png
 *.json
+*.mp3
+/bundle.js
+/webpack.config.js
+
 
