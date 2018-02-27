@@ -11,7 +11,7 @@ export default class FontEffect extends EFFECT{
   //strは表示する文字(今は数字のみ)
   constructor(pos,str,fonttype){
     let v = {
-      x:1.5 * (Math.random()-0.5),
+      x:Rand(1.5),
       y:-2
     }
     super(CPV(pos),v);
@@ -25,21 +25,20 @@ export default class FontEffect extends EFFECT{
     this.isMultiple = true;//このEntityは複数スプライトを持つか
     /*スプライト*/
     this.str = str; //0~9
-    this.sprites = [];//スプライトを配列で持っている
+    this.container = new PIXI.Container();
     this.d = this.str.length;//桁数
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
       let tex;
       switch(this.fonttype){
-        case "player" : tex = Art.font[spid + "r"];
-          break;
-        case "enemy" : tex = Art.font[spid];
-          break;
-        case "pop" : tex = Art.font[spid];
+        case "player" : tex = Art.font[spid + "r"]; break;
+        case "enemy" : tex = Art.font[spid]; break;
+        case "pop" : tex = Art.font[spid]; break;
       }
-      this.sprites[i] = Art.SpriteFactory(tex);
-      this.sprites[i].position = {x:this.pos.x + i*6,y:this.pos.y};
+      let sp =  Art.SpriteFactory(tex) ;
+      sp.position = {x:this.pos.x + i*6,y:this.pos.y};
+      this.container.addChild(sp);
     }
     this.gravity = 0.2;
   }
@@ -66,14 +65,14 @@ export default class FontEffect extends EFFECT{
       //ここはあとで書き直す
       //というか別クラスにする
       if(this.fonttype == "pop"){
-        this.sprites[i].position = {x:this.pos.x + i * 9,y:this.pos.y};
+        this.container.children[i].position = {x:this.pos.x + i * 9,y:this.pos.y};
       }else{
-        this.sprites[i].position = {x:this.pos.x + i * 6,y:this.pos.y};
+        this.container.children[i].position = {x:this.pos.x + i * 6,y:this.pos.y};
       }
     }
     for(let i = 0;i<this.d;i++){
       if(this.frame > 30){
-        this.sprites[i].alpha -=0.05; 
+        this.container.children[i].alpha -=0.05; 
       }
     }
     if(this.frame > 90){
