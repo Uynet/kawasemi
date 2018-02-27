@@ -28,6 +28,8 @@ export default class Bullet2 extends Bullet{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = pos;
     this.sprite.anchor.set(0.5);
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+    this.sprite.alpha = 0.7;
     /*コライダ*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
     /*パラメータ*/
