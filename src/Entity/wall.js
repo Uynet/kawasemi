@@ -11,8 +11,9 @@ export default class Wall extends Entity{
     /*基本情報*/
     //this.name = name; 必要になったら
     this.type = ENTITY.WALL;
+    this.layer = "ENTITY";
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-      this.isUpdater = false;
+    this.isUpdater = false;
     /*スプライト*/
     this.tex = tex
     this.sprite = Art.SpriteFactory(this.tex);

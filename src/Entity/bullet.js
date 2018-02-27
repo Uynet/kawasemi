@@ -11,9 +11,13 @@ export default class Bullet extends Entity{
     super(pos,vel);
     /*基本情報*/
     this.type = ENTITY.BULLET;
+    this.layer = "ENTITY";
+    this.isMultiple = false;
     /*パラメータ*/
     this.hp;//弾丸のHP 0になると消滅
     this.atk;//攻撃力
     this.length;//これは武器がもつ?
+
+    this.isUpdater  =true;
   }
 }

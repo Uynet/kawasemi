@@ -29,6 +29,7 @@ export default class Coin extends Entity{
     /*パラメータ*/
     this.gravity = 0.3;
     this.type = ENTITY.BULLET;
+    this.layer = "ENTITY";
     /*AI*/
     this.vel.y = 0.3;
   }

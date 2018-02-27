@@ -15,11 +15,13 @@ export default class Goal extends Entity{
   constructor(pos){
     super(pos);
     this.type = ENTITY.GOAL;//これいらない　
+    this.layer = "ENTITY";
     this.sprite = Art.SpriteFactory(Art.wallPattern.goal);
     this.sprite.position = pos;
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    /*固有*/
     this.isgoal = false;//??
-      this.isUpdater = true;
+    this.isUpdater = true;
   }
   Update(){
     if(Collision.on(this,EntityManager.player).isHit){

@@ -10,6 +10,7 @@ export default class BackEntity extends Entity{
   constructor(pos,tex){
     super(pos,VEC0());
     this.type = ENTITY.BACK;
+    this.layer = "BACK";
     this.isUpdater = false;
     this.tex = tex
     this.sprite = Art.SpriteFactory(this.tex);

@@ -8,6 +8,8 @@ export default class Enemy extends Entity{
     this.isUpdater = true;
     /*固有情報*/
     this.AIList = [];//AIの配列
+    /*レイヤー*/
+    this.layer = "ENTITY";
   }
   addAI(AI){
     this.AIList.push(AI);

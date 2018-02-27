@@ -35,9 +35,6 @@ export default class Bullet2 extends Bullet{
     /*パラメータ*/
     this.hp = Param.bullet2.hp;//弾丸のHP 0になると消滅
     this.atk = Param.bullet2.atkMax;//攻撃力
-    this.curve = Param.bullet2.curve;
-    //this.boost = 1.5;
-    this.type = ENTITY.BULLET;
     /*AI*/
     this.AIList = [];
     this.AIList.push(new Bullet2AI(this));
