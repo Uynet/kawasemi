@@ -370,7 +370,7 @@ Observer(){
       //死亡開始時に一回だけ呼ばれる部分
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
       EntityManager.removeEntity(this.weapon.target);
-      EntityManager.removeEntity(this.weapon.lasersight);
+      //EntityManager.removeEntity(this.weapon.lasersight);
       this.frameDead = this.frame;
       this.isDying = true;
       this.isAlive = false;
@@ -419,7 +419,7 @@ Supply(){
         this.Input();//入力
         /*weapon*/
         this.weapon.Target(this);//照準を自動でやってる
-        this.weapon.Lasersight(this);//照準を自動でやってる
+        //this.weapon.Lasersight(this);//照準を自動でやってる
         this.Physics();//物理
         this.Collision();//衝突
         this.Supply();//bulletのかいふく　
