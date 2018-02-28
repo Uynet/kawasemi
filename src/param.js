@@ -30,10 +30,15 @@ export default class Param{
       COIN : 3
     }
     this.weapon1 = {
+      //status
       agi : 20,
       cost : 3,
       speed : 10, 
       length : 180,
+      //optional
+      target : true,
+      horming : false,
+      lasersight : false,
     }
     this.weapon11 = {
       agi : 2,
