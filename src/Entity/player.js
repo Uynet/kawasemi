@@ -417,6 +417,9 @@ Supply(){
         this.weapon.Target(this);//照準を自動でやってる
         this.Physics();//物理
         this.Collision();//衝突
+        this.Supply();//bulletのかいふく　
+        UIManager.bullet.UpdateBar(this.bullet); //BulletBarの更新
+        UIManager.HP.UpdateBar(this.hp);//HPbarの更新
       }
       
       this.ScrollByDir();//向きに応じてスクロール位置を変更
@@ -427,9 +430,6 @@ Supply(){
       if(this.frame - this.frameDamaged > Param.player.INV_TIME){
         this.isInvincible = false;
       }
-      this.Supply();//bulletのかいふく　
-      UIManager.bullet.UpdateBar(this.bullet); //BulletBarの更新
-      UIManager.HP.UpdateBar(this.hp);//HPbarの更新
       this.sprite.position = {
       x : this.pos.x-4,
       y : this.pos.y

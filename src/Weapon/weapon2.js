@@ -124,8 +124,6 @@ export default class Weapon2 extends Weapon{
         EntityManager.addEntity(new Explosion1(CPV(p)));
         //反動
         //player.vel.x -= v.x/11;
-        //let v = POV(arg,vi);
-        //player.acc.y -= v.y/5;
         //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
         //振動
         EventManager.eventList.push(new QuakeEvent(17,5));
