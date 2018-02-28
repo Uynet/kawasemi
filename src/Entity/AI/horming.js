@@ -15,6 +15,8 @@ export default class horming{
       let closs = this.bullet.vel.x * to.y - this.bullet.vel.y * to.x; 
       if(closs>0) this.bullet.arg += this.bullet.curve;
       else if(closs<-0) this.bullet.arg -= this.bullet.curve;
+    }else{
+      this.bullet.arg += Rand(0.2);
     }
   }
 }

@@ -111,7 +111,7 @@ export default class Player extends Entity{
       if(this.state == STATE.FALLING){
         let jumpCost = 20
           if(this.bullet >= jumpCost){
-            EntityManager.addEntity(new Explosion2(CPV(this.pos)));
+            EntityManager.addEntity(new Explosion2(CPV(this.pos),Math.PI*(1/2)));
             EventManager.eventList.push(new QuakeEvent(20,5));
             this.frameShot = this.frame;//最終ショット時刻
               this.vel.y = - Param.player.JUMP_VEL;
