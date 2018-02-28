@@ -80,9 +80,7 @@ export default class Player extends Entity{
     /*状態*/
     this.state = STATE.WAITING;
     this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
-    this.weapon.isTargetOn = false;
-    this.weapon.isLaserOn = false;
-    this.weapon.target = null;//これ大丈夫か??
+    this.weapon.Init();
     this.dir = DIR.R;//向き
     this.score = 0;
     /*フラグ*/
@@ -369,8 +367,7 @@ Observer(){
     if(this.isAlive){
       //死亡開始時に一回だけ呼ばれる部分
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
-      EntityManager.removeEntity(this.weapon.target);
-      EntityManager.removeEntity(this.weapon.lasersight);
+      this.weapon.Reset();
       this.frameDead = this.frame;
       this.isDying = true;
       this.isAlive = false;
@@ -415,16 +412,16 @@ Supply(){
           this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
         }
         this.isRun = false;
-
         this.Input();//入力
-        /*weapon*/
-        this.weapon.Target(this);//照準を自動でやってる
-        this.weapon.Lasersight(this);//照準を自動でやってる
+        this.weapon.Update(this);//weapon
         this.Physics();//物理
         this.Collision();//衝突
         this.Supply();//bulletのかいふく　
         UIManager.bullet.UpdateBar(this.bullet); //BulletBarの更新
         UIManager.HP.UpdateBar(this.hp);//HPbarの更新
+      }
+      if(Input.isKeyClick(KEY.K)){
+        this.weapon.Option("isHorming",true);
       }
       
       this.ScrollByDir();//向きに応じてスクロール位置を変更

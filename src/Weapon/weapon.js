@@ -29,6 +29,11 @@ export default class Weapon{
     this.isLaserOn = false;
     this.arg = 0;
   }
+  Init(){
+    this.isTargetOn = false;
+    this.isLaserOn = false;
+    this.target = null;//これ大丈夫か??
+  }
   shot(player){ }
   //敵が視界に入っているか
   isSeen(player,enemy){
@@ -87,7 +92,7 @@ export default class Weapon{
   Lasersight(player,weapon){
     if(!this.isLaserOn){
       let effect;
-      let p = CPV(player.pos);
+      let p = CPV(ADV(player.pos,POV(player.arg,16)));
       effect = new Lasersight(p,player.arg);
       EntityManager.addEntity(effect);
       this.lasersight = effect;

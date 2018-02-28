@@ -36,9 +36,9 @@ export default class Param{
       speed : 10, 
       length : 180,
       //optional
-      target : true,
-      horming : false,
-      lasersight : false,
+      isTarget : true,
+      isHorming : false,
+      isLasersight : false,
     }
     this.weapon11 = {
       agi : 2,

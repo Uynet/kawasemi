@@ -6,6 +6,7 @@ import EntityManager from '../Stage/entityManager.js';
 import EventManager from '../Event/eventmanager.js';
 import QuakeEvent from '../Event/quakeEvent.js';
 import Bullet1AI from './AI/bullet1AI.js';
+import Horming from './AI/horming.js';
 import Bullet from './bullet.js';
 import BulletBlur from './Effect/bulletBlur.js';
 import Util from '../util.js';
@@ -17,12 +18,12 @@ const bullet1 = Param.bullet1;
 /*bullet1クラス*/
 //Missile
 export default class Bullet1 extends Bullet{
-  constructor(pos,vi,arg,weapon){
-    super(pos,POV(arg,vi));
+  constructor(pos,weapon){
+    super(pos,POV(weapon.arg,weapon.speed));
     /*基本情報*/
     this.frame = 0;
-    this.arg = arg;
-    this.vi = vi;
+    this.arg = weapon.arg;
+    this.vi = weapon.speed;
     this.isTargetOn = weapon.isTargetOn;
     if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
       this.isUpdater  =true;
@@ -43,6 +44,7 @@ export default class Bullet1 extends Bullet{
     /*AI*/
     this.AIList = [];
     this.AIList.push(new Bullet1AI(this));
+    if(weapon.isHorming) this.AIList.push(new Horming(this));
   }
 
   Update(){

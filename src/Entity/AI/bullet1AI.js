@@ -47,17 +47,8 @@ export default class Bullet1AI{
       }
     }
   }
-  Horming(){
-    //敵方向へのベクトル
-    let to = ADV(this.bullet.targetedEnemy.pos , MLV(VECN(-1),this.bullet.pos));
-    //外積を取って正負を判定
-    let closs = this.bullet.vel.x * to.y - this.bullet.vel.y * to.x; 
-    if(closs>0) this.bullet.arg += this.bullet.curve;
-    else if(closs<-0) this.bullet.arg -= this.bullet.curve;
-  }
 
   Do(){
-    if(this.bullet.isTargetOn) this.Horming();
     this.collision();
     this.Phisics();
     //this.bullet.arg += 0.1*Math.sin(this.bullet.frame);
