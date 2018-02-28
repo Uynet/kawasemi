@@ -2,6 +2,7 @@ import Bullet from '../Entity/bullet.js';
 import EntityManager from '../Stage/entityManager.js';
 import Util from '../util.js';
 import Target from '../Entity/Effect/target.js';
+import Lasersight from '../Entity/Effect/lasersight.js';
 
 
 const DIR = {
@@ -42,7 +43,7 @@ export default class Weapon{
       //既にロックオンされている敵が射程外に出たら解除
       if(this.isTargetOn &&
         l == this.target.enemy){
-        if(Util.distance(l.pos, player.pos) < this.length
+        if(DIST_C(l.pos, player.pos) < this.length
           //各方向+-45度まで許容
           && this.isSeen(player,l)
         ){
@@ -53,11 +54,11 @@ export default class Weapon{
         continue;
       }
       //射程距離以内かつ視界
-      if(Util.distance(l.pos, player.pos) < this.length && this.isSeen(player,l)
+      if(DIST_C(l.pos, player.pos) < this.length && this.isSeen(player,l)
       ){
         //既にロックオンされている敵より近ければ
         if(!this.isTargetOn ||
-          Util.distance(l.pos , player.pos) < Util.distance(this.target.pos,player.pos)){
+          DIST_C(l.pos , player.pos) < DIST_C(this.target.pos,player.pos)){
           //今のロック先を解除して
           if(this.isTargetOn){
             EntityManager.removeEntity(this.target);

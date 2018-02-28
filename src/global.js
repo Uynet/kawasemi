@@ -116,7 +116,14 @@ let Rand2D = (d)=>{
   }
   return p;
 }
-
+/*distance*/
+let DIST = (p1,p2)=>{
+  return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
+}
+//チェビシェフ
+let DIST_C = (p1,p2)=>{
+  return Math.max(Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y));
+}
 /*for debug*/
 let cl = console.log;
 
