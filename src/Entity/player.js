@@ -79,8 +79,9 @@ export default class Player extends Entity{
     this.vyMax = Param.player.VY_MAX;
     /*状態*/
     this.state = STATE.WAITING;
-    this.weapon = WeaponManager.weaponList[1];//選択中の武器のインスタンス
+    this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
     this.weapon.isTargetOn = false;
+    this.weapon.isLaserOn = false;
     this.weapon.target = null;//これ大丈夫か??
     this.dir = DIR.R;//向き
     this.score = 0;
@@ -368,6 +369,8 @@ Observer(){
     if(this.isAlive){
       //死亡開始時に一回だけ呼ばれる部分
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
+      EntityManager.removeEntity(this.weapon.target);
+      EntityManager.removeEntity(this.weapon.lasersight);
       this.frameDead = this.frame;
       this.isDying = true;
       this.isAlive = false;
@@ -414,7 +417,9 @@ Supply(){
         this.isRun = false;
 
         this.Input();//入力
+        /*weapon*/
         this.weapon.Target(this);//照準を自動でやってる
+        this.weapon.Lasersight(this);//照準を自動でやってる
         this.Physics();//物理
         this.Collision();//衝突
         this.Supply();//bulletのかいふく　

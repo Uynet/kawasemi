@@ -4,27 +4,37 @@ import EntityManager from '../../Stage/entityManager.js';
 import Util from '../../util.js';
 import Drawer from '../../drawer.js';
 
-export default class Signpop extends EFFECT{
-  constructor(pos){
+export default class Lasersight extends EFFECT{
+  constructor(pos,arg){
     super(pos,VEC0());
     /*基本情報*/
     this.type = ENTITY.EFFECT;
-    this.name = "signpop";
+    this.name = "lasersight";
+    this.arg = arg;
     /*スプライト*/
     this.spid = 0; //12~15
     this.frame = 0;
-    this.pattern = Art.bulletPattern.signpop;
+    this.pattern = Art.bulletPattern.lasersight;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
+    this.sprite.anchor.set(0);
+    this.sprite.scale.x = 1;
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+    this.sprite.aplha = 0.1;
   }
   Delete(){
     EntityManager.removeEntity(this);
   }
+  Rotate(player){
+    this.arg = player.arg;
+    this.pos = player.pos;
+  }
 
   Update(){
     this.sprite.texture = this.pattern[this.spid];
-    this.spid = Math.floor(this.frame/4)%4;
-    this.sprite.position = this.pos;
-    this.frame++;
+    this.spid = 0;
+    this.sprite.position = ADV(this.pos,VECN(8));
+    this.sprite.position.x-=4;
+    this.sprite.rotation = this.arg;
   }
 }

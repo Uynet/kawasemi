@@ -60,6 +60,6 @@ export default class Bullet1AI{
     if(this.bullet.isTargetOn) this.Horming();
     this.collision();
     this.Phisics();
-    this.bullet.arg += 0.1*Math.sin(this.bullet.frame);
+    //this.bullet.arg += 0.1*Math.sin(this.bullet.frame);
   }
 }
