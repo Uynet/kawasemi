@@ -10,35 +10,32 @@ import Smoke from './smoke.js';
 
 //爆発エフェクト
 export default class Explosion2 extends EFFECT{
-  constructor(pos,vel){
-    super(pos,vel);
+  constructor(pos,arg){
+    super(pos,VEC0());
     //微妙に左上に寄ってるので中心に
     this.pos = ADV(this.pos,VECN(8));
+    this.arg = arg;
+    this.vi = 15;
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.frame = 0;
     this.isNoSprite = true;
   }
   Bomb(){
-    /*
-    EntityManager.addEntity(new Sonic(this.pos));
-    for(let i =0;i<3;i++){
-      let p = ADV(this.pos,Util.Rand2D(16));
-      EntityManager.addEntity(new Flash(this.pos));
-    }
-    */
+    /*stone*/
     for(let i = 0;i<8;i++){
-      let v = Util.Rand2D(30);
-      v.x *= 0.3;
-      v.y += 15;
+      let arg = this.arg + Rand(0.3);
+      let vi = this.vi + Rand(5);
+      let v = POV(arg,vi);
       EntityManager.addEntity(new Stone(CPV(this.pos),v));
     }
+    /*smoke*/
     for(let j = 0;j<6;j++){
       let v = {
         x : Rand(4),
-        y : Rand(2) + 4
+        y : Rand(1)
       }
-      let smoke = new Smoke(CPV(this.pos),v,Rand(10)); 
+      let smoke = new Smoke(CPV(this.pos),v,15+Rand(10)); 
       EntityManager.addEntity(smoke);
     }
   }
