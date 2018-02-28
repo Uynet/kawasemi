@@ -221,7 +221,7 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet16.png'),
         PIXI.Texture.fromFrame('bullet17.png'),
       ],
-      bullet3 : [
+      lasersight : [
         PIXI.Texture.fromFrame('bullet20.png'),
       ],
       target : [

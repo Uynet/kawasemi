@@ -14,6 +14,7 @@ import QuakeEvent from '../Event/quakeEvent.js';
 import Param from '../param.js';
 import Explosion1 from '../Entity/Effect/explosion1.js';
 import Sonic from '../Entity/Effect/sonic.js';
+import Lasersight from '../Entity/Effect/lasersight.js';
 
 const DIR = {
   UR : "UR",
@@ -33,6 +34,8 @@ export default class Weapon1 extends Weapon{
     /*基本情報*/
     this.target = null;
     this.isTargetOn = false;//照準が発生しているか
+    this.lasersight;
+    this.isLaserOn = false;
     this.arg = 0;
     /*パラメータ*/
     this.param = Param.weapon1;
@@ -41,7 +44,18 @@ export default class Weapon1 extends Weapon{
     this.speed = this.param.speed;//弾速
     this.length = this.param.length;//射程距離
   }
-
+  Lasersight(player,weapon){
+    if(!this.isLaserOn){
+      let effect;
+      let p = CPV(player.pos);
+      effect = new Lasersight(p,player.arg);
+      EntityManager.addEntity(effect);
+      this.lasersight = effect;
+      this.isLaserOn = true;
+    }else{
+      this.lasersight.Rotate(player,this);
+    }
+  }
   //敵が視界に入っているか
   isSeen(player,enemy){
     return (player.dir == DIR.UR || player.dir ==  DIR.UL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 1
@@ -49,7 +63,6 @@ export default class Weapon1 extends Weapon{
         || player.dir == DIR.R && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) <-1
           || player.dir == DIR.L && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >1
   }
-
   Target(player){
     /*とりあえず全探索*/
     for(let l of EntityManager.enemyList){
@@ -96,6 +109,8 @@ export default class Weapon1 extends Weapon{
       }
     }
   }
+
+
   shot(player){
     //最後に撃ってからframeまで停止
     if((player.frame - player.frameShot) > this.agi){

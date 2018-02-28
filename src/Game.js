@@ -14,11 +14,13 @@ import Timer from './timer.js';
 import Util from './util.js';
 import Param from './param.js';
 import Menu from './UI/Menu.js';
+import Audio from './audio.js';
 
 export default class Game{
   static Init(){
     Param.Init();
     Drawer.Init();
+    //Audio.Init();
     EventManager.Init();
     EntityManager.Init();
     Timer.Init();

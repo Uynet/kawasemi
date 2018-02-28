@@ -32,7 +32,7 @@ export default class Param{
     this.weapon1 = {
       agi : 20,
       cost : 3,
-      speed : 8, 
+      speed : 10, 
       length : 180,
     }
     this.weapon11 = {
