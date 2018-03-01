@@ -23,7 +23,8 @@ export default class Explosion1 extends EFFECT{
     EntityManager.addEntity(new Sonic(this.pos));
     for(let i = 0;i<8;i++){
       let v = Util.Rand2D(30);
-      EntityManager.addEntity(new Stone(CPV(this.pos),v));
+      let stone = EntityManager.GetStone(CPV(this.pos),v);
+      EntityManager.addEntity(stone);
     }
     for(let i = 0;i<2;i++){
       EntityManager.addEntity(new Smoke(CPV(this.pos),{x:Rand(8),y:-1}));

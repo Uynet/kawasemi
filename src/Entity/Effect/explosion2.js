@@ -27,7 +27,8 @@ export default class Explosion2 extends EFFECT{
       let arg = this.arg + Rand(0.3);
       let vi = this.vi + Rand(5);
       let v = POV(arg,vi);
-      EntityManager.addEntity(new Stone(CPV(this.pos),v));
+      let stone = EntityManager.GetStone(CPV(this.pos),v);
+      EntityManager.addEntity(stone);
     }
     /*smoke*/
     for(let j = 0;j<6;j++){
