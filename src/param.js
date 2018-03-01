@@ -50,6 +50,10 @@ export default class Param{
       agi : 20,
       cost : 10,
       length : 300,
+      //optional
+      isTarget : true,
+     // isHorming : false,
+      isLasersight : true,
     }
     //Missile
     this.bullet1 = {

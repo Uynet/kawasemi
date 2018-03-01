@@ -38,17 +38,17 @@ export default class Bullet extends UI{
     this.container = new PIXI.Container();
     let s;
     //outer
-    s = Art.SpriteFactory(Art.UIPattern.bullet[this.spid]);
+    s = Art.SpriteFactory(Art.UIPattern.bullet.outer);
     s.position = this.outer.pos; 
     this.container.addChild(s);
     this.spid++;
     //bar
-    s = Art.SpriteFactory(Art.UIPattern.bullet[this.spid]);
+    s = Art.SpriteFactory(Art.UIPattern.bullet.bar);
     s.position = this.bar.pos; 
     this.container.addChild(s);
     this.spid++;
     //icon
-    s = Art.SpriteFactory(Art.UIPattern.bullet[this.spid]);
+    s = Art.SpriteFactory(Art.UIPattern.bullet.icon.missile);
     s.position = this.icon.pos; 
     this.container.addChild(s);
     //amount
@@ -61,6 +61,15 @@ export default class Bullet extends UI{
     this.container.children[1].scale.x = bullet/this.max;
     //bullet数字の更新
     this.amount.UpdateFont(bullet);
+  }
+  ChangeWeapon(name){
+    //アイコンを武器に変更
+    switch(name){
+      case "1": this.container.children[2].texture = Art.UIPattern.bullet.icon.missile;
+      break;
+      case "2": this.container.children[2].texture = Art.UIPattern.bullet.icon.laser;
+      break;
+    }
   }
   Update(){
     let to  = (56-this.pos.x);

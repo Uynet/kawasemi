@@ -195,11 +195,14 @@ export default class Art{
         PIXI.Texture.fromFrame('HP01.png'),
         PIXI.Texture.fromFrame('HP02.png'),
       ],
-      bullet : [
-        PIXI.Texture.fromFrame('UI70.png'),
-        PIXI.Texture.fromFrame('UI76.png'),
-        PIXI.Texture.fromFrame('UI7a.png'),
-      ],
+      bullet : {
+        outer : PIXI.Texture.fromFrame('UI70.png'),
+        bar : PIXI.Texture.fromFrame('UI76.png'),
+        icon : {
+          missile : PIXI.Texture.fromFrame('UI7a.png'),
+          laser : PIXI.Texture.fromFrame('UI7b.png'),
+        },
+      },
       message : {
         frame : PIXI.Texture.fromFrame('UI80.png'),
       }
