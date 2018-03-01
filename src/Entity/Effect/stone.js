@@ -3,7 +3,7 @@ import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Util from '../../util.js';
 
-//閃光
+//火花?
 export default class Stone extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
@@ -17,6 +17,7 @@ export default class Stone extends EFFECT{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 
   Update(){
