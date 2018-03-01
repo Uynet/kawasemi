@@ -25,10 +25,6 @@ const DIR = {
   L : "L",
 };
 
-const SEEN = 2;
-
-let weapon2 = Param.weapon2;
-
 export default class Weapon2 extends Weapon{
   constructor(){
     super("2");
@@ -38,11 +34,14 @@ export default class Weapon2 extends Weapon{
     this.lasersight;
     this.isLaserOn = false;
     /*パラメータ*/
-      weapon2 = Param.weapon2;
-    this.agi = weapon2.agi;//間隔
-      this.cost = weapon2.cost;
-    this.speed = weapon2.speed;//弾速
-      this.length = weapon2.length;//射程距離
+    this.param = Param.weapon2;
+    this.agi = this.param.agi;//間隔
+    this.cost = this.param.cost;
+    this.speed = this.param.speed;//弾速
+    this.length = this.param.length;//射程距離
+    /*オプション*/
+    this.isTarget = this.param.isTarget;
+    this.isLasersight = this.param.isLasersight;
 
   }
 
@@ -78,6 +77,22 @@ export default class Weapon2 extends Weapon{
         //振動
         EventManager.eventList.push(new QuakeEvent(17,5));
       }
+    }
+  }
+  Update(player){
+    if(this.isTarget) this.Target(player);
+    if(this.isLasersight) this.Lasersight(player);
+  }
+  Reset(){
+    if(this.isTarget)EntityManager.removeEntity(this.target);
+    if(this.isLasersight)EntityManager.removeEntity(this.lasersight);
+  }
+  Option(option,value){
+    switch(option){
+      case "isHorming" : this.isHorming = value ;break;
+      case "isLasersight" : this.isLasersight = value ;break;
+      case "isTarget" : this.isTarget = value ;break;
+      default : console.warn(option);
     }
   }
 }

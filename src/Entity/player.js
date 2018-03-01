@@ -246,7 +246,9 @@ export default class Player extends Entity{
   //他から呼ばれる系
   /*武器チェンジ*/
   ChangeWeapon(name){
+    this.weapon.Reset();
     WeaponManager.ChangeWeapon(this,name);
+    UIManager.bullet.ChangeWeapon(name);
   }
   /*ダメージ*/
   /*負の値を入れる*/
@@ -420,8 +422,12 @@ Supply(){
         UIManager.bullet.UpdateBar(this.bullet); //BulletBarの更新
         UIManager.HP.UpdateBar(this.hp);//HPbarの更新
       }
+      /*for debug*/
       if(Input.isKeyClick(KEY.K)){
-        this.weapon.Option("isHorming",true);
+        switch(this.weapon.name){
+          case  "1" : this.ChangeWeapon("2");break;
+          case  "2" : this.ChangeWeapon("1");break;
+        }
       }
       
       this.ScrollByDir();//向きに応じてスクロール位置を変更

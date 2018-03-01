@@ -1,4 +1,5 @@
 import UIManager from '../UI/uiManager.js';
+import EntityManager from '../Stage/entityManager.js';
 /*State 
 const STATE = {
   INIT : "INIT",
@@ -24,6 +25,7 @@ export default class Scene{
       case "TITLE" : UIManager.SetTitle(); break;
       case "STAGE" : UIManager.SetStage(); break;
     }
+    cl(EntityManager.player);
     this.state = newState;
   }
 

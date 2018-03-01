@@ -49,7 +49,6 @@ export default class MapData{
    */
   static async CreateStage(stageNo,state){
     await this.Load(stageNo);
-
     //背景の生成
     //if(state == "ENTER")
     this.AddBackGround();

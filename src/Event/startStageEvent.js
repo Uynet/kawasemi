@@ -18,6 +18,7 @@ export default class StartStageEvent extends Event{
       /*ここでマップをロード*/
       MapData.DeleteStage();
       MapData.CreateStage(Game.stage,"ENTER");
+      //ここで非同期
       Game.scene.ChangeState(STATE.TITLE,STATE.STAGE);
       Game.scene.PopSubState("TRANS");
       yield;
