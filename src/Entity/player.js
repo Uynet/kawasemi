@@ -74,6 +74,7 @@ export default class Player extends Entity{
     this.gravity = Param.player.GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
     this.scArg = 0;//スクロール用
+    this.toArg = 0;
     this.scPos = VEC0();//スクロール位置
 
     this.vxMax = Param.player.VX_MAX;
@@ -131,7 +132,7 @@ export default class Player extends Entity{
       this.state = STATE.RUNNING;
       this.dir = DIR.R;
       this.isRun = true;
-      this.arg = 0;
+      this.toArg = 0;
       this.acc.x = Param.player.RUN_VEL;
     }
     /*左向き*/
@@ -139,7 +140,7 @@ export default class Player extends Entity{
       this.state = STATE.RUNNING;
       this.dir = DIR.L;
       this.isRun = true;
-      this.arg = Math.PI;
+      this.toArg = Math.PI;
       this.acc.x = -Param.player.RUN_VEL;
     }
     /*上向き*/
@@ -150,7 +151,7 @@ export default class Player extends Entity{
       }else if(this.dir == DIR.L || this.dir == DIR.UL || this.dir == DIR.DL){
         this.dir = DIR.UL;
       }
-      this.arg = -Math.PI/2;
+      this.toArg = 3 * Math.PI/2;
     }
     /*下向き*/
     //看板が近くにあれば優先
@@ -161,7 +162,7 @@ export default class Player extends Entity{
       }else if(this.dir == DIR.L || this.dir == DIR.UL || this.dir == DIR.DL){
         this.dir = DIR.DL;
       }
-      this.arg = Math.PI/2;
+      this.toArg = Math.PI/2;
     }
     /*shot*/
     if(Input.isKeyInput(KEY.X)){
@@ -410,6 +411,12 @@ Supply(){
   this.bullet = BET(0,this.bullet,this.maxBullet);
 }
 
+SetArg(arg){
+  let d = this.toArg - this.arg;
+  if(d > Math.PI)d -= 2*Math.PI;
+  if(d < -Math.PI)d += 2*Math.PI;
+  this.arg += d*0.2;
+}
 
   Update(){
       if(this.isAlive){
@@ -419,6 +426,7 @@ Supply(){
         }
         this.isRun = false;
         this.Input();//入力
+        this.SetArg(this.toArg);
         this.weapon.Update(this);//weapon
         this.Physics();//物理
         this.Collision();//衝突

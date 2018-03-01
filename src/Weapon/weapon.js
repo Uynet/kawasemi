@@ -83,8 +83,8 @@ export default class Weapon{
         this.isTargetOn = false;
       }else{
         //方向を指定
-        player.arg = Math.atan((this.target.pos.y-player.pos.y)/(this.target.pos.x-player.pos.x));
-        if(player.pos.x > this.target.pos.x ) player.arg += Math.PI;
+        player.toArg = Math.atan((this.target.pos.y-player.pos.y)/(this.target.pos.x-player.pos.x));
+        if(player.pos.x > this.target.pos.x ) player.toArg += Math.PI;
       }
     }
   }
@@ -92,8 +92,8 @@ export default class Weapon{
   Lasersight(player,weapon){
     if(!this.isLaserOn){
       let effect;
-      let p = CPV(ADV(player.pos,POV(player.arg,16)));
-      effect = new Lasersight(p,player.arg);
+      let p = CPV(ADV(player.pos,POV(player.toArg,16)));
+      effect = new Lasersight(p,player.toArg);
       EntityManager.addEntity(effect);
       this.lasersight = effect;
       this.isLaserOn = true;

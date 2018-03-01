@@ -12,6 +12,7 @@ export default class EntityManager{
     this.player;//プレイヤーのインスタンス
     this.updaterList = [];//更新が必要なEntity
 
+
     this.entityIndex = 0;
   }
   /*Entityをリストに登録*/

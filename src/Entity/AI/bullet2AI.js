@@ -16,7 +16,7 @@ export default class Bullet2AI{
     for(let l of EntityManager.enemyList){
       if(Collision.on(this.bullet,l).isHit){
         l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
-        this.bullet.hp--;
+        this.bullet.hp = 0;
         /* ■ SoundEffect : hitWall */
         /* □ Effect : hitWall */
       }

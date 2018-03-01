@@ -64,12 +64,6 @@ export default class Enemy2 extends Enemy{
       EntityManager.removeEntity(this);
       EntityManager.addEntity(new Explosion2(this.pos));
   }
-  //自分がダメージを食らう
-  Damage(atkMax){
-    this.hp += atkMax;
-    //ダメージをポップ
-    EntityManager.addEntity(new FontEffect(this.pos,-atkMax+"","enemy"));
-  }
   //プレイヤーにダメージを与える
   Hurt(){
     let player = EntityManager.player; 
