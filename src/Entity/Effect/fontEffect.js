@@ -27,7 +27,7 @@ export default class FontEffect extends EFFECT{
     this.str = str; //0~9
     this.container = new PIXI.Container();
     this.d = this.str.length;//桁数
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
+    //this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
       let tex;
@@ -43,21 +43,8 @@ export default class FontEffect extends EFFECT{
     this.gravity = 0.2;
   }
 
-  Collision(){
-    //壁とのみ行う 正直無くても良い
-    for(let l of EntityManager.wallList){
-      let c = Collision.on(this,l);
-      if(c.isHit){
-        /*速度*/
-        /*押し出し*/
-        Collision.Resolve(this,l);
-        /*note : now isHit == false*/
-      }
-    }
-  }
 
   Update(){
-    this.Collision();
     //phys
     this.pos = ADV(this.pos,this.vel);
     this.vel.y += this.gravity;

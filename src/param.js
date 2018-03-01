@@ -37,7 +37,7 @@ export default class Param{
       length : 180,
       //optional
       isTarget : true,
-      isHorming : false,
+      isHorming : true,
       isLasersight : false,
     }
     this.weapon11 = {
@@ -60,7 +60,7 @@ export default class Param{
       atkMax : 50,
       atkMin : 10,
       hp : 1,
-      curve : 0.1
+      curve : 0.2
     }
     //Laser
     this.bullet2 = {

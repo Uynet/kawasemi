@@ -51,6 +51,5 @@ export default class Bullet1AI{
   Do(){
     this.collision();
     this.Phisics();
-    //this.bullet.arg += 0.1*Math.sin(this.bullet.frame);
   }
 }

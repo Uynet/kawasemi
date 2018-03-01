@@ -101,7 +101,7 @@ export default class Coin extends Entity{
     //Collision
     this.Collision();
     this.Physics();
-    this.GetByPlayer();
+    if(EntityManager.player.isAlive)this.GetByPlayer();
     //時間立つと点滅
     if( this.frame > 300 && this.frame%8 <4) this.sprite.texture = this.pattern[12];
     else this.sprite.texture = this.pattern[this.spid];

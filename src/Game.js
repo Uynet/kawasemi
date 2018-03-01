@@ -18,9 +18,9 @@ import Audio from './audio.js';
 
 export default class Game{
   static Init(){
+    /*audioとartはinitしない*/
     Param.Init();
     Drawer.Init();
-    //Audio.Init();
     EventManager.Init();
     EntityManager.Init();
     Timer.Init();
@@ -41,6 +41,7 @@ export default class Game{
 
   static async Load(){
     await Art.LoadTexture();
+    await Audio.Load();
     Game.Init();
   }
 

@@ -43,12 +43,6 @@ export default class Enemy1 extends Enemy{
     this.isAlive = false;
     EntityManager.removeEntity(this);
   }
-  //自分がダメージを食らう
-  Damage(atkMax){
-    this.hp += atkMax;
-    //ダメージをポップ
-    EntityManager.addEntity(new FontEffect(this.pos,-atkMax+"","enemy"));
-  }
   //衝突判定
   Collision(){
     for(let l of EntityManager.wallList){
