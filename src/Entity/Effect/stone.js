@@ -1,6 +1,7 @@
 import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
+import Pool from '../../Stage/pool.js';
 import Util from '../../util.js';
 
 //火花?
@@ -32,7 +33,7 @@ export default class Stone extends EFFECT{
       this.isNext = false;
       this.sprite.scale = MLV(this.sprite.scale,VECN(0.8));
       let p = ADV(this.pos,this.vel);
-      let stone = EntityManager.GetStone(p,this.vel);
+      let stone = Pool.GetStone(p,this.vel);
       //次の石 : 小さく薄く
       stone.sprite.scale = this.sprite.scale;
       stone.sprite.alpha = this.sprite.alpha;
@@ -41,7 +42,7 @@ export default class Stone extends EFFECT{
     if(this.frame == 1)this.isNext = true;
     //持続時間
     if(this.frame > 3){
-      EntityManager.RemoveStone(this);
+      Pool.RemoveStone(this);
     }
     this.frame++;
   }

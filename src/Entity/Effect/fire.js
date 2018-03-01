@@ -1,7 +1,7 @@
 import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
-import Util from '../../util.js';
+import Pool from '../../Stage/pool.js';
 
 //閃光
 export default class Fire extends EFFECT{
@@ -26,7 +26,7 @@ export default class Fire extends EFFECT{
     this.sprite.scale = ADV(this.sprite.scale, VECN(1/(this.frame+4)));
     this.sprite.alpha = 0.5 - this.frame/40;
     if(this.frame == 16){
-      EntityManager.removeEntity(this);
+      Pool.RemoveFire(this);
     }
     this.frame++;
   }
