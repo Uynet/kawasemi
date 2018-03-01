@@ -1,6 +1,7 @@
 import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
+import Pool from '../../Stage/pool.js';
 import Util from '../../util.js';
 
 export default class Sonic extends EFFECT{
@@ -28,7 +29,7 @@ export default class Sonic extends EFFECT{
     this.sprite.scale = VECN(10/(this.frame+5));
     this.sprite.alpha -= 0.03;
     if(this.frame == 40){
-      EntityManager.RemoveSmoke(this);
+      Pool.RemoveSmoke(this);
     }
     this.sprite.position = this.pos;
 

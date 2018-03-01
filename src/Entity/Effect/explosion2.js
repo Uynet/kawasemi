@@ -1,6 +1,7 @@
 import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
+import Pool from '../../Stage/pool.js';
 import Util from '../../util.js';
 import Sonic from './sonic.js';
 import Stone from './stone.js';
@@ -27,7 +28,7 @@ export default class Explosion2 extends EFFECT{
       let arg = this.arg + Rand(0.3);
       let vi = this.vi + Rand(5);
       let v = POV(arg,vi);
-      let stone = EntityManager.GetStone(CPV(this.pos),v);
+      let stone = Pool.GetStone(CPV(this.pos),v);
       EntityManager.addEntity(stone);
     }
     /*smoke*/
@@ -36,7 +37,7 @@ export default class Explosion2 extends EFFECT{
         x : Rand(4),
         y : Rand(1)
       }
-      let smoke = EntityManager.GetSmoke(CPV(this.pos),v,15+Rand(10)); 
+      let smoke = Pool.GetSmoke(CPV(this.pos),v,15+Rand(10)); 
       EntityManager.addEntity(smoke);
     }
   }

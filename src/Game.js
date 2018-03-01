@@ -1,4 +1,5 @@
 import EntityManager from './Stage/entityManager.js';
+import Pool from './Stage/pool.js';
 import MapData from './Stage/mapData.js';
 import EventManager from './Event/eventmanager.js';
 import StartStageEvent from './Event/startStageEvent.js';
@@ -23,6 +24,7 @@ export default class Game{
     Drawer.Init();
     EventManager.Init();
     EntityManager.Init();
+    Pool.Init();
     Timer.Init();
     Util.Init();
     UIManager.Init();
