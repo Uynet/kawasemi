@@ -3,6 +3,7 @@ import Drawer from '../drawer.js';
 import Target from '../Entity/Effect/target.js';
 import Timer from '../timer.js';
 import Art from '../art.js';
+import Stone from '../Entity/Effect/stone.js';
 /*エンティティマネージャ*/
 export default class EntityManager{
   static Init(){
@@ -12,8 +13,30 @@ export default class EntityManager{
     this.player;//プレイヤーのインスタンス
     this.updaterList = [];//更新が必要なEntity
 
+    this.unusedStones = [];
+    for(let i = 0;i<1000;i++){
+      this.unusedStones.push(new Stone(VEC0(),VEC0()));
+    }
 
     this.entityIndex = 0;
+  }
+  static GetStone(pos,vel){
+    if(this.unusedStones.length>0){
+      let s = this.unusedStones.pop();
+      s.pos = pos;
+      s.vel = vel;
+      s.frame = 0;
+      s.isNext = false;
+      s.sprite.alpha = 1;
+      s.sprite.scale.set(1);
+      return s;
+    }else{
+      cl("unko");
+    }
+  }
+  static RemoveStone(s){
+    this.unusedStones.push(s);
+    EntityManager.removeEntity(s);
   }
   /*Entityをリストに登録*/
   static addEntity(entity){

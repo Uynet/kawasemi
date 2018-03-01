@@ -5,15 +5,15 @@ export default class Entity{
     this.vel = vel;
     this.acc = VEC0();
     this.gravity;
-    this.e = 0.9;
+    //this.e = 0.9;
     /*standard*/
     this.frame = 0;
     this.type;
-    this.collider;
-    this.isUpdater = true;    
-    this.isMultiple;
+    //this.collider;
+    //this.isUpdater = true;    
+    //this.isMultiple;
     /*sprite*/
-    this.sprite;
+    //this.sprite;
     //this.container;
     /*未実装*/
     this.layer;
