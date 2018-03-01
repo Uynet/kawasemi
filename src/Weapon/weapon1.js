@@ -4,6 +4,7 @@ import Target from '../Entity/Effect/target.js';
 import EntityManager from '../Stage/entityManager.js';
 import Weapon from './weapon.js';
 import Art from '../art.js';
+import Audio from '../audio.js';
 import UIManager from '../UI/uiManager.js';
 import Util from '../util.js';
 import BulletShot from '../Entity/Effect/bulletShot.js';
@@ -55,6 +56,7 @@ export default class Weapon1 extends Weapon{
         let bullet = new Bullet1(p,this);
         EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
+        Audio.PlaySE("missileHit");
         /* □ Effect : shot */
         EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
         EntityManager.addEntity(new Explosion2(CPV(p),this.arg));

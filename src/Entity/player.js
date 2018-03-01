@@ -1,5 +1,7 @@
 import Entity from './entity.js'
+import Param from '../param.js';
 import Art from '../art.js'
+import Audio from '../audio.js';
 import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/Box.js';
@@ -19,7 +21,6 @@ import Explosion1 from './Effect/explosion1.js';
 import Explosion2 from './Effect/explosion2.js';
 import QuakeEvent from '../Event/quakeEvent.js';
 import Enemy2 from './Enemy/enemy2.js';
-import Param from '../param.js';
 
 const STATE = {
   WAITING : "WAITING",
@@ -103,6 +104,8 @@ export default class Player extends Entity{
         this.vel.y = - Param.player.JUMP_VEL;
         this.isJump = true;
         this.state = STATE.JUMPING;
+        // ■ SoundEffect : jump
+        Audio.PlaySE("jump");
       }
     }
     /*空中ジャンプ*/
@@ -255,6 +258,7 @@ export default class Player extends Entity{
   Damage(atk){
     if(atk>0 && atk%1>0){
       console.warn(atk);
+      atk = Math.floor(atk);
     }
     //無敵時間は攻撃を受けない
     //if(!this.isInvincible){
@@ -424,10 +428,12 @@ Supply(){
       }
       /*for debug*/
       if(Input.isKeyClick(KEY.K)){
+        /*
         switch(this.weapon.name){
           case  "1" : this.ChangeWeapon("2");break;
           case  "2" : this.ChangeWeapon("1");break;
         }
+        */
       }
       
       this.ScrollByDir();//向きに応じてスクロール位置を変更

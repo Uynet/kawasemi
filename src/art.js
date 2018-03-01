@@ -636,17 +636,17 @@ export default class Art{
   }
 
   static async LoadTexture(){
-    let loader = PIXI.loader;
-    await new Promise((res)=>loader
-      .add('pattern','src/resource/img/playerPattern.json')
-      .add('pattern2','src/resource/img/UIPattern.json')
-      .add('pattern3','src/resource/img/bulletPattern.json')
-      .add('pattern4','src/resource/img/enemyPattern.json')
-      .add('pattern5','src/resource/img/wallPattern.json')
-      .add('pattern6','src/resource/img/seqPattern.json')
-      .add('pattern7','src/resource/img/font.json')
-      .add('src/resource/effect/dark.png')
-      .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
+      let loader = PIXI.loader;
+      await new Promise((res)=>loader
+        .add('pattern','src/resource/img/playerPattern.json')
+        .add('pattern2','src/resource/img/UIPattern.json')
+        .add('pattern3','src/resource/img/bulletPattern.json')
+        .add('pattern4','src/resource/img/enemyPattern.json')
+        .add('pattern5','src/resource/img/wallPattern.json')
+        .add('pattern6','src/resource/img/seqPattern.json')
+        .add('pattern7','src/resource/img/font.json')
+        .add('src/resource/effect/dark.png')
+        .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
   }
 
   static SpriteFactory(texture){

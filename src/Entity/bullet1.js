@@ -57,6 +57,7 @@ export default class Bullet1 extends Bullet{
       let blur = new BulletBlur(p,v);
       EntityManager.addEntity(blur);
     }
+    this.arg += Rand(0.2);
     for (let AI of this.AIList){
       AI.Do();
     }

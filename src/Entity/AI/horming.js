@@ -13,10 +13,7 @@ export default class horming{
       let to = ADV(this.bullet.targetedEnemy.pos , MLV(VECN(-1),this.bullet.pos));
       //外積を取って正負を判定
       let closs = this.bullet.vel.x * to.y - this.bullet.vel.y * to.x; 
-      if(closs>0) this.bullet.arg += this.bullet.curve;
-      else if(closs<-0) this.bullet.arg -= this.bullet.curve;
-    }else{
-      this.bullet.arg += Rand(0.2);
+      this.bullet.arg += closs/Math.abs(closs) * this.bullet.curve;
     }
   }
 }

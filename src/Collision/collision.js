@@ -25,8 +25,6 @@ export default class Collision{
     }
 
     /*矩形同士*/
-    /*とりあえず正方形*/
-    /*下記途中*/
     if(e1.collider.shape == SHAPE.BOX && e2.collider.shape == SHAPE.BOX){
       let box1 = e1.collider.hitbox;
       let box2 = e2.collider.hitbox;
@@ -91,7 +89,7 @@ export default class Collision{
     /*速度*/
     let l = Collision.on(e1,e2);
     if(l.n.x != 0) e1.vel.x = 0;
-    if(l.n.y == -1) e1.vel.y *= -e1.e ;
+    if(l.n.y == -1) e1.vel.y =0;
     if(l.n.y == 1) e1.vel.y =0;
     //while(Collision.on(e1,e2).isHit){
       e1.pos.x += l.n.x*l.depth;
@@ -105,7 +103,7 @@ export default class Collision{
 class CollisionInfo{
   constructor(isHit,n,depth){
     this.isHit = isHit; // 衝突したかどうか bool
-      this.n = n //衝突したならば法線
-        this.depth = depth;//めり込み量
+    this.n = n //衝突したならば法線
+    this.depth = depth;//めり込み量
   }
 }
