@@ -16,8 +16,8 @@ export default class Sonic extends EFFECT{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
-      this.sprite.scale.x = this.size/5;
-      this.sprite.scale.y = this.size/5;
+    this.sprite.scale.x = this.size/5;
+    this.sprite.scale.y = this.size/5;
   }
 
   Update(){
@@ -28,7 +28,7 @@ export default class Sonic extends EFFECT{
     this.sprite.scale = VECN(10/(this.frame+5));
     this.sprite.alpha -= 0.03;
     if(this.frame == 40){
-      EntityManager.removeEntity(this);
+      EntityManager.RemoveSmoke(this);
     }
     this.sprite.position = this.pos;
 

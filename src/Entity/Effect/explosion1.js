@@ -21,13 +21,16 @@ export default class Explosion1 extends EFFECT{
   }
   Bomb(){
     EntityManager.addEntity(new Sonic(this.pos));
+    //stone(というか火花?)
     for(let i = 0;i<8;i++){
       let v = Util.Rand2D(30);
       let stone = EntityManager.GetStone(CPV(this.pos),v);
       EntityManager.addEntity(stone);
     }
+    //smoke
     for(let i = 0;i<2;i++){
-      EntityManager.addEntity(new Smoke(CPV(this.pos),{x:Rand(8),y:-1}));
+      let smoke = EntityManager.GetStone(CPV(this.pos),{x:Rand(8),y:-1});
+      EntityManager.addEntity(smoke);
     }
     for(let i =0;i<3;i++){
       let v = Util.Rand2D(16);

@@ -4,6 +4,7 @@ import Target from '../Entity/Effect/target.js';
 import Timer from '../timer.js';
 import Art from '../art.js';
 import Stone from '../Entity/Effect/stone.js';
+import Smoke from '../Entity/Effect/smoke.js';
 /*エンティティマネージャ*/
 export default class EntityManager{
   static Init(){
@@ -13,9 +14,14 @@ export default class EntityManager{
     this.player;//プレイヤーのインスタンス
     this.updaterList = [];//更新が必要なEntity
 
+      /*Object Pool*/
     this.unusedStones = [];
     for(let i = 0;i<1000;i++){
       this.unusedStones.push(new Stone(VEC0(),VEC0()));
+    }
+    this.unusedSmokes = [];
+    for(let i = 0;i<100;i++){
+      this.unusedSmokes.push(new Smoke(VEC0(),VEC0(),0));
     }
 
     this.entityIndex = 0;
@@ -36,6 +42,28 @@ export default class EntityManager{
   }
   static RemoveStone(s){
     this.unusedStones.push(s);
+    EntityManager.removeEntity(s);
+  }
+  static GetSmoke(pos,vel,size){
+    if(this.unusedSmokes.length>0){
+      cl(this.unusedSmokes.length);
+      /*constructor*/
+      let s = this.unusedSmokes.pop();
+      s.pos = pos;
+      s.vel = vel;
+      s.frame = 0;
+      s.isNext = false;
+      //sprite
+      s.spid = 0;
+      s.sprite.alpha = 1;
+      s.sprite.scale.set(1);
+      s.sprite.scale.x = this.size/5;
+      s.sprite.scale.y = this.size/5;
+      return s;
+    }
+  }
+  static RemoveSmoke(s){
+    this.unusedSmokes.push(s);
     EntityManager.removeEntity(s);
   }
   /*Entityをリストに登録*/
