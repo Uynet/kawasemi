@@ -10,6 +10,7 @@ export default class Stone extends EFFECT{
     super(pos,vel);
     /*基本情報*/
     this.type = ENTITY.EFFECT;
+    this.name = "stone";
     this.frame = 0;
     this.isNext = false;
     /*スプライト*/
@@ -44,7 +45,7 @@ export default class Stone extends EFFECT{
     if(this.frame == 1)this.isNext = true;
     //持続時間
     if(this.frame > 3){
-      Pool.RemoveStone(this);
+      Pool.Remove(this);
     }
     this.frame++;
   }

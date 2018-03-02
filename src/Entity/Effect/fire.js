@@ -9,6 +9,7 @@ export default class Fire extends EFFECT{
     super(pos,vel);
     /*基本情報*/
     this.type = ENTITY.EFFECT;
+    this.name = "fire";
     this.frame = 0;
     /*スプライト*/
     this.spid = 0;
@@ -26,7 +27,7 @@ export default class Fire extends EFFECT{
     this.sprite.scale = ADV(this.sprite.scale, VECN(1/(this.frame+4)));
     this.sprite.alpha = 0.5 - this.frame/40;
     if(this.frame == 16){
-      Pool.RemoveFire(this);
+      Pool.Remove(this);
     }
     this.frame++;
   }

@@ -54,8 +54,8 @@ export default class Weapon1 extends Weapon{
           x: player.pos.x -4 + 10 * Math.cos(this.arg),
           y: player.pos.y + 10 * Math.sin(this.arg),
         }
-        //let bullet = Pool.GetMissile(p,this);
-        let bullet = new Bullet1(p,this);
+        let bullet = Pool.GetMissile(p,this);
+        //let bullet = new Bullet1(p,this);
         EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
         Audio.PlaySE("missileShot");
