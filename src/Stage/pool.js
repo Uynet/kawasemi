@@ -1,5 +1,6 @@
 import EntityManager from './entityManager.js';
 import Stone from '../Entity/Effect/stone.js';
+import BulletBlur from '../Entity/Effect/bulletBlur.js';
 import Smoke from '../Entity/Effect/smoke.js';
 import Fire from '../Entity/Effect/fire.js';
 import Bullet1 from '../Entity/bullet1.js';
@@ -11,7 +12,7 @@ import Box from '../Collision/box.js';
 export default class Pool{
   static Init(){
     this.unusedStones = [];
-    for(let i = 0;i<800;i++){
+    for(let i = 0;i<500;i++){
       this.unusedStones.push(new Stone(VEC0(),VEC0()));
     }
     this.unusedSmokes = [];
@@ -22,10 +23,34 @@ export default class Pool{
     for(let i = 0;i<100;i++){
       this.unusedFires.push(new Fire(VEC0(),VEC0()));
     }
+    this.unusedBulletBlurs = [];
+    for(let i = 0;i<300;i++){
+      this.unusedBulletBlurs.push(new BulletBlur(VEC0(),VEC0()));
+    }
     this.unusedMissiles = [];
     for(let i = 0;i<100;i++){
       this.unusedMissiles.push(new Bullet1(VEC0(),"weapon"));
     }
+  }
+  static GetBulletBlur(pos,vel){
+    if(this.unusedBulletBlurs.length > 0){
+    let s = this.unusedBulletBlurs.pop();
+    s.isAlive = true;//消えたらfalse
+    s.pos = pos;
+    s.vel = vel;
+    s.frame = 0;
+    s.spid = 0;
+    s.sprite.alpha = 0.5;
+    s.sprite.scale.set(Rand(0.5)+1);
+    s.sprite.position = ADV(s.pos,VECN(8));
+    return s;
+    }else{
+      return false;
+    }
+  }
+  static RemoveBulletBlur(s){
+    this.unusedBulletBlurs.push(s);
+    EntityManager.removeEntity(s);
   }
   static GetMissile(pos,weapon){
     if(this.unusedMissiles.length > 0){
@@ -49,7 +74,7 @@ export default class Pool{
     EntityManager.removeEntity(s);
   }
   static GetStone(pos,vel){
-    if(this.unusedStones.length < 10)cl("!");
+    if(this.unusedStones.length > 0){
     let s = this.unusedStones.pop();
     s.pos = pos;
     s.vel = vel;
@@ -58,6 +83,9 @@ export default class Pool{
     s.sprite.alpha = 1;
     s.sprite.scale.set(1);
     return s;
+    }else{
+      return false;
+    }
   }
   static RemoveStone(s){
     this.unusedStones.push(s);
