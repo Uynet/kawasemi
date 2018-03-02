@@ -2,12 +2,14 @@ import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Util from '../../util.js';
+import Pool from '../../Stage/pool.js';
 
 export default class Sonic extends EFFECT{
   constructor(pos){
     super(pos,VEC0());
     /*基本情報*/ this.type = ENTITY.EFFECT;
     this.frame = 0;
+    this.name = "sonic";
     /*スプライト*/
     this.spid = 0;
     this.pattern = Art.bulletPattern.explosion.sonic;
@@ -28,7 +30,7 @@ export default class Sonic extends EFFECT{
     this.sprite.alpha *= 0.8;
 
     if(this.spid == 4){
-      EntityManager.removeEntity(this);
+      Pool.Remove(this);
     }
     this.sprite.position = this.pos;
     this.frame++;

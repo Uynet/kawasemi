@@ -9,6 +9,8 @@ import Bullet1AI from '../Entity/AI/bullet1AI.js';
 import Collider from '../Collision/collider.js';
 import Box from '../Collision/box.js';
 import Param from '../param.js';
+import Sonic from '../Entity/Effect/sonic.js';
+import Flash from '../Entity/Effect/flash.js';
 /*Object Pool*/
 export default class Pool{
   static Init(){
@@ -17,6 +19,8 @@ export default class Pool{
       smokes : [],
       fires : [],
       bulletblurs : [],
+      sonics : [],
+      flashes : [],
       missiles : [],
     }
     for(let i = 0;i<500;i++){
@@ -27,6 +31,12 @@ export default class Pool{
     }
     for(let i = 0;i<100;i++){
       this.unused.fires.push(new Fire(VEC0(),VEC0()));
+    }
+    for(let i = 0;i<50;i++){
+      this.unused.sonics.push(new Sonic(VEC0()));
+    }
+    for(let i = 0;i<50;i++){
+      this.unused.flashes.push(new Flash(VEC0()));
     }
     for(let i = 0;i<300;i++){
       this.unused.bulletblurs.push(new BulletBlur(VEC0(),VEC0()));
@@ -82,10 +92,40 @@ export default class Pool{
       case "fire" : this.unused.fires.push(s);break;
       case "stone" : this.unused.stones.push(s);break;
       case "smoke" : this.unused.smokes.push(s);break;
+      case "sonic" : this.unused.sonics.push(s);break;
+      case "flash" : this.unused.flashes.push(s);break;
       case "missile" : this.unused.missiles.push(s);break;
       default :console.warn(s.name);
     }
     EntityManager.removeEntity(s);
+  }
+  static GetFlash(pos,vel){
+    if(this.unused.flashes.length > 0){
+    let s = this.unused.flashes.pop();
+    s.pos = pos;
+    s.vel = vel;
+    s.frame = 0;
+    s.spid = 0;
+    s.sprite.alpha = 0.2;
+    s.sprite.scale.set(1);
+    return s;
+    }else{
+      return false;
+    }
+  }
+  static GetSonic(pos,vel){
+    if(this.unused.sonics.length > 0){
+    let s = this.unused.sonics.pop();
+    s.pos = pos;
+    s.vel = vel;
+    s.frame = 0;
+    s.spid = 0;
+    s.sprite.alpha = 0.2;
+    s.sprite.scale.set(1);
+    return s;
+    }else{
+      return false;
+    }
   }
   static GetStone(pos,vel){
     if(this.unused.stones.length > 0){

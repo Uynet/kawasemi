@@ -20,7 +20,8 @@ export default class Explosion1 extends EFFECT{
     this.isNoSprite = true;
   }
   Bomb(){
-    EntityManager.addEntity(new Sonic(this.pos));
+    let sonic = Pool.GetSonic(this.pos,VEC0());
+    if(sonic)EntityManager.addEntity(sonic);
     //stone(というか火花?)
     for(let i = 0;i<8;i++){
       let v = Rand2D(30);
@@ -40,7 +41,8 @@ export default class Explosion1 extends EFFECT{
     }
     for(let i =0;i<3;i++){
       let p = ADV(this.pos,Rand2D(16));
-      EntityManager.addEntity(new Flash(this.pos));
+      let flash = Pool.GetFlash(this.pos,VEC0());
+      EntityManager.addEntity(flash);
     }
   }
 
