@@ -1,4 +1,4 @@
-import Game from './Game.js';
+import Game from './game.js';
 
 export default class Art{
   static Load(resources){

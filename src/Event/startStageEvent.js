@@ -1,10 +1,7 @@
 import Event from './event.js';
-import EntityManager from '../Stage/entityManager.js';
-import Game from '../Game.js';
+import Game from '../game.js';
 import EventManager from './eventmanager.js';
 import MapData from '../Stage/mapData.js';
-import Art from '../art.js';
-import Drawer from '../drawer.js';
 
 /*タイトル画面からゲーム開始画面に移行するイベント
  * (UIの退避)

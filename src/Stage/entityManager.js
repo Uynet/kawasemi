@@ -1,4 +1,3 @@
-'use strict'
 import Drawer from '../drawer.js';
 import Target from '../Entity/Effect/target.js';
 import Timer from '../timer.js';

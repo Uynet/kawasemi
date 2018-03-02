@@ -1,10 +1,5 @@
 import Event from './event.js';
-import UIManager from '../UI/uiManager.js';
-import EntityManager from '../Stage/entityManager.js';
-import Game from '../Game.js';
 import EventManager from './eventmanager.js';
-import MapData from '../Stage/mapData.js';
-import Art from '../art.js';
 import Drawer from '../drawer.js';
 
 /*タイトル画面からゲーム開始画面に移行するイベント

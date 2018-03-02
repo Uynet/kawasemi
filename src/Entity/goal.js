@@ -5,7 +5,7 @@ import Collision from '../Collision/collision.js';
 import EntityManager from '../Stage/entityManager.js';
 import Circle from '../Collision/circle.js';
 import Box from '../Collision/box.js';
-import Game from '../Game.js';
+import Game from '../game.js';
 import GameOverEvent from '../Event/gameOverEvent.js';
 import EventManager from '../Event/eventmanager.js';
 import GameClearEvent from '../Event/gameClearEvent.js';

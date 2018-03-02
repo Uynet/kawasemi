@@ -8,10 +8,9 @@ import Player from '../Entity/player.js'
 import Enemy1 from '../Entity/Enemy/enemy1.js'
 import Enemy2 from '../Entity/Enemy/enemy2.js'
 import Goal from '../Entity/goal.js'
-import Game from '../Game.js'
+import Game from '../game.js'
 import Art from '../art.js'
 import Drawer from '../drawer.js';
-import WeaponManager from '../Weapon/weaponManager.js';
 import Woodbox from '../Entity/woodbox.js';
 import Needle from '../Entity/needle.js';
 /*マップデータ*/
