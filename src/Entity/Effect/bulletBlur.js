@@ -11,7 +11,7 @@ export default class BulletBlur extends EFFECT{
     super(pos,vel);
     /*基本情報*/
     this.type = ENTITY.EFFECT;
-    this.name = "blur";
+    this.name = "bulletblur";
     this.frame = 0;
     this.isAlive = true;//消えたらfalse
       /*スプライト*/
@@ -43,7 +43,7 @@ export default class BulletBlur extends EFFECT{
         //消える時に一回だけ呼ばれる
         if(this.isAlive){
           //EntityManager.removeEntity(this);
-          Pool.RemoveBulletBlur(this);
+          Pool.Remove(this);
           this.isAlive = false
         }
       }

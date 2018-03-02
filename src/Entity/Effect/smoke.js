@@ -9,6 +9,7 @@ export default class Sonic extends EFFECT{
     super(pos,vel);
     /*基本情報*/
     this.type = ENTITY.EFFECT;
+    this.name = "smoke";
     this.frame = 0;
     this.size = size;//煙の大きさ 浮力にも関わってくる
     /*スプライト*/
@@ -29,7 +30,7 @@ export default class Sonic extends EFFECT{
     this.sprite.scale = VECN(10/(this.frame+5));
     this.sprite.alpha -= 0.03;
     if(this.frame == 40){
-      Pool.RemoveSmoke(this);
+      Pool.Remove(this);
     }
     this.sprite.position = this.pos;
 

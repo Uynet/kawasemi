@@ -23,12 +23,12 @@ export default class Game{
     Param.Init();
     Drawer.Init();
     EventManager.Init();
+    WeaponManager.Init();
     EntityManager.Init();
     Pool.Init();
     Timer.Init();
     Util.Init();
     UIManager.Init();
-    WeaponManager.Init();
 
     /*initialize Game state*/
     Game.stage = 0;//現在のステージ番号

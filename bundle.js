@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 40);
+/******/ 	return __webpack_require__(__webpack_require__.s = 49);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -69,9 +69,12 @@
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__drawer_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entity_Effect_target_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timer_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entity_Effect_target_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timer_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Entity_Effect_stone_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Entity_Effect_smoke_js__ = __webpack_require__(28);
+
 
 
 
@@ -81,133 +84,63 @@
 class EntityManager{
   static Init(){
     this.entityList = [];//全Entityのリスト
-    this.enemyList = [];//敵のリスト
+    this.enemyList = [];//敵のリスト(moverList?)
     this.wallList = [];//壁のリスト
     this.player;//プレイヤーのインスタンス
-    this.effectList = [];//本当はいらないけど何故か消えないバグがあるから..
+    this.updaterList = [];//更新が必要なEntity
+
+    this.entityIndex = 0;
   }
+
   /*Entityをリストに登録*/
   static addEntity(entity){
     //各entityの参照を保持する
-    this.entityList.push(entity); 
+    this.entityList[this.entityIndex] = entity; 
+    this.entityIndex++;
+    //更新が必要なEntityのみリストに追加
     switch(entity.type){
-      //プレイヤー
-      case ENTITY.PLAYER :
-        this.player = entity;
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,"ENTITY");
-        break;
-        //敵
-      case ENTITY.ENEMY : 
-        this.enemyList.push(entity);
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,"ENTITY");
-        break;
-        //エフェクト
-      case ENTITY.EFFECT :
-        if(entity.isMultiple){
-        //複数スプライトを持つ
-          this.effectList.push(entity);
-          for(let i=0 ;i < entity.sprites.length ; i++){
-            __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprites[i],"FORE");
-          }
-        }else if(entity.isNoSprite){
-        //何も持たない
-        }else{
-          this.effectList.push(entity);
-          __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,"ENTITY");
-        }
-        break;
-        //壁
-      case ENTITY.WALL :
-        this.wallList.push(entity);
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,"ENTITY");
-        break;
-      case ENTITY.BACK :
-        //背景Entityであり背景ではない
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,"BACK");
-        break;
-      case ENTITY.BG :
-        //真の背景
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,"BG");
-        break;
-        //ゴール?
-      case ENTITY.GOAL :
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,"ENTITY");
-        break;
-        //弾丸
-      case ENTITY.BULLET :
-          __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,"ENTITY");
-          break;
-        //その他
-      default : 
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,"ENTITY");
+      case ENTITY.PLAYER : this.player = entity; break;
+      case ENTITY.ENEMY : this.enemyList.push(entity); break;
+      case ENTITY.WALL : this.wallList.push(entity); break;
     }
+
+    if(entity.isMultiple) __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.container,entity.layer);
+    else if(entity.isNoSprite);
+    else __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(entity.sprite,entity.layer);
   }
 
   /*Entityをリストから削除する*/
   static removeEntity(entity){
     switch(entity.type){
-      //プレイヤー
-      case ENTITY.PLAYER :
-        this.player = null;
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprite,"ENTITY");
-        break;
-        //敵
+      case ENTITY.PLAYER : this.player = null; break;
       case ENTITY.ENEMY :
         let i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprite,"ENTITY");
         break;
-        //エフェクト
-      case ENTITY.EFFECT :
-        let m = this.effectList.indexOf(entity);
-        this.effectList.splice(m,1);
-        if(entity.isMultiple){
-        //複数スプライトを持つオブジェクトの処理
-          for(let j = 0;j<entity.sprites.length;j++){
-            console.assert(entity.sprites[j] != undefined);
-            __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprites[j],"FORE");
-          }
-        }else if(entity.isNoSprite){
-          //何もスプライトを持たない
-        }else{
-          console.assert(entity.sprite != undefined);
-          __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprite,"ENTITY");
-        }
-        break;
-        //壁
       case ENTITY.WALL :
         let j = this.wallList.indexOf(entity);
         this.wallList.splice(j,1);
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprite,"ENTITY");
-        break;
-      case ENTITY.BACK :
-        //背景entity
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprite,"BACK");
-        break;
-      case ENTITY.BG :
-        //真の背景
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprite,"BG");
-        break;
-      case ENTITY.BULLET :
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprite,"ENTITY");
-        break;
-        //その他
-      default :
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprite,"ENTITY");
         break;
     }
     let k = this.entityList.indexOf(entity);
     this.entityList.splice(k,1);
+    this.entityIndex--;
+
+    if(entity.isMultiple) __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.container,entity.layer);
+    else if(entity.isNoSprite)/*Nothing to do*/;
+    else __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(entity.sprite,entity.layer);
   }
   /*Entityの更新*/
   static Update(){
-    for(let l of this.entityList){
-      l.Update(); 
+    for(let i=0;i<this.entityIndex;i++){
+      let l = this.entityList[i];
+      if(l.isUpdater) l.Update(); 
     }
   }
   /*メッセージイベント中にアニメーションだけ行う*/
   static Animation(){
-    for(let l of this.entityList){
+    for(let i=0;i<this.entityIndex;i++){
+      let l = this.entityList[i];
       //playerはアニメーションのみ
       if(l.type == ENTITY.PLAYER){
         l.Animation(); 
@@ -228,7 +161,7 @@ class EntityManager{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game_js__ = __webpack_require__(10);
 
 
 class Art{
@@ -407,9 +340,6 @@ class Art{
       ],
     };
     this.UIPattern = {
-      wEq1 : PIXI.Texture.fromFrame('weapon00.png'),
-      wEq2 : PIXI.Texture.fromFrame('weapon01.png'),
-      wEq3 : PIXI.Texture.fromFrame('weapon02.png'),
       wIcon : {
         w1 : [
         PIXI.Texture.fromFrame('weapon10.png'),
@@ -424,17 +354,19 @@ class Art{
         PIXI.Texture.fromFrame('weapon15.png'),
         ]
       },
-      sel : PIXI.Texture.fromFrame('selectbox.png'),//廃止予定
       HP : [
         PIXI.Texture.fromFrame('HP00.png'),
         PIXI.Texture.fromFrame('HP01.png'),
         PIXI.Texture.fromFrame('HP02.png'),
       ],
-      bullet : [
-        PIXI.Texture.fromFrame('UI70.png'),
-        PIXI.Texture.fromFrame('UI76.png'),
-        PIXI.Texture.fromFrame('UI7a.png'),
-      ],
+      bullet : {
+        outer : PIXI.Texture.fromFrame('UI70.png'),
+        bar : PIXI.Texture.fromFrame('UI76.png'),
+        icon : {
+          missile : PIXI.Texture.fromFrame('UI7a.png'),
+          laser : PIXI.Texture.fromFrame('UI7b.png'),
+        },
+      },
       message : {
         frame : PIXI.Texture.fromFrame('UI80.png'),
       }
@@ -442,11 +374,21 @@ class Art{
     this.bulletPattern = {
       bullet1 : [
         PIXI.Texture.fromFrame('bullet00.png'),
+        PIXI.Texture.fromFrame('bullet01.png'),
+        PIXI.Texture.fromFrame('bullet02.png'),
+        PIXI.Texture.fromFrame('bullet03.png'),
       ],
       bullet2 : [
         PIXI.Texture.fromFrame('bullet10.png'),
+        PIXI.Texture.fromFrame('bullet11.png'),
+        PIXI.Texture.fromFrame('bullet12.png'),
+        PIXI.Texture.fromFrame('bullet13.png'),
+        PIXI.Texture.fromFrame('bullet14.png'),
+        PIXI.Texture.fromFrame('bullet15.png'),
+        PIXI.Texture.fromFrame('bullet16.png'),
+        PIXI.Texture.fromFrame('bullet17.png'),
       ],
-      bullet3 : [
+      lasersight : [
         PIXI.Texture.fromFrame('bullet20.png'),
       ],
       target : [
@@ -482,8 +424,15 @@ class Art{
           PIXI.Texture.fromFrame('bulletD1.png'),
           PIXI.Texture.fromFrame('bulletD2.png'),
           PIXI.Texture.fromFrame('bulletD3.png') 
-        ]
+        ],
       },
+        //看板のポップ
+        signpop : [
+          PIXI.Texture.fromFrame('bulletE0.png'),
+          PIXI.Texture.fromFrame('bulletE1.png'),
+          PIXI.Texture.fromFrame('bulletE2.png'),
+          PIXI.Texture.fromFrame('bulletE3.png'), 
+        ],
       explosion : {
         flash : [PIXI.Texture.fromFrame('bullet80.png')],
         fire : [PIXI.Texture.fromFrame('bulletA0.png')],
@@ -506,7 +455,12 @@ class Art{
         PIXI.Texture.fromFrame('enemy24.png'),
         PIXI.Texture.fromFrame('enemy25.png'),
         PIXI.Texture.fromFrame('enemy26.png'),
-        PIXI.Texture.fromFrame('enemy27.png')
+        PIXI.Texture.fromFrame('enemy27.png'),
+        PIXI.Texture.fromFrame('enemy28.png'),
+        PIXI.Texture.fromFrame('enemy29.png'),
+        PIXI.Texture.fromFrame('enemy2a.png'),
+        PIXI.Texture.fromFrame('enemy2b.png'),
+        PIXI.Texture.fromFrame('enemy2c.png'),
       ],
       enemy1 : [
         PIXI.Texture.fromFrame('enemy00.png'),
@@ -846,17 +800,17 @@ class Art{
   }
 
   static async LoadTexture(){
-    let loader = PIXI.loader;
-    await new Promise((res)=>loader
-      .add('pattern','src/resource/img/playerPattern.json')
-      .add('pattern2','src/resource/img/UIPattern.json')
-      .add('pattern3','src/resource/img/bulletPattern.json')
-      .add('pattern4','src/resource/img/enemyPattern.json')
-      .add('pattern5','src/resource/img/wallPattern.json')
-      .add('pattern6','src/resource/img/seqPattern.json')
-      .add('pattern7','src/resource/img/font.json')
-      .add('src/resource/effect/dark.png')
-      .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
+      let loader = PIXI.loader;
+      await new Promise((res)=>loader
+        .add('pattern','src/resource/img/playerPattern.json')
+        .add('pattern2','src/resource/img/UIPattern.json')
+        .add('pattern3','src/resource/img/bulletPattern.json')
+        .add('pattern4','src/resource/img/enemyPattern.json')
+        .add('pattern5','src/resource/img/wallPattern.json')
+        .add('pattern6','src/resource/img/seqPattern.json')
+        .add('pattern7','src/resource/img/font.json')
+        .add('src/resource/effect/dark.png')
+        .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
   }
 
   static SpriteFactory(texture){
@@ -874,7 +828,7 @@ class Art{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__timer_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__timer_js__ = __webpack_require__(7);
 
 
 //便利関数
@@ -964,18 +918,15 @@ class Util{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Timer{
+class EventManager{
   static Init(){
-    this.timer = 0;
+    this.eventList = [];
   }
-  static GetTime(){
-    return this.timer;
-  }
-  static IncTime(){
-    this.timer++;
+  static PushEvent(event){
+    this.eventList.push(event);
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Timer;
+/* harmony export (immutable) */ __webpack_exports__["a"] = EventManager;
 
 
 
@@ -985,16 +936,14 @@ class Timer{
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__drawer_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__input_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__uiWeaponIcon_js__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__uiWeaponEquip_js__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__uiHP_js__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__uiBullet_js__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__uiFont_js__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__uiMessage_js__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__weaponIcon_js__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__HP_js__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__bullet_js__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__font_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__message_js__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__menu_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Stage_entityManager_js__ = __webpack_require__(0);
 
 
 
@@ -1005,258 +954,132 @@ class Timer{
 
 
 
-
-
-
-const WEQ = {
-  x : 8, 
-  y : 160, 
-};
-//HP frame
-const HPF = {
-  x : 24, 
+//HP
+const P_HP = {
+  x : -32, 
   y : 160
 };
-//HP bar
-const HPB = {
-  x : HPF.x, 
-  y : HPF.y, 
+//bullet
+const P_BUL = {
+  x : P_HP.x, 
+  y : P_HP.y+16, 
 };
-//HP font 
-const HPFont = {
-  x : HPF.x+22, 
-  y : HPF.y+4, 
-};
-//HP Icon
-const HPIC = {
-  x : HPF.x-16, 
-  y : HPF.y, 
-};
-//bullet frame
-const BulF = {
-  x : HPF.x, 
-  y : HPF.y+16, 
-};
-//bullet bar
-const BulB = {
-  x : BulF.x, 
-  y : BulF.y, 
-};
-//Bullet font 
-const BulFont = {
-  x : BulF.x+22, 
-  y : BulF.y+4, 
-};
-//Bullet icon 
-const BulIC = {
-  x : BulF.x-16, 
-  y : BulF.y, 
-};
-//score font
-const SCORE = {
+//score
+const P_SCORE = {
   x : 224,
-  y : BulF.y, 
+  y : P_BUL.y, 
 }
 //message
-const MES_FRAME = {
+const P_MES = {
   x:40,
   y:35
 }
-//
-const MES_TEXT = {
-  x:MES_FRAME.x +8,
-  y:MES_FRAME.y +8
+//Menu
+let P_MENU = {
+  x : 104,
+  y : 48
 }
 /*UIクラス*/
-/*TODO リファクタリング*/
 class UIManager{
   static Init(){
-    /*
-     * 武器アイコン(sub)
-     * 武器アイコン(装備中)
-     * セレクトボックス
-     */
     this.UIList = [];//UI全部のリスト
-      this.WeaponIconList = [];//武器アイコンのリスト
-    this.weaponEquip;
-    //オブジェクトの初期化分からん
-    this.HP = {
-      bar : undefined,
-      frame : undefined,
-      font : undefined,
-      icon : undefined
-    };
-    this.bullet = {
-      bar : undefined,
-      frame : undefined,
-      font : undefined,
-      icon : undefined
-    };
-    this.score = {
-      font : undefined
-    };
-    this.message = {
-      frame : undefined,
-      text : undefined,
-      sentence : []
-    };
+    this.WeaponIconList = [];//武器アイコンのリスト
+    this.HP;
+    this.bullet;
+    this.score;
+    this.message;
+    this.menu;
   }
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
-    this.PopMessage("タイトルがめん","POP");
-  }
-  static CleanTitle(){
-    this.CloseMessage();
+    this.PopMessage("PRESS SPACE","POP");
   }
   /*ステージ中でのUI配置に変更*/
   static SetStage(){
-    /*装備中の武器*/
-    //UIManager.addUI(new UIWeaponEquip(WEQ,"po"));//武器1のメインアイコン(?)
-    /*HP*/
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_6__uiHP_js__["a" /* default */](HPF,"frame"));//外枠
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_6__uiHP_js__["a" /* default */](HPB,"bar"));//中
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_8__uiFont_js__["a" /* default */](HPFont,"100","HP"));//数字
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_6__uiHP_js__["a" /* default */](HPIC,"icon"));//
-    /*bullet*/
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_7__uiBullet_js__["a" /* default */](BulF,"frame"));//外枠
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_7__uiBullet_js__["a" /* default */](BulB,"bar"));//中
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_8__uiFont_js__["a" /* default */](BulFont,"100","BULLET"));//数字
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_7__uiBullet_js__["a" /* default */](BulIC,"icon"));//
-    /*score*/
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_8__uiFont_js__["a" /* default */](SCORE,"0","SCORE"));//数字
+    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_3__HP_js__["a" /* default */](P_HP));//HP
+    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_4__bullet_js__["a" /* default */](P_BUL));//BULLET
+    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_5__font_js__["a" /* default */](P_SCORE,"0","SCORE"));//SCORE
+  }
+  //フィルタ
+  static SetFilter(filters){
+    __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].entityContainer.filters = filters;
+    __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].backContainer.filters = filters;
+    __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].backGroundContainer.filters = filters;
+    __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].foreContainer.filters = filters;
+  }
+  //メニューを開く
+  static SetMenu(){
+    UIManager.SetFilter([__WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].noiseFilter]);
+    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_7__menu_js__["a" /* default */](ADV(P_MENU,{x:0,y:16})));
+  }
+  //UIをすべて削除
+  static Clean(){
+    while(this.UIList.length>0){
+      this.removeUI(this.UIList[0]);
+    }
+    let filters = [];
+    UIManager.SetFilter(filters);
   }
   //メッセージイベント
   /* text : 入力文字列
    * sentence : textを改行文字で区切った配列
    */
-   static PopMessage(text,type){
-     /*type : 
-      * POP 新しくフレームを作る
-      * PAGE フレームを作らず改ページのみ
-      */
-     if(type == "POP"){
-       UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_9__uiMessage_js__["a" /* default */](MES_FRAME,"frame"));//枠
-       //文字の長さに応じて枠を調整
-       this.message.frame.sprite.scale.x *= 1.5;
-       this.message.frame.sprite.scale.y *= 1.5; //yは固定
+  static PopMessage(text,type){
+    /*type : 
+     * POP 新しくフレームを作る
+     * PAGE フレームを作らず改ページのみ
+     */
+    if(type == "POP"){
+      UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_6__message_js__["a" /* default */](P_MES,text));//枠
     }else if(type == "PAGE"){
-       //改ページするために文字だけを消す
-       for(let i=0;i<this.message.sentence.length;i++){
-         UIManager.removeUI(this.message.sentence[i]);
-      }
-    }else{
-      console.warn("messageEvent");
-    }
-    let p = 
-      {
-        x:MES_TEXT.x,
-        y:MES_TEXT.y
-      };
-      // sentenceには改行されたテキストの配列が入る
-      let sentence = text.split("\n");
-    for(let i = 0;i<sentence.length;i++){
-      p.y = MES_TEXT.y + i*10;
-      UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_8__uiFont_js__["a" /* default */](p,sentence[i],"MES"));//テキスト 
+      this.message.Page(text);
     }
   }
   static CloseMessage(){
-    for(let i=0;i<this.message.sentence.length;i++){
-      UIManager.removeUI(this.message.sentence[i]);
-    }
-    UIManager.removeUI(this.message.frame);
+    UIManager.removeUI(this.message);
   }
 
-  /*WeaponIconのポップアップ*/
-  //持っている武器の数だけアイコンをpop
-  //持っている武器の情報はどうやって保持する?
-  static OpenWeapon(){
-    let p = {
-      x:16,
-      y:16
-    }
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_4__uiWeaponIcon_js__["a" /* default */](p,"1"));//武器1のサブアイコン
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_4__uiWeaponIcon_js__["a" /* default */](p,"2"));//武器2のサブアイコン
-    UIManager.addUI(new __WEBPACK_IMPORTED_MODULE_4__uiWeaponIcon_js__["a" /* default */](p,"3"));//武器3のサブアイコン
-  }
-  /*ポップアップの逆(?)*/
-  static CloseWeapon(){
-    for(let l of this.WeaponIconList){
-      UIManager.removeUI(l);//武器1のサブアイコン
-    }
-  }
-
-  /*UIをリストに登録*/
+  //UIをリストに登録
   static addUI(ui){
     this.UIList.push(ui); 
     switch (ui.type){
-      //weapon icon
-      case UI_.WICON : 
-        this.WeaponIconList.push(ui);
-        break;
-          //equip
-          case UI_.WEQUIP : 
-            this.weaponEquip = ui;
-            break;
-            //HPゲージ
-            case UI_.HP :
-              switch(ui.name){
-                case "bar": this.HP.bar = ui; break;
-                 case "frame" : this.HP.frame = ui;break;
-                 case "font" : this.HP.font = ui;break;
-                 case "icon" : this.HP.icon = ui;break;
-               }
-               break;
-               //Bulletゲージ
-               case UI_.BULLET :
-                 switch(ui.name){
-                   case "bar" : this.bullet.bar = ui;break;
-                   case "frame" : this.bullet.frame = ui;break;
-                   case "font" : this.bullet.font = ui;break;
-                   case "icon" : this.bullet.icon = ui;break;
-                 }
-                 break;
-      case UI_.SCORE :
-        this.score.font = ui;break;
-      case "MES" : 
-        switch(ui.name){
-          case "font" : this.message.sentence.push(ui);break;
-          case "frame": this.message.frame = ui;break;
-        }
-        break;
- default :
-   console.warn(ui);
+      case "HP" : this.HP = ui; break;
+      case "BULLET" : this.bullet = ui; break;
+      case "SCORE" : this.score = ui;break;
+      case "MES" : this.message = ui;break;
+      case "MENU" : this.menu = ui;break;
+      default : console.warn(ui);
     }
-    //fontはスプライトを複数持っているので特別
-    if(ui.name == "font"){
-      for(let i = 0;i<ui.sprite.length;i++){
-        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(ui.sprite[i],"UI");
-      }
+    //スプライトの追加
+    if(ui.isMultiple){
+      //複スプライト
+        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(ui.container,"UI");
     }else{
+      //単スプライト
       __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].addContainer(ui.sprite,"UI");
     }
   }
-   /*UIをリストから削除*/
-   //参照の開放をする
-   static removeUI(ui){
-     let i = this.UIList.indexOf(ui);
-     this.UIList.splice(i,1);
-     //複数スプライトを持つオブジェクト
-     if(ui.name == "font"){
-       for(let i = 0;i<ui.sprite.length;i++){
-         __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(ui.sprite[i],"UI");
-       }
-       //単スプライト
-       }else{
-         __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(ui.sprite,"UI");
-       }
-   }
-   /*UIの更新*/
-   static Update(){
-     for(let l of UIManager.UIList){
-       l.Update();
-     }
-   }
+  /*UIをリストから削除*/
+  //参照の開放をする
+  static removeUI(ui){
+    let i = this.UIList.indexOf(ui);
+    //要素の子であるFontはリストに無いため参照を消さない
+    if(i != -1) this.UIList.splice(i,1);
+    if(ui.isMultiple){
+      //複数スプライトを持つオブジェクト
+        __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(ui.container,"UI");
+    }else{
+      //単スプライト
+      __WEBPACK_IMPORTED_MODULE_0__drawer_js__["a" /* default */].removeContainer(ui.sprite,"UI");
+    }
+  }
+  /*UIの更新*/
+  static Update(){
+    for(let l of UIManager.UIList){
+      l.Update();
+    }
+  }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = UIManager;
 
@@ -1264,41 +1087,6 @@ class UIManager{
 
 /***/ }),
 /* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
-
-
-//これ継承してる意味ある？？
-class EFFECT extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
-  constructor(pos,vel){
-    if(!vel) vel = VEC0();
-    super(pos,vel);
-    this.type = ENTITY.EFFECT;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = EFFECT;
-
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class Collider{
-  constructor(shape,hitbox){
-    this.shape = shape;
-    this.hitbox = hitbox;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Collider;
-
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1330,8 +1118,6 @@ class Collision{
     }
 
     /*矩形同士*/
-    /*とりあえず正方形*/
-    /*下記途中*/
     if(e1.collider.shape == SHAPE.BOX && e2.collider.shape == SHAPE.BOX){
       let box1 = e1.collider.hitbox;
       let box2 = e2.collider.hitbox;
@@ -1396,7 +1182,7 @@ class Collision{
     /*速度*/
     let l = Collision.on(e1,e2);
     if(l.n.x != 0) e1.vel.x = 0;
-    if(l.n.y == -1) e1.vel.y *= -e1.e ;
+    if(l.n.y == -1) e1.vel.y =0;
     if(l.n.y == 1) e1.vel.y =0;
     //while(Collision.on(e1,e2).isHit){
       e1.pos.x += l.n.x*l.depth;
@@ -1412,10 +1198,52 @@ class Collision{
 class CollisionInfo{
   constructor(isHit,n,depth){
     this.isHit = isHit; // 衝突したかどうか bool
-      this.n = n //衝突したならば法線
-        this.depth = depth;//めり込み量
+    this.n = n //衝突したならば法線
+    this.depth = depth;//めり込み量
   }
 }
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(12);
+
+
+//これ継承してる意味ある？？
+class EFFECT extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
+  constructor(pos,vel){
+    if(!vel) vel = VEC0();
+    super(pos,vel);
+    this.type = ENTITY.EFFECT;
+    this.layer = "ENTITY";
+    this.isUpdater = true;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = EFFECT;
+
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Timer{
+  static Init(){
+    this.timer = 0;
+  }
+  static GetTime(){
+    return this.timer;
+  }
+  static IncTime(){
+    this.timer++;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Timer;
+
 
 
 /***/ }),
@@ -1423,19 +1251,13 @@ class CollisionInfo{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Entity{
-  constructor(pos,vel){
-    this.pos = pos;
-    this.vel = vel;
-    this.acc = {
-      x:0,
-      y:0
-    }
+class Collider{
+  constructor(shape,hitbox){
+    this.shape = shape;
+    this.hitbox = hitbox;
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Entity;
-
-
+/* harmony export (immutable) */ __webpack_exports__["a"] = Collider;
 
 
 
@@ -1465,20 +1287,23 @@ class Box{
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_mapData_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Event_eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Event_startStageEvent_js__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Event_startGameEvent_js__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Event_scene_js__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__UI_uiFont_js__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Weapon_weaponManager_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__drawer_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__input_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__param_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_pool_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_mapData_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Event_startStageEvent_js__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Event_startGameEvent_js__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Event_scene_js__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__UI_font_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Weapon_weaponManager_js__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__drawer_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__input_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__timer_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__param_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__UI_menu_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__audio_js__ = __webpack_require__(17);
 
 
 
@@ -1495,144 +1320,102 @@ class Box{
 
 
 
-//大嘘
-let dark;
+
+
 
 class Game{
   static Init(){
-    __WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].Init();
-    __WEBPACK_IMPORTED_MODULE_2__Event_eventmanager_js__["a" /* default */].Init();
+    /*audioとartはinitしない*/
+    __WEBPACK_IMPORTED_MODULE_15__param_js__["a" /* default */].Init();
+    __WEBPACK_IMPORTED_MODULE_11__drawer_js__["a" /* default */].Init();
+    __WEBPACK_IMPORTED_MODULE_3__Event_eventmanager_js__["a" /* default */].Init();
     __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].Init();
-    __WEBPACK_IMPORTED_MODULE_12__timer_js__["a" /* default */].Init();
-    __WEBPACK_IMPORTED_MODULE_13__util_js__["a" /* default */].Init();
-    __WEBPACK_IMPORTED_MODULE_8__Weapon_weaponManager_js__["a" /* default */].Init();
-    __WEBPACK_IMPORTED_MODULE_6__UI_uiManager_js__["a" /* default */].Init();
-    __WEBPACK_IMPORTED_MODULE_14__param_js__["a" /* default */].Init();
+    __WEBPACK_IMPORTED_MODULE_1__Stage_pool_js__["a" /* default */].Init();
+    __WEBPACK_IMPORTED_MODULE_13__timer_js__["a" /* default */].Init();
+    __WEBPACK_IMPORTED_MODULE_14__util_js__["a" /* default */].Init();
+    __WEBPACK_IMPORTED_MODULE_7__UI_uiManager_js__["a" /* default */].Init();
+    __WEBPACK_IMPORTED_MODULE_9__Weapon_weaponManager_js__["a" /* default */].Init();
 
     /*initialize Game state*/
-    Game.isPause = false;
-    Game.isSelect = false;//
-    Game.isSeq = false;//ステージ間遷移しているかどうか
-    Game.isMes = false;//メッセージイベント中か
     Game.stage = 0;//現在のステージ番号
-    Game.scene = new __WEBPACK_IMPORTED_MODULE_5__Event_scene_js__["a" /* default */]();
+    Game.scene = new __WEBPACK_IMPORTED_MODULE_6__Event_scene_js__["a" /* default */]();
 
     //Gameにタイトル画面状態をプッシュ
-    let event = new __WEBPACK_IMPORTED_MODULE_4__Event_startGameEvent_js__["a" /* default */]();
-    __WEBPACK_IMPORTED_MODULE_2__Event_eventmanager_js__["a" /* default */].PushEvent(event);
-
-    /*for debug */
-    /*TODO EffectManagerを作成*/
-    dark = __WEBPACK_IMPORTED_MODULE_9__art_js__["a" /* default */].SpriteFactory(__WEBPACK_IMPORTED_MODULE_9__art_js__["a" /* default */].darkTexture);
-    dark.alpha = 0.7;
+    let event = new __WEBPACK_IMPORTED_MODULE_5__Event_startGameEvent_js__["a" /* default */]();
+    __WEBPACK_IMPORTED_MODULE_3__Event_eventmanager_js__["a" /* default */].PushEvent(event);
 
     Game.Run();
   }
 
   static async Load(){
-    await __WEBPACK_IMPORTED_MODULE_9__art_js__["a" /* default */].LoadTexture();
+    await __WEBPACK_IMPORTED_MODULE_10__art_js__["a" /* default */].LoadTexture();
+    await __WEBPACK_IMPORTED_MODULE_17__audio_js__["a" /* default */].Load();
     Game.Init();
   }
 
-  static Input(){
-    //ポーズ
-    if(__WEBPACK_IMPORTED_MODULE_11__input_js__["a" /* default */].isKeyClick(KEY.C)){
-      Game.isPause = !Game.isPause;
-      Game.isSelect = !Game.isSelect;
-      //武器選択画面
-      if(Game.isSelect){
-        //ゲーム画面を暗くする
-        //TODO : イベント化　 
-        //UIManager.OpenWeapon();
-        
-        //pause の文字をだす　
-        let p = {
-          x : 112,
-          y : 64
-        }
-        __WEBPACK_IMPORTED_MODULE_6__UI_uiManager_js__["a" /* default */].addUI(new __WEBPACK_IMPORTED_MODULE_7__UI_uiFont_js__["a" /* default */](p,"-PAUSE-","MES"));//テキスト 
-
-        let filters = [__WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].blurFilter,__WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].noiseFilter];
-        __WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].entityContainer.filters = filters;
-        __WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].backContainer.filters = filters;
-        __WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].foreContainer.filters = filters
-     //   Drawer.addContainer(dark,"FILTER");
-      }else{
-        __WEBPACK_IMPORTED_MODULE_6__UI_uiManager_js__["a" /* default */].CloseMessage();
-        //UIManager.CloseWeapon();
-        __WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].entityContainer.filters = [0];
-        __WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].backContainer.filters = [0];
-        __WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].foreContainer.filters = [0];
-      //  Drawer.removeContainer(dark,"FILTER");
-      }
-    }
-  }
   //タイトル画面中の処理
   static UpdateTitle(){
-    if(__WEBPACK_IMPORTED_MODULE_11__input_js__["a" /* default */].isKeyClick(KEY.SP)){
-      let event = new __WEBPACK_IMPORTED_MODULE_3__Event_startStageEvent_js__["a" /* default */]();
-      __WEBPACK_IMPORTED_MODULE_2__Event_eventmanager_js__["a" /* default */].PushEvent(event);
+    if(__WEBPACK_IMPORTED_MODULE_12__input_js__["a" /* default */].isKeyClick(KEY.SP)){
+      let event = new __WEBPACK_IMPORTED_MODULE_4__Event_startStageEvent_js__["a" /* default */]();
+      __WEBPACK_IMPORTED_MODULE_3__Event_eventmanager_js__["a" /* default */].PushEvent(event);
     }
   }
 
+  //ステージ中の処理
   static UpdateStage(){
-    Game.Input();
-    /*
-     * 各Entityの更新
-     * ポーズ中は停止させる*/
-     if(!Game.isPause){
-       __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].Update();
-       __WEBPACK_IMPORTED_MODULE_6__UI_uiManager_js__["a" /* default */].Update();
-     }
-     if(Game.isSelect){
-       __WEBPACK_IMPORTED_MODULE_6__UI_uiManager_js__["a" /* default */].Update();
+    /*Entityの更新*/
+     __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].Update();
+     __WEBPACK_IMPORTED_MODULE_7__UI_uiManager_js__["a" /* default */].Update();
+
+     /*ポーズ状態に遷移*/
+     if(__WEBPACK_IMPORTED_MODULE_12__input_js__["a" /* default */].isKeyClick(KEY.C) && __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].player.isAlive){
+       __WEBPACK_IMPORTED_MODULE_7__UI_uiManager_js__["a" /* default */].SetMenu();
+       Game.scene.PushSubState("PAUSE");
      }
   }
-  static AnimationStage(){
+  static UpdatePause(){
+    __WEBPACK_IMPORTED_MODULE_7__UI_uiManager_js__["a" /* default */].Update();
+  }
+  //看板を読んでいるときにアニメーションだけを行う
+  static UpdateMes(){
     __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].Animation();
-    __WEBPACK_IMPORTED_MODULE_6__UI_uiManager_js__["a" /* default */].Update();
+    __WEBPACK_IMPORTED_MODULE_7__UI_uiManager_js__["a" /* default */].Update();
+  }
+
+  static UpdateSeq(){
   }
 
   static Run(){
     requestAnimationFrame(Game.Run);
-    /*イベントをyieldで実行*/
-    for (let l of __WEBPACK_IMPORTED_MODULE_2__Event_eventmanager_js__["a" /* default */].eventList){
-      let d = l.Do().done;
-      if(d){
-        let i = __WEBPACK_IMPORTED_MODULE_2__Event_eventmanager_js__["a" /* default */].eventList.indexOf(l);
-        __WEBPACK_IMPORTED_MODULE_2__Event_eventmanager_js__["a" /* default */].eventList.splice(i,1);
+    for (let l of __WEBPACK_IMPORTED_MODULE_3__Event_eventmanager_js__["a" /* default */].eventList){
+      if(l.Do().done){
+        let i = __WEBPACK_IMPORTED_MODULE_3__Event_eventmanager_js__["a" /* default */].eventList.indexOf(l);
+        __WEBPACK_IMPORTED_MODULE_3__Event_eventmanager_js__["a" /* default */].eventList.splice(i,1);
       }
     }
     switch(Game.scene.state){
       /*更新*/
+      /*Note : Lastは自前関数*/
       case STATE.TITLE :
-        if(Game.isSeq){
-          //遷移画面中
-          //2018/2/22
-          //キー入力できないようにする
-          //スタート画面で遷移中にキー連打されると開始イベントが複数発生してバグるため
-        }else{
-          Game.UpdateTitle();
+        switch(Game.scene.substate.Last()){
+          case "DEFAULT" : Game.UpdateTitle();break;
+          case  "TRANS" : /*Nothing to do*/ break;
         }
         break;
       case STATE.STAGE :
-        if(Game.isSeq){
-        //遷移画面中
-        }
-        else if(Game.isMes){
-          //メッセージ画面中
-            Game.AnimationStage();
-        }else{
-        //プレイ画面中
-            Game.UpdateStage();
+        switch(Game.scene.substate.Last()){
+          case "DEFAULT" : Game.UpdateStage();break;
+          case  "PAUSE" : Game.UpdatePause();break;
+          case  "MES" : Game.UpdateMes(); break;
+          case  "TRANS" : /*Nothing to do*/ break;
         }
         break;
       default :
         console.warn("unknown state");
     }
     /*描画*/
-    __WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].Renderer.render(__WEBPACK_IMPORTED_MODULE_10__drawer_js__["a" /* default */].Stage);
-    __WEBPACK_IMPORTED_MODULE_12__timer_js__["a" /* default */].IncTime();
+    __WEBPACK_IMPORTED_MODULE_11__drawer_js__["a" /* default */].Renderer.render(__WEBPACK_IMPORTED_MODULE_11__drawer_js__["a" /* default */].Stage);
+    __WEBPACK_IMPORTED_MODULE_13__timer_js__["a" /* default */].IncTime();
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Game;
@@ -1645,14 +1428,15 @@ class Game{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__timer_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__timer_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__input_js__ = __webpack_require__(13);
+
 
 
 
 let PIXI_WIDTH = 800; let PIXI_HEIGHT = 600;
-let size = 1;
-
+let size = 1; 
 class Drawer{
 
   /*setting stage*/
@@ -1690,14 +1474,18 @@ class Drawer{
     this.backContainer.scale = po;
     this.entityContainer.scale = po;
     this.UIContainer.scale = po;
-    this.foreContainer.scale = po;
+    this.foreContainer.scale.set(4);
     this.filterContainer.scale = po;
     $("#pixiview").append(this.Renderer.view);
 
     //フィルタ
     this.blurFilter = new PIXI.filters.BlurFilter();
-    this.blurFilter.blur = 3;
-    this.noiseFilter = new PIXI.filters.NoiseFilter(0.3);
+    this.blurFilter.blur = 2;
+    this.noiseFilter = new PIXI.filters.NoiseFilter(0.5);
+    //this.sepia =filter = new PIXI.filters.SepiaFilter();
+    //this.tiltShiftFilter = new PIXI.filters.TiltShiftFilter()
+    //this.sepiaFilter = new PIXI.filters.SepiaFilter();
+    //this.sepiaFilter.sepia = 0.5;
 
   }
 
@@ -1723,7 +1511,7 @@ class Drawer{
         this.backGroundContainer.addChild(sprite);
         break;
       default :
-        console.warn("po");
+        console.warn(CONTAINER);
     }
   }
 
@@ -1755,7 +1543,7 @@ class Drawer{
 
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
-    let centerX = this.magnification*(- pos.x-8 + 400/this.magnification);
+    let centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
     let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
     let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
@@ -1768,9 +1556,10 @@ class Drawer{
     this.backContainer.y = toY;
     this.entityContainer.x = toX;
     this.entityContainer.y = toY;
-    this.foreContainer.x = toX;
-    this.foreContainer.y = toY;
+    this.foreContainer.x = toX*4/3;
+    this.foreContainer.y = toY*4/3;
     //UIは動かない
+
   }
   /*スクロール位置を一瞬で移動させる*/
   static ScrollSet(pos){
@@ -1782,14 +1571,6 @@ class Drawer{
     this.entityContainer.y = Math.floor(centerY);
     this.foreContainer.x = Math.floor(centerX);
     this.foreContainer.y = Math.floor(centerY);
-  }
-
-  static Yakudo(mag){
-    this.magnification = mag;
-    this.entityContainer.scale.x = this.magnification;
-    this.entityContainer.scale.y = this.magnification;
-    this.filterContainer.scale.x = this.magnification;
-    this.filterContainer.scale.y = this.magnification;
   }
 
   static Quake(diff){
@@ -1808,15 +1589,36 @@ class Drawer{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class EventManager{
-  static Init(){
-    this.eventList = [];
+class Entity{
+  constructor(pos,vel){
+    /*phys*/
+    this.pos = pos;
+    this.vel = vel;
+    this.acc = VEC0();
+    this.gravity;
+    //this.e = 0.9;
+    /*standard*/
+    this.frame = 0;
+    this.type;
+    //this.collider;
+    //this.isUpdater = true;    
+    //this.isMultiple;
+    /*sprite*/
+    //this.sprite;
+    //this.container;
+    /*未実装*/
+    this.layer;
+    /* Other */
   }
-  static PushEvent(event){
-    this.eventList.push(event);
-  }
+  /*common*/
+  Physics(){};
+  Collision(){};
+  Update(){};
+  /*Hurt()*/
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = EventManager;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Entity;
+
+
 
 
 
@@ -1825,7 +1627,7 @@ class EventManager{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__timer_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__timer_js__ = __webpack_require__(7);
 
 
 let inputedKeyList = (new Array(256)).fill(false);
@@ -1871,20 +1673,149 @@ $(document).on("keyup",(e)=> {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entity_Effect_stone_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Entity_Effect_bulletBlur_js__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Entity_Effect_smoke_js__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Entity_Effect_fire_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Entity_bullet1_js__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Entity_AI_horming_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Entity_AI_bullet1AI_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Collision_box_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Weapon_weaponManager_js__ = __webpack_require__(37);
 
 
-const OUTSIDE = -999;
 
-class UI{
-  constructor(pos){
-    this.pos = pos;
-    this.sprite;
-    this.type;//enum
+
+
+
+
+
+
+
+
+/*Object Pool*/
+class Pool{
+  static Init(){
+    this.unused = {
+      stones : [],
+      smokes : [],
+      fires : [],
+      bulletblurs : [],
+      missiles : [],
+    }
+    for(let i = 0;i<500;i++){
+      this.unused.stones.push(new __WEBPACK_IMPORTED_MODULE_1__Entity_Effect_stone_js__["a" /* default */](VEC0(),VEC0()));
+    }
+    for(let i = 0;i<80;i++){
+      this.unused.smokes.push(new __WEBPACK_IMPORTED_MODULE_3__Entity_Effect_smoke_js__["a" /* default */](VEC0(),VEC0(),0));
+    }
+    for(let i = 0;i<100;i++){
+      this.unused.fires.push(new __WEBPACK_IMPORTED_MODULE_4__Entity_Effect_fire_js__["a" /* default */](VEC0(),VEC0()));
+    }
+    for(let i = 0;i<300;i++){
+      this.unused.bulletblurs.push(new __WEBPACK_IMPORTED_MODULE_2__Entity_Effect_bulletBlur_js__["a" /* default */](VEC0(),VEC0()));
+    }
+    for(let i = 0;i<100;i++){
+      this.unused.missiles.push(new __WEBPACK_IMPORTED_MODULE_5__Entity_bullet1_js__["a" /* default */](VEC0(),WeaponManaer.weaponList[0]));
+    }
+  }
+  static GetBulletBlur(pos,vel){
+    if(this.unused.bulletblurs.length > 0){
+    let s = this.unused.bulletblurs.pop();
+    s.isAlive = true;//消えたらfalse
+    s.pos = pos;
+    s.vel = vel;
+    s.frame = 0;
+    s.spid = 0;
+    s.sprite.alpha = 0.5;
+    s.sprite.scale.set(Rand(0.5)+1);
+    s.sprite.position = ADV(s.pos,VECN(8));
+    return s;
+    }else{
+      return false;
+    }
+  }
+  static GetMissile(pos,weapon){
+    if(this.unused.missiles.length > 0){
+      let s = this.unused.missiles.pop();
+      s.arg = weapon.arg;
+      s.vi = weapon.speed;
+      s.pos = pos;
+      s.vel = POV(s.arg,s.vi);
+      s.frame = 0;
+      s.isTargetOn = weapon.isTargetOn;
+      s.AIList.push(new __WEBPACK_IMPORTED_MODULE_7__Entity_AI_bullet1AI_js__["a" /* default */](s));
+      if(s.isTargetOn) s.targetedEnemy = weapon.target.enemy;
+      if(weapon.isHorming) s.AIList.push(new __WEBPACK_IMPORTED_MODULE_6__Entity_AI_horming_js__["a" /* default */](s));
+      return s;
+    }else{
+      return false;
+    }
+  }
+  static Remove(s){
+    let listname;
+    switch(s.name){
+      case "bulletblur" : this.unused.bulletblurs.push(s);break;
+      case "fire" : this.unused.fires.push(s);break;
+      case "stone" : this.unused.stones.push(s);break;
+      case "smoke" : this.unused.smokes.push(s);break;
+      case "missile" : this.unused.missiles.push(s);break;
+      default :console.warn(s.name);
+    }
+    __WEBPACK_IMPORTED_MODULE_0__entityManager_js__["a" /* default */].removeEntity(s);
+  }
+  static GetStone(pos,vel){
+    if(this.unused.stones.length > 0){
+    let s = this.unused.stones.pop();
+    s.pos = pos;
+    s.vel = vel;
+    s.frame = 0;
+    s.isNext = false;
+    s.sprite.alpha = 1;
+    s.sprite.scale.set(1);
+    return s;
+    }else{
+      return false;
+    }
+  }
+  static GetSmoke(pos,vel,size){
+    if(this.unused.smokes.length>0){
+      /*constructor*/
+      let s = this.unused.smokes.pop();
+      s.pos = pos;
+      s.vel = vel;
+      s.frame = 0;
+      //sprite
+      s.spid = 0;
+      s.sprite.alpha = 1;
+      s.sprite.scale.set(size/5);
+      return s;
+    }
+    else{
+      return false;
+    }
+  }
+  static GetFire(pos,vel){
+    if(this.unused.fires.length < 10)cl("!");
+    if(this.unused.fires.length>0){
+      /*constructor*/
+      let s = this.unused.fires.pop();
+      s.pos = pos;
+      s.vel = vel;
+      s.frame = 0;
+      //sprite
+      s.spid = 0;
+      s.sprite.alpha = 1;
+      s.sprite.scale.set(1);
+      return s;
+    }else{
+      cl("fire");
+    }
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = UI;
-
+/* harmony export (immutable) */ __webpack_exports__["a"] = Pool;
 
 
 
@@ -1893,23 +1824,600 @@ class UI{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+class Event{
+  constructor(func,args){
+    this.func = func;/*実行する関数*/
+    this.args = args;/*引数の配列*/
+  }
+  Do(){
+    //?
+    return this.func.next();
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Event;
+
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//パラメータ管理クラス
+class Param{
+  static Init(){
+    this.player = {
+      JUMP_VEL : 5,//ジャンプ力
+      RUN_VEL : 0.4,//はしり速度
+      GRAVITY : 0.15,
+      HP : 100,
+      BULLET : 100,
+      FLICTION : 0.7,
+      INV_TIME : 5,//無敵時間
+      
+      ANIM_RUN : 4,
+      ANIM_WAIT : 7,
+
+      VX_MAX : 3,
+      VY_MAX : 8
+    }
+    this.ENEMY1 = {
+      HP : 5,
+      ATK_MAX : 10,
+      ATK_MIN : 5,
+      GRAVITY : 0.1
+    }
+    this.ENEMY2 = {
+      HP : 50,
+      ATK_MAX : 10,
+      ATK_MIN : 5,
+      GRAVITY : 0.1,
+      COIN : 3
+    }
+    this.weapon1 = {
+      //status
+      agi : 16,
+      cost : 3,
+      speed : 10, 
+      length : 180,
+      //optional
+      isTarget : true,
+      isHorming : false,
+      isLasersight : true,
+    }
+    this.weapon11 = {
+      agi : 2,
+      cost : 3,
+      speed : 0.0001, 
+      length : 180,
+    }
+    this.weapon2 = {
+      agi : 20,
+      cost : 10,
+      length : 300,
+      //optional
+      isTarget : true,
+     // isHorming : false,
+      isLasersight : true,
+    }
+    //Missile
+    this.bullet1 = {
+      atkMax : 50,
+      atkMin : 10,
+      hp : 1,
+      curve : 0.2
+    }
+    //Laser
+    this.bullet2 = {
+      atkMax : 10,
+      atkMin : 5,
+      hp : 99999,
+    }
+  }
+  GetParam(entity){
+    return this.weapon1;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Param;
+
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//サウンド管理
+class Audio{
+  static Init(){
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.context = new AudioContext();
+    this.BGM = {
+      stage1:null,
+      stage2:null,
+      stage3:null,
+    } 
+    this.SE = {
+      jump1 : null,
+      jump2 : null,
+      coin1 : null,
+      coin2 : null,
+      enemyDamage : null,
+      missileShot : null,
+      missileHit : null,
+    }
+  };
+  static LoadSE(name){
+    let url = "src/resource/SE/" + name + ".wav";
+    let req = new XMLHttpRequest();
+    // array buffer を指定
+    req.responseType = 'arraybuffer';
+    req.onreadystatechange = ()=>{
+      if (req.readyState === 4) {
+        if (req.status === 0 || req.status === 200) {
+          // array buffer を audio buffer に変換
+          this.context.decodeAudioData(req.response,(buffer)=>{this.SE[name] = buffer});
+        }
+      }
+    }
+    req.open('GET', url, true);
+    req.send('');
+  }
+  static LoadBGM(name){
+    let url = "src/resource/BGM/" + name + ".mp3";
+    let req = new XMLHttpRequest();
+    // array buffer を指定
+    req.responseType = 'arraybuffer';
+    req.onreadystatechange = ()=>{
+      if (req.readyState === 4) {
+        if (req.status === 0 || req.status === 200) {
+          // array buffer を audio buffer に変換
+          this.context.decodeAudioData(req.response,(buffer)=>{this.BGM[name] = buffer});
+        }
+      }
+    }
+    req.open('GET', url, true);
+    req.send('');
+  }
+  // サウンドを再生
+  static PlayBGM(name){
+    let buffer = this.BGM[name];
+    let source = this.context.createBufferSource(); // source を作成
+    source.buffer = buffer; // buffer をセット
+    source.connect(this.context.destination); // context に connect
+    source.loop = true; // 再生
+    let gainNode = this.context.createGain();
+    // Connect the source to the gain node.
+    source.connect(gainNode);
+    // Connect the gain node to the destination.
+    gainNode.connect(this.context.destination);
+    gainNode.gain.value = 1;
+    source.start(0);
+  };
+  static PlaySE(name){
+    let buffer = this.SE[name];
+    let source = this.context.createBufferSource(); // source を作成
+    source.buffer = buffer; // buffer をセット
+    source.connect(this.context.destination); // context に connect
+    source.loop = false; // 再生
+    source.start(0);
+  };
+  static async Load() {
+    this.Init();
+    //this.LoadSound('src/resource/BGM/boss.mp3');
+    //!ココで読み込むnameはファイル名に統一すること!
+    this.LoadBGM('stage1');
+    this.LoadBGM('stage2');
+
+    this.LoadSE('jump1');
+    this.LoadSE('jump2');//空中ジャンプ
+    this.LoadSE('coin1');
+    this.LoadSE('coin2');//コイン反射
+    this.LoadSE('targetOn');//照準
+    this.LoadSE('playerDamage');
+    this.LoadSE('enemyDamage');
+    this.LoadSE('missileHit');
+    this.LoadSE('missileShot');
+  };
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Audio;
+;
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__drawer_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Collision_box_js__ = __webpack_require__(9);
+
+
+
+
+
+
+
+
+/*文字*/
+class FontEffect extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  //strは表示する文字(今は数字のみ)
+  constructor(pos,str,fonttype){
+    let v = {
+      x:Rand(1.5),
+      y:-2
+    }
+    super(CPV(pos),v);
+    /*基本情報*/
+    this.fonttype = fonttype;
+    this.type = ENTITY.EFFECT;
+    this.name = "FontEffect";
+    this.frame = 0;
+    this.isAlive = true;//消えたらfalse
+    this.e = 0.0;
+    this.isMultiple = true;//このEntityは複数スプライトを持つか
+    /*スプライト*/
+    this.str = str; //0~9
+    this.container = new PIXI.Container();
+    this.d = this.str.length;//桁数
+    //this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
+    for(let i = 0;i<this.d;i++){
+      let spid = this.str[i] + "";//str型にすること
+      let tex;
+      switch(this.fonttype){
+        case "player" : tex = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].font[spid + "r"]; break;
+        case "enemy" : tex = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].font[spid]; break;
+        case "pop" : tex = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].font[spid]; break;
+      }
+      let sp =  __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(tex) ;
+      sp.position = {x:this.pos.x + i*6,y:this.pos.y};
+      this.container.addChild(sp);
+    }
+    this.gravity = 0.2;
+  }
+
+
+  Update(){
+    //phys
+    this.pos = ADV(this.pos,this.vel);
+    this.vel.y += this.gravity;
+    for(let i = 0;i<this.d;i++){
+      //ここはあとで書き直す
+      //というか別クラスにする
+      if(this.fonttype == "pop"){
+        this.container.children[i].position = {x:this.pos.x + i * 9,y:this.pos.y};
+      }else{
+        this.container.children[i].position = {x:this.pos.x + i * 6,y:this.pos.y};
+      }
+    }
+    for(let i = 0;i<this.d;i++){
+      if(this.frame > 30){
+        this.container.children[i].alpha -=0.05; 
+      }
+    }
+    if(this.frame > 90){
+      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+    }
+    this.frame++;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FontEffect;
+
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+class UI{
+  constructor(pos){
+    this.pos = pos;
+    this.sprite;
+    this.type;//enum
+    this.isMultiple = false;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = UI;
+
+
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__drawer_js__ = __webpack_require__(11);
+
+
+
+
+/*タイトル画面からゲーム開始画面に移行するイベント
+ * (UIの退避)
+ * UIのセット
+ */
+class QuakeEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */]{
+  constructor(size,time){
+    //undefined
+    if(!time) {
+      console.warn("invalid time : " + time);
+      time = 5
+    };
+    super(1);
+    function* gen(){
+      let frame = 0;
+      let d;
+      while(frame < time){
+        d = Rand2D(size);
+        __WEBPACK_IMPORTED_MODULE_2__drawer_js__["a" /* default */].Quake(d);
+        size *= 0.9;
+        frame++;
+        yield ;
+      }
+      __WEBPACK_IMPORTED_MODULE_2__drawer_js__["a" /* default */].Stage.x = 0;
+      __WEBPACK_IMPORTED_MODULE_2__drawer_js__["a" /* default */].Stage.y = 0;
+      yield ;
+    }
+    let itt = gen();
+    this.func = itt;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = QuakeEvent;
+
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_js__ = __webpack_require__(2);
+
+
+
+
+
+
+
+
+class Bullet extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
+  constructor(pos,vel){
+    super(pos,vel);
+    /*基本情報*/
+    this.layer = "ENTITY";
+    this.isMultiple = false;
+    /*パラメータ*/
+    this.hp;//弾丸のHP 0になると消滅
+    this.atk;//攻撃力
+    this.length;//これは武器がもつ?
+
+    this.isUpdater  =true;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Bullet;
+
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__sonic_js__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__stone_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__flash_js__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fire_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__smoke_js__ = __webpack_require__(28);
+
+
+
+
+
+
+
+
+
+
+//爆発エフェクト
+class Explosion1 extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos,vel){
+    super(pos,vel);
+    //微妙に左上に寄ってるので中心に
+    this.pos = ADV(this.pos,VECN(8));
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
+    this.frame = 0;
+    this.isNoSprite = true;
+  }
+  Bomb(){
+    __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_4__sonic_js__["a" /* default */](this.pos));
+    //stone(というか火花?)
+    for(let i = 0;i<8;i++){
+      let v = Rand2D(30);
+      let stone = __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].GetStone(CPV(this.pos),v);
+      if(stone)__WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(stone);
+    }
+    //smoke
+    for(let i = 0;i<2;i++){
+      let smoke = __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].GetStone(CPV(this.pos),{x:Rand(8),y:-1});
+      if(smoke)__WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(smoke);
+    }
+    for(let i =0;i<3;i++){
+      let v = Rand2D(16);
+      let p = ADV(v,this.pos);
+      let fire = __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].GetFire(p,VEC0());
+      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(fire);
+    }
+    for(let i =0;i<3;i++){
+      let p = ADV(this.pos,Rand2D(16));
+      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_6__flash_js__["a" /* default */](this.pos));
+    }
+  }
+
+  Update(){
+    //爆発して自分は消える
+    this.Bomb();
+    __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Explosion1;
+
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__drawer_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__input_js__ = __webpack_require__(13);
+
+
+
+
+/*文字*/
+let small = [
+  ",",".","!","l","i","j","っ","ぁ","ぃ","ぅ","ぇ","ぉ",
+]
+class Font extends __WEBPACK_IMPORTED_MODULE_2__ui_js__["a" /* default */]{
+  //strは表示する文字(今は数字のみ)
+  constructor(pos,str,type){
+    super(CPV(pos));
+    /*基本情報*/
+    this.type = type;
+    this.name = "font";
+    this.isAlive = true;//消えたらfalse
+      this.isMultiple = true;
+    /*スプライト*/
+    this.str = str; //0~9
+    this.container = new PIXI.Container();
+    //0埋めをするかしないか
+    switch(this.type){
+      case "HP" :
+      case "BULLET" :
+      case "MES" :
+      case "MENU" :
+        this.isPadding = true;
+        this.d = this.str.length;//桁数
+          break;
+      case "SCORE" :
+        this.isPadding = false;
+        this.d = 6;//決め打ち
+          break;
+        defaut :
+        console.warn(this.type);
+    }
+    this.SetPos(this.pos);
+  };
+
+  //HP,BULLETの表示用
+  //HP,BULLETの中から呼ばれている
+  UpdateFont(value){
+    //phys
+    //文字列型にすること
+    this.str = value + "";
+    //0埋め
+    if(this.isPadding){
+      while(this.str.length < this.d){
+        //スペースの代わりに欠番フォント(ゐ)を使っている←クソ
+        this.str = "ゐ" + this.str;
+      }
+    }else if(!this.isPadding){
+      while(this.str.length < this.d){
+        //スペース(ゑ)
+        this.str = " " + this.str;
+      }
+    }
+    //000は特殊
+    if(this.str == "ゐゐ0")this.str = "ゐゐゐ";
+    for(let i = 0;i<this.d;i++){
+      let spid = this.str[i] + "";//str型にすること
+        this.container.children[i].texture = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].font[spid];
+    };
+  };
+  Move(pos){
+    /*TODO コンテナ*/
+    for(let i=0;i<this.container.children.length;i++){
+      this.container.children[i].position = pos;
+      this.container.children[i].position.x += 10 * i;
+    }
+  }
+
+  SetPos(pos){
+    let space;
+    let sprite;
+    let tex;
+    for(let i = 0;i<this.d;i++){
+      let spid = this.str[i] + "";//str型にすること
+      tex = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].font[spid];
+      //文字コードを比較している
+      //日本語以降は半角として識別
+      let s = this.str[i];
+      if(s > "z"){
+        space = 9;
+      }else if( small.indexOf(s) >= 0 ) {
+        space = 4;
+      } else{
+        space = 7;
+      }
+      sprite = new PIXI.Sprite(tex);
+      sprite.position = this.pos;
+      this.container.addChild(sprite);
+      pos.x += space;
+    };
+  }
+
+  //UIManagerから直接呼ばれているのはScoreのみ(それも廃止予定
+  //各UIの内部から呼ぶ必要がある
+  Update(){
+  };
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Font;
+;
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entity_entity_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Entity_wall_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Entity_backEntity_js__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Entity_backGround_js__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Entity_signboard_js__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Entity_player_js__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Entity_Enemy_enemy1_js__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Entity_Enemy_enemy2_js__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Entity_goal_js__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entity_entity_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Entity_wall_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Entity_backEntity_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Entity_backGround_js__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Entity_signboard_js__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Entity_player_js__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Entity_Enemy_enemy1_js__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Entity_Enemy_enemy2_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Entity_goal_js__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__game_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__art_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__drawer_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Weapon_weaponManager_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Entity_woodbox_js__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Entity_needle_js__ = __webpack_require__(66);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Entity_woodbox_js__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Entity_needle_js__ = __webpack_require__(71);
 
 
 
@@ -1960,10 +2468,10 @@ class MapData{
    */
   static async CreateStage(stageNo,state){
     await this.Load(stageNo);
-
     //背景の生成
     //if(state == "ENTER")
-    this.AddBackGround();
+    //this.AddBackGround();
+    //this.AutoStageCreate();
     //entityの生成
     /*タイルに割り当てるtype
      * 1 : 壁
@@ -1982,7 +2490,7 @@ class MapData{
           case TILE.WALL :
             //直せ
             if(wallTiletype[ID].name == "woodbox"){
-              entity = new __WEBPACK_IMPORTED_MODULE_14__Entity_woodbox_js__["a" /* default */]({x:16*x,y:16*y});
+              entity = new __WEBPACK_IMPORTED_MODULE_13__Entity_woodbox_js__["a" /* default */]({x:16*x,y:16*y});
             }else{
               entity = new __WEBPACK_IMPORTED_MODULE_2__Entity_wall_js__["a" /* default */]({x:16*x,y:16*y},MapData.WallTile(ID));
             }
@@ -1991,9 +2499,12 @@ class MapData{
           case TILE.BACK :
             entity = new __WEBPACK_IMPORTED_MODULE_3__Entity_backEntity_js__["a" /* default */]({x:16*x,y:16*y},MapData.WallTile(ID));
             __WEBPACK_IMPORTED_MODULE_0__entityManager_js__["a" /* default */].addEntity(entity); break;
-          case TILE.SIGN : __WEBPACK_IMPORTED_MODULE_0__entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_5__Entity_signboard_js__["a" /* default */]({x:16*x,y:16*y})); break;
+          case TILE.FORE :
+            entity = new __WEBPACK_IMPORTED_MODULE_3__Entity_backEntity_js__["a" /* default */]({x:16*x,y:16*y},MapData.WallTile(ID));
+            entity.layer = "FORE";
+            __WEBPACK_IMPORTED_MODULE_0__entityManager_js__["a" /* default */].addEntity(entity); break;
           case TILE.NEEDLE :
-            entity = new __WEBPACK_IMPORTED_MODULE_15__Entity_needle_js__["a" /* default */]({x:16*x,y:16*y},MapData.WallTile(ID));
+            entity = new __WEBPACK_IMPORTED_MODULE_14__Entity_needle_js__["a" /* default */]({x:16*x,y:16*y},MapData.WallTile(ID));
             __WEBPACK_IMPORTED_MODULE_0__entityManager_js__["a" /* default */].addEntity(entity);
             break;
           default : 
@@ -2039,7 +2550,7 @@ class MapData{
   static RebuildStage(){
     MapData.DeleteStage();
     let state = "RESET";
-    MapData.CreateStage(__WEBPACK_IMPORTED_MODULE_10__Game_js__["a" /* default */].stage,state);
+    MapData.CreateStage(__WEBPACK_IMPORTED_MODULE_10__game_js__["a" /* default */].stage,state);
   }
 
   /*現在開かれているステージを削除*/
@@ -2107,247 +2618,166 @@ class MapData{
       }
     }
   }
+
+  static AutoStageCreate(){
+    //うねうね
+    let grid = {
+      x : 12,
+      y : this.height,
+    }
+    let dist;//移動距離
+    let dir = "U";//移動方向 
+    let dim = "R";//U,UR,R,DR,D,DL,L,UL
+    function dimToID(dim){
+      switch(dim){
+        case "DRI": return 49;break;
+        case "DLI": return 51;break;
+        case "URI": return 65;break;
+        case "ULI": return 67;break;
+        case "ULO": return 52;break;
+        case "URO": return 54;break;
+        case "DLO": return 68;break;
+        case "DRO": return 70;break;
+        case "U"  : return 53;break;
+        case "L"  : return 60;break;
+        case "R"  : return 62;break;
+        case "D"  : return 69;break;
+      }
+    }
+    let dirs = ["R","D","L","U"];
+    function rot(dir,side){
+      if(side == "R") {
+        switch(dir){
+          case "R" :return "D";
+          case "D" :return "L";
+          case "L" :return "U";
+          case "U" :return "R";
+        }
+      }
+      if(side == "L") {
+        switch(dir){
+          case "R" :return "U";
+          case "D" :return "R";
+          case "L" :return "D";
+          case "U" :return "L";
+        }
+      }
+    };
+
+    function dirToV(dir){
+      switch(dir){
+        case "R": return {x:1,y:0};break;
+        case "D": return {x:0,y:1};break;
+        case "L": return {x:-1,y:0};break;
+        case "U": return {x:0,y:-1};break;
+      }
+    }
+    //回す
+    //置く
+    //すすめる
+    
+    //left
+      let leftSide = 8;
+      let rightSide = 16;
+    for(let i=0;i<100;i++){
+      dim = rot(dir,"R");
+      //rot
+      if(Dice(2)==0 || grid.x < leftSide || grid.x > rightSide){
+        let side;
+        if(Dice(2)==0)side = "R";
+        else side = "L";
+
+        //区間指定
+        if(dir == "L")side = "R";
+        if(dir == "R")side = "L";
+        if(grid.x<leftSide && this.dir == "U")side = "R";
+        if(grid.x>rightSide && this.dir == "U")side = "L";
+        if(dir =="U" && side =="L") dim = "URO";
+        if(dir =="U" && side =="R") dim = "DRI";
+        //if(dir =="D" && side =="L") dim = "URO";
+        //if(dir =="D" && side =="R") dim = "DRI";
+        if(dir =="R") dim = "DRO";
+        if(dir =="L") dim = "URI";
+        dir = rot(dir,side);
+      }
+      //put
+      let ID = dimToID(dim);
+      let entity = new __WEBPACK_IMPORTED_MODULE_2__Entity_wall_js__["a" /* default */](MLV(VECN(16),grid),MapData.WallTile(ID));
+      __WEBPACK_IMPORTED_MODULE_0__entityManager_js__["a" /* default */].addEntity(entity);
+      //fill
+      if(dir == "U"){
+        let i = grid.x-1;
+        /*
+        while(i>0){
+          let back = new BackEntity({x:16*i,y:16*(grid.y)},MapData.WallTile(79));
+          EntityManager.addEntity(back);
+          i--;
+        }
+        */
+      }
+      //step
+      grid = ADV(grid,dirToV(dir));
+    }
+    //right
+    grid = {
+      x : 20,
+      y : this.height,
+    }
+    dir = "U";//移動方向 
+    dim = "L";//U,UR,R,DR,D,DL,L,UL
+      leftSide = 18;
+      rightSide = 25;
+    for(let i=0;i<100;i++){
+      dim = rot(dir,"L");
+      //rot
+      if(Dice(2)==0 || grid.x > rightSide || grid.x < leftSide){
+        let side;
+        if(Dice(2)==0)side = "R";
+        else side = "L";
+
+        //区間指定
+        if(dir == "L")side = "R";
+        if(dir == "R")side = "L";
+        if(grid.x<leftSide && this.dir == "U")side = "R";
+        if(grid.x>rightSide && this.dir == "U")side = "L";
+        if(dir =="U" && side =="L") dim = "DLI";
+        if(dir =="U" && side =="R") dim = "ULO";
+        //if(dir =="D" && side =="L") dim = "URO";
+        //if(dir =="D" && side =="R") dim = "DRI";
+        if(dir =="R") dim = "ULI";
+        if(dir =="L") dim = "DLO";
+        dir = rot(dir,side);
+      }
+      //put
+      let ID = dimToID(dim);
+      let entity = new __WEBPACK_IMPORTED_MODULE_2__Entity_wall_js__["a" /* default */](MLV(VECN(16),grid),MapData.WallTile(ID));
+      __WEBPACK_IMPORTED_MODULE_0__entityManager_js__["a" /* default */].addEntity(entity);
+      //fill
+      if(dir == "U"){
+        let i = grid.x+1;
+        /*
+        while(i<32){
+          let back = new BackEntity({x:16*i,y:16*(grid.y)},MapData.WallTile(79));
+          EntityManager.addEntity(back);
+          i++;
+        }
+        */
+      }
+      //step
+      grid = ADV(grid,dirToV(dir));
+    }
+  }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = MapData;
 
 
 
 /***/ }),
-/* 16 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Event{
-  constructor(func,args){
-    this.func = func;/*実行する関数*/
-    this.args = args;/*引数の配列*/
-  }
-  Do(){
-    //?
-    return this.func.next();
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Event;
-
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__drawer_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Collision_collision_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Collision_box_js__ = __webpack_require__(9);
-
-
-
-
-
-
-
-
-/*文字*/
-class FontEffect extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  //strは表示する文字(今は数字のみ)
-  constructor(pos,str,fonttype){
-    let v = {
-      x:1.5 * (Math.random()-0.5),
-      y:-2
-    }
-    super(CPV(pos),v);
-    /*基本情報*/
-    this.fonttype = fonttype;
-    this.type = ENTITY.EFFECT;
-    this.name = "FontEffect";
-    this.frame = 0;
-    this.isAlive = true;//消えたらfalse
-    this.e = 0.0;
-    this.isMultiple = true;//このEntityは複数スプライトを持つか
-    /*スプライト*/
-    this.str = str; //0~9
-    this.sprites = [];//スプライトを配列で持っている
-    this.d = this.str.length;//桁数
-    this.collider = new __WEBPACK_IMPORTED_MODULE_6__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_7__Collision_box_js__["a" /* default */](pos,8,8));//衝突判定の形状
-    for(let i = 0;i<this.d;i++){
-      let spid = this.str[i] + "";//str型にすること
-      let tex;
-      switch(this.fonttype){
-        case "player" : tex = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].font[spid + "r"];
-          break;
-        case "enemy" : tex = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].font[spid];
-          break;
-        case "pop" : tex = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].font[spid];
-      }
-      this.sprites[i] = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(tex);
-      this.sprites[i].position = {x:this.pos.x + i*6,y:this.pos.y};
-    }
-    this.gravity = 0.2;
-  }
-
-  Collision(){
-    //壁とのみ行う 正直無くても良い
-    for(let l of __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].wallList){
-      let c = __WEBPACK_IMPORTED_MODULE_5__Collision_collision_js__["a" /* default */].on(this,l);
-      if(c.isHit){
-        /*速度*/
-        /*押し出し*/
-        __WEBPACK_IMPORTED_MODULE_5__Collision_collision_js__["a" /* default */].Resolve(this,l);
-        /*note : now isHit == false*/
-      }
-    }
-  }
-
-  Update(){
-    this.Collision();
-    //phys
-    this.pos = ADV(this.pos,this.vel);
-    this.vel.y += this.gravity;
-    for(let i = 0;i<this.d;i++){
-      //ここはあとで書き直す
-      //というか別クラスにする
-      if(this.fonttype == "pop"){
-        this.sprites[i].position = {x:this.pos.x + i * 9,y:this.pos.y};
-      }else{
-        this.sprites[i].position = {x:this.pos.x + i * 6,y:this.pos.y};
-      }
-    }
-    for(let i = 0;i<this.d;i++){
-      if(this.frame > 30){
-        this.sprites[i].alpha -=0.05; 
-      }
-    }
-    if(this.frame > 90){
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-    }
-    this.frame++;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = FontEffect;
-
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Game_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_mapData_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__drawer_js__ = __webpack_require__(11);
-
-
-
-
-
-
-
-
-
-/*タイトル画面からゲーム開始画面に移行するイベント
- * (UIの退避)
- * UIのセット
- */
-class QuakeEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */]{
-  constructor(size,time){
-    //undefined
-    if(!time) {
-      console.warn("invalid time : " + time);
-      time = 5
-    };
-    super(1);
-    function* gen(){
-      let frame = 0;
-      let d;
-      while(frame < time){
-        d = Rand2D(size);
-        __WEBPACK_IMPORTED_MODULE_7__drawer_js__["a" /* default */].Quake(d);
-        size *= 0.9;
-        frame++;
-        yield ;
-      }
-      __WEBPACK_IMPORTED_MODULE_7__drawer_js__["a" /* default */].Stage.x = 0;
-      __WEBPACK_IMPORTED_MODULE_7__drawer_js__["a" /* default */].Stage.y = 0;
-      yield ;
-    }
-    let itt = gen();
-    this.func = itt;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = QuakeEvent;
-
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_js__ = __webpack_require__(2);
-
-
-
-
-
-
-
-
-class Bullet extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
-  constructor(pos,vel){
-    super(pos,vel);
-    /*基本情報*/
-    this.type = ENTITY.BULLET;
-    /*パラメータ*/
-    this.hp;//弾丸のHP 0になると消滅
-    this.atk;//攻撃力
-    this.length;//これは武器がもつ?
-    this.launchedPos = {x:pos.x,y:pos.y};//射出された座標 射程距離の計算に必要 
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Bullet;
-
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/*円*/
-class Circle{
-  /* pos : 中心の座標 */
-  /* r : 半径 */
-  constructor(pos,r){
-    this.pos = pos;
-    this.r = r;
-  }
-}
-/* unused harmony export default */
-
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
@@ -2387,445 +2817,12 @@ class BulletShot extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default
 
 
 /***/ }),
-/* 22 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-//パラメータ管理クラス
-class Param{
-  static Init(){
-    this.PLAYER = {
-      JUMP_VEL : 5,//ジャンプ力
-      RUN_VEL : 0.4,//はしり速度
-      GRAVITY : 0.15,
-      HP : 100,
-      BULLET : 100,
-      FLICTION : 0.7,
-      INV_TIME : 5,//無敵時間
-      
-      ANIM_RUN : 4,
-      ANIM_WAIT : 7,
-
-      VX_MAX : 3,
-      VY_MAX : 11
-    }
-    this.ENEMY1 = {
-      HP : 5,
-      ATK_MAX : 10,
-      ATK_MIN : 5,
-      GRAVITY : 0.1
-    }
-    this.ENEMY2 = {
-      HP : 5,
-      ATK_MAX : 10,
-      ATK_MIN : 5,
-      GRAVITY : 0.1,
-      COIN : 3
-    }
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Param;
-
-
-
-/***/ }),
-/* 23 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_circle_js__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
-
-
-
-
-
-
-
-let VEC0 = {x:0,y:0};
-
-class Wall extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
-  constructor(pos,tex){
-    super(pos,{x:0,y:0});
-    /*基本情報*/
-    //this.name = name; 必要になったら
-    this.type = ENTITY.WALL;
-    this.collider = new __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__["a" /* default */](pos,16,16));//衝突判定の形状
-    /*スプライト*/
-    this.tex = tex
-    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.tex);
-    this.sprite.position = pos;
-  }
-  Update(){
-    /*nothing to do*/
-    //  let player = EntityManaer.player;
-    // this.sprite.position = this.pos;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Wall;
-
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_circle_js__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
-
-
-
-
-
-
-
-//背景オブジェクト 何もしない
-class BackEntity extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
-  constructor(pos,tex){
-    super(pos,VEC0());
-    this.type = ENTITY.BACK;
-    this.tex = tex
-    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.tex);
-    this.sprite.position = pos;
-  }
-  Update(){
-    /*nothing to do*/
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = BackEntity;
-
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__weapon1_js__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__weapon2_js__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__weapon3_js__ = __webpack_require__(57);
-
-
-
-
-class WeaponManager{
-  static Init(){
-    /*singleton list*/
-    /*武器のインスタンスを作成*/
-    this.weaponList = [
-      new __WEBPACK_IMPORTED_MODULE_0__weapon1_js__["a" /* default */](),
-      new __WEBPACK_IMPORTED_MODULE_1__weapon2_js__["a" /* default */](),
-      new __WEBPACK_IMPORTED_MODULE_2__weapon3_js__["a" /* default */]()
-    ];
-    /*selectBoxの選択*/
-    this.select;
-  }
-
-  /*プレイヤーの参照を受け取って武器を変更*/
-  static ChangeWeapon(player,name){
-    switch (name){
-      case "1":
-        player.weapon = this.weaponList[0];
-        break;
-      case "2":
-        player.weapon = this.weaponList[1];
-        break;
-      case "3":
-        player.weapon = this.weaponList[2];
-        break;
-    }
-  }
-
-
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = WeaponManager;
-
-
-
-/***/ }),
 /* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
-
-
-
-
-
-class Sonic extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  constructor(pos){
-    super(pos,VEC0());
-    /*基本情報*/
-    this.type = ENTITY.EFFECT;
-    this.frame = 0;
-    /*スプライト*/
-    this.spid = 0;
-    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.sonic;
-    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
-    this.sprite.anchor.set(0.5);
-    this.sprite.alpha = 0.16;
-  }
-
-  Update(){
-    this.sprite.texture = this.pattern[this.spid];
-    this.spid = Math.floor(this.frame/3);
-    //phys
-    this.pos = ADV(this.pos,this.vel);
-
-    this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+1)));
-    this.sprite.alpha *= 0.8;
-
-    if(this.spid == 4){
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-    }
-    this.sprite.position = this.pos;
-    this.frame++;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Sonic;
-
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
-
-
-
-
-
-//閃光
-class Stone extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  constructor(pos,vel){
-    super(pos,vel);
-    /*基本情報*/
-    this.type = ENTITY.EFFECT;
-    this.frame = 0;
-    this.isNext = false;
-    /*スプライト*/
-    this.spid = 0;
-    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.stone;
-    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
-    this.sprite.anchor.set(0.5);
-  }
-
-  Update(){
-    this.vel = MLV(this.vel,VECN(0.9)); //減速
-    this.pos.y += 0.3;//重力
-    //this.pos = Util.advec(this.pos,this.vel);
-    this.sprite.alpha -= 0.02;
-    //再帰
-    if(this.sprite.alpha > 0 && this.isNext){
-      //生成は最初の一回のみ
-      this.isNext = false;
-      this.sprite.scale = MLV(this.sprite.scale,VECN(0.8));
-      let p = __WEBPACK_IMPORTED_MODULE_3__util_js__["a" /* default */].advec(this.pos,this.vel);
-      let stone = new Stone(p,this.vel);
-      //次の石 : 小さく薄く
-      stone.sprite.scale = this.sprite.scale;
-      stone.sprite.alpha = this.sprite.alpha;
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(stone);
-    }
-    if(this.frame == 1)this.isNext = true;
-    //持続時間
-    if(this.frame > 3)__WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-    this.frame++;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Stone;
-
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
-
-
-
-
-
-//閃光
-class Flash extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  constructor(pos){
-    super(pos,VEC0());
-    /*基本情報*/
-    this.type = ENTITY.EFFECT;
-    this.frame = 0;
-    /*スプライト*/
-    this.spid = 0;
-    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.flash;
-    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
-    this.sprite.anchor.set(0.5);
-  }
-
-  Update(){
-    //this.sprite.texture = this.pattern[this.spid];
-    this.sprite.scale = ADV(VECN(1),Rand2D(1));
-    this.sprite.alpha = 1;
-    if(this.frame == 1){
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-    }
-    this.sprite.position = this.pos;
-    this.frame++;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Flash;
-
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
-
-
-
-
-
-//閃光
-class Fire extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  constructor(pos,vel){
-    super(pos,vel);
-    /*基本情報*/
-    this.type = ENTITY.EFFECT;
-    this.frame = 0;
-    /*スプライト*/
-    this.spid = 0;
-    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.fire;
-    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
-    this.sprite.anchor.set(0.5);
-  }
-
-  Update(){
-    this.sprite.position = this.pos;
-    let a = 10;
-    this.pos = ADV(this.pos,this.vel);
-    this.sprite.scale = ADV(this.sprite.scale, VECN(1/(this.frame+4)));
-    this.sprite.alpha = 0.5 - this.frame/40;
-    if(this.frame == 16){
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-    }
-    this.frame++;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Fire;
-
-
-
-/***/ }),
-/* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
-
-
-
-
-
-class Sonic extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  constructor(pos,vel,size){
-    super(pos,vel);
-    /*基本情報*/
-    this.type = ENTITY.EFFECT;
-    this.frame = 0;
-    this.size = size;//煙の大きさ 浮力にも関わってくる
-    /*スプライト*/
-    this.spid = 0;
-    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.smoke;
-    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
-    this.sprite.anchor.set(0.5);
-      this.sprite.scale.x = this.size/5;
-      this.sprite.scale.y = this.size/5;
-  }
-
-  Update(){
-    let b = 10;
-    this.pos = ADV(this.pos,this.vel);
-    this.vel.x *= (1-this.frame/10);
-    if(this.vel.y > 0) this.vel.y *= 0.9;
-    this.sprite.scale = VECN(10/(this.frame+5));
-    this.sprite.alpha -= 0.03;
-    if(this.frame == 40){
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-    }
-    this.sprite.position = this.pos;
-
-    this.frame++;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Sonic;
-
-
-
-/***/ }),
-/* 31 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__ = __webpack_require__(0);
-
-
-
-class Weapon{
-  /* 
-   * ammunition : 弾薬数 
-  /* agi : agility*/
-  constructor(name){
-    this.name = name;
-  }
-  shot(player){ }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Weapon;
-
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Enemy_enemy_js__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__effect_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Enemy_enemy_js__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__effect_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__art_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_js__ = __webpack_require__(2);
@@ -2870,102 +2867,367 @@ class Target extends __WEBPACK_IMPORTED_MODULE_1__effect_js__["a" /* default */]
 
 
 /***/ }),
+/* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_js__ = __webpack_require__(2);
+
+
+
+
+
+
+//火花?
+class Stone extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos,vel){
+    super(pos,vel);
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
+    this.name = "stone";
+    this.frame = 0;
+    this.isNext = false;
+    /*スプライト*/
+    this.spid = 0;
+    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.stone;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = this.pos;
+    this.sprite.anchor.set(0.5);
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+  }
+
+  Update(){
+    this.vel = MLV(this.vel,VECN(0.9)); //減速
+    this.pos.y += 0.3;//重力
+    //this.pos = Util.advec(this.pos,this.vel);
+    this.sprite.position = this.pos;
+    this.sprite.alpha -= 0.02;
+    //再帰
+    if(this.sprite.alpha > 0 && this.isNext){
+      //生成は最初の一回のみ
+      this.isNext = false;
+      this.sprite.scale = MLV(this.sprite.scale,VECN(0.8));
+      let p = ADV(this.pos,this.vel);
+      let stone = __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].GetStone(p,this.vel);
+      //次の石 : 小さく薄く
+      if(stone){
+        stone.sprite.scale = this.sprite.scale;
+        stone.sprite.alpha = this.sprite.alpha;
+        __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(stone);
+      }
+    }
+    if(this.frame == 1)this.isNext = true;
+    //持続時間
+    if(this.frame > 3){
+      __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].Remove(this);
+    }
+    this.frame++;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Stone;
+
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_js__ = __webpack_require__(2);
+
+
+
+
+
+
+class Sonic extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos,vel,size){
+    super(pos,vel);
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
+    this.name = "smoke";
+    this.frame = 0;
+    this.size = size;//煙の大きさ 浮力にも関わってくる
+    /*スプライト*/
+    this.spid = 0;
+    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.smoke;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = this.pos;
+    this.sprite.anchor.set(0.5);
+    this.sprite.scale.x = this.size/5;
+    this.sprite.scale.y = this.size/5;
+  }
+
+  Update(){
+    let b = 10;
+    this.pos = ADV(this.pos,this.vel);
+    this.vel.x *= (1-this.frame/10);
+    if(this.vel.y > 0) this.vel.y *= 0.9;
+    this.sprite.scale = VECN(10/(this.frame+5));
+    this.sprite.alpha -= 0.03;
+    if(this.frame == 40){
+      __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].Remove(this);
+    }
+    this.sprite.position = this.pos;
+
+    this.frame++;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Sonic;
+
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
+
+
+
+
+
+class Sonic extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos){
+    super(pos,VEC0());
+    /*基本情報*/ this.type = ENTITY.EFFECT;
+    this.frame = 0;
+    /*スプライト*/
+    this.spid = 0;
+    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.sonic;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = this.pos;
+    this.sprite.anchor.set(0.5);
+    this.sprite.alpha = 0.16;
+    //this.arg = ADV(VECN(2),Rand2D(1));
+  }
+
+  Update(){
+    this.sprite.texture = this.pattern[this.spid];
+    this.spid = Math.floor(this.frame/3);
+    //phys
+    this.pos = ADV(this.pos,this.vel);
+
+    this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)));
+    this.sprite.alpha *= 0.8;
+
+    if(this.spid == 4){
+      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+    }
+    this.sprite.position = this.pos;
+    this.frame++;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Sonic;
+
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/*円*/
+class Circle{
+  /* pos : 中心の座標 */
+  /* r : 半径 */
+  constructor(pos,r){
+    this.pos = pos;
+    this.r = r;
+  }
+}
+/* unused harmony export default */
+
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sonic_js__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__stone_js__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__flash_js__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__fire_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__smoke_js__ = __webpack_require__(28);
+
+
+
+
+
+
+
+
+
+
+
+//爆発エフェクト
+class Explosion2 extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos,arg){
+    super(pos,VEC0());
+    //微妙に左上に寄ってるので中心に
+    this.pos = ADV(this.pos,VECN(8));
+    this.arg = arg;
+    this.vi = 15;
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
+    this.frame = 0;
+    this.isNoSprite = true;
+  }
+  Bomb(){
+    /*stone*/
+    for(let i = 0;i<8;i++){
+      let arg = this.arg + Rand(0.7);
+      let vi = this.vi + Rand(8);
+      let v = POV(arg,vi);
+      let stone = __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].GetStone(CPV(this.pos),v);
+      if(stone)__WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(stone);
+    }
+    /*smoke*/
+    for(let j = 0;j<6;j++){
+      let v = {
+        x : Rand(4),
+        y : Rand(1)
+      }
+      let smoke = __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].GetSmoke(CPV(this.pos),v,15+Rand(10)); 
+      if(smoke)__WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(smoke);
+    }
+  }
+
+  Update(){
+    //爆発して自分は消える
+    this.Bomb();
+    __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Explosion2;
+
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__audio_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Effect_fontEffect_js__ = __webpack_require__(18);
+
+
+
+
+
+class Enemy extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
+  constructor(pos,vel){
+    super(pos,vel);
+    /*基本情報*/
+    this.type = ENTITY.ENEMY;
+    this.isUpdater = true;
+    /*固有情報*/
+    this.AIList = [];//AIの配列
+    /*レイヤー*/
+    this.layer = "ENTITY";
+  }
+  addAI(AI){
+    this.AIList.push(AI);
+  }
+  //自分がダメージを食らう
+  Damage(atk){
+    __WEBPACK_IMPORTED_MODULE_1__audio_js__["a" /* default */].PlaySE("enemyDamage");
+    this.hp += atk;
+    //ダメージをポップ
+    __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_3__Effect_fontEffect_js__["a" /* default */](this.pos,-atk+"","enemy"));
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Enemy;
+
+
+
+/***/ }),
 /* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__drawer_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__input_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__drawer_js__ = __webpack_require__(11);
 
 
 
 
-/*文字*/
-class UIFont extends __WEBPACK_IMPORTED_MODULE_2__ui_js__["a" /* default */]{
-  //strは表示する文字(今は数字のみ)
-  constructor(pos,str,type){
-    super(CPV(pos));
+
+
+
+/*bullet1残像*/
+class BulletBlur extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos,vel){
+    super(pos,vel);
     /*基本情報*/
-    //HPとBulletでtypeを分ける必要がある
-    this.type = type;
-    this.name = "font";
+    this.type = ENTITY.EFFECT;
+    this.name = "bulletblur";
+    this.frame = 0;
     this.isAlive = true;//消えたらfalse
       /*スプライト*/
-      this.str = str; //0~9
-    this.sprite = [];//スプライトを配列で持っている
-    //0埋めをするかしないか
-    switch(this.type){
-      case "HP" :
-      case "BULLET" :
-      case "MES" :
-        this.isPadding = true;
-        this.d = this.str.length;//桁数
-        break
-      case "SCORE" :
-        this.isPadding = false;
-        this.d = 6;//決め打ち
-        break
-    }
-    let space;
-    for(let i = 0;i<this.d;i++){
-      let spid = this.str[i] + "";//str型にすること
-        let tex = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].font[spid];
-      //文字コードを比較している
-      //日本語以降は半角として識別
-      let s = this.str[i];
-      if(s > "z"){
-        space = 9;
-      }else if(
-        s == "!" ||
-          s == "l" ||
-            s == "i" ||
-              s == "j"||
-                s == "."
-      ){
-        space = 4;
-      } else{
-        space = 7;
-      }
-      let p = this.pos;
-      this.sprite[i] = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].SpriteFactory(tex);
-      this.sprite[i].position = p;
-      p.x += space;
-    };
-  };
+    this.spid = 0; //12~15
+    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.blur;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.anchor.set(0.5);
+    this.sprite.alpha = 0.5;
+    this.sprite.scale = VECN(Rand(0.5)+1);
+    this.sprite.position = ADV(this.pos,VECN(8));
+    //this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+  }
 
-  //HP,BULLETの表示用
-  UpdateFont(hp){
-    //phys
-    //文字列型にすること
-    this.str = hp + "";
-    //0埋め
-    if(this.isPadding){
-      while(this.str.length < this.d){
-        //スペースの代わりに欠番フォント(ゐ)を使っている←クソ
-        this.str = "ゐ" + this.str;
-      }
-    }else if(!this.isPadding){
-      while(this.str.length < this.d){
-        //スペース(ゑ)
-        this.str = " " + this.str;
-      }
-    }
-    //000は特殊
-    if(this.str == "ゐゐ0")this.str = "ゐゐゐ";
-    for(let i = 0;i<this.d;i++){
-      let spid = this.str[i] + "";//str型にすること
-        this.sprite[i].texture = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].font[spid];
-    };
-  };
+  Physics(){
+    this.pos = ADV(this.pos,this.vel);
+    this.vel = MLV(this.vel,VECN(0.9));
+  }
+
 
   Update(){
-    /*nothing to do*/
-  };
+    if(this.isAlive){
+      this.sprite.alpha *= 0.9
+      this.sprite.scale = ADV(this.sprite.scale,VECN(this.frame/256));
+      this.Physics();
+      this.sprite.position = ADV(this.pos.x,VECN(8));
+      this.sprite.texture = this.pattern[this.spid];
+      this.spid = Math.floor(this.frame/4)%4;
+      if(this.frame >= 40){
+        //消える時に一回だけ呼ばれる
+        if(this.isAlive){
+          //EntityManager.removeEntity(this);
+          __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].Remove(this);
+          this.isAlive = false
+        }
+      }
+      this.sprite.position = ADV(this.pos,VECN(8));
+      this.frame++;
+    }
+  }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = UIFont;
-;
+/* harmony export (immutable) */ __webpack_exports__["a"] = BulletBlur;
+
 
 
 /***/ }),
@@ -2973,93 +3235,45 @@ class UIFont extends __WEBPACK_IMPORTED_MODULE_2__ui_js__["a" /* default */]{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_mapData_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Game_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__drawer_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__ = __webpack_require__(14);
 
 
 
 
 
-
-
-
-
-class GameOverEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */]{
-  //Gameのstateを遷移状態に移行
-  constructor(){
-    super(1);
-    function* Posreset(){
-
-      //note : Game.seqがtrueの間はEntityは更新されない
-
-      //やっぱり画面移動中も敵動いてて欲しい...
-      __WEBPACK_IMPORTED_MODULE_4__Game_js__["a" /* default */].seq = true;
-      //画面遷移エフェクトの♢
-      let frame = 0;//経過フレーム数 途中で0にしているので注意
-        let spid = 0;//スプライト番号
-      let pattern = __WEBPACK_IMPORTED_MODULE_7__art_js__["a" /* default */].seqPattern;//パターン
-        let seq = new Array(400);//各♢
-      //♢を初期化して追加
-      for(let i = 0; i < 400; i++) {
-        let sp = __WEBPACK_IMPORTED_MODULE_7__art_js__["a" /* default */].SpriteFactory(pattern[spid]);
-        let y = Math.floor(i/20);
-        let x = i%20 - 4;
-        sp.position.x = x*16-8;
-        sp.position.y = y*20-8;
-        sp.scale.x = 1.5;
-        sp.scale.y = 1.5;
-        seq[i] = sp;
-        __WEBPACK_IMPORTED_MODULE_6__drawer_js__["a" /* default */].addContainer(sp,"FILTER");
-      }
-      /*フェードアウト*/
-      while(frame < 40){
-        for(let i = 0; i < 400; i++) {
-          //上から下へ
-          spid = Math.max(0,Math.min(Math.floor(frame - i/8),15));
-          seq[i].texture = pattern[spid];
-        }
-        frame++;
-        yield;
-      }
-      /*ここでマップをロード*/
-      __WEBPACK_IMPORTED_MODULE_3__Stage_mapData_js__["a" /* default */].RebuildStage();
-
-      /*ちょっと待つ*/
-      frame = 0;
-      while(frame < 10){
-        frame++;
-        yield
-      }
-      __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__["a" /* default */].HP.bar.UpdateBar(100);
-      frame = 0;
-      /*フェードin*/
-      while(frame < 40){
-        __WEBPACK_IMPORTED_MODULE_4__Game_js__["a" /* default */].seq = false;
-        for(let i = 0; i < 400; i++) {
-          spid = 16 + Math.max(0,Math.min(Math.floor(frame -i/8),15));
-          seq[i].texture = pattern[spid];
-        }
-        frame++;
-        yield;
-      }
-      for(let i = 0; i < 400; i++) {
-        __WEBPACK_IMPORTED_MODULE_6__drawer_js__["a" /* default */].removeContainer(seq[i],"FILTER");
-      }
-      __WEBPACK_IMPORTED_MODULE_4__Game_js__["a" /* default */].seq = false;
-      yield;
-    }
-    let itt = Posreset();
-    this.func = itt;
+//閃光
+class Fire extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos,vel){
+    super(pos,vel);
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
+    this.name = "fire";
+    this.frame = 0;
+    /*スプライト*/
+    this.spid = 0;
+    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.fire;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = this.pos;
+    this.sprite.anchor.set(0.5);
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 
+  Update(){
+    this.sprite.position = this.pos;
+    let a = 10;
+    this.pos = ADV(this.pos,this.vel);
+    this.sprite.scale = ADV(this.sprite.scale, VECN(1/(this.frame+4)));
+    this.sprite.alpha = 0.5 - this.frame/40;
+    if(this.frame == 16){
+      __WEBPACK_IMPORTED_MODULE_3__Stage_pool_js__["a" /* default */].Remove(this);
+    }
+    this.frame++;
+  }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = GameOverEvent;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Fire;
 
 
 
@@ -3068,7 +3282,7 @@ class GameOverEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* defau
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
@@ -3100,7 +3314,7 @@ class BulletHitWall extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* defa
     this.frame++;
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = BulletHitWall;
+/* unused harmony export default */
 
 
 
@@ -3109,7 +3323,7 @@ class BulletHitWall extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* defa
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
@@ -3118,35 +3332,35 @@ class BulletHitWall extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* defa
 
 
 
-class BrightCoin extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  constructor(pos,vel){
-    //velが渡されなければ0を渡す
-    super(pos,vel);
+//閃光
+class Flash extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos){
+    super(pos,VEC0());
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.frame = 0;
     /*スプライト*/
     this.spid = 0;
-    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.coin.bright;
+    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.explosion.flash;
     this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
-    this.sprite.alpha = 0.7;
+    this.sprite.anchor.set(0.5);
+    this.sprite.alpha = 0.2;
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 
   Update(){
-    this.sprite.texture = this.pattern[this.spid];
-    this.spid = Math.floor(this.frame/3);
-    //phys
-    
-    this.pos = ADV(this.pos,this.vel);
-    if(this.spid == 4){
+    //this.sprite.texture = this.pattern[this.spid];
+    this.sprite.alpha *=0.8;
+    this.sprite.scale = VECN(2);
+    if(this.frame == 4){
       __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
     }
     this.sprite.position = this.pos;
     this.frame++;
   }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = BrightCoin;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Flash;
 
 
 
@@ -3155,63 +3369,44 @@ class BrightCoin extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__sonic_js__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__stone_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__flash_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fire_js__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__smoke_js__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__weapon1_js__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__weapon2_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__weapon3_js__ = __webpack_require__(75);
 
 
 
 
-
-
-
-
-
-
-//爆発エフェクト
-class Explosion1 extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  constructor(pos,vel){
-    super(pos,vel);
-    //微妙に左上に寄ってるので中心に
-    this.pos = ADV(this.pos,VECN(8));
-    /*基本情報*/
-    this.type = ENTITY.EFFECT;
-    this.frame = 0;
-    this.isNoSprite = true;
+class WeaponManager{
+  static Init(){
+    /*singleton list*/
+    /*武器のインスタンスを作成*/
+    this.weaponList = [
+      new __WEBPACK_IMPORTED_MODULE_0__weapon1_js__["a" /* default */](),
+      new __WEBPACK_IMPORTED_MODULE_1__weapon2_js__["a" /* default */](),
+      new __WEBPACK_IMPORTED_MODULE_2__weapon3_js__["a" /* default */]()
+    ];
+    /*selectBoxの選択*/
+    this.select;
   }
-  Bomb(){
-    __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_4__sonic_js__["a" /* default */](this.pos));
-    for(let i = 0;i<8;i++){
-      let v = __WEBPACK_IMPORTED_MODULE_3__util_js__["a" /* default */].Rand2D(30);
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_5__stone_js__["a" /* default */](CPV(this.pos),v));
-    }
-    for(let i = 0;i<2;i++){
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_8__smoke_js__["a" /* default */](CPV(this.pos),{x:Rand(8),y:-1}));
-    }
-    for(let i =0;i<3;i++){
-      let v = __WEBPACK_IMPORTED_MODULE_3__util_js__["a" /* default */].Rand2D(16);
-      let p = ADV(v,this.pos);
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_7__fire_js__["a" /* default */](p));
-    }
-    for(let i =0;i<3;i++){
-      let p = ADV(this.pos,__WEBPACK_IMPORTED_MODULE_3__util_js__["a" /* default */].Rand2D(16));
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_6__flash_js__["a" /* default */](this.pos));
+
+  /*プレイヤーの参照を受け取って武器を変更*/
+  static ChangeWeapon(player,name){
+    switch (name){
+      case "1":
+        player.weapon = this.weaponList[0];
+        break;
+      case "2":
+        player.weapon = this.weaponList[1];
+        break;
+      case "3":
+        player.weapon = this.weaponList[2];
+        break;
     }
   }
 
-  Update(){
-    //爆発して自分は消える
-    this.Bomb();
-    __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-  }
+
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Explosion1;
+/* harmony export (immutable) */ __webpack_exports__["a"] = WeaponManager;
 
 
 
@@ -3220,20 +3415,700 @@ class Explosion1 extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Enemy_js__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Entity_Effect_target_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Entity_Effect_lasersight_js__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__audio_js__ = __webpack_require__(17);
+
+
+
+
+
+
+
+
+const DIR = {
+  UR : "UR",
+  UL : "UL",
+  DR : "DR",
+  DL : "DL",
+  R : "R",
+  L : "L",
+};
+
+const SEEN = 2;
+
+class Weapon{
+  /* 
+   * ammunition : 弾薬数 
+  /* agi : agility*/
+  constructor(name){
+    this.name = name;
+    /*基本情報*/
+    this.target = null;
+    this.isTargetOn = false;//照準が発生しているか
+    this.lasersight;
+    this.isLaserOn = false;
+    this.arg = 0;
+  }
+  Init(){
+    this.isTargetOn = false;
+    this.isLaserOn = false;
+    this.target = null;//これ大丈夫か??
+  }
+  shot(player){ }
+  //敵が視界に入っているか
+  isSeen(player,enemy){
+    return (player.dir == DIR.UR || player.dir ==  DIR.UL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 1
+      || (player.dir == DIR.DR || player.dir == DIR.DL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) <-1
+        || player.dir == DIR.R && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) <-1
+          || player.dir == DIR.L && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >1
+  }
+  Target(player){
+    /*とりあえず全探索*/
+    for(let l of __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__["a" /* default */].enemyList){
+      //既にロックオンされている敵が射程外に出たら解除
+      if(this.isTargetOn &&
+        l == this.target.enemy){
+        if(DIST_C(l.pos, player.pos) < this.length
+          //各方向+-45度まで許容
+          && this.isSeen(player,l)
+        ){
+          continue;
+        }
+        __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__["a" /* default */].removeEntity(this.target);
+        this.isTargetOn = false;
+        continue;
+      }
+      //射程距離以内かつ視界
+      if(DIST_C(l.pos, player.pos) < this.length && this.isSeen(player,l)
+      ){
+        //既にロックオンされている敵より近ければ
+        if(!this.isTargetOn ||
+          DIST_C(l.pos , player.pos) < DIST_C(this.target.pos,player.pos)){
+          //今のロック先を解除して
+          if(this.isTargetOn){
+            __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__["a" /* default */].removeEntity(this.target);
+            this.isTargetOn = false;
+          }
+          //targetを追加する
+          this.target = new __WEBPACK_IMPORTED_MODULE_3__Entity_Effect_target_js__["a" /* default */](l);
+          __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__["a" /* default */].addEntity(this.target);
+          __WEBPACK_IMPORTED_MODULE_5__audio_js__["a" /* default */].PlaySE("targetOn");
+          this.isTargetOn = true;
+        }
+      }
+    }
+    if(this.isTargetOn == true){
+      //lockしていた敵が視界から消えたら消去
+      if(!this.target.enemy.isAlive){
+        __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__["a" /* default */].removeEntity(this.target);
+        this.isTargetOn = false;
+      }else{
+        //方向を指定
+        player.toArg = Math.atan((this.target.pos.y-player.pos.y)/(this.target.pos.x-player.pos.x));
+        if(player.pos.x > this.target.pos.x ) player.toArg += Math.PI;
+      }
+    }
+  }
+  //レーザーサイト
+  Lasersight(player,weapon){
+    if(!this.isLaserOn){
+      let effect;
+      let p = CPV(ADV(player.pos,POV(player.toArg,16)));
+      effect = new __WEBPACK_IMPORTED_MODULE_4__Entity_Effect_lasersight_js__["a" /* default */](p,player.toArg);
+      __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__["a" /* default */].addEntity(effect);
+      this.lasersight = effect;
+      this.isLaserOn = true;
+    }else{
+      this.lasersight.Rotate(player,this);
+    }
+  }
+
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Weapon;
+
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__drawer_js__ = __webpack_require__(11);
+
+
+
+
+
+
+class Lasersight extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos,arg){
+    super(pos,VEC0());
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
+    this.name = "lasersight";
+    this.arg = arg;
+    /*スプライト*/
+    this.spid = 0; //12~15
+    this.frame = 0;
+    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.lasersight;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = this.pos;
+    this.sprite.anchor.set(0.5);
+    this.sprite.scale.x = 1;
+    this.sprite.aplha = 0.1;
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+  }
+  Delete(){
+    __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+  }
+  Rotate(player,weapon){
+    this.arg = player.arg;
+    this.pos = CPV(ADV(player.pos,POV(player.arg,8)));
+    if(weapon.isTargetOn && Math.abs(player.arg - player.toArg < 5)){
+      this.sprite.scale.x = __WEBPACK_IMPORTED_MODULE_3__util_js__["a" /* default */].distance(weapon.target.enemy.pos,player.pos)/16 -0.5;
+    }else this.sprite.scale.x = 16;
+  }
+
+  Update(){
+    this.sprite.texture = this.pattern[this.spid];
+    this.spid = 0;
+    this.sprite.position = ADV(this.pos,VECN(8));
+    this.sprite.position.x -= 4;
+    this.sprite.position = ADV(this.sprite.position,POV(this.arg,8*this.sprite.scale.x));
+    this.sprite.rotation = this.arg;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Lasersight;
+
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_circle_js__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AI_enemy2AI_js__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Effect_fontEffect_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__coin_js__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Event_eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Event_quakeEvent_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__param_js__ = __webpack_require__(22);
+
+
+
+
+
+
+
+class Wall extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
+  constructor(pos,tex){
+    super(pos,VEC0());
+    /*基本情報*/
+    //this.name = name; 必要になったら
+    this.type = ENTITY.WALL;
+    this.layer = "ENTITY";
+    this.collider = new __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__["a" /* default */](pos,16,16));//衝突判定の形状
+    this.isUpdater = false;
+    /*スプライト*/
+    this.tex = tex
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.tex);
+    this.sprite.position = pos;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Wall;
+
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_circle_js__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
+
+
+
+
+
+
+
+//背景オブジェクト 何もしない
+class BackEntity extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
+  constructor(pos,tex){
+    super(pos,VEC0());
+    this.layer = "BACK";
+    this.isUpdater = false;
+    this.tex = tex
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.tex);
+    this.sprite.position = pos;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = BackEntity;
+
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__audio_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Stage_pool_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Event_quakeEvent_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__AI_bullet1AI_js__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__AI_horming_js__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__bullet_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Effect_bulletBlur_js__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Effect_explosion1_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__param_js__ = __webpack_require__(16);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const bullet1 = __WEBPACK_IMPORTED_MODULE_15__param_js__["a" /* default */].bullet1;
+
+/*bullet1クラス*/
+//Missile
+class Bullet1 extends __WEBPACK_IMPORTED_MODULE_11__bullet_js__["a" /* default */]{
+  constructor(pos,weapon){
+    super(pos,POV(weapon.arg,weapon.speed));
+    //super(VEC0(),VEC0());
+    /*基本情報*/
+    this.frame = 0;
+    this.arg = weapon.arg;
+    this.vi = weapon.speed;
+    this.isTargetOn = weapon.isTargetOn;
+    //if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
+    this.isUpdater  =true;
+    /*スプライト*/
+    this.pattern = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].bulletPattern.bullet1;
+    this.spid = 0;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = pos;
+    this.sprite.anchor.set(0.5);
+    /*コライダ*/
+    this.collider = new __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__["a" /* default */](pos,4,4));//衝突判定の形状
+    /*パラメータ*/
+    this.hp = __WEBPACK_IMPORTED_MODULE_15__param_js__["a" /* default */].bullet1.hp;//弾丸のHP 0になると消滅
+    this.atk = __WEBPACK_IMPORTED_MODULE_15__param_js__["a" /* default */].bullet1.atkMax;//攻撃力
+    this.curve = __WEBPACK_IMPORTED_MODULE_15__param_js__["a" /* default */].bullet1.curve;
+    this.type = ENTITY.BULLET;
+    /*AI*/
+    this.AIList = [];
+    this.AIList.push(new __WEBPACK_IMPORTED_MODULE_9__AI_bullet1AI_js__["a" /* default */](this));
+    //if(weapon.isHorming) this.AIList.push(new Horming(this));
+  }
+
+  Update(){
+    /*□Effect BulletBulr*/
+    if(this.frame%1 == 0){
+      let p = CPV(this.pos);
+      let d = ADV(Rand2D(5),POV(this.frame,3))
+      p = ADV(p,d);
+      let v = POV(this.arg+Math.PI,4);
+      let blur = __WEBPACK_IMPORTED_MODULE_6__Stage_pool_js__["a" /* default */].GetBulletBlur(p,v);
+      if(blur)__WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(blur);
+    }
+    this.arg += Rand(0.2);
+    for (let AI of this.AIList){
+      AI.Do();
+    }
+    /*observer*/
+    //HP || 経過時間
+    if(this.hp<=0 ||
+      this.frame > 100) {
+      __WEBPACK_IMPORTED_MODULE_6__Stage_pool_js__["a" /* default */].Remove(this);
+      //EntityManager.removeEntity(this);
+      __WEBPACK_IMPORTED_MODULE_7__Event_eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_8__Event_quakeEvent_js__["a" /* default */](6,3));//ゆれ
+      __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_14__Effect_explosion1_js__["a" /* default */](CPV(this.pos)));
+      __WEBPACK_IMPORTED_MODULE_1__audio_js__["a" /* default */].PlaySE("missileHit");
+    }
+    this.sprite.position = ADV(this.pos,VECN(8));
+    this.sprite.rotation = this.arg + Math.PI/2;
+    this.sprite.texture = this.pattern[this.spid];
+
+    this.spid = (this.spid+0)%4;
+    this.frame++;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Bullet1;
+
+
+
+/***/ }),
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Effect_bulletHitWall_js__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__timer_js__ = __webpack_require__(7);
+
+
+
+
+
+
+class Bullet1AI{
+  /*bulletの参照を受け取り関数を実行する*/
+  constructor(bullet){
+    this.bullet = bullet;
+  }
+  Phisics(){
+    this.bullet.vel = POV(this.bullet.arg,this.bullet.vi);
+    this.bullet.pos.x += this.bullet.vel.x;
+    this.bullet.pos.y += this.bullet.vel.y;
+  }
+  /* 衝突判定 */
+  collision(){
+    for(let l of __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].enemyList){
+      if(__WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__["a" /* default */].on(this.bullet,l).isHit){
+        l.Damage(-this.bullet.atk - Math.floor(99*Math.random()) );
+        this.bullet.hp--;
+        /* ■ SoundEffect : hitWall */
+        /* □ Effect : hitWall */
+      };
+    }
+    for(let l of __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].wallList){
+      if(__WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__["a" /* default */].on(this.bullet,l).isHit){
+        //breakable object
+        if(l.name == "woodbox"){
+          /* ■ SoundEffect : hitWood */
+          l.Damage(-this.bullet.atk );
+          this.bullet.hp--;
+          //wall
+          }else{
+            /* ■ SoundEffect : hitWall */
+            this.bullet.hp = 0;
+          }
+          /* □ Effect : Exp */
+      }
+    }
+  }
+
+  Do(){
+    this.collision();
+    this.Phisics();
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Bullet1AI;
+
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_js__ = __webpack_require__(2);
+
+
+
+
+class horming{
+  /*bulletの参照を受け取り関数を実行する*/
+  constructor(bullet){
+    this.bullet = bullet;
+  }
+  Do(){
+    //敵方向へのベクトル
+    if(this.bullet.isTargetOn){
+      let to = ADV(this.bullet.targetedEnemy.pos , MLV(VECN(-1),this.bullet.pos));
+      //外積を取って正負を判定
+      let closs = this.bullet.vel.x * to.y - this.bullet.vel.y * to.x; 
+      this.bullet.arg += closs/Math.abs(closs) * this.bullet.curve;
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = horming;
+
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__input_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__font_js__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Event_quitGameEvent_js__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__drawer_js__ = __webpack_require__(11);
+
+
+
+
+
+
+
+
+
+
+
+const COLUMN = 12;
+const INDENT = {x:-8,y:0};
+ 
+class Menu extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
+  constructor(pos){
+    super(pos); 
+    /*基本情報*/
+    this.type = "MENU";
+    this.isMultiple = true;
+    let p = CPV(pos);
+    this.title = new __WEBPACK_IMPORTED_MODULE_5__font_js__["a" /* default */]({x:p.x,y:p.y + -1 * COLUMN},"-PAUSE-","MENU"),
+    this.index = 0;
+    this.items = [
+      new __WEBPACK_IMPORTED_MODULE_5__font_js__["a" /* default */]({x:p.x + 0,y:p.y + 1 * COLUMN},"さいかい","MENU"),
+      new __WEBPACK_IMPORTED_MODULE_5__font_js__["a" /* default */]({x:p.x + 0,y:p.y + 2 * COLUMN},"ぶき","MENU"),
+      new __WEBPACK_IMPORTED_MODULE_5__font_js__["a" /* default */]({x:p.x + 0,y:p.y + 3 * COLUMN},"やめる","MENU"),
+    ];
+    this.Select(this.index);
+    /*スプライト*/
+    this.container = new PIXI.Container;
+    this.container.addChild(this.title.container);
+    for(let l of this.items){
+      this.container.addChild(l.container);
+    }
+  }
+  Select(i){
+    for(let j=0;j<this.items.length;j++){
+      let p = {
+        x : this.pos.x, 
+        y : this.pos.y + (j+1)*COLUMN,
+      }
+      if(j==i){
+        this.items[j].Move(ADV(p,INDENT));
+      }
+      else {
+        this.items[j].Move(p);
+      }
+    }
+  }
+  Close(){
+    __WEBPACK_IMPORTED_MODULE_1__uiManager_js__["a" /* default */].SetFilter([]);
+    __WEBPACK_IMPORTED_MODULE_1__uiManager_js__["a" /* default */].removeUI(__WEBPACK_IMPORTED_MODULE_1__uiManager_js__["a" /* default */].menu);
+    __WEBPACK_IMPORTED_MODULE_6__game_js__["a" /* default */].scene.PopSubState();
+  }
+
+  Update(){
+    if(__WEBPACK_IMPORTED_MODULE_3__input_js__["a" /* default */].isKeyClick(KEY.DOWN)||(__WEBPACK_IMPORTED_MODULE_3__input_js__["a" /* default */].isKeyClick(KEY.RIGHT))){
+      this.index = Math.min(this.index+1,this.items.length-1);
+      this.Select(this.index);
+    }
+    if(__WEBPACK_IMPORTED_MODULE_3__input_js__["a" /* default */].isKeyClick(KEY.UP) || __WEBPACK_IMPORTED_MODULE_3__input_js__["a" /* default */].isKeyClick(KEY.LEFT)){
+      this.index = Math.max(this.index-1,0);
+      this.Select(this.index);
+    }
+    if(__WEBPACK_IMPORTED_MODULE_3__input_js__["a" /* default */].isKeyClick(KEY.C) || __WEBPACK_IMPORTED_MODULE_3__input_js__["a" /* default */].isKeyClick(KEY.X)|| __WEBPACK_IMPORTED_MODULE_3__input_js__["a" /* default */].isKeyClick(KEY.SP)){
+      switch(this.items[this.index].str){
+        case "さいかい" : 
+          this.Close();
+          break;
+        case "ぶき" : break;
+        case "やめる" :
+          this.Close();
+          let qe  = new __WEBPACK_IMPORTED_MODULE_8__Event_quitGameEvent_js__["a" /* default */]();
+          __WEBPACK_IMPORTED_MODULE_7__Event_eventmanager_js__["a" /* default */].eventList.push(qe);
+          break;
+      }
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Menu;
+
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fadeEvent_js__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__game_js__ = __webpack_require__(10);
+
+
+
+
+
+class GameOverEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */]{
+  constructor(){
+    super();
+    function* gen(){
+      let frame = 0;
+      __WEBPACK_IMPORTED_MODULE_1__eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_2__fadeEvent_js__["a" /* default */]("fadeout"));
+
+      while(frame<30){
+        frame++;
+        yield;
+      }
+      __WEBPACK_IMPORTED_MODULE_3__game_js__["a" /* default */].scene.PushSubState("SEQ");
+      yield;
+    }
+    let itt = gen();
+    this.func = itt;
+  }
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = GameOverEvent;
+
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_mapData_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__drawer_js__ = __webpack_require__(11);
+
+
+
+
+
+
+
+
+/*タイトル画面からゲーム開始画面に移行するイベント
+ * (UIの退避)
+ * UIのセット
+ */
+class FadeEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */]{
+  constructor(type){
+    super();//どうでもいい
+    function* FadeOut(){
+      let pattern = __WEBPACK_IMPORTED_MODULE_5__art_js__["a" /* default */].seqPattern;
+      let seq = new Array(400);
+      let spid = 0;
+      let frame = 0;
+      //♢を初期化して追加
+      for(let i = 0; i < 400; i++) {
+      let sp = __WEBPACK_IMPORTED_MODULE_5__art_js__["a" /* default */].SpriteFactory(pattern[spid]);
+      let y = Math.floor(i/20);
+      let x = i%20;
+      sp.scale = VECN(2);
+      sp.position.x = x*16-24;
+      sp.position.y = y*16-24;
+      seq[i] = sp;
+      __WEBPACK_IMPORTED_MODULE_6__drawer_js__["a" /* default */].addContainer(sp,"FILTER");
+    }
+      /*フェードアウト*/
+      while(frame < 40){
+        for(let i = 0; i < 400; i++) {
+          //上から下へ
+          spid = Math.max(0,Math.min(Math.floor(frame - i/8),15));
+          seq[i].texture = pattern[spid];
+        }
+        frame++;
+        yield;
+      }
+      /*ここでマップをロード*/
+      __WEBPACK_IMPORTED_MODULE_4__Stage_mapData_js__["a" /* default */].DeleteStage();
+      __WEBPACK_IMPORTED_MODULE_4__Stage_mapData_js__["a" /* default */].CreateStage(__WEBPACK_IMPORTED_MODULE_2__game_js__["a" /* default */].stage,"ENTER");
+
+      /*マップデータを生成するのでちょっと待つ*/
+      frame = 0;
+      while(frame < 10){
+        frame++;
+        yield
+      }
+      /*フェードin*/
+      __WEBPACK_IMPORTED_MODULE_2__game_js__["a" /* default */].scene.PopSubState();
+      while(frame < 40){
+        for(let i = 0; i < 400; i++) {
+          spid = 16 + Math.max(0,Math.min(Math.floor(frame -i/8),15));
+          seq[i].texture = pattern[spid];
+        }
+        frame++;
+        yield;
+      }
+      for(let i = 0; i < 400; i++) {
+        __WEBPACK_IMPORTED_MODULE_6__drawer_js__["a" /* default */].removeContainer(seq[i],"FILTER");
+      }
+      yield;
+    }
+
+    let itt;
+    itt = FadeOut();
+    this.func = itt;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FadeEvent;
+
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__enemy_js__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AI_enemy2AI_js__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AI_moveReflect_js__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Effect_fontEffect_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__coin_js__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Event_quakeEvent_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__param_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Effect_explosion2_js__ = __webpack_require__(31);
+
+
 
 
 
@@ -3259,7 +4134,7 @@ let ENEMY2 = {
 
 let EntityList = __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].entityList;
 
-class Enemy2 extends __WEBPACK_IMPORTED_MODULE_0__Enemy_js__["a" /* default */]{
+class Enemy2 extends __WEBPACK_IMPORTED_MODULE_0__enemy_js__["a" /* default */]{
   constructor(pos){
     super(pos,VEC0(),VEC0());
     /*基本情報*/
@@ -3271,8 +4146,8 @@ class Enemy2 extends __WEBPACK_IMPORTED_MODULE_0__Enemy_js__["a" /* default */]{
     this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    ENEMY2 = __WEBPACK_IMPORTED_MODULE_13__param_js__["a" /* default */].ENEMY2;
-    this.addAI(new __WEBPACK_IMPORTED_MODULE_6__AI_enemy2AI_js__["a" /* default */](this));
+    ENEMY2 = __WEBPACK_IMPORTED_MODULE_14__param_js__["a" /* default */].ENEMY2;
+    this.addAI(new __WEBPACK_IMPORTED_MODULE_7__AI_moveReflect_js__["a" /* default */](this));
     this.atkMax = ENEMY2.ATK_MAX;
     this.hp = ENEMY2.HP;
     this.gravity = ENEMY2.GRAVITY;
@@ -3285,83 +4160,18 @@ class Enemy2 extends __WEBPACK_IMPORTED_MODULE_0__Enemy_js__["a" /* default */]{
       on : false,
       under : null
     }
+    this.vel = Rand2D(1);
   }
   //die
   Die(){
     this.isAlive = false;
       //死ぬ時にコイン
       for(let i = 0;i<this.coin;i++){
-        __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_9__coin_js__["a" /* default */]({x:this.pos.x,y:this.pos.y}));
+        __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_10__coin_js__["a" /* default */]({x:this.pos.x,y:this.pos.y}));
       }
       //EventManager.eventList.push(new QuakeEvent(5));//ゆれ
       __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-  }
-  //自分がダメージを食らう
-  Damage(atkMax){
-    this.hp += atkMax;
-    //ダメージをポップ
-    __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_8__Effect_fontEffect_js__["a" /* default */](this.pos,-atkMax+"","enemy"));
-  }
-  Collision(){
-    /*衝突判定*/
-    for(let l of __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].wallList){
-      if(l == this) continue;
-      /*衝突判定*/
-      let c = __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__["a" /* default */].on(this,l);
-      if(c.isHit){
-        /* 衝突応答*/
-
-        /*速度*/
-        if(c.n.x != 0) {
-          this.vel.x = 0;
-        }
-        //地面との衝突
-        if(c.n.y == -1){ 
-          this.isJump = false;
-          this.vel.y = Math.min(0,this.vel.y * -0.3);
-        }
-        //天井との衝突
-        if(c.n.y == 1 ){
-          this.vel.y = Math.max(0,this.vel.y * -0.3)
-        }
-        /*押し出し*/
-        this.pos.x += c.n.x * c.depth;
-        this.pos.y += c.n.y * c.depth;
-        /*note : now isHit == false*/
-      }
-    }
-    // 敵同士の衝突
-    this.floor.on  =false ;
-    this.floor.under = null;
-    for(let i=0;i<__WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].enemyList.length;i++){
-      let l = __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].enemyList[i];
-      let c = __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__["a" /* default */].on(this,l);
-      //これないと自分と衝突判定してバグ
-      if(i == __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].enemyList.indexOf(this))continue;
-      //衝突判定
-      if(c.isHit){
-        // 衝突応答
-
-        //速度
-        if(c.n.x != 0) this.vel.x *= -1;
-        //地面との衝突
-        if(c.n.y == -1){ 
-          this.floor.on = true;
-          this.floor.under = __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].enemyList[i];
-          this.isJump = false;
-          this.vel.y = Math.min(1,this.vel.y * -0.3);
-        }
-        //天井との衝突
-        if(c.n.y == 1 ){
-          this.vel.y = Math.max(1,this.vel.y * -0.3)
-        }
-        //押し出し
-        let l = __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].enemyList[i];
-        this.pos.x += c.n.x * c.depth/2;
-        this.pos.y += c.n.y * c.depth/2;
-        //note : now isHit == false
-      }
-    }
+      __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_15__Effect_explosion2_js__["a" /* default */](this.pos));
   }
   //プレイヤーにダメージを与える
   Hurt(){
@@ -3387,25 +4197,21 @@ class Enemy2 extends __WEBPACK_IMPORTED_MODULE_0__Enemy_js__["a" /* default */]{
     this.acc.y = 0;
     this.acc.x = 0;
     //最大速度制限
-    this.vel.y = Math.max(Math.min(this.vel.y,0.05),-0.05);
   }
   Animation(){
     this.spid = Math.floor(this.frame/2)%4;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
-    this.frame++;
   }
 
   Update(){
     for (let AI of this.AIList){
-      AI.Do(this);
+      AI.Do();
     }
-    this.Collision();
     this.Physics();
     this.Hurt();
-    this.Animation();//アニメーション
+    this.Animation();
     this.frame++;
-
     //observer
     if(this.hp<=0){
       this.Die();
@@ -3417,63 +4223,181 @@ class Enemy2 extends __WEBPACK_IMPORTED_MODULE_0__Enemy_js__["a" /* default */]{
 
 
 /***/ }),
-/* 39 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
-
-
-class Enemy extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
-  constructor(pos,vel){
-    super(pos,vel);
-    this.type = ENTITY.ENEMY;
-    this.hp;
-    this.atk;
-    this.AIList = [];//AIの配列
-  }
-  addAI(AI){
-    this.AIList.push(AI);
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Enemy;
-
-
-
-/***/ }),
-/* 40 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game_js__ = __webpack_require__(10);
 /*｡+☆.En†rypoinT.☆+｡*/
  
 
 /*拡大方式をニアレストネイバーに*/
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-__WEBPACK_IMPORTED_MODULE_0__Game_js__["a" /* default */].Load();
+__WEBPACK_IMPORTED_MODULE_0__game_js__["a" /* default */].Load();
 
 
 
 /***/ }),
-/* 41 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entity_bullet1_js__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Entity_Effect_target_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_pool_js__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__weapon_js__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__audio_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Entity_Effect_bulletShot_js__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__timer_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Entity_Effect_fontEffect_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Event_quakeEvent_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__param_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__Entity_Effect_explosion1_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__Entity_Effect_explosion2_js__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__Entity_Effect_flash_js__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Entity_Effect_sonic_js__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__Entity_Effect_lasersight_js__ = __webpack_require__(39);
 
 
-class Enemy extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
-  constructor(pos,vel){
-    super(pos,vel);
-    this.type = ENTITY.ENEMY;
-    this.hp;
-    this.atk;
-    this.AIList = [];//AIの配列
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Weapon1 extends __WEBPACK_IMPORTED_MODULE_5__weapon_js__["a" /* default */]{
+  constructor(){
+    super("1");
+    /*基本情報*/
+    /*パラメータ*/
+    this.param = __WEBPACK_IMPORTED_MODULE_15__param_js__["a" /* default */].weapon1;
+    this.agi = this.param.agi;//間隔
+    this.cost = this.param.cost;
+    this.speed = this.param.speed;//弾速
+    this.length = this.param.length;//射程距離
+    /*option*/
+    this.isTarget = this.param.isTarget;
+    this.isHorming = this.param.isHorming;
+    this.isLasersight = this.param.isLasersight;
   }
-  addAI(AI){
-    this.AIList.push(AI);
+  shot(player){
+    //最後に撃ってからframeまで停止
+    if((player.frame - player.frameShot) > this.agi){
+      //shot時刻
+      player.frameShot = player.frame;
+      //playerの弾薬が残っていなければ打てない
+      if(player.bullet < this.cost){
+        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_12__Entity_Effect_fontEffect_js__["a" /* default */](player.pos,"たりないよ","pop"));
+      }else{
+
+        //弾薬消費
+        player.bullet -= this.cost;
+        console.assert(player.bullet >=0 );
+
+        this.arg = player.arg;
+        let p = {
+          x: player.pos.x -4 + 10 * Math.cos(this.arg),
+          y: player.pos.y + 10 * Math.sin(this.arg),
+        }
+        let bullet = __WEBPACK_IMPORTED_MODULE_4__Stage_pool_js__["a" /* default */].GetMissile(p,this);
+        //let bullet = new Bullet1(p,this);
+        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(bullet);
+        /* ■ SoundEffect : shot */
+        __WEBPACK_IMPORTED_MODULE_7__audio_js__["a" /* default */].PlaySE("missileShot");
+        /* □ Effect : shot */
+        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_10__Entity_Effect_bulletShot_js__["a" /* default */](CPV(p),VEC0()));
+        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_17__Entity_Effect_explosion2_js__["a" /* default */](CPV(p),this.arg));
+        //反動
+        //player.vel.x -= v.x/11;
+        let v = POV(this.arg,this.speed);
+        player.acc.y -= Math.max(v.y/5,0);
+        //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
+        //振動
+        //EventManager.eventList.push(new QuakeEvent(8,2));
+      }
+    }
+  }
+  Update(player){
+    if(this.isTarget) this.Target(player);
+    if(this.isLasersight) this.Lasersight(player);
+  }
+  Reset(){
+    if(this.isTarget)__WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].removeEntity(this.target);
+    if(this.isLasersight)__WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].removeEntity(this.lasersight);
+  }
+  Option(option,value){
+    switch(option){
+      case "isHorming" : this.isHorming = value ;break;
+      case "isLasersight" : this.isLasersight = value ;break;
+      case "isTarget" : this.isTarget = value ;break;
+      default : console.warn(option);
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Weapon1;
+
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__input_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__timer_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_js__ = __webpack_require__(2);
+
+
+
+
+
+
+
+ 
+class WeaponIcon extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
+  constructor(pos,name){
+    super(pos); 
+    /*基本情報*/
+    this.type = "WICON";
+    this.tex;
+    switch(name){
+      case "1" : this.tex = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].UIPattern.wIcon.w1[0] ; break;
+      case "2" : this.tex = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].UIPattern.wIcon.w2[0] ; break;
+      case "3" : this.tex = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].UIPattern.wIcon.w3[0] ; break;
+    }
+    this.name = name;
+    this.index = 0;
+    /*スプライト*/
+    this.sprite = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].SpriteFactory(this.tex);
+    this.sprite.position = this.pos;
+  }
+  Update(){
+    this.pos.x++; 
+    this.sprite.position = this.pos;
   }
 }
 /* unused harmony export default */
@@ -3481,11 +4405,325 @@ class Enemy extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
 
 
 /***/ }),
-/* 42 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__input_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__font_js__ = __webpack_require__(23);
+
+
+
+
+
+
+
+
+const P_AMOUNT = {
+  x : 22, 
+  y : 4, 
+};
+//HP Icon
+const P_ICON = {
+  x : -16, 
+  y : 0, 
+};
+
+class HP extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
+  constructor(pos,name){
+    super(pos);
+    /*基本情報*/
+    this.isAlive = true;//消えたらfalse
+    this.type = "HP"; 
+    this.isMultiple = true;
+    this.name = name;
+    this.pos = pos;
+    /*child*/
+    this.outer = {pos:CPV(pos)};
+    this.bar = {pos:CPV(pos)};
+    this.icon = {pos:ADV(pos,P_ICON)};
+    this.amount = new __WEBPACK_IMPORTED_MODULE_6__font_js__["a" /* default */](ADV(pos,P_AMOUNT),"100","HP");//数字
+    /*スプライト*/
+    this.spid = 0;
+    this.container = new PIXI.Container();
+    let s;
+    //outer
+    s = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].SpriteFactory(__WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.HP[this.spid]);
+    s.position = this.outer.pos; 
+    this.container.addChild(s);
+    this.spid++;
+    //bar
+    s = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].SpriteFactory(__WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.HP[this.spid]);
+    s.position = this.bar.pos; 
+    this.container.addChild(s);
+    this.spid++;
+    //icon
+    s = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].SpriteFactory(__WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.HP[this.spid]);
+    s.position = this.icon.pos; 
+    this.container.addChild(s);
+    //amount
+    //向こうの配列も動いているっぽい
+    this.container.addChild(this.amount.container);
+    /*パラメータ*/
+    this.max = 100;//EntityManager.player.maxHP;
+    /*state*/
+    this.isPopIn = true;
+  }
+  UpdateBar(hp){
+    //barの長さを更新
+    this.container.children[1].scale.x = hp/this.max;
+    //HP数字の更新
+    this.amount.UpdateFont(hp);
+  }
+  Update(){
+    if(this.isPopIn){
+      let to  = (56-this.pos.x);
+      this.pos.x += to/8;
+    }
+    if(this.pos.x > 56){
+      this.pos.x = 56;
+      this.isPopIn = false;
+    }
+    this.container.position.x = this.pos.x;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = HP;
+
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__input_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__font_js__ = __webpack_require__(23);
+
+
+
+
+
+
+
+
+const P_AMOUNT = {
+  x : 22, 
+  y : 4, 
+};
+//HP Icon
+const P_ICON = {
+  x : -16, 
+  y : 0, 
+};
+
+class Bullet extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
+  constructor(pos,name){
+    super(pos);
+    /*基本情報*/
+    this.isAlive = true;//消えたらfalse
+    this.type = "BULLET"; 
+    this.isMultiple = true;
+    this.name = name;
+    this.pos = pos;
+    /*child*/
+    this.outer = {pos:CPV(pos)};
+    this.bar = {pos:CPV(pos)};
+    this.icon = {pos:ADV(pos,P_ICON)};
+    this.amount = new __WEBPACK_IMPORTED_MODULE_6__font_js__["a" /* default */](ADV(pos,P_AMOUNT),"100","BULLET");//数字
+
+    //pos
+    /*スプライト*/
+    this.spid = 0;
+    this.container = new PIXI.Container();
+    let s;
+    //outer
+    s = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].SpriteFactory(__WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.bullet.outer);
+    s.position = this.outer.pos; 
+    this.container.addChild(s);
+    this.spid++;
+    //bar
+    s = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].SpriteFactory(__WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.bullet.bar);
+    s.position = this.bar.pos; 
+    this.container.addChild(s);
+    this.spid++;
+    //icon
+    s = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].SpriteFactory(__WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.bullet.icon.missile);
+    s.position = this.icon.pos; 
+    this.container.addChild(s);
+    //amount
+    this.container.addChild(this.amount.container);
+    /*パラメータ*/
+    this.max = 100;
+  }
+  UpdateBar(bullet){
+    //barの長さを更新
+    this.container.children[1].scale.x = bullet/this.max;
+    //bullet数字の更新
+    this.amount.UpdateFont(bullet);
+  }
+  ChangeWeapon(name){
+    //アイコンを武器に変更
+    switch(name){
+      case "1": this.container.children[2].texture = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.bullet.icon.missile;
+      break;
+      case "2": this.container.children[2].texture = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.bullet.icon.laser;
+      break;
+    }
+  }
+  Update(){
+    let to  = (56-this.pos.x);
+    this.pos.x += to/8;
+    this.container.position.x = this.pos.x;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Bullet;
+
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__input_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__font_js__ = __webpack_require__(23);
+
+
+
+
+
+
+
+const P_TEXT = VECN(8);//テキストの相対位置
+const COLUMN = 10;//行間
+
+class Message extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
+  constructor(pos,text){
+    super(pos); 
+    /*基本情報*/
+    this.text = text;
+    let sent = this.text.split("\n");
+    this.sentence = [];//Font
+      this.type = "MES";
+    /*child*/
+    this.outer = {
+      sprite : __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].SpriteFactory(__WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].UIPattern.message.frame), 
+    }
+    //文字の長さに応じて枠を調整
+    this.outer.sprite.scale.x *= 1.5;
+    this.outer.sprite.scale.y *= 1.5; //yは固定
+    /*スプライト*/
+    this.isMultiple = true;
+    //枠スプライト追加
+    let p = CPV(pos);
+    this.outer.sprite.position = p;
+    this.container = new PIXI.Container();
+    this.container.addChild(this.outer.sprite);
+    p = ADV(p,P_TEXT);
+    //テキスト
+    for(let i = 0;i<sent.length;i++){
+      this.sentence.push(new __WEBPACK_IMPORTED_MODULE_5__font_js__["a" /* default */](p,sent[i],"MES"));//テキスト 
+      p.y += COLUMN;
+    }
+    //各行各文字のスプライトを追加
+    for(let l of this.sentence){
+      this.container.addChild(l.container);
+    }
+  }
+  Page(text){
+    //改ページするために文字だけを消す
+    for(let i=0;i<this.sentence.length;i++){
+      __WEBPACK_IMPORTED_MODULE_1__uiManager_js__["a" /* default */].removeUI(this.sentence[i]);
+    }
+    //これをすると先頭以外の要素が消える
+    //つまり枠スプライトを残し他の文字を消す
+    this.container.children.length = 1;//は？
+      //新しい文字
+      this.text = text;
+    let sent = this.text.split("\n");
+    this.sentence = [];//Font
+      let p = CPV(this.pos);
+    p = ADV(p,P_TEXT);
+    //テキスト
+    for(let i = 0;i<sent.length;i++){
+      this.sentence.push(new __WEBPACK_IMPORTED_MODULE_5__font_js__["a" /* default */](p,sent[i],"MES"));//テキスト 
+      p.y += COLUMN;
+    }
+    //各行各文字のスプライトを追加
+    for(let l of this.sentence){
+      this.container.addChild(l.container);
+    }
+    __WEBPACK_IMPORTED_MODULE_1__uiManager_js__["a" /* default */].addUI(this);
+  }
+  Update(){
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Message;
+
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_mapData_js__ = __webpack_require__(24);
+
+
+
+
+
+
+/*初期状態タイトル画面に移行するイベント
+ * (UIの退避)
+ * UIのセット
+ */
+class QuitGameEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */]{
+  constructor(){
+    super(1);
+    function* gen(){
+      __WEBPACK_IMPORTED_MODULE_2__game_js__["a" /* default */].scene.ChangeState(STATE.STAGE,STATE.TITLE);
+      /*delete all entities*/
+      __WEBPACK_IMPORTED_MODULE_4__Stage_mapData_js__["a" /* default */].DeleteStage();
+      __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__["a" /* default */].Clean();
+      /*Reinitialize Game*/
+      __WEBPACK_IMPORTED_MODULE_2__game_js__["a" /* default */].stage = 0;
+      /*Setting Title*/
+      __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__["a" /* default */].SetTitle();
+      yield ;
+    }
+    let itt = gen();
+    this.func = itt;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = QuitGameEvent;
+
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
 
@@ -3496,14 +4734,12 @@ class Enemy extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
 class BackEntity extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
   constructor(pos,tex){
     super(pos,VEC0());
-    this.type = ENTITY.BG;
+    this.layer = "BG";
+    this.isUpdater = false;
     this.tex = tex;
     this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.tex);
     this.sprite.scale = VECN(2);
     this.sprite.position = pos;
-  }
-  Update(){
-    /*nothing to do*/
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = BackEntity;
@@ -3511,23 +4747,25 @@ class BackEntity extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default
 
 
 /***/ }),
-/* 43 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_circle_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_circle_js__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__input_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Event_messageEvent_js__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Game_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__backEntity_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Event_messageEvent_js__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__backEntity_js__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Effect_signpop_js__ = __webpack_require__(59);
+
 
 
 
@@ -3546,9 +4784,11 @@ class BackEntity extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default
 class Signboard extends __WEBPACK_IMPORTED_MODULE_11__backEntity_js__["a" /* default */]{
   constructor(pos,message){
     super(pos,__WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].wallPattern.signboard);
-    this.type = ENTITY.BACK;
+    /*基本情報*/
+    this.layer= "BACK";
     this.name = "signboard";
-      /*
+    this.isUpdater = true;
+      /* 固有情報
        * message : 複数のページからなる文章
        * text : 1つのページの文章
        * sentense : 1行の文章
@@ -3561,50 +4801,58 @@ class Signboard extends __WEBPACK_IMPORTED_MODULE_11__backEntity_js__["a" /* def
     }
     this.page = 0;//現在のページ番号
     this.isRead = false;//会話中かどうか
-      /*スプライト*/
+    /*スプライト*/
     this.tex = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].wallPattern.signboard;//テクスチャ
     this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.tex);
     this.sprite.position = pos;
+    //pop
+    let p = CPV(this.pos);
+    p.y -= 16;
+    this.popup = new __WEBPACK_IMPORTED_MODULE_13__Effect_signpop_js__["a" /* default */](p);
+    __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(this.popup);
+  }
+  Read(){
+    if(!this.isRead){
+      this.isRead = true;
+      let event = new __WEBPACK_IMPORTED_MODULE_9__Event_messageEvent_js__["a" /* default */](this.message[this.page],"POP");
+      __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__["a" /* default */].eventList.push(event);
+      this.page++;
+    }else{
+      /*イベント発生用メッセージ*/
+      //イベントを発生させてページを読み進める
+      //テスト用イベント(死ぬ)
+      if(this.message[this.page] == "EVENT"){;
+        //第一引数いらんのでは?
+        let event = new __WEBPACK_IMPORTED_MODULE_9__Event_messageEvent_js__["a" /* default */](this.message[this.page],"EVENT");
+        __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__["a" /* default */].eventList.push(event);
+        this.page++;
+      }
+      if(this.page < this.message.length){
+        let event = new __WEBPACK_IMPORTED_MODULE_9__Event_messageEvent_js__["a" /* default */](this.message[this.page],"PAGE");
+        __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__["a" /* default */].eventList.push(event);
+        this.page++;
+        //続きがあれば読む
+        }else{
+          //なければ終了
+          __WEBPACK_IMPORTED_MODULE_10__game_js__["a" /* default */].scene.PopSubState();
+          __WEBPACK_IMPORTED_MODULE_12__UI_uiManager_js__["a" /* default */].CloseMessage();//枠を閉じる
+          this.isRead = false;
+          this.isNear = false;
+          this.page = 0;
+          this.popup;
+        }
+    }
   }
 
   Update(){
+    //メッセージ文が"EVENT"ならばイベントを発生させる
+    //page : 現在のページ番号
     let player = __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].player;
-    if(__WEBPACK_IMPORTED_MODULE_6__util_js__["a" /* default */].distance(player.pos,this.pos) < 16 && player.isAlive){
-      //キーを押すと読む
-      //メッセージ文が"EVENT"ならばイベントを発生させる
-      //page : 現在のページ番号
+    if(__WEBPACK_IMPORTED_MODULE_6__util_js__["a" /* default */].distance(player.pos,this.pos) <  16 && player.isAlive){
       if( __WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyClick(KEY.SP)){
-        if(!this.isRead){
-          this.isRead = true;
-          let event = new __WEBPACK_IMPORTED_MODULE_9__Event_messageEvent_js__["a" /* default */](this.message[this.page],"POP");
-          __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__["a" /* default */].eventList.push(event);
-          this.page++;
-        }else{
-          /*イベント発生用メッセージ*/
-          //イベントを発生させてページを読み進める
-          //テスト用イベント(死ぬ)
-          if(this.message[this.page] == "EVENT"){;
-            //第一引数いらんのでは?
-            let event = new __WEBPACK_IMPORTED_MODULE_9__Event_messageEvent_js__["a" /* default */](this.message[this.page],"EVENT");
-            __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__["a" /* default */].eventList.push(event);
-            this.page++;
-          }
-          if(this.page < this.message.length){
-            let event = new __WEBPACK_IMPORTED_MODULE_9__Event_messageEvent_js__["a" /* default */](this.message[this.page],"PAGE");
-            __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__["a" /* default */].eventList.push(event);
-            this.page++;
-            //続きがあれば読む
-          }else{
-            //なければ終了
-            __WEBPACK_IMPORTED_MODULE_10__Game_js__["a" /* default */].isMes = false;
-            __WEBPACK_IMPORTED_MODULE_12__UI_uiManager_js__["a" /* default */].CloseMessage();//枠を閉じる
-            this.isRead = false;
-            this.page = 0;
-          }
-        }
+        this.Read();
       }
     }
-    // this.sprite.position = this.pos;
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Signboard;
@@ -3612,19 +4860,15 @@ class Signboard extends __WEBPACK_IMPORTED_MODULE_11__backEntity_js__["a" /* def
 
 
 /***/ }),
-/* 44 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_mapData_js__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__quakeEvent_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Game_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__ = __webpack_require__(0);
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__ = __webpack_require__(0);
 
 
 
@@ -3633,21 +4877,20 @@ class Signboard extends __WEBPACK_IMPORTED_MODULE_11__backEntity_js__["a" /* def
 
 //新しくメッセージ枠を開く
 function* pop(text){
-  __WEBPACK_IMPORTED_MODULE_5__Game_js__["a" /* default */].isMes = true;
+  __WEBPACK_IMPORTED_MODULE_3__game_js__["a" /* default */].scene.PushSubState("MES");
   __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__["a" /* default */].PopMessage(text,"POP");
   yield ;
 }
 //メッセージをスクロールする
 function* page(text){
-  __WEBPACK_IMPORTED_MODULE_5__Game_js__["a" /* default */].isMes = true;
   __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__["a" /* default */].PopMessage(text,"PAGE");
   yield ;
 }
 //イベントを発生させる
 function* event(){
-  let e = new __WEBPACK_IMPORTED_MODULE_4__quakeEvent_js__["a" /* default */](5,10);
-  __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__["a" /* default */].player.Damage(-999);
-  __WEBPACK_IMPORTED_MODULE_3__eventmanager_js__["a" /* default */].eventList.push(e);
+  let e = new QuakeEvent(5,10);
+  __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].player.Damage(-999);
+  __WEBPACK_IMPORTED_MODULE_2__eventmanager_js__["a" /* default */].eventList.push(e);
   yield ;
 }
 
@@ -3656,8 +4899,9 @@ let itt;
 class MessageEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */]{
   //text ... 文章の配列
   //type : 
-  //1 : new message 
-  //2 : scrll page
+  //pop : new message 
+  //page : scrll page
+  //event : trriger event
   constructor(text,type){
     super(); //特に意味はない
     switch(type){
@@ -3673,276 +4917,77 @@ class MessageEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* defaul
 
 
 /***/ }),
-/* 45 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__input_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_js__ = __webpack_require__(2);
-
-
-
-
-
-
-
- 
-class UIWeaponIcon extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
-  constructor(pos,name){
-    super(pos); 
-    /*基本情報*/
-    this.type = UI_.WICON;
-    this.tex;
-    switch(name){
-      case "1" : this.tex = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].UIPattern.wIcon.w1[0] ; break;
-      case "2" : this.tex = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].UIPattern.wIcon.w2[0] ; break;
-      case "3" : this.tex = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].UIPattern.wIcon.w3[0] ; break;
-    }
-    this.name = name;
-    this.index = 0;
-    /*スプライト*/
-    this.sprite = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].SpriteFactory(this.tex);
-    this.sprite.position = this.pos;
-  }
-  Update(){
-    this.pos.x++; 
-    this.sprite.position = this.pos;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = UIWeaponIcon;
-
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__input_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_js__ = __webpack_require__(2);
-
-
-
-
-
-
-
- class UIWeaponIcon extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
-   constructor(pos,name){
-    super(pos); 
-    /*基本情報*/
-    this.name = name;
-    this.type = UI_.WEQUIP;
-    /*スプライト*/
-    this.tex = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].UIPattern.wEq1,UI_.WEQUIP; 
-    this.sprite = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].SpriteFactory(this.tex);
-    this.sprite.position = this.pos;
-   }
-   Update(){
-     /*nothing to do*/
-   }
- }
-/* unused harmony export default */
-
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__input_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_js__ = __webpack_require__(2);
-
-
-
-
-
-
-
-
-class UIHP extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
-  constructor(pos,name){
-    super(pos);
-    /*基本情報*/
-    this.frame = 0;
-    this.isAlive = true;//消えたらfalse
-      this.type = UI_.HP; 
-    /*スプライト*/
-    switch (name){
-      case "frame" : 
-        this.spid = 0;
-        break;
-      case "bar" :
-        this.spid = 1;
-        break;
-      case "icon" :
-        this.spid = 2;
-        break;
-      default :
-        console.warn("UI");
-        break;
-    }
-    this.tex = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.HP[this.spid];
-    this.sprite = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].SpriteFactory(this.tex);
-    this.sprite.position = this.pos;
-    this.name = name;
-    this.max = 100;//EntityManager.player.maxHP;
-  }
-  UpdateBar(hp){
-    if(this.name == "bar"){
-      /*debug*/
-      if(!__WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].player){
-        console.warn("player undefined");
-      }else{
-        this.sprite.scale.x = hp/this.max;
-        __WEBPACK_IMPORTED_MODULE_1__uiManager_js__["a" /* default */].HP.font.UpdateFont(hp);
-      }
-    }
-  }
-  Update(){
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = UIHP;
-
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__input_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_js__ = __webpack_require__(2);
-
-
-
-
-
-
-
-
-class UIBullet extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
-  constructor(pos,name){
-    super(pos);
-    /*基本情報*/
-    this.frame = 0;
-    this.isAlive = true;//消えたらfalse
-    this.type = UI_.BULLET;;
-    /*スプライト*/
-    switch (name){
-      case "frame" : this.spid = 0; break;
-      case "bar" : this.spid = 1; break;
-      case "icon" : this.spid = 2; break;
-      default : console.warn("bullet"); break;
-    }
-    this.tex = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].UIPattern.bullet[this.spid];
-    this.sprite = __WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].SpriteFactory(this.tex);
-    this.sprite.position = this.pos;
-    this.name = name;
-    this.max = 100;//EntityManager.player.maxbullet;
-  }
-  UpdateBar(bullet){
-    if(this.name == "bar"){
-      /*debug*/
-      if(!__WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].player){
-        console.warn("player undefined");
-      }else{
-        this.sprite.scale.x = bullet/this.max;
-        __WEBPACK_IMPORTED_MODULE_1__uiManager_js__["a" /* default */].bullet.font.UpdateFont(bullet);
-      }
-    }
-  }
-  Update(){
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = UIBullet;
-
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_js__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__input_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_js__ = __webpack_require__(2);
-
-
-
-
-
-
-
- class UIMessage extends __WEBPACK_IMPORTED_MODULE_0__ui_js__["a" /* default */]{
-   constructor(pos,name){
-    super(pos); 
-    /*基本情報*/
-    this.name = name;
-    this.type = "MES";
-    /*スプライト*/
-    this.tex = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].UIPattern.message.frame;
-    this.sprite = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].SpriteFactory(this.tex);
-    this.sprite.position = this.pos;
-   }
-   Update(){
-     /*nothing to do*/
-   }
- }
-/* harmony export (immutable) */ __webpack_exports__["a"] = UIMessage;
-
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_Box_js__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__input_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Event_event_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Event_gameOverEvent_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__drawer_js__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Game_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Weapon_weaponManager_js__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__Effect_fontEffect_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__Effect_bulletShot_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__Effect_explosion1_js__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Effect_explosion2_js__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__Event_quakeEvent_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__Enemy_enemy2_js__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__param_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__drawer_js__ = __webpack_require__(11);
+
+
+
+
+
+
+class Signpop extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos){
+    super(pos,VEC0());
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
+    this.name = "signpop";
+    /*スプライト*/
+    this.spid = 0; //12~15
+    this.frame = 0;
+    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.signpop;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = this.pos;
+  }
+  Delete(){
+    __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+  }
+
+  Update(){
+    this.sprite.texture = this.pattern[this.spid];
+    this.spid = Math.floor(this.frame/4)%4;
+    this.sprite.position = this.pos;
+    this.frame++;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Signpop;
+
+
+
+/***/ }),
+/* 60 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__param_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__audio_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Collision_box_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__input_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Event_event_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Event_gameOverEvent_js__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__drawer_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Weapon_weaponManager_js__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__Effect_fontEffect_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__Effect_bulletShot_js__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__Effect_explosion1_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__Effect_explosion2_js__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__Event_quakeEvent_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__Enemy_enemy2_js__ = __webpack_require__(48);
 
 
 
@@ -3995,8 +5040,9 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
     super(pos,VEC0(),VEC0());
     /*基本情報*/
     let p = CPV(this.pos);
-    this.collider = new __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_4__Collision_Box_js__["a" /* default */](pos,8,16));//衝突判定の形状
+    this.collider = new __WEBPACK_IMPORTED_MODULE_4__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_6__Collision_box_js__["a" /* default */](pos,8,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
+    this.layer = "ENTITY";
     this.frame = 0;
     this.frameDead;//死んだ時刻
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
@@ -4004,23 +5050,29 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
     this.e = 0.1;//反発係数
     this.score = 0;
     this.offset = 0;//↑入力での画面スクロールに使う変数
+      this.isUpdater = true;
     /*スプライト*/
-    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].playerPattern;
+    this.pattern = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
-    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+    this.sprite = __WEBPACK_IMPORTED_MODULE_2__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.maxHP = __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.HP;
+    this.maxHP = __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.HP;
     this.hp = this.maxHP;
-    this.maxBullet = __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.BULLET;
+    this.maxBullet = __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.BULLET;
     this.bullet = this.maxBullet;
-    this.gravity = __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.GRAVITY;
+    this.gravity = __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.GRAVITY;
     this.arg = 0;//狙撃角度 0 - 2π
+    this.scArg = 0;//スクロール用
+    this.toArg = 0;
+    this.scPos = VEC0();//スクロール位置
+
+    this.vxMax = __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.VX_MAX;
+    this.vyMax = __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.VY_MAX;
     /*状態*/
     this.state = STATE.WAITING;
-    this.weapon = __WEBPACK_IMPORTED_MODULE_13__Weapon_weaponManager_js__["a" /* default */].weaponList[0];//選択中の武器のインスタンス
-    this.weapon.isTargetOn = false;
-    this.weapon.target = null;//これ大丈夫か??
+    this.weapon = __WEBPACK_IMPORTED_MODULE_15__Weapon_weaponManager_js__["a" /* default */].weaponList[0];//選択中の武器のインスタンス
+    this.weapon.Init();
     this.dir = DIR.R;//向き
     this.score = 0;
     /*フラグ*/
@@ -4028,6 +5080,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
     this.isRun = false;//走っているか
     this.isAlive = true;//
     this.isInvincible = false//無敵時間
+    this.isNearBoard = false;
     /*床の親子関係*/
     this.floor = {
       on : false,//乗っているか
@@ -4037,83 +5090,85 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
   /*キー入力による移動*/
   Input(){
     /*ジャンプ*/
-    if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.Z)){
+    if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.Z)){
       if(this.isJump == false){
-        this.vel.y = - __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.JUMP_VEL;
+        this.vel.y = - __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.JUMP_VEL;
         this.isJump = true;
         this.state = STATE.JUMPING;
+        // ■ SoundEffect : jump
+        __WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("jump1");
       }
     }
     /*空中ジャンプ*/
     //空中でZ押すとbulletを消費してジャンプできる
-    if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyClick(KEY.Z)){
+    if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyClick(KEY.Z)){
       if(this.state == STATE.FALLING){
         let jumpCost = 20
           if(this.bullet >= jumpCost){
-            __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_19__Effect_explosion2_js__["a" /* default */](CPV(this.pos)));
-            __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_20__Event_quakeEvent_js__["a" /* default */](20,5));
+            __WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("jump2");
+            __WEBPACK_IMPORTED_MODULE_8__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_20__Effect_explosion2_js__["a" /* default */](CPV(this.pos),Math.PI*(1/2)));
+            __WEBPACK_IMPORTED_MODULE_10__Event_eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_21__Event_quakeEvent_js__["a" /* default */](20,5));
             this.frameShot = this.frame;//最終ショット時刻
-              this.vel.y = - __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.JUMP_VEL;
+              this.vel.y = - __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.JUMP_VEL;
             this.bullet -= 20;
             this.state = STATE.JUMPING;
           }else{
             //足りないとできない
-            __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_16__Effect_fontEffect_js__["a" /* default */](this.pos,"たりないよ","pop"));
+            __WEBPACK_IMPORTED_MODULE_8__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_17__Effect_fontEffect_js__["a" /* default */](this.pos,"たりないよ","pop"));
           }
       }
     }
     /*右向き*/
-    if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.RIGHT)){
+    if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.RIGHT)){
       this.state = STATE.RUNNING;
       this.dir = DIR.R;
       this.isRun = true;
-      this.arg = 0;
-      this.acc.x = __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.RUN_VEL;
+      this.toArg = 0;
+      this.acc.x = __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.RUN_VEL;
     }
     /*左向き*/
-    if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.LEFT)){
+    if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.LEFT)){
       this.state = STATE.RUNNING;
       this.dir = DIR.L;
       this.isRun = true;
-      this.arg = Math.PI;
-      this.acc.x = -__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.RUN_VEL;
+      this.toArg = Math.PI;
+      this.acc.x = -__WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.RUN_VEL;
     }
     /*上向き*/
-    if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.UP)){
-      if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.SP)) this.offset = Math.max(this.offset-0.5,-20);
+    if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.UP)){
       //右向き上 or 左向き上
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.UR;
       }else if(this.dir == DIR.L || this.dir == DIR.UL || this.dir == DIR.DL){
         this.dir = DIR.UL;
       }
-      this.arg = -Math.PI/2;
+      this.toArg = 3 * Math.PI/2;
     }
     /*下向き*/
-    if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.DOWN)){
-      if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.SP)) this.offset = Math.min(this.offset+0.5,20);
+    //看板が近くにあれば優先
+    if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.DOWN)){
       //右向き下 or 左向き下
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.DR;
       }else if(this.dir == DIR.L || this.dir == DIR.UL || this.dir == DIR.DL){
         this.dir = DIR.DL;
       }
-      this.arg = Math.PI/2;
+      this.toArg = Math.PI/2;
     }
     /*shot*/
-    if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.X)){
+    if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.X)){
       this.weapon.shot(this);
     }
     /*for debug*/
-    if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.J)){
+    if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.J)){
       this.Damage(-999);
     }
-    if(__WEBPACK_IMPORTED_MODULE_5__input_js__["a" /* default */].isKeyInput(KEY.K) && this.frame%10 == 0){
+    if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.K) && this.frame%10 == 0){
       let p = {
         x:this.pos.x,
         y:this.pos.y - 32
       }
-      __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_21__Enemy_enemy2_js__["a" /* default */](p));
+      //EntityManager.addEntity(new Enemy2(p));
     }
   }
 
@@ -4122,7 +5177,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
     this.frame++;
     switch(this.state){
       case STATE.WAITING :
-        this.spid = (Math.floor(this.frame/__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.ANIM_WAIT))%4
+        this.spid = (Math.floor(this.frame/__WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.ANIM_WAIT))%4
           switch(this.dir){
             case DIR.R : this.sprite.texture = this.pattern.waitR[this.spid]; break;
             case DIR.L : this.sprite.texture = this.pattern.waitL[this.spid]; break;
@@ -4133,7 +5188,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
           }
           break;
       case STATE.JUMPING :
-        this.spid = (Math.floor(this.frame/__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.ANIM_RUN))%4
+        this.spid = (Math.floor(this.frame/__WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.ANIM_RUN))%4
           switch(this.dir){
             case DIR.R : this.sprite.texture = this.pattern.jumpR[this.spid]; break;
             case DIR.L : this.sprite.texture = this.pattern.jumpL[this.spid]; break;
@@ -4144,7 +5199,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
           }
           break;
       case STATE.FALLING :
-        this.spid = (Math.floor(this.frame/__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.ANIM_RUN))%4;
+        this.spid = (Math.floor(this.frame/__WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.ANIM_RUN))%4;
         switch(this.dir){
           case DIR.R : this.sprite.texture = this.pattern.fallR[this.spid]; break;
           case DIR.L : this.sprite.texture = this.pattern.fallL[this.spid]; break;
@@ -4155,7 +5210,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
         }
         break;
       case STATE.RUNNING :
-        this.spid = (Math.floor(this.frame/__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.ANIM_RUN))%6;
+        this.spid = (Math.floor(this.frame/__WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.ANIM_RUN))%6;
         switch(this.dir){
           case DIR.R : this.sprite.texture = this.pattern.runR[this.spid]; break;
           case DIR.L : this.sprite.texture = this.pattern.runL[this.spid]; break;
@@ -4177,7 +5232,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
         break;
         //死亡
         case STATE.DYING:
-          this.spid = Math.min(7,(Math.floor((this.frame - this.frameDead)/__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.ANIM_RUN)));
+          this.spid = Math.min(7,(Math.floor((this.frame - this.frameDead)/__WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.ANIM_RUN)));
           this.sprite.texture = this.pattern.dying[this.spid];
           break;
     }
@@ -4186,34 +5241,36 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
   //他から呼ばれる系
   /*武器チェンジ*/
   ChangeWeapon(name){
-    __WEBPACK_IMPORTED_MODULE_13__Weapon_weaponManager_js__["a" /* default */].ChangeWeapon(this,name);
+    this.weapon.Reset();
+    __WEBPACK_IMPORTED_MODULE_15__Weapon_weaponManager_js__["a" /* default */].ChangeWeapon(this,name);
+    __WEBPACK_IMPORTED_MODULE_16__UI_uiManager_js__["a" /* default */].bullet.ChangeWeapon(name);
   }
   /*ダメージ*/
   /*負の値を入れる*/
   Damage(atk){
     if(atk>0 && atk%1>0){
       console.warn(atk);
+      atk = Math.floor(atk);
     }
     //無敵時間は攻撃を受けない
-    //if(!this.isInvincible){
-      if(this.isAlive){
-        this.hp+=atk;
-        //フォントはダメージ数に応じて数字を表示する　
-        __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_16__Effect_fontEffect_js__["a" /* default */](this.pos,-atk+"","player"));
-        this.hp = Math.max(this.hp,0);
-        //ダメージを受けて一定時間無敵になる
-        this.isInvincible = true;
-        this.frameDamaged = this.frame;
-        __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_20__Event_quakeEvent_js__["a" /* default */](5,2));
-      }
-    //}
+    if(!this.isInvincible && this.isAlive){
+      __WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("playerDamage");
+      this.hp+=atk;
+      //フォントはダメージ数に応じて数字を表示する　
+      __WEBPACK_IMPORTED_MODULE_8__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_17__Effect_fontEffect_js__["a" /* default */](this.pos,-atk+"","player"));
+      this.hp = Math.max(this.hp,0);
+      //ダメージを受けて一定時間無敵になる
+      this.isInvincible = true;
+      this.frameDamaged = this.frame;
+      __WEBPACK_IMPORTED_MODULE_10__Event_eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_21__Event_quakeEvent_js__["a" /* default */](5,2));
+    }
   }
   //コイン取得
   GetScore(){
     if(this.isAlive){
       this.score+=1;
       this.bullet += 5;//とりあえずbulletも回復しとくか
-      __WEBPACK_IMPORTED_MODULE_15__UI_uiManager_js__["a" /* default */].score.font.UpdateFont(this.score);
+      __WEBPACK_IMPORTED_MODULE_16__UI_uiManager_js__["a" /* default */].score.UpdateFont(this.score);
     }
   }
   /* 衝突判定 */
@@ -4221,8 +5278,8 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
     //下からしか通れない物体
       this.floor.on = false;
       this.floor.under = null;
-    for(let l of __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__["a" /* default */].enemyList){
-      let c = __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__["a" /* default */].on(this,l);
+    for(let l of __WEBPACK_IMPORTED_MODULE_8__Stage_entityManager_js__["a" /* default */].enemyList){
+      let c = __WEBPACK_IMPORTED_MODULE_5__Collision_collision_js__["a" /* default */].on(this,l);
       if(c.isHit){
         /* 衝突応答*/
         /*フラグの解除*/
@@ -4230,7 +5287,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
         //床との衝突
         if(c.n.y == -1){
           this.isJump = false;
-          __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__["a" /* default */].Resolve(this,l);
+          __WEBPACK_IMPORTED_MODULE_5__Collision_collision_js__["a" /* default */].Resolve(this,l);
           this.floor.on = true;
           this.floor.under = l;
         }
@@ -4238,8 +5295,8 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
       }
     }
     //壁
-    for(let l of __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__["a" /* default */].wallList){
-      let c = __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__["a" /* default */].on(this,l);
+    for(let l of __WEBPACK_IMPORTED_MODULE_8__Stage_entityManager_js__["a" /* default */].wallList){
+      let c = __WEBPACK_IMPORTED_MODULE_5__Collision_collision_js__["a" /* default */].on(this,l);
       if(c.isHit){
         /* 衝突応答*/
         /*フラグの解除*/
@@ -4248,7 +5305,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
         if(c.n.y == -1){
           this.isJump = false;
         }
-        __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__["a" /* default */].Resolve(this,l);
+        __WEBPACK_IMPORTED_MODULE_5__Collision_collision_js__["a" /* default */].Resolve(this,l);
         /*note : now isHit == false*/
       }
     }
@@ -4267,17 +5324,18 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
       this.vel.x += this.acc.x;
       this.vel.y += this.acc.y;
     //最大速度制限:
-    if(this.vel.x > __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.VX_MAX)this.vel.x = __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.VX_MAX;
-    if(this.vel.x < -__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.VX_MAX)this.vel.x = -__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.VX_MAX;
-    if(this.vel.y > __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.VY_MAX)this.vel.y = __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.VY_MAX;
-    if(this.vel.y < -__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.VY_MAX)this.vel.y = -__WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.VY_MAX;
+    this.vel.x = BET(-this.vxMax , this.vel.x , this.vxMax);
+    if(this.vel.y > this.vyMax)this.vel.y = this.vyMax;
+    //if(this.vel.y < -this.vyMax)this.vel.y = -this.vyMax;
     /*摩擦
      * 地面にいる&&入力がない場合のみ有向*/
      if(this.state == STATE.WAITING){
-       this.vel.x *= __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.FLICTION;
+       this.vel.x *= __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.FLICTION;
+     }else if(this.isJump){
+       this.vel.x *= 0.99;
      }
      //jumping state
-     if(this.isJump && this.vel.y <= -1){
+     if(this.isJump && this.vel.y <= 0){
        this.state = STATE.JUMPING;
      }
      if(this.vel.y > 0 && this.isJump){
@@ -4288,21 +5346,25 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
   }
 
 ScrollByDir(){
-   switch(this.dir){
-   case DIR.UR :
-   case DIR.UL :
-   case DIR.DR :
-   case DIR.DL :
-   default :
-     __WEBPACK_IMPORTED_MODULE_11__drawer_js__["a" /* default */].ScrollOn({x:this.pos.x,y:this.pos.y+90*po(this.offset)});
-   }
+    let d = POV(this.arg,100*po(this.offset));
+    let p = ADV(this.pos,d);
+  if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.SP)) {
+    let to = ADV(p,MLV(this.scPos,VECN(-1)));
+    this.scPos = ADV(this.scPos , MLV(to,VECN(1/20)));
+    this.offset = Math.min(this.offset+0.5,20);
+    __WEBPACK_IMPORTED_MODULE_13__drawer_js__["a" /* default */].ScrollOn(this.scPos);
+  }else{
+    this.scPos = p;
+    this.offset = 0;
+  }
 }
 
 Observer(){
   if(this.hp <= 0){
     if(this.isAlive){
       //死亡開始時に一回だけ呼ばれる部分
-      __WEBPACK_IMPORTED_MODULE_6__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_18__Effect_explosion1_js__["a" /* default */](CPV(this.pos)));
+      __WEBPACK_IMPORTED_MODULE_8__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_19__Effect_explosion1_js__["a" /* default */](CPV(this.pos)));
+      this.weapon.Reset();
       this.frameDead = this.frame;
       this.isDying = true;
       this.isAlive = false;
@@ -4320,8 +5382,8 @@ Dying(){
       //完全死亡時に一回だけ呼ばれる部分
       if(this.isDying){
         //this.state = STATE.DEAD
-        let g = new __WEBPACK_IMPORTED_MODULE_10__Event_gameOverEvent_js__["a" /* default */]();
-        __WEBPACK_IMPORTED_MODULE_8__Event_eventmanager_js__["a" /* default */].eventList.push(g);
+        let g = new __WEBPACK_IMPORTED_MODULE_12__Event_gameOverEvent_js__["a" /* default */]();
+        __WEBPACK_IMPORTED_MODULE_10__Event_eventmanager_js__["a" /* default */].eventList.push(g);
       }
       this.isDying = false;
     }
@@ -4331,45 +5393,64 @@ Dying(){
 //bulletのかいふく
 Supply(){
   //最後に撃った時刻から経過するほど早くなる
-  //let t1 = 100;
   let t = (this.frame-this.frameShot);
-  if(t<=50 && t%10 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-  else if(t>50 && t<=100 && t%5 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-  else if(t>100 && t<=150 && t%3 == 0) this.bullet = Math.min(this.maxBullet,this.bullet+1);
-  else if(t>150) this.bullet = Math.min(this.maxBullet,this.bullet+1);
+  if(t<=50 && t%10 == 0) this.bullet++;
+  else if(t>50 && t<=100 && t%5 == 0) this.bullet++;
+  else if(t>100 && t<=150 && t%3 == 0) this.bullet++
+  else if(t>150) this.bullet++;
+  this.bullet = BET(0,this.bullet,this.maxBullet);
 }
 
+SetArg(arg){
+  let d = this.toArg - this.arg;
+  if(d > Math.PI)d -= 2*Math.PI;
+  if(d < -Math.PI)d += 2*Math.PI;
+  this.arg += d*0.2;
+}
 
   Update(){
       if(this.isAlive){
+        /*Init*/
         if(!this.isJump) {
           this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
         }
         this.isRun = false;
         this.Input();//入力
-        this.weapon.Target(this);//照準を自動でやってる
+        this.SetArg(this.toArg);
+        this.weapon.Update(this);//weapon
         this.Physics();//物理
         this.Collision();//衝突
+        this.Supply();//bulletのかいふく　
+        __WEBPACK_IMPORTED_MODULE_16__UI_uiManager_js__["a" /* default */].bullet.UpdateBar(this.bullet); //BulletBarの更新
+        __WEBPACK_IMPORTED_MODULE_16__UI_uiManager_js__["a" /* default */].HP.UpdateBar(this.hp);//HPbarの更新
+      }
+      /*for debug*/
+      if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyClick(KEY.K)){
+        /*
+        switch(this.weapon.name){
+          case  "1" : this.ChangeWeapon("2");break;
+          case  "2" : this.ChangeWeapon("1");break;
+        }
+        */
       }
       
       this.ScrollByDir();//向きに応じてスクロール位置を変更
-      __WEBPACK_IMPORTED_MODULE_11__drawer_js__["a" /* default */].ScrollOn(this.pos);//プレイヤー中心にスクロール
+      __WEBPACK_IMPORTED_MODULE_13__drawer_js__["a" /* default */].ScrollOn(this.pos);//プレイヤー中心にスクロール
       this.Observer(); //死亡チェック
       this.Dying();//死亡中
       //無敵時間の有向時間
-      if(this.frame - this.frameDamaged > __WEBPACK_IMPORTED_MODULE_22__param_js__["a" /* default */].PLAYER.INV_TIME){
+      if(this.frame - this.frameDamaged > __WEBPACK_IMPORTED_MODULE_1__param_js__["a" /* default */].player.INV_TIME){
         this.isInvincible = false;
       }
-      this.Supply();//bulletのかいふく　
-      __WEBPACK_IMPORTED_MODULE_15__UI_uiManager_js__["a" /* default */].bullet.bar.UpdateBar(this.bullet); //BulletBarの更新
-      __WEBPACK_IMPORTED_MODULE_15__UI_uiManager_js__["a" /* default */].HP.bar.UpdateBar(this.hp);//HPbarの更新
       this.sprite.position = {
       x : this.pos.x-4,
       y : this.pos.y
     }
     /*パラメータ*/
     this.offset *= 0.99;
-      this.Animation();//状態から画像を更新
+    this.Animation();//状態から画像を更新
+    /*reset*/
+    this.isNearBoard = false;
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Player;
@@ -4378,567 +5459,13 @@ Supply(){
 
 
 /***/ }),
-/* 51 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/*矩形*/
-class Box{
-  //pos:左上の座標
-  //width
-  //height
-  constructor(pos,width,height){
-    this.pos = pos;
-    this.width = width;
-    this.height = height;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Box;
-
-
-
-/***/ }),
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entity_bullet1_js__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Entity_Effect_target_js__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__weapon_js__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Entity_Effect_bulletShot_js__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Entity_Effect_fontEffect_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Event_eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Event_quakeEvent_js__ = __webpack_require__(18);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const DIR = {
-  UR : "UR",
-  UL : "UL",
-  DR : "DR",
-  DL : "DL",
-  R : "R",
-  L : "L",
-};
-
-const SEEN = 2;
-
-class Weapon1 extends __WEBPACK_IMPORTED_MODULE_4__weapon_js__["a" /* default */]{
-  constructor(){
-    super("1");
-    /*基本情報*/
-    this.target;
-    this.isTargetOn = false;//照準が発生しているか
-      /*パラメータ*/
-      this.agi = 15;//間隔
-    this.cost = 5;
-    this.speed = 6;//弾速
-      this.length = 180;//射程距離
-  }
-
-  //敵が視界に入っているか
-  isSeen(player,enemy){
-    return (player.dir == DIR.UR || player.dir ==  DIR.UL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 1
-      || (player.dir == DIR.DR || player.dir == DIR.DL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) <-1
-        || player.dir == DIR.R && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) <-1
-          || player.dir == DIR.L && (player.pos.x-enemy.pos.x)/Math.abs((player.pos.y-enemy.pos.y)) >1
-  }
-
-  Target(player){
-    /*とりあえず全探索*/
-    for(let l of __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].enemyList){
-      //既にロックオンされている敵が射程外に出たら解除
-      if(this.isTargetOn &&
-        l == this.target.enemy){
-        if(__WEBPACK_IMPORTED_MODULE_7__util_js__["a" /* default */].distance(l.pos, player.pos) < this.length
-          //各方向+-45度まで許容
-          && this.isSeen(player,l)
-        ){
-          continue;
-        }
-        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].removeEntity(this.target);
-        this.isTargetOn = false;
-        continue;
-      }
-      //射程距離以内かつ視界
-      if(__WEBPACK_IMPORTED_MODULE_7__util_js__["a" /* default */].distance(l.pos, player.pos) < this.length && this.isSeen(player,l)
-      ){
-        //既にロックオンされている敵より近ければ
-        if(!this.isTargetOn ||
-          __WEBPACK_IMPORTED_MODULE_7__util_js__["a" /* default */].distance(l.pos , player.pos) < __WEBPACK_IMPORTED_MODULE_7__util_js__["a" /* default */].distance(this.target.pos,player.pos)){
-          //今のロック先を解除して
-          if(this.isTargetOn){
-            __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].removeEntity(this.target);
-            this.isTargetOn = false;
-          }
-          //targetを追加する
-          this.target = new __WEBPACK_IMPORTED_MODULE_2__Entity_Effect_target_js__["a" /* default */](l);
-          __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(this.target,__WEBPACK_IMPORTED_MODULE_9__timer_js__["a" /* default */].timer);
-          this.isTargetOn = true;
-        }
-      }
-    }
-    if(this.isTargetOn == true){
-      //lockしていた敵が視界から消えたら消去
-      if(!this.target.enemy.isAlive){
-        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].removeEntity(this.target);
-        this.isTargetOn = false;
-      }else{
-        //方向を指定
-        player.arg = Math.atan((this.target.pos.y-player.pos.y)/(this.target.pos.x-player.pos.x));
-        if(player.pos.x > this.target.pos.x ) player.arg += Math.PI;
-      }
-    }
-  }
-  shot(player){
-    //最後に撃ってからframeまで停止
-    if((player.frame - player.frameShot) > this.agi){
-      //shot時刻
-      player.frameShot = player.frame;
-      //playerの弾薬が残っていなければ打てない
-      if(player.bullet < this.cost){
-        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_10__Entity_Effect_fontEffect_js__["a" /* default */](player.pos,"たりないよ","pop"));
-      }else{
-
-        //弾薬消費
-        player.bullet -= this.cost;
-        console.assert(player.bullet >=0 );
-
-        let vi = this.speed;
-        let v = {
-          x: vi * Math.cos(player.arg + (Math.random()-0.5)/5),
-          y: vi * Math.sin(player.arg + (Math.random()-0.5)/5)
-        }
-        let p = {
-          x: player.pos.x -4 + 5 * Math.cos(player.arg),
-          y: player.pos.y + 5 * Math.sin(player.arg),
-        }
-        let bullet = new __WEBPACK_IMPORTED_MODULE_1__Entity_bullet1_js__["a" /* default */](p,v);
-        bullet.atk = 1;
-        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(bullet);
-        /* ■ SoundEffect : shot */
-        /* □ Effect : shot */
-        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_8__Entity_Effect_bulletShot_js__["a" /* default */](CPV(p),VEC0()));
-        //反動
-        //player.vel.x -= v.x/11;
-        //player.acc.y -= v.y/5;
-        if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
-        //振動
-        __WEBPACK_IMPORTED_MODULE_11__Event_eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_12__Event_quakeEvent_js__["a" /* default */](8,2));
-      }
-    }
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Weapon1;
-
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collision_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Event_eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Event_quakeEvent_js__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AI_bullet1AI_js__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__bullet_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Effect_bulletBlur_js__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Effect_brightCoin_js__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Effect_sonic_js__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__Effect_stone_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Effect_flash_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Effect_fire_js__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__Effect_smoke_js__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__Effect_explosion1_js__ = __webpack_require__(37);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*bullet1クラス*/
-class Bullet1 extends __WEBPACK_IMPORTED_MODULE_8__bullet_js__["a" /* default */]{
-  constructor(pos,vel){
-    super(pos,vel,VEC0());
-    /*基本情報*/
-    this.frame = 0;
-    /*スプライト*/
-    this.pattern = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].bulletPattern.bullet1;
-    this.spid = 0;
-    this.sprite = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = pos;
-    /*コライダ*/
-    this.collider = new __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__["a" /* default */](pos,4,4));//衝突判定の形状
-    /*パラメータ*/
-    this.hp = 1;//弾丸のHP 0になると消滅
-    this.atk = 99;//攻撃力
-    this.length = 180;//これは武器がもつ?
-    this.launchedPos = CPV(pos);//射出された座標 射程距離の計算に必要 
-    this.type = ENTITY.BULLET;
-    /*AI*/
-    this.AIList = [];
-    this.AIList.push(new __WEBPACK_IMPORTED_MODULE_7__AI_bullet1AI_js__["a" /* default */](this));
-  }
-
-  Update(){
-    /*□Effect BulletBulr*/
-    if(this.frame%1 == 0){
-      let p = CPV(this.pos);
-      let v = VEC0();
-      __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_9__Effect_bulletBlur_js__["a" /* default */](p,v));
-    }
-    for (let AI of this.AIList){
-      AI.Do();
-    }
-    /*observer*/
-    //HP || 飛行距離
-    if(this.hp<=0 ||
-      this.frame > 100 || 
-      __WEBPACK_IMPORTED_MODULE_11__util_js__["a" /* default */].distance(this.pos , this.launchedPos) > this.length){
-      __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-    __WEBPACK_IMPORTED_MODULE_5__Event_eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_6__Event_quakeEvent_js__["a" /* default */](6));//ゆれ
-    __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_17__Effect_explosion1_js__["a" /* default */](CPV(this.pos)));
-    }
-    this.sprite.position = this.pos;
-    this.frame++;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Bullet1;
-
-
-
-/***/ }),
-/* 54 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Effect_bulletHitWall_js__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__timer_js__ = __webpack_require__(3);
-
-
-
-
-
-
-class Bullet1AI{
-  /*bulletの参照を受け取り関数を実行する*/
-  constructor(bullet){
-    this.bullet = bullet;
-  }
-  Phisics(){
-    this.bullet.pos.x += this.bullet.vel.x;
-    this.bullet.pos.y += this.bullet.vel.y;
-  }
-  /* 衝突判定 */
-  collision(){
-    /*TODO リスト分割 */
-    let EntityList = __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].entityList;
-    for(let l of EntityList){
-      switch(l.type){
-        case ENTITY.ENEMY :
-          if(__WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__["a" /* default */].on(this.bullet,l).isHit){
-            l.Damage(-this.bullet.atk - Math.floor(99*Math.random()) );
-            this.bullet.hp--;
-            /* ■ SoundEffect : hitWall */
-            /* □ Effect : hitWall */
-            __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_3__Effect_bulletHitWall_js__["a" /* default */](this.bullet.pos,{x:0,y:0}));
-          };
-          break;
-        case ENTITY.WALL :
-          if(__WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__["a" /* default */].on(this.bullet,l).isHit){
-            //breakable object
-            if(l.name == "woodbox"){
-              /* ■ SoundEffect : hitWood */
-              l.Damage(-this.bullet.atk );
-              this.bullet.hp--;
-            //wall
-            }else{
-              /* ■ SoundEffect : hitWall */
-              this.bullet.hp = 0;
-            }
-            /* □ Effect : hitWall */
-            __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_3__Effect_bulletHitWall_js__["a" /* default */](this.bullet.pos,{x:0,y:0}));
-          };
-          break;
-      }
-    }
-  }
-
-  Do(){
-    this.collision();
-    this.Phisics();
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Bullet1AI;
-
-
-
-/***/ }),
-/* 55 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__drawer_js__ = __webpack_require__(11);
-
-
-
-
-
-
-/*bullet1残像*/
-class BulletBlur extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  constructor(pos,vel){
-    super(pos,vel);
-    /*基本情報*/
-    this.type = ENTITY.EFFECT;
-    this.name = "blur";
-    this.frame = 0;
-    this.isAlive = true;//消えたらfalse
-      /*スプライト*/
-    this.spid = 0; //12~15
-    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.blur;
-    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
-  }
-
-  Physics(){
-    this.pos = ADV(this.pos,this.vel);
-  }
-
-
-  Update(){
-    if(this.isAlive){
-      this.sprite.alpha = 3 / (3 + this.frame);
-      this.Physics();
-      this.sprite.position = ADV(this.pos.x,VECN(8));
-      this.sprite.texture = this.pattern[this.spid];
-      this.spid = Math.floor(this.frame/2);
-      if(this.spid >= 4){
-        //消える時に一回だけ呼ばれる
-        if(this.isAlive){
-          this.spid = 4;
-          
-          __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-          this.isAlive = false
-        }
-      }
-      this.sprite.position = this.pos;
-      this.frame++;
-    }
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = BulletBlur;
-
-
-
-/***/ }),
-/* 56 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__weapon_js__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__art_js__ = __webpack_require__(1);
-
-
-
-
-
-class Weapon2 extends __WEBPACK_IMPORTED_MODULE_2__weapon_js__["a" /* default */]{
-  /* ammunition : 弾薬数 */
-  constructor(){
-    super("1",10,40);
-    this.clock = 0;//最後に撃った時刻
-    this.speed = 10;
-    this.length = 80;//射程距離
-  }
-  shot(player){
-      for(let i = 0;i<12;i++){
-        let vi = 5 + 5 * Math.random();
-        let v = {
-          x: vi * Math.cos(player.arg+ (Math.random()-0.5)/3),
-          y: vi * Math.sin(player.arg+ (Math.random()-0.5)/3)
-        }
-        //bulletの出現位置
-        let p = {
-          x: player.pos.x + 5 * Math.cos(player.arg),
-          y: player.pos.y + 5 * Math.sin(player.arg),
-        }
-        let bullet = new __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__["a" /* default */](p,v,__WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].bullet2Texture);
-        __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__["a" /* default */].addEntity(bullet);
-      }
-      this.ammunition--;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Weapon2;
-
-
-
-/***/ }),
-/* 57 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__weapon_js__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__art_js__ = __webpack_require__(1);
-
-
-
-
-
-class Weapon3 extends __WEBPACK_IMPORTED_MODULE_2__weapon_js__["a" /* default */]{
-  /* ammunition : 弾薬数 */
-  constructor(){
-    super("1",10,30);
-    this.clock = 0;//最後に撃った時刻
-    this.speed = 10;
-    this.length = 170;//射程距離
-  }
-  shot(player){
-      for(let i = 0;i<1;i++){
-        let vi = 0 + 5 * Math.random();
-        let v = {
-          x: vi * Math.cos(player.arg),
-          y: vi * Math.sin(player.arg)
-        }
-        //bulletの出現位置
-        let p = {
-          x: player.pos.x + 5 * Math.cos(player.arg),
-          y: player.pos.y + 5 * Math.sin(player.arg),
-        }
-        let bullet = new __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__["a" /* default */](p,v,__WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].unkoTexture);
-        __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__["a" /* default */].addEntity(bullet);
-      }
-      this.ammunition--;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Weapon3;
-
-
-
-/***/ }),
-/* 58 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__sonic_js__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__stone_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__flash_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fire_js__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__smoke_js__ = __webpack_require__(30);
-
-
-
-
-
-
-
-
-
-
-//爆発エフェクト
-class Explosion2 extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
-  constructor(pos,vel){
-    super(pos,vel);
-    //微妙に左上に寄ってるので中心に
-    this.pos = ADV(this.pos,VECN(8));
-    /*基本情報*/
-    this.type = ENTITY.EFFECT;
-    this.frame = 0;
-    this.isNoSprite = true;
-  }
-  Bomb(){
-    /*
-    EntityManager.addEntity(new Sonic(this.pos));
-    for(let i =0;i<3;i++){
-      let p = ADV(this.pos,Util.Rand2D(16));
-      EntityManager.addEntity(new Flash(this.pos));
-    }
-    */
-    for(let i = 0;i<8;i++){
-      let v = __WEBPACK_IMPORTED_MODULE_3__util_js__["a" /* default */].Rand2D(30);
-      v.x *= 0.3;
-      v.y += 15;
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_5__stone_js__["a" /* default */](CPV(this.pos),v));
-    }
-    for(let j = 0;j<6;j++){
-      let v = {
-        x : Rand(4),
-        y : Rand(2) + 4
-      }
-      let smoke = new __WEBPACK_IMPORTED_MODULE_8__smoke_js__["a" /* default */](CPV(this.pos),v,Rand(10)); 
-      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].addEntity(smoke);
-    }
-  }
-
-  Update(){
-    //爆発して自分は消える
-    this.Bomb();
-    __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Explosion2;
-
-
-
-/***/ }),
-/* 59 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timer_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timer_js__ = __webpack_require__(7);
 
 
 
@@ -4953,8 +5480,99 @@ class Enemy2AI{
   }
 
   Do(enemy){
-    enemy.acc.y  = -0.05;
     //enemy.acc.x = 1;
+  }
+}
+/* unused harmony export default */
+
+
+
+/***/ }),
+/* 62 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timer_js__ = __webpack_require__(7);
+
+
+
+
+
+
+class Enemy2AI{
+  /*enemyの参照を受け取り関数を実行する*/
+
+  constructor(enemy){
+    this.enemy = enemy;
+  }
+
+  Collision(){
+    /*衝突判定*/
+    for(let l of __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].wallList){
+      if(l == this.enemy) continue;
+      /*衝突判定*/
+      let c = __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__["a" /* default */].on(this.enemy,l);
+      if(c.isHit){
+        /* 衝突応答*/
+
+        /*速度*/
+        if(c.n.x != 0) {
+          this.enemy.vel.x  *= -1; 
+        }
+        //地面との衝突
+        if(c.n.y == -1){ 
+          this.enemy.isJump = false;
+          this.enemy.vel.y *= -1;
+        }
+        //天井との衝突
+        if(c.n.y == 1 ){
+          this.enemy.vel.y *= -1;
+        }
+        /*押し出し*/
+        this.enemy.pos.x += c.n.x * c.depth;
+        this.enemy.pos.y += c.n.y * c.depth;
+        /*note : now isHit == false*/
+      }
+    }
+    // 敵同士の衝突
+    this.enemy.floor.on  =false ;
+    this.enemy.floor.under = null;
+    for(let i=0;i<__WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].enemyList.length;i++){
+      let l = __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].enemyList[i];
+      let c = __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__["a" /* default */].on(this.enemy,l);
+      //これないと自分と衝突判定してバグ
+      if(i == __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].enemyList.indexOf(this.enemy))continue;
+      //衝突判定
+      if(c.isHit){
+        // 衝突応答
+
+        //壁との衝突
+        if(c.n.x != 0){
+          this.enemy.vel.x *= -1; 
+        }
+        //地面との衝突
+        if(c.n.y == -1){ 
+          this.enemy.floor.on = true;
+          this.enemy.floor.under = __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].enemyList[i];
+          this.enemy.isJump = false;
+          this.enemy.vel.y *= -1;
+        }
+        //天井との衝突
+        if(c.n.y == 1 ){
+          this.enemy.vel.y *= -1;
+        }
+        //押し出し
+        let l = __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].enemyList[i];
+        this.enemy.pos.x += c.n.x * c.depth/2;
+        this.enemy.pos.y += c.n.y * c.depth/2;
+        //note : now isHit == false
+      }
+    }
+  }
+  Do(enemy){
+    this.Collision();
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Enemy2AI;
@@ -4962,20 +5580,22 @@ class Enemy2AI{
 
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collision_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__entity_js__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Effect_bulletHitWall_js__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Effect_getCoin_js__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Effect_brightCoin_js__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__audio_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__entity_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Effect_bulletHitWall_js__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Effect_getCoin_js__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Effect_brightCoin_js__ = __webpack_require__(65);
+
 
 
 
@@ -4989,39 +5609,36 @@ class Enemy2AI{
 
 let player;
 //コイン
-class Coin extends __WEBPACK_IMPORTED_MODULE_6__entity_js__["a" /* default */]{
+class Coin extends __WEBPACK_IMPORTED_MODULE_7__entity_js__["a" /* default */]{
   constructor(pos){
-    player = __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].player;
-    super(pos,{x:2 * (Math.random()-0.5),y:-3});
+    player = __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].player;
+    super(pos,{x:Rand(2),y:-3});
     /*基本情報*/
     this.frame = 0;
     this.e = 0.9;
-    
+    this.isUpdater = true;    
     /*スプライト*/
     this.pattern = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].enemyPattern.coin;
     this.spid = 0;
     this.sprite = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = pos;
     /*コライダ*/
-    this.collider = new __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__["a" /* default */](pos,9,9));//衝突判定の形状
+    this.collider = new __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__["a" /* default */](pos,9,9));//衝突判定の形状
     /*パラメータ*/
     this.gravity = 0.3;
-    this.type = ENTITY.BULLET;
-    /*フラグ*/
-    this.isJump = false
+    this.layer = "ENTITY";
     /*AI*/
-    //this.AIList = [];
-    //this.AIList.push(new Bullet1AI(this));
     this.vel.y = 0.3;
   }
   Collision(){
     this.isJump = true;
     //collision at wall
-    for(let l of __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].wallList){
+    for(let l of __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].wallList){
       if(l == this) continue;
-      let c = __WEBPACK_IMPORTED_MODULE_2__Collision_collision_js__["a" /* default */].on(this,l);
+      let c = __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__["a" /* default */].on(this,l);
       if(c.isHit){
         /* 衝突応答*/
+        __WEBPACK_IMPORTED_MODULE_1__audio_js__["a" /* default */].PlaySE("coin2");
 
         /*速度*/
         if(c.n.x != 0) this.vel.x *= -this.e;
@@ -5048,27 +5665,24 @@ class Coin extends __WEBPACK_IMPORTED_MODULE_6__entity_js__["a" /* default */]{
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
     this.vel.x += this.acc.x;
-    //摩擦
-    if(!this.isJump){
-      this.vel.x *= 0.8;
-    }
     //最大速度制限
-    this.vel.y = Math.min(0.5,Math.max(this.vel.y,-0.5));
-    this.vel.x = Math.min(3,Math.max(this.vel.x,-3));
+    this.vel.y = BET(-0.5,this.vel.y,0.5);
+    this.vel.x = BET(-3,this.vel.x,3);
   }
   GetByPlayer(){
     //プレイヤーに回収される
-    if(__WEBPACK_IMPORTED_MODULE_5__util_js__["a" /* default */].distance(this.pos,player.pos)<48){
-      let vec = __WEBPACK_IMPORTED_MODULE_5__util_js__["a" /* default */].nomalize({
+    if(__WEBPACK_IMPORTED_MODULE_6__util_js__["a" /* default */].distance(this.pos,player.pos)<48){
+      let vec = __WEBPACK_IMPORTED_MODULE_6__util_js__["a" /* default */].nomalize({
         x : player.pos.x - this.pos.x,
         y : player.pos.y - this.pos.y
       });
       this.pos.x += 5 * vec.x;
       this.pos.y += 5 * vec.y;
-      if(__WEBPACK_IMPORTED_MODULE_5__util_js__["a" /* default */].distance(this.pos,player.pos)<10){
-        __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_8__Effect_getCoin_js__["a" /* default */](this.pos,{x:0,y:0}));
+      if(__WEBPACK_IMPORTED_MODULE_6__util_js__["a" /* default */].distance(this.pos,player.pos)<10){
+        __WEBPACK_IMPORTED_MODULE_1__audio_js__["a" /* default */].PlaySE("coin1");
+        __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_9__Effect_getCoin_js__["a" /* default */](this.pos,{x:0,y:0}));
         player.GetScore(1);
-        __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+        __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].removeEntity(this);
       }
     }
   }
@@ -5076,24 +5690,27 @@ class Coin extends __WEBPACK_IMPORTED_MODULE_6__entity_js__["a" /* default */]{
   Update(){
     //Animation
     if(this.frame%3 == 0){
-      this.spid = (this.spid+1)%6;
-      this.sprite.texture = this.pattern[this.spid];
+      this.spid = (this.spid+1)%12;
     }
     //たまに光る
-    if(this.frame%(8 + Math.floor(__WEBPACK_IMPORTED_MODULE_5__util_js__["a" /* default */].Rand(1))) == 0){
-      let p = __WEBPACK_IMPORTED_MODULE_5__util_js__["a" /* default */].advec(this.pos,__WEBPACK_IMPORTED_MODULE_5__util_js__["a" /* default */].Rand2D(5));
-      __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_9__Effect_brightCoin_js__["a" /* default */](p));
+    if(this.frame%(8 + Math.floor(__WEBPACK_IMPORTED_MODULE_6__util_js__["a" /* default */].Rand(1))) == 0){
+      let p = __WEBPACK_IMPORTED_MODULE_6__util_js__["a" /* default */].advec(this.pos,__WEBPACK_IMPORTED_MODULE_6__util_js__["a" /* default */].Rand2D(5));
+      console.assert(p);
+      __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_10__Effect_brightCoin_js__["a" /* default */](p));
     }
     //Collision
     this.Collision();
     this.Physics();
-    this.GetByPlayer();
-    //時間立つと消える
-    if( this.frame > 500 ){
-      __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+    if(__WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].player.isAlive)this.GetByPlayer();
+    //時間立つと点滅
+    if( this.frame > 300 && this.frame%8 <4) this.sprite.texture = this.pattern[12];
+    else this.sprite.texture = this.pattern[this.spid];
+    //消える
+    if( this.frame > 450 ){
+      __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].removeEntity(this);
     }
-
     this.sprite.position = this.pos;
+
     this.frame++;
   }
 }
@@ -5102,11 +5719,11 @@ class Coin extends __WEBPACK_IMPORTED_MODULE_6__entity_js__["a" /* default */]{
 
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
@@ -5148,20 +5765,66 @@ class GetCoin extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */
 
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Enemy_js__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__effect_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_js__ = __webpack_require__(2);
+
+
+
+
+
+class BrightCoin extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */]{
+  constructor(pos,vel){
+    //velが渡されなければ0を渡す
+    super(pos,vel);
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
+    this.frame = 0;
+    /*スプライト*/
+    this.spid = 0;
+    this.pattern = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].bulletPattern.coin.bright;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = this.pos;
+    this.sprite.alpha = 0.7;
+  }
+
+  Update(){
+    this.sprite.texture = this.pattern[this.spid];
+    this.spid = Math.floor(this.frame/3);
+    //phys
+    
+    this.pos = ADV(this.pos,this.vel);
+    if(this.spid == 4){
+      __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+    }
+    this.sprite.position = this.pos;
+    this.frame++;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = BrightCoin;
+
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__enemy_js__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Collision_box_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AI_enemy1AI_js__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AI_enemy1AI_js__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Effect_fontEffect_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__param_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Effect_fontEffect_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__param_js__ = __webpack_require__(16);
 
 
 
@@ -5176,7 +5839,7 @@ class GetCoin extends __WEBPACK_IMPORTED_MODULE_0__effect_js__["a" /* default */
 
 let EntityList = __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].entityList;
 
-class Enemy1 extends __WEBPACK_IMPORTED_MODULE_0__Enemy_js__["a" /* default */]{
+class Enemy1 extends __WEBPACK_IMPORTED_MODULE_0__enemy_js__["a" /* default */]{
   constructor(pos){
     super(pos,VEC0(),VEC0());
     /*基本情報*/
@@ -5206,12 +5869,6 @@ class Enemy1 extends __WEBPACK_IMPORTED_MODULE_0__Enemy_js__["a" /* default */]{
   Die(){
     this.isAlive = false;
     __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-  }
-  //自分がダメージを食らう
-  Damage(atkMax){
-    this.hp += atkMax;
-    //ダメージをポップ
-    __WEBPACK_IMPORTED_MODULE_5__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_8__Effect_fontEffect_js__["a" /* default */](this.pos,-atkMax+"","enemy"));
   }
   //衝突判定
   Collision(){
@@ -5319,13 +5976,13 @@ class Enemy1 extends __WEBPACK_IMPORTED_MODULE_0__Enemy_js__["a" /* default */]{
 
 
 /***/ }),
-/* 63 */
+/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timer_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timer_js__ = __webpack_require__(7);
 
 
 
@@ -5354,20 +6011,22 @@ class Enemy1AI{
 
 
 /***/ }),
-/* 64 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entity_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Collision_circle_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Collision_circle_js__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Collision_box_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Game_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Event_gameOverEvent_js__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Event_eventmanager_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Event_gameOverEvent_js__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Event_gameClearEvent_js__ = __webpack_require__(69);
+
 
 
 
@@ -5383,18 +6042,19 @@ class Enemy1AI{
 class Goal extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
   constructor(pos){
     super(pos);
-    this.type = ENTITY.GOAL;
+    this.layer = "ENTITY";
     this.sprite = __WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].SpriteFactory(__WEBPACK_IMPORTED_MODULE_1__art_js__["a" /* default */].wallPattern.goal);
     this.sprite.position = pos;
     this.collider = new __WEBPACK_IMPORTED_MODULE_2__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_6__Collision_box_js__["a" /* default */](pos,16,16));//衝突判定の形状
+    /*固有*/
     this.isgoal = false;//??
+    this.isUpdater = true;
   }
   Update(){
     if(__WEBPACK_IMPORTED_MODULE_3__Collision_collision_js__["a" /* default */].on(this,__WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].player).isHit){
       /*ステージ遷移処理*/
       if(!this.isgoal){
-        __WEBPACK_IMPORTED_MODULE_7__Game_js__["a" /* default */].stage++;
-        let g = new __WEBPACK_IMPORTED_MODULE_8__Event_gameOverEvent_js__["a" /* default */]();
+        let g = new __WEBPACK_IMPORTED_MODULE_10__Event_gameClearEvent_js__["a" /* default */]();
         __WEBPACK_IMPORTED_MODULE_9__Event_eventmanager_js__["a" /* default */].eventList.push(g);
         this.isgoal = true;
       }
@@ -5406,20 +6066,61 @@ class Goal extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]{
 
 
 /***/ }),
-/* 65 */
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_mapData_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__drawer_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__fadeEvent_js__ = __webpack_require__(47);
+
+
+
+
+
+
+
+
+
+
+class GameClearEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */]{
+  constructor(){
+    super();
+    function* gen(){
+      __WEBPACK_IMPORTED_MODULE_4__game_js__["a" /* default */].scene.PushSubState("TRANS");
+      __WEBPACK_IMPORTED_MODULE_4__game_js__["a" /* default */].stage++;
+      __WEBPACK_IMPORTED_MODULE_7__eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_8__fadeEvent_js__["a" /* default */]("fadeout"));
+      yield;
+    }
+    let itt = gen();
+    this.func = itt;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = GameClearEvent;
+
+
+
+/***/ }),
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collision_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collision_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Effect_fontEffect_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__wall_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Effect_bulletShot_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__timer_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Effect_fontEffect_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__wall_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Effect_bulletShot_js__ = __webpack_require__(25);
 
 
 
@@ -5441,6 +6142,7 @@ class WoodBox extends __WEBPACK_IMPORTED_MODULE_8__wall_js__["a" /* default */]{
     this.collider = new __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__["a" /* default */](pos,16,16));//衝突判定の形状
     this.type = ENTITY.WALL;
     this.name = "woodbox";
+    this.isUpdater = true;
     /*スプライト*/
     this.pattern = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号
@@ -5475,21 +6177,23 @@ class WoodBox extends __WEBPACK_IMPORTED_MODULE_8__wall_js__["a" /* default */]{
 
 
 /***/ }),
-/* 66 */
+/* 71 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collision_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collision_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__timer_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Effect_fontEffect_js__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__wall_js__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__backEntity_js__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Effect_bulletShot_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__timer_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Effect_fontEffect_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__wall_js__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__backEntity_js__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Effect_bulletShot_js__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__param_js__ = __webpack_require__(16);
+
 
 
 
@@ -5503,6 +6207,7 @@ class WoodBox extends __WEBPACK_IMPORTED_MODULE_8__wall_js__["a" /* default */]{
 
 
 let EntityList = __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].entityList;
+
 //トゲ
 class Needle extends __WEBPACK_IMPORTED_MODULE_9__backEntity_js__["a" /* default */]{
   constructor(pos,tex){
@@ -5510,6 +6215,8 @@ class Needle extends __WEBPACK_IMPORTED_MODULE_9__backEntity_js__["a" /* default
     /*基本情報*/
     this.collider = new __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__["a" /* default */]({x:pos.x+4,y:pos.y+12},8,8));//衝突判定の形状
     this.name = "needle";
+    this.layer = "ENTITY";
+    this.isUpdater  =true;
     /*スプライト*/
     this.pattern = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号
@@ -5554,11 +6261,8 @@ class Needle extends __WEBPACK_IMPORTED_MODULE_9__backEntity_js__["a" /* default
     /*observer*/
     if(this.hp<=0){
       __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].removeEntity(this);
-      let p = {
-        x : this.pos.x,
-        y : this.pos.y
-      }
-      __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_10__Effect_bulletShot_js__["a" /* default */](p,{x:0,y:0}));
+      let p = CPV(this.pos);
+      __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_10__Effect_bulletShot_js__["a" /* default */](p,VEC0()));
     }
   }
 }
@@ -5567,19 +6271,325 @@ class Needle extends __WEBPACK_IMPORTED_MODULE_9__backEntity_js__["a" /* default
 
 
 /***/ }),
-/* 67 */
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Game_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_mapData_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Entity_bullet2_js__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Entity_Effect_target_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__weapon_js__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__art_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__drawer_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Entity_Effect_bulletShot_js__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__timer_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Entity_Effect_fontEffect_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__Event_quakeEvent_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__param_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__Entity_Effect_explosion1_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__Entity_Effect_sonic_js__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__Entity_Effect_lasersight_js__ = __webpack_require__(39);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const DIR = {
+  UR : "UR",
+  UL : "UL",
+  DR : "DR",
+  DL : "DL",
+  R : "R",
+  L : "L",
+};
+
+class Weapon2 extends __WEBPACK_IMPORTED_MODULE_4__weapon_js__["a" /* default */]{
+  constructor(){
+    super("2");
+    /*基本情報*/
+    this.target;
+    this.isTargetOn = false;//照準が発生しているか
+    this.lasersight;
+    this.isLaserOn = false;
+    /*パラメータ*/
+    this.param = __WEBPACK_IMPORTED_MODULE_13__param_js__["a" /* default */].weapon2;
+    this.agi = this.param.agi;//間隔
+    this.cost = this.param.cost;
+    this.speed = this.param.speed;//弾速
+    this.length = this.param.length;//射程距離
+    /*オプション*/
+    this.isTarget = this.param.isTarget;
+    this.isLasersight = this.param.isLasersight;
+
+  }
+
+  shot(player){
+    //最後に撃ってからframeまで停止
+    if((player.frame - player.frameShot) > this.agi){
+      //shot時刻
+      player.frameShot = player.frame;
+      //playerの弾薬が残っていなければ打てない
+      if(player.bullet < this.cost){
+        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_10__Entity_Effect_fontEffect_js__["a" /* default */](player.pos,"たりないよ","pop"));
+      }else{
+
+        //弾薬消費
+        player.bullet -= this.cost;
+
+        let arg = player.arg;
+        let p = ADV(POV(arg,32),CPV(player.pos));
+        let bullet;
+        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_14__Entity_Effect_explosion1_js__["a" /* default */](CPV(p)));
+        for(let i = 0;i<16;i++){
+          p = ADV(player.pos,POV(arg,16*(i+1)));
+          bullet = new __WEBPACK_IMPORTED_MODULE_1__Entity_bullet2_js__["a" /* default */](p,arg,this.target);
+          __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(bullet);
+        }
+        /* ■ SoundEffect : shot */
+        /* □ Effect : shot */
+        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_8__Entity_Effect_bulletShot_js__["a" /* default */](CPV(p),VEC0()));
+        __WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].addEntity(new __WEBPACK_IMPORTED_MODULE_14__Entity_Effect_explosion1_js__["a" /* default */](CPV(p)));
+        //反動
+        //player.vel.x -= v.x/11;
+        //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
+        //振動
+        __WEBPACK_IMPORTED_MODULE_11__Event_eventmanager_js__["a" /* default */].eventList.push(new __WEBPACK_IMPORTED_MODULE_12__Event_quakeEvent_js__["a" /* default */](17,5));
+      }
+    }
+  }
+  Update(player){
+    if(this.isTarget) this.Target(player);
+    if(this.isLasersight) this.Lasersight(player);
+  }
+  Reset(){
+    if(this.isTarget)__WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].removeEntity(this.target);
+    if(this.isLasersight)__WEBPACK_IMPORTED_MODULE_3__Stage_entityManager_js__["a" /* default */].removeEntity(this.lasersight);
+  }
+  Option(option,value){
+    switch(option){
+      case "isHorming" : this.isHorming = value ;break;
+      case "isLasersight" : this.isLasersight = value ;break;
+      case "isTarget" : this.isTarget = value ;break;
+      default : console.warn(option);
+    }
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Weapon2;
+
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__art_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Event_eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Event_quakeEvent_js__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AI_bullet2AI_js__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__bullet_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Effect_bulletBlur_js__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__Effect_explosion1_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__param_js__ = __webpack_require__(16);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const bullet2 = __WEBPACK_IMPORTED_MODULE_12__param_js__["a" /* default */].bullet2;
+
+//Laser
+class Bullet2 extends __WEBPACK_IMPORTED_MODULE_8__bullet_js__["a" /* default */]{
+  constructor(pos,arg,weapon){
+    super(pos,POV(arg,VEC0()));
+    /*基本情報*/
+    this.frame = 0;
+    this.arg = arg;
+    this.isUpdater  =true;
+    /*スプライト*/
+    this.pattern = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].bulletPattern.bullet2;
+    this.spid = 0;
+    this.sprite = __WEBPACK_IMPORTED_MODULE_0__art_js__["a" /* default */].SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = pos;
+    this.sprite.anchor.set(0.5);
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+    this.sprite.alpha = 0.7;
+    /*コライダ*/
+    this.collider = new __WEBPACK_IMPORTED_MODULE_1__Collision_collider_js__["a" /* default */](SHAPE.BOX,new __WEBPACK_IMPORTED_MODULE_3__Collision_box_js__["a" /* default */](pos,4,4));//衝突判定の形状
+    /*パラメータ*/
+    this.hp = __WEBPACK_IMPORTED_MODULE_12__param_js__["a" /* default */].bullet2.hp;//弾丸のHP 0になると消滅
+    this.atkMax = __WEBPACK_IMPORTED_MODULE_12__param_js__["a" /* default */].bullet2.atkMax;//攻撃力
+    this.atkMin = __WEBPACK_IMPORTED_MODULE_12__param_js__["a" /* default */].bullet2.atkMin;//攻撃力
+    /*AI*/
+    this.AIList = [];
+    this.AIList.push(new __WEBPACK_IMPORTED_MODULE_7__AI_bullet2AI_js__["a" /* default */](this));
+  }
+
+  Update(){
+    for (let AI of this.AIList){
+      AI.Do();
+    }
+    /*observer*/
+    //HP || 経過時間
+    if( this.frame > 10 || this.hp<=0){
+      __WEBPACK_IMPORTED_MODULE_4__Stage_entityManager_js__["a" /* default */].removeEntity(this);
+    }
+    this.sprite.position = ADV(this.pos,VECN(8));
+    this.sprite.position.x -=4;
+    this.sprite.rotation = this.arg;
+    this.sprite.texture = this.pattern[this.spid];
+
+    this.spid = (this.spid+1)%8;
+    this.frame++;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Bullet2;
+
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Effect_bulletHitWall_js__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__timer_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Effect_explosion1_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Effect_explosion2_js__ = __webpack_require__(31);
+
+
+
+
+
+
+
+
+class Bullet2AI{
+  /*bulletの参照を受け取り関数を実行する*/
+  constructor(bullet){
+    this.bullet = bullet;
+  }
+  /* 衝突判定 */
+  collision(){
+    for(let l of __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].enemyList){
+      if(__WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__["a" /* default */].on(this.bullet,l).isHit){
+        l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
+        this.bullet.hp = 0;
+        /* ■ SoundEffect : hitWall */
+        /* □ Effect : hitWall */
+      }
+    }
+    for(let l of __WEBPACK_IMPORTED_MODULE_0__Stage_entityManager_js__["a" /* default */].wallList){
+      if(__WEBPACK_IMPORTED_MODULE_1__Collision_collision_js__["a" /* default */].on(this.bullet,l).isHit){
+        //breakable object
+        if(l.name == "woodbox"){
+          /* ■ SoundEffect : hitWood */
+          l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
+          this.bullet.hp--;
+          //wall
+          }else{
+            /* ■ SoundEffect : hitWall */
+            this.bullet.hp = 0;
+          /* □ Effect : Exp */
+          }
+      }
+    }
+  }
+  Do(){
+    this.collision();
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Bullet2AI;
+
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__weapon_js__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__art_js__ = __webpack_require__(1);
+
+
+
+
+
+class Weapon3 extends __WEBPACK_IMPORTED_MODULE_2__weapon_js__["a" /* default */]{
+  /* ammunition : 弾薬数 */
+  constructor(){
+    super("1",10,30);
+    this.clock = 0;//最後に撃った時刻
+    this.speed = 10;
+    this.length = 170;//射程距離
+  }
+  shot(player){
+      for(let i = 0;i<1;i++){
+        let vi = 0 + 5 * Math.random();
+        let v = {
+          x: vi * Math.cos(player.arg),
+          y: vi * Math.sin(player.arg)
+        }
+        //bulletの出現位置
+        let p = {
+          x: player.pos.x + 5 * Math.cos(player.arg),
+          y: player.pos.y + 5 * Math.sin(player.arg),
+        }
+        let bullet = new __WEBPACK_IMPORTED_MODULE_0__Entity_bullet_js__["a" /* default */](p,v,__WEBPACK_IMPORTED_MODULE_3__art_js__["a" /* default */].unkoTexture);
+        __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__["a" /* default */].addEntity(bullet);
+      }
+      this.ammunition--;
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Weapon3;
+
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__eventmanager_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Stage_mapData_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__audio_js__ = __webpack_require__(17);
 
 
 
@@ -5594,70 +6604,14 @@ class StartStageEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* def
   constructor(){
     super(1);
     function* gen(){
-
-      //note : Game.seqがtrueの間はEntityは更新されない
-
-      //やっぱり画面移動中も敵動いてて欲しい...
-      __WEBPACK_IMPORTED_MODULE_2__Game_js__["a" /* default */].isSeq = true;
-      //画面遷移エフェクトの♢
-      let frame = 0;//経過フレーム数 途中で0にしているので注意
-      let spid = 0;//スプライト番号
-      let pattern = __WEBPACK_IMPORTED_MODULE_5__art_js__["a" /* default */].seqPattern;//パターン
-      let seq = new Array(400);//各♢
-      //♢を初期化して追加
-      /*
-      for(let i = 0; i < 400; i++) {
-          let sp = Art.SpriteFactory(pattern[spid]);
-          let y = Math.floor(i/20);
-          let x = i%20;
-          sp.position.x = x*16-8;
-          sp.position.y = y*16-8;
-          seq[i] = sp;
-          Drawer.addContainer(sp,"FILTER");
-      }
-      */
-      /*フェードアウト*/
-      /*
-      while(frame < 40){
-        for(let i = 0; i < 400; i++) {
-          //上から下へ
-          spid = Math.max(0,Math.min(Math.floor(frame - i/8),15));
-          seq[i].texture = pattern[spid];
-        }
-        frame++;
-        yield;
-      }
-      */
+      __WEBPACK_IMPORTED_MODULE_4__audio_js__["a" /* default */].PlayBGM("stage1");
+      __WEBPACK_IMPORTED_MODULE_1__game_js__["a" /* default */].scene.PushSubState("TRANS");
       /*ここでマップをロード*/
-      __WEBPACK_IMPORTED_MODULE_4__Stage_mapData_js__["a" /* default */].DeleteStage();
-      __WEBPACK_IMPORTED_MODULE_4__Stage_mapData_js__["a" /* default */].CreateStage(__WEBPACK_IMPORTED_MODULE_2__Game_js__["a" /* default */].stage,"ENTER");
-
-      /*マップデータを生成するのでちょっと待つ*/
-      frame = 0;
-      while(frame < 10){
-        frame++;
-        yield
-      }
-      __WEBPACK_IMPORTED_MODULE_2__Game_js__["a" /* default */].scene.ChangeState(STATE.TITLE,STATE.STAGE);
-      frame = 0;
-      /*フェードin*/
-      /*
-      while(frame < 40){
-        Game.seq = false;
-        for(let i = 0; i < 400; i++) {
-          spid = 16 + Math.max(0,Math.min(Math.floor(frame -i/8),15));
-          seq[i].texture = pattern[spid];
-        }
-        frame++;
-        yield;
-      }
-      */
-     /*
-      for(let i = 0; i < 400; i++) {
-        Drawer.removeContainer(seq[i],"FILTER");
-      }
-      */
-      __WEBPACK_IMPORTED_MODULE_2__Game_js__["a" /* default */].isSeq = false;
+      __WEBPACK_IMPORTED_MODULE_3__Stage_mapData_js__["a" /* default */].DeleteStage();
+      __WEBPACK_IMPORTED_MODULE_3__Stage_mapData_js__["a" /* default */].CreateStage(__WEBPACK_IMPORTED_MODULE_1__game_js__["a" /* default */].stage,"ENTER");
+      //ここで非同期
+      __WEBPACK_IMPORTED_MODULE_1__game_js__["a" /* default */].scene.ChangeState(STATE.TITLE,STATE.STAGE);
+      __WEBPACK_IMPORTED_MODULE_1__game_js__["a" /* default */].scene.PopSubState("TRANS");
       yield;
     }
     let itt = gen();
@@ -5669,17 +6623,13 @@ class StartStageEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* def
 
 
 /***/ }),
-/* 68 */
+/* 77 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__UI_uiManager_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Game_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventmanager_js__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Stage_mapData_js__ = __webpack_require__(15);
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_js__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__game_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__eventmanager_js__ = __webpack_require__(3);
 
 
 
@@ -5691,11 +6641,11 @@ class StartStageEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* def
 class StartGameEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */]{
   constructor(){
     super(1);
-    function* po(){
-      __WEBPACK_IMPORTED_MODULE_2__Game_js__["a" /* default */].scene.ChangeState(STATE.INIT,STATE.TITLE);
+    function* gen(){
+      __WEBPACK_IMPORTED_MODULE_1__game_js__["a" /* default */].scene.ChangeState(STATE.INIT,STATE.TITLE);
       yield ;
     }
-    let itt = po();
+    let itt = gen();
     this.func = itt;
   }
 }
@@ -5704,44 +6654,37 @@ class StartGameEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* defa
 
 
 /***/ }),
-/* 69 */
+/* 78 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UI_uiManager_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Stage_entityManager_js__ = __webpack_require__(0);
 
-/*state*/
+
+ 
 class Scene{
   constructor(){
-    this.stack = [];
     this.state = STATE.INIT;
+    this.substate = ["DEFAULT"];
   }
 
   ChangeState(oldState,newState){
     //UIのクリア
-    switch(oldState){
-      case "TITLE" : __WEBPACK_IMPORTED_MODULE_0__UI_uiManager_js__["a" /* default */].CleanTitle() ;break;
-      case "STAGE" : __WEBPACK_IMPORTED_MODULE_0__UI_uiManager_js__["a" /* default */].CleanStage() ;break;
-    }
+    __WEBPACK_IMPORTED_MODULE_0__UI_uiManager_js__["a" /* default */].Clean(); 
     switch(newState){
       /*ゲーム画面用 UIの作成*/
       case "TITLE" : __WEBPACK_IMPORTED_MODULE_0__UI_uiManager_js__["a" /* default */].SetTitle(); break;
       case "STAGE" : __WEBPACK_IMPORTED_MODULE_0__UI_uiManager_js__["a" /* default */].SetStage(); break;
     }
-
     this.state = newState;
   }
 
-  /* 新しい状態をスタックにプッシュして遷移 */
-  PushState(newState){
-    this.stack.push(newState);
-    this.state = newState();
+  PushSubState(sub){
+    this.substate.push(sub);
   }
-  /* 現在の状態を抜ける */
-  PopState(){
-    /*debug*/
-    console.assert(this.stack.length > 0 );
-    this.state = this.stack.pop();
+  PopSubState(){
+    this.substate.pop();
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Scene;

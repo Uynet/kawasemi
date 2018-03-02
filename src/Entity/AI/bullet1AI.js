@@ -16,14 +16,12 @@ export default class Bullet1AI{
   }
   /* 衝突判定 */
   collision(){
-    /*TODO リスト分割 */
     for(let l of EntityManager.enemyList){
       if(Collision.on(this.bullet,l).isHit){
         l.Damage(-this.bullet.atk - Math.floor(99*Math.random()) );
         this.bullet.hp--;
         /* ■ SoundEffect : hitWall */
         /* □ Effect : hitWall */
-        EntityManager.addEntity(new BulletHitWall(this.bullet.pos,VEC0()));
       };
     }
     for(let l of EntityManager.wallList){
@@ -39,7 +37,7 @@ export default class Bullet1AI{
             this.bullet.hp = 0;
           }
           /* □ Effect : Exp */
-      };
+      }
     }
   }
 

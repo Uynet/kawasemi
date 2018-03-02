@@ -8,33 +8,36 @@ import Horming from '../Entity/AI/horming.js';
 import Bullet1AI from '../Entity/AI/bullet1AI.js';
 import Collider from '../Collision/collider.js';
 import Box from '../Collision/box.js';
+import Param from '../param.js';
 /*Object Pool*/
 export default class Pool{
   static Init(){
-    this.unusedStones = [];
+    this.unused = {
+      stones : [],
+      smokes : [],
+      fires : [],
+      bulletblurs : [],
+      missiles : [],
+    }
     for(let i = 0;i<500;i++){
-      this.unusedStones.push(new Stone(VEC0(),VEC0()));
+      this.unused.stones.push(new Stone(VEC0(),VEC0()));
     }
-    this.unusedSmokes = [];
     for(let i = 0;i<80;i++){
-      this.unusedSmokes.push(new Smoke(VEC0(),VEC0(),0));
+      this.unused.smokes.push(new Smoke(VEC0(),VEC0(),0));
     }
-    this.unusedFires = [];
     for(let i = 0;i<100;i++){
-      this.unusedFires.push(new Fire(VEC0(),VEC0()));
+      this.unused.fires.push(new Fire(VEC0(),VEC0()));
     }
-    this.unusedBulletBlurs = [];
     for(let i = 0;i<300;i++){
-      this.unusedBulletBlurs.push(new BulletBlur(VEC0(),VEC0()));
+      this.unused.bulletblurs.push(new BulletBlur(VEC0(),VEC0()));
     }
-    this.unusedMissiles = [];
     for(let i = 0;i<100;i++){
-      this.unusedMissiles.push(new Bullet1(VEC0(),"weapon"));
+      this.unused.missiles.push(new Bullet1(VEC0(),"dummyWeapon"));
     }
   }
   static GetBulletBlur(pos,vel){
-    if(this.unusedBulletBlurs.length > 0){
-    let s = this.unusedBulletBlurs.pop();
+    if(this.unused.bulletblurs.length > 0){
+    let s = this.unused.bulletblurs.pop();
     s.isAlive = true;//消えたらfalse
     s.pos = pos;
     s.vel = vel;
@@ -48,34 +51,45 @@ export default class Pool{
       return false;
     }
   }
-  static RemoveBulletBlur(s){
-    this.unusedBulletBlurs.push(s);
-    EntityManager.removeEntity(s);
-  }
   static GetMissile(pos,weapon){
-    if(this.unusedMissiles.length > 0){
-      let s = this.unusedMissiles.pop();
+    if(this.unused.missiles.length > 0){
+      let s = this.unused.missiles.pop();
+      //param
+      s.hp = Param.bullet1.hp;//弾丸のHP 0になると消滅
+      //phys
       s.arg = weapon.arg;
       s.vi = weapon.speed;
       s.pos = pos;
       s.vel = POV(s.arg,s.vi);
+      //basic
       s.frame = 0;
+      //collider
+      s.collider.hitbox.pos = s.pos;
+      //AI
       s.isTargetOn = weapon.isTargetOn;
-      s.AIList.push(new Bullet1AI(s));
+      s.AIList[0].bullet = s;
       if(s.isTargetOn) s.targetedEnemy = weapon.target.enemy;
-      if(weapon.isHorming) s.AIList.push(new Horming(s));
+      //if(weapon.isHorming) s.AIList.push(new Horming(s));
       return s;
     }else{
       return false;
     }
   }
-  static RemoveMissile(s){
-    this.unusedMissiles.push(s);
+  static Remove(s){
+    let listname;
+    switch(s.name){
+      case "bulletblur" : this.unused.bulletblurs.push(s);break;
+      case "fire" : this.unused.fires.push(s);break;
+      case "stone" : this.unused.stones.push(s);break;
+      case "smoke" : this.unused.smokes.push(s);break;
+      case "missile" : this.unused.missiles.push(s);break;
+      default :console.warn(s.name);
+    }
     EntityManager.removeEntity(s);
   }
   static GetStone(pos,vel){
-    if(this.unusedStones.length > 0){
-    let s = this.unusedStones.pop();
+    if(this.unused.stones.length > 0){
+    let s = this.unused.stones.pop();
     s.pos = pos;
     s.vel = vel;
     s.frame = 0;
@@ -87,14 +101,10 @@ export default class Pool{
       return false;
     }
   }
-  static RemoveStone(s){
-    this.unusedStones.push(s);
-    EntityManager.removeEntity(s);
-  }
   static GetSmoke(pos,vel,size){
-    if(this.unusedSmokes.length>0){
+    if(this.unused.smokes.length>0){
       /*constructor*/
-      let s = this.unusedSmokes.pop();
+      let s = this.unused.smokes.pop();
       s.pos = pos;
       s.vel = vel;
       s.frame = 0;
@@ -108,15 +118,11 @@ export default class Pool{
       return false;
     }
   }
-  static RemoveSmoke(s){
-    this.unusedSmokes.push(s);
-    EntityManager.removeEntity(s);
-  }
   static GetFire(pos,vel){
-    if(this.unusedFires.length < 10)cl("!");
-    if(this.unusedFires.length>0){
+    if(this.unused.fires.length < 10)cl("!");
+    if(this.unused.fires.length>0){
       /*constructor*/
-      let s = this.unusedFires.pop();
+      let s = this.unused.fires.pop();
       s.pos = pos;
       s.vel = vel;
       s.frame = 0;
@@ -128,9 +134,5 @@ export default class Pool{
     }else{
       cl("fire");
     }
-  }
-  static RemoveFire(s){
-    this.unusedFires.push(s);
-    EntityManager.removeEntity(s);
   }
 }

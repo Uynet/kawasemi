@@ -287,13 +287,11 @@ export default class MapData{
       //fill
       if(dir == "U"){
         let i = grid.x-1;
-        /*
         while(i>0){
           let back = new BackEntity({x:16*i,y:16*(grid.y)},MapData.WallTile(79));
           EntityManager.addEntity(back);
           i--;
         }
-        */
       }
       //step
       grid = ADV(grid,dirToV(dir));
@@ -335,13 +333,11 @@ export default class MapData{
       //fill
       if(dir == "U"){
         let i = grid.x+1;
-        /*
         while(i<32){
           let back = new BackEntity({x:16*i,y:16*(grid.y)},MapData.WallTile(79));
           EntityManager.addEntity(back);
           i++;
         }
-        */
       }
       //step
       grid = ADV(grid,dirToV(dir));
