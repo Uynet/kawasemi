@@ -3,6 +3,7 @@ import EntityManager from '../Stage/entityManager.js';
 import Util from '../util.js';
 import Target from '../Entity/Effect/target.js';
 import Lasersight from '../Entity/Effect/lasersight.js';
+import Audio from '../audio.js';
 
 
 const DIR = {
@@ -72,6 +73,7 @@ export default class Weapon{
           //targetを追加する
           this.target = new Target(l);
           EntityManager.addEntity(this.target);
+          Audio.PlaySE("targetOn");
           this.isTargetOn = true;
         }
       }

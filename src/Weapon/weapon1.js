@@ -58,7 +58,7 @@ export default class Weapon1 extends Weapon{
         let bullet = new Bullet1(p,this);
         EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
-        Audio.PlaySE("missileHit");
+        Audio.PlaySE("missileShot");
         /* □ Effect : shot */
         EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
         EntityManager.addEntity(new Explosion2(CPV(p),this.arg));

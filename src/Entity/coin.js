@@ -1,4 +1,5 @@
 import Art from '../art.js';
+import Audio from '../audio.js';
 import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
@@ -40,6 +41,7 @@ export default class Coin extends Entity{
       let c = Collision.on(this,l);
       if(c.isHit){
         /* 衝突応答*/
+        Audio.PlaySE("coin2");
 
         /*速度*/
         if(c.n.x != 0) this.vel.x *= -this.e;
@@ -80,6 +82,7 @@ export default class Coin extends Entity{
       this.pos.x += 5 * vec.x;
       this.pos.y += 5 * vec.y;
       if(Util.distance(this.pos,player.pos)<10){
+        Audio.PlaySE("coin1");
         EntityManager.addEntity(new GetCoin(this.pos,{x:0,y:0}));
         player.GetScore(1);
         EntityManager.removeEntity(this);
