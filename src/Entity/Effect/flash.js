@@ -2,6 +2,7 @@ import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Util from '../../util.js';
+import Pool from '../../Stage/pool.js';
 
 //閃光
 export default class Flash extends EFFECT{
@@ -10,6 +11,7 @@ export default class Flash extends EFFECT{
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.frame = 0;
+    this.name = "flash"
     /*スプライト*/
     this.spid = 0;
     this.pattern = Art.bulletPattern.explosion.flash;
@@ -25,7 +27,8 @@ export default class Flash extends EFFECT{
     this.sprite.alpha *=0.8;
     this.sprite.scale = VECN(2);
     if(this.frame == 4){
-      EntityManager.removeEntity(this);
+      Pool.Remove(this);
+      //EntityManager.removeEntity(this);
     }
     this.sprite.position = this.pos;
     this.frame++;
