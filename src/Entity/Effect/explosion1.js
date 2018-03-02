@@ -25,7 +25,7 @@ export default class Explosion1 extends EFFECT{
     for(let i = 0;i<8;i++){
       let v = Rand2D(30);
       let stone = Pool.GetStone(CPV(this.pos),v);
-      EntityManager.addEntity(stone);
+      if(stone)EntityManager.addEntity(stone);
     }
     //smoke
     for(let i = 0;i<2;i++){

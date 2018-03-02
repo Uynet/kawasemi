@@ -1,6 +1,7 @@
 import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
+import Pool from '../../Stage/pool.js';
 import Util from '../../util.js';
 import Drawer from '../../drawer.js';
 
@@ -41,7 +42,8 @@ export default class BulletBlur extends EFFECT{
       if(this.frame >= 40){
         //消える時に一回だけ呼ばれる
         if(this.isAlive){
-          EntityManager.removeEntity(this);
+          //EntityManager.removeEntity(this);
+          Pool.RemoveBulletBlur(this);
           this.isAlive = false
         }
       }

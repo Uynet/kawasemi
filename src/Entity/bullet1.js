@@ -55,8 +55,8 @@ export default class Bullet1 extends Bullet{
       let d = ADV(Rand2D(5),POV(this.frame,3))
       p = ADV(p,d);
       let v = POV(this.arg+Math.PI,4);
-      let blur = new BulletBlur(p,v);
-      EntityManager.addEntity(blur);
+      let blur = Pool.GetBulletBlur(p,v);
+      if(blur)EntityManager.addEntity(blur);
     }
     this.arg += Rand(0.2);
     for (let AI of this.AIList){
