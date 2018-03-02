@@ -28,7 +28,8 @@ export default class Pool{
     }
   }
   static GetMissile(pos,weapon){
-    if(this.unusedMissiles.length > 0){
+    cl(this.unusedMissiles.length);
+    if(this.unusedMissiles.length < 0){
       let s = this.unusedMissiles.pop();
       s.arg = weapon.arg;
       s.vi = weapon.speed;
@@ -37,8 +38,10 @@ export default class Pool{
       s.frame = 0;
       s.isTargetOn = weapon.isTargetOn;
       s.AIList.push(new Bullet1AI(s));
-      if(s.isTargetOn) s.targetedEnemy = weapon.target.enemy;
+      s.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
+      if(s.isTargetOn) s.targetedEnemy = weapon.target.enemy
       if(weapon.isHorming) s.AIList.push(new Horming(s));
+      cl(s);
       return s;
     }else{
       return false;

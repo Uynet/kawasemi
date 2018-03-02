@@ -4,7 +4,7 @@ import Art from '../art.js'
 import Audio from '../audio.js';
 import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
-import Box from '../Collision/Box.js';
+import Box from '../Collision/box.js';
 import Input from '../input.js';
 import EntityManager from '../Stage/entityManager.js';
 import Util from '../util.js';
@@ -12,7 +12,7 @@ import EventManager from '../Event/eventmanager.js';
 import Event from '../Event/event.js';
 import GameOverEvent from '../Event/gameOverEvent.js';
 import Drawer from '../drawer.js';
-import Game from '../Game.js';
+import Game from '../game.js';
 import WeaponManager from '../Weapon/weaponManager.js';
 import UIManager from '../UI/uiManager.js';
 import FontEffect from './Effect/fontEffect.js';

@@ -2,9 +2,8 @@ import UI from './ui.js';
 import UIManager from './uiManager.js';
 import Art from '../art.js';
 import Input from '../input.js';
-import Timer from '../timer.js';
 import Util from '../util.js';
-import Font from './Font.js';
+import Font from './font.js';
 
 const P_TEXT = VECN(8);//テキストの相対位置
 const COLUMN = 10;//行間

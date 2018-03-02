@@ -1,4 +1,3 @@
-import Art from '../art.js';
 
 export default class UI{
   constructor(pos){

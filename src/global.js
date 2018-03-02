@@ -17,9 +17,9 @@ const DIR = {
 
 /*形状*/
 const SHAPE = {
-  BOX : 0,
-  CIRCLE : 1,
-  LINE : 2
+  BOX : "BOX",
+  CIRCLE : "CIRCLE",
+  LINE : "LINE"
 };
 
 /*Key*/

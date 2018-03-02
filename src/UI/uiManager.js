@@ -1,13 +1,11 @@
 import Drawer from '../drawer.js';
 import UI from './ui.js';
-import Input from '../input.js';
-import Timer from '../timer.js';
 import WeaponIcon from './weaponIcon.js';
 import HP from './HP.js';
-import Bullet from './Bullet.js';
-import Font from './Font.js';
-import Message from './Message.js';
-import Menu from './Menu.js';
+import Bullet from './bullet.js';
+import Font from './font.js';
+import Message from './message.js';
+import Menu from './menu.js';
 import EntityManager from '../Stage/entityManager.js';
 
 //HP

@@ -8,7 +8,7 @@ import Util from '../util.js';
 import Input from '../input.js';
 import EventManager from '../Event/eventmanager.js';
 import MessageEvent from '../Event/messageEvent.js';
-import Game from '../Game.js';
+import Game from '../game.js';
 import BackEntity from './backEntity.js';
 import UIManager from '../UI/uiManager.js';
 import Signpop from './Effect/signpop.js';

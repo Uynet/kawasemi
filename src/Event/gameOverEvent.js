@@ -1,13 +1,7 @@
 import Event from './event.js';
-import UIManager from '../UI/uiManager.js';
-import EntityManager from '../Stage/entityManager.js';
-import MapData from '../Stage/mapData.js';
-import Game from '../Game.js';
-import Timer from '../timer.js';
-import Drawer from '../drawer.js';
-import Art from '../art.js';
 import EventManager from './eventmanager.js';
-import FadeEvent from './FadeEvent.js';
+import FadeEvent from './fadeEvent.js';
+import Game from '../game.js';
 
 export default class GameOverEvent extends Event{
   constructor(){

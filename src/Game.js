@@ -6,7 +6,7 @@ import StartStageEvent from './Event/startStageEvent.js';
 import StartGameEvent from './Event/startGameEvent.js';
 import Scene from './Event/scene.js';
 import UIManager from './UI/uiManager.js';
-import Font from './UI/Font.js';
+import Font from './UI/font.js';
 import WeaponManager from './Weapon/weaponManager.js';
 import Art from './art.js';
 import Drawer from './drawer.js';
@@ -14,7 +14,7 @@ import Input from './input.js';
 import Timer from './timer.js';
 import Util from './util.js';
 import Param from './param.js';
-import Menu from './UI/Menu.js';
+import Menu from './UI/menu.js';
 import Audio from './audio.js';
 
 export default class Game{

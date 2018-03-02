@@ -1,9 +1,7 @@
 import Event from './event.js';
 import UIManager from '../UI/uiManager.js';
-import MapData from '../Stage/mapData.js';
 import EventManager from './eventmanager.js';
-import QuakeEvent from './quakeEvent.js';
-import Game from '../Game.js';
+import Game from '../game.js';
 import EntityManager from '../Stage/entityManager.js';
 
 //新しくメッセージ枠を開く

@@ -2,12 +2,11 @@ import Event from './event.js';
 import UIManager from '../UI/uiManager.js';
 import EntityManager from '../Stage/entityManager.js';
 import MapData from '../Stage/mapData.js';
-import Game from '../Game.js';
-import Timer from '../timer.js';
+import Game from '../game.js';
 import Drawer from '../drawer.js';
 import Art from '../art.js';
 import EventManager from './eventmanager.js';
-import FadeEvent from './FadeEvent.js';
+import FadeEvent from './fadeEvent.js';
 
 export default class GameClearEvent extends Event{
   constructor(){
