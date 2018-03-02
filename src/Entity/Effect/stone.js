@@ -35,9 +35,11 @@ export default class Stone extends EFFECT{
       let p = ADV(this.pos,this.vel);
       let stone = Pool.GetStone(p,this.vel);
       //次の石 : 小さく薄く
-      stone.sprite.scale = this.sprite.scale;
-      stone.sprite.alpha = this.sprite.alpha;
-      EntityManager.addEntity(stone);
+      if(stone){
+        stone.sprite.scale = this.sprite.scale;
+        stone.sprite.alpha = this.sprite.alpha;
+        EntityManager.addEntity(stone);
+      }
     }
     if(this.frame == 1)this.isNext = true;
     //持続時間

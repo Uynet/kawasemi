@@ -106,7 +106,7 @@ export default class Player extends Entity{
         this.isJump = true;
         this.state = STATE.JUMPING;
         // ■ SoundEffect : jump
-        Audio.PlaySE("jump");
+        Audio.PlaySE("jump1");
       }
     }
     /*空中ジャンプ*/
@@ -115,6 +115,7 @@ export default class Player extends Entity{
       if(this.state == STATE.FALLING){
         let jumpCost = 20
           if(this.bullet >= jumpCost){
+            Audio.PlaySE("jump2");
             EntityManager.addEntity(new Explosion2(CPV(this.pos),Math.PI*(1/2)));
             EventManager.eventList.push(new QuakeEvent(20,5));
             this.frameShot = this.frame;//最終ショット時刻
@@ -262,18 +263,17 @@ export default class Player extends Entity{
       atk = Math.floor(atk);
     }
     //無敵時間は攻撃を受けない
-    //if(!this.isInvincible){
-      if(this.isAlive){
-        this.hp+=atk;
-        //フォントはダメージ数に応じて数字を表示する　
-        EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
-        this.hp = Math.max(this.hp,0);
-        //ダメージを受けて一定時間無敵になる
-        this.isInvincible = true;
-        this.frameDamaged = this.frame;
-        EventManager.eventList.push(new QuakeEvent(5,2));
-      }
-    //}
+    if(!this.isInvincible && this.isAlive){
+      Audio.PlaySE("playerDamage");
+      this.hp+=atk;
+      //フォントはダメージ数に応じて数字を表示する　
+      EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
+      this.hp = Math.max(this.hp,0);
+      //ダメージを受けて一定時間無敵になる
+      this.isInvincible = true;
+      this.frameDamaged = this.frame;
+      EventManager.eventList.push(new QuakeEvent(5,2));
+    }
   }
   //コイン取得
   GetScore(){

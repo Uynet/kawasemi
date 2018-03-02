@@ -17,34 +17,29 @@ export default class Bullet1AI{
   /* 衝突判定 */
   collision(){
     /*TODO リスト分割 */
-    let EntityList = EntityManager.entityList;
-    for(let l of EntityList){
-      switch(l.type){
-        case ENTITY.ENEMY :
-          if(Collision.on(this.bullet,l).isHit){
-            l.Damage(-this.bullet.atk - Math.floor(99*Math.random()) );
-            this.bullet.hp--;
+    for(let l of EntityManager.enemyList){
+      if(Collision.on(this.bullet,l).isHit){
+        l.Damage(-this.bullet.atk - Math.floor(99*Math.random()) );
+        this.bullet.hp--;
+        /* ■ SoundEffect : hitWall */
+        /* □ Effect : hitWall */
+        EntityManager.addEntity(new BulletHitWall(this.bullet.pos,VEC0()));
+      };
+    }
+    for(let l of EntityManager.wallList){
+      if(Collision.on(this.bullet,l).isHit){
+        //breakable object
+        if(l.name == "woodbox"){
+          /* ■ SoundEffect : hitWood */
+          l.Damage(-this.bullet.atk );
+          this.bullet.hp--;
+          //wall
+          }else{
             /* ■ SoundEffect : hitWall */
-            /* □ Effect : hitWall */
-            EntityManager.addEntity(new BulletHitWall(this.bullet.pos,VEC0()));
-          };
-          break;
-        case ENTITY.WALL :
-          if(Collision.on(this.bullet,l).isHit){
-            //breakable object
-            if(l.name == "woodbox"){
-              /* ■ SoundEffect : hitWood */
-              l.Damage(-this.bullet.atk );
-              this.bullet.hp--;
-            //wall
-            }else{
-              /* ■ SoundEffect : hitWall */
-              this.bullet.hp = 0;
-            }
-            /* □ Effect : Exp */
-          };
-          break;
-      }
+            this.bullet.hp = 0;
+          }
+          /* □ Effect : Exp */
+      };
     }
   }
 

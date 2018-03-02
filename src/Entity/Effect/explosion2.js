@@ -25,8 +25,8 @@ export default class Explosion2 extends EFFECT{
   Bomb(){
     /*stone*/
     for(let i = 0;i<8;i++){
-      let arg = this.arg + Rand(0.3);
-      let vi = this.vi + Rand(5);
+      let arg = this.arg + Rand(0.7);
+      let vi = this.vi + Rand(8);
       let v = POV(arg,vi);
       let stone = Pool.GetStone(CPV(this.pos),v);
       if(stone)EntityManager.addEntity(stone);
