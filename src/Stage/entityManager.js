@@ -15,6 +15,16 @@ export default class EntityManager{
 
     this.entityIndex = 0;
   }
+  static SortWallList(){
+    //比較関数
+    let compare = (w1,w2)=>{
+      if(w1.pos.y > w2.pos.y)return 1
+      else if(w1.pos.y < w2.pos.y) return -1;
+      else return 0;
+    }
+    this.wallList.sort(compare);
+  }
+
 
   /*Entityをリストに登録*/
   static addEntity(entity){
@@ -44,6 +54,7 @@ export default class EntityManager{
       case ENTITY.WALL :
         let j = this.wallList.indexOf(entity);
         this.wallList.splice(j,1);
+        this.SortWallList();
         break;
     }
     let k = this.entityList.indexOf(entity);

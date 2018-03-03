@@ -24,19 +24,49 @@ export default class Bullet1AI{
         /* □ Effect : hitWall */
       };
     }
-    for(let l of EntityManager.wallList){
-      if(Collision.on(this.bullet,l).isHit){
-        //breakable object
-        if(l.name == "woodbox"){
-          /* ■ SoundEffect : hitWood */
-          l.Damage(-this.bullet.atk );
-          this.bullet.hp--;
-          //wall
+    //壁との判定を二分探索
+    let l = EntityManager.wallList.length;
+    let m = Math.floor(l/2);//判別位置
+    let d = Math.floor(m/2);//移動距離
+    
+    //broad phase
+    for(let i = 0;i<9;i++){
+      let w = EntityManager.wallList[m];
+      //上半分
+      if(this.bullet.pos.y < w.pos.y - 16){
+        m -= d;
+        d = Math.floor(d/2);
+        continue;
+      }else if(this.bullet.pos.y > w.pos.y){
+      //下半分
+        m += d;
+        if(m >= l){
+          m = l-1;
+        }
+        d = Math.floor(d/2);
+        continue;
+      }else{
+        //narrow phase
+        //衝突?
+        for(let j = 0;j<20;j++){
+          if(Collision.on(this.bullet,w).isHit){
+            //breakable object
+            if(w.name == "woodbox"){
+              /* ■ SoundEffect : hitWood */
+              w.Damage(-this.bullet.atk );
+              this.bullet.hp--;
+              //wall
+              }else{
+                /* ■ SoundEffect : hitWall */
+                this.bullet.hp = 0;
+              }
+              /* □ Effect : Exp */
+              break;
           }else{
-            /* ■ SoundEffect : hitWall */
-            this.bullet.hp = 0;
+            m = Math.max(m-1,0) ;
+            w = EntityManager.wallList[m];
           }
-          /* □ Effect : Exp */
+        }
       }
     }
   }
