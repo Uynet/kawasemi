@@ -150,7 +150,7 @@ export default class Pool{
       s.frame = 0;
       //sprite
       s.spid = 0;
-      s.sprite.alpha = 1;
+      s.sprite.alpha = 0.7;
       s.sprite.scale.set(size/5);
       return s;
     }
