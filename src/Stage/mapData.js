@@ -92,6 +92,9 @@ export default class MapData{
         }
       }
     }
+    //wallのソート
+    EntityManager.SortWallList();
+
     let obj;
     //objectの生成
     for(let i = 0;i < this.objData.length;i++){
