@@ -1,0 +1,303 @@
+import EntityManager from './entityManager.js'
+import Entity from '../Entity/entity.js'
+import Wall from '../Entity/wall.js'
+import BackEntity from '../Entity/backEntity.js';
+import BackGround from '../Entity/backGround.js';
+import Signboard from '../Entity/signboard.js';
+import Player from '../Entity/player.js'
+import Enemy1 from '../Entity/Enemy/enemy1.js'
+import Enemy2 from '../Entity/Enemy/enemy2.js'
+import Goal from '../Entity/goal.js'
+import Game from '../game.js'
+import Art from '../art.js'
+import Drawer from '../drawer.js';
+import Woodbox from '../Entity/woodbox.js';
+import Needle from '../Entity/needle.js';
+/*マップデータ*/
+export default class MapData{
+  constructor(){
+    this.stageNo;
+    this.entityData;
+    this.width;
+    this.height;
+  }
+
+  /*マップデータを読み込む*/
+  static Load(stageNo){
+    return new Promise((resolve)=>{
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET','src/resource/map/stage'+stageNo+'.json',true);
+      xhr.onload = ()=>{
+        this.jsonObj = JSON.parse(xhr.responseText);
+        //entityの読み込み
+        this.entityData = this.jsonObj.layers[0].data;
+        //objの読み込み(今は看板だけ)
+        this.objData = this.jsonObj.layers[1].objects;
+        this.width = this.jsonObj.layers[0].width;
+        this.height = this.jsonObj.layers[0].height;
+        resolve();
+      }
+      xhr.send(null);
+      this.stageNo = stageNo;
+    });
+  }
+
+  /* state 
+   * ENTER : 新しいステージに入った時
+   * RESET : 死んでやり直す時
+   */
+  static async CreateStage(stageNo,state){
+    await this.Load(stageNo);
+    //背景の生成
+    //if(state == "ENTER")
+    this.AddBackGround();
+    //this.AutoStageCreate();
+    //entityの生成
+    /*タイルに割り当てるtype
+     * 1 : 壁
+     * 2 : 背景*/
+    let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
+    let moverTiletype = this.jsonObj.tilesets[1].tileproperties;
+    let entity;
+    let ID;//tiledに対応漬けられているID
+
+    for(let y = 0;y<this.height;y++){
+      for(let x = 0;x<this.width;x++){
+        ID = this.entityData[this.width*y + x]-1;
+        //tiledのIDがjsonデータより1小さいので引く
+        if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
+        switch(wallTiletype[ID].type){
+          case TILE.WALL :
+            //直せ
+            if(wallTiletype[ID].name == "woodbox"){
+              entity = new Woodbox({x:16*x,y:16*y});
+            }else{
+              entity = new Wall({x:16*x,y:16*y},MapData.WallTile(ID));
+            }
+            EntityManager.addEntity(entity);
+            break;
+          case TILE.BACK :
+            entity = new BackEntity({x:16*x,y:16*y},MapData.WallTile(ID));
+            EntityManager.addEntity(entity); break;
+          case TILE.FORE :
+            entity = new BackEntity({x:16*x,y:16*y},MapData.WallTile(ID));
+            entity.layer = "FORE";
+            EntityManager.addEntity(entity); break;
+          case TILE.NEEDLE :
+            entity = new Needle({x:16*x,y:16*y},MapData.WallTile(ID));
+            EntityManager.addEntity(entity);
+            break;
+          default : 
+            console.warn("タイルセットに未実装のチップが使用されています ID : " + wallTiletype[ID].type);
+        }
+      }
+    }
+    //wallのソート
+    EntityManager.SortWallList();
+
+    let obj;
+    //objectの生成
+    for(let i = 0;i < this.objData.length;i++){
+      ID = this.objData[i].gid;
+        let objx = this.objData[i].x;
+        let objy = this.objData[i].y -16 ;//なぜかyだけずれるので引く
+        let p = {x:objx , y:objy};
+        switch(ID){
+          case 161 :
+            obj = new Player(p);
+            EntityManager.addEntity(obj);
+            break;
+          case 162 :
+            let message = this.objData[i].properties;
+            obj = new Signboard(p,message);
+            EntityManager.addEntity(obj);
+            break;
+          case 163 :
+            obj = new Goal(p);
+            EntityManager.addEntity(obj);
+            break;
+          case 169 :
+            obj = new Enemy1(p);
+            EntityManager.addEntity(obj);
+            break;
+          case 170 :
+            obj = new Enemy2(p);
+            EntityManager.addEntity(obj);
+            break;
+      }
+    }
+    Drawer.ScrollSet(EntityManager.player.pos);
+  }
+
+  /*マップデータを消して作り直す*/
+  static RebuildStage(){
+    MapData.DeleteStage();
+    let state = "RESET";
+    MapData.CreateStage(Game.stage,state);
+  }
+
+  /*現在開かれているステージを削除*/
+  static DeleteStage(){
+    while(EntityManager.entityList.length > 0){
+      EntityManager.removeEntity(EntityManager.entityList[0]);
+    }
+  }
+  //壁タイルの対応
+  //タイルIDを渡すとテクスチャを返す
+  static WallTile(i){
+    let out = Art.wallPattern.edge.out;
+    let inner = Art.wallPattern.edge.inner;
+    let steel = Art.wallPattern.steel;
+    let needle = Art.wallPattern.needle;
+    switch(i){
+      //edge in
+      case 49 : return inner[0];
+      case 51 : return inner[1];
+      case 65 : return inner[2];
+      case 67 : return inner[3];
+      //edge out
+      case 52:return out[0];
+      case 53:return out[1];
+      case 54:return out[2];
+      case 60:return out[3];
+      case 62:return out[4];
+      case 68:return out[5];
+      case 69:return out[6];
+      case 70:return out[7];
+      //steel
+      case 72:return steel.entity[0]; 
+      case 73:return steel.entity[1]; 
+      case 74:return steel.entity[2]; 
+      case 75:return steel.entity[3]; 
+      case 76:return steel.back[0];
+      case 77:return steel.back[1];
+      case 78:return steel.back[2];
+      case 79:return steel.back[3];
+      //signboard
+      case 4 :return Art.wallPattern.signboard;
+        //needle
+      case 8 : return needle[0];
+      case 9 : return needle[1];
+      case 10 : return needle[2];
+      case 11 : return needle[3];
+  }
+    console.warn(i);
+    return Art.wallPattern.block;
+  }
+
+  //背景を追加
+  static AddBackGround(){
+    let back;
+    let w = 20;
+    let h = 20;
+    for(let y = 0;y<h;y++){
+      for(let x = 0;x<w;x++){
+        let tex = Art.wallPattern.steel.backGround[0];
+        let p = {
+          x : (x - w/2)*32,
+          y : (y - h/2)*32
+        }
+        EntityManager.addEntity(new BackGround(CPV(p),tex));
+      }
+    }
+  }
+
+  static AutoStageCreate(playerY){
+    //うねうね
+    let grid = {
+      x : 12,
+      y : playerY,
+    }
+    let dist;//移動距離
+    let dir = "U";//移動方向 
+    let dim = "R";//U,UR,R,DR,D,DL,L,UL
+    function dimToID(dim){
+      switch(dim){
+        case "DRI": return 49;break;
+        case "DLI": return 51;break;
+        case "URI": return 65;break;
+        case "ULI": return 67;break;
+        case "ULO": return 52;break;
+        case "URO": return 54;break;
+        case "DLO": return 68;break;
+        case "DRO": return 70;break;
+        case "U"  : return 53;break;
+        case "L"  : return 60;break;
+        case "R"  : return 62;break;
+        case "D"  : return 69;break;
+      }
+    }
+    let dirs = ["R","D","L","U"];
+    function rot(dir,side){
+      if(side == "R") {
+        switch(dir){
+          case "R" :return "D";
+          case "D" :return "L";
+          case "L" :return "U";
+          case "U" :return "R";
+        }
+      }
+      if(side == "L") {
+        switch(dir){
+          case "R" :return "U";
+          case "D" :return "R";
+          case "L" :return "D";
+          case "U" :return "L";
+        }
+      }
+    };
+
+    function dirToV(dir){
+      switch(dir){
+        case "R": return {x:1,y:0};break;
+        case "D": return {x:0,y:1};break;
+        case "L": return {x:-1,y:0};break;
+        case "U": return {x:0,y:-1};break;
+      }
+    }
+    //回す
+    //置く
+    //すすめる
+    
+    //left
+      let leftSide = 8;
+      let rightSide = 16;
+    while(grid.y > 0){
+      dim = rot(dir,"R");
+      //rot
+      if(Dice(2)==0 || grid.x < leftSide || grid.x > rightSide){
+        let side;
+        if(Dice(2)==0)side = "R";
+        else side = "L";
+
+        //区間指定
+        if(dir == "L")side = "R";
+        if(dir == "R")side = "L";
+        if(grid.x<leftSide && this.dir == "U")side = "R";
+        if(grid.x>rightSide && this.dir == "U")side = "L";
+        if(dir =="U" && side =="L") dim = "URO";
+        if(dir =="U" && side =="R") dim = "DRI";
+        //if(dir =="D" && side =="L") dim = "URO";
+        //if(dir =="D" && side =="R") dim = "DRI";
+        if(dir =="R") dim = "DRO";
+        if(dir =="L") dim = "URI";
+        dir = rot(dir,side);
+      }
+      //put
+      let ID = dimToID(dim);
+      let entity = new Wall(MLV(VECN(16),grid),MapData.WallTile(ID));
+      EntityManager.addEntity(entity);
+      //fill
+      if(dir == "U"){
+        let i = grid.x-1;
+        while(i>0){
+          let back = new BackEntity({x:16*i,y:16*(grid.y)},MapData.WallTile(79));
+          EntityManager.addEntity(back);
+          i--;
+        }
+      }
+      //step
+      grid = ADV(grid,dirToV(dir));
+    }
+  }
+}

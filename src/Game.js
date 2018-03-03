@@ -16,6 +16,7 @@ import Util from './util.js';
 import Param from './param.js';
 import Menu from './UI/menu.js';
 import Audio from './audio.js';
+import StageGen from './Stage/stageGen.js';
 
 export default class Game{
   static Init(){
@@ -29,6 +30,7 @@ export default class Game{
     Timer.Init();
     Util.Init();
     UIManager.Init();
+    StageGen.Init();
 
     /*initialize Game state*/
     Game.stage = 0;//現在のステージ番号

@@ -30,11 +30,15 @@ export default class Bullet1AI{
     let d = Math.floor(m/2);//移動距離
     
     //broad phase
-    for(let i = 0;i<9;i++){
+    for(let i = 0;i<20;i++){
       let w = EntityManager.wallList[m];
+      if(!w){
+        cl(m);
+      }
       //上半分
       if(this.bullet.pos.y < w.pos.y - 16){
         m -= d;
+        if(m<0)break;
         d = Math.floor(d/2);
         continue;
       }else if(this.bullet.pos.y > w.pos.y){
@@ -42,6 +46,7 @@ export default class Bullet1AI{
         m += d;
         if(m >= l){
           m = l-1;
+          break;
         }
         d = Math.floor(d/2);
         continue;

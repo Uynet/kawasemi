@@ -7,9 +7,9 @@ import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import Input from '../input.js';
 import EntityManager from '../Stage/entityManager.js';
-import Util from '../util.js';
+import MapData from '../Stage/mapData.js';
+import StageGen from '../Stage/stageGen.js';
 import EventManager from '../Event/eventmanager.js';
-import Event from '../Event/event.js';
 import GameOverEvent from '../Event/gameOverEvent.js';
 import Drawer from '../drawer.js';
 import Game from '../game.js';
@@ -96,6 +96,8 @@ export default class Player extends Entity{
       on : false,//乗っているか
       under : null,//自分の下
     }
+    //??
+    this.poyo = true;
   }
   /*キー入力による移動*/
   Input(){
@@ -398,25 +400,32 @@ Dying(){
       this.isDying = false;
     }
   }
-}
+  }
 
-//bulletのかいふく
-Supply(){
-  //最後に撃った時刻から経過するほど早くなる
-  let t = (this.frame-this.frameShot);
-  if(t<=50 && t%10 == 0) this.bullet++;
-  else if(t>50 && t<=100 && t%5 == 0) this.bullet++;
-  else if(t>100 && t<=150 && t%3 == 0) this.bullet++
-  else if(t>150) this.bullet++;
-  this.bullet = BET(0,this.bullet,this.maxBullet);
-}
+  //bulletのかいふく
+  Supply(){
+    //最後に撃った時刻から経過するほど早くなる
+    let t = (this.frame-this.frameShot);
+    if(t<=50 && t%10 == 0) this.bullet++;
+    else if(t>50 && t<=100 && t%5 == 0) this.bullet++;
+    else if(t>100 && t<=150 && t%3 == 0) this.bullet++
+    else if(t>150) this.bullet++;
+    this.bullet = BET(0,this.bullet,this.maxBullet);
+  }
 
-SetArg(arg){
-  let d = this.toArg - this.arg;
-  if(d > Math.PI)d -= 2*Math.PI;
-  if(d < -Math.PI)d += 2*Math.PI;
-  this.arg += d*0.2;
-}
+  SetArg(arg){
+    let d = this.toArg - this.arg;
+    if(d > Math.PI)d -= 2*Math.PI;
+    if(d < -Math.PI)d += 2*Math.PI;
+    this.arg += d*0.2;
+  }
+
+  CreateStage(){
+    if(this.pos.y < StageGen.checkpoint * 16){
+      StageGen.GenerateChunk(StageGen.checkpoint);
+      StageGen.checkpoint -= 1;
+    }
+  }
 
   Update(){
       if(this.isAlive){
@@ -443,7 +452,7 @@ SetArg(arg){
         }
         */
       }
-      
+      this.CreateStage();//マップ生成
       this.ScrollByDir();//向きに応じてスクロール位置を変更
       Drawer.ScrollOn(this.pos);//プレイヤー中心にスクロール
       this.Observer(); //死亡チェック
