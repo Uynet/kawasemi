@@ -24,6 +24,21 @@ export default class Bullet1AI{
         /* □ Effect : hitWall */
       };
     }
+    for(let w of EntityManager.wallList){
+      if(Collision.on(this.bullet,w).isHit){
+        //breakable object
+        if(w.name == "woodbox"){
+          // ■ SoundEffect : hitWood
+          w.Damage(-this.bullet.atk );
+          this.bullet.hp--;
+          //wall
+          }else{
+            // ■ SoundEffect : hitWall
+            this.bullet.hp = 0;
+          }
+      }
+    }
+    /*
     //壁との判定を二分探索
     let l = EntityManager.wallList.length;
     let m = Math.floor(l/2);//判別位置
@@ -57,15 +72,15 @@ export default class Bullet1AI{
           if(Collision.on(this.bullet,w).isHit){
             //breakable object
             if(w.name == "woodbox"){
-              /* ■ SoundEffect : hitWood */
+              // ■ SoundEffect : hitWood
               w.Damage(-this.bullet.atk );
               this.bullet.hp--;
               //wall
               }else{
-                /* ■ SoundEffect : hitWall */
+                // ■ SoundEffect : hitWall
                 this.bullet.hp = 0;
               }
-              /* □ Effect : Exp */
+              // □ Effect : Exp
               break;
           }else{
             m = Math.max(m-1,0) ;
@@ -74,6 +89,7 @@ export default class Bullet1AI{
         }
       }
     }
+    */
   }
 
   Do(){

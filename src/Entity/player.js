@@ -423,7 +423,9 @@ Dying(){
   CreateStage(){
     if(this.pos.y < StageGen.checkpoint * 16){
       StageGen.GenerateChunk(StageGen.checkpoint);
-      StageGen.checkpoint -= 1;
+    }
+    if(this.pos.y > StageGen.wall.left.lastGrid.y * 16){
+      this.Damage(-999);
     }
   }
 

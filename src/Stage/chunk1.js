@@ -70,8 +70,8 @@ export default class StageGen{
     let dim;
     if(dir =="U" && side =="L") dim = "URO";
     if(dir =="U" && side =="R") dim = "DRI";
-    //if(dir =="D" && side =="L") dim = "URO";
-    //if(dir =="D" && side =="R") dim = "DRI";
+    if(dir =="D" && side =="L") dim = "URO";
+    if(dir =="D" && side =="R") dim = "DRI";
     if(dir =="R") dim = "DRO";
     if(dir =="L") dim = "URI";
     return dim;
@@ -88,7 +88,7 @@ export default class StageGen{
     let dist = 2;//移動距離
     let dir =  this.wall.left.dirrection;
     let dim = this.wall.left.dimmension;
-    let length = 20;//チャンク区間
+    let length = 10;//チャンク区間
     this.checkpoint -= length;
     //回す
     //置く
@@ -96,6 +96,8 @@ export default class StageGen{
     //left
     let leftSide = this.wall.left.leftside;
     let rightSide = this.wall.left.rightside;
+    //checkpoint line
+    let i = 32
     //checkpointの3ブロック↑まで生成する
     while(grid.y > this.checkpoint - 3){
       dim = this.Rot(dir,"R");
@@ -106,12 +108,16 @@ export default class StageGen{
         let side;
         if(Dice(2)==0)side = "R";
         else side = "L";
+
         //区間指定
         if(dir == "L")side = "R";//→→↑
         if(dir == "R")side = "L";//↑←←
-        if(grid.x<leftSide && this.dir == "U")side = "R";//↑→
+        if(grid.x<leftSide && this.dir == "U"){
+          side = "R";//↑→
+            dist = 10;
+        }
         if(grid.x>rightSide && this.dir == "U")side = "L";//←↑
-        dim = this.DirSideToDim(dir,side);
+        this.DirSideToDim(dir,side);
         dir = this.Rot(dir,side);
       }
       //put
@@ -136,15 +142,9 @@ export default class StageGen{
     this.wall.left.topGrid = grid;
     //dequeue
     let dewall;
-    while(this.wall.left.lastGrid.y > this.checkpoint + 2*length){
+    for(let i = 0;i<length;i++){
       dewall = this.wall.left.list.shift();
-      this.wall.left.lastGrid.x = dewall.pos.x/16;
-      this.wall.left.lastGrid.y = dewall.pos.y/16;
       EntityManager.removeEntity(dewall);
-      let i = this.wall.left.lastGrid.x -1;
-      while(i>0){
-        i--;
-      }
     }
   }
 }

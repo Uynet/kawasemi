@@ -31,9 +31,9 @@ export default class Param{
     }
     this.weapon1 = {
       //status
-      agi : 3,
-      cost : 1,
-      speed : 10, 
+      agi : 16,
+      cost : 10,
+      speed : 4, 
       length : 180,
       //optional
       isTarget : true,

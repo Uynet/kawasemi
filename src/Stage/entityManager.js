@@ -54,7 +54,7 @@ export default class EntityManager{
       case ENTITY.WALL :
         let j = this.wallList.indexOf(entity);
         this.wallList.splice(j,1);
-        this.SortWallList();
+        //this.SortWallList();
         break;
     }
     let k = this.entityList.indexOf(entity);
