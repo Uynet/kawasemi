@@ -7,7 +7,11 @@ import Util from '../../util.js';
 export default class Sonic extends EFFECT{
   constructor(pos,vel,size){
     super(pos,vel);
+  }
+  Init(pos,vel,size){
     /*基本情報*/
+    this.pos = pos;
+    this.vel = vel;
     this.type = ENTITY.EFFECT;
     this.name = "smoke";
     this.frame = 0;
@@ -16,7 +20,9 @@ export default class Sonic extends EFFECT{
     this.spid = 0;
     this.pattern = Art.bulletPattern.explosion.smoke;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.sprite.alpha = 0.7;
     this.sprite.position = this.pos;
+    this.sprite.scale.set(size/5);
     this.sprite.anchor.set(0.5);
     this.sprite.scale.x = this.size/5;
     this.sprite.scale.y = this.size/5;

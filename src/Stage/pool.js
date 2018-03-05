@@ -48,14 +48,7 @@ export default class Pool{
   static GetBulletBlur(pos,vel){
     if(this.unused.bulletblurs.length > 0){
     let s = this.unused.bulletblurs.pop();
-    s.isAlive = true;//消えたらfalse
-    s.pos = pos;
-    s.vel = vel;
-    s.frame = 0;
-    s.spid = 0;
-    s.sprite.alpha = 0.5;
-    s.sprite.scale.set(Rand(0.5)+1);
-    s.sprite.position = ADV(s.pos,VECN(8));
+    s.Init(pos,vel);
     return s;
     }else{
       return false;
@@ -64,6 +57,7 @@ export default class Pool{
   static GetMissile(pos,weapon){
     if(this.unused.missiles.length > 0){
       let s = this.unused.missiles.pop();
+      s.Init(pos,weapon);
       //param
       s.hp = Param.bullet1.hp;//弾丸のHP 0になると消滅
       //phys
@@ -102,12 +96,7 @@ export default class Pool{
   static GetFlash(pos,vel){
     if(this.unused.flashes.length > 0){
     let s = this.unused.flashes.pop();
-    s.pos = pos;
-    s.vel = vel;
-    s.frame = 0;
-    s.spid = 0;
-    s.sprite.alpha = 0.2;
-    s.sprite.scale.set(1);
+    s.Init(pos,vel);
     return s;
     }else{
       return false;
@@ -116,12 +105,7 @@ export default class Pool{
   static GetSonic(pos,vel){
     if(this.unused.sonics.length > 0){
     let s = this.unused.sonics.pop();
-    s.pos = pos;
-    s.vel = vel;
-    s.frame = 0;
-    s.spid = 0;
-    s.sprite.alpha = 0.2;
-    s.sprite.scale.set(1);
+    s.Init(pos,vel);
     return s;
     }else{
       return false;
@@ -130,12 +114,7 @@ export default class Pool{
   static GetStone(pos,vel){
     if(this.unused.stones.length > 0){
     let s = this.unused.stones.pop();
-    s.pos = pos;
-    s.vel = vel;
-    s.frame = 0;
-    s.isNext = false;
-    s.sprite.alpha = 1;
-    s.sprite.scale.set(1);
+    s.Init(pos,vel);
     return s;
     }else{
       return false;
@@ -145,13 +124,7 @@ export default class Pool{
     if(this.unused.smokes.length>0){
       /*constructor*/
       let s = this.unused.smokes.pop();
-      s.pos = pos;
-      s.vel = vel;
-      s.frame = 0;
-      //sprite
-      s.spid = 0;
-      s.sprite.alpha = 0.7;
-      s.sprite.scale.set(size/5);
+      s.Init(pos,vel,size);
       return s;
     }
     else{
@@ -159,20 +132,13 @@ export default class Pool{
     }
   }
   static GetFire(pos,vel){
-    if(this.unused.fires.length < 10)cl("!");
     if(this.unused.fires.length>0){
       /*constructor*/
       let s = this.unused.fires.pop();
-      s.pos = pos;
-      s.vel = vel;
-      s.frame = 0;
-      //sprite
-      s.spid = 0;
-      s.sprite.alpha = 1;
-      s.sprite.scale.set(1);
+      s.Init(pos,vel);
       return s;
     }else{
-      cl("fire");
+      return false;
     }
   }
 }

@@ -23,13 +23,15 @@ export default class Bullet1 extends Bullet{
   constructor(pos,weapon){
     //super(pos,POV(weapon.arg,weapon.speed));
     super(VEC0(),VEC0());
+  }
+  Init(pos,weapon){
     /*基本情報*/
     this.frame = 0;
     this.name = "missile";
-    //this.arg = weapon.arg;
-    //this.vi = weapon.speed;
-    //this.isTargetOn = weapon.isTargetOn;
-    //if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
+    this.arg = weapon.arg;
+    this.vi = weapon.speed;
+    this.isTargetOn = weapon.isTargetOn;
+    if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
     this.isUpdater  =true;
     /*スプライト*/
     this.pattern = Art.bulletPattern.bullet1;
@@ -46,7 +48,8 @@ export default class Bullet1 extends Bullet{
     this.type = ENTITY.BULLET;
     this.AIList = [];
     this.AIList.push(new Bullet1AI(this));
-    //if(weapon.isHorming) this.AIList.push(new Horming(this));
+    if(weapon.isHorming) this.AIList.push(new Horming(this));
+    cl(this.AIList.length);
   }
 
   Update(){

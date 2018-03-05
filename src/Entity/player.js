@@ -90,7 +90,6 @@ export default class Player extends Entity{
     this.isRun = false;//走っているか
     this.isAlive = true;//
     this.isInvincible = false//無敵時間
-    this.isNearBoard = false;
     /*床の親子関係*/
     this.floor = {
       on : false,//乗っているか
@@ -384,22 +383,22 @@ Observer(){
     this.state = STATE.DYING;
   }
 }
-Dying(){
-  //死亡中
-  if(this.isDying){       //まだ死んでない  
-    if(this.frame - this.frameDead < 50){
-      this.isDying = true;
-    }else{
-      //完全に死んだ
-      //完全死亡時に一回だけ呼ばれる部分
-      if(this.isDying){
-        //this.state = STATE.DEAD
-        let g = new GameOverEvent();
-        EventManager.eventList.push(g);
+  Dying(){
+    //死亡中
+    if(this.isDying){//まだ死んでない  
+      if(this.frame - this.frameDead < 50){
+        this.isDying = true;
+      }else{
+        //完全に死んだ
+        //完全死亡時に一回だけ呼ばれる部分
+        if(this.isDying){
+          //this.state = STATE.DEAD
+          let g = new GameOverEvent();
+          EventManager.eventList.push(g);
+        }
+        this.isDying = false;
       }
-      this.isDying = false;
     }
-  }
   }
 
   //bulletのかいふく
@@ -469,7 +468,6 @@ Dying(){
     this.offset *= 0.99;
     this.Animation();//状態から画像を更新
     /*reset*/
-    this.isNearBoard = false;
   }
 }
 
