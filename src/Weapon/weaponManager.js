@@ -1,6 +1,8 @@
 import Weapon1 from './weapon1.js';
 import Weapon2 from './weapon2.js';
 import Weapon3 from './weapon3.js';
+import Param from '../param.js';
+import UIManager from '../UI/uiManager.js';
 
 export default class WeaponManager{
   static Init(){
@@ -17,17 +19,19 @@ export default class WeaponManager{
 
   /*プレイヤーの参照を受け取って武器を変更*/
   static ChangeWeapon(player,name){
+    UIManager.bullet.ChangeWeapon(name);
     switch (name){
-      case "1":
+      case "missile":
         player.weapon = this.weaponList[0];
         break;
-      case "2":
+      case "laser":
         player.weapon = this.weaponList[1];
         break;
       case "3":
         player.weapon = this.weaponList[2];
         break;
     }
+    Param.player.equip = name;
   }
 
 

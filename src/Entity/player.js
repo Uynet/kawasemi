@@ -447,12 +447,10 @@ Dying(){
       }
       /*for debug*/
       if(Input.isKeyClick(KEY.K)){
-        /*
         switch(this.weapon.name){
-          case  "1" : this.ChangeWeapon("2");break;
-          case  "2" : this.ChangeWeapon("1");break;
+          case  "missile" : this.ChangeWeapon("laser");break;
+          case  "laser" : this.ChangeWeapon("missile");break;
         }
-        */
       }
       this.CreateStage();//マップ生成
       this.ScrollByDir();//向きに応じてスクロール位置を変更

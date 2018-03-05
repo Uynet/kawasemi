@@ -5,6 +5,7 @@ import Art from '../art.js';
 import Input from '../input.js';
 import Util from '../util.js';
 import Font from './font.js';
+import Param from '../param.js';
 
 const P_AMOUNT = {
   x : 22, 
@@ -16,7 +17,7 @@ const P_ICON = {
   y : 0, 
 };
 
-export default class Bullet extends UI{
+export default class GaugeBullet extends UI{
   constructor(pos,name){
     super(pos);
     /*基本情報*/
@@ -47,7 +48,8 @@ export default class Bullet extends UI{
     this.container.addChild(s);
     this.spid++;
     //icon
-    s = Art.SpriteFactory(Art.UIPattern.bullet.icon.missile);
+    let equip = Param.player.equip;
+    s = Art.SpriteFactory(Art.UIPattern.bullet.icon[equip]);
     s.position = this.icon.pos; 
     this.container.addChild(s);
     //amount
@@ -64,9 +66,9 @@ export default class Bullet extends UI{
   ChangeWeapon(name){
     //アイコンを武器に変更
     switch(name){
-      case "1": this.container.children[2].texture = Art.UIPattern.bullet.icon.missile;
+      case "missile": this.container.children[2].texture = Art.UIPattern.bullet.icon.missile;
       break;
-      case "2": this.container.children[2].texture = Art.UIPattern.bullet.icon.laser;
+      case "laser": this.container.children[2].texture = Art.UIPattern.bullet.icon.laser;
       break;
     }
   }

@@ -22,7 +22,7 @@ import Lasersight from '../Entity/Effect/lasersight.js';
 
 export default class Weapon1 extends Weapon{
   constructor(){
-    super("1");
+    super("missile");
     /*基本情報*/
     /*パラメータ*/
     this.param = Param.weapon1;

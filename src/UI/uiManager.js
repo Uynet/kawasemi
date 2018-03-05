@@ -1,8 +1,7 @@
 import Drawer from '../drawer.js';
 import UI from './ui.js';
-import WeaponIcon from './weaponIcon.js';
-import HP from './HP.js';
-import Bullet from './bullet.js';
+import GaugeHP from './gaugeHP.js';
+import GaugeBullet from './gaugeBullet.js';
 import Font from './font.js';
 import Message from './message.js';
 import Menu from './menu.js';
@@ -37,7 +36,6 @@ let P_MENU = {
 export default class UIManager{
   static Init(){
     this.UIList = [];//UI全部のリスト
-    this.WeaponIconList = [];//武器アイコンのリスト
     this.HP;
     this.bullet;
     this.score;
@@ -51,8 +49,8 @@ export default class UIManager{
   }
   /*ステージ中でのUI配置に変更*/
   static SetStage(){
-    UIManager.addUI(new HP(P_HP));//HP
-    UIManager.addUI(new Bullet(P_BUL));//BULLET
+    UIManager.addUI(new GaugeHP(P_HP));//HP
+    UIManager.addUI(new GaugeBullet(P_BUL));//BULLET
     UIManager.addUI(new Font(P_SCORE,"0","SCORE"));//SCORE
   }
   //フィルタ
