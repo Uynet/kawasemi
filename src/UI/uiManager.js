@@ -5,6 +5,7 @@ import GaugeBullet from './gaugeBullet.js';
 import Font from './font.js';
 import Message from './message.js';
 import Menu from './menu.js';
+import Score from './score.js';
 import EntityManager from '../Stage/entityManager.js';
 
 //HP
@@ -19,8 +20,8 @@ const P_BUL = {
 };
 //score
 const P_SCORE = {
-  x : 224,
-  y : P_BUL.y, 
+  x : 216,
+  y : P_BUL.y + 8, 
 }
 //message
 const P_MES = {
@@ -51,7 +52,8 @@ export default class UIManager{
   static SetStage(){
     UIManager.addUI(new GaugeHP(P_HP));//HP
     UIManager.addUI(new GaugeBullet(P_BUL));//BULLET
-    UIManager.addUI(new Font(P_SCORE,"0","SCORE"));//SCORE
+    //UIManager.addUI(new Font(P_SCORE,"0","SCORE"));//SCORE
+    UIManager.addUI(new Score(P_SCORE));//SCORE
   }
   //フィルタ
   static SetFilter(filters){
