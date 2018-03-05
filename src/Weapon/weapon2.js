@@ -27,7 +27,7 @@ const DIR = {
 
 export default class Weapon2 extends Weapon{
   constructor(){
-    super("2");
+    super("laser");
     /*基本情報*/
     this.target;
     this.isTargetOn = false;//照準が発生しているか

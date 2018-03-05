@@ -25,7 +25,7 @@ export default class Bullet1 extends Bullet{
     super(VEC0(),VEC0());
     /*基本情報*/
     this.frame = 0;
-    this.name = "missile";
+    this.name = "nomal";
     //this.arg = weapon.arg;
     //this.vi = weapon.speed;
     //this.isTargetOn = weapon.isTargetOn;

@@ -14,7 +14,14 @@ export default class Param{
       ANIM_WAIT : 7,
 
       VX_MAX : 3,
-      VY_MAX : 8
+      VY_MAX : 8,
+      //手に入れた武器の情報
+      weapon : {
+        missile : true,
+        laser : true,
+      },
+      //装備中の武器
+      equip : "missile",
     }
     this.ENEMY1 = {
       HP : 5,

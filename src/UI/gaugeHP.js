@@ -16,7 +16,7 @@ const P_ICON = {
   y : 0, 
 };
 
-export default class HP extends UI{
+export default class gaugeHP extends UI{
   constructor(pos,name){
     super(pos);
     /*基本情報*/

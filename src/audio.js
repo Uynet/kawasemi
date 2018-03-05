@@ -62,7 +62,7 @@ export default class Audio{
     source.connect(gainNode);
     // Connect the gain node to the destination.
     gainNode.connect(this.context.destination);
-    gainNode.gain.value = 1;
+    gainNode.gain.value = 5;
     source.start(0);
   };
   static PlaySE(name){
@@ -79,6 +79,8 @@ export default class Audio{
     //!ココで読み込むnameはファイル名に統一すること!
     this.LoadBGM('stage1');
     this.LoadBGM('stage2');
+    this.LoadBGM('stage3');
+    this.LoadBGM('boss');
 
     this.LoadSE('jump1');
     this.LoadSE('jump2');//空中ジャンプ
