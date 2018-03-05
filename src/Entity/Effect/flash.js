@@ -8,6 +8,10 @@ import Pool from '../../Stage/pool.js';
 export default class Flash extends EFFECT{
   constructor(pos){
     super(pos,VEC0());
+  }
+  Init(pos,vel){
+    this.pos = pos;
+    this.vel = vel;
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.frame = 0;
@@ -19,6 +23,7 @@ export default class Flash extends EFFECT{
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     this.sprite.alpha = 0.2;
+    this.sprite.scale.set(1);
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 

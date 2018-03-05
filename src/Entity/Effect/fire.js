@@ -7,7 +7,11 @@ import Pool from '../../Stage/pool.js';
 export default class Fire extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
+  }
+  Init(pos,vel){
     /*基本情報*/
+    this.pos = pos;
+    this.vel = vel;
     this.type = ENTITY.EFFECT;
     this.name = "fire";
     this.frame = 0;
@@ -16,6 +20,8 @@ export default class Fire extends EFFECT{
     this.pattern = Art.bulletPattern.explosion.fire;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
+    this.sprite.alpha = 1;
+    this.sprite.scale.set(1);
     this.sprite.anchor.set(0.5);
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }

@@ -8,6 +8,11 @@ import Util from '../../util.js';
 export default class Stone extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
+  }
+  Init(pos,vel){
+    //constructor
+    this.pos = pos;
+    this.vel = vel;
     /*基本情報*/
     this.type = ENTITY.EFFECT;
     this.name = "stone";
@@ -18,6 +23,8 @@ export default class Stone extends EFFECT{
     this.pattern = Art.bulletPattern.explosion.stone;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
+    this.sprite.alpha = 1;
+    this.sprite.scale.set(1);
     this.sprite.anchor.set(0.5);
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }

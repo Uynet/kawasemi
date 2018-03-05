@@ -38,13 +38,13 @@ export default class Param{
     }
     this.weapon1 = {
       //status
-      agi : 16,
-      cost : 10,
+      agi : 3,
+      cost : 2,
       speed : 4, 
       length : 180,
       //optional
       isTarget : true,
-      isHorming : false,
+      isHorming : true,
       isLasersight : true,
     }
     this.weapon11 = {

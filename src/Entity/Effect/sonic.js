@@ -7,7 +7,12 @@ import Pool from '../../Stage/pool.js';
 export default class Sonic extends EFFECT{
   constructor(pos){
     super(pos,VEC0());
-    /*基本情報*/ this.type = ENTITY.EFFECT;
+  }
+  Init(pos,vel){
+    this.pos = pos;
+    this.vel = vel;
+    /*基本情報*/
+    this.type = ENTITY.EFFECT;
     this.frame = 0;
     this.name = "sonic";
     /*スプライト*/
@@ -16,6 +21,7 @@ export default class Sonic extends EFFECT{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
+    this.sprite.scale.set(1);
     this.sprite.alpha = 0.16;
     //this.arg = ADV(VECN(2),Rand2D(1));
   }

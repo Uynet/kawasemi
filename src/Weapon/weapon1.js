@@ -77,8 +77,9 @@ export default class Weapon1 extends Weapon{
     if(this.isLasersight) this.Lasersight(player);
   }
   Reset(){
-    if(this.isTarget)EntityManager.removeEntity(this.target);
+    if(this.isTargetOn)EntityManager.removeEntity(this.target);
     if(this.isLasersight)EntityManager.removeEntity(this.lasersight);
+    this.Init();
   }
   Option(option,value){
     switch(option){
