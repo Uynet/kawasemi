@@ -2,19 +2,19 @@
 export default class Param{
   static Init(){
     this.player = {
-      JUMP_VEL : 5,//ジャンプ力
-      RUN_VEL : 0.4,//はしり速度
-      GRAVITY : 0.15,
-      HP : 100,
-      BULLET : 100,
-      FLICTION : 0.7,
-      INV_TIME : 5,//無敵時間
+      jumpVel : 5,//ジャンプ力
+      runVel : 0.4,//はしり速度
+      gravity : 0.15,
+      maxHp : 100,
+      maxBullet : 100,
+      fliction : 0.7,
+      invTime : 5,//無敵時間
       
-      ANIM_RUN : 4,
-      ANIM_WAIT : 7,
+      animRun : 4,
+      animWait : 7,
 
-      VX_MAX : 3,
-      VY_MAX : 8,
+      vxMax : 3,
+      vyMax : 8,
       //手に入れた武器の情報
       weapon : {
         missile : true,

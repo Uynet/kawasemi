@@ -176,32 +176,21 @@ export default class Art{
       ],
     };
     this.UIPattern = {
-      wIcon : {
-        w1 : [
-        PIXI.Texture.fromFrame('weapon10.png'),
-        PIXI.Texture.fromFrame('weapon11.png'),
-        ],
-        w2 : [
-        PIXI.Texture.fromFrame('weapon12.png'),
-        PIXI.Texture.fromFrame('weapon13.png'),
-        ],
-        w3 : [
-        PIXI.Texture.fromFrame('weapon14.png'),
-        PIXI.Texture.fromFrame('weapon15.png'),
-        ]
+      HP : {
+        outer : PIXI.Texture.fromFrame('UI60.png'),
+        bar : PIXI.Texture.fromFrame('UI66.png'),
+        icon : PIXI.Texture.fromFrame('UI6A.png'),
       },
-      HP : [
-        PIXI.Texture.fromFrame('HP00.png'),
-        PIXI.Texture.fromFrame('HP01.png'),
-        PIXI.Texture.fromFrame('HP02.png'),
-      ],
       bullet : {
         outer : PIXI.Texture.fromFrame('UI70.png'),
         bar : PIXI.Texture.fromFrame('UI76.png'),
         icon : {
-          missile : PIXI.Texture.fromFrame('UI7a.png'),
-          laser : PIXI.Texture.fromFrame('UI7b.png'),
+          missile : PIXI.Texture.fromFrame('UI7A.png'),
+          laser : PIXI.Texture.fromFrame('UI7B.png'),
         },
+      },
+      score : {
+        icon : PIXI.Texture.fromFrame('UI6B.png'),
       },
       message : {
         frame : PIXI.Texture.fromFrame('UI80.png'),

@@ -29,7 +29,7 @@ export default class Font extends UI{
           break;
       case "SCORE" :
         this.isPadding = false;
-        this.d = 6;//決め打ち
+        this.d = 5;//決め打ち
           break;
         defaut :
         console.warn(this.type);

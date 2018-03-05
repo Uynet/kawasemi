@@ -5,6 +5,7 @@ import Art from '../art.js';
 import Input from '../input.js';
 import Util from '../util.js';
 import Font from './font.js';
+import Param from '../param.js';
 
 const P_AMOUNT = {
   x : 22, 
@@ -17,13 +18,12 @@ const P_ICON = {
 };
 
 export default class gaugeHP extends UI{
-  constructor(pos,name){
+  constructor(pos){
     super(pos);
     /*基本情報*/
     this.isAlive = true;//消えたらfalse
     this.type = "HP"; 
     this.isMultiple = true;
-    this.name = name;
     this.pos = pos;
     /*child*/
     this.outer = {pos:CPV(pos)};
@@ -35,24 +35,21 @@ export default class gaugeHP extends UI{
     this.container = new PIXI.Container();
     let s;
     //outer
-    s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
+    s = Art.SpriteFactory(Art.UIPattern.HP.outer);
     s.position = this.outer.pos; 
     this.container.addChild(s);
-    this.spid++;
     //bar
-    s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
+    s = Art.SpriteFactory(Art.UIPattern.HP.bar);
     s.position = this.bar.pos; 
     this.container.addChild(s);
-    this.spid++;
     //icon
-    s = Art.SpriteFactory(Art.UIPattern.HP[this.spid]);
+    s = Art.SpriteFactory(Art.UIPattern.HP.icon);
     s.position = this.icon.pos; 
     this.container.addChild(s);
     //amount
-    //向こうの配列も動いているっぽい
     this.container.addChild(this.amount.container);
     /*パラメータ*/
-    this.max = 100;//EntityManager.player.maxHP;
+    this.max = Param.player.maxHp;
     /*state*/
     this.isPopIn = true;
   }

@@ -1,6 +1,5 @@
 import UI from './ui.js';
 import UIManager from './uiManager.js';
-import EntityManager from '../Stage/entityManager.js';
 import Art from '../art.js';
 import Input from '../input.js';
 import Util from '../util.js';
@@ -18,19 +17,20 @@ const P_ICON = {
 };
 
 export default class GaugeBullet extends UI{
-  constructor(pos,name){
+  constructor(pos){
     super(pos);
     /*基本情報*/
     this.isAlive = true;//消えたらfalse
     this.type = "BULLET"; 
     this.isMultiple = true;
-    this.name = name;
     this.pos = pos;
+    /*パラメータ*/
+    this.max = Param.player.maxBullet;
     /*child*/
     this.outer = {pos:CPV(pos)};
     this.bar = {pos:CPV(pos)};
     this.icon = {pos:ADV(pos,P_ICON)};
-    this.amount = new Font(ADV(pos,P_AMOUNT),"100","BULLET");//数字
+    this.amount = new Font(ADV(pos,P_AMOUNT),this.max + "","BULLET");//数字
 
     //pos
     /*スプライト*/
@@ -54,8 +54,6 @@ export default class GaugeBullet extends UI{
     this.container.addChild(s);
     //amount
     this.container.addChild(this.amount.container);
-    /*パラメータ*/
-    this.max = 100;
   }
   UpdateBar(bullet){
     //barの長さを更新
