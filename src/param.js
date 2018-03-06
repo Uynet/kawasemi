@@ -38,9 +38,9 @@ export default class Param{
     }
     this.weapon1 = {
       //status
-      agi : 3,
+      agi : 14,
       cost : 2,
-      speed : 4, 
+      speed : 9, 
       length : 180,
       //optional
       isTarget : true,
@@ -60,7 +60,7 @@ export default class Param{
       //optional
       isTarget : true,
      // isHorming : false,
-      isLasersight : true,
+      isLasersight : false,
     }
     //Missile
     this.bullet1 = {
@@ -71,12 +71,16 @@ export default class Param{
     }
     //Laser
     this.bullet2 = {
-      atkMax : 10,
+      atkMax : 100,
       atkMin : 5,
       hp : 99999,
     }
-  }
-  GetParam(entity){
-    return this.weapon1;
+    //normal
+    this.bullet3 = {
+      atkMax : 12,
+      atkMin : 10,
+      hp : 1,
+      curve : 0.2
+    }
   }
 }

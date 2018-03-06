@@ -11,6 +11,7 @@ import BulletBlur from './Effect/bulletBlur.js';
 import Util from '../util.js';
 import Explosion1 from './Effect/explosion1.js';
 import Param from '../param.js';
+import Audio from '../audio.js';
 
 const bullet2 = Param.bullet2;
 

@@ -213,6 +213,13 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet16.png'),
         PIXI.Texture.fromFrame('bullet17.png'),
       ],
+      //あとで差し替え
+      bullet3 : [
+        PIXI.Texture.fromFrame('bullet00.png'),
+        PIXI.Texture.fromFrame('bullet01.png'),
+        PIXI.Texture.fromFrame('bullet02.png'),
+        PIXI.Texture.fromFrame('bullet03.png'),
+      ],
       lasersight : [
         PIXI.Texture.fromFrame('bullet20.png'),
       ],

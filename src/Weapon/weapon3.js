@@ -6,7 +6,7 @@ import Art from '../art.js';
 export default class Weapon3 extends Weapon{
   /* ammunition : 弾薬数 */
   constructor(){
-    super("1",10,30);
+    super("nomal");
     this.clock = 0;//最後に撃った時刻
     this.speed = 10;
     this.length = 170;//射程距離
