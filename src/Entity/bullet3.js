@@ -15,24 +15,23 @@ import Util from '../util.js';
 import Explosion1 from './Effect/explosion1.js';
 import Param from '../param.js';
 
-const bullet1 = Param.bullet1;
-
-/*bullet1クラス*/
-//Missile
-export default class Bullet1 extends Bullet{
+//normal bullet
+export default class Bullet3 extends Bullet{
   constructor(pos,weapon){
     //super(pos,POV(weapon.arg,weapon.speed));
     super(VEC0(),VEC0());
+  }
+  Init(pos,weapon){
     /*基本情報*/
     this.frame = 0;
-    this.name = "nomal";
-    //this.arg = weapon.arg;
-    //this.vi = weapon.speed;
-    //this.isTargetOn = weapon.isTargetOn;
-    //if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
-    this.isUpdater  =true;
+    this.name = "normal";
+    this.arg = weapon.arg;
+    this.vi = weapon.speed;
+    this.isTargetOn = weapon.isTargetOn;
+    if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
+    this.isUpdater = true;
     /*スプライト*/
-    this.pattern = Art.bulletPattern.bullet1;
+    this.pattern = Art.bulletPattern.bullet3;
     this.spid = 0;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = pos;
@@ -40,17 +39,19 @@ export default class Bullet1 extends Bullet{
     /*コライダ*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
     /*パラメータ*/
-    this.hp = Param.bullet1.hp;//弾丸のHP 0になると消滅
-    this.atk = Param.bullet1.atkMax;//攻撃力
-    this.curve = Param.bullet1.curve;
+    this.hp = Param.bullet3.hp;//弾丸のHP 0になると消滅
+    this.atkMin = Param.bullet3.atkMin;//攻撃力
+    this.atkMax = Param.bullet3.atkMax;//攻撃力
+    //this.curve = Param.bullet3.curve;
     this.type = ENTITY.BULLET;
     this.AIList = [];
-    this.AIList.push(new Bullet1AI(this));
+    this.AIList.push(new Bullet3AI(this));
     //if(weapon.isHorming) this.AIList.push(new Horming(this));
   }
 
   Update(){
     /*□Effect BulletBulr*/
+    /*
     if(this.frame%1 == 0){
       let p = CPV(this.pos);
       let d = ADV(Rand2D(5),POV(this.frame,3))
@@ -59,7 +60,7 @@ export default class Bullet1 extends Bullet{
       let blur = Pool.GetBulletBlur(p,v);
       if(blur)EntityManager.addEntity(blur);
     }
-    this.arg += Rand(0.01);
+    */
     for (let AI of this.AIList){
       AI.Do();
     }
@@ -67,10 +68,7 @@ export default class Bullet1 extends Bullet{
     //HP || 経過時間
     if(this.hp<=0 ||
       this.frame > 100) {
-      Pool.Remove(this);
-      //EntityManager.removeEntity(this);
-      EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
-      EntityManager.addEntity(new Explosion1(CPV(this.pos)));
+      EntityManager.removeEntity(this);
       Audio.PlaySE("missileHit");
     }
     this.sprite.position = ADV(this.pos,VECN(8));

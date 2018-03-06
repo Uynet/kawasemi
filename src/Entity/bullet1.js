@@ -49,7 +49,6 @@ export default class Bullet1 extends Bullet{
     this.AIList = [];
     this.AIList.push(new Bullet1AI(this));
     if(weapon.isHorming) this.AIList.push(new Horming(this));
-    cl(this.AIList.length);
   }
 
   Update(){

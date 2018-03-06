@@ -16,6 +16,7 @@ export default class Audio{
       enemyDamage : null,
       missileShot : null,
       missileHit : null,
+      laserShot : null,
     }
   };
   static LoadSE(name){
@@ -51,26 +52,32 @@ export default class Audio{
     req.send('');
   }
   // サウンドを再生
-  static PlayBGM(name){
+  static PlayBGM(name,gain){
     let buffer = this.BGM[name];
     let source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
     source.connect(this.context.destination); // context に connect
     source.loop = true; // 再生
-    let gainNode = this.context.createGain();
-    // Connect the source to the gain node.
-    source.connect(gainNode);
-    // Connect the gain node to the destination.
-    gainNode.connect(this.context.destination);
-    gainNode.gain.value = 5;
+      if(gain){
+        let gainNode = this.context.createGain();
+        source.connect(gainNode);
+        gainNode.connect(this.context.destination);
+        gainNode.gain.value = gain;
+      }
     source.start(0);
   };
-  static PlaySE(name){
+  static PlaySE(name,gain){
     let buffer = this.SE[name];
     let source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
     source.connect(this.context.destination); // context に connect
     source.loop = false; // 再生
+    if(gain){
+      let gainNode = this.context.createGain();
+      source.connect(gainNode);
+      gainNode.connect(this.context.destination);
+      gainNode.gain.value = gain;
+    }
     source.start(0);
   };
   static async Load() {
@@ -91,5 +98,6 @@ export default class Audio{
     this.LoadSE('enemyDamage');
     this.LoadSE('missileHit');
     this.LoadSE('missileShot');
+    this.LoadSE('laserShot');
   };
 };
