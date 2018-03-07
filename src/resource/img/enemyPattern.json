@@ -83,6 +83,10 @@
     "enemy2c.png": {
       "frame": {"x":192, "y":32, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy30.png": {
+      "frame": {"x":0, "y":48, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
   },
   "meta": {

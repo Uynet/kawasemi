@@ -39,11 +39,6 @@ export default class Enemy1 extends Enemy{
       under : null
     }
   }
-  //死ぬ
-  Die(){
-    this.isAlive = false;
-    EntityManager.removeEntity(this);
-  }
   //衝突判定
   Collision(){
     for(let l of EntityManager.wallList){
@@ -51,7 +46,6 @@ export default class Enemy1 extends Enemy{
       let c = Collision.on(this,l);
       if(c.isHit){
         /* 衝突応答*/
-
         if(c.n.x != 0) this.vel.x = 0;
         //地面との衝突
         if(c.n.y == -1){ 
@@ -100,34 +94,10 @@ export default class Enemy1 extends Enemy{
       }
     }
   }
-  //プレイヤーにダメージを与える
-  Hurt(){
-    let player = EntityManager.player; 
-    let c = Collision.on(this,player);
-    if(c.isHit && c.n.y != 1){
-      //ダメージ
-      let damage = this.atkMax  +  Math.floor(-this.vel.y * Math.random());
-      if(!player.isInvincible)player.Damage(-damage);
-    }
-  }
-
-
-  Physics(){
-    if(this.floor.on){
-      this.pos.x += this.floor.under.vel.x;
-    //  this.pos.y += this.floor.under.vel.y;
-    }
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
-    this.vel.x += this.acc.x;
-    this.vel.y += this.acc.y;
-    this.acc.y = this.gravity;
-  }
   Animation(){
     this.spid = Math.floor(this.frame/2)%4;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
-    this.frame++;
   }
 
   Update(){
@@ -143,5 +113,6 @@ export default class Enemy1 extends Enemy{
     if(this.hp<=0){
       this.Die();
     }
+    this.frame++;
   }
 }

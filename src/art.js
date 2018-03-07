@@ -309,6 +309,9 @@ export default class Art{
         PIXI.Texture.fromFrame('enemy12.png'),
         PIXI.Texture.fromFrame('enemy13.png')
       ],
+      enemy3 : [
+        PIXI.Texture.fromFrame('enemy30.png'),
+      ],
       //壊せる木箱
       woodbox : [
         PIXI.Texture.fromFrame('enemy10.png')
