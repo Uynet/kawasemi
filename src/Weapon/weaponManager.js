@@ -8,11 +8,11 @@ export default class WeaponManager{
   static Init(){
     /*singleton list*/
     /*武器のインスタンスを作成*/
-    this.weaponList = [
-      new Weapon1(),
-      new Weapon2(),
-      new Weapon3()
-    ];
+    this.weapons = {
+      missile : new Weapon1(),
+      laser : new Weapon2(),
+      normal : new Weapon3()
+    };
     /*selectBoxの選択*/
     this.select;
   }
@@ -20,17 +20,7 @@ export default class WeaponManager{
   /*プレイヤーの参照を受け取って武器を変更*/
   static ChangeWeapon(player,name){
     UIManager.bullet.ChangeWeapon(name);
-    switch (name){
-      case "missile":
-        player.weapon = this.weaponList[0];
-        break;
-      case "laser":
-        player.weapon = this.weaponList[1];
-        break;
-      case "3":
-        player.weapon = this.weaponList[2];
-        break;
-    }
+    player.weapon = this.weapons[name];
     Param.player.equip = name;
   }
 

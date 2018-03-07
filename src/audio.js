@@ -53,6 +53,7 @@ export default class Audio{
   }
   // サウンドを再生
   static PlayBGM(name,gain){
+    /*
     let buffer = this.BGM[name];
     let source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
@@ -65,6 +66,7 @@ export default class Audio{
         gainNode.gain.value = gain;
       }
     source.start(0);
+    */
   };
   static PlaySE(name,gain){
     let buffer = this.SE[name];

@@ -46,6 +46,9 @@ export default class Bullet2 extends Bullet{
     for (let AI of this.AIList){
       AI.Do();
     }
+    if(this.frame%2 == 0){
+      this.spid = Math.min(this.spid+1,7);
+    }
     /*observer*/
     //HP || 経過時間
     if( this.frame > 10 || this.hp<=0){
@@ -56,7 +59,6 @@ export default class Bullet2 extends Bullet{
     this.sprite.rotation = this.arg;
     this.sprite.texture = this.pattern[this.spid];
 
-    this.spid = (this.spid+1)%8;
     this.frame++;
   }
 }

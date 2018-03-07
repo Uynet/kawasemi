@@ -187,6 +187,7 @@ export default class Art{
         icon : {
           missile : PIXI.Texture.fromFrame('UI7A.png'),
           laser : PIXI.Texture.fromFrame('UI7B.png'),
+          normal : PIXI.Texture.fromFrame('UI7C.png'),
         },
       },
       score : {
@@ -213,12 +214,8 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet16.png'),
         PIXI.Texture.fromFrame('bullet17.png'),
       ],
-      //あとで差し替え
       bullet3 : [
-        PIXI.Texture.fromFrame('bullet00.png'),
-        PIXI.Texture.fromFrame('bullet01.png'),
-        PIXI.Texture.fromFrame('bullet02.png'),
-        PIXI.Texture.fromFrame('bullet03.png'),
+        PIXI.Texture.fromFrame('bullet100.png'),
       ],
       lasersight : [
         PIXI.Texture.fromFrame('bullet20.png'),
@@ -243,6 +240,12 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet61.png'),//bullet blur
         PIXI.Texture.fromFrame('bullet62.png'),//bullet blur
         PIXI.Texture.fromFrame('bullet63.png') //bullet blur
+      ],
+      blur2 : [ 
+        PIXI.Texture.fromFrame('bulletF0.png'),//bullet blur
+        PIXI.Texture.fromFrame('bulletF1.png'),//bullet blur
+        PIXI.Texture.fromFrame('bulletF2.png'),//bullet blur
+        PIXI.Texture.fromFrame('bulletF3.png') //bullet blur
       ],
       coin : {
         get : [

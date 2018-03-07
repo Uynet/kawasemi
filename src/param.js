@@ -40,8 +40,8 @@ export default class Param{
       //status
       agi : 14,
       cost : 2,
-      speed : 9, 
-      length : 180,
+      speed : 14, 
+      length : 580,
       //optional
       isTarget : true,
       isHorming : true,
@@ -54,11 +54,22 @@ export default class Param{
       length : 180,
     }
     this.weapon2 = {
-      agi : 20,
-      cost : 10,
+      agi : 6,
+      cost : 1,
       length : 300,
       //optional
       isTarget : true,
+     // isHorming : false,
+      isLasersight : false,
+    }
+    //normal
+    this.weapon3 = {
+      agi : 16,
+      cost : 3,
+      speed : 6, 
+      length : 300,
+      //optional
+      isTarget : false,
      // isHorming : false,
       isLasersight : false,
     }

@@ -81,7 +81,7 @@ export default class Player extends Entity{
     this.vyMax = Param.player.vyMax;
     /*状態*/
     this.state = STATE.WAITING;
-    this.weapon = WeaponManager.weaponList[0];//選択中の武器のインスタンス
+    this.weapon = WeaponManager.weapons.normal;//選択中の武器のインスタンス
     this.weapon.Init();
     this.dir = DIR.R;//向き
     this.score = 0;
@@ -448,7 +448,8 @@ Observer(){
       if(Input.isKeyClick(KEY.K)){
         switch(this.weapon.name){
           case  "missile" : this.ChangeWeapon("laser");break;
-          case  "laser" : this.ChangeWeapon("missile");break;
+          case  "laser" : this.ChangeWeapon("normal");break;
+          case  "normal" : this.ChangeWeapon("missile");break;
         }
       }
       this.CreateStage();//マップ生成

@@ -195,6 +195,26 @@
       "bulletE3.png": {
       "frame": {"x":48, "y":224, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
+    },
+      "bulletF0.png": {
+      "frame": {"x":0, "y":240, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bulletF1.png": {
+      "frame": {"x":16, "y":240, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bulletF2.png": {
+      "frame": {"x":32, "y":240, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bulletF3.png": {
+      "frame": {"x":48, "y":240, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+      "bullet100.png": {
+      "frame": {"x":0, "y":256, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
   },
 

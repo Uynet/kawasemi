@@ -63,12 +63,7 @@ export default class GaugeBullet extends UI{
   }
   ChangeWeapon(name){
     //アイコンを武器に変更
-    switch(name){
-      case "missile": this.container.children[2].texture = Art.UIPattern.bullet.icon.missile;
-      break;
-      case "laser": this.container.children[2].texture = Art.UIPattern.bullet.icon.laser;
-      break;
-    }
+    this.container.children[2].texture = Art.UIPattern.bullet.icon[name];
   }
   Update(){
     let to  = (56-this.pos.x);
