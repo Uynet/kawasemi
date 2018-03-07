@@ -20,7 +20,7 @@ import BulletShot from './Effect/bulletShot.js';
 import Explosion1 from './Effect/explosion1.js';
 import Explosion2 from './Effect/explosion2.js';
 import QuakeEvent from '../Event/quakeEvent.js';
-import Enemy2 from './Enemy/enemy2.js';
+import Enemy3 from './Enemy/enemy3.js';
 
 const STATE = {
   WAITING : "WAITING",
@@ -413,6 +413,8 @@ Observer(){
   }
 
   SetArg(arg){
+    this.toArg %= (Math.PI * 2)
+    this.arg %= (Math.PI * 2)
     let d = this.toArg - this.arg;
     if(d > Math.PI)d -= 2*Math.PI;
     if(d < -Math.PI)d += 2*Math.PI;
@@ -446,6 +448,9 @@ Observer(){
       }
       /*for debug*/
       if(Input.isKeyClick(KEY.K)){
+        let p = CPV(this.pos);
+        p.y -= 32;
+        EntityManager.addEntity(new Enemy3(p,VEC0()));
         switch(this.weapon.name){
           case  "missile" : this.ChangeWeapon("laser");break;
           case  "laser" : this.ChangeWeapon("normal");break;

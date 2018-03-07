@@ -27,18 +27,26 @@ export default class Param{
       HP : 5,
       ATK_MAX : 10,
       ATK_MIN : 5,
-      GRAVITY : 0.1
+      GRAVITY : 0.1,
+      COIN : 1
     }
     this.ENEMY2 = {
       HP : 50,
       ATK_MAX : 10,
       ATK_MIN : 5,
       GRAVITY : 0.1,
-      COIN : 3
+      COIN : 2
+    }
+    this.ENEMY3 = {
+      HP : 10,
+      ATK_MAX : 10,
+      ATK_MIN : 5,
+      GRAVITY : 0,
+      COIN : 1
     }
     this.weapon1 = {
       //status
-      agi : 14,
+      agi : 30,
       cost : 2,
       speed : 14, 
       length : 580,
@@ -54,7 +62,7 @@ export default class Param{
       length : 180,
     }
     this.weapon2 = {
-      agi : 6,
+      agi : 26,
       cost : 1,
       length : 300,
       //optional

@@ -2,6 +2,9 @@ import Entity from '../entity.js';
 import Audio from '../../audio.js';
 import EntityManager from '../../Stage/entityManager.js';
 import FontEffect from '../Effect/fontEffect.js';
+import Collision from '../../Collision/collision.js';
+import Coin from '../coin.js'
+import Explosion2 from '../Effect/explosion2.js';
 
 export default class Enemy extends Entity{
   constructor(pos,vel){
@@ -23,5 +26,40 @@ export default class Enemy extends Entity{
     this.hp += atk;
     //ダメージをポップ
     EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));
+  }
+  //プレイヤーにダメージを与える
+  Hurt(){
+    let player = EntityManager.player; 
+    let c = Collision.on(this,player);
+    if(c.isHit && c.n.y != 1){
+      //ダメージ
+      let damage = this.atkMax  +  Math.floor(-this.vel.y * Math.random());
+      if(!player.isInvincible)player.Damage(-damage);
+    }
+  }
+  //しぬ
+  Die(){
+    this.isAlive = false;
+      //死ぬ時にコイン
+      for(let i = 0;i<this.coin;i++){
+        EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
+      }
+      //EventManager.eventList.push(new QuakeEvent(5));//ゆれ
+      EntityManager.removeEntity(this);
+      EntityManager.addEntity(new Explosion2(this.pos));
+  }
+  //物理
+  Physics(){
+    if(this.floor.on){
+      this.pos.x += this.floor.under.vel.x;
+      //this.pos.y += this.floor.under.vel.y;
+    }
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+    this.vel.x += this.acc.x;
+    this.vel.y += this.acc.y;
+    this.acc.y = 0;
+    this.acc.x = 0;
+    //最大速度制限
   }
 }
