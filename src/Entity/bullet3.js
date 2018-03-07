@@ -4,22 +4,18 @@ import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
 import EntityManager from '../Stage/entityManager.js';
-import Pool from '../Stage/pool.js';
 import EventManager from '../Event/eventmanager.js';
-import QuakeEvent from '../Event/quakeEvent.js';
-import Bullet1AI from './AI/bullet1AI.js';
+import Bullet3AI from './AI/bullet3AI.js';
 import Horming from './AI/horming.js';
 import Bullet from './bullet.js';
-import BulletBlur from './Effect/bulletBlur.js';
-import Util from '../util.js';
-import Explosion1 from './Effect/explosion1.js';
+import BulletBlur2 from './Effect/bulletBlur2.js';
 import Param from '../param.js';
 
 //normal bullet
 export default class Bullet3 extends Bullet{
   constructor(pos,weapon){
-    //super(pos,POV(weapon.arg,weapon.speed));
-    super(VEC0(),VEC0());
+    super(pos,POV(weapon.arg,weapon.speed));
+    this.Init(pos,weapon);
   }
   Init(pos,weapon){
     /*基本情報*/
@@ -51,16 +47,12 @@ export default class Bullet3 extends Bullet{
 
   Update(){
     /*□Effect BulletBulr*/
-    /*
     if(this.frame%1 == 0){
       let p = CPV(this.pos);
-      let d = ADV(Rand2D(5),POV(this.frame,3))
-      p = ADV(p,d);
       let v = POV(this.arg+Math.PI,4);
-      let blur = Pool.GetBulletBlur(p,v);
+     let blur = new BulletBlur2(p,v);
       if(blur)EntityManager.addEntity(blur);
     }
-    */
     for (let AI of this.AIList){
       AI.Do();
     }
@@ -69,7 +61,6 @@ export default class Bullet3 extends Bullet{
     if(this.hp<=0 ||
       this.frame > 100) {
       EntityManager.removeEntity(this);
-      Audio.PlaySE("missileHit");
     }
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.rotation = this.arg + Math.PI/2;
