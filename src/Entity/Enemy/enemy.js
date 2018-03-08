@@ -35,6 +35,8 @@ export default class Enemy extends Entity{
       //ダメージ
       let damage = this.atkMax  +  Math.floor(-this.vel.y * Math.random());
       if(!player.isInvincible)player.Damage(-damage);
+      //自分もダメージ
+    //  this.Damage(-1);
     }
   }
   //しぬ
