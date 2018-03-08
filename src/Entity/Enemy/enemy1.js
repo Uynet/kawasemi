@@ -27,9 +27,11 @@ export default class Enemy1 extends Enemy{
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.addAI(new Enemy1AI(this));
-    this.atkMax = Param.ENEMY1.ATK_MAX;
-    this.hp = Param.ENEMY1.HP;
-    this.gravity = Param.ENEMY1.GRAVITY;
+    this.param = Param.enemy1
+    this.atkMin = this.param.atkMin;
+    this.atkMax = this.param.atkMax;
+    this.hp = this.param.hp;
+    this.gravity = this.param.gravity;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;

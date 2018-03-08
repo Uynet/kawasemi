@@ -33,7 +33,7 @@ export default class Enemy extends Entity{
     let c = Collision.on(this,player);
     if(c.isHit && c.n.y != 1){
       //ダメージ
-      let damage = this.atkMax  +  Math.floor(-this.vel.y * Math.random());
+      let damage = RandBET(this.atkMin,this.atkMax);
       if(!player.isInvincible)player.Damage(-damage);
       //自分もダメージ
     //  this.Damage(-1);

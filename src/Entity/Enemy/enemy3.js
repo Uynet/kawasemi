@@ -5,8 +5,8 @@ import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Enemy2AI from '../AI/enemy2AI.js';
-import shotUpper from '../AI/shotUpper.js';
-import moveReflect from '../AI/moveReflect.js';
+import Shot from '../AI/shot.js';
+import MoveLissajous from '../AI/moveLissajous.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Coin from '../coin.js';
@@ -16,13 +16,15 @@ import Util from '../../util.js';
 import Param from '../../param.js';
 import Explosion2 from '../Effect/explosion2.js';
 
-let EntityList = EntityManager.entityList;
+let player;
 
 export default class Enemy3 extends Enemy{
   constructor(pos){
-    super(pos,VEC0(),VEC0());
+    super(pos,VEC0());
+    player = EntityManager.player;
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.arg = 0;
     this.frame = 0;
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy3;
@@ -30,12 +32,13 @@ export default class Enemy3 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    let ENEMY3 = Param.ENEMY3;
-    this.addAI(new shotUpper(this));
-    this.atkMax = ENEMY3.ATK_MAX;
-    this.hp = ENEMY3.HP;
-    this.gravity = ENEMY3.GRAVITY;
-    this.coin = ENEMY3.COIN;
+    this.param = Param.enemy3;
+    this.addAI(new Shot(this));
+    this.addAI(new MoveLissajous(this));
+    this.atkMin = this.param.atkMin;
+    this.atkMax = this.param.atkMax;
+    this.hp = this.param.hp;
+    this.coin = this.param.coin;
     /*フラグ*/
     this.isAlive = true;
     /*床の親子関係*/
@@ -62,5 +65,7 @@ export default class Enemy3 extends Enemy{
     if(this.hp<=0){
       this.Die();
     }
+    this.arg = Math.atan((player.pos.y-this.pos.y)/(player.pos.x-this.pos.x));
+    if(this.pos.x > player.pos.x ) this.arg += Math.PI;
   }
 }

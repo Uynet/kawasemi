@@ -1,14 +1,15 @@
 import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
 import Timer from '../../timer.js';
+import AI from './ai.js';
 
 
 
-export default class Enemy1AI{
+export default class Enemy1AI extends AI{
   /*enemyの参照を受け取り関数を実行する*/
 
   constructor(enemy){
-    this.enemy = enemy;
+    super(enemy)
   }
 
   Do(){
