@@ -23,26 +23,31 @@ export default class Param{
       //装備中の武器
       equip : "missile",
     }
-    this.ENEMY1 = {
-      HP : 5,
-      ATK_MAX : 10,
-      ATK_MIN : 5,
-      GRAVITY : 0.1,
-      COIN : 1
+    this.enemy1 = {
+      hp : 5,
+      atkMax : 10,
+      atkMin : 5,
+      gravity : 0.1,
+      coin : 1
     }
-    this.ENEMY2 = {
-      HP : 50,
-      ATK_MAX : 10,
-      ATK_MIN : 5,
-      GRAVITY : 0.1,
-      COIN : 2
+    this.enemy2 = {
+      hp : 50,
+      atkMax : 10,
+      atkMin : 5,
+      gravity : 0.1,
+      coin : 2
     }
-    this.ENEMY3 = {
-      HP : 10,
-      ATK_MAX : 10,
-      ATK_MIN : 5,
-      GRAVITY : 0,
-      COIN : 1
+    this.enemy3 = {
+      hp : 10,
+      atkMax : 10,
+      atkMin : 5,
+      gravity : 0,
+      coin : 1
+    }
+    this.eBullet1 = {
+      hp : 1,
+      atkMin : 1,
+      atkMax : 1,
     }
     this.weapon1 = {
       //status

@@ -15,11 +15,9 @@ import Util from '../../util.js';
 import Param from '../../param.js';
 import Explosion2 from '../Effect/explosion2.js';
 
-let EntityList = EntityManager.entityList;
-
 export default class Enemy2 extends Enemy{
   constructor(pos){
-    super(pos,VEC0(),VEC0());
+    super(pos,VEC0());
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.frame = 0;
@@ -29,12 +27,13 @@ export default class Enemy2 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    let ENEMY2 = Param.ENEMY2;
+    this.param = Param.enemy2;
     this.addAI(new moveReflect(this));
-    this.atkMax = ENEMY2.ATK_MAX;
-    this.hp = ENEMY2.HP;
-    this.gravity = ENEMY2.GRAVITY;
-    this.coin = ENEMY2.COIN;
+    this.atkMin = this.param.atkMin;
+    this.atkMax = this.param.atkMax;
+    this.hp = this.param.hp;
+    this.gravity = this.param.gravity;
+    this.coin = this.param.coin;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;

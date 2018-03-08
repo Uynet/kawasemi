@@ -16,17 +16,17 @@ export default class eBullet1 extends Enemy{
     this.frame = 0;
     this.type = "OTHERS"
     /*スプライト*/
-    this.pattern = Art.enemyPattern.coin;
+    this.pattern = Art.enemyPattern.eBullet1;
     this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    let ENEMY3 = Param.ENEMY3;
+    this.param = Param.eBullet1;
     //this.addAI(new moveReflect(this));
-    this.atkMax = ENEMY3.ATK_MAX;
-    this.hp = ENEMY3.HP;
-    this.gravity = ENEMY3.GRAVITY;
-    this.coin = ENEMY3.COIN;
+    this.atkMin = this.param.atkMin;
+    this.atkMax = this.param.atkMax;
+    //this.hp = ENEMY3.HP;
+    //this.gravity = ENEMY3.GRAVITY;
     /*フラグ*/
     this.isAlive = true;
     /*床の親子関係*/
@@ -36,7 +36,7 @@ export default class eBullet1 extends Enemy{
     }
   }
   Animation(){
-  //  this.spid = Math.floor(this.frame/2)%4;
+    this.spid = Math.floor(this.frame/2)%4;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
   }

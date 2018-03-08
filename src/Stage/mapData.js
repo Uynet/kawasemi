@@ -7,6 +7,7 @@ import Signboard from '../Entity/signboard.js';
 import Player from '../Entity/player.js'
 import Enemy1 from '../Entity/Enemy/enemy1.js'
 import Enemy2 from '../Entity/Enemy/enemy2.js'
+import Enemy3 from '../Entity/Enemy/enemy3.js'
 import Goal from '../Entity/goal.js'
 import Game from '../game.js'
 import Art from '../art.js'
@@ -105,26 +106,25 @@ export default class MapData{
         switch(ID){
           case 161 :
             obj = new Player(p);
-            EntityManager.addEntity(obj);
             break;
           case 162 :
             let message = this.objData[i].properties;
             obj = new Signboard(p,message);
-            EntityManager.addEntity(obj);
             break;
           case 163 :
             obj = new Goal(p);
-            EntityManager.addEntity(obj);
             break;
           case 169 :
             obj = new Enemy1(p);
-            EntityManager.addEntity(obj);
             break;
           case 170 :
             obj = new Enemy2(p);
-            EntityManager.addEntity(obj);
+            break;
+          case 171 :
+            obj = new Enemy3(p);
             break;
       }
+            EntityManager.addEntity(obj);
     }
     Drawer.ScrollSet(EntityManager.player.pos);
   }

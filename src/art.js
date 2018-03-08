@@ -312,6 +312,12 @@ export default class Art{
       enemy3 : [
         PIXI.Texture.fromFrame('enemy30.png'),
       ],
+      eBullet1 : [
+        PIXI.Texture.fromFrame('enemy40.png'),
+        PIXI.Texture.fromFrame('enemy41.png'),
+        PIXI.Texture.fromFrame('enemy42.png'),
+        PIXI.Texture.fromFrame('enemy43.png'),
+      ],
       //壊せる木箱
       woodbox : [
         PIXI.Texture.fromFrame('enemy10.png')
