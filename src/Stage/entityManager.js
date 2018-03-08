@@ -33,6 +33,7 @@ export default class EntityManager{
     this.entityIndex++;
     //更新が必要なEntityのみリストに追加
     switch(entity.type){
+      case ENTITY.OTHERS : break;
       case ENTITY.PLAYER : this.player = entity; break;
       case ENTITY.ENEMY : this.enemyList.push(entity); break;
       case ENTITY.WALL : this.wallList.push(entity); break;

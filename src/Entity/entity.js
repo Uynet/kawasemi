@@ -8,7 +8,7 @@ export default class Entity{
     //this.e = 0.9;
     /*standard*/
     this.frame = 0;
-    this.type;
+    this.type = "OTHERS";
     //this.collider;
     //this.isUpdater = true;    
     //this.isMultiple;

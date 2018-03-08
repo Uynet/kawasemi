@@ -51,6 +51,7 @@ const ENTITY = {
   PLAYER  : "PLAYER",
   WALL : "WALL",
   ENEMY : "ENEMY",
+  OTHERS : "OTHERS",
 }
 
 /*MapChip*/
@@ -88,6 +89,8 @@ const WICON_Y = 40;
 /*Vector*/
 const VEC0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
 const VECN = (n)=>{return {x:n,y:n}};//
+const VECX = (vx)=>{return {x:vx,y:0}};//
+const VECY = (vy)=>{return {x:0,y:vy}};//
 const CPV = (v)=>{return {x:v.x,y:v.y}};//値渡し
 const ADV = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
 const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
