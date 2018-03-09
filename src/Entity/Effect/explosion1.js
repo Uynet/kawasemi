@@ -15,7 +15,6 @@ export default class Explosion1 extends EFFECT{
     //微妙に左上に寄ってるので中心に
     this.pos = ADV(this.pos,VECN(8));
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.frame = 0;
     this.isNoSprite = true;
   }

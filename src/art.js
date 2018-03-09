@@ -320,11 +320,19 @@ export default class Art{
       ],
       //壊せる木箱
       woodbox : [
-        PIXI.Texture.fromFrame('enemy10.png')
+        PIXI.Texture.fromFrame('enemy40.png')
       ]
     }
     this.wallPattern = {
-      block : PIXI.Texture.fromFrame('wall00.png'),//未使用
+      block : PIXI.Texture.fromFrame('wallA4.png'),
+      HPBlock : PIXI.Texture.fromFrame('wallA5.png'),
+      bulletBlock : PIXI.Texture.fromFrame('wallA6.png'),
+      bigBlock : [
+        PIXI.Texture.fromFrame('wallA2.png'),
+        PIXI.Texture.fromFrame('wallA3.png'),
+        PIXI.Texture.fromFrame('wallB2.png'),
+        PIXI.Texture.fromFrame('wallB3.png'),
+      ],
       goal : PIXI.Texture.fromFrame('wall01.png'),//ゴール
       signboard : PIXI.Texture.fromFrame('wall02.png'),//看板
       needle : [

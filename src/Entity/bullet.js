@@ -12,6 +12,7 @@ export default class Bullet extends Entity{
     /*基本情報*/
     this.layer = "ENTITY";
     this.isMultiple = false;
+    this.type = "MOVER";
     /*パラメータ*/
     this.hp;//弾丸のHP 0になると消滅
     this.atk;//攻撃力

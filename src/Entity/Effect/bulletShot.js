@@ -8,7 +8,6 @@ export default class BulletShot extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.frame = 0;
     /*スプライト*/
     this.spid = 0;

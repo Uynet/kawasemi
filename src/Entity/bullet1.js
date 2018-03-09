@@ -46,7 +46,6 @@ export default class Bullet1 extends Bullet{
     this.atkMin = Param.bullet1.atkMin;//攻撃力
     this.atkMax = Param.bullet1.atkMax;//攻撃力
     this.curve = Param.bullet1.curve;
-    this.type = ENTITY.BULLET;
     this.AIList = [];
     this.AIList.push(new Bullet1AI(this));
     if(weapon.isHorming) this.AIList.push(new Horming(this));

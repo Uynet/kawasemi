@@ -12,7 +12,6 @@ export default class Fire extends EFFECT{
     /*基本情報*/
     this.pos = pos;
     this.vel = vel;
-    this.type = ENTITY.EFFECT;
     this.name = "fire";
     this.frame = 0;
     /*スプライト*/

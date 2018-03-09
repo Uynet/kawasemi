@@ -7,7 +7,6 @@ export default class GetCoin extends EFFECT{
   constructor(pos){
     super(pos,{x:0,y:0});
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.frame = 0;
     /*スプライト*/
     this.spid = 0;

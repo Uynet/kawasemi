@@ -8,7 +8,6 @@ export default class BrightCoin extends EFFECT{
     //velが渡されなければ0を渡す
     super(pos,vel);
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.frame = 0;
     /*スプライト*/
     this.spid = 0;

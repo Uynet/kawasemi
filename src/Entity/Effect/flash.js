@@ -13,7 +13,6 @@ export default class Flash extends EFFECT{
     this.pos = pos;
     this.vel = vel;
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.frame = 0;
     this.name = "flash"
     /*スプライト*/

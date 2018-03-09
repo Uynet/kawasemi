@@ -18,7 +18,6 @@ export default class Explosion2 extends EFFECT{
     this.arg = arg;
     this.vi = 15;
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.frame = 0;
     this.isNoSprite = true;
   }

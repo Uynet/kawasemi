@@ -17,7 +17,7 @@ export default class WoodBox extends Wall{
     super(pos,Art.enemyPattern.woodbox[0]);
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    this.type = ENTITY.WALL;
+    this.type = "WALL";
     this.name = "woodbox";
     this.isUpdater = true;
     /*スプライト*/
