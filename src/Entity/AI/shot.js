@@ -11,13 +11,14 @@ export default class Shot{
     this.enemy = enemy;
   }
   Do(enemy){
-    if(this.enemy.frame%300 == 99){
-      let arg = this.enemy.arg + Rand(0.1);
+    if(this.enemy.frame - this.enemy.frameShot >= 4){
+      let arg = this.enemy.arg + Rand(0.4);
       let p = CPV(this.enemy.pos);
       let d = POV(arg,16);
       p = ADV(p,d);
-      let v = POV(arg,1.0);
+      let v = POV(arg,8.0);
       EntityManager.addEntity(new eBullet1(p,v))
+      this.enemy.frameShot = this.enemy.frame;
     }
   }
 }

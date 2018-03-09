@@ -12,7 +12,7 @@ export default class eBullet1 extends Enemy{
   constructor(pos,vel){
     super(pos,vel);
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
     this.frame = 0;
     this.type = "MOVER"
     /*スプライト*/
@@ -43,6 +43,14 @@ export default class eBullet1 extends Enemy{
   Die(){
     EntityManager.removeEntity(this);
   }
+  Collision(){
+    for(let w of EntityManager.wallList){
+      let c = Collision.on(this,w);
+      if(c.isHit){
+        this.hp = 0;
+      }
+    }
+  }
 
   Update(){
     /*
@@ -51,6 +59,7 @@ export default class eBullet1 extends Enemy{
     }
     */
     this.Physics();
+    this.Collision();
     this.Hurt();
     this.Animation();
     this.frame++;
