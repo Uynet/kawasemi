@@ -311,6 +311,7 @@ export default class Art{
       ],
       enemy3 : [
         PIXI.Texture.fromFrame('enemy30.png'),
+        PIXI.Texture.fromFrame('enemy31.png'),
       ],
       eBullet1 : [
         PIXI.Texture.fromFrame('enemy40.png'),
