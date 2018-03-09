@@ -8,7 +8,7 @@ export default class Entity{
     //this.e = 0.9;
     /*standard*/
     this.frame = 0;
-    this.type = "OTHERS";
+    this.type = "MOVER";//最も深い階層に書いたもので上書きされる
     //this.collider;
     //this.isUpdater = true;    
     //this.isMultiple;

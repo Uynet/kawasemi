@@ -146,11 +146,21 @@ export default class MapData{
   //壁タイルの対応
   //タイルIDを渡すとテクスチャを返す
   static WallTile(i){
+    let wall = Art.wallPattern;
     let out = Art.wallPattern.edge.out;
     let inner = Art.wallPattern.edge.inner;
     let steel = Art.wallPattern.steel;
     let needle = Art.wallPattern.needle;
     switch(i){
+      //Bigblock
+      case 82 : return wall.bigBlock[0];
+      case 83 : return wall.bigBlock[1];
+      case 90 : return wall.bigBlock[2];
+      case 91 : return wall.bigBlock[3];
+      //block
+      case 84 : return wall.block;
+      case 85 : return wall.HPBlock;
+      case 86 : return wall.bulletBlock;
       //edge in
       case 49 : return inner[0];
       case 51 : return inner[1];

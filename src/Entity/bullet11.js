@@ -49,7 +49,6 @@ export default class Bullet1 extends Bullet{
     this.atk = BULLET1.ATK_MAX;//攻撃力
     this.curve = BULLET1.CURVE;
     //this.boost = 1.5;
-    this.type = ENTITY.BULLET;
     /*AI*/
     this.AIList = [];
     this.AIList.push(new Bullet1AI(this));

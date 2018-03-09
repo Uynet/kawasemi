@@ -8,7 +8,6 @@ export default class Lasersight extends EFFECT{
   constructor(pos,arg){
     super(pos,VEC0());
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.name = "lasersight";
     this.layer = "BACK";
     this.arg = arg;

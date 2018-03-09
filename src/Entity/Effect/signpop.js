@@ -8,7 +8,6 @@ export default class Signpop extends EFFECT{
   constructor(pos){
     super(pos,VEC0());
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.name = "signpop";
     /*スプライト*/
     this.spid = 0; //12~15

@@ -14,7 +14,7 @@ export default class eBullet1 extends Enemy{
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.frame = 0;
-    this.type = "OTHERS"
+    this.type = "MOVER"
     /*スプライト*/
     this.pattern = Art.enemyPattern.eBullet1;
     this.spid = 0; //spriteIndex 現在のスプライト番号

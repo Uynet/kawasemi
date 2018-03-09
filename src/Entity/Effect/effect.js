@@ -5,7 +5,7 @@ export default class EFFECT extends Entity{
   constructor(pos,vel){
     if(!vel) vel = VEC0();
     super(pos,vel);
-    this.type = ENTITY.EFFECT;
+    this.type = "MOVER";
     this.layer = "ENTITY";
     this.isUpdater = true;
   }

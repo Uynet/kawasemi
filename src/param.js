@@ -35,14 +35,14 @@ export default class Param{
       atkMax : 10,
       atkMin : 5,
       gravity : 0.1,
-      coin : 2
+      coin : 4
     }
     this.enemy3 = {
       hp : 10,
       atkMax : 10,
       atkMin : 5,
       gravity : 0,
-      coin : 1
+      coin : 3
     }
     this.eBullet1 = {
       hp : 1,
@@ -53,7 +53,7 @@ export default class Param{
       //status
       agi : 30,
       cost : 2,
-      speed : 14, 
+      speed : 0.8, 
       length : 580,
       //optional
       isTarget : true,

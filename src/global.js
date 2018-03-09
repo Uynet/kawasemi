@@ -50,6 +50,7 @@ const STATE = {
 const ENTITY = {
   PLAYER  : "PLAYER",
   WALL : "WALL",
+  MOVER : "MOVER",
   ENEMY : "ENEMY",
   OTHERS : "OTHERS",
 }

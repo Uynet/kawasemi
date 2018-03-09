@@ -8,7 +8,6 @@ export default class BulletHitWall extends EFFECT{
   constructor(pos){
     super(pos,VEC0());
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.frame = 0;
     /*スプライト*/
     this.spid = 0; //8~11

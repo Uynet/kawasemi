@@ -14,7 +14,6 @@ export default class Stone extends EFFECT{
     this.pos = pos;
     this.vel = vel;
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.name = "stone";
     this.frame = 0;
     this.isNext = false;

@@ -14,7 +14,6 @@ export default class BulletBlur extends EFFECT{
     this.pos = pos;
     this.vel = vel;
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.name = "bulletblur";
     this.frame = 0;
     this.isAlive = true;//消えたらfalse

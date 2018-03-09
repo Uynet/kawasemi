@@ -12,7 +12,6 @@ export default class Sonic extends EFFECT{
     this.pos = pos;
     this.vel = vel;
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.frame = 0;
     this.name = "sonic";
     /*スプライト*/

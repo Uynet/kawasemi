@@ -17,7 +17,6 @@ export default class FontEffect extends EFFECT{
     super(CPV(pos),v);
     /*基本情報*/
     this.fonttype = fonttype;
-    this.type = ENTITY.EFFECT;
     this.name = "FontEffect";
     this.frame = 0;
     this.isAlive = true;//消えたらfalse

@@ -20,6 +20,7 @@ export default class Coin extends Entity{
     this.frame = 0;
     this.e = 0.9;
     this.isUpdater = true;    
+    this.type = "MOVER";
     /*スプライト*/
     this.pattern = Art.enemyPattern.coin;
     this.spid = 0;

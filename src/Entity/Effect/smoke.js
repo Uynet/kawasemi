@@ -12,7 +12,6 @@ export default class Sonic extends EFFECT{
     /*基本情報*/
     this.pos = pos;
     this.vel = vel;
-    this.type = ENTITY.EFFECT;
     this.name = "smoke";
     this.frame = 0;
     this.size = size;//煙の大きさ 浮力にも関わってくる

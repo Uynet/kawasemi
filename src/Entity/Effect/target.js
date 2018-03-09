@@ -9,7 +9,6 @@ export default class Target extends EFFECT{
   constructor(enemy){
     super(enemy.pos,VEC0());
     /*基本情報*/
-    this.type = ENTITY.EFFECT;
     this.name = "target";
     this.frame = 0;
     /*スプライト*/
