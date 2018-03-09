@@ -122,13 +122,11 @@ export default class StageGen{
       //fill
     if(dir == "U"){
         let i = grid.x-1;
-        /*
         while(i>0){
           let back = new BackEntity({x:16*i,y:16*(grid.y)},MapData.WallTile(79));
           EntityManager.addEntity(back);
           i--;
         }
-        */
       }
       //step
       grid = ADV(grid,this.DirToV(dir));
