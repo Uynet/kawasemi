@@ -59,15 +59,23 @@ export default class Enemy3 extends Enemy{
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = ADV(this.pos , VECN(8));
   }
+  Collision(){
+    for(let w of EntityManager.wallList){
+      let c = Collision.on(this,w);
+      if(c.isHit){
+        Collision.Resolve(this,w);
+      }
+    }
+  }
 
   Update(){
     //if(DIST(this.pos,EntityManager.player.pos) < this.range){
-    if(EntityManager.player.weapon.isTargetOn){
-      if(EntityManager.player.weapon.target.enemy == this){
+    if(EntityManager.player.weapon.isSeen(EntityManager.player,this)){
+      //if(EntityManager.player.weapon.target.enemy == this){
         this.state = "ACTIVE";
-      }else{
-        this.state = "WAITING"
-      }
+      //}else{
+       // this.state = "WAITING"
+      //}
     }else{
       this.state = "WAITING";
     }
@@ -90,6 +98,7 @@ export default class Enemy3 extends Enemy{
     }
 
     this.Physics();
+    this.Collision();
     this.Hurt();
     this.Animation();
     this.frame++;

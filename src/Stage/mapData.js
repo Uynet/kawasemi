@@ -67,6 +67,7 @@ export default class MapData{
         ID = this.entityData[this.width*y + x]-1;
         //tiledのIDがjsonデータより1小さいので引く
         if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
+        if(!wallTiletype[ID])cl(ID)
         switch(wallTiletype[ID].type){
           case TILE.WALL :
             //直せ

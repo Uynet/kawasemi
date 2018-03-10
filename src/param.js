@@ -21,7 +21,7 @@ export default class Param{
         laser : true,
       },
       //装備中の武器
-      equip : "missile",
+      equip : "normal",
     }
     this.enemy1 = {
       hp : 5,
