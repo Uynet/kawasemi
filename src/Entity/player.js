@@ -457,7 +457,7 @@ Observer(){
           case  "normal" : this.ChangeWeapon("missile");break;
         }
       }
-      this.CreateStage();//マップ生成
+      //this.CreateStage();//マップ生成
       this.ScrollByDir();//向きに応じてスクロール位置を変更
       Drawer.ScrollOn(this.pos);//プレイヤー中心にスクロール
       this.Observer(); //死亡チェック
