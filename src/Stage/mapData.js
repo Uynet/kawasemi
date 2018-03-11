@@ -67,7 +67,7 @@ export default class MapData{
         ID = this.entityData[this.width*y + x]-1;
         //tiledのIDがjsonデータより1小さいので引く
         if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
-        if(!wallTiletype[ID])cl(ID)
+        if(!wallTiletype[ID])cl(x + "  " + y)
         switch(wallTiletype[ID].type){
           case TILE.WALL :
             //直せ
@@ -127,7 +127,8 @@ export default class MapData{
       }
             EntityManager.addEntity(obj);
     }
-    Drawer.ScrollSet(EntityManager.player.pos);
+    let p = CPV(EntityManager.player.pos);
+    Drawer.ScrollSet(p);
   }
 
   /*マップデータを消して作り直す*/

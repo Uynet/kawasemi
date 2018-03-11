@@ -46,8 +46,10 @@ export default class Bullet3 extends Bullet{
 
   Update(){
     /*□Effect BulletBulr*/
-    if(this.frame%1 == 0){
+    if(this.frame%2 == 0){
       let p = CPV(this.pos);
+      let d = Rand2D(5);
+      p = ADV(p,d);
       let v = POV(this.arg+Math.PI,4);
      let blur = new BulletBlur2(p,v);
       if(blur)EntityManager.addEntity(blur);

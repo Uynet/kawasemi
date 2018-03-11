@@ -51,20 +51,20 @@ export default class Player extends Entity{
     /*基本情報*/
     let p = CPV(this.pos);
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,16));//衝突判定の形状
-    this.type = ENTITY.PLAYER;
+      this.type = ENTITY.PLAYER;
     this.layer = "ENTITY";
     this.frame = 0;
     this.frameDead;//死んだ時刻
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
     this.frameShot = 0;//最後にshotした時刻
-    this.e = 0.1;//反発係数
+      this.e = 0.1;//反発係数
     this.score = 0;
     this.offset = 0;//↑入力での画面スクロールに使う変数
       this.isUpdater = true;
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+      this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.maxHP = Param.player.maxHp;
@@ -73,30 +73,30 @@ export default class Player extends Entity{
     this.bullet = this.maxBullet;
     this.gravity = Param.player.gravity;
     this.arg = 0;//狙撃角度 0 - 2π
-    this.scArg = 0;//スクロール用
+      this.scArg = 0;//スクロール用
     this.toArg = 0;
     this.scPos = VEC0();//スクロール位置
 
-    this.vxMax = Param.player.vxMax;
+      this.vxMax = Param.player.vxMax;
     this.vyMax = Param.player.vyMax;
     /*状態*/
     this.state = STATE.WAITING;
     this.weapon = WeaponManager.weapons.normal;//選択中の武器のインスタンス
-    this.weapon.Init();
+      this.weapon.Init();
     this.dir = DIR.R;//向き
-    this.score = 0;
+      this.score = 0;
     /*フラグ*/
     this.isJump = false;//空中にいるか
-    this.isRun = false;//走っているか
+      this.isRun = false;//走っているか
     this.isAlive = true;//
-    this.isInvincible = false//無敵時間
-    /*床の親子関係*/
-    this.floor = {
-      on : false,//乗っているか
-      under : null,//自分の下
-    }
-    //??
-    this.poyo = true;
+      this.isInvincible = false//無敵時間
+        /*床の親子関係*/
+        this.floor = {
+          on : false,//乗っているか
+          under : null,//自分の下
+        }
+        //??
+        this.poyo = true;
   }
   /*キー入力による移動*/
   Input(){
@@ -180,7 +180,7 @@ export default class Player extends Entity{
         y:this.pos.y - 32
       }
       //EntityManager.addEntity(new Enemy2(p));
-    }
+      }
   }
 
   /*状態からアニメーションを行う*/
@@ -233,12 +233,12 @@ export default class Player extends Entity{
         //走り中は画像をちょっとだけ跳ねさせる
         //スプライト位置を動かしているだけなので当たり判定は変化していない
         let a = 2;//振幅
-        let l = 9;//周期
+          let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
         if(a*4*f*f/l/l == 0 ){;
           //■ SE : foot
-        }
+          }
 
         break;
         //死亡
@@ -287,8 +287,8 @@ export default class Player extends Entity{
   /* 衝突判定 */
   Collision(){
     //下からしか通れない物体
-      this.floor.on = false;
-      this.floor.under = null;
+    this.floor.on = false;
+    this.floor.under = null;
     for(let l of EntityManager.enemyList){
       let c = Collision.on(this,l);
       if(c.isHit){
@@ -329,11 +329,11 @@ export default class Player extends Entity{
       this.pos.x += this.floor.under.vel.x; 
       this.pos.y += this.floor.under.vel.y; 
     }
-      this.acc.y += this.gravity;
-      this.pos.x += this.vel.x; 
-      this.pos.y += this.vel.y; 
-      this.vel.x += this.acc.x;
-      this.vel.y += this.acc.y;
+    this.acc.y += this.gravity;
+    this.pos.x += this.vel.x; 
+    this.pos.y += this.vel.y; 
+    this.vel.x += this.acc.x;
+    this.vel.y += this.acc.y;
     //最大速度制限:
     this.vel.x = BET(-this.vxMax , this.vel.x , this.vxMax);
     if(this.vel.y > this.vyMax)this.vel.y = this.vyMax;
@@ -356,33 +356,33 @@ export default class Player extends Entity{
      this.acc.y = 0;
   }
 
-ScrollByDir(){
+  ScrollByDir(){
     let d = POV(this.arg,100*po(this.offset));
     let p = ADV(this.pos,d);
-  if(Input.isKeyInput(KEY.SP)) {
-    let to = ADV(p,MLV(this.scPos,VECN(-1)));
-    this.scPos = ADV(this.scPos , MLV(to,VECN(1/20)));
-    this.offset = Math.min(this.offset+0.5,20);
-    Drawer.ScrollOn(this.scPos);
-  }else{
-    this.scPos = p;
-    this.offset = 0;
-  }
-}
-
-Observer(){
-  if(this.hp <= 0){
-    if(this.isAlive){
-      //死亡開始時に一回だけ呼ばれる部分
-      EntityManager.addEntity(new Explosion1(CPV(this.pos)));
-      this.weapon.Reset();
-      this.frameDead = this.frame;
-      this.isDying = true;
-      this.isAlive = false;
+    if(Input.isKeyInput(KEY.SP)) {
+      let to = ADV(p,MLV(this.scPos,VECN(-1)));
+      this.scPos = ADV(this.scPos , MLV(to,VECN(1/20)));
+      this.offset = Math.min(this.offset+0.5,20);
+      Drawer.ScrollOn(this.scPos);
+    }else{
+      this.scPos = p;
+      this.offset = 0;
     }
-    this.state = STATE.DYING;
   }
-}
+
+  Observer(){
+    if(this.hp <= 0){
+      if(this.isAlive){
+        //死亡開始時に一回だけ呼ばれる部分
+        EntityManager.addEntity(new Explosion1(CPV(this.pos)));
+        this.weapon.Reset();
+        this.frameDead = this.frame;
+        this.isDying = true;
+        this.isAlive = false;
+      }
+      this.state = STATE.DYING;
+    }
+  }
   Dying(){
     //死亡中
     if(this.isDying){//まだ死んでない  
@@ -407,7 +407,7 @@ Observer(){
     let t = (this.frame-this.frameShot);
     if(t<=50 && t%10 == 0) this.bullet++;
     else if(t>50 && t<=100 && t%5 == 0) this.bullet++;
-    else if(t>100 && t<=150 && t%3 == 0) this.bullet++
+    else if(t>100 && t<=150 && t%3 == 0) this.bullet++;
     else if(t>150) this.bullet++;
     this.bullet = BET(0,this.bullet,this.maxBullet);
   }
@@ -431,42 +431,42 @@ Observer(){
   }
 
   Update(){
-      if(this.isAlive){
-        /*Init*/
-        if(!this.isJump) {
-          this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
-        }
-        this.isRun = false;
-        this.Input();//入力
-        this.SetArg(this.toArg);
-        this.weapon.Update(this);//weapon
-        this.Physics();//物理
-        this.Collision();//衝突
-        this.Supply();//bulletのかいふく　
-        UIManager.bullet.UpdateBar(this.bullet); //BulletBarの更新
-        UIManager.HP.UpdateBar(this.hp);//HPbarの更新
+    if(this.isAlive){
+      /*Init*/
+      if(!this.isJump) {
+        this.state = STATE.WAITING; //何も入力がなければWAITINGとみなされる
       }
-      /*for debug*/
-      if(Input.isKeyClick(KEY.K)){
-        let p = CPV(this.pos);
-        p.y -= 32;
-        EntityManager.addEntity(new Enemy3(p,VEC0()));
-        switch(this.weapon.name){
-          case  "missile" : this.ChangeWeapon("laser");break;
-          case  "laser" : this.ChangeWeapon("normal");break;
-          case  "normal" : this.ChangeWeapon("missile");break;
-        }
+      this.isRun = false;
+      this.Input();//入力
+      this.SetArg(this.toArg);
+      this.weapon.Update(this);//weapon
+      this.Physics();//物理
+      this.Collision();//衝突
+      this.Supply();//bulletのかいふく　
+      UIManager.bullet.UpdateBar(this.bullet); //BulletBarの更新
+      UIManager.HP.UpdateBar(this.hp);//HPbarの更新
+    }
+    /*for debug*/
+    if(Input.isKeyClick(KEY.K)){
+      let p = CPV(this.pos);
+      p.y -= 32;
+      //EntityManager.addEntity(new Enemy3(p,VEC0()));
+      switch(this.weapon.name){
+        case  "missile" : this.ChangeWeapon("laser");break;
+        case  "laser" : this.ChangeWeapon("normal");break;
+        case  "normal" : this.ChangeWeapon("missile");break;
       }
-      //this.CreateStage();//マップ生成
-      this.ScrollByDir();//向きに応じてスクロール位置を変更
-      Drawer.ScrollOn(this.pos);//プレイヤー中心にスクロール
-      this.Observer(); //死亡チェック
-      this.Dying();//死亡中
-      //無敵時間の有向時間
-      if(this.frame - this.frameDamaged > Param.player.invTime){
-        this.isInvincible = false;
-      }
-      this.sprite.position = {
+    }
+    //this.CreateStage();//マップ生成
+    this.ScrollByDir();//向きに応じてスクロール位置を変更
+    Drawer.ScrollOn(this.pos);//プレイヤー中心にスクロール
+    this.Observer(); //死亡チェック
+    this.Dying();//死亡中
+    //無敵時間の有向時間
+    if(this.frame - this.frameDamaged > Param.player.invTime){
+      this.isInvincible = false;
+    }
+    this.sprite.position = {
       x : this.pos.x-4,
       y : this.pos.y
     }
