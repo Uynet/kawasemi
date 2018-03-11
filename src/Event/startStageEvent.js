@@ -12,7 +12,7 @@ export default class StartStageEvent extends Event{
   constructor(){
     super(1);
     function* gen(){
-      Audio.PlayBGM("boss",0.1);
+      Audio.PlayBGM("stage4",0.5);
       Game.scene.PushSubState("TRANS");
       /*ここでマップをロード*/
       MapData.DeleteStage();
