@@ -29,6 +29,7 @@ export default class Enemy3 extends Enemy{
     this.arg = 0;
     this.frame = 0;
     this.frameShot = 0;//最後にshotした時刻
+      this.e = 0;
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy3;
     this.spid = 0; //spriteIndex 現在のスプライト番号

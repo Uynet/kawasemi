@@ -43,6 +43,9 @@ export default class UIManager{
     this.message;
     this.menu;
   }
+  static PopStage(stage){
+   // this.PopMessage("STAGE" + stage, "POP");
+  }
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
@@ -64,7 +67,7 @@ export default class UIManager{
   }
   //メニューを開く
   static SetMenu(){
-    UIManager.SetFilter([Drawer.noiseFilter]);
+    UIManager.SetFilter([Drawer.blurFilter]);
     UIManager.addUI(new Menu(ADV(P_MENU,{x:0,y:16})));
   }
   //UIをすべて削除

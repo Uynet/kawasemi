@@ -55,7 +55,7 @@ export default class Bullet1 extends Bullet{
     /*□Effect BulletBulr*/
     if(this.frame%1 == 0){
       let p = CPV(this.pos);
-      let d = ADV(Rand2D(5),POV(this.frame,3))
+      let d = Rand2D(5);
       p = ADV(p,d);
       let v = POV(this.arg+Math.PI,4);
       let blur = Pool.GetBulletBlur(p,v);
@@ -73,7 +73,7 @@ export default class Bullet1 extends Bullet{
       //EntityManager.removeEntity(this);
       EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
-      Audio.PlaySE("missileHit");
+      Audio.PlaySE("missileHit",-1);
     }
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.rotation = this.arg + Math.PI/2;

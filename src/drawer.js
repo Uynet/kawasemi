@@ -130,8 +130,8 @@ export default class Drawer{
   }
   /*スクロール位置を一瞬で移動させる*/
   static ScrollSet(pos){
-    let centerX = this.magnification*(- (pos.x-8) + 400/this.magnification);
-    let centerY = this.magnification*(- (pos.y-8) + 300/this.magnification);
+    let centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
+    let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
     this.backContainer.x = Math.floor(centerX);
     this.backContainer.y = Math.floor(centerY);
     this.entityContainer.x = Math.floor(centerX);

@@ -78,9 +78,6 @@ export default class Game{
     UIManager.Update();
   }
 
-  static UpdateSeq(){
-  }
-
   static Run(){
     requestAnimationFrame(Game.Run);
     for (let l of EventManager.eventList){
