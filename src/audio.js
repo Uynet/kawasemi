@@ -7,6 +7,7 @@ export default class Audio{
       stage1:null,
       stage2:null,
       stage3:null,
+      stage4:null,
     } 
     this.SE = {
       jump1 : null,
@@ -53,7 +54,6 @@ export default class Audio{
   }
   // サウンドを再生
   static PlayBGM(name,gain){
-    /*
     let buffer = this.BGM[name];
     let source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
@@ -66,10 +66,8 @@ export default class Audio{
         gainNode.gain.value = gain;
       }
     source.start(0);
-    */
   };
   static PlaySE(name,gain){
-    /*
     let buffer = this.SE[name];
     let source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
@@ -82,7 +80,6 @@ export default class Audio{
       gainNode.gain.value = gain;
     }
     source.start(0);
-    */
   };
   static async Load() {
     this.Init();
@@ -91,6 +88,7 @@ export default class Audio{
     this.LoadBGM('stage1');
     this.LoadBGM('stage2');
     this.LoadBGM('stage3');
+    this.LoadBGM('stage4');
     this.LoadBGM('boss');
 
     this.LoadSE('jump1');
