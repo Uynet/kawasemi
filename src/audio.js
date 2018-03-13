@@ -24,6 +24,7 @@ export default class Audio{
      blockBreak : null,
      stageChange : null,
     empty : null,
+    enemy3Shot : null,
     }
   };
   static LoadSE(name){
@@ -75,9 +76,9 @@ export default class Audio{
   };
   static PlaySE(name,gain){
     let buffer = this.SE[name];
-    let source = this.context.createBufferSource(); // source を作成
-    source.buffer = buffer; // buffer をセット
-    source.connect(this.context.destination); // context に connect
+    let source = this.context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(this.context.destination);
     source.loop = false; // 再生
       let gainNode = this.context.createGain();
       source.connect(gainNode);
@@ -86,6 +87,7 @@ export default class Audio{
     if(gain){
       gainNode.gain.value += gain;
     }
+    source.playbackRate.value = 1 + Rand(0.1);
     source.start(0);
   };
   static async Load() {
@@ -114,5 +116,6 @@ export default class Audio{
     this.LoadSE('blockBreak');//
     this.LoadSE('stageChange');//
     this.LoadSE('empty');//
+    this.LoadSE('enemy3Shot');//
   };
 };
