@@ -83,7 +83,7 @@ export default class Coin extends Entity{
       this.pos.x += 5 * vec.x;
       this.pos.y += 5 * vec.y;
       if(Util.distance(this.pos,player.pos)<10){
-        Audio.PlaySE("coin1");
+        Audio.PlaySE("coin1",-1);
         EntityManager.addEntity(new GetCoin(this.pos,{x:0,y:0}));
         player.GetScore(1);
         EntityManager.removeEntity(this);

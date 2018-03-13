@@ -240,8 +240,8 @@ export default class Player extends Entity{
         if(a*4*f*f/l/l == 0 && this.floor.on){;
           //■ SE : foot
           switch(this.floor.under.material){
-            case "wall" : Audio.PlaySE("landing1");break;
-            case "steel" : Audio.PlaySE("landing1");break;
+            case "wall" : Audio.PlaySE("landing1",-1);break;
+           case "steel": Audio.PlaySE("landing2",-1);Audio.PlaySE("landing1",-1);break;
             default : break;
           }
         }
@@ -326,7 +326,7 @@ export default class Player extends Entity{
             if(this.isJump){
               switch(l.material){
                 case "wall": Audio.PlaySE("landing1");break;
-                case "steel": Audio.PlaySE("landing2",1);break;
+                case "steel": Audio.PlaySE("landing2");Audio.PlaySE("landing1");break;
                 default : console.warn(l.material);
               }
             }
