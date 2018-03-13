@@ -236,8 +236,9 @@ export default class Player extends Entity{
           let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        if(a*4*f*f/l/l == 0 ){;
+        if(a*4*f*f/l/l == 0 && !this.isJump){;
           //■ SE : foot
+          Audio.PlaySE("landing1");
           }
 
         break;
@@ -306,6 +307,7 @@ export default class Player extends Entity{
       }
     }
     //壁
+      this.osJump
     for(let l of EntityManager.wallList){
       let c = Collision.on(this,l);
       if(c.isHit){
@@ -314,7 +316,14 @@ export default class Player extends Entity{
 
         //床との衝突
         if(c.n.y == -1){
-          this.isJump = false;
+            if(this.isJump){
+                 Audio.PlaySE("landing1");
+            }
+        
+            this.isJump = false;
+
+                 
+
         }
         Collision.Resolve(this,l);
         /*note : now isHit == false*/
