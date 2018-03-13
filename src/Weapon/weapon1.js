@@ -43,6 +43,7 @@ export default class Weapon1 extends Weapon{
       //playerの弾薬が残っていなければ打てない
       if(player.bullet < this.cost){
         EntityManager.addEntity(new FontEffect(player.pos,"たりないよ","pop"));
+          Audio.PlaySE("empty");
       }else{
 
         //弾薬消費
