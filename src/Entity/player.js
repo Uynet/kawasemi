@@ -125,6 +125,7 @@ export default class Player extends Entity{
             this.state = STATE.JUMPING;
           }else{
             //足りないとできない
+            Audio.PlaySE("empty");
             EntityManager.addEntity(new FontEffect(this.pos,"たりないよ","pop"));
           }
       }

@@ -2,6 +2,7 @@ import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
 import Timer from '../../timer.js';
 import eBullet1 from '../Enemy/eBullet1.js';
+import Audio from '../../audio.js'
 
 //arg方向に向かって発射する
 
@@ -12,6 +13,7 @@ export default class Shot{
   }
   Do(enemy){
     if(this.enemy.frame - this.enemy.frameShot >= 4){
+        Audio.PlaySE("enemy3Shot");
       let arg = this.enemy.arg + Rand(0.4);
       let p = CPV(this.enemy.pos);
       let d = POV(arg,16);

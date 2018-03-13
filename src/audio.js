@@ -18,8 +18,12 @@ export default class Audio{
       missileShot : null,
       missileHit : null,
       laserShot : null,
+    normalShot : null,
       landing1 : null,
-      blockBreak : null,
+      landing2 : null,
+     blockBreak : null,
+     stageChange : null,
+    empty : null,
     }
   };
   static LoadSE(name){
@@ -104,7 +108,11 @@ export default class Audio{
     this.LoadSE('missileHit');
     this.LoadSE('missileShot');
     this.LoadSE('laserShot');
+    this.LoadSE('normalShot');
     this.LoadSE('landing1');//着地
+    this.LoadSE('landing2');//着地鉄骨
     this.LoadSE('blockBreak');//
+    this.LoadSE('stageChange');//
+    this.LoadSE('empty');//
   };
 };
