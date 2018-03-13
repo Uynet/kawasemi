@@ -18,6 +18,8 @@ export default class Audio{
       missileShot : null,
       missileHit : null,
       laserShot : null,
+      landing1 : null,
+      blockBreak : null,
     }
   };
   static LoadSE(name){
@@ -76,7 +78,7 @@ export default class Audio{
       let gainNode = this.context.createGain();
       source.connect(gainNode);
       gainNode.connect(this.context.destination);
-      gainNode.gain.value = 0;
+      gainNode.gain.value = 1;
     if(gain){
       gainNode.gain.value += gain;
     }
@@ -102,5 +104,7 @@ export default class Audio{
     this.LoadSE('missileHit');
     this.LoadSE('missileShot');
     this.LoadSE('laserShot');
+    this.LoadSE('landing1');//着地
+    this.LoadSE('blockBreak');//
   };
 };

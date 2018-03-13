@@ -5,6 +5,7 @@ import MapData from '../Stage/mapData.js';
 import Game from '../game.js';
 import Drawer from '../drawer.js';
 import Art from '../art.js';
+import Audio from '../audio.js'
 import EventManager from './eventmanager.js';
 import FadeEvent from './fadeEvent.js';
 
@@ -14,6 +15,7 @@ export default class GameClearEvent extends Event{
     function* gen(){
       Game.scene.PushSubState("TRANS");
       Game.stage++;
+        Audio.PlaySE("stageChange");
       UIManager.PopStage(Game.stage);
       EventManager.eventList.push(new FadeEvent("fadeout"));
       yield;

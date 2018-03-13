@@ -1,4 +1,5 @@
 import Art from '../art.js';
+import Audio from '../audio.js'
 import Collider from '../Collision/collider.js';
 import Collision from '../Collision/collision.js';
 import Box from '../Collision/box.js';
@@ -33,6 +34,7 @@ export default class WoodBox extends Wall{
   //自分がダメージを食らう
   Damage(atkMax){
     this.hp += atkMax;
+       Audio.PlaySE("blockBreak");
   }
 
   Update(){
@@ -45,6 +47,7 @@ export default class WoodBox extends Wall{
         x : this.pos.x,
         y : this.pos.y
       }
+     
       EntityManager.addEntity(new BulletShot(p,VEC0()));
     }
   }
