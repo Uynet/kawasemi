@@ -237,10 +237,14 @@ export default class Player extends Entity{
           let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        if(a*4*f*f/l/l == 0 && !this.isJump){;
+        if(a*4*f*f/l/l == 0 && this.floor.on){;
           //■ SE : foot
-          Audio.PlaySE("landing1");
+          switch(this.floor.under.material){
+            case "wall" : Audio.PlaySE("landing1");break;
+            case "steel" : Audio.PlaySE("landing1");break;
+            default : break;
           }
+        }
 
         break;
         //死亡
@@ -317,8 +321,14 @@ export default class Player extends Entity{
 
         //床との衝突
         if(c.n.y == -1){
+          this.floor.under = l;
+          this.floor.on = true;
             if(this.isJump){
-                 Audio.PlaySE("landing1");
+              switch(l.material){
+                case "wall": Audio.PlaySE("landing1");break;
+                case "steel": Audio.PlaySE("landing2",1);break;
+                default : console.warn(l.material);
+              }
             }
         
             this.isJump = false;

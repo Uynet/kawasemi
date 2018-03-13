@@ -74,19 +74,19 @@ export default class MapData{
             if(wallTiletype[ID].name == "woodbox"){
               entity = new Woodbox({x:16*x,y:16*y});
             }else{
-              entity = new Wall({x:16*x,y:16*y},MapData.WallTile(ID));
+              entity = new Wall({x:16*x,y:16*y},ID);
             }
             EntityManager.addEntity(entity);
             break;
           case TILE.BACK :
-            entity = new BackEntity({x:16*x,y:16*y},MapData.WallTile(ID));
+            entity = new BackEntity({x:16*x,y:16*y},MapData.Tile(ID).texture);
             EntityManager.addEntity(entity); break;
           case TILE.FORE :
-            entity = new BackEntity({x:16*x,y:16*y},MapData.WallTile(ID));
+            entity = new BackEntity({x:16*x,y:16*y},MapData.Tile(ID).texture);
             entity.layer = "FORE";
             EntityManager.addEntity(entity); break;
           case TILE.NEEDLE :
-            entity = new Needle({x:16*x,y:16*y},MapData.WallTile(ID));
+            entity = new Needle({x:16*x,y:16*y},MapData.Tile(ID).texture);
             EntityManager.addEntity(entity);
             break;
           default : 
@@ -147,55 +147,60 @@ export default class MapData{
   }
   //壁タイルの対応
   //タイルIDを渡すとテクスチャを返す
-  static WallTile(i){
+  static Tile(i){
     let wall = Art.wallPattern;
     let out = Art.wallPattern.edge.out;
     let inner = Art.wallPattern.edge.inner;
     let steel = Art.wallPattern.steel;
     let needle = Art.wallPattern.needle;
+    //戻り値データ
+    let tex;//テクスチャ
+    let material = "wall";//材質
     switch(i){
       //Bigblock
-      case 82 : return wall.bigBlock[0];
-      case 83 : return wall.bigBlock[1];
-      case 90 : return wall.bigBlock[2];
-      case 91 : return wall.bigBlock[3];
+      case 82 : tex = wall.bigBlock[0];break;
+      case 83 : tex = wall.bigBlock[1];break;
+      case 90 : tex = wall.bigBlock[2];break;
+      case 91 : tex = wall.bigBlock[3];break;
       //block
-      case 84 : return wall.block;
-      case 85 : return wall.HPBlock;
-      case 86 : return wall.bulletBlock;
+      case 84 : tex = wall.block;break;
+      case 85 : tex = wall.HPBlock;break;
+      case 86 : tex = wall.bulletBlock;break;
       //edge in
-      case 49 : return inner[0];
-      case 51 : return inner[1];
-      case 65 : return inner[2];
-      case 67 : return inner[3];
+      case 49 : tex = inner[0];break;
+      case 51 : tex = inner[1];break;
+      case 65 : tex = inner[2];break;
+      case 67 : tex = inner[3];break;
       //edge out
-      case 52:return out[0];
-      case 53:return out[1];
-      case 54:return out[2];
-      case 60:return out[3];
-      case 62:return out[4];
-      case 68:return out[5];
-      case 69:return out[6];
-      case 70:return out[7];
+      case 52:tex = out[0];break;
+      case 53:tex = out[1];break;
+      case 54:tex = out[2];break;
+      case 60:tex = out[3];break;
+      case 62:tex = out[4];break;
+      case 68:tex = out[5];break;
+      case 69:tex = out[6];break;
+      case 70:tex = out[7];break;
       //steel
-      case 72:return steel.entity[0]; 
-      case 73:return steel.entity[1]; 
-      case 74:return steel.entity[2]; 
-      case 75:return steel.entity[3]; 
-      case 76:return steel.back[0];
-      case 77:return steel.back[1];
-      case 78:return steel.back[2];
-      case 79:return steel.back[3];
+      case 72:tex = steel.entity[0];material = "steel";break; 
+      case 73:tex = steel.entity[1];material = "steel";break; 
+      case 74:tex = steel.entity[2];material = "steel";break; 
+      case 75:tex = steel.entity[3];material = "steel";break; 
+      case 76:tex = steel.back[0];material = "steel";break;
+      case 77:tex = steel.back[1];material = "steel";break;
+      case 78:tex = steel.back[2];material = "steel";break;
+      case 79:tex = steel.back[3];material = "steel";break;
       //signboard
-      case 4 :return Art.wallPattern.signboard;
+      case 4 :tex = Art.wallPattern.signboard;break;
         //needle
-      case 8 : return needle[0];
-      case 9 : return needle[1];
-      case 10 : return needle[2];
-      case 11 : return needle[3];
+      case 8 : tex = needle[0];break;
+      case 9 : tex = needle[1];break;
+      case 10 : tex = needle[2];break;
+      case 11 : tex = needle[3];break;
   }
-    console.warn(i);
-    return Art.wallPattern.block;
+    return {
+      material : material,
+      texture : tex,
+    }
   }
 
   //背景を追加
