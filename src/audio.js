@@ -60,7 +60,6 @@ export default class Audio{
     source.connect(this.context.destination); // context に connect
     source.loop = true; // 再生
       if(gain){
-        gain = 3;
         let gainNode = this.context.createGain();
         source.connect(gainNode);
         gainNode.connect(this.context.destination);
@@ -77,7 +76,7 @@ export default class Audio{
       let gainNode = this.context.createGain();
       source.connect(gainNode);
       gainNode.connect(this.context.destination);
-      gainNode.gain.value = 3;
+      gainNode.gain.value = 0;
     if(gain){
       gainNode.gain.value += gain;
     }
