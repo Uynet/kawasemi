@@ -73,7 +73,9 @@ export default class Bullet1 extends Bullet{
       //EntityManager.removeEntity(this);
       EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
-      Audio.PlaySE("missileHit",-1);
+      if(this.hp<=0){
+        Audio.PlaySE("missileHit",1);
+      }
     }
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.rotation = this.arg + Math.PI/2;
