@@ -2,7 +2,7 @@ import Timer from './timer.js';
 import EntityManager from './Stage/entityManager.js';
 import Input from './input.js';
 
-let PIXI_WIDTH = 800; let PIXI_HEIGHT = 600;
+let PIXI_WIDTH = 800; let PIXI_HEIGHT = 640;
 let size = 1; 
 export default class Drawer{
 
@@ -54,6 +54,11 @@ export default class Drawer{
     //this.sepiaFilter = new PIXI.filters.SepiaFilter();
     //this.sepiaFilter.sepia = 0.5;
 
+    //
+    this.mapSize = {
+      width : 32,
+      height : 32,
+    }
   }
 
   /*コンテナにスプライトを追加*/
@@ -108,12 +113,21 @@ export default class Drawer{
     }
   }
 
+  static SetMap(x,y){
+    this.mapSize.width = x;
+    this.mapSize.height = y;
+  }
+
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
-    let centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
-    let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
+    //let centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
+    //let centerY = BET(-512 - 256 -128 - 32,this.magnification*(- pos.y-8 + 300/this.magnification),256);
+    let centerX = BET(-this.mapSize.width*32 + 300,this.magnification*(- pos.x-8 + 400/this.magnification),0);
+    let centerY = BET(-this.mapSize.height*32 + 200,this.magnification*(- pos.y-8 + 300/this.magnification),0);
     let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
+    if(Input.isKeyClick(KEY.X))cl(centerX)
+    if(Input.isKeyClick(KEY.K))cl(centerY)
     //背景レイヤ
     //スクロールが遅い
     this.backGroundContainer.x = toX/4;
