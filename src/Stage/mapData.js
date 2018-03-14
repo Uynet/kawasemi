@@ -8,6 +8,7 @@ import Player from '../Entity/player.js'
 import Enemy1 from '../Entity/Enemy/enemy1.js'
 import Enemy2 from '../Entity/Enemy/enemy2.js'
 import Enemy3 from '../Entity/Enemy/enemy3.js'
+import Enemy4 from '../Entity/Enemy/enemy4.js'
 import Goal from '../Entity/goal.js'
 import Game from '../game.js'
 import Art from '../art.js'
@@ -123,6 +124,9 @@ export default class MapData{
             break;
           case 171 :
             obj = new Enemy3(p);
+            break;
+          case 172 :
+            obj = new Enemy4(p);
             break;
       }
             EntityManager.addEntity(obj);

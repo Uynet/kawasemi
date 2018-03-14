@@ -56,6 +56,8 @@ export default class Enemy extends Entity{
       this.pos.x += this.floor.under.vel.x;
       //this.pos.y += this.floor.under.vel.y;
     }
+    if(this.gravity)this.acc.y += this.gravity;
+
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
     this.vel.x += this.acc.x;
