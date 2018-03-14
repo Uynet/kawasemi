@@ -4,29 +4,8 @@ export default class Audio{
   static Init(){
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new AudioContext();
-    this.BGM = {
-      stage1:null,
-      stage2:null,
-      stage3:null,
-      stage4:null,
-    } 
-    this.SE = {
-      jump1 : null,
-      jump2 : null,
-      coin1 : null,
-      coin2 : null,
-      enemyDamage : null,
-      missileShot : null,
-      missileHit : null,
-      laserShot : null,
-    normalShot : null,
-      landing1 : null,
-      landing2 : null,
-     blockBreak : null,
-     stageChange : null,
-    empty : null,
-    enemy3Shot : null,
-    }
+    this.BGM = { } 
+    this.SE = { }
     this.stack = [];
     this.time = Timer.timer;
     this.lastSE;
@@ -40,7 +19,9 @@ export default class Audio{
       if (req.readyState === 4) {
         if (req.status === 0 || req.status === 200) {
           // array buffer を audio buffer に変換
-          this.context.decodeAudioData(req.response,(buffer)=>{this.SE[name] = buffer});
+          this.context.decodeAudioData(req.response,
+            (buffer)=>{this.SE[name] = buffer
+            });
         }
       }
     }
@@ -70,12 +51,14 @@ export default class Audio{
     source.buffer = buffer; // buffer をセット
     source.connect(this.context.destination); // context に connect
     source.loop = true; // 再生
+      /*
       if(gain){
         let gainNode = this.context.createGain();
         source.connect(gainNode);
         gainNode.connect(this.context.destination);
         gainNode.gain.value = gain;
       }
+      */
     source.start(0);
   };
   static PlaySE(name,gain,pitch){
@@ -83,49 +66,53 @@ export default class Audio{
     if(this.time != Timer.timer || name != this.lastSE){
       this.time = Timer.timer;
       this.lastSE = name;
-      let buffer = this.SE[name];
       let source = this.context.createBufferSource();
-      source.buffer = buffer;
+      source.buffer = this.SE[name];
       source.connect(this.context.destination);
       source.loop = false; // 再生
-        let gainNode = this.context.createGain();
+      if(!pitch)pitch = 1;
+      source.playbackRate.value = pitch + Rand(0.05);
+      /*
+      let gainNode = this.context.createGain();
       source.connect(gainNode);
       gainNode.connect(this.context.destination);
       gainNode.gain.value = 1;
-      if(!pitch)pitch = 1;
-      source.playbackRate.value = pitch + Rand(0.05);
       if(gain){
         gainNode.gain.value += gain;
       }
+      */
       source.start(0);
     }
   };
-  static async Load() {
-    this.Init();
-    //this.LoadSound('src/resource/BGM/boss.mp3');
-    //!ココで読み込むnameはファイル名に統一すること!
-    this.LoadBGM('stage1');
-    this.LoadBGM('stage2');
-    this.LoadBGM('stage3');
-    this.LoadBGM('stage4');
-    this.LoadBGM('boss');
+  static Load() {
+    return new Promise(res=>{
+      this.Init();
+      //!ココで読み込むnameはファイル名に統一すること!
+      this.LoadBGM('stage1');
+      this.LoadBGM('stage2');
+      this.LoadBGM('stage3');
+      this.LoadBGM('stage4');
+      this.LoadBGM('boss');
 
-    this.LoadSE('jump1');
-    this.LoadSE('jump2');//空中ジャンプ
-    this.LoadSE('coin1');
-    this.LoadSE('coin2');//コイン反射
-    this.LoadSE('targetOn');//照準
-    this.LoadSE('playerDamage');
-    this.LoadSE('enemyDamage');
-    this.LoadSE('missileHit');
-    this.LoadSE('missileShot');
-    this.LoadSE('laserShot');
-    this.LoadSE('normalShot');
-    this.LoadSE('landing1');//着地
-    this.LoadSE('landing2');//着地鉄骨
-    this.LoadSE('blockBreak');//
-    this.LoadSE('stageChange');//
-    this.LoadSE('empty');//
-    this.LoadSE('enemy3Shot');//
+      this.LoadSE('jump1');
+      this.LoadSE('jump2');//空中ジャンプ
+      this.LoadSE('coin1');
+      this.LoadSE('coin2');//コイン反射
+      this.LoadSE('targetOn');//照準
+      this.LoadSE('playerDamage');
+      this.LoadSE('enemyDamage');
+      this.LoadSE('missileHit');
+      this.LoadSE('missileShot');
+      this.LoadSE('laserShot');
+      this.LoadSE('normalShot');
+      this.LoadSE('landing1');//着地
+      this.LoadSE('landing2');//着地鉄骨
+      this.LoadSE('blockBreak');//
+      this.LoadSE('stageChange');//
+      this.LoadSE('empty');//
+      this.LoadSE('enemy3Shot');//
+      cl(this.BGM);
+      res();
+    })
   };
 };

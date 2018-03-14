@@ -45,8 +45,9 @@ export default class Game{
 
   static async Load(){
     await Art.LoadTexture();
-    await Audio.Load();
-    Game.Init();
+    Audio.Load().then(_=>{
+      Game.Init();
+    })
   }
 
   //タイトル画面中の処理
