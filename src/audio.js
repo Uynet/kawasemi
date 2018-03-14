@@ -1,3 +1,4 @@
+import Timer from './timer.js';
 //サウンド管理
 export default class Audio{
   static Init(){
@@ -26,6 +27,9 @@ export default class Audio{
     empty : null,
     enemy3Shot : null,
     }
+    this.stack = [];
+    this.time = Timer.timer;
+    this.lastSE;
   };
   static LoadSE(name){
     let url = "src/resource/SE/" + name + ".wav";
@@ -74,21 +78,27 @@ export default class Audio{
       }
     source.start(0);
   };
-  static PlaySE(name,gain){
-    let buffer = this.SE[name];
-    let source = this.context.createBufferSource();
-    source.buffer = buffer;
-    source.connect(this.context.destination);
-    source.loop = false; // 再生
-      let gainNode = this.context.createGain();
+  static PlaySE(name,gain,pitch){
+    //同じ効果音は同時にならないようにする
+    if(this.time != Timer.timer || name != this.lastSE){
+      this.time = Timer.timer;
+      this.lastSE = name;
+      let buffer = this.SE[name];
+      let source = this.context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(this.context.destination);
+      source.loop = false; // 再生
+        let gainNode = this.context.createGain();
       source.connect(gainNode);
       gainNode.connect(this.context.destination);
       gainNode.gain.value = 1;
-    if(gain){
-      gainNode.gain.value += gain;
+      if(!pitch)pitch = 1;
+      source.playbackRate.value = pitch + Rand(0.05);
+      if(gain){
+        gainNode.gain.value += gain;
+      }
+      source.start(0);
     }
-    source.playbackRate.value = 1 + Rand(0.1);
-    source.start(0);
   };
   static async Load() {
     this.Init();

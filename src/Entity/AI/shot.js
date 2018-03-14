@@ -14,7 +14,7 @@ export default class Shot{
   Do(enemy){
     if(this.enemy.frame - this.enemy.frameShot >= 100){
       Audio.PlaySE("enemy3Shot",-0.7);
-      let arg = this.enemy.arg + Rand(0.4);
+      let arg = this.enemy.arg + Rand(0.1);
       let p = CPV(this.enemy.pos);
       let d = POV(arg,16);
       p = ADV(p,d);

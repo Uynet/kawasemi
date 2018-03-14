@@ -237,11 +237,11 @@ export default class Player extends Entity{
           let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        if(a*4*f*f/l/l == 0 && this.floor.on){;
+        if(this.frame%5 == 0 && this.floor.on){;
           //■ SE : foot
           switch(this.floor.under.material){
-            case "wall" : Audio.PlaySE("landing1",-1);break;
-           case "steel": Audio.PlaySE("landing2",-1);Audio.PlaySE("landing1",-1);break;
+            case "wall" : Audio.PlaySE("landing1",0);break;
+           case "steel": Audio.PlaySE("landing2",-0.4,0.8);Audio.PlaySE("landing1",-1);break;
             default : break;
           }
         }
@@ -325,8 +325,8 @@ export default class Player extends Entity{
           this.floor.on = true;
             if(this.isJump){
               switch(l.material){
-                case "wall": Audio.PlaySE("landing1");break;
-                case "steel": Audio.PlaySE("landing2");Audio.PlaySE("landing1");break;
+                case "wall": Audio.PlaySE("landing1",1);break;
+                case "steel": Audio.PlaySE("landing2",1);Audio.PlaySE("landing1");break;
                 default : console.warn(l.material);
               }
             }

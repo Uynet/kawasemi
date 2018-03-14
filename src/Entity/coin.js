@@ -29,7 +29,7 @@ export default class Coin extends Entity{
     /*コライダ*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,9,9));//衝突判定の形状
     /*パラメータ*/
-    this.gravity = 0.3;
+    this.gravity = 0.5 + Rand(0.2);
     this.layer = "ENTITY";
     /*AI*/
     this.vel.y = 0.3;
