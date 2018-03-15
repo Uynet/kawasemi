@@ -44,10 +44,29 @@ export default class Explosion1 extends EFFECT{
       EntityManager.addEntity(flash);
     }
   }
+  Collision(){
+    for(let l of EntityManager.enemyList){
+      if(DIST(this.pos,l.pos) < 48){
+        l.Damage(-RandBET(50,99));
+        /* ■ SoundEffect : hitWall */
+        /* □ Effect : hitWall */
+      };
+    }
+    for(let w of EntityManager.wallList){
+      if(DIST(this.pos,w.pos) < 48){
+        //breakable object
+        if(w.name == "woodbox"){
+          // ■ SoundEffect : hitWood
+          w.Damage(-RandBET(50,99));
+        }
+      }
+    }
+  }
 
   Update(){
     //爆発して自分は消える
     this.Bomb();
+    this.Collision();
     EntityManager.removeEntity(this);
   }
 }

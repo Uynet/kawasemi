@@ -126,8 +126,6 @@ export default class Drawer{
     let centerY = BET(-this.mapSize.height*32 + 200,this.magnification*(- pos.y-8 + 300/this.magnification),0);
     let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
-    if(Input.isKeyClick(KEY.X))cl(centerX)
-    if(Input.isKeyClick(KEY.K))cl(centerY)
     //背景レイヤ
     //スクロールが遅い
     this.backGroundContainer.x = toX/4;

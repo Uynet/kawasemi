@@ -101,7 +101,7 @@ export default class Player extends Entity{
   /*キー入力による移動*/
   Input(){
     /*ジャンプ*/
-    if(Input.isKeyInput(KEY.Z)){
+    if(Input.isKeyClick(KEY.Z)){
       if(this.isJump == false){
         this.vel.y = - Param.player.jumpVel;
         this.isJump = true;
@@ -295,25 +295,8 @@ export default class Player extends Entity{
     //下からしか通れない物体
     this.floor.on = false;
     this.floor.under = null;
-    for(let l of EntityManager.enemyList){
-      let c = Collision.on(this,l);
-      if(c.isHit){
-        /* 衝突応答*/
-        /*フラグの解除*/
-
-        //床との衝突
-        if(c.n.y == -1){
-          this.isJump = false;
-          Collision.Resolve(this,l);
-          this.floor.on = true;
-          this.floor.under = l;
-        }
-        /*note : now isHit == false*/
-      }
-    }
     //壁
-      this.osJump
-    for(let l of EntityManager.wallList){
+    for(let l of EntityManager.colliderList){
       let c = Collision.on(this,l);
       if(c.isHit){
         /* 衝突応答*/
@@ -337,7 +320,7 @@ export default class Player extends Entity{
         switch(l.colType){
           case "through" : 
             //下からのみ通り抜けられる床
-            if(c.n.y == -1 && l.pos.y - (this.pos.y+8) > 0&& this.vel.y > 0){
+            if(c.n.y == -1 && l.pos.y - (this.pos.y - (this.vel.y-l.vel.y) + 8) > 0&& this.vel.y > 0){
               Collision.Resolve(this,l);
             }
             break;

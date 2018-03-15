@@ -247,6 +247,13 @@ export default class Art{
         PIXI.Texture.fromFrame('bulletF2.png'),//bullet blur
         PIXI.Texture.fromFrame('bulletF3.png') //bullet blur
       ],
+      //ブロックの破片
+      blockDebris : [
+        PIXI.Texture.fromFrame('bullet110.png'),
+        PIXI.Texture.fromFrame('bullet111.png'),
+        PIXI.Texture.fromFrame('bullet112.png'),
+        PIXI.Texture.fromFrame('bullet113.png'), 
+      ],
       coin : {
         get : [
           PIXI.Texture.fromFrame('bulletD0.png'),

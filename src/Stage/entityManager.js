@@ -12,6 +12,7 @@ export default class EntityManager{
     this.wallList = [];//壁のリスト
     this.player;//プレイヤーのインスタンス
     this.updaterList = [];//更新が必要なEntity
+    this.colliderList = [];
 
     this.entityIndex = 0;
   }
@@ -35,8 +36,8 @@ export default class EntityManager{
     switch(entity.type){
       case ENTITY.MOVER : break;
       case ENTITY.PLAYER : this.player = entity; break;
-      case ENTITY.ENEMY : this.enemyList.push(entity); break;
-      case ENTITY.WALL : this.wallList.push(entity); break;
+      case ENTITY.ENEMY : this.colliderList.push(entity);this.enemyList.push(entity); break;
+      case ENTITY.WALL : this.colliderList.push(entity);this.wallList.push(entity); break;
       default : console.warn(entity.type)
     }
 
@@ -52,10 +53,14 @@ export default class EntityManager{
       case ENTITY.ENEMY :
         let i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
+        i = this.colliderList.indexOf(entity);
+        this.colliderList.splice(i,1);
         break;
       case ENTITY.WALL :
         let j = this.wallList.indexOf(entity);
         this.wallList.splice(j,1);
+        j = this.colliderList.indexOf(entity);
+        this.colliderList.splice(j,1);
         //this.SortWallList();
         break;
     }
