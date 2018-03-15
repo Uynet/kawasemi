@@ -9,6 +9,7 @@ import Bullet3AI from './AI/bullet3AI.js';
 import Horming from './AI/horming.js';
 import Bullet from './bullet.js';
 import BulletBlur2 from './Effect/bulletBlur2.js';
+import BulletHitWall from './Effect/bulletHitWall.js';
 import Param from '../param.js';
 
 //normal bullet
@@ -62,6 +63,7 @@ export default class Bullet3 extends Bullet{
     if(this.hp<=0 ||
       this.frame > 100) {
       EntityManager.removeEntity(this);
+      EntityManager.addEntity(new BulletHitWall(CPV(this.pos)));
     }
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.rotation = this.arg + Math.PI/2;

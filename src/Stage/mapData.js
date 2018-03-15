@@ -107,28 +107,16 @@ export default class MapData{
         let objy = this.objData[i].y -16 ;//なぜかyだけずれるので引く
         let p = {x:objx , y:objy};
         switch(ID){
-          case 161 :
-            obj = new Player(p);
-            break;
+          case 161 : obj = new Player(p); break;
           case 162 :
             let message = this.objData[i].properties;
             obj = new Signboard(p,message);
             break;
-          case 163 :
-            obj = new Goal(p);
-            break;
-          case 169 :
-            obj = new Enemy1(p);
-            break;
-          case 170 :
-            obj = new Enemy2(p);
-            break;
-          case 171 :
-            obj = new Enemy3(p);
-            break;
-          case 172 :
-            obj = new Enemy4(p);
-            break;
+          case 163 : obj = new Goal(p); break;
+          case 169 : obj = new Enemy1(p); break;
+          case 170 : obj = new Enemy2(p); break;
+          case 171 : obj = new Enemy3(p); break;
+          case 172 : obj = new Enemy4(p); break;
       }
             EntityManager.addEntity(obj);
     }
@@ -161,6 +149,7 @@ export default class MapData{
     //戻り値データ
     let tex;//テクスチャ
     let material = "wall";//材質
+    let colType = "wall";//すり抜け床かどうか
     switch(i){
       //Bigblock
       case 82 : tex = wall.bigBlock[0];break;
@@ -181,10 +170,11 @@ export default class MapData{
       case 53:tex = out[1];break;
       case 54:tex = out[2];break;
       case 60:tex = out[3];break;
-      case 62:tex = out[4];break;
-      case 68:tex = out[5];break;
-      case 69:tex = out[6];break;
-      case 70:tex = out[7];break;
+      case 61:tex = out[4];break;
+      case 62:tex = out[5];break;
+      case 68:tex = out[6];break;
+      case 69:tex = out[7];break;
+      case 70:tex = out[8];break;
       //steel
       case 72:tex = steel.entity[0];material = "steel";break; 
       case 73:tex = steel.entity[1];material = "steel";break; 
@@ -195,14 +185,17 @@ export default class MapData{
       case 78:tex = steel.back[2];material = "steel";break;
       case 79:tex = steel.back[3];material = "steel";break;
       //signboard
-      case 4 :tex = Art.wallPattern.signboard;break;
-        //needle
+      case 4 :tex = wall.signboard;break;
+      //needle
       case 8 : tex = needle[0];break;
       case 9 : tex = needle[1];break;
       case 10 : tex = needle[2];break;
       case 11 : tex = needle[3];break;
+      //through
+      case 96 : tex = wall.through[0];colType="through";break;
   }
     return {
+      colType : colType,
       material : material,
       texture : tex,
     }
@@ -215,7 +208,7 @@ export default class MapData{
     let h = 20;
     for(let y = 0;y<h;y++){
       for(let x = 0;x<w;x++){
-        let tex = Art.wallPattern.steel.backGround[0];
+        let tex = Art.wallPattern.backGround[0];
         let p = {
           x : (x - w/2)*32,
           y : (y - h/2)*32
