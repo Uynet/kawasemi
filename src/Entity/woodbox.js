@@ -9,6 +9,7 @@ import Timer from '../timer.js';
 import FontEffect from './Effect/fontEffect.js';
 import Wall from './wall.js';
 import BulletShot from './Effect/bulletShot.js';
+import BlockDebris from './Effect/blockDebris.js';
 
 let EntityList = EntityManager.entityList;
 
@@ -43,12 +44,17 @@ export default class WoodBox extends Wall{
     /*observer*/
     if(this.hp<=0){
       EntityManager.removeEntity(this);
-      let p = {
-        x : this.pos.x,
-        y : this.pos.y
+      let p = CPV(this.pos);
+      EntityManager.addEntity(new BulletShot(p,VEC0()));
+      let v;
+      for(let i = 0;i<2 ;i++){
+        v = {
+          x : Rand(1) + (2*i-1),//←と→に飛ばす
+          y : -1-Rand(3)/5,
+        }
+        EntityManager.addEntity(new BlockDebris(p,v));
       }
      
-      EntityManager.addEntity(new BulletShot(p,VEC0()));
     }
   }
 }

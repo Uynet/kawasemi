@@ -81,7 +81,7 @@ export default class Audio{
         gainNode.gain.value += gain;
       }
       */
-      source.start(0);
+      //source.start(0);
     }
   };
   static Load() {
