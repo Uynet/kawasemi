@@ -15,9 +15,12 @@ export default class Wall extends Entity{
     this.layer = "ENTITY";
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.isUpdater = false;
+    /*性質*/
+    let wall = MapData.Tile(ID)
+    this.material = wall.material;
+    this.colType = wall.colType;
     /*スプライト*/
     this.tex = MapData.Tile(ID).texture;
-    this.material = MapData.Tile(ID).material;
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
   }

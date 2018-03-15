@@ -360,6 +360,7 @@ export default class Art{
           PIXI.Texture.fromFrame('wall65.png'),//
           PIXI.Texture.fromFrame('wall66.png'),//
           PIXI.Texture.fromFrame('wall74.png'),//
+          PIXI.Texture.fromFrame('wall75.png'),//
           PIXI.Texture.fromFrame('wall76.png'),//
           PIXI.Texture.fromFrame('wall84.png'),//
           PIXI.Texture.fromFrame('wall85.png'),//
@@ -370,23 +371,27 @@ export default class Art{
       steel : {
         //entity
         entity : [
-        PIXI.Texture.fromFrame('wall90.png'),
-        PIXI.Texture.fromFrame('wall91.png'),
-        PIXI.Texture.fromFrame('wall92.png'),
-        PIXI.Texture.fromFrame('wall93.png'),
+          PIXI.Texture.fromFrame('wall90.png'),
+          PIXI.Texture.fromFrame('wall91.png'),
+          PIXI.Texture.fromFrame('wall92.png'),
+          PIXI.Texture.fromFrame('wall93.png'),
         ],
         //backentity
         back : [
-        PIXI.Texture.fromFrame('wall94.png'),
-        PIXI.Texture.fromFrame('wall95.png'),
-        PIXI.Texture.fromFrame('wall96.png'),
-        PIXI.Texture.fromFrame('wall97.png'),
+          PIXI.Texture.fromFrame('wall94.png'),
+          PIXI.Texture.fromFrame('wall95.png'),
+          PIXI.Texture.fromFrame('wall96.png'),
+          PIXI.Texture.fromFrame('wall97.png'),
         ],
-        //back
-        backGround : [
+      },
+      //背景
+      backGround : [
         PIXI.Texture.fromFrame('wallA0.png'),
-        ],
-      }
+      ],
+      //すり抜け床
+      through : [
+        PIXI.Texture.fromFrame('wallC0.png'),
+      ]
     }
 
     /*画面遷移エフェクト*/

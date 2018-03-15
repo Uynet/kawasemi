@@ -330,14 +330,21 @@ export default class Player extends Entity{
                 default : console.warn(l.material);
               }
             }
-        
             this.isJump = false;
-
-                 
-
         }
-        Collision.Resolve(this,l);
+
+        //Resolve
+        switch(l.colType){
+          case "through" : 
+            //下からのみ通り抜けられる床
+            if(c.n.y == -1 && l.pos.y - (this.pos.y+8) > 0&& this.vel.y > 0){
+              Collision.Resolve(this,l);
+            }
+            break;
+          case "wall" : Collision.Resolve(this,l);break;
+          default : console.warn(l.colType);break;
         /*note : now isHit == false*/
+        }
       }
     }
   }
