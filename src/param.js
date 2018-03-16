@@ -38,7 +38,7 @@ export default class Param{
       coin : 4
     }
     this.enemy3 = {
-      hp : 10,
+      hp : 100,
       atkMax : 10,
       atkMin : 5,
       gravity : 0,
@@ -103,8 +103,8 @@ export default class Param{
     }
     //Laser
     this.bullet2 = {
-      atkMax : 100,
-      atkMin : 5,
+      atkMax : 2,
+      atkMin : 1,
       hp : 99999,
     }
     //normal

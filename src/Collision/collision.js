@@ -15,7 +15,7 @@ export default class Collision{
       let circ2 = e2.collider.hitbox;
       if(DIST(circ1.pos,circ2.pos) < circ1.r + circ2.r){
         isHit = true;
-        n = NORMALIZE({x:circ1.pos.x-circ2.pos.x , y:circ1.pos.y-circ2.pos.y});
+        n = NOMALIZE({x:circ1.pos.x-circ2.pos.x , y:circ1.pos.y-circ2.pos.y});
       }else{
         isHit = false;
       }

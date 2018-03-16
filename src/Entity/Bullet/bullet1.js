@@ -10,6 +10,7 @@ import QuakeEvent from '../../Event/quakeEvent.js';
 import Bullet1AI from '../AI/bullet1AI.js';
 import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
+import BulletShot from '../Effect/bulletShot.js';
 import BulletBlur from '../Effect/bulletBlur.js';
 import Explosion1 from '../Effect/explosion1.js';
 import Param from '../../param.js';
@@ -66,15 +67,15 @@ export default class Bullet1 extends Bullet{
     }
     /*observer*/
     //HP || 経過時間
-    if(this.hp<=0 ||
-      this.frame > 100) {
+    if(this.hp<=0){
       Pool.Remove(this);
-      //EntityManager.removeEntity(this);
+      Audio.PlaySE("missileHit",1);
       EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
-      if(this.hp<=0){
-        Audio.PlaySE("missileHit",1);
-      }
+    }
+    if(this.frame > 100){
+      Pool.Remove(this);
+      EntityManager.addEntity(new BulletShot(CPV(this.pos)));
     }
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.rotation = this.arg + Math.PI/2;

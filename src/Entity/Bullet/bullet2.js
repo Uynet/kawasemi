@@ -22,6 +22,7 @@ export default class Bullet2 extends Bullet{
     this.frame = 0;
     this.arg = arg;
     this.isUpdater  =true;
+    this.layer = "BACK"//壁に埋めるため
     /*スプライト*/
     this.pattern = Art.bulletPattern.bullet2;
     this.spid = 0;
@@ -50,7 +51,7 @@ export default class Bullet2 extends Bullet{
     }
     /*observer*/
     //HP || 経過時間
-    if( this.frame > 10 || this.hp<=0){
+    if( this.frame > 10 || this.hp<=-99){
       EntityManager.removeEntity(this);
     }
     this.sprite.position = ADV(this.pos,VECN(8));

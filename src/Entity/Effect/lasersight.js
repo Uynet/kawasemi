@@ -28,7 +28,7 @@ export default class Lasersight extends EFFECT{
     this.arg = player.arg;
     this.pos = CPV(ADV(player.pos,POV(player.arg,8)));
     if(weapon.isTargetOn && Math.abs(player.arg - player.toArg < 5)){
-      this.sprite.scale.x = Util.distance(weapon.target.enemy.pos,player.pos)/16 -0.5;
+      this.sprite.scale.x = DIST(weapon.target.enemy.pos,player.pos)/16 -0.5;
     }else this.sprite.scale.x = 16;
   }
 
