@@ -77,7 +77,7 @@ export default class MapData{
               case "backEntityData" : entity.layer = "BACK";break;
               case "entityData" : entity.layer = "ENTITY";break;
               case "foreData" : entity.layer = "FORE";break;
-              case "foreEntityData" : entity.layer = "FORE";break;
+              case "foreEntityData" : entity.layer = "FOREENTITY";break;
               default :console.warn("れいやーエラー:"+layer);
             }
             break;

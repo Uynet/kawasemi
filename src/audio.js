@@ -1,5 +1,6 @@
 import Timer from './timer.js';
 //サウンド管理
+let source,buffer,gainNode;
 export default class Audio{
   static Init(){
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -47,7 +48,7 @@ export default class Audio{
   // サウンドを再生
   static PlayBGM(name,gain){
     let buffer = this.BGM[name];
-    let source = this.context.createBufferSource(); // source を作成
+    source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
     source.connect(this.context.destination); // context に connect
     source.loop = true; // 再生
@@ -66,19 +67,17 @@ export default class Audio{
     if(this.time != Timer.timer || name != this.lastSE){
       this.time = Timer.timer;
       this.lastSE = name;
-      let source = this.context.createBufferSource();
+      source = this.context.createBufferSource();
       source.buffer = this.SE[name];
       source.connect(this.context.destination);
       source.loop = false; // 再生
       if(!pitch)pitch = 1;
       source.playbackRate.value = pitch + Rand(0.05);
-      let gainNode = this.context.createGain();
+      gainNode = this.context.createGain();
       source.connect(gainNode);
       gainNode.connect(this.context.destination);
       gainNode.gain.value = 1;
-      if(gain){
-        gainNode.gain.value += gain;
-      }
+      if(gain) gainNode.gain.value += gain;
       source.start(0);
     }
   };
@@ -109,7 +108,6 @@ export default class Audio{
       this.LoadSE('stageChange');//
       this.LoadSE('empty');//
       this.LoadSE('enemy3Shot');//
-      cl(this.BGM);
       res();
     })
   };

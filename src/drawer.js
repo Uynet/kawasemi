@@ -4,6 +4,7 @@ import Input from './input.js';
 
 let PIXI_WIDTH = 800; let PIXI_HEIGHT = 640;
 let size = 1; 
+let centerX,centerY,toX,toY;
 export default class Drawer{
 
   /*setting stage*/
@@ -23,12 +24,14 @@ export default class Drawer{
     this.entityContainer = new PIXI.Container();//Entity
     this.filterContainer = new PIXI.Container();//画面遷移フィルター
     this.foreContainer = new PIXI.Container();//手前に表示する 文字エフェクトなど
+    this.foreEntityContainer = new PIXI.Container();//手前に表示する 文字エフェクトなど
     this.UIContainer = new PIXI.Container();//UI
 
     this.app.stage.addChild(this.backGroundContainer);
     this.app.stage.addChild(this.backContainer);
     this.app.stage.addChild(this.entityContainer);
     this.app.stage.addChild(this.foreContainer);
+    this.app.stage.addChild(this.foreEntityContainer);
     this.app.stage.addChild(this.filterContainer);
     this.app.stage.addChild(this.UIContainer);
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);
@@ -42,6 +45,7 @@ export default class Drawer{
     this.entityContainer.scale = po;
     this.UIContainer.scale = po;
     this.foreContainer.scale.set(4);
+    this.foreEntityContainer.scale = po;
     this.filterContainer.scale = po;
     $("#pixiview").append(this.Renderer.view);
 
@@ -64,91 +68,70 @@ export default class Drawer{
   /*コンテナにスプライトを追加*/
   static addContainer(sprite,CONTAINER,id){
     switch (CONTAINER){
-      case "UI" :
-        this.UIContainer.addChild(sprite);
-        break;
-      case "FILTER":
-        this.filterContainer.addChild(sprite);
-        break;
-      case "ENTITY":
-        this.entityContainer.addChild(sprite);
-        break;
-      case "FORE":
-        this.foreContainer.addChild(sprite);
-        break;
-      case "BACK":
-        this.backContainer.addChild(sprite);
-        break;
-      case "BG":
-        this.backGroundContainer.addChild(sprite);
-        break;
-      default :
-        console.warn(CONTAINER);
+      case "UI" : this.UIContainer.addChild(sprite); break;
+      case "FILTER": this.filterContainer.addChild(sprite); break;
+      case "ENTITY": this.entityContainer.addChild(sprite); break;
+      case "FORE": this.foreContainer.addChild(sprite); break;
+      case "FOREENTITY": this.foreEntityContainer.addChild(sprite); break;
+      case "BACK": this.backContainer.addChild(sprite); break;
+      case "BG": this.backGroundContainer.addChild(sprite); break;
+      default : console.warn(CONTAINER);
     }
   }
 
   /*コンテナからスプライトを削除*/
   static removeContainer(sprite,CONTAINER){//,id){
     switch (CONTAINER){
-      case "UI" :
-        this.UIContainer.removeChild(sprite);
-        break;
-      case "ENTITY":
-        this.entityContainer.removeChild(sprite);
-        break;
-      case "FILTER":
-        this.filterContainer.removeChild(sprite);
-        break;
-      case "FORE":
-        this.foreContainer.removeChild(sprite);
-        break;
-      case "BACK":
-        this.backContainer.removeChild(sprite);
-        break;
-      case "BG":
-        this.backGroundContainer.removeChild(sprite);
-        break;
-      default :
-        console.warn("container");
+      case "UI" : this.UIContainer.removeChild(sprite); break;
+      case "ENTITY": this.entityContainer.removeChild(sprite); break;
+      case "FILTER": this.filterContainer.removeChild(sprite); break;
+      case "FORE": this.foreContainer.removeChild(sprite); break;
+      case "FOREENTITY": this.foreEntityContainer.removeChild(sprite); break;
+      case "BACK": this.backContainer.removeChild(sprite); break;
+      case "BG": this.backGroundContainer.removeChild(sprite); break;
+      default : console.warn("container");
     }
   }
 
   static SetMap(x,y){
     this.mapSize.width = x;
     this.mapSize.height = y;
-    cl(this.mapSize)
   }
 
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
     //let centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
     //let centerY = BET(-512 - 256 -128 - 32,this.magnification*(- pos.y-8 + 300/this.magnification),256);
-    let centerX = BET(-this.mapSize.width*32 + 300,this.magnification*(- pos.x-8 + 400/this.magnification),0);
-    let centerY = BET(-this.mapSize.height*32 + 200,this.magnification*(- pos.y-8 + 300/this.magnification),0);
-    let toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
-    let toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
+    centerX = BET(-this.mapSize.width*32 + 300,this.magnification*(- pos.x-8 + 400/this.magnification),0);
+    centerY = BET(-this.mapSize.height*32 + 200,this.magnification*(- pos.y-8 + 300/this.magnification),0);
+    toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
+    toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
     //背景レイヤ
     //スクロールが遅い
-    this.backGroundContainer.x = toX/4;
-    this.backGroundContainer.y = toY/4 % 64;
+    this.backGroundContainer.x = Math.floor(toX/4);
+    this.backGroundContainer.y = Math.floor(toY/4 % 64);
     //Entityレイヤ
-    this.backContainer.x = toX;
-    this.backContainer.y = toY;
-    this.entityContainer.x = toX;
-    this.entityContainer.y = toY;
-    this.foreContainer.x = toX*4/3;
-    this.foreContainer.y = toY*4/3;
+    this.backContainer.x = Math.floor(toX);
+    this.backContainer.y = Math.floor(toY);
+    this.entityContainer.x = Math.floor(toX);
+    this.entityContainer.y = Math.floor(toY);
+    this.foreEntityContainer.x = Math.floor(toX);
+    this.foreEntityContainer.y = Math.floor(toY);
+    this.foreContainer.x = Math.floor(toX*4/3);
+    this.foreContainer.y = Math.floor(toY*4/3);
     //UIは動かない
 
   }
   /*スクロール位置を一瞬で移動させる*/
   static ScrollSet(pos){
-    let centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
-    let centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
+    centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
+    centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
     this.backContainer.x = Math.floor(centerX);
     this.backContainer.y = Math.floor(centerY);
     this.entityContainer.x = Math.floor(centerX);
     this.entityContainer.y = Math.floor(centerY);
+    this.foreEntityContainer.x = Math.floor(centerX);
+    this.foreEntityContainer.y = Math.floor(centerY);
     this.foreContainer.x = Math.floor(centerX);
     this.foreContainer.y = Math.floor(centerY);
   }
