@@ -64,7 +64,7 @@ export default class Audio{
   };
   static PlaySE(name,gain,pitch){
     //同じ効果音は同時にならないようにする
-    if(this.time != Timer.timer || name != this.lastSE){
+    if(Timer.timer-this.time > 2|| name != this.lastSE){
       this.time = Timer.timer;
       this.lastSE = name;
       source = this.context.createBufferSource();

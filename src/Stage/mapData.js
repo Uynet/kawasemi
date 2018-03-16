@@ -64,7 +64,6 @@ export default class MapData{
         let p = {x:16*x,y:16*y};
         switch(wallTiletype[ID].type){
           case TILE.WALL :
-            //直せ
             switch(wallTiletype[ID].name){
               case "woodbox" : entity = new Woodbox(p);break;
               case "needle" : entity = new Needle(p,ID);break;

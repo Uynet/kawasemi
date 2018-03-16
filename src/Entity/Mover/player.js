@@ -65,7 +65,8 @@ export default class Player extends Entity{
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
       this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
-    this.sprite.position = this.pos;
+    this.sprite.position.x = Math.floor(this.pos.x);
+    this.sprite.position.y = Math.floor(this.pos.y);
     /*パラメータ*/
     this.maxHP = Param.player.maxHp;
     this.hp = this.maxHP;
@@ -477,8 +478,8 @@ export default class Player extends Entity{
       this.isInvincible = false;
     }
     this.sprite.position = {
-      x : this.pos.x-4,
-      y : this.pos.y
+      x : Math.floor(this.pos.x-4),
+      y : Math.floor(this.pos.y)
     }
     /*パラメータ*/
     this.offset *= 0.99;
