@@ -1,14 +1,13 @@
-import Art from '../art.js';
-import Audio from '../audio.js';
-import Collider from '../Collision/collider.js';
-import Collision from '../Collision/collision.js';
-import Box from '../Collision/box.js';
-import EntityManager from '../Stage/entityManager.js';
-import Util from '../util.js';
-import Entity from './entity.js';
-import BulletHitWall from './Effect/bulletHitWall.js';
-import GetCoin from './Effect/getCoin.js';
-import BrightCoin from './Effect/brightCoin.js';
+import Art from '../../art.js';
+import Audio from '../../audio.js';
+import Collider from '../../Collision/collider.js';
+import Collision from '../../Collision/collision.js';
+import Box from '../../Collision/box.js';
+import EntityManager from '../../Stage/entityManager.js';
+import Entity from '../entity.js';
+import BulletHitWall from '../Effect/bulletHitWall.js';
+import GetCoin from '../Effect/getCoin.js';
+import BrightCoin from '../Effect/brightCoin.js';
 
 let player;
 //コイン

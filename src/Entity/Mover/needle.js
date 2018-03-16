@@ -1,22 +1,17 @@
-import Art from '../art.js';
-import Collider from '../Collision/collider.js';
-import Collision from '../Collision/collision.js';
-import Box from '../Collision/box.js';
-import EntityManager from '../Stage/entityManager.js';
-import UIManager from '../UI/uiManager.js'
-import Timer from '../timer.js';
-import FontEffect from './Effect/fontEffect.js';
-import Wall from './wall.js';
-import BackEntity from './backEntity.js';
-import BulletShot from './Effect/bulletShot.js';
-import Param from '../param.js';
+import Art from '../../art.js';
+import Collider from '../../Collision/collider.js';
+import Collision from '../../Collision/collision.js';
+import Box from '../../Collision/box.js';
+import EntityManager from '../../Stage/entityManager.js';
+import BackEntity from '../backEntity.js';
+import BulletShot from '../Effect/bulletShot.js';
 
 let EntityList = EntityManager.entityList;
 
 //トゲ
 export default class Needle extends BackEntity{
-  constructor(pos,tex){
-    super(pos,tex);
+  constructor(pos,ID){
+    super(pos,ID);
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box({x:pos.x+4,y:pos.y+12},8,8));//衝突判定の形状
     this.name = "needle";
@@ -25,20 +20,12 @@ export default class Needle extends BackEntity{
     /*スプライト*/
     this.pattern = Art.wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号
-    //this.pattern = Art.wallPattern.needle;
-    //this.tex = this.pattern[0];
     this.sprite = Art.SpriteFactory(this.tex);//現在表示中のスプライト
     this.sprite.position = this.pos;
-    /*パラメータ*/
-    this.hp = 1;
-    this.atkMax = 4;
-    this.atkMin = 1;
-    /*フラグ*/
-    this.isAlive = true;
   }
   //自分がダメージを食らう
-  Damage(atkMax){
-    this.hp += atkMax;
+  Damage(atk){
+    this.hp += atk;
   }
 
   //プレイヤーにダメージ

@@ -1,6 +1,5 @@
-import Bullet from '../Entity/bullet.js';
+import Bullet from '../Entity/Bullet/bullet.js';
 import EntityManager from '../Stage/entityManager.js';
-import Util from '../util.js';
 import Target from '../Entity/Effect/target.js';
 import Lasersight from '../Entity/Effect/lasersight.js';
 import Audio from '../audio.js';

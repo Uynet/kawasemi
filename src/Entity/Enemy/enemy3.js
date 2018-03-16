@@ -7,12 +7,8 @@ import EntityManager from '../../Stage/entityManager.js';
 import Enemy2AI from '../AI/enemy2AI.js';
 import Shot from '../AI/shot.js';
 import MoveLissajous from '../AI/moveLissajous.js';
-import UIManager from '../../UI/uiManager.js'
-import FontEffect from '../Effect/fontEffect.js';
-import Coin from '../coin.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
-import Util from '../../util.js';
 import Param from '../../param.js';
 import Explosion2 from '../Effect/explosion2.js';
 

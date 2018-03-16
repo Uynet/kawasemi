@@ -1,23 +1,17 @@
-import Bullet from '../Entity/bullet.js';
-import Bullet1 from '../Entity/bullet1.js';
-import Target from '../Entity/Effect/target.js';
+import Bullet from '../Entity/Bullet/bullet.js';
+import Bullet1 from '../Entity/Bullet/bullet1.js';
 import EntityManager from '../Stage/entityManager.js';
 import Pool from '../Stage/pool.js';
 import Weapon from './weapon.js';
 import Art from '../art.js';
 import Audio from '../audio.js';
-import UIManager from '../UI/uiManager.js';
-import Util from '../util.js';
 import BulletShot from '../Entity/Effect/bulletShot.js';
-import Timer from '../timer.js';
 import FontEffect from '../Entity/Effect/fontEffect.js';
 import EventManager from '../Event/eventmanager.js';
 import QuakeEvent from '../Event/quakeEvent.js';
 import Param from '../param.js';
 import Explosion1 from '../Entity/Effect/explosion1.js';
 import Explosion2 from '../Entity/Effect/explosion2.js';
-import Flah from '../Entity/Effect/flash.js';
-import Sonic from '../Entity/Effect/sonic.js';
 import Lasersight from '../Entity/Effect/lasersight.js';
 
 export default class Weapon1 extends Weapon{

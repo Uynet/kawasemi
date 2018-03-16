@@ -3,7 +3,7 @@ import Stone from '../Entity/Effect/stone.js';
 import BulletBlur from '../Entity/Effect/bulletBlur.js';
 import Smoke from '../Entity/Effect/smoke.js';
 import Fire from '../Entity/Effect/fire.js';
-import Bullet1 from '../Entity/bullet1.js';
+import Bullet1 from '../Entity/Bullet/bullet1.js';
 import Horming from '../Entity/AI/horming.js';
 import Bullet1AI from '../Entity/AI/bullet1AI.js';
 import Collider from '../Collision/collider.js';

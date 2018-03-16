@@ -8,7 +8,7 @@ import Enemy2AI from '../AI/enemy2AI.js';
 import moveReflect from '../AI/moveReflect.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
-import Coin from '../coin.js';
+import Coin from '../Mover/coin.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import Util from '../../util.js';
