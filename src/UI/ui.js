@@ -1,4 +1,3 @@
-
 export default class UI{
   constructor(pos){
     this.pos = pos;

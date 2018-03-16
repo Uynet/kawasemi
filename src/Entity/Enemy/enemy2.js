@@ -11,7 +11,6 @@ import FontEffect from '../Effect/fontEffect.js';
 import Coin from '../Mover/coin.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
-import Util from '../../util.js';
 import Param from '../../param.js';
 import Explosion2 from '../Effect/explosion2.js';
 

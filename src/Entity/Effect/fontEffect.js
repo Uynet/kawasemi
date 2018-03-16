@@ -1,7 +1,6 @@
 import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
-import Util from '../../util.js';
 import Drawer from '../../drawer.js';
 import Collision from '../../Collision/collision.js';
 import Collider from '../../Collision/collider.js';

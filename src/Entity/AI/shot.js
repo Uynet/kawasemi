@@ -1,6 +1,5 @@
 import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
-import Timer from '../../timer.js';
 import eBullet1 from '../Enemy/eBullet1.js';
 import Audio from '../../audio.js'
 

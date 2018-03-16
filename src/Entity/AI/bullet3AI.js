@@ -1,6 +1,5 @@
 import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
-import Util from '../../util.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
 import Audio from '../../audio.js'
 

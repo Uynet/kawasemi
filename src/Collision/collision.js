@@ -1,5 +1,3 @@
-import Util from '../util.js';
-
 export default class Collision{
 
   /*collisionInfoを返す */
@@ -15,9 +13,9 @@ export default class Collision{
     if(e1.collider.shape == SHAPE.CIRCLE && e2.collider.shape == SHAPE.CIRCLE){
       let circ1 = e1.collider.hitbox;
       let circ2 = e2.collider.hitbox;
-      if(Util.distance(circ1.pos,circ2.pos) < circ1.r + circ2.r){
+      if(DIST(circ1.pos,circ2.pos) < circ1.r + circ2.r){
         isHit = true;
-        n = Util.nomalize({x:circ1.pos.x-circ2.pos.x , y:circ1.pos.y-circ2.pos.y});
+        n = NORMALIZE({x:circ1.pos.x-circ2.pos.x , y:circ1.pos.y-circ2.pos.y});
       }else{
         isHit = false;
       }
@@ -46,8 +44,8 @@ export default class Collision{
           box1.pos.y+box1.height - box2.pos.y ,
           box1.pos.x+box1.width - box2.pos.x
         ];
-        let maxI = Util.maxIndex(meri);
-        let minI = Util.minIndex(meri);
+        let maxI = meri.maxIndex();
+        let minI = meri.minIndex();
         //console.log(meri);
         isHit = true;
         switch(minI){
