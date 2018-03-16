@@ -1,7 +1,6 @@
 import EntityManager from '../../Stage/entityManager.js';
 import AI from './ai.js';
 import Collision from '../../Collision/collision.js';
-import Timer from '../../timer.js';
 
 //リサージュ曲線で移動
 export default class MoveLissajous extends AI{

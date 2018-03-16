@@ -1,7 +1,6 @@
 import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
-import Util from '../../util.js';
 
 /*bullet1壁にぶつかった時した時のエフェクト*/
 export default class BulletHitWall extends EFFECT{

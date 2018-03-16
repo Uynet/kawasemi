@@ -3,7 +3,6 @@ import UIManager from './uiManager.js';
 import EntityManager from '../Stage/entityManager.js';
 import Art from '../art.js';
 import Input from '../input.js';
-import Util from '../util.js';
 import Font from './font.js';
 
 //score Icon

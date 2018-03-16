@@ -12,7 +12,6 @@ import Art from './art.js';
 import Drawer from './drawer.js';
 import Input from './input.js';
 import Timer from './timer.js';
-import Util from './util.js';
 import Param from './param.js';
 import Menu from './UI/menu.js';
 import Audio from './audio.js';
@@ -28,7 +27,6 @@ export default class Game{
     EntityManager.Init();
     Pool.Init();
     Timer.Init();
-    Util.Init();
     UIManager.Init();
     StageGen.Init();
 

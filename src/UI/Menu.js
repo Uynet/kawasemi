@@ -2,7 +2,6 @@ import UI from './ui.js';
 import UIManager from './uiManager.js';
 import Art from '../art.js';
 import Input from '../input.js';
-import Util from '../util.js';
 import Font from './font.js';
 import Game from '../game.js';
 import EventManager from '../Event/eventmanager.js';

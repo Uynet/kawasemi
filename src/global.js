@@ -1,4 +1,4 @@
-/*meta*/entityIndex = 0;
+/*meta*/
 Array.prototype.Last = function(){
   if(this.length == 0){
     return undefined;
@@ -7,6 +7,29 @@ Array.prototype.Last = function(){
     return this[this.length-1];
   }
 }
+Array.prototype.maxIndex = function(){
+  let max = this[0];
+  let maxI = 0;
+  for(let i = 1;i<this.length;i++){
+    if(max < this[i]){
+      max = this[i];
+      maxI = i;
+    }
+  }
+  return maxI;
+}
+Array.prototype.minIndex = function(){
+  let min = this[0];
+  let minI = 0;
+  for(let i = 1;i<this.length;i++){
+    if(min > this[i]){
+      min = this[i];
+      minI = i;
+    }
+  }
+  return minI;
+}
+
 
 const DIR = {
   UP : 0,
@@ -96,6 +119,7 @@ const CPV = (v)=>{return {x:v.x,y:v.y}};//値渡し
 const ADV = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
 const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
 const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
+const NORMALIZE = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化
 /*Random*/
 const Rand = (d)=>{
   return 2 * d * (Math.random()-0.5);
