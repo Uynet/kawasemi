@@ -39,7 +39,7 @@ export default class Font extends UI{
 
   //HP,BULLETの表示用
   //HP,BULLETの中から呼ばれている
-  UpdateFont(value){
+  SetFont(value){
     //phys
     //文字列型にすること
     this.str = value + "";
@@ -94,8 +94,8 @@ export default class Font extends UI{
     };
   }
 
-  //UIManagerから直接呼ばれているのはScoreのみ(それも廃止予定
   //各UIの内部から呼ぶ必要がある
   Update(){
+    this.container.position;
   };
 };

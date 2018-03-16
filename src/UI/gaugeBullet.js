@@ -55,11 +55,11 @@ export default class GaugeBullet extends UI{
     //amount
     this.container.addChild(this.amount.container);
   }
-  UpdateBar(bullet){
+  SetBar(bullet){
     //barの長さを更新
     this.container.children[1].scale.x = bullet/this.max;
     //bullet数字の更新
-    this.amount.UpdateFont(bullet);
+    this.amount.SetFont(bullet);
   }
   ChangeWeapon(name){
     //アイコンを武器に変更

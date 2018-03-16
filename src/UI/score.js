@@ -20,10 +20,10 @@ export default class Score extends UI{
     this.type = "SCORE"; 
     this.isMultiple = true;
     this.pos = pos;
-    /*child*/
+    //child
     this.icon = {pos:ADV(pos,P_ICON)};
     this.amount = new Font(pos,"    0","SCORE");//数字
-    /*スプライト*/
+    //スプライト
     this.spid = 0;
     this.container = new PIXI.Container();
     let s;
@@ -34,10 +34,12 @@ export default class Score extends UI{
     //amount
     this.container.addChild(this.amount.container);
   }
-  UpdateScore(score){
-    this.amount.UpdateFont(score);
+  SetScore(score){
+    this.amount.SetFont(score);
   }
   Update(){
+    //this.amount.container.position = this.pos
+    this.amount.Update();
     /*nothing to do*/
   }
 }

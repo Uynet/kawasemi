@@ -281,13 +281,14 @@ export default class Player extends Entity{
       this.frameDamaged = this.frame;
       EventManager.eventList.push(new QuakeEvent(5,2));
     }
+    UIManager.HP.SetBar(this.hp);//HPbarの更新
   }
   //コイン取得
   GetScore(){
     if(this.isAlive){
       this.score+=1;
       this.bullet += 5;//とりあえずbulletも回復しとくか
-      UIManager.score.UpdateScore(this.score);
+      UIManager.score.SetScore(this.score);
     }
   }
   /* 衝突判定 */
@@ -420,6 +421,7 @@ export default class Player extends Entity{
     else if(t>100 && t<=150 && t%3 == 0) this.bullet++;
     else if(t>150) this.bullet++;
     this.bullet = BET(0,this.bullet,this.maxBullet);
+    UIManager.bullet.SetBar(this.bullet); //BulletBarの更新
   }
 
   SetArg(arg){
@@ -453,8 +455,6 @@ export default class Player extends Entity{
       this.Physics();//物理
       this.Collision();//衝突
       this.Supply();//bulletのかいふく　
-      UIManager.bullet.UpdateBar(this.bullet); //BulletBarの更新
-      UIManager.HP.UpdateBar(this.hp);//HPbarの更新
     }
     /*for debug*/
     if(Input.isKeyClick(KEY.K)){

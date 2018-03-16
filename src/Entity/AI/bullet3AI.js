@@ -2,7 +2,7 @@ import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
 import Util from '../../util.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
-import Timer from '../../timer.js';
+import Audio from '../../audio.js'
 
 export default class Bullet3AI{
   /*bulletの参照を受け取り関数を実行する*/
@@ -34,6 +34,10 @@ export default class Bullet3AI{
           //wall
           }else{
             // ■ SoundEffect : hitWall
+            switch(w.material){
+              case  "wall" : Audio.PlaySE("landing1",0,2);break;
+              case  "steel": Audio.PlaySE("landing2",0,2);break;
+              }
             this.bullet.hp = 0;
           }
       }

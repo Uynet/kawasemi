@@ -11,7 +11,7 @@ import EntityManager from '../Stage/entityManager.js';
 //HP
 const P_HP = {
   x : -32, 
-  y : 160
+  y : 176
 };
 //bullet
 const P_BUL = {
