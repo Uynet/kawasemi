@@ -91,24 +91,15 @@ const TILE = {
   FORE : 8,
 }
 
-const CONTAINER = {
-  ENTITY : "ENTITY",
-  FILTER : "FILTER"
-}
 
 /*UI*/
 const UI_ = {
-  WICON : "WICON",
-  SELBOX : "SELBOX",
-  WEQUIP : "WEQUIP",
   HP : "HP",
   BULLET : "BULLET",
   FONT : "FONT",
   SCORE : "SCORE",
   MSSSAGE : "MES"
 }
-const WICON_X = 8;
-const WICON_Y = 40;
 
 /*Vector*/
 const VEC0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
