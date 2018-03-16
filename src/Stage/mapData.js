@@ -35,7 +35,8 @@ export default class MapData{
         //entityの読み込み
         this.backEntityData = this.jsonObj.layers[1].data;
         this.entityData = this.jsonObj.layers[2].data;
-        this.foreData = this.jsonObj.layers[3].data;
+        this.foreEntityData = this.jsonObj.layers[3].data;
+        this.foreData = this.jsonObj.layers[4].data;
         //objの読み込み(今は看板だけ)
         this.objData = this.jsonObj.layers[0].objects;
         this.width = this.jsonObj.layers[1].width;
@@ -48,37 +49,15 @@ export default class MapData{
       this.stageNo = stageNo;
     });
   }
-  static CreateForeLayer(){
+  
+  static CreateEntityLayer(layer){
     let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
     let entity;
     let ID;//tiledに対応しているID
 
     for(let y = 0;y<this.height;y++){
       for(let x = 0;x<this.width;x++){
-        ID = this.foreData[this.width*y + x]-1;
-        //tiledのIDがjsonデータより1小さいので引く
-        if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
-        if(!wallTiletype[ID])console.warn(x + "  " + y)
-        switch(wallTiletype[ID].type){
-          case TILE.BACK :
-            entity = new BackEntity({x:16*x,y:16*y},MapData.Tile(ID).texture);
-            EntityManager.addEntity(entity); break;
-            entity.layer = "FORE";
-          default : 
-            console.warn("未実装チップ" + wallTiletype[ID].type);
-        }
-      }
-    }
-  }
-
-  static CreateEntityLayer(){
-    let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
-    let entity;
-    let ID;//tiledに対応しているID
-
-    for(let y = 0;y<this.height;y++){
-      for(let x = 0;x<this.width;x++){
-        ID = this.entityData[this.width*y + x]-1;
+        ID = this[layer][this.width*y + x]-1;
         //tiledのIDがjsonデータより1小さいので引く
         if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
         if(!wallTiletype[ID])cl(x + "  " + y)
@@ -94,6 +73,13 @@ export default class MapData{
             break;
           case TILE.BACK :
             entity = new BackEntity(p,ID);
+            switch(layer){
+              case "backEntityData" : entity.layer = "BACK";break;
+              case "entityData" : entity.layer = "ENTITY";break;
+              case "foreData" : entity.layer = "FORE";break;
+              case "foreEntityData" : entity.layer = "FORE";break;
+              default :console.warn("れいやーエラー:"+layer);
+            }
             break;
           default : 
             console.warn("未実装:" + wallTiletype[ID].type);
@@ -135,10 +121,12 @@ export default class MapData{
   static async CreateStage(stageNo,state){
     await this.Load(stageNo);
     //背景の生成
-    //if(state == "ENTER")
     this.AddBackGround();
     //entityの生成
-    this.CreateEntityLayer();
+    this.CreateEntityLayer("backEntityData");
+    this.CreateEntityLayer("entityData");
+    this.CreateEntityLayer("foreEntityData");
+    this.CreateEntityLayer("foreData");
     this.CreateObjectLayer();
     let p = CPV(EntityManager.player.pos);
     Drawer.ScrollSet(p);
