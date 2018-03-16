@@ -9,6 +9,7 @@ import Bullet2AI from './../AI/bullet2AI.js';
 import Bullet from './bullet.js';
 import BulletBlur from '../Effect/bulletBlur.js';
 import Explosion1 from '../Effect/explosion1.js';
+import Explosion2 from '../Effect/explosion2.js';
 import Param from '../../param.js';
 import Audio from '../../audio.js';
 
@@ -16,7 +17,7 @@ const bullet2 = Param.bullet2;
 
 //Laser
 export default class Bullet2 extends Bullet{
-  constructor(pos,arg,weapon){
+  constructor(pos,arg,isNext,step){
     super(pos,POV(arg,VEC0()));
     /*基本情報*/
     this.frame = 0;
@@ -32,7 +33,7 @@ export default class Bullet2 extends Bullet{
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
     this.sprite.alpha = 0.7;
     /*コライダ*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,2,2));//衝突判定の形状
     /*パラメータ*/
     this.hp = Param.bullet2.hp;//弾丸のHP 0になると消滅
     this.atkMax = Param.bullet2.atkMax;//攻撃力
@@ -40,18 +41,45 @@ export default class Bullet2 extends Bullet{
     /*AI*/
     this.AIList = [];
     this.AIList.push(new Bullet2AI(this));
+
+    //壁にぶつかってなければレーザー光線を進める
+    let unko = true; 
+    if(step > 15) unko = false;
+    for(let w of EntityManager.colliderList){
+      if(Collision.on(this,w).isHit){
+        if(w.name == "woodbox") {
+          w.Damage(-1);
+          EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
+        }
+        else if(w.type == "ENEMY"){
+          EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
+          w.Damage(-RandBET(this.atkMin,this.atkMax));
+          }
+        else {
+          //壁にぶつかったので停止
+          EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
+          unko = false;
+        }
+      }
+    }
+    if(isNext){
+      step++;
+      let p = ADV(this.pos,POV(this.arg,16));
+      let bullet = new Bullet2(p,this.arg,unko,step);
+      EntityManager.addEntity(bullet);
+    }
   }
 
   Update(){
     for (let AI of this.AIList){
-      AI.Do();
+    //  AI.Do();
     }
     if(this.frame%2 == 0){
       this.spid = Math.min(this.spid+1,7);
     }
     /*observer*/
     //HP || 経過時間
-    if( this.frame > 10 || this.hp<=-99){
+    if( this.frame > 10 || this.hp<=0){
       EntityManager.removeEntity(this);
     }
     this.sprite.position = ADV(this.pos,VECN(8));

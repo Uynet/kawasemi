@@ -59,13 +59,10 @@ export default class Weapon2 extends Weapon{
         let arg = player.arg;
         let p = ADV(POV(arg,16),CPV(player.pos));
         let bullet;
-        EntityManager.addEntity(new Explosion1(CPV(p)));
-        //EntityManager.addEntity(new Explosion2(CPV(p),arg));
-        for(let i = 0;i<16;i++){
-          p = ADV(player.pos,POV(arg,16*(i+1)));
-          bullet = new Bullet2(p,arg,this.target);
-          EntityManager.addEntity(bullet);
-        }
+        //再帰的に生成
+        p = ADV(player.pos,POV(arg,16));
+        bullet = new Bullet2(p,arg,true,0);
+        EntityManager.addEntity(bullet);
         /* ■ SoundEffect : shot */
         Audio.PlaySE("laserShot",0.7);
         /* □ Effect : shot */
