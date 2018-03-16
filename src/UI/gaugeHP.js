@@ -53,11 +53,11 @@ export default class gaugeHP extends UI{
     /*state*/
     this.isPopIn = true;
   }
-  UpdateBar(hp){
+  SetBar(hp){
     //barの長さを更新
     this.container.children[1].scale.x = hp/this.max;
     //HP数字の更新
-    this.amount.UpdateFont(hp);
+    this.amount.SetFont(hp);
   }
   Update(){
     if(this.isPopIn){

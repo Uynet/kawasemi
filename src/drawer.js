@@ -116,6 +116,7 @@ export default class Drawer{
   static SetMap(x,y){
     this.mapSize.width = x;
     this.mapSize.height = y;
+    cl(this.mapSize)
   }
 
   /* プレイヤー中心にスクロール*/

@@ -72,7 +72,6 @@ export default class Audio{
       source.loop = false; // 再生
       if(!pitch)pitch = 1;
       source.playbackRate.value = pitch + Rand(0.05);
-      /*
       let gainNode = this.context.createGain();
       source.connect(gainNode);
       gainNode.connect(this.context.destination);
@@ -80,8 +79,7 @@ export default class Audio{
       if(gain){
         gainNode.gain.value += gain;
       }
-      */
-      //source.start(0);
+      source.start(0);
     }
   };
   static Load() {

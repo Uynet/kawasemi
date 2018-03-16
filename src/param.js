@@ -24,14 +24,14 @@ export default class Param{
       equip : "normal",
     }
     this.enemy1 = {
-      hp : 5,
+      hp : 10,
       atkMax : 10,
       atkMin : 5,
       gravity : 0.1,
       coin : 1
     }
     this.enemy2 = {
-      hp : 50,
+      hp : 20,
       atkMax : 10,
       atkMin : 5,
       gravity : 0.0,
@@ -46,7 +46,7 @@ export default class Param{
       coin : 3
     }
     this.enemy4 = {
-      hp : 5,
+      hp : 10,
       atkMax : 3,
       atkMin : 1,
       gravity : 0.2,
@@ -60,7 +60,7 @@ export default class Param{
     this.weapon1 = {
       //status
       agi : 9,
-      cost : 4,
+      cost : 10,
       speed : 7, 
       length : 580,
       //optional
@@ -76,7 +76,7 @@ export default class Param{
     }
     this.weapon2 = {
       agi : 26,
-      cost : 9,
+      cost : 12,
       length : 300,
       //optional
       isTarget : true,
@@ -86,7 +86,7 @@ export default class Param{
     //normal
     this.weapon3 = {
       agi : 16,
-      cost : 3,
+      cost : 5,
       speed : 6, 
       length : 300,
       //optional
@@ -110,7 +110,7 @@ export default class Param{
     //normal
     this.bullet3 = {
       atkMax : 12,
-      atkMin : 10,
+      atkMin : 8,
       hp : 1,
       curve : 0.2
     }

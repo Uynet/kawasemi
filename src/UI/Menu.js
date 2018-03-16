@@ -19,12 +19,12 @@ export default class Menu extends UI{
     this.type = "MENU";
     this.isMultiple = true;
     let p = CPV(pos);
-    this.title = new Font({x:p.x,y:p.y + -1 * COLUMN},"-PAUSE-","MENU"),
+    this.title = new Font({x:p.x,y:p.y + -1 * COLUMN},"-WEAPON-","MENU"),
     this.index = 0;
     this.items = [
-      new Font({x:p.x + 0,y:p.y + 1 * COLUMN},"さいかい","MENU"),
-      new Font({x:p.x + 0,y:p.y + 2 * COLUMN},"ぶき","MENU"),
-      new Font({x:p.x + 0,y:p.y + 3 * COLUMN},"やめる","MENU"),
+      new Font({x:p.x + 0,y:p.y + 1 * COLUMN},"NORMAL","MENU"),
+      new Font({x:p.x + 0,y:p.y + 2 * COLUMN},"MISSILE","MENU"),
+      new Font({x:p.x + 0,y:p.y + 3 * COLUMN},"LASER","MENU"),
     ];
     this.Select(this.index);
     /*スプライト*/
@@ -63,7 +63,7 @@ export default class Menu extends UI{
       this.index = Math.max(this.index-1,0);
       this.Select(this.index);
     }
-    if(Input.isKeyClick(KEY.C) || Input.isKeyClick(KEY.X)|| Input.isKeyClick(KEY.SP)){
+    if(Input.isKeyClick(KEY.X)|| Input.isKeyClick(KEY.SP)){
       switch(this.items[this.index].str){
         case "さいかい" : 
           this.Close();
@@ -75,6 +75,9 @@ export default class Menu extends UI{
           EventManager.eventList.push(qe);
           break;
       }
+    }
+    if(Input.isKeyClick(KEY.C)){
+        this.Close();
     }
   }
 }
