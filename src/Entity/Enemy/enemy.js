@@ -3,7 +3,7 @@ import Audio from '../../audio.js';
 import EntityManager from '../../Stage/entityManager.js';
 import FontEffect from '../Effect/fontEffect.js';
 import Collision from '../../Collision/collision.js';
-import Coin from '../coin.js'
+import Coin from '../Mover/coin.js'
 import Explosion2 from '../Effect/explosion2.js';
 
 export default class Enemy extends Entity{

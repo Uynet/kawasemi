@@ -1,15 +1,15 @@
-import Art from '../art.js';
-import Audio from '../audio.js'
-import Collider from '../Collision/collider.js';
-import Collision from '../Collision/collision.js';
-import Box from '../Collision/box.js';
-import EntityManager from '../Stage/entityManager.js';
-import UIManager from '../UI/uiManager.js'
-import Timer from '../timer.js';
-import FontEffect from './Effect/fontEffect.js';
-import Wall from './wall.js';
-import BulletShot from './Effect/bulletShot.js';
-import BlockDebris from './Effect/blockDebris.js';
+import Art from '../../art.js';
+import Audio from '../../audio.js'
+import Collider from '../../Collision/collider.js';
+import Collision from '../../Collision/collision.js';
+import Box from '../../Collision/box.js';
+import EntityManager from '../../Stage/entityManager.js';
+import UIManager from '../../UI/uiManager.js'
+import Timer from '../../timer.js';
+import FontEffect from '../Effect/fontEffect.js';
+import Wall from '../wall.js';
+import BulletShot from '../Effect/bulletShot.js';
+import BlockDebris from '../Effect/blockDebris.js';
 
 let EntityList = EntityManager.entityList;
 

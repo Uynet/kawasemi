@@ -1,16 +1,16 @@
-import Art from '../art.js';
-import Audio from '../audio.js';
-import Collider from '../Collision/collider.js';
-import Collision from '../Collision/collision.js';
-import Box from '../Collision/box.js';
-import EntityManager from '../Stage/entityManager.js';
-import EventManager from '../Event/eventmanager.js';
-import Bullet3AI from './AI/bullet3AI.js';
-import Horming from './AI/horming.js';
+import Art from '../../art.js';
+import Audio from '../../audio.js';
+import Collider from '../../Collision/collider.js';
+import Collision from '../../Collision/collision.js';
+import Box from '../../Collision/box.js';
+import EntityManager from '../../Stage/entityManager.js';
+import EventManager from '../../Event/eventmanager.js';
+import Bullet3AI from '../AI/bullet3AI.js';
+import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
-import BulletBlur2 from './Effect/bulletBlur2.js';
-import BulletHitWall from './Effect/bulletHitWall.js';
-import Param from '../param.js';
+import BulletBlur2 from '../Effect/bulletBlur2.js';
+import BulletHitWall from '../Effect/bulletHitWall.js';
+import Param from '../../param.js';
 
 //normal bullet
 export default class Bullet3 extends Bullet{
@@ -52,7 +52,7 @@ export default class Bullet3 extends Bullet{
       let d = Rand2D(5);
       p = ADV(p,d);
       let v = POV(this.arg+Math.PI,4);
-     let blur = new BulletBlur2(p,v);
+      let blur = new BulletBlur2(p,v);
       if(blur)EntityManager.addEntity(blur);
     }
     for (let AI of this.AIList){
@@ -61,7 +61,7 @@ export default class Bullet3 extends Bullet{
     /*observer*/
     //HP || 経過時間
     if(this.hp<=0 ||
-      this.frame > 100) {
+      this.frame > 30) {
       EntityManager.removeEntity(this);
       EntityManager.addEntity(new BulletHitWall(CPV(this.pos)));
     }

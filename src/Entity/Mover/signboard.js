@@ -1,17 +1,15 @@
-import Entity from './entity.js';
-import Art from '../art.js';
-import Collider from '../Collision/collider.js';
-import Circle from '../Collision/circle.js';
-import Box from '../Collision/box.js';
-import EntityManager from '../Stage/entityManager.js';
-import Util from '../util.js';
-import Input from '../input.js';
-import EventManager from '../Event/eventmanager.js';
-import MessageEvent from '../Event/messageEvent.js';
-import Game from '../game.js';
-import BackEntity from './backEntity.js';
-import UIManager from '../UI/uiManager.js';
-import Signpop from './Effect/signpop.js';
+import Entity from '../entity.js';
+import Art from '../../art.js';
+import Collider from '../../Collision/collider.js';
+import Box from '../../Collision/box.js';
+import EntityManager from '../../Stage/entityManager.js';
+import Input from '../../input.js';
+import EventManager from '../../Event/eventmanager.js';
+import MessageEvent from '../../Event/messageEvent.js';
+import Game from '../../game.js';
+import BackEntity from '../backEntity.js';
+import UIManager from '../../UI/uiManager.js';
+import Signpop from '../Effect/signpop.js';
 
 
 export default class Signboard extends BackEntity{
@@ -81,7 +79,7 @@ export default class Signboard extends BackEntity{
     //メッセージ文が"EVENT"ならばイベントを発生させる
     //page : 現在のページ番号
     let player = EntityManager.player;
-    if(Util.distance(player.pos,this.pos) <  16 && player.isAlive){
+    if(DIST(player.pos,this.pos) <  16 && player.isAlive){
       if( Input.isKeyClick(KEY.SP)){
         this.Read();
       }

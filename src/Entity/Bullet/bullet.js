@@ -1,10 +1,10 @@
-import Entity from './entity.js';
-import Art from '../art.js';
-import Collider from '../Collision/collider.js';
-import Collision from '../Collision/collision.js';
-import Box from '../Collision/box.js';
-import EntityManager from '../Stage/entityManager.js';
-import Util from '../util.js';
+import Entity from '../entity.js';
+import Art from '../../art.js';
+import Collider from '../../Collision/collider.js';
+import Collision from '../../Collision/collision.js';
+import Box from '../../Collision/box.js';
+import EntityManager from '../../Stage/entityManager.js';
+import Util from '../../util.js';
 
 export default class Bullet extends Entity{
   constructor(pos,vel){
