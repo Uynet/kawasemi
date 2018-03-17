@@ -373,6 +373,25 @@ export default class Art{
           PIXI.Texture.fromFrame('wall85.png'),//
           PIXI.Texture.fromFrame('wall86.png')//
         ],
+        back : {
+          inner : [
+            PIXI.Texture.fromFrame('wall31.png'),
+            PIXI.Texture.fromFrame('wall33.png'),
+            PIXI.Texture.fromFrame('wall51.png'),
+            PIXI.Texture.fromFrame('wall53.png'),
+          ],
+          out : [
+            PIXI.Texture.fromFrame('wall34.png'),
+            PIXI.Texture.fromFrame('wall35.png'),
+            PIXI.Texture.fromFrame('wall36.png'),
+            PIXI.Texture.fromFrame('wall44.png'),
+            PIXI.Texture.fromFrame('wall45.png'),
+            PIXI.Texture.fromFrame('wall46.png'),
+            PIXI.Texture.fromFrame('wall54.png'),
+            PIXI.Texture.fromFrame('wall55.png'),
+            PIXI.Texture.fromFrame('wall56.png')
+          ],
+        }
       },
       //鉄骨
       steel : {

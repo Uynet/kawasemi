@@ -43,10 +43,10 @@ export default class Bullet2 extends Bullet{
     this.AIList.push(new Bullet2AI(this));
 
     //壁にぶつかってなければレーザー光線を進める
-    let unko = true; 
-    if(step > 15) unko = false;
+    if(step > 15) isNext = false;
     for(let w of EntityManager.colliderList){
-      if(Collision.on(this,w).isHit){
+      let c = Collision.on(this,w);
+      if(c.isHit){
         if(w.name == "woodbox") {
           w.Damage(-1);
           EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
@@ -56,16 +56,25 @@ export default class Bullet2 extends Bullet{
           w.Damage(-RandBET(this.atkMin,this.atkMax));
           }
         else {
+          if(w.material == "steel"){
+            let i = POV(this.arg,16);//入射角
+            //r = i+2n*(i・n)
+            let r = ADV(i,MLV(VECN(2),MLV(c.n,VECN(DOT(i,c.n)))));
+            this.arg = Math.atan(r.y/r.x);
+            if(r.y>0)this.arg += Math.PI;
+          //鉄で反射
+          }else{
           //壁にぶつかったので停止
           EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
-          unko = false;
+          isNext = false;
+          }
         }
       }
     }
     if(isNext){
       step++;
       let p = ADV(this.pos,POV(this.arg,16));
-      let bullet = new Bullet2(p,this.arg,unko,step);
+      let bullet = new Bullet2(p,this.arg,isNext,step);
       EntityManager.addEntity(bullet);
     }
   }
