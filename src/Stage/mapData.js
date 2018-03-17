@@ -151,6 +151,8 @@ export default class MapData{
     let wall = Art.wallPattern;
     let out = Art.wallPattern.edge.out;
     let inner = Art.wallPattern.edge.inner;
+    let backOut = Art.wallPattern.edge.back.out;
+    let backInner = Art.wallPattern.edge.back.inner;
     let steel = Art.wallPattern.steel;
     let needle = Art.wallPattern.needle;
     //戻り値データ
@@ -182,6 +184,21 @@ export default class MapData{
       case 68:tex = out[6];break;
       case 69:tex = out[7];break;
       case 70:tex = out[8];break;
+      //edge in back
+      case 25 : tex = backInner[0];break;
+      case 27 : tex = backInner[1];break;
+      case 41 : tex = backInner[2];break;
+      case 43 : tex = backInner[3];break;
+      //edge out back
+      case 28:tex = backOut[0];break;
+      case 29:tex = backOut[1];break;
+      case 30:tex = backOut[2];break;
+      case 36:tex = backOut[3];break;
+      case 37:tex = backOut[4];break;
+      case 38:tex = backOut[5];break;
+      case 44:tex = backOut[6];break;
+      case 45:tex = backOut[7];break;
+      case 46:tex = backOut[8];break;
       //steel
       case 72:tex = steel.entity[0];material = "steel";break; 
       case 73:tex = steel.entity[1];material = "steel";break; 
