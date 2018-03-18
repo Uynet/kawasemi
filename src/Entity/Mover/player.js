@@ -109,6 +109,8 @@ export default class Player extends Entity{
         this.state = STATE.JUMPING;
         // ■ SoundEffect : jump
         Audio.PlaySE("jump1");
+        //effect
+        EntityManager.addEntity(new BulletShot(CPV(this.pos)));
       }
     }
     /*空中ジャンプ*/
