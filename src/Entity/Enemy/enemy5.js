@@ -24,8 +24,7 @@ export default class Enemy5 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.addAI(new Enemy5AI(this));
-    this.param = Param.enemy4
+    this.addAI(new Enemy5AI(this,100)); this.param = Param.enemy4
     this.atkMin = this.param.atkMin;
     this.atkMax = this.param.atkMax;
     this.hp = this.param.hp;
@@ -34,6 +33,7 @@ export default class Enemy5 extends Enemy{
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
+    this.isActive = false;
     /*床の親子関係*/
     this.floor = {
       on : false,
@@ -96,34 +96,33 @@ export default class Enemy5 extends Enemy{
     }
   }
   Animation(){
-    //this.spid = Math.floor(this.frame/2)%4;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
   }
-  Activate(){
-    this.spid = 1;
-  }
-  Deactivate(){
-    this.spid = 0;
-    this.frame = 0;
-  }
 
   Update(){
+    /*AI*/
     for (let AI of this.AIList){
-      AI.Do();
+      AI.Do();//activationのみ
     }
-    //弾を発射
-    if(this.frame%100 == 49){
-      let p = CPV(this.pos);
-      p = ADV(p,VECX(4));//弾は中心から
-      EntityManager.addEntity(new eBullet2(p,VECY(-1)));
-    }
+    //動く
     this.vel = ADV(this.vel , MLV(VECN(0.01),Rand2D(1)));
-    //this.vel.x = BET(-1,1);
+    //弾を発射
+    if(this.isActive){
+      this.spid = 1;
+      if(this.frame%100 == 99){
+        let p = CPV(this.pos);
+        p = ADV(p,VECX(4));//弾は中心から
+          EntityManager.addEntity(new eBullet2(p,VECY(-1)));
+      }
+    }else{
+      this.spid = 0;
+      this.frame = 0;
+    }
+    /*きょうつう*/
     this.Collision();
     this.Physics();
     this.Hurt();
-    //アニメーション
     this.Animation();
     //observer
     if(this.hp<=0){

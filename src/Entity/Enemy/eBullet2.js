@@ -4,6 +4,7 @@ import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
+import Pool from '../../Stage/pool.js';
 import Param from '../../param.js';
 import Explosion2 from '../Effect/explosion2.js';
 import Stone from '../Effect/stone.js';
@@ -60,7 +61,10 @@ export default class eBullet2 extends Enemy{
       AI.Do();
     }
     */
-    //EntityManager.addEntity(new Stone(this.pos));
+   if(this.frame%1 == 0){
+    let stone = Pool.GetStone(ADV(this.pos,VECX(4)),VEC0());
+    EntityManager.addEntity(stone);
+    }
     this.Physics();
     this.Collision();
     this.Hurt();

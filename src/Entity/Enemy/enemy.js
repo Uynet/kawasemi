@@ -51,7 +51,6 @@ export default class Enemy extends Entity{
       EntityManager.removeEntity(this);
       EntityManager.addEntity(new Explosion2(this.pos));
   }
-  //物理
   Physics(){
     if(this.floor.on){
       this.pos.x += this.floor.under.vel.x;
@@ -66,5 +65,10 @@ export default class Enemy extends Entity{
     this.acc.y = 0;
     this.acc.x = 0;
     //最大速度制限
+  }
+  ExecuteAI(){
+    for (let AI of this.AIList){
+      AI.Do();
+    }
   }
 }
