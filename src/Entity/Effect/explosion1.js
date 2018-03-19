@@ -55,7 +55,7 @@ export default class Explosion1 extends EFFECT{
     for(let w of EntityManager.wallList){
       if(DIST(this.pos,w.pos) < 32){
         //breakable object
-        if(w.name == "woodbox"){
+        if(w.isBreakable){
           // ■ SoundEffect : hitWood
           w.Damage(-RandBET(50,99));
         }

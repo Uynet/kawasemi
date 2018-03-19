@@ -24,12 +24,14 @@ export default class Enemy5 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.addAI(new Enemy5AI(this,200)); this.param = Param.enemy4
+    this.addAI(new Enemy5AI(this,200));
+    this.param = Param.enemy5;
     this.atkMin = this.param.atkMin;
     this.atkMax = this.param.atkMax;
     this.hp = this.param.hp;
     this.gravity = 0 * this.param.gravity;
     this.coin = this.param.coin;
+    this.term = this.param.term;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
@@ -115,7 +117,7 @@ export default class Enemy5 extends Enemy{
         p = ADV(p,VECX(4));//弾は中心から
           let v = {
             x : 0,
-            y : -3,
+            y : 0,
           }
           EntityManager.addEntity(new eBullet2(p,v));
       }

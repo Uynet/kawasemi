@@ -26,7 +26,7 @@ export default class Bullet3AI{
     for(let w of EntityManager.wallList){
       if(Collision.on(this.bullet,w).isHit){
         //breakable object
-        if(w.name == "woodbox"){
+        if(w.isBreakable){
           // ■ SoundEffect : hitWood
           w.Damage(-1);
           this.bullet.hp--;

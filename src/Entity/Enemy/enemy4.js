@@ -110,22 +110,27 @@ export default class Enemy4 extends Enemy{
       AI.Do();
     }
 
+
+    this.Collision();
+    this.Physics();
+    this.Hurt();
+    this.Animation();
+
     if(this.isActive){
       this.spid = 1;
+      if(this.isJump){
+        this.vel.x = (EntityManager.player.pos.x - this.pos.x > 0)?0.7:-0.7;
+      }
       //たまにじゃんぷ　
-      if(this.frame%60 == 0){
+      if(this.frame%40 == 0 && !this.isJump){
         this.vel.y = -3;
-        this.acc.x = (EntityManager.player.pos.x - this.pos.x > 0)?0.5:-0.5;
+        this.isJump = true;
       }
     }else{
       this.spid = 0;
       this.frame = 0;
     }
 
-    this.Collision();
-    this.Physics();
-    this.Hurt();
-    this.Animation();
     //observer
     if(this.hp<=0){
       this.Die();

@@ -96,14 +96,23 @@ export default class Drawer{
   static SetMap(x,y){
     this.mapSize.width = x;
     this.mapSize.height = y;
+    cl(this.mapSize.height);
   }
 
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
-    //let centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
-    //let centerY = BET(-512 - 256 -128 - 32,this.magnification*(- pos.y-8 + 300/this.magnification),256);
-    centerX = BET(-this.mapSize.width*32 + 300,this.magnification*(- pos.x-8 + 400/this.magnification),0);
-    centerY = BET(-this.mapSize.height*32 + 200,this.magnification*(- pos.y-8 + 300/this.magnification),0);
+    centerX = BET(
+      this.magnification*(-this.mapSize.width*16 + 134) + 400,
+      //10ブロック戻すもどす
+      this.magnification*(- pos.x-8) + 400,
+      0
+    );
+    centerY = BET(
+      //8ブロックぶん上げる
+      this.magnification*(-this.mapSize.height*16 +8*16) + 300,
+      this.magnification*(-pos.y-8) + 300,
+      0
+    );
     toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
     toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
     //背景レイヤ
