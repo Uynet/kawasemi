@@ -301,6 +301,7 @@ export default class Player extends Entity{
     this.floor.under = null;
     //壁
     for(let l of EntityManager.colliderList){
+      if(l == this)continue;
       let c = Collision.on(this,l);
       if(c.isHit){
         /* 衝突応答*/
@@ -310,6 +311,10 @@ export default class Player extends Entity{
         if(c.n.y == -1){
           this.floor.under = l;
           this.floor.on = true;
+          /*直せ*/
+          if(l.name == "enemy6"){
+            l.isSwelling = true;
+          }
             if(this.isJump){
               switch(l.material){
                 case "wall": Audio.PlaySE("landing1",1);break;

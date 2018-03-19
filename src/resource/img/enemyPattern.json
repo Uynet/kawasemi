@@ -139,6 +139,14 @@
     "enemy73.png": {
       "frame": {"x":48, "y":112, "w":8, "h":8},
       "sourceSize": {"w": 8, "h": 8}
+    },
+    "enemy80.png": {
+      "frame": {"x":0, "y":128, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
+    },
+    "enemy81.png": {
+      "frame": {"x":16, "y":128, "w":16, "h":16},
+      "sourceSize": {"w": 16, "h": 16}
     }
   },
   "meta": {
