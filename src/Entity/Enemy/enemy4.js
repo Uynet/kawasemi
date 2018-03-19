@@ -4,17 +4,17 @@ import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
-import Enemy4AI from '../AI/enemy4AI.js';
+//import Enemy4AI from '../AI/enemy4AI.js';
+import Enemy5AI from '../AI/enemy5AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Param from '../../param.js';
-
 
 let EntityList = EntityManager.entityList;
 
 export default class Enemy4 extends Enemy{
   constructor(pos){
-    super(pos,VEC0(),VEC0());
+    super(pos,VEC0());
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.frame = 0;
@@ -26,7 +26,7 @@ export default class Enemy4 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.addAI(new Enemy4AI(this));
+    this.addAI(new Enemy5AI(this,130));
     this.param = Param.enemy4
     this.atkMin = this.param.atkMin;
     this.atkMax = this.param.atkMax;
@@ -36,6 +36,7 @@ export default class Enemy4 extends Enemy{
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
+    this.isActive = false;
     /*床の親子関係*/
     this.floor = {
       on : false,
@@ -54,6 +55,7 @@ export default class Enemy4 extends Enemy{
         if(c.n.y == -1){ 
           this.isJump = false;
           this.vel.y = Math.min(0,this.vel.y * -0.3);
+          this.vel.x *= 0.8;//摩擦
         }
         //天井との衝突
         if(c.n.y == 1 ){
@@ -83,7 +85,7 @@ export default class Enemy4 extends Enemy{
           this.floor.on = true; 
           this.floor.under = EntityManager.enemyList[i];
           this.isJump = false;
-          this.vel.y = Math.min(1,this.vel.y * -0.3);
+          this.vel.y = Math.min(0,this.vel.y * -0.3);
         }
         //天井との衝突
         if(c.n.y == 1 ){
@@ -107,10 +109,22 @@ export default class Enemy4 extends Enemy{
     for (let AI of this.AIList){
       AI.Do();
     }
+
+    if(this.isActive){
+      this.spid = 1;
+      //たまにじゃんぷ　
+      if(this.frame%60 == 0){
+        this.vel.y = -3;
+        this.acc.x = (EntityManager.player.pos.x - this.pos.x > 0)?0.5:-0.5;
+      }
+    }else{
+      this.spid = 0;
+      this.frame = 0;
+    }
+
     this.Collision();
     this.Physics();
     this.Hurt();
-    //アニメーション
     this.Animation();
     //observer
     if(this.hp<=0){

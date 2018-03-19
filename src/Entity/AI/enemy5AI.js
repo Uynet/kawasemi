@@ -7,17 +7,18 @@ let player;
 export default class Enemy5AI extends AI{
   /*enemyの参照を受け取り関数を実行する*/
 
-  constructor(enemy){
+  constructor(enemy,dist){
     super(enemy)
     this.enemy = enemy;
+    this.dist = dist;
     player = EntityManager.player;
   }
 
   Do(){
-    if(DIST(this.enemy.pos,player.pos) < 500){
-      this.enemy.Activate();
+    if(DIST(this.enemy.pos,player.pos) < this.dist){
+      this.enemy.isActive = true;
     }else{
-      this.enemy.Deactivate();
+      this.enemy.isActive = false;
     }
   }
 }

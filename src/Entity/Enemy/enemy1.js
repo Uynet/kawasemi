@@ -14,7 +14,7 @@ let EntityList = EntityManager.entityList;
 
 export default class Enemy1 extends Enemy{
   constructor(pos){
-    super(pos,VEC0(),VEC0());
+    super(pos,VEC0());
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.frame = 0;

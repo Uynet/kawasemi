@@ -60,7 +60,7 @@ export default class Audio{
         gainNode.gain.value = gain;
       }
       */
-    //source.start(0);
+    source.start(0);
   };
   static PlaySE(name,gain,pitch){
     //同じ効果音は同時にならないようにする
