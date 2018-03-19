@@ -62,8 +62,8 @@ export default class eBullet2 extends Enemy{
     }
     */
    if(this.frame%1 == 0){
-    let stone = Pool.GetStone(ADV(this.pos,VECX(4)),VEC0());
-    EntityManager.addEntity(stone);
+    //let stone = Pool.GetStone(ADV(this.pos,VECX(4)),VEC0());
+    //EntityManager.addEntity(stone);
     }
     this.Physics();
     this.Collision();

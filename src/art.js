@@ -225,27 +225,27 @@ export default class Art{
       ],
       shot : [
         PIXI.Texture.fromFrame('bullet40.png'),//bullet shot
-        PIXI.Texture.fromFrame('bullet41.png'),//bullet shot
-        PIXI.Texture.fromFrame('bullet42.png'),//bullet shot
-        PIXI.Texture.fromFrame('bullet43.png'),//bullet shot
+        PIXI.Texture.fromFrame('bullet41.png'),
+        PIXI.Texture.fromFrame('bullet42.png'),
+        PIXI.Texture.fromFrame('bullet43.png'),
       ],
       hitWall : [
         PIXI.Texture.fromFrame('bullet50.png'),//bullet hit at wall
-        PIXI.Texture.fromFrame('bullet51.png'),//bullet hit at wall
-        PIXI.Texture.fromFrame('bullet52.png'),//bullet hit at wall
-        PIXI.Texture.fromFrame('bullet53.png'),//bullet hit at wall
+        PIXI.Texture.fromFrame('bullet51.png'),
+        PIXI.Texture.fromFrame('bullet52.png'),
+        PIXI.Texture.fromFrame('bullet53.png'),
       ],
       blur : [ 
         PIXI.Texture.fromFrame('bullet60.png'),//bullet blur
-        PIXI.Texture.fromFrame('bullet61.png'),//bullet blur
-        PIXI.Texture.fromFrame('bullet62.png'),//bullet blur
-        PIXI.Texture.fromFrame('bullet63.png') //bullet blur
+        PIXI.Texture.fromFrame('bullet61.png'),
+        PIXI.Texture.fromFrame('bullet62.png'),
+        PIXI.Texture.fromFrame('bullet63.png') 
       ],
       blur2 : [ 
         PIXI.Texture.fromFrame('bulletF0.png'),//bullet blur
-        PIXI.Texture.fromFrame('bulletF1.png'),//bullet blur
-        PIXI.Texture.fromFrame('bulletF2.png'),//bullet blur
-        PIXI.Texture.fromFrame('bulletF3.png') //bullet blur
+        PIXI.Texture.fromFrame('bulletF1.png'),
+        PIXI.Texture.fromFrame('bulletF2.png'),
+        PIXI.Texture.fromFrame('bulletF3.png') 
       ],
       //ブロックの破片
       blockDebris : [
@@ -339,6 +339,10 @@ export default class Art{
         PIXI.Texture.fromFrame('enemy71.png'),
         PIXI.Texture.fromFrame('enemy72.png'),
         PIXI.Texture.fromFrame('enemy73.png'),
+      ],
+      enemy6 : [
+        PIXI.Texture.fromFrame('enemy80.png'),
+        PIXI.Texture.fromFrame('enemy81.png'),
       ],
       //壊せる木箱
       woodbox : [

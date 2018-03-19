@@ -35,10 +35,10 @@ export default class EntityManager{
     //更新が必要なEntityのみリストに追加
     switch(entity.type){
       case ENTITY.MOVER : break;
-      case ENTITY.PLAYER : this.player = entity; break;
+      case ENTITY.PLAYER : this.colliderList.push(entity);this.player = entity; break;
       case ENTITY.ENEMY : this.colliderList.push(entity);this.enemyList.push(entity); break;
       case ENTITY.WALL : this.colliderList.push(entity);this.wallList.push(entity); break;
-      default : console.warn(entity.type)
+      default : console.warn(entity)
     }
 
     if(entity.isMultiple) Drawer.addContainer(entity.container,entity.layer);
@@ -48,24 +48,29 @@ export default class EntityManager{
 
   /*Entityをリストから削除する*/
   static removeEntity(entity){
+    let i;
     switch(entity.type){
-      case ENTITY.PLAYER : this.player = null; break;
+      case ENTITY.PLAYER :
+        this.player = null;
+        i = this.colliderList.indexOf(entity);
+        this.colliderList.splice(i,1);
+        break;
       case ENTITY.ENEMY :
-        let i = this.enemyList.indexOf(entity);
+        i = this.enemyList.indexOf(entity);
         this.enemyList.splice(i,1);
         i = this.colliderList.indexOf(entity);
         this.colliderList.splice(i,1);
         break;
       case ENTITY.WALL :
-        let j = this.wallList.indexOf(entity);
-        this.wallList.splice(j,1);
-        j = this.colliderList.indexOf(entity);
-        this.colliderList.splice(j,1);
+        i = this.wallList.indexOf(entity);
+        this.wallList.splice(i,1);
+        i = this.colliderList.indexOf(entity);
+        this.colliderList.splice(i,1);
         //this.SortWallList();
         break;
     }
-    let k = this.entityList.indexOf(entity);
-    this.entityList.splice(k,1);
+    i = this.entityList.indexOf(entity);
+    this.entityList.splice(i,1);
     this.entityIndex--;
 
     if(entity.isMultiple) Drawer.removeContainer(entity.container,entity.layer);

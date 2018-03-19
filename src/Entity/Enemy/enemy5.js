@@ -24,7 +24,7 @@ export default class Enemy5 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.addAI(new Enemy5AI(this,100)); this.param = Param.enemy4
+    this.addAI(new Enemy5AI(this,200)); this.param = Param.enemy4
     this.atkMin = this.param.atkMin;
     this.atkMax = this.param.atkMax;
     this.hp = this.param.hp;
@@ -74,7 +74,7 @@ export default class Enemy5 extends Enemy{
       if(c.isHit){
         /* 衝突応答*/
 
-        /*速度*/
+        //壁との衝突
         if(c.n.x != 0) this.vel.x = 0;
         //地面との衝突
         if(c.n.y == -1){ 
@@ -113,7 +113,11 @@ export default class Enemy5 extends Enemy{
       if(this.frame%100 == 99){
         let p = CPV(this.pos);
         p = ADV(p,VECX(4));//弾は中心から
-          EntityManager.addEntity(new eBullet2(p,VECY(-1)));
+          let v = {
+            x : 0,
+            y : -3,
+          }
+          EntityManager.addEntity(new eBullet2(p,v));
       }
     }else{
       this.spid = 0;
