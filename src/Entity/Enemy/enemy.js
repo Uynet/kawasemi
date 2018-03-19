@@ -13,6 +13,7 @@ export default class Enemy extends Entity{
     this.type = ENTITY.ENEMY;
     this.isUpdater = true;
     this.colType = "through";
+    this.material = "wall";
     /*固有情報*/
     this.AIList = [];//AIの配列
     /*レイヤー*/

@@ -2,8 +2,6 @@ import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Drawer from '../../drawer.js';
-import Collision from '../../Collision/collision.js';
-import Collider from '../../Collision/collider.js';
 import Box from '../../Collision/box.js';
 /*文字*/
 export default class FontEffect extends EFFECT{

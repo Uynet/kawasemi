@@ -2,7 +2,7 @@
 export default class Param{
   static Init(){
     this.player = {
-      jumpVel : 5,//ジャンプ力
+      jumpVel : 4.5,//ジャンプ力
       runVel : 0.4,//はしり速度
       gravity : 0.15,
       maxHp : 100,
@@ -52,15 +52,29 @@ export default class Param{
       gravity : 0.2,
       coin : 2
     }
+    this.enemy5 = {
+      hp : 10,
+      atkMax : 3,
+      atkMin : 1,
+      gravity : 0.2,
+      term : 100,
+      coin : 2
+    }
     this.eBullet1 = {
       hp : 1,
       atkMin : 1,
       atkMax : 1,
     }
+    this.eBullet2 = {
+      hp : 1,
+      atkMin : 20,
+      atkMax : 30,
+      gravity : 0.05
+    }
     this.weapon1 = {
       //status
-      agi : 9,
-      cost : 10,
+      agi : 30,
+      cost : 30,
       speed : 7, 
       length : 580,
       //optional
@@ -86,7 +100,7 @@ export default class Param{
     //normal
     this.weapon3 = {
       agi : 16,
-      cost : 5,
+      cost : 8,
       speed : 6, 
       length : 300,
       //optional

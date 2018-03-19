@@ -63,7 +63,7 @@ export default class Weapon{
       ){
         //既にロックオンされている敵より近ければ
         if(!this.isTargetOn ||
-          DIST_C(l.pos , player.pos) < DIST_C(this.target.pos,player.pos)){
+          DIST_C(l.pos,player.pos) +1< DIST_C(this.target.pos,player.pos)){
           //今のロック先を解除して
           if(this.isTargetOn){
             EntityManager.removeEntity(this.target);

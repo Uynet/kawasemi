@@ -8,6 +8,7 @@ import Pool from '../../Stage/pool.js';
 import Param from '../../param.js';
 import Explosion2 from '../Effect/explosion2.js';
 import Stone from '../Effect/stone.js';
+import MoveReflect from '../AI/moveReflect.js';
 
 //敵の弾丸その2
 export default class eBullet2 extends Enemy{
@@ -23,12 +24,12 @@ export default class eBullet2 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.param = Param.eBullet1;
-    //this.addAI(new moveReflect(this));
+    this.param = Param.eBullet2;
+    //this.addAI(new MoveReflect(this));
     this.atkMin = this.param.atkMin;
     this.atkMax = this.param.atkMax;
-    //this.hp = ENEMY3.HP;
-    this.gravity = 0.1
+    this.hp = this.param.hp;
+    this.gravity = this.param.gravity;
     /*フラグ*/
     this.isAlive = true;
     /*床の親子関係*/
@@ -50,21 +51,21 @@ export default class eBullet2 extends Enemy{
     for(let w of EntityManager.wallList){
       let c = Collision.on(this,w);
       if(c.isHit){
-        this.hp = 0;
+        this.hp--;
       }
     }
   }
 
   Update(){
+    //for (let AI of this.AIList){
+    // AI.Do();
+    //}
     /*
-    for (let AI of this.AIList){
-      AI.Do();
+   if(this.frame%1 == 0){
+    let stone = Pool.GetStone(ADV(this.pos,VECX(4)),VEC0());
+    EntityManager.addEntity(stone);
     }
     */
-   if(this.frame%1 == 0){
-    //let stone = Pool.GetStone(ADV(this.pos,VECX(4)),VEC0());
-    //EntityManager.addEntity(stone);
-    }
     this.Physics();
     this.Collision();
     this.Hurt();

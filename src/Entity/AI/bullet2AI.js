@@ -23,7 +23,7 @@ export default class Bullet2AI{
       if(Collision.on(this.bullet,l).isHit){
         //breakable object
           EntityManager.addEntity(new Explosion2(CPV(this.bullet.pos),this.bullet.arg + Math.PI));
-        if(l.name == "woodbox"){
+        if(l.isBreakable){
           /* ■ SoundEffect : hitWood */
           l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
           this.bullet.hp--;
