@@ -361,6 +361,7 @@ export default class Art{
       ],
       goal : PIXI.Texture.fromFrame('wall01.png'),//ゴール
       signboard : PIXI.Texture.fromFrame('wall02.png'),//看板
+      shop : PIXI.Texture.fromFrame('wall03.png'),//看板
       needle : [
         PIXI.Texture.fromFrame('wall10.png'),//∧
         PIXI.Texture.fromFrame('wall11.png'),//>

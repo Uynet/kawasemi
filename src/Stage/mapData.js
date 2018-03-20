@@ -4,6 +4,7 @@ import Wall from '../Entity/wall.js'
 import BackEntity from '../Entity/backEntity.js';
 import BackGround from '../Entity/backGround.js';
 import Signboard from '../Entity/Mover/signboard.js';
+import Shop from '../Entity/Mover/shop.js';
 import Player from '../Entity/Mover/player.js'
 import Enemy1 from '../Entity/Enemy/enemy1.js'
 import Enemy2 from '../Entity/Enemy/enemy2.js'
@@ -100,13 +101,18 @@ export default class MapData{
           x: this.objData[i].x,
           y: this.objData[i].y -16,//なぜかyだけずれるので引く
         }
+        let message;
         switch(ID){
           case 161 : obj = new Player(p); break;
           case 162 :
-            let message = this.objData[i].properties;
+            message = this.objData[i].properties;
             obj = new Signboard(p,message);
             break;
           case 163 : obj = new Goal(p); break;
+          case 164 :
+            message = this.objData[i].properties;
+            obj = new Shop(p,message);
+            break;
           case 169 : obj = new Enemy1(p); break;
           case 170 : obj = new Enemy2(p); break;
           case 171 : obj = new Enemy3(p); break;

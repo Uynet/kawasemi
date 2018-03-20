@@ -5,7 +5,7 @@ export default class Param{
       jumpVel : 4.5,//ジャンプ力
       runVel : 0.4,//はしり速度
       gravity : 0.15,
-      maxHp : 100,
+      maxHp : 20,
       maxBullet : 100,
       fliction : 0.7,
       invTime : 5,//無敵時間
@@ -59,6 +59,14 @@ export default class Param{
       gravity : 0.2,
       term : 100,
       coin : 2
+    }
+    this.enemy6 = {
+      hp : 10,
+      atkMax : 3,
+      atkMin : 1,
+      gravity : 0,
+      term : 100,
+      coin : 1
     }
     this.eBullet1 = {
       hp : 1,

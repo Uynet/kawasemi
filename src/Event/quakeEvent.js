@@ -17,7 +17,7 @@ export default class QuakeEvent extends Event{
     function* gen(){
       let frame = 0;
       let d;
-      while(frame < time){
+      while(size > 0.1){
         d = Rand2D(size);
         Drawer.Quake(d);
         size *= 0.9;

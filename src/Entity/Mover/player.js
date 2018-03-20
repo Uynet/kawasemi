@@ -180,13 +180,6 @@ export default class Player extends Entity{
     if(Input.isKeyInput(KEY.J)){
       this.Damage(-999);
     }
-    if(Input.isKeyInput(KEY.K) && this.frame%10 == 0){
-      let p = {
-        x:this.pos.x,
-        y:this.pos.y - 32
-      }
-      //EntityManager.addEntity(new Enemy2(p));
-      }
   }
 
   /*状態からアニメーションを行う*/
