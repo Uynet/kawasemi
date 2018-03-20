@@ -45,6 +45,7 @@ export default class Font extends UI{
     this.str = value + "";
     //0埋め
     if(this.isPadding){
+      if(this.str == "0")this.str = "ゐ";
       while(this.str.length < this.d){
         //スペースの代わりに欠番フォント(ゐ)を使っている←クソ
         this.str = "ゐ" + this.str;
@@ -55,8 +56,6 @@ export default class Font extends UI{
         this.str = " " + this.str;
       }
     }
-    //000は特殊
-    if(this.str == "ゐゐ0")this.str = "ゐゐゐ";
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
         this.container.children[i].texture = Art.font[spid];

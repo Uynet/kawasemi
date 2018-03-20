@@ -31,7 +31,7 @@ export default class Game{
     StageGen.Init();
 
     /*initialize Game state*/
-    Game.stage = 4;//現在のステージ番号
+    Game.stage = 6;//現在のステージ番号
     Game.scene = new Scene();
 
     //Gameにタイトル画面状態をプッシュ
@@ -64,9 +64,17 @@ export default class Game{
 
      /*ポーズ状態に遷移*/
      if(Input.isKeyClick(KEY.C) && EntityManager.player.isAlive){
+       let player = EntityManager.player;
+       switch(player.weapon.name){
+         case  "missile" : player.ChangeWeapon("laser");break;
+         case  "laser" : player.ChangeWeapon("normal");break;
+         case  "normal" : player.ChangeWeapon("missile");break;
+       }
+     }
+     /*
        UIManager.SetMenu();
        Game.scene.PushSubState("PAUSE");
-     }
+       */
   }
   static UpdatePause(){
     UIManager.Update();

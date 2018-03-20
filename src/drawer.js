@@ -146,8 +146,8 @@ export default class Drawer{
   }
 
   static Quake(diff){
-    this.Stage.x += Math.floor(diff.x);
-    this.Stage.y += Math.floor(diff.y);
+    this.Stage.x = Math.floor(diff.x);
+    this.Stage.y = Math.floor(diff.y);
   }
 
 

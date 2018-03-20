@@ -1,5 +1,6 @@
 import Enemy from './enemy.js';
 import Art from '../../art.js';
+import Audio from '../../audio.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
@@ -29,7 +30,8 @@ export default class Enemy6 extends Enemy{
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     /*パラメータ*/
-    this.addAI(new Enemy5AI(this,200)); this.param = Param.enemy4
+    this.addAI(new Enemy5AI(this,200));
+    this.param = Param.enemy6
     this.atkMin = this.param.atkMin;
     this.atkMax = this.param.atkMax;
     this.hp = this.param.hp;
@@ -74,9 +76,11 @@ export default class Enemy6 extends Enemy{
     if(DIST(this.pos,EntityManager.player.pos)<32){
       EntityManager.player.Damage(-99);
     }
-    EntityManager.removeEntity(this);
+    Audio.PlaySE("missileHit");
     EntityManager.addEntity(new Explosion1(this.pos));
+    this.Die();
   }
+
 
   Update(){
     /*きょうつう*/
@@ -93,7 +97,8 @@ export default class Enemy6 extends Enemy{
     }
     //observer
     if(this.hp<=0){
-      this.Die();
+      //this.Bomb();
+      this.isSwelling = true;
     }
     this.frame++;
   }
