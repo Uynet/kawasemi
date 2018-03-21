@@ -7,9 +7,10 @@ export default class Sonic extends EFFECT{
   constructor(pos){
     super(pos,VEC0());
   }
-  Init(pos,vel){
+  Init(pos,vel,arg){
     this.pos = pos;
     this.vel = vel;
+    this.arg = arg;
     /*基本情報*/
     this.frame = 0;
     this.name = "sonic";
