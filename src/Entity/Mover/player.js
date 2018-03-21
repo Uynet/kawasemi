@@ -51,20 +51,20 @@ export default class Player extends Entity{
     /*基本情報*/
     let p = CPV(this.pos);
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,16));//衝突判定の形状
-      this.type = ENTITY.PLAYER;
+    this.type = ENTITY.PLAYER;
     this.layer = "ENTITY";
     this.frame = 0;
     this.frameDead;//死んだ時刻
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
     this.frameShot = 0;//最後にshotした時刻
-      this.e = 0.1;//反発係数
+    this.e = 0.1;//反発係数
     this.score = 0;
     this.offset = 0;//↑入力での画面スクロールに使う変数
-      this.isUpdater = true;
+    this.isUpdater = true;
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0 // spriteIndex 現在のスプライト番号
-      this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position.x = Math.floor(this.pos.x);
     this.sprite.position.y = Math.floor(this.pos.y);
     /*パラメータ*/

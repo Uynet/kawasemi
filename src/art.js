@@ -1,4 +1,5 @@
 import Game from './game.js';
+import Drawer from './drawer.js';
 
 export default class Art{
   static Load(resources){
@@ -280,12 +281,8 @@ export default class Art{
         fire : [PIXI.Texture.fromFrame('bulletA0.png')],
         stone : [PIXI.Texture.fromFrame('bulletB0.png')],
         smoke : [PIXI.Texture.fromFrame('bulletC0.png')],
-        sonic :[
-          PIXI.Texture.fromFrame('bullet70.png'),//sonic
-          PIXI.Texture.fromFrame('bullet71.png'),//sonic
-          PIXI.Texture.fromFrame('bullet72.png'),//sonic
-          PIXI.Texture.fromFrame('bullet73.png') //sonic
-        ]
+        sonic :this.Cor("bullet",70,4),
+        
       }
     }
     this.enemyPattern = {
@@ -310,40 +307,13 @@ export default class Art{
         PIXI.Texture.fromFrame('enemy02.png'),
         PIXI.Texture.fromFrame('enemy03.png')
       ],
-      enemy2 : [
-        PIXI.Texture.fromFrame('enemy10.png'),
-        PIXI.Texture.fromFrame('enemy11.png'),
-        PIXI.Texture.fromFrame('enemy12.png'),
-        PIXI.Texture.fromFrame('enemy13.png')
-      ],
-      enemy3 : [
-        PIXI.Texture.fromFrame('enemy30.png'),
-        PIXI.Texture.fromFrame('enemy31.png'),
-      ],
-      eBullet1 : [
-        PIXI.Texture.fromFrame('enemy40.png'),
-        PIXI.Texture.fromFrame('enemy41.png'),
-        PIXI.Texture.fromFrame('enemy42.png'),
-        PIXI.Texture.fromFrame('enemy43.png'),
-      ],
-      enemy4 : [
-        PIXI.Texture.fromFrame('enemy50.png'),
-        PIXI.Texture.fromFrame('enemy51.png'),
-      ],
-      enemy5 : [
-        PIXI.Texture.fromFrame('enemy60.png'),
-        PIXI.Texture.fromFrame('enemy61.png'),
-      ],
-      eBullet2 : [
-        PIXI.Texture.fromFrame('enemy70.png'),
-        PIXI.Texture.fromFrame('enemy71.png'),
-        PIXI.Texture.fromFrame('enemy72.png'),
-        PIXI.Texture.fromFrame('enemy73.png'),
-      ],
-      enemy6 : [
-        PIXI.Texture.fromFrame('enemy80.png'),
-        PIXI.Texture.fromFrame('enemy81.png'),
-      ],
+      enemy2 :this.Cor("enemy",10,4),
+      enemy3 : this.Cor("enemy",30,2),
+      eBullet1 : this.Cor("enemy",40,4),
+      enemy4 : this.Cor("enemy",50,2),
+      enemy5 : this.Cor("enemy",60,2),
+      eBullet2 : this.Cor("enemy",70,4),
+      enemy6 : this.Cor("enemy",80,2),
       //壊せる木箱
       woodbox : [
         PIXI.Texture.fromFrame('enemy40.png')
@@ -416,29 +386,15 @@ export default class Art{
       },
       //鉄骨
       steel : {
-        //entity
-        entity : [
-          PIXI.Texture.fromFrame('wall90.png'),
-          PIXI.Texture.fromFrame('wall91.png'),
-          PIXI.Texture.fromFrame('wall92.png'),
-          PIXI.Texture.fromFrame('wall93.png'),
-        ],
-        //backentity
-        back : [
-          PIXI.Texture.fromFrame('wall94.png'),
-          PIXI.Texture.fromFrame('wall95.png'),
-          PIXI.Texture.fromFrame('wall96.png'),
-          PIXI.Texture.fromFrame('wall97.png'),
-        ],
+        entity : this.Cor("wall",90,4),
+        back : this.Cor("wall",94,4),
       },
       //背景
-      backGround : [
-        PIXI.Texture.fromFrame('wallA0.png'),
-      ],
+      backGround : [PIXI.Texture.fromFrame('wallA0.png')],
       //すり抜け床
-      through : [
-        PIXI.Texture.fromFrame('wallC0.png'),
-      ]
+      through : [PIXI.Texture.fromFrame('wallC0.png')],
+      //トゲが飛び出る床
+      needleShot : [ PIXI.Texture.fromFrame('wallC1.png')],
     }
 
     /*画面遷移エフェクト*/
@@ -450,7 +406,44 @@ export default class Art{
         this.seqPattern[i] = PIXI.Texture.fromFrame(str);
       }
     }
+    //font
+    this.LoadFont();
 
+    //shader
+    let filter = new PIXI.Filter(null,resources.shader.data);
+    Drawer.testFilter = filter;
+  }
+
+  static async LoadTexture(){
+      let loader = PIXI.loader;
+      await new Promise((res)=>loader
+        .add('pattern','src/resource/img/playerPattern.json')
+        .add('pattern2','src/resource/img/UIPattern.json')
+        .add('pattern3','src/resource/img/bulletPattern.json')
+        .add('pattern4','src/resource/img/enemyPattern.json')
+        .add('pattern5','src/resource/img/wallPattern.json')
+        .add('pattern6','src/resource/img/seqPattern.json')
+        .add('pattern7','src/resource/img/font.json')
+        .add('src/resource/effect/dark.png')
+        .add('shader', 'src/Shader/test.frag')
+        .load((loader,resources)=>Art.Load(resources)).onComplete.add(res)); }
+
+  //pattern : str
+  //start ,frames : int
+  static Cor(pattern,start,frames){
+    let filename;
+    let a = [];//戻り値
+    for(let i=0;i<frames;i++){
+      filename = pattern + (start + i) + ".png";
+      a[i] = PIXI.Texture.fromFrame(filename);
+    }
+    return a;
+  }
+
+  static SpriteFactory(texture){
+    return new PIXI.Sprite(texture);
+  }
+  static LoadFont(){
     this.font = new Array(256);
     this.font["0"] = PIXI.Texture.fromFrame('font00.png');
     this.font["1"] = PIXI.Texture.fromFrame('font01.png');
@@ -708,23 +701,7 @@ export default class Art{
     this.font["↓"] = PIXI.Texture.fromFrame('fontCd.png');
   }
 
-  static async LoadTexture(){
-      let loader = PIXI.loader;
-      await new Promise((res)=>loader
-        .add('pattern','src/resource/img/playerPattern.json')
-        .add('pattern2','src/resource/img/UIPattern.json')
-        .add('pattern3','src/resource/img/bulletPattern.json')
-        .add('pattern4','src/resource/img/enemyPattern.json')
-        .add('pattern5','src/resource/img/wallPattern.json')
-        .add('pattern6','src/resource/img/seqPattern.json')
-        .add('pattern7','src/resource/img/font.json')
-        .add('src/resource/effect/dark.png')
-        .load((loader,resources)=>Art.Load(resources)).onComplete.add(res));
-  }
 
-  static SpriteFactory(texture){
-    return new PIXI.Sprite(texture);
-  }
 }
 
 

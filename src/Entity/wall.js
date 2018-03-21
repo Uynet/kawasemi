@@ -1,5 +1,6 @@
 import Entity from './entity.js';
 import Art from '../art.js';
+import Drawer from '../drawer.js';
 import Collider from '../Collision/collider.js';
 import Circle from '../Collision/circle.js';
 import Box from '../Collision/box.js';
@@ -23,5 +24,9 @@ export default class Wall extends Entity{
     this.tex = MapData.Tile(ID).texture;
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
+    //テスト
+    if(ID == 72){
+      this.sprite.filters = [Drawer.testFilter];
+    }
   }
 }

@@ -50,9 +50,20 @@ export default class Drawer{
     $("#pixiview").append(this.Renderer.view);
 
     //フィルタ
+    //this.filters = 
     this.blurFilter = new PIXI.filters.BlurFilter();
     this.blurFilter.blur = 2;
     this.noiseFilter = new PIXI.filters.NoiseFilter(0.5);
+    /*
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET","src/Shader/test.frag",true);
+    xhr.addEventListener("load",e=>{
+      let test = xhr.responseText;
+      cl(test);
+      this.testFilter = new PIXI.Filter(null,test);
+    })
+    */
+
     //this.sepia =filter = new PIXI.filters.SepiaFilter();
     //this.tiltShiftFilter = new PIXI.filters.TiltShiftFilter()
     //this.sepiaFilter = new PIXI.filters.SepiaFilter();
@@ -96,7 +107,6 @@ export default class Drawer{
   static SetMap(x,y){
     this.mapSize.width = x;
     this.mapSize.height = y;
-    cl(this.mapSize.height);
   }
 
   /* プレイヤー中心にスクロール*/
