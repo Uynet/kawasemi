@@ -158,6 +158,7 @@ export default class MapData{
   //壁タイルの対応
   //タイルIDを渡すとテクスチャを返す
   static Tile(i){
+    //エイリアス
     let wall = Art.wallPattern;
     let out = Art.wallPattern.edge.out;
     let inner = Art.wallPattern.edge.inner;
@@ -169,6 +170,7 @@ export default class MapData{
     let tex;//テクスチャ
     let material = "wall";//材質
     let colType = "wall";//すり抜け床かどうか
+    let isBreakable = false;//壊せるか
     switch(i){
       //Bigblock
       case 82 : tex = wall.bigBlock[0];break;
@@ -218,13 +220,13 @@ export default class MapData{
       case 77:tex = steel.back[1];break;
       case 78:tex = steel.back[2];break;
       case 79:tex = steel.back[3];break;
-      //signboard
-      case 4 :tex = wall.signboard;break;
       //needle
-      case 8 : tex = needle[0];break;
-      case 9 : tex = needle[1];break;
-      case 10 : tex = needle[2];break;
-      case 11 : tex = needle[3];break;
+      case 0 : case 1 : case 2 : case 3 :
+        tex = needle[i];
+        isBreakable = true;
+        break;
+      case 8 : case 9 : case 10 : case 11 :
+        tex = needle[i-4];break;
       //through
       case 96 : tex = wall.through[0];colType="through";break;
   }
@@ -232,6 +234,7 @@ export default class MapData{
       colType : colType,
       material : material,
       texture : tex,
+      isBreakable : isBreakable,
     }
   }
 

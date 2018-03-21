@@ -297,6 +297,7 @@ export default class Player extends Entity{
     //壁
     for(let l of EntityManager.colliderList){
       if(l == this)continue;
+      if(l.coltype == "none")continue;
       let c = Collision.on(this,l);
       if(c.isHit){
         /* 衝突応答*/
@@ -314,6 +315,7 @@ export default class Player extends Entity{
               switch(l.material){
                 case "wall": Audio.PlaySE("landing1",1);break;
                 case "steel": Audio.PlaySE("landing2",1);Audio.PlaySE("landing1");break;
+                case "wood": Audio.PlaySE("landing1",1);break;
                 default : console.warn(l.material);
               }
             }
@@ -338,10 +340,10 @@ export default class Player extends Entity{
   Physics(){
     //動く床に乗っている時
     if(this.floor.on){
-      this.vel.x += this.floor.under.acc.x; 
-      this.vel.y += this.floor.under.acc.y; 
       this.pos.x += this.floor.under.vel.x; 
       this.pos.y += this.floor.under.vel.y; 
+      this.vel.x += this.floor.under.acc.x; 
+      this.vel.y += this.floor.under.acc.y; 
     }
     this.acc.y += this.gravity;
     this.pos.x += this.vel.x; 
@@ -355,9 +357,9 @@ export default class Player extends Entity{
     /*摩擦
      * 地面にいる&&入力がない場合のみ有向*/
      if(this.state == STATE.WAITING){
-       this.vel.x *= Param.player.fliction;
+      this.vel.x *= Param.player.fliction;
      }else if(this.isJump){
-       this.vel.x *= 0.99;
+      this.vel.x *= 0.99;
      }
      //jumping state
      if(this.isJump && this.vel.y <= 0){

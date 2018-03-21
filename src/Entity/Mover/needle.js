@@ -1,15 +1,18 @@
 import Art from '../../art.js';
+import Audio from '../../audio.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
+import MapData from '../../Stage/mapData.js';
+import Wall from '../wall.js';
 import BackEntity from '../backEntity.js';
 import BulletShot from '../Effect/bulletShot.js';
 
 let EntityList = EntityManager.entityList;
 
 //トゲ
-export default class Needle extends BackEntity{
+export default class Needle extends Wall{
   constructor(pos,ID){
     super(pos,ID);
     /*基本情報*/
@@ -17,6 +20,11 @@ export default class Needle extends BackEntity{
     this.name = "needle";
     this.layer = "ENTITY";
     this.isUpdater  =true;
+    this.hp = 1;
+    //wall parameter
+    let wall = MapData.Tile(ID);
+    this.isBreakable = wall.isBreakable;
+    this.coltype = "none";
     /*スプライト*/
     this.pattern = Art.wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号
@@ -55,6 +63,7 @@ export default class Needle extends BackEntity{
       EntityManager.removeEntity(this);
       let p = CPV(this.pos);
       EntityManager.addEntity(new BulletShot(p,VEC0()));
+      Audio.PlaySE("blockBreak");
     }
   }
 }
