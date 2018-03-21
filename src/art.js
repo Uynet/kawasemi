@@ -363,10 +363,16 @@ export default class Art{
       signboard : PIXI.Texture.fromFrame('wall02.png'),//看板
       shop : PIXI.Texture.fromFrame('wall03.png'),//看板
       needle : [
+        //壊れる
         PIXI.Texture.fromFrame('wall10.png'),//∧
         PIXI.Texture.fromFrame('wall11.png'),//>
         PIXI.Texture.fromFrame('wall12.png'),//<
         PIXI.Texture.fromFrame('wall13.png'),//V
+        //壊れない
+        PIXI.Texture.fromFrame('wall20.png'),//∧
+        PIXI.Texture.fromFrame('wall21.png'),//>
+        PIXI.Texture.fromFrame('wall22.png'),//<
+        PIXI.Texture.fromFrame('wall23.png'),//V
       ],
       //壁縁あり
       edge : {
