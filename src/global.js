@@ -53,12 +53,14 @@ const KEY = {
   DOWN : 40,
   Z : 90,
   X : 88,
+  V : 86,
   C : 67,
   H : 72,
   J : 74,
   K : 75,
   L : 76,
-  SP : 32
+  SP : 32,
+  SHIFT : 16, 
 }
 
 /*State*/ 

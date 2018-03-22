@@ -89,9 +89,10 @@ export default class Player extends Entity{
       this.score = 0;
     /*フラグ*/
     this.isJump = false;//空中にいるか
-      this.isRun = false;//走っているか
+    this.isRun = false;//走っているか
     this.isAlive = true;//
-      this.isInvincible = false//無敵時間
+    this.isInvincible = false;//無敵時間
+    this.isCanRead = false;//看板を読める状態
         /*床の親子関係*/
         this.floor = {
           on : false,//乗っているか
@@ -166,6 +167,7 @@ export default class Player extends Entity{
     //看板が近くにあれば優先
     if(Input.isKeyInput(KEY.DOWN)){
       //右向き下 or 左向き下
+      if(this.isCanRead)return;
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.DR;
       }else if(this.dir == DIR.L || this.dir == DIR.UL || this.dir == DIR.DL){
@@ -403,7 +405,7 @@ export default class Player extends Entity{
   ScrollByDir(){
     let d = POV(this.arg,100*po(this.offset));
     let p = ADV(this.pos,d);
-    if(Input.isKeyInput(KEY.SP)) {
+    if(Input.isKeyInput(KEY.SHIFT)) {
       let to = ADV(p,MLV(this.scPos,VECN(-1)));
       this.scPos = ADV(this.scPos , MLV(to,VECN(1/20)));
       this.offset = Math.min(this.offset+0.5,20);
@@ -489,16 +491,7 @@ export default class Player extends Entity{
       this.Collision();//衝突
       this.Supply();//bulletのかいふく　
     }
-    /*for debug*/
-    if(Input.isKeyClick(KEY.K)){
-      let p = CPV(this.pos);
-      p.y -= 32;
-      switch(this.weapon.name){
-        case  "missile" : this.ChangeWeapon("laser");break;
-        case  "laser" : this.ChangeWeapon("normal");break;
-        case  "normal" : this.ChangeWeapon("missile");break;
-      }
-    }
+    this.isCanRead = false;
     //this.CreateStage();//マップ生成
     this.ScrollByDir();//向きに応じてスクロール位置を変更
     Drawer.ScrollOn(this.pos);//プレイヤー中心にスクロール

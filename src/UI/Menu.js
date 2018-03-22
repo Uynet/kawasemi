@@ -20,10 +20,11 @@ export default class Menu extends UI{
     let p = CPV(pos);
     this.title = new Font({x:p.x,y:p.y + -1 * COLUMN},"-WEAPON-","MENU"),
     this.index = 0;
+    this.layer = "FILTER";
     this.items = [
-      new Font({x:p.x + 0,y:p.y + 1 * COLUMN},"NORMAL","MENU"),
-      new Font({x:p.x + 0,y:p.y + 2 * COLUMN},"MISSILE","MENU"),
-      new Font({x:p.x + 0,y:p.y + 3 * COLUMN},"LASER","MENU"),
+      new Font({x:p.x + 0,y:p.y + 1 * COLUMN},"さいかい","MENU"),
+      new Font({x:p.x + 0,y:p.y + 2 * COLUMN},"ぶき","MENU"),
+      new Font({x:p.x + 0,y:p.y + 3 * COLUMN},"やめる","MENU"),
     ];
     this.Select(this.index);
     /*スプライト*/
@@ -62,7 +63,7 @@ export default class Menu extends UI{
       this.index = Math.max(this.index-1,0);
       this.Select(this.index);
     }
-    if(Input.isKeyClick(KEY.X)|| Input.isKeyClick(KEY.SP)){
+    if(Input.isKeyClick(KEY.X)){
       switch(this.items[this.index].str){
         case "さいかい" : 
           this.Close();
@@ -75,7 +76,7 @@ export default class Menu extends UI{
           break;
       }
     }
-    if(Input.isKeyClick(KEY.C)){
+    if(Input.isKeyClick(KEY.SP)){
         this.Close();
     }
   }

@@ -62,7 +62,7 @@ export default class Drawer{
   }
 
   /*コンテナにスプライトを追加*/
-  static addContainer(sprite,CONTAINER,id){
+  static addContainer(sprite,CONTAINER){
     switch (CONTAINER){
       case "UI" : this.UIContainer.addChild(sprite); break;
       case "FILTER": this.filterContainer.addChild(sprite); break;

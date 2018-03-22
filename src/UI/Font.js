@@ -21,10 +21,11 @@ export default class Font extends UI{
     this.container = new PIXI.Container();
     //0埋めをするかしないか
     switch(this.type){
+      case "MENU" :
+        this.layer = "FILTER";
       case "HP" :
       case "BULLET" :
       case "MES" :
-      case "MENU" :
         this.isPadding = true;
         this.d = this.str.length;//桁数
           break;

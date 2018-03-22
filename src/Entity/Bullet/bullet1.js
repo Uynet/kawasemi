@@ -60,10 +60,12 @@ export default class Bullet1 extends Bullet{
       let blur = Pool.GetBulletBlur(p,v);
       if(blur)EntityManager.addEntity(blur);
     /*Effect Sonic*/
+    /*
     if(this.frame%4 == 0){
       let sonic = Pool.GetSonic(p,v);
       if(sonic)EntityManager.addEntity(sonic);
     }
+    */
     for (let AI of this.AIList){
       AI.Do();
     }

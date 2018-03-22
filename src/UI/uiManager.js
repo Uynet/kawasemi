@@ -55,7 +55,11 @@ export default class UIManager{
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
-    this.PopMessage("さいはてどろっぷ","POP");
+    let p1 = {
+      x : 96, 
+      y : 64,
+    }
+    UIManager.addUI(new Font(p1,"さいはてどろっぷ","MES"));//SCORE
     let p = {
       x : 172, 
       y : 192,
@@ -74,11 +78,12 @@ export default class UIManager{
     Drawer.backContainer.filters = filters;
     Drawer.backGroundContainer.filters = filters;
     Drawer.foreContainer.filters = filters;
+    Drawer.UIContainer.filters = filters;
   }
   //メニューを開く
   static SetMenu(){
     UIManager.SetFilter([Drawer.blurFilter]);
-    UIManager.addUI(new Menu(ADV(P_MENU,{x:0,y:16})));
+    UIManager.addUI(new Menu(ADV(P_MENU,VECY(16))));
   }
   //UIをすべて削除
   static Clean(){
@@ -109,6 +114,9 @@ export default class UIManager{
 
   //UIをリストに登録
   static addUI(ui){
+    let layer = ui.layer;
+    if(!layer)layer = "UI";
+
     this.UIList.push(ui); 
     switch (ui.type){
       case "HP" : this.HP = ui; break;
@@ -121,24 +129,27 @@ export default class UIManager{
     //スプライトの追加
     if(ui.isMultiple){
       //複スプライト
-        Drawer.addContainer(ui.container,"UI");
+        Drawer.addContainer(ui.container,layer);
     }else{
       //単スプライト
-      Drawer.addContainer(ui.sprite,"UI");
+      Drawer.addContainer(ui.sprite,layer);
     }
   }
   /*UIをリストから削除*/
   //参照の開放をする
   static removeUI(ui){
+    let layer = ui.layer;
+    if(!layer)layer = "UI";
+    
     let i = this.UIList.indexOf(ui);
     //要素の子であるFontはリストに無いため参照を消さない
     if(i != -1) this.UIList.splice(i,1);
     if(ui.isMultiple){
       //複数スプライトを持つオブジェクト
-        Drawer.removeContainer(ui.container,"UI");
+        Drawer.removeContainer(ui.container,layer);
     }else{
       //単スプライト
-      Drawer.removeContainer(ui.sprite,"UI");
+      Drawer.removeContainer(ui.sprite,layer);
     }
   }
   /*UIの更新*/
