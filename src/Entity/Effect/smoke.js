@@ -22,8 +22,6 @@ export default class Sonic extends EFFECT{
     this.sprite.position = this.pos;
     this.sprite.scale.set(size/5);
     this.sprite.anchor.set(0.5);
-    this.sprite.scale.x = this.size/5;
-    this.sprite.scale.y = this.size/5;
   }
 
   Update(){
