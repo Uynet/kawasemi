@@ -22,16 +22,16 @@ export default class Drawer{
     this.backGroundContainer = new PIXI.Container();//背景
     this.backContainer = new PIXI.Container();//backEntity
     this.entityContainer = new PIXI.Container();//Entity
-    this.filterContainer = new PIXI.Container();//画面遷移フィルター
-    this.foreContainer = new PIXI.Container();//手前に表示する 文字エフェクトなど
     this.foreEntityContainer = new PIXI.Container();//手前に表示する 文字エフェクトなど
+    this.foreContainer = new PIXI.Container();//手前に表示する 文字エフェクトなど
+    this.filterContainer = new PIXI.Container();//画面遷移フィルター
     this.UIContainer = new PIXI.Container();//UI
 
     this.app.stage.addChild(this.backGroundContainer);
     this.app.stage.addChild(this.backContainer);
     this.app.stage.addChild(this.entityContainer);
-    this.app.stage.addChild(this.foreContainer);
     this.app.stage.addChild(this.foreEntityContainer);
+    this.app.stage.addChild(this.foreContainer);
     this.app.stage.addChild(this.filterContainer);
     this.app.stage.addChild(this.UIContainer);
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);

@@ -123,10 +123,6 @@ export default class Enemy5 extends Enemy{
             y : -1,
           }
           let b = new eBullet2(p,v);
-        if(this.pos.y > EntityManager.player.pos.y){
-          b.gravity *= -1;
-          b.vel.y*=-1;
-          }
           EntityManager.addEntity(b);
       }
     }else{
