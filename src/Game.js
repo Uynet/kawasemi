@@ -63,14 +63,6 @@ export default class Game{
      UIManager.Update();
 
      /*ポーズ状態に遷移*/
-     if(Input.isKeyClick(KEY.C) && EntityManager.player.isAlive){
-       let player = EntityManager.player;
-       switch(player.weapon.name){
-         case  "missile" : player.ChangeWeapon("laser");break;
-         case  "laser" : player.ChangeWeapon("normal");break;
-         case  "normal" : player.ChangeWeapon("missile");break;
-       }
-     }
      /*
        UIManager.SetMenu();
        Game.scene.PushSubState("PAUSE");

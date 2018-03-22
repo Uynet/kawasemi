@@ -16,9 +16,10 @@ export default class Param{
       vxMax : 3,
       vyMax : 8,
       //手に入れた武器の情報
-      weapon : {
+      havingWeaponList : {
+        normal : true,
         missile : true,
-        laser : true,
+        laser : false,
       },
       //装備中の武器
       equip : "normal",
@@ -88,7 +89,7 @@ export default class Param{
       //optional
       isTarget : true,
       isHorming : false,
-      isLasersight : false,
+      isLasersight : true,
     }
     this.weapon11 = {
       agi : 2,
@@ -103,7 +104,7 @@ export default class Param{
       //optional
       isTarget : true,
      // isHorming : false,
-      isLasersight : true,
+      isLasersight : false,
     }
     //normal
     this.weapon3 = {
