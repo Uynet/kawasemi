@@ -61,6 +61,7 @@ const KEY = {
   L : 76,
   SP : 32,
   SHIFT : 16, 
+  ESC : 27, 
 }
 
 /*State*/ 

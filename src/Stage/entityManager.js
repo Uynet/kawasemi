@@ -93,7 +93,7 @@ export default class EntityManager{
         l.Animation(); 
       }
       //看板は読めるようにする
-      if(l.name == "signboard") {
+      if(l.name == "signboard" || l.name == "shop") {
         l.Update(); 
       }
     }

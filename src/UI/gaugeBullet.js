@@ -14,7 +14,11 @@ const P_ICON = {
   x : -16, 
   y : 0, 
 };
-
+//WLIST
+const P_WLIST = {
+  x : -12,
+  y : -23,
+}
 export default class GaugeBullet extends UI{
   constructor(pos){
     super(pos);
@@ -25,14 +29,27 @@ export default class GaugeBullet extends UI{
     this.pos = pos;
     /*パラメータ*/
     this.max = Param.player.maxBullet;
+
+    //samall weapon list
+    let list = Object.keys(Param.player.havingWeaponList);
+    list = list.filter((arr)=>{
+      return Param.player.havingWeaponList[arr];
+    })
+
     /*child*/
     this.outer = {pos:CPV(pos)};
     this.bar = {pos:CPV(pos)};
     this.icon = {pos:ADV(pos,P_ICON)};
     this.amount = new Font(ADV(pos,P_AMOUNT),this.max + "","BULLET");//数字
+    this.wlist = {
+      pos:ADV(pos,P_WLIST),
+      list: list,
+    };
 
     //pos
     /*スプライト*/
+    this.wlistPattern = Art.UIPattern.bullet.pop;
+    this.frame = new PIXI.Rectangle(0, 0,16,16);
     this.spid = 0;
     this.container = new PIXI.Container();
     let s;
@@ -40,12 +57,10 @@ export default class GaugeBullet extends UI{
     s = Art.SpriteFactory(Art.UIPattern.bullet.outer);
     s.position = this.outer.pos; 
     this.container.addChild(s);
-    this.spid++;
     //bar
     s = Art.SpriteFactory(Art.UIPattern.bullet.bar);
     s.position = this.bar.pos; 
     this.container.addChild(s);
-    this.spid++;
     //icon
     let equip = Param.player.equip;
     s = Art.SpriteFactory(Art.UIPattern.bullet.icon[equip]);
@@ -53,6 +68,17 @@ export default class GaugeBullet extends UI{
     this.container.addChild(s);
     //amount
     this.container.addChild(this.amount.container);
+
+    //アイコンリストをぷっしゅ　
+    let p = this.wlist.pos; 
+    //p = this.pos; 
+    for(let w of this.wlist.list){
+      s = Art.SpriteFactory(Art.UIPattern.bullet.pop[w]);
+      s.position = p;
+      this.container.addChild(s);
+      p.x += 8;
+    }
+
   }
   SetBar(bullet){
     //barの長さを更新

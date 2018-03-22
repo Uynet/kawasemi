@@ -2,6 +2,7 @@ import Timer from './timer.js';
 
 let inputedKeyList = (new Array(256)).fill(false);
 let clickedKeyList = (new Array(256)).fill(false);
+let anyKeyPress = false;
 let timer = 0;
 
 export default class Input{
@@ -17,9 +18,13 @@ export default class Input{
       return false;
     }
   }
+  static isAnyKeyClick(){
+    return anyKeyPress;
+  }
 }
 /*receive input event*/
 $(document).on("keydown",(e)=> {
+  anyKeyPress = true;
   clickedKeyList[event.keyCode] = false;
   if(!inputedKeyList[event.keyCode]){
     clickedKeyList[event.keyCode] = true;
@@ -27,9 +32,14 @@ $(document).on("keydown",(e)=> {
   }
   inputedKeyList[event.keyCode] = true;
   //上下キーを封じる
-  if(e.keyCode==KEY.UP || e.keyCode == KEY.DOWN || e.keyCode == KEY.SP) event.preventDefault();
+  switch(e.keyCode){
+    case KEY.UP: 
+    case KEY.DOWN: 
+    case KEY.SP: event.preventDefault();
+  }
 });
 $(document).on("keyup",(e)=> {
+  anyKeyPress = false;
   clickedKeyList[event.keyCode] = false;
   inputedKeyList[event.keyCode] = false;
 });

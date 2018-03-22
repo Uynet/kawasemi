@@ -75,13 +75,14 @@ export default class Coin extends Entity{
   GetByPlayer(){
     //プレイヤーに回収される
     if(DIST(this.pos,player.pos)<48){
+      this.coltype = "none";
       let vec = NOMALIZE({
         x : player.pos.x - this.pos.x,
         y : player.pos.y - this.pos.y
       });
       this.pos.x += 5 * vec.x;
       this.pos.y += 5 * vec.y;
-      if(DIST(this.pos,player.pos)<10){
+      if(DIST(this.pos,player.pos)<2){
         Audio.PlaySE("coin1",-1);
         EntityManager.addEntity(new GetCoin(this.pos,{x:0,y:0}));
         player.GetScore(1);
@@ -102,7 +103,7 @@ export default class Coin extends Entity{
       EntityManager.addEntity(new BrightCoin(p));
     }
     //Collision
-    this.Collision();
+    if(this.coltype!="none")this.Collision();
     this.Physics();
     if(EntityManager.player.isAlive)this.GetByPlayer();
     //時間立つと点滅

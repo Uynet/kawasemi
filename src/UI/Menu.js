@@ -18,7 +18,7 @@ export default class Menu extends UI{
     this.type = "MENU";
     this.isMultiple = true;
     let p = CPV(pos);
-    this.title = new Font({x:p.x,y:p.y + -1 * COLUMN},"-WEAPON-","MENU"),
+    this.title = new Font({x:p.x,y:p.y + -1 * COLUMN},"-PAUSE-","MENU"),
     this.index = 0;
     this.layer = "FILTER";
     this.items = [
@@ -76,7 +76,7 @@ export default class Menu extends UI{
           break;
       }
     }
-    if(Input.isKeyClick(KEY.SP)){
+    if(Input.isKeyClick(KEY.ESC)){
         this.Close();
     }
   }

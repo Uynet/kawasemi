@@ -3,6 +3,7 @@ import UI from './ui.js';
 import StagePop from './stagePop.js';
 import GaugeHP from './gaugeHP.js';
 import GaugeBullet from './gaugeBullet.js';
+import WeaponList from './WeaponList.js';
 import Font from './font.js';
 import Message from './message.js';
 import Menu from './menu.js';
@@ -12,23 +13,23 @@ import Game from '../game.js';
 
 //HP
 const P_HP = {
-  x : 56, 
-  y : 8
+  x : 8, 
+  y : 0
 };
 //bullet
 const P_BUL = {
-  x : 12, 
-  y : P_HP.y, 
+  x : P_HP.x, 
+  y : P_HP.y+16, 
 };
 //score
 const P_SCORE = {
   x : 216,
-  y : P_BUL.y + 8, 
+  y : P_HP.y + 8, 
 }
 //message
 const P_MES = {
-  x:40,
-  y:35
+  x:64,
+  y:128
 }
 //Menu
 let P_MENU = {
@@ -41,6 +42,7 @@ export default class UIManager{
     this.UIList = [];//UI全部のリスト
     this.HP;
     this.bullet;
+    this.wlistk
     this.score;
     this.message;
     this.menu;
@@ -64,17 +66,25 @@ export default class UIManager{
       x : 172, 
       y : 192,
     }
-    UIManager.addUI(new Font(p,"+ uynet 2018","MES"));//SCORE
+    UIManager.addUI(new Font(p,"+ 2018 uynet","MES"));//SCORE
   }
   /*ステージ中でのUI配置に変更*/
   static SetStage(){
     UIManager.addUI(new GaugeHP(P_HP));//HP
     UIManager.addUI(new GaugeBullet(P_BUL));//BULLET
+    UIManager.addUI(new WeaponList(P_BUL));//WList;
     UIManager.addUI(new Score(P_SCORE));//SCORE
   }
   //フィルタ
   static SetFilter(filters){
+    /*
     Drawer.entityContainer.filters = filters;
+    Drawer.backContainer.filters = filters;
+    Drawer.backGroundContainer.filters = filters;
+    Drawer.foreContainer.filters = filters;
+    Drawer.UIContainer.filters = filters;
+    */
+    Drawer.entityContainer.aplha = 0.5;
     Drawer.backContainer.filters = filters;
     Drawer.backGroundContainer.filters = filters;
     Drawer.foreContainer.filters = filters;
@@ -82,7 +92,7 @@ export default class UIManager{
   }
   //メニューを開く
   static SetMenu(){
-    UIManager.SetFilter([Drawer.blurFilter]);
+    UIManager.SetFilter([Drawer.testFilter]);
     UIManager.addUI(new Menu(ADV(P_MENU,VECY(16))));
   }
   //UIをすべて削除
@@ -121,6 +131,7 @@ export default class UIManager{
     switch (ui.type){
       case "HP" : this.HP = ui; break;
       case "BULLET" : this.bullet = ui; break;
+      case "WLIST" : this.wlist = ui; break;
       case "SCORE" : this.score = ui;break;
       case "MES" : this.message = ui;break;
       case "MENU" : this.menu = ui;break;

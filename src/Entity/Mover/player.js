@@ -93,6 +93,7 @@ export default class Player extends Entity{
     this.isAlive = true;//
     this.isInvincible = false;//無敵時間
     this.isCanRead = false;//看板を読める状態
+    this.isReading = false;//看板を読んでいる
         /*床の親子関係*/
         this.floor = {
           on : false,//乗っているか
@@ -167,7 +168,11 @@ export default class Player extends Entity{
     //看板が近くにあれば優先
     if(Input.isKeyInput(KEY.DOWN)){
       //右向き下 or 左向き下
-      if(this.isCanRead)return;
+      if(this.isCanRead){
+        this.isReading = true;
+        this.state = STATE.WAITING;
+        return;
+      }
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.DR;
       }else if(this.dir == DIR.L || this.dir == DIR.UL || this.dir == DIR.DL){
@@ -203,50 +208,23 @@ export default class Player extends Entity{
   /*状態からアニメーションを行う*/
   Animation(){
     this.frame++;
+    let state;
     switch(this.state){
       case STATE.WAITING :
         this.spid = (Math.floor(this.frame/Param.player.animWait))%4
-          switch(this.dir){
-            case DIR.R : this.sprite.texture = this.pattern.waitR[this.spid]; break;
-            case DIR.L : this.sprite.texture = this.pattern.waitL[this.spid]; break;
-            case DIR.UR : this.sprite.texture = this.pattern.waitUR[this.spid]; break;
-            case DIR.UL : this.sprite.texture = this.pattern.waitUL[this.spid]; break;
-            case DIR.DR : this.sprite.texture = this.pattern.waitDR[this.spid]; break;
-            case DIR.DL : this.sprite.texture = this.pattern.waitDL[this.spid]; break;
-          }
+          state = "wait";
           break;
       case STATE.JUMPING :
         this.spid = (Math.floor(this.frame/Param.player.animRun))%4
-          switch(this.dir){
-            case DIR.R : this.sprite.texture = this.pattern.jumpR[this.spid]; break;
-            case DIR.L : this.sprite.texture = this.pattern.jumpL[this.spid]; break;
-            case DIR.UR : this.sprite.texture = this.pattern.jumpUR[this.spid]; break;
-            case DIR.UL : this.sprite.texture = this.pattern.jumpUL[this.spid]; break;
-            case DIR.DR : this.sprite.texture = this.pattern.jumpDR[this.spid]; break;
-            case DIR.DL : this.sprite.texture = this.pattern.jumpDL[this.spid]; break;
-          }
+          state = "jump";
           break;
       case STATE.FALLING :
         this.spid = (Math.floor(this.frame/Param.player.animRun))%4;
-        switch(this.dir){
-          case DIR.R : this.sprite.texture = this.pattern.fallR[this.spid]; break;
-          case DIR.L : this.sprite.texture = this.pattern.fallL[this.spid]; break;
-          case DIR.UR : this.sprite.texture = this.pattern.fallUR[this.spid]; break;
-          case DIR.UL : this.sprite.texture = this.pattern.fallUL[this.spid]; break;
-          case DIR.DR : this.sprite.texture = this.pattern.fallDR[this.spid]; break;
-          case DIR.DL : this.sprite.texture = this.pattern.fallDL[this.spid]; break;
-        }
+          state = "fall";
         break;
       case STATE.RUNNING :
         this.spid = (Math.floor(this.frame/Param.player.animRun))%6;
-        switch(this.dir){
-          case DIR.R : this.sprite.texture = this.pattern.runR[this.spid]; break;
-          case DIR.L : this.sprite.texture = this.pattern.runL[this.spid]; break;
-          case DIR.UR : this.sprite.texture = this.pattern.runUR[this.spid]; break;
-          case DIR.UL : this.sprite.texture = this.pattern.runUL[this.spid]; break;
-          case DIR.DR : this.sprite.texture = this.pattern.runDR[this.spid]; break;
-          case DIR.DL : this.sprite.texture = this.pattern.runDL[this.spid]; break;
-        }
+        state = "run";
         //走り中は画像をちょっとだけ跳ねさせる
         //スプライト位置を動かしているだけなので当たり判定は変化していない
         let a = 2;//振幅
@@ -261,13 +239,17 @@ export default class Player extends Entity{
             default : break;
           }
         }
-
         break;
         //死亡
         case STATE.DYING:
           this.spid = Math.min(7,(Math.floor((this.frame - this.frameDead)/Param.player.animRun)));
-          this.sprite.texture = this.pattern.dying[this.spid];
+          state = "dying"
           break;
+    }
+    if(state == "dying"){
+      this.sprite.texture = this.pattern[state][this.spid];
+    }else{
+      this.sprite.texture = this.pattern[state+this.dir][this.spid];
     }
   }
 
@@ -405,7 +387,7 @@ export default class Player extends Entity{
   ScrollByDir(){
     let d = POV(this.arg,100*po(this.offset));
     let p = ADV(this.pos,d);
-    if(Input.isKeyInput(KEY.SHIFT)) {
+    if(Input.isKeyInput(KEY.SP)) {
       let to = ADV(p,MLV(this.scPos,VECN(-1)));
       this.scPos = ADV(this.scPos , MLV(to,VECN(1/20)));
       this.offset = Math.min(this.offset+0.5,20);

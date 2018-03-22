@@ -47,7 +47,7 @@ export default class Bullet2 extends Bullet{
     for(let w of EntityManager.colliderList){
       let c = Collision.on(this,w);
       if(c.isHit){
-        if(w.name == "woodbox") {
+        if(w.isBreakable) {
           w.Damage(-1);
           EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
         }
@@ -57,11 +57,12 @@ export default class Bullet2 extends Bullet{
           }
         else {
           if(w.material == "steel"){
-            let i = POV(this.arg,16);//入射角
+            let i = POV(this.arg,16);//入射角ベクトル
             //r = i+2n*(i・n)
+
             let r = ADV(i,MLV(VECN(2),MLV(c.n,VECN(DOT(i,c.n)))));
             this.arg = Math.atan(r.y/r.x);
-            if(r.y>0)this.arg += Math.PI;
+            if(r.y<0)this.arg += Math.PI;
           //鉄で反射
           }else{
           //壁にぶつかったので停止
