@@ -80,7 +80,8 @@ export default class Signboard extends BackEntity{
     //page : 現在のページ番号
     let player = EntityManager.player;
     if(DIST(player.pos,this.pos) <  16 && player.isAlive){
-      if( Input.isKeyClick(KEY.SP)){
+      player.isCanRead = true;
+      if( Input.isKeyClick(KEY.DOWN)){
         this.Read();
       }
     }

@@ -59,14 +59,14 @@ export default class Game{
   //ステージ中の処理
   static UpdateStage(){
     /*Entityの更新*/
-     EntityManager.Update();
-     UIManager.Update();
+    EntityManager.Update();
+    UIManager.Update();
 
-     /*ポーズ状態に遷移*/
-     /*
-       UIManager.SetMenu();
-       Game.scene.PushSubState("PAUSE");
-       */
+    /*ポーズ状態に遷移*/
+    if(Input.isKeyClick(KEY.SP)){
+      UIManager.SetMenu();
+      Game.scene.PushSubState("PAUSE");
+    }
   }
   static UpdatePause(){
     UIManager.Update();
