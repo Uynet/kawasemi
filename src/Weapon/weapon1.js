@@ -45,27 +45,24 @@ export default class Weapon1 extends Weapon{
         console.assert(player.bullet >=0 );
 
         this.arg = player.arg;
-        let p = {
-          x: player.pos.x -4 + 10 * Math.cos(this.arg),
-          y: player.pos.y + 10 * Math.sin(this.arg),
-        }
-        let bullet = Pool.GetMissile(p,this);
-        //let bullet = new Bullet1(p,this);
-        EntityManager.addEntity(bullet);
-        /* ■ SoundEffect : shot */
-        Audio.PlaySE("missileShot",2);
-        /* □ Effect : shot */
-        EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
-        EntityManager.addEntity(new Explosion2(CPV(p),this.arg));
-        //反動
-        //player.vel.x -= v.x/11;
-        let v = POV(this.arg,this.speed);
-        player.acc.y -= Math.max(v.y/5,0);
-        //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
-        //振動
-        //EventManager.eventList.push(new QuakeEvent(8,2));
+        this.Set(player);
+
       }
     }
+  }
+  //装填
+  Set(player){
+    let p = {
+      x: player.pos.x -4 + 10 * Math.cos(this.arg),
+      y: player.pos.y + 10 * Math.sin(this.arg),
+    }
+    let bullet = Pool.GetMissile(p,this);
+    EntityManager.addEntity(bullet);
+    /* ■ SoundEffect : shot */
+    Audio.PlaySE("missileShot",2);
+    /* □ Effect : shot */
+    EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
+    EntityManager.addEntity(new Explosion2(CPV(p),this.arg));
   }
   Update(player){
     if(this.isTarget) this.Target(player);

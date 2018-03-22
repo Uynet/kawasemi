@@ -30,41 +30,26 @@ export default class Weapon3 extends Weapon{
     this.isHorming = this.param.isHorming;
     this.isLasersight = this.param.isLasersight;
   }
-  shot(player){
-    //最後に撃ってからframeまで停止
-    if((player.frame - player.frameShot) > this.agi){
-      //shot時刻
-      player.frameShot = player.frame;
-      //playerの弾薬が残っていなければ打てない
-      if(player.bullet < this.cost){
-        EntityManager.addEntity(new FontEffect(player.pos,"たりないよ","pop"));
-      }else{
-
-        //弾薬消費
-        player.bullet -= this.cost;
-        console.assert(player.bullet >=0 );
-
-        this.arg = player.arg;
-        let p = {
-          x: player.pos.x -4 + 10 * Math.cos(this.arg),
-          y: player.pos.y + 10 * Math.sin(this.arg),
-        }
-        let bullet = new Bullet3(p,this);
-        //let bullet = new Bullet1(p,this);
-        EntityManager.addEntity(bullet);
-        /* ■ SoundEffect : shot */
-        Audio.PlaySE("normalShot",-0.6);
-        /* □ Effect : shot */
-        EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
-        //反動
-        //player.vel.x -= v.x/11;
-        //let v = POV(this.arg,this.speed);
-        //player.acc.y -= Math.max(v.y/5,0);
-        //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
-        //振動
-        //EventManager.eventList.push(new QuakeEvent(8,2));
-      }
+  Set(player){
+    this.arg = player.arg;
+    let p = {
+      x: player.pos.x -4 + 10 * Math.cos(this.arg),
+      y: player.pos.y + 10 * Math.sin(this.arg),
     }
+    let bullet = new Bullet3(p,this);
+    //let bullet = new Bullet1(p,this);
+    EntityManager.addEntity(bullet);
+    /* ■ SoundEffect : shot */
+    Audio.PlaySE("normalShot",-0.6);
+    /* □ Effect : shot */
+    EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
+    //反動
+    //player.vel.x -= v.x/11;
+    //let v = POV(this.arg,this.speed);
+    //player.acc.y -= Math.max(v.y/5,0);
+    //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
+    //振動
+    //EventManager.eventList.push(new QuakeEvent(8,2));
   }
   Update(player){
     if(this.isTarget) this.Target(player);

@@ -88,7 +88,7 @@ export default class Bullet2 extends Bullet{
     }
     /*observer*/
     //HP || 経過時間
-    if( this.frame > 10 || this.hp<=0){
+    if( this.frame > 20 || this.hp<=0){
       EntityManager.removeEntity(this);
     }
     this.sprite.position = ADV(this.pos,VECN(8));

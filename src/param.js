@@ -5,7 +5,7 @@ export default class Param{
       jumpVel : 4.5,//ジャンプ力
       runVel : 0.4,//はしり速度
       gravity : 0.15,
-      maxHp : 20,
+      maxHp : 100,
       maxBullet : 100,
       fliction : 0.7,
       invTime : 5,//無敵時間

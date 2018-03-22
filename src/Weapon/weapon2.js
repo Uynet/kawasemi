@@ -42,39 +42,24 @@ export default class Weapon2 extends Weapon{
     this.isLasersight = this.param.isLasersight;
 
   }
-
-  shot(player){
-    //最後に撃ってからframeまで停止
-    if((player.frame - player.frameShot) > this.agi){
-      //shot時刻
-      player.frameShot = player.frame;
-      //playerの弾薬が残っていなければ打てない
-      if(player.bullet < this.cost){
-        EntityManager.addEntity(new FontEffect(player.pos,"たりないよ","pop"));
-      }else{
-
-        //弾薬消費
-        player.bullet -= this.cost;
-
-        let arg = player.arg;
-        let p = ADV(POV(arg,16),CPV(player.pos));
-        let bullet;
-        //再帰的に生成
-        p = ADV(player.pos,POV(arg,16));
-        bullet = new Bullet2(p,arg,true,0);
-        EntityManager.addEntity(bullet);
-        /* ■ SoundEffect : shot */
-        Audio.PlaySE("laserShot",0.7);
-        /* □ Effect : shot */
-        EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
-        EntityManager.addEntity(new Explosion1(CPV(p)));
-        //反動
-        //player.vel.x -= v.x/11;
-        //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
-        //振動
-        EventManager.eventList.push(new QuakeEvent(17,5));
-      }
-    }
+  Set(player){
+    let arg = player.arg;
+    let p = ADV(POV(arg,16),CPV(player.pos));
+    let bullet;
+    //再帰的に生成
+    p = ADV(player.pos,POV(arg,16));
+    bullet = new Bullet2(p,arg,true,0);
+    EntityManager.addEntity(bullet);
+    /* ■ SoundEffect : shot */
+    Audio.PlaySE("laserShot",0.7);
+    /* □ Effect : shot */
+    EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
+    EntityManager.addEntity(new Explosion1(CPV(p)));
+    //反動
+    //player.vel.x -= v.x/11;
+    //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
+    //振動
+    EventManager.eventList.push(new QuakeEvent(17,5));
   }
   Update(player){
     if(this.isTarget) this.Target(player);
