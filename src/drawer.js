@@ -54,21 +54,6 @@ export default class Drawer{
     this.blurFilter = new PIXI.filters.BlurFilter();
     this.blurFilter.blur = 2;
     this.noiseFilter = new PIXI.filters.NoiseFilter(0.5);
-    /*
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET","src/Shader/test.frag",true);
-    xhr.addEventListener("load",e=>{
-      let test = xhr.responseText;
-      cl(test);
-      this.testFilter = new PIXI.Filter(null,test);
-    })
-    */
-
-    //this.sepia =filter = new PIXI.filters.SepiaFilter();
-    //this.tiltShiftFilter = new PIXI.filters.TiltShiftFilter()
-    //this.sepiaFilter = new PIXI.filters.SepiaFilter();
-    //this.sepiaFilter.sepia = 0.5;
-
     //
     this.mapSize = {
       width : 32,

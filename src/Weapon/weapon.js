@@ -3,7 +3,7 @@ import EntityManager from '../Stage/entityManager.js';
 import Target from '../Entity/Effect/target.js';
 import Lasersight from '../Entity/Effect/lasersight.js';
 import Audio from '../audio.js';
-
+import FontEffect from '../Entity/Effect/fontEffect.js';
 
 const DIR = {
   UR : "UR",
@@ -34,7 +34,26 @@ export default class Weapon{
     this.isLaserOn = false;
     this.target = null;//これ大丈夫か??
   }
-  shot(player){ }
+  shot(player){
+    //最後に撃ってからframeまで停止
+    if((player.frame - player.frameShot) > this.agi){
+      //shot時刻
+      player.frameShot = player.frame;
+      //playerの弾薬が残っていなければ打てない
+      if(player.bullet < this.cost){
+        EntityManager.addEntity(new FontEffect(player.pos,"たりないよ","pop"));
+          Audio.PlaySE("empty");
+      }else{
+        //弾薬消費
+        player.bullet -= this.cost;
+        console.assert(player.bullet >=0 );
+
+        this.arg = player.arg;
+        this.Set(player);
+
+      }
+    }
+  }
   //敵が視界に入っているか
   isSeen(player,enemy){
     return (player.dir == DIR.UR || player.dir ==  DIR.UL) && (player.pos.y-enemy.pos.y)/Math.abs((player.pos.x-enemy.pos.x)) > 1

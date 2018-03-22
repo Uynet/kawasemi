@@ -1,5 +1,6 @@
 import Drawer from '../drawer.js';
 import UI from './ui.js';
+import StagePop from './stagePop.js';
 import GaugeHP from './gaugeHP.js';
 import GaugeBullet from './gaugeBullet.js';
 import Font from './font.js';
@@ -7,6 +8,7 @@ import Message from './message.js';
 import Menu from './menu.js';
 import Score from './score.js';
 import EntityManager from '../Stage/entityManager.js';
+import Game from '../game.js';
 
 //HP
 const P_HP = {
@@ -44,18 +46,26 @@ export default class UIManager{
     this.menu;
   }
   static PopStage(stage){
-   // this.PopMessage("STAGE" + stage, "POP");
+    let p = {
+      x : 64,
+      y : 64
+    }
+    UIManager.addUI(new StagePop(p,"--stage "+Game.stage+"- "));//SCORE
   }
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
-    this.PopMessage("PRESS SPACE","POP");
+    this.PopMessage("さいはてどろっぷ","POP");
+    let p = {
+      x : 172, 
+      y : 192,
+    }
+    UIManager.addUI(new Font(p,"+ uynet 2018","MES"));//SCORE
   }
   /*ステージ中でのUI配置に変更*/
   static SetStage(){
     UIManager.addUI(new GaugeHP(P_HP));//HP
     UIManager.addUI(new GaugeBullet(P_BUL));//BULLET
-    //UIManager.addUI(new Font(P_SCORE,"0","SCORE"));//SCORE
     UIManager.addUI(new Score(P_SCORE));//SCORE
   }
   //フィルタ

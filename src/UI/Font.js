@@ -14,7 +14,8 @@ export default class Font extends UI{
     this.type = type;
     this.name = "font";
     this.isAlive = true;//消えたらfalse
-      this.isMultiple = true;
+    this.isMultiple = true;
+    this.frame = 0;//stagepopでしか使ってない
     /*スプライト*/
     this.str = str; //0~9
     this.container = new PIXI.Container();
@@ -69,6 +70,23 @@ export default class Font extends UI{
     }
   }
 
+  PushText(str){
+    let spid = str + "";//str型にすること
+    let tex = Art.font[spid];
+    let sprite = new PIXI.Sprite(tex);
+    let pos = CPV(this.pos);
+    pos.x += this.d * 8;
+    sprite.position = pos;
+    this.container.addChild(sprite);
+    this.d++;
+  }
+  ChangeText(text,pos){
+    this.container.children = [];
+    this.str = text; //0~9
+    this.d = this.str.length;//桁数
+    this.SetPos(CPV(pos));
+  }
+
   SetPos(pos){
     let space;
     let sprite;
@@ -87,7 +105,7 @@ export default class Font extends UI{
         space = 7;
       }
       sprite = new PIXI.Sprite(tex);
-      sprite.position = this.pos;
+      sprite.position = pos;
       this.container.addChild(sprite);
       pos.x += space;
     };
@@ -95,6 +113,6 @@ export default class Font extends UI{
 
   //各UIの内部から呼ぶ必要がある
   Update(){
-    this.container.position;
+    this.frame++;
   };
 };

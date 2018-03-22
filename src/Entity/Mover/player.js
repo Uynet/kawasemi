@@ -68,6 +68,7 @@ export default class Player extends Entity{
     this.sprite.position.x = Math.floor(this.pos.x);
     this.sprite.position.y = Math.floor(this.pos.y);
     /*パラメータ*/
+    this.param = Param.player;
     this.maxHP = Param.player.maxHp;
     this.hp = this.maxHP;
     this.maxBullet = Param.player.maxBullet;
@@ -82,7 +83,7 @@ export default class Player extends Entity{
     this.vyMax = Param.player.vyMax;
     /*状態*/
     this.state = STATE.WAITING;
-    this.weapon = WeaponManager.weapons.normal;//選択中の武器のインスタンス
+    this.weapon = WeaponManager.weapons[this.param.equip];//選択中の武器のインスタンス
       this.weapon.Init();
     this.dir = DIR.R;//向き
       this.score = 0;
@@ -270,6 +271,11 @@ export default class Player extends Entity{
     //無敵時間は攻撃を受けない
     if(!this.isInvincible && this.isAlive){
       Audio.PlaySE("playerDamage");
+
+      //bulletが少ないと防御力がさがる(思いつき)
+      atk *= (1 + 10*(1 - this.bullet/100))
+      atk = Math.floor(atk);
+
       this.hp+=atk;
       //フォントはダメージ数に応じて数字を表示する　
       EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
@@ -312,6 +318,7 @@ export default class Player extends Entity{
             l.isSwelling = true;
           }
             if(this.isJump){
+              //着地エフェクト
               switch(l.material){
                 case "wall": Audio.PlaySE("landing1",1);break;
                 case "steel": Audio.PlaySE("landing2",1);Audio.PlaySE("landing1");break;
