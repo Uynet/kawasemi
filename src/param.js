@@ -81,14 +81,14 @@ export default class Param{
     }
     this.weapon1 = {
       //status
-      agi : 30,
-      cost : 30,
+      agi : 20,
+      cost : 15,
       speed : 7, 
       length : 580,
       //optional
       isTarget : true,
-      isHorming : true,
-      isLasersight : true,
+      isHorming : false,
+      isLasersight : false,
     }
     this.weapon11 = {
       agi : 2,
@@ -103,7 +103,7 @@ export default class Param{
       //optional
       isTarget : true,
      // isHorming : false,
-      isLasersight : false,
+      isLasersight : true,
     }
     //normal
     this.weapon3 = {

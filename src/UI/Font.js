@@ -75,7 +75,7 @@ export default class Font extends UI{
     let tex = Art.font[spid];
     let sprite = new PIXI.Sprite(tex);
     let pos = CPV(this.pos);
-    pos.x += this.d * 8;
+    pos.x += this.d * 9;
     sprite.position = pos;
     this.container.addChild(sprite);
     this.d++;

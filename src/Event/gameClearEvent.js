@@ -15,7 +15,7 @@ export default class GameClearEvent extends Event{
     function* gen(){
       Game.scene.PushSubState("TRANS");
       Game.stage++;
-        Audio.PlaySE("stageChange");
+      Audio.PlaySE("stageChange");
       UIManager.PopStage(Game.stage);
       EventManager.eventList.push(new FadeEvent("fadeout"));
       yield;
