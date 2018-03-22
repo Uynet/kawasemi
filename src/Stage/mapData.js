@@ -19,6 +19,7 @@ import Drawer from '../drawer.js';
 import Woodbox from '../Entity/Mover/woodbox.js';
 import Needle from '../Entity/Mover/needle.js';
 import StageGen from './stageGen.js';
+import Pool from './pool.js';
 /*マップデータ*/
 export default class MapData{
   constructor(){
@@ -151,7 +152,20 @@ export default class MapData{
   /*現在開かれているステージを削除*/
   static DeleteStage(){
     while(EntityManager.entityList.length > 0){
-      EntityManager.removeEntity(EntityManager.entityList[0]);
+      //poolしている物はリストに無いので開放
+      switch(EntityManager.entityList[0].name){
+        case "bulletblur" :
+        case "fire" : 
+        case "smoke" :
+        case "sonic" : 
+        case "flash" : 
+        case "missile" :
+        case "stone":
+          Pool.Remove(EntityManager.entityList[0]);
+          break;
+        default:
+          EntityManager.removeEntity(EntityManager.entityList[0]);
+      }
     }
     StageGen.Init();
   }
@@ -228,7 +242,11 @@ export default class MapData{
       case 8 : case 9 : case 10 : case 11 :
         tex = needle[i-4];break;
       //through
-      case 96 : tex = wall.through[0];colType="through";break;
+      case 96 :
+        tex = wall.through[0];
+        colType="through";
+        material = "steel";
+        break;
   }
     return {
       colType : colType,

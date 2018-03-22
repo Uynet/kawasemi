@@ -10,7 +10,9 @@ import Param from '../../param.js';
 import Game from '../../game.js';
 import BackEntity from '../backEntity.js';
 import UIManager from '../../UI/uiManager.js';
+import Message from '../../UI/message.js';
 import Signpop from '../Effect/signpop.js';
+import StagePop from '../../UI/stagePop.js';
 
 
 export default class Shop extends BackEntity{
@@ -45,16 +47,37 @@ export default class Shop extends BackEntity{
 
   }
   Read(){
-    EventManager.eventList.push(new QuakeEvent(5,10));
-    //テスト
-    Param.player.havingWeaponList.laser = true;
+    this.isRead = !this.isRead;
+    if(this.isRead){
+      Game.scene.PushSubState("MES");
+      EventManager.eventList.push(new QuakeEvent(5,10));
+      let p = {
+        x : 96,
+        y : 64,
+      }
+      let P_MES = {
+        x:64,
+        y:128
+      }
+      let text = ""; 
+      UIManager.PopMessage(text,"POP");
+      UIManager.addUI(new StagePop(p," ミサイル "));//SCORE
+      p.y+= 10;
+      UIManager.addUI(new StagePop(p," レーザー "));//SCORE
+      //テスト
+      Param.player.havingWeaponList.laser = true;
+    }
+    else{
+      Game.scene.PopSubState();
+    }
   }
 
   Update(){
     //page : 現在のページ番号
     let player = EntityManager.player;
     if(DIST(player.pos,this.pos) <  16 && player.isAlive){
-      if( Input.isKeyClick(KEY.SP)){
+        player.isCanRead = true;
+      if( Input.isKeyClick(KEY.DOWN)){
         this.Read();
       }
     }

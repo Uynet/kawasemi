@@ -7,10 +7,9 @@ void main(void) {
 
   float y = vTextureCoord.y;
 
-  //color.r = min(1.0, color.r + y*y/4.0);
-  //color.g = min(1.0, color.g - y*y/4.0);
-  //color.b = min(1.0, color.b - y*y/4.0);
-  
+  color.r = min(1.0, color.r + y*y/1.0);
+  color.g = min(1.0, color.g + y*y/4.0);
+  color.b = min(1.0, color.b - y*y/4.0);
 
   gl_FragColor = color;
 }

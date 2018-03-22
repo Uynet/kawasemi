@@ -31,7 +31,7 @@ export default class Game{
     StageGen.Init();
 
     /*initialize Game state*/
-    Game.stage = 1;//現在のステージ番号
+    Game.stage = 5;//現在のステージ番号
     Game.scene = new Scene();
 
     //Gameにタイトル画面状態をプッシュ
@@ -50,7 +50,7 @@ export default class Game{
 
   //タイトル画面中の処理
   static UpdateTitle(){
-    if(Input.isKeyClick(KEY.SP)){
+    if(Input.isAnyKeyClick()){
       let event = new StartStageEvent();
       EventManager.PushEvent(event);
     }
@@ -63,7 +63,7 @@ export default class Game{
     UIManager.Update();
 
     /*ポーズ状態に遷移*/
-    if(Input.isKeyClick(KEY.SP)){
+    if(Input.isKeyClick(KEY.ESC)){
       UIManager.SetMenu();
       Game.scene.PushSubState("PAUSE");
     }

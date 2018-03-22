@@ -23,7 +23,6 @@ export default class StartStageEvent extends Event{
       Game.scene.ChangeState(STATE.TITLE,STATE.STAGE);
       Game.scene.PopSubState("TRANS");
       UIManager.PopStage(); 
-      Drawer.entityContainer.filters = [Drawer.testFilter];
       yield;
     }
     let itt = gen();

@@ -16,7 +16,7 @@ export default class Needle extends Wall{
   constructor(pos,ID){
     super(pos,ID);
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box({x:pos.x+4,y:pos.y+12},8,8));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box({x:pos.x,y:pos.y},16,16));//衝突判定の形状
     this.name = "needle";
     this.layer = "ENTITY";
     this.isUpdater  =true;

@@ -2,6 +2,7 @@ import Event from './event.js';
 import EventManager from './eventmanager.js';
 import FadeEvent from './fadeEvent.js';
 import Game from '../game.js';
+import Audio from '../audio.js';
 
 export default class GameOverEvent extends Event{
   constructor(){
@@ -14,6 +15,7 @@ export default class GameOverEvent extends Event{
         frame++;
         yield;
       }
+      Audio.PlaySE("stageChange");
       Game.scene.PushSubState("SEQ");
       yield;
     }

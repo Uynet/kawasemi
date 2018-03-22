@@ -4,6 +4,7 @@ import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
+import moveReflect from '../AI/moveReflect.js';
 import eBullet2 from '../../Entity/Enemy/eBullet2.js';
 import Enemy5AI from '../AI/enemy5AI.js';
 import UIManager from '../../UI/uiManager.js'
@@ -24,7 +25,8 @@ export default class Enemy5 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    this.addAI(new Enemy5AI(this,200));
+    //this.addAI(new Enemy5AI(this,200));
+    this.addAI(new moveReflect(this));
     this.param = Param.enemy5;
     this.atkMin = this.param.atkMin;
     this.atkMax = this.param.atkMax;
@@ -41,6 +43,7 @@ export default class Enemy5 extends Enemy{
       on : false,
       under : null
     }
+    this.vel.x = -0.5;
   }
   //衝突判定
   Collision(){
@@ -104,30 +107,34 @@ export default class Enemy5 extends Enemy{
 
   Update(){
     /*AI*/
-    //for (let AI of this.AIList){
-     // AI.Do();//activationのみ
-    //}
+    for (let AI of this.AIList){
+      AI.Do();//activationのみ
+    }
     this.isActive = (Math.abs(this.pos.x - EntityManager.player.pos.x) < 100)
     //動く
-    this.vel = ADV(this.vel , MLV(VECN(0.01),Rand2D(1)));
     //弾を発射
     if(this.isActive){
       this.spid = 1;
-      if(this.frame%100 == 99){
+      if(this.frame%this.term == 0){
         let p = CPV(this.pos);
         p = ADV(p,VECX(4));//弾は中心から
           let v = {
             x : 0,
-            y : 0,
+            y : -1,
           }
-          EntityManager.addEntity(new eBullet2(p,v));
+          let b = new eBullet2(p,v);
+        if(this.pos.y > EntityManager.player.pos.y){
+          b.gravity *= -1;
+          b.vel.y*=-1;
+          }
+          EntityManager.addEntity(b);
       }
     }else{
       this.spid = 0;
       this.frame = 0;
     }
     /*きょうつう*/
-    this.Collision();
+ //   this.Collision();
     this.Physics();
     this.Hurt();
     this.Animation();

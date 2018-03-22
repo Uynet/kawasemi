@@ -10,8 +10,8 @@ import MapData from "../Stage/mapData.js";
 export default class BackEntity extends Entity{
   constructor(pos,ID){
     super(pos,VEC0());
-    this.layer = "BACK";
     this.isUpdater = false;
+    //this.layer = "ENTITY";
     let wall = MapData.Tile(ID)
     this.tex = wall.texture;
     this.sprite = Art.SpriteFactory(this.tex);

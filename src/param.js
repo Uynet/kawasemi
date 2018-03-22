@@ -18,7 +18,7 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile : true,
+        missile : false,
         laser : false,
       },
       //装備中の武器
@@ -66,7 +66,7 @@ export default class Param{
       atkMax : 3,
       atkMin : 1,
       gravity : 0,
-      term : 100,
+      term : 50,
       coin : 1
     }
     this.eBullet1 = {
