@@ -65,6 +65,7 @@ export default class eBullet2 extends Enemy{
     if(stone)EntityManager.addEntity(stone);
     }
     this.Physics();
+    if(Math.abs(this.vel.y)>1)this.vel.y *= 0.7;
     this.Collision();
     this.Hurt();
     this.Animation();

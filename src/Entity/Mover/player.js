@@ -382,6 +382,13 @@ export default class Player extends Entity{
      }
      this.acc.x = 0;
      this.acc.y = 0;
+
+
+     //画面端の制限
+     this.pos.x = Math.min(this.pos.x,Drawer.mapSize.width * 16-4);//右端
+     this.pos.x = Math.max(this.pos.x,0);//←端
+     this.pos.y = Math.max(this.pos.y,0);//↑端
+     if(this.pos.y > Drawer.mapSize.height * 16+8)this.Damage(-999);//下端
   }
 
   ScrollByDir(){
