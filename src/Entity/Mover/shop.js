@@ -6,7 +6,7 @@ import EntityManager from '../../Stage/entityManager.js';
 import Input from '../../input.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
-
+import Param from '../../param.js';
 import Game from '../../game.js';
 import BackEntity from '../backEntity.js';
 import UIManager from '../../UI/uiManager.js';
@@ -42,10 +42,12 @@ export default class Shop extends BackEntity{
     p.y -= 16;
     this.popup = new Signpop(p);
     EntityManager.addEntity(this.popup);
+
   }
   Read(){
     EventManager.eventList.push(new QuakeEvent(5,10));
-
+    //テスト
+    Param.player.havingWeaponList.laser = true;
   }
 
   Update(){

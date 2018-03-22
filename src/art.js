@@ -178,25 +178,30 @@ export default class Art{
     };
     this.UIPattern = {
       HP : {
-        outer : PIXI.Texture.fromFrame('UI60.png'),
-        bar : PIXI.Texture.fromFrame('UI66.png'),
-        icon : PIXI.Texture.fromFrame('UI6A.png'),
+        outer : PIXI.Texture.fromFrame('UI00.png'),
+        bar : PIXI.Texture.fromFrame('UI04.png'),
+        icon : PIXI.Texture.fromFrame('UI08.png'),
       },
       bullet : {
-        outer : PIXI.Texture.fromFrame('UI70.png'),
-        bar : PIXI.Texture.fromFrame('UI76.png'),
+        outer : PIXI.Texture.fromFrame('UI10.png'),
+        bar : PIXI.Texture.fromFrame('UI14.png'),
         icon : {
-          missile : PIXI.Texture.fromFrame('UI7A.png'),
-          laser : PIXI.Texture.fromFrame('UI7B.png'),
-          normal : PIXI.Texture.fromFrame('UI7C.png'),
+          missile : PIXI.Texture.fromFrame('UI18.png'),
+          laser : PIXI.Texture.fromFrame('UI19.png'),
+          normal : PIXI.Texture.fromFrame('UI1A.png'),
         },
+        pop : {
+          normal : PIXI.Texture.fromFrame('UI30.png'),
+          missile : PIXI.Texture.fromFrame('UI31.png'),
+          laser : PIXI.Texture.fromFrame('UI32.png'),
+        }
       },
       score : {
-        icon : PIXI.Texture.fromFrame('UI6B.png'),
+        icon : PIXI.Texture.fromFrame('UI09.png'),
       },
       message : {
-        frame : PIXI.Texture.fromFrame('UI80.png'),
-      }
+        frame : PIXI.Texture.fromFrame('UI20.png'),
+      },
     };
     this.bulletPattern = {
       bullet1 : [

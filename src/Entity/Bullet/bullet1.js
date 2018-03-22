@@ -53,15 +53,17 @@ export default class Bullet1 extends Bullet{
 
   Update(){
     /*□Effect BulletBulr*/
-    if(this.frame%1 == 0){
       let p = CPV(this.pos);
       let d = Rand2D(5);
       p = ADV(p,d);
       let v = POV(this.arg+Math.PI,4);
       let blur = Pool.GetBulletBlur(p,v);
       if(blur)EntityManager.addEntity(blur);
+    /*Effect Sonic*/
+    if(this.frame%4 == 0){
+      let sonic = Pool.GetSonic(p,v);
+      if(sonic)EntityManager.addEntity(sonic);
     }
-    this.arg += Rand(0.01);
     for (let AI of this.AIList){
       AI.Do();
     }
@@ -81,7 +83,7 @@ export default class Bullet1 extends Bullet{
     this.sprite.rotation = this.arg + Math.PI/2;
     this.sprite.texture = this.pattern[this.spid];
 
-    this.spid = (this.spid+0)%4;
+    this.spid = (this.spid+1)%4;
     this.frame++;
   }
 }

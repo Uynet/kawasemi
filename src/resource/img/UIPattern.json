@@ -1,45 +1,58 @@
 {
   "frames": {
-    "UI60.png": {
-      "frame": {"x":0, "y":96, "w":64, "h":16},
+    "UI00.png": {
+      "frame": {"x":0, "y":0, "w":64, "h":16},
       "sourceSize": {"w": 64, "h": 16}
     },
-    "UI66.png": {
-      "frame": {"x":96, "y":96, "w":64, "h":16},
+    "UI04.png": {
+      "frame": {"x":64, "y":0, "w":64, "h":16},
       "sourceSize": {"w": 64, "h": 16}
     },
-    "UI6A.png": {
-      "frame": {"x":160, "y":96, "w":16, "h":16},
+    "UI08.png": {
+      "frame": {"x":128, "y":0, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
-    "UI6B.png": {
-      "frame": {"x":176, "y":96, "w":16, "h":16},
+    "UI09.png": {
+      "frame": {"x":144, "y":0, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
-    "UI70.png": {
-      "frame": {"x":0, "y":112, "w":64, "h":16},
+    "UI10.png": {
+      "frame": {"x":0, "y":16, "w":64, "h":16},
       "sourceSize": {"w": 64, "h": 16}
     },
-    "UI76.png": {
-      "frame": {"x":96, "y":112, "w":64, "h":16},
+    "UI14.png": {
+      "frame": {"x":64, "y":16, "w":64, "h":16},
       "sourceSize": {"w": 64, "h": 16}
     },
-    "UI7A.png": {
-      "frame": {"x":160, "y":112, "w":16, "h":16},
+    "UI18.png": {
+      "frame": {"x":128, "y":16, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
-    "UI7B.png": {
-      "frame": {"x":176, "y":112, "w":16, "h":16},
+    "UI19.png": {
+      "frame": {"x":144, "y":16, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
-    "UI7C.png": {
-      "frame": {"x":192, "y":112, "w":16, "h":16},
+    "UI1A.png": {
+      "frame": {"x":160, "y":16, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
-    "UI80.png": {
-      "frame": {"x":0, "y":128, "w":96, "h":32},
+    "UI20.png": {
+      "frame": {"x":0, "y":32, "w":96, "h":32},
       "sourceSize": {"w": 96, "h": 32}
+    },
+    "UI30.png": {
+      "frame": {"x":0, "y":64, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "UI31.png": {
+      "frame": {"x":16, "y":64, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
+    },
+    "UI32.png": {
+      "frame": {"x":32, "y":64, "w":8, "h":8},
+      "sourceSize": {"w": 8, "h": 8}
     }
+
   },
 
   "meta": {
