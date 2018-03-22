@@ -12,13 +12,13 @@ import Game from '../game.js';
 
 //HP
 const P_HP = {
-  x : -32, 
-  y : 176
+  x : 56, 
+  y : 8
 };
 //bullet
 const P_BUL = {
-  x : P_HP.x, 
-  y : P_HP.y+16, 
+  x : 12, 
+  y : P_HP.y, 
 };
 //score
 const P_SCORE = {
@@ -47,10 +47,10 @@ export default class UIManager{
   }
   static PopStage(stage){
     let p = {
-      x : 64,
+      x : 96,
       y : 64
     }
-    UIManager.addUI(new StagePop(p,"--stage "+Game.stage+"- "));//SCORE
+    UIManager.addUI(new StagePop(p,"--どうくつ "+Game.stage+"- "));//SCORE
   }
 
   /*タイトルでのUI配置に変更*/

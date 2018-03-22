@@ -60,14 +60,6 @@ export default class gaugeHP extends UI{
     this.amount.SetFont(hp);
   }
   Update(){
-    if(this.isPopIn){
-      let to  = (56-this.pos.x);
-      this.pos.x += to/8;
-    }
-    if(this.pos.x > 56){
-      this.pos.x = 56;
-      this.isPopIn = false;
-    }
     this.container.position.x = this.pos.x;
   }
 }

@@ -65,8 +65,6 @@ export default class GaugeBullet extends UI{
     this.container.children[2].texture = Art.UIPattern.bullet.icon[name];
   }
   Update(){
-    let to  = (56-this.pos.x);
-    this.pos.x += to/8;
     this.container.position.x = this.pos.x;
   }
 }

@@ -37,28 +37,17 @@ export default class Weapon3 extends Weapon{
       y: player.pos.y + 10 * Math.sin(this.arg),
     }
     let bullet = new Bullet3(p,this);
-    //let bullet = new Bullet1(p,this);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */
     Audio.PlaySE("normalShot",-0.6);
     /* □ Effect : shot */
     EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
-    //反動
-    //player.vel.x -= v.x/11;
-    //let v = POV(this.arg,this.speed);
-    //player.acc.y -= Math.max(v.y/5,0);
-    //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
     //振動
     //EventManager.eventList.push(new QuakeEvent(8,2));
   }
   Update(player){
     if(this.isTarget) this.Target(player);
     if(this.isLasersight) this.Lasersight(player);
-  }
-  Reset(){
-    if(this.isTargetOn)EntityManager.removeEntity(this.target);
-    if(this.isLasersight)EntityManager.removeEntity(this.lasersight);
-    this.Init();
   }
   Option(option,value){
     switch(option){

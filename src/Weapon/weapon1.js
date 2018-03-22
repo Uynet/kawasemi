@@ -29,27 +29,6 @@ export default class Weapon1 extends Weapon{
     this.isHorming = this.param.isHorming;
     this.isLasersight = this.param.isLasersight;
   }
-  shot(player){
-    //最後に撃ってからframeまで停止
-    if((player.frame - player.frameShot) > this.agi){
-      //shot時刻
-      player.frameShot = player.frame;
-      //playerの弾薬が残っていなければ打てない
-      if(player.bullet < this.cost){
-        EntityManager.addEntity(new FontEffect(player.pos,"たりないよ","pop"));
-          Audio.PlaySE("empty");
-      }else{
-
-        //弾薬消費
-        player.bullet -= this.cost;
-        console.assert(player.bullet >=0 );
-
-        this.arg = player.arg;
-        this.Set(player);
-
-      }
-    }
-  }
   //装填
   Set(player){
     let p = {
@@ -67,11 +46,6 @@ export default class Weapon1 extends Weapon{
   Update(player){
     if(this.isTarget) this.Target(player);
     if(this.isLasersight) this.Lasersight(player);
-  }
-  Reset(){
-    if(this.isTargetOn)EntityManager.removeEntity(this.target);
-    if(this.isLasersight)EntityManager.removeEntity(this.lasersight);
-    this.Init();
   }
   Option(option,value){
     switch(option){

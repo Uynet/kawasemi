@@ -273,7 +273,9 @@ export default class Player extends Entity{
       Audio.PlaySE("playerDamage");
 
       //bulletが少ないと防御力がさがる(思いつき)
-      atk *= (1 + 10*(1 - this.bullet/100))
+      //0~1
+      let def = (1 - this.bullet/this.maxBullet)
+      atk *= (1 + 30*def*def);
       atk = Math.floor(atk);
 
       this.hp+=atk;

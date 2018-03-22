@@ -2,6 +2,7 @@ import Event from './event.js';
 import Drawer from '../drawer.js';
 import Game from '../game.js';
 import EventManager from './eventmanager.js';
+import UIManager from '../UI/uiManager.js';
 import MapData from '../Stage/mapData.js';
 import Audio from '../audio.js';
 
@@ -21,6 +22,7 @@ export default class StartStageEvent extends Event{
       //ここで非同期
       Game.scene.ChangeState(STATE.TITLE,STATE.STAGE);
       Game.scene.PopSubState("TRANS");
+      UIManager.PopStage(); 
       Drawer.entityContainer.filters = [Drawer.testFilter];
       yield;
     }
