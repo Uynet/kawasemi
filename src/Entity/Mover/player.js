@@ -181,6 +181,21 @@ export default class Player extends Entity{
     if(Input.isKeyInput(KEY.J)){
       this.Damage(-999);
     }
+    if(Input.isKeyClick(KEY.C) && this.isAlive){
+      //武器チェンジ
+      //持っている武器の中で次の武器をセレクト
+      //リストの末尾でループ
+      
+      //武器リストから持っている物だけを抽出
+      let wList = Object.keys(this.param.havingWeaponList);
+      wList = wList.filter((arr)=>{
+        return this.param.havingWeaponList[arr];
+      })
+      let wIndex = wList.indexOf(this.weapon.name);
+      let wNameNext = wList[wIndex+1];//次の武器をセレクト
+      if(!wNameNext)wNameNext = wList[0];//最後尾でループ
+      this.ChangeWeapon(wNameNext);
+    }
   }
 
   /*状態からアニメーションを行う*/
