@@ -85,6 +85,7 @@ export default class Audio{
     return new Promise(res=>{
       this.Init();
       //!ココで読み込むnameはファイル名に統一すること!
+      this.LoadBGM('title');
       this.LoadBGM('stage1');
       this.LoadBGM('stage2');
       this.LoadBGM('stage3');
@@ -110,7 +111,7 @@ export default class Audio{
       this.LoadSE('empty');//
       this.LoadSE('enemy3Shot');//
       this.LoadSE('enemy5Shot');//
-         this.LoadSE('enemy6Swell');//
+      this.LoadSE('enemy6Swell');//
       this.LoadSE('changeWeapon');//
       res();
     })

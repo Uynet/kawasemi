@@ -21,6 +21,7 @@ import Explosion1 from '../Effect/explosion1.js';
 import Explosion2 from '../Effect/explosion2.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import WeaponIcon from '../Effect/weaponIcon.js';
+import Pool from '../../Stage/pool.js';
 
 const STATE = {
   WAITING : "WAITING",
@@ -116,7 +117,13 @@ export default class Player extends Entity{
         // ■ SoundEffect : jump
         Audio.PlaySE("jump1");
         //effect
-        EntityManager.addEntity(new BulletShot(CPV(this.pos)));
+        let p = ADV(this.pos,VECY(12));
+        let v = {
+          x : Rand(1),
+          y : Rand(0.4),
+        }
+        let s = Pool.GetSmoke(p,v,10);
+        EntityManager.addEntity(s);
       }
     }
     /*空中ジャンプ*/
@@ -235,6 +242,14 @@ export default class Player extends Entity{
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
         if(this.frame%5 == 0 && this.floor.on){;
+          //歩き土埃エフェクト
+          let p = ADV(this.pos,VECY(16));
+          let v = {
+            x : -this.vel.x/2,
+            y : -0.3 + Rand(0.1),
+          }
+          let s = Pool.GetSmoke(p,v,6 + Rand(2));
+          EntityManager.addEntity(s);
           //■ SE : foot
           switch(this.floor.under.material){
             case "wall" : Audio.PlaySE("landing1",0);break;
@@ -327,6 +342,13 @@ export default class Player extends Entity{
           }
             if(this.isJump){
               //着地エフェクト
+              let p = ADV(this.pos,VECY(16));
+              let v = {
+                x : 2 + Rand(1),
+                y : Rand(0.4),
+              }
+              let s = Pool.GetSmoke(p,v,10);
+              EntityManager.addEntity(s);
               switch(l.material){
                 case "wall": Audio.PlaySE("landing1",1);break;
                 case "steel": Audio.PlaySE("landing2",1);Audio.PlaySE("landing1");break;

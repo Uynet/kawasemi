@@ -35,6 +35,8 @@ $(document).on("keydown",(e)=> {
   switch(e.keyCode){
     case KEY.UP: 
     case KEY.DOWN: 
+    case KEY.RIGHT: 
+    case KEY.LEFT: 
     case KEY.SP: event.preventDefault();
   }
 });
