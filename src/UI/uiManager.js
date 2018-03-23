@@ -67,11 +67,16 @@ export default class UIManager{
       y : p1.y+10,
     }
     UIManager.addUI(new Font(p2,"- ver0.1 -","MES"));//SCORE
-    let p = {
+    let p3 = {
+      x : p1.x-12, 
+      y : p2.y+48,
+    }
+    UIManager.addUI(new Font(p3,"Press Any Key","MES"));//SCORE
+    let p4 = {
       x : 172, 
       y : 192,
     }
-    UIManager.addUI(new Font(p,"+ 2018 uynet","MES"));//SCORE
+    UIManager.addUI(new Font(p4,"+ 2018 uynet","MES"));//SCORE
   }
   /*ステージ中でのUI配置に変更*/
   static SetStage(){

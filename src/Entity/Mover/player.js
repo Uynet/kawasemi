@@ -53,6 +53,7 @@ export default class Player extends Entity{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
     this.layer = "ENTITY";
+    this.name = "player";
     this.frame = 0;
     this.frameDead;//死んだ時刻
     this.frameDamaged;//最後に攻撃を食らった時刻 無敵時間の計算に必要
@@ -78,8 +79,8 @@ export default class Player extends Entity{
       this.scArg = 0;//スクロール用
     this.toArg = 0;
     this.scPos = VEC0();//スクロール位置
-    UIManager.HP.SetBar(this.hp);//HPbarの更新
-    UIManager.bullet.SetBar(this.bullet);//HPbarの更新
+    //UIManager.HP.SetBar(this.hp);//HPbarの更新
+    //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
 
       this.vxMax = Param.player.vxMax;
     this.vyMax = Param.player.vyMax;

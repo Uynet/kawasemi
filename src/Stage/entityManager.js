@@ -84,6 +84,13 @@ export default class EntityManager{
       if(l.isUpdater) l.Update(); 
     }
   }
+  /*Entityの更新(Tiltle用)*/
+  static UpdateTitle(){
+    for(let i=0;i<this.entityIndex;i++){
+      let l = this.entityList[i];
+      if(l.name != "player" && l.isUpdater) l.Update(); 
+    }
+  }
   /*メッセージイベント中にアニメーションだけ行う*/
   static Animation(){
     for(let i=0;i<this.entityIndex;i++){
