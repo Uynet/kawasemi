@@ -112,7 +112,7 @@ export default class Enemy5 extends Enemy{
     for (let AI of this.AIList){
       AI.Do();//activationのみ
     }
-    this.isActive = (Math.abs(this.pos.x - EntityManager.player.pos.x) < 100)
+    this.isActive = (Math.abs(this.pos.x - EntityManager.player.pos.x) < 200)
     //動く
     //弾を発射
     if(this.isActive){

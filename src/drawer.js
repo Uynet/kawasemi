@@ -112,8 +112,8 @@ export default class Drawer{
     toY = this.entityContainer.y + ( centerY - this.entityContainer.y )/8;
     //背景レイヤ
     //スクロールが遅い
-    this.backGroundContainer.x = Math.floor(toX/4);
-    this.backGroundContainer.y = Math.floor(toY/4 % 64);
+    this.backGroundContainer.x = Math.floor(toX/4 % 256);
+    this.backGroundContainer.y = Math.floor(toY/4 % 256);
     //Entityレイヤ
     this.backContainer.x = Math.floor(toX);
     this.backContainer.y = Math.floor(toY);

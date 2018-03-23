@@ -14,6 +14,7 @@ import Message from '../../UI/message.js';
 import Signpop from '../Effect/signpop.js';
 import StagePop from '../../UI/stagePop.js';
 import Font from '../../UI/font.js';
+import GaugeBullet from '../../UI/gaugeBullet.js';
 
 export default class Shop extends BackEntity{
   constructor(pos,message){
@@ -50,22 +51,33 @@ export default class Shop extends BackEntity{
     this.isRead = !this.isRead;
     if(this.isRead){
       Game.scene.PushSubState("MES");
-      let p = {
-        x : 80,
-        y : 136,
+
+      //this.messageの武器を手に入れる
+      //もう持っていたら発生しない
+      let weapon = this.message[0];
+      if(!Param.player.havingWeaponList[weapon]){
+        let text = this.ToJap(weapon)+"をてにいれた!\ncキーでチェンジできるよ↓"; 
+        UIManager.PopMessage(text,"POP");
+        //テスト
+        Param.player.havingWeaponList[weapon] = true;
+        UIManager.bullet.Push(weapon);
+      }else{
+        let text = "きりかえはc だよ↓"; 
+        UIManager.PopMessage(text,"POP");
       }
-      let P_MES = {
-        x:64,
-        y:128
-      }
-      let text = "ミサイルを 100G でかう?"; 
-      UIManager.PopMessage(text,"SELECT");
-      //テスト
-      Param.player.havingWeaponList.laser = true;
     }
     else{
       Game.scene.PopSubState();
       UIManager.CloseMessage();//枠を閉じる
+    }
+  }
+  //武器名を日本語にするだけ
+  ToJap(weapon){
+    cl(weapon)
+    switch(weapon){
+      case "missile" : return "ミサイル";
+      case "laser" : return "レーザー";
+      default : cl("po"); 
     }
   }
 
@@ -74,7 +86,7 @@ export default class Shop extends BackEntity{
     let player = EntityManager.player;
     if(DIST(player.pos,this.pos) <  16 && player.isAlive){
         player.isCanRead = true;
-      if( Input.isKeyClick(KEY.DOWN)){
+      if( Input.isKeyClick(KEY.X)){
         this.Read();
       }
     }
