@@ -30,12 +30,6 @@ export default class GaugeBullet extends UI{
     /*パラメータ*/
     this.max = Param.player.maxBullet;
 
-    //samall weapon list
-    let list = Object.keys(Param.player.havingWeaponList);
-    list = list.filter((arr)=>{
-      return Param.player.havingWeaponList[arr];
-    })
-
     /*child*/
     this.outer = {pos:CPV(pos)};
     this.bar = {pos:CPV(pos)};
@@ -43,7 +37,8 @@ export default class GaugeBullet extends UI{
     this.amount = new Font(ADV(pos,P_AMOUNT),this.max + "","BULLET");//数字
     this.wlist = {
       pos:ADV(pos,P_WLIST),
-      list: list,
+      list: null,
+      container : new PIXI.Container(),
     };
 
     //pos
@@ -69,6 +64,11 @@ export default class GaugeBullet extends UI{
     //amount
     this.container.addChild(this.amount.container);
 
+    let list = Object.keys(Param.player.havingWeaponList);
+    list = list.filter((arr)=>{
+      return Param.player.havingWeaponList[arr];
+    })
+    this.wlist.list = list;
     //アイコンリストをぷっしゅ　
     let p = this.wlist.pos; 
     //p = this.pos; 
@@ -79,6 +79,15 @@ export default class GaugeBullet extends UI{
       p.x += 8;
     }
 
+  }
+  Push(w){
+    let p = CPV(this.wlist.pos); 
+    let s = Art.SpriteFactory(Art.UIPattern.bullet.pop[w]);
+    p.x += (this.wlist.list.length-1)*8;
+    s.position = p;
+    this.container.addChild(s);
+    this.wlist.list.push(w);
+    //samall weapon list
   }
   SetBar(bullet){
     //barの長さを更新

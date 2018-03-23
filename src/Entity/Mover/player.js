@@ -151,7 +151,7 @@ export default class Player extends Entity{
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
       this.state = STATE.RUNNING;
-      if(!this.isJump)this.dir = DIR.R;
+      this.dir = DIR.R;
       this.isRun = true;
       this.toArg = 0;
       this.acc.x = Param.player.runVel;
@@ -159,7 +159,7 @@ export default class Player extends Entity{
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
       this.state = STATE.RUNNING;
-      if(!this.isJump)this.dir = DIR.L;
+      this.dir = DIR.L;
       this.isRun = true;
       this.toArg = Math.PI;
       this.acc.x = -Param.player.runVel;
@@ -175,14 +175,8 @@ export default class Player extends Entity{
       this.toArg = 3 * Math.PI/2;
     }
     /*下向き*/
-    //看板が近くにあれば優先
     if(Input.isKeyInput(KEY.DOWN)){
       //右向き下 or 左向き下
-      if(this.isCanRead){
-        this.isReading = true;
-        this.state = STATE.WAITING;
-        return;
-      }
       if(this.dir == DIR.R || this.dir == DIR.UR || this.dir == DIR.DR){
         this.dir = DIR.DR;
       }else if(this.dir == DIR.L || this.dir == DIR.UL || this.dir == DIR.DL){
@@ -191,7 +185,13 @@ export default class Player extends Entity{
       this.toArg = Math.PI/2;
     }
     /*shot*/
+    //看板が近くにあれば優先
     if(Input.isKeyInput(KEY.X)){
+      if(this.isCanRead){
+        this.isReading = true;
+        this.state = STATE.WAITING;
+        return;
+      }
       this.weapon.shot(this);
     }
     /*for debug*/
@@ -308,7 +308,6 @@ export default class Player extends Entity{
       this.frameDamaged = this.frame;
       EventManager.eventList.push(new QuakeEvent(5,2));
     }
-    UIManager.HP.SetBar(this.hp);//HPbarの更新
   }
   //コイン取得
   GetScore(){
@@ -504,6 +503,7 @@ export default class Player extends Entity{
       this.Physics();//物理
       this.Collision();//衝突
       this.Supply();//bulletのかいふく　
+      UIManager.HP.SetBar(this.hp);//HPbarの更新
     }
     this.isCanRead = false;
     //this.CreateStage();//マップ生成

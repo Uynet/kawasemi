@@ -24,8 +24,11 @@ export default class WeaponList extends UI{
     //スプライト
     this.spid = 0;
     this.container = new PIXI.Container();
-    let s;
     //icon
+    this.Push();
+  }
+  Push(){
+    let s;
     let wList = Object.keys(Param.player.havingWeaponList);
     wList = wList.filter((arr)=>{
       return Param.player.havingWeaponList[arr];
