@@ -138,7 +138,15 @@ export default class MapData{
     this.CreateEntityLayer("foreEntityData");
     this.CreateEntityLayer("foreData");
     this.CreateObjectLayer();
-    let p = CPV(EntityManager.player.pos);
+      let p;
+    if(stageNo >= 1){
+      p = CPV(EntityManager.player.pos);
+    }else{
+      p = {
+        x : 240,
+        y : 128,
+      }
+    }
     Drawer.ScrollSet(p);
   }
 
