@@ -13,11 +13,17 @@ export default class GameClearEvent extends Event{
   constructor(){
     super();
     function* gen(){
+      let frame = 0;
       Game.scene.PushSubState("TRANS");
       Game.stage++;
       Audio.PlaySE("stageChange");
       UIManager.PopStage(Game.stage);
       EventManager.eventList.push(new FadeEvent("fadeout"));
+      while(frame < 50){
+        frame++;
+        yield;
+      }
+      if(Game.stage == 2)Audio.PlayBGM("stage4",0);
       yield;
     }
     let itt = gen();

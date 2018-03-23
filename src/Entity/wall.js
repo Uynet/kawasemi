@@ -27,9 +27,5 @@ export default class Wall extends Entity{
     this.tex = MapData.Tile(ID).texture;
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
-    //テスト
-    if(ID == 72){
-      this.sprite.filters = [Drawer.testFilter];
-    }
   }
 }

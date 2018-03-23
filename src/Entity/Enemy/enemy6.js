@@ -37,6 +37,7 @@ export default class Enemy6 extends Enemy{
     this.hp = this.param.hp;
     this.gravity = 0 * this.param.gravity;
     this.coin = this.param.coin;
+    this.exp = this.param.exp;
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
@@ -74,7 +75,7 @@ export default class Enemy6 extends Enemy{
   }
   Bomb(){
     if(DIST(this.pos,EntityManager.player.pos)<32){
-      EntityManager.player.Damage(-33);
+      EntityManager.player.Damage(-this.exp);
     }
     Audio.PlaySE("missileHit");
     EntityManager.addEntity(new Explosion1(this.pos));

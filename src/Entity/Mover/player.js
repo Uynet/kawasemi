@@ -77,9 +77,10 @@ export default class Player extends Entity{
     this.bullet = this.maxBullet;
     this.gravity = Param.player.gravity;
     this.arg = 0;//狙撃角度 0 - 2π
-      this.scArg = 0;//スクロール用
+    this.scArg = 0;//スクロール用
     this.toArg = 0;
     this.scPos = VEC0();//スクロール位置
+    this.score = this.param.score;
     //UIManager.HP.SetBar(this.hp);//HPbarの更新
     //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
 
@@ -90,7 +91,6 @@ export default class Player extends Entity{
     this.weapon = WeaponManager.weapons[this.param.equip];//選択中の武器のインスタンス
       this.weapon.Init();
     this.dir = DIR.R;//向き
-      this.score = 0;
     /*フラグ*/
     this.isJump = false;//空中にいるか
     this.isRun = false;//走っているか
@@ -313,6 +313,7 @@ export default class Player extends Entity{
   GetScore(){
     if(this.isAlive){
       this.score+=1;
+      this.param.score = this.score;
       this.bullet += 5;//とりあえずbulletも回復しとくか
       UIManager.score.SetScore(this.score);
     }

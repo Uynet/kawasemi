@@ -12,6 +12,7 @@ export default class Param{
       
       animRun : 4,
       animWait : 7,
+      score : 0,
 
       vxMax : 3,
       vyMax : 8,
@@ -67,7 +68,8 @@ export default class Param{
       atkMin : 1,
       gravity : 0,
       term : 50,
-      coin : 1
+      coin : 1,
+      exp : 999,
     }
     this.eBullet1 = {
       hp : 1,
