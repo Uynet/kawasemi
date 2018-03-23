@@ -20,6 +20,9 @@ export default class Wall extends Entity{
     let wall = MapData.Tile(ID)
     this.material = wall.material;
     this.colType = wall.colType;
+    if(this.colType == "through"){
+      this.collider.hitbox.height = 8;
+    }
     /*スプライト*/
     this.tex = MapData.Tile(ID).texture;
     this.sprite = Art.SpriteFactory(this.tex);

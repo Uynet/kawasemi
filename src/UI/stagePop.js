@@ -12,7 +12,7 @@ export default class StagePop extends UI{
     super(pos);
     /*基本情報*/
     this.isAlive = true;//消えたらfalse
-    this.type = "MES";
+    this.type = "PUSH";
     this.isMultiple = true;
     this.pos = pos;
     this.frame = 0;

@@ -17,7 +17,7 @@ const P_ICON = {
 //WLIST
 const P_WLIST = {
   x : -12,
-  y : -23,
+  y : 16,
 }
 export default class GaugeBullet extends UI{
   constructor(pos){

@@ -11,7 +11,7 @@ export default class BackEntity extends Entity{
   constructor(pos,ID){
     super(pos,VEC0());
     this.isUpdater = false;
-    //this.layer = "ENTITY";
+    this.colType = "none";
     let wall = MapData.Tile(ID)
     this.tex = wall.texture;
     this.sprite = Art.SpriteFactory(this.tex);

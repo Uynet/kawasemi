@@ -76,19 +76,19 @@ export default class Param{
     }
     this.eBullet2 = {
       hp : 1,
-      atkMin : 20,
-      atkMax : 30,
+      atkMin : 5,
+      atkMax : 10,
       gravity : 0.05
     }
     this.weapon1 = {
       //status
       agi : 20,
-      cost : 15,
+      cost : 20,
       speed : 7, 
       length : 580,
       //optional
       isTarget : true,
-      isHorming : false,
+      isHorming : true,
       isLasersight : true,
     }
     this.weapon11 = {
@@ -99,7 +99,7 @@ export default class Param{
     }
     this.weapon2 = {
       agi : 26,
-      cost : 12,
+      cost : 2,
       length : 300,
       //optional
       isTarget : true,

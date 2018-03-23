@@ -77,6 +77,7 @@ export default class Enemy5 extends Enemy{
       //これないと自分と衝突判定してバグ
       if(i == EntityManager.enemyList.indexOf(this))continue;
       /*衝突判定*/
+      //判定は落下中のみ
       if(c.isHit){
         /* 衝突応答*/
 

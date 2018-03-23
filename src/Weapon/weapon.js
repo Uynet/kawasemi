@@ -40,12 +40,10 @@ export default class Weapon{
       //shot時刻
       player.frameShot = player.frame;
       //playerの弾薬が残っていなければ打てない
-      /*
       if(player.bullet < this.cost){
         EntityManager.addEntity(new FontEffect(player.pos,"たりないよ","pop"));
           Audio.PlaySE("empty");
       }else{
-        */
         //弾薬消費
         player.bullet -= this.cost;
         player.bullet = Math.max(0,player.bullet);
@@ -53,7 +51,7 @@ export default class Weapon{
         this.arg = player.arg;
         this.Set(player);
 
-      //}
+      }
     }
   }
   //敵が視界に入っているか

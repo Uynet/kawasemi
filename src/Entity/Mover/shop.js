@@ -13,7 +13,7 @@ import UIManager from '../../UI/uiManager.js';
 import Message from '../../UI/message.js';
 import Signpop from '../Effect/signpop.js';
 import StagePop from '../../UI/stagePop.js';
-
+import Font from '../../UI/font.js';
 
 export default class Shop extends BackEntity{
   constructor(pos,message){
@@ -50,25 +50,22 @@ export default class Shop extends BackEntity{
     this.isRead = !this.isRead;
     if(this.isRead){
       Game.scene.PushSubState("MES");
-      EventManager.eventList.push(new QuakeEvent(5,10));
       let p = {
-        x : 96,
-        y : 64,
+        x : 80,
+        y : 136,
       }
       let P_MES = {
         x:64,
         y:128
       }
-      let text = ""; 
-      UIManager.PopMessage(text,"POP");
-      UIManager.addUI(new StagePop(p," ミサイル "));//SCORE
-      p.y+= 10;
-      UIManager.addUI(new StagePop(p," レーザー "));//SCORE
+      let text = "ミサイルを 100G でかう?"; 
+      UIManager.PopMessage(text,"SELECT");
       //テスト
       Param.player.havingWeaponList.laser = true;
     }
     else{
       Game.scene.PopSubState();
+      UIManager.CloseMessage();//枠を閉じる
     }
   }
 

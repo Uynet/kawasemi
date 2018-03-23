@@ -24,6 +24,7 @@ export default class Bullet2 extends Bullet{
     this.arg = arg;
     this.isUpdater  =true;
     this.layer = "BACK"//壁に埋めるため
+      this.name = "laser";
     /*スプライト*/
     this.pattern = Art.bulletPattern.bullet2;
     this.spid = 0;
@@ -42,10 +43,15 @@ export default class Bullet2 extends Bullet{
     this.AIList = [];
     this.AIList.push(new Bullet2AI(this));
 
+    this.step = step;
+
     //壁にぶつかってなければレーザー光線を進める
-    if(step > 15) isNext = false;
+    if(step > 30){
+      isNext = false;
+    }
     for(let w of EntityManager.colliderList){
       let c = Collision.on(this,w);
+      if(w.colType == "none")cl("i");
       if(c.isHit){
         if(w.isBreakable) {
           w.Damage(-1);
@@ -57,8 +63,9 @@ export default class Bullet2 extends Bullet{
           }
         else {
           if(w.material == "steel"){
-            let i = POV(this.arg,16);//入射角ベクトル
+            let i = POV(this.arg,20);//入射角ベクトル
             //r = i+2n*(i・n)
+            if(w.name == "laser")cl("po");
 
             let r = ADV(i,MLV(VECN(2),MLV(c.n,VECN(DOT(i,c.n)))));
             this.arg = Math.atan(r.y/r.x);
