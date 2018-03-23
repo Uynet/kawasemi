@@ -50,7 +50,8 @@ export default class eBullet2 extends Enemy{
   Collision(){
     for(let w of EntityManager.wallList){
       let c = Collision.on(this,w);
-      if(c.isHit){
+      //判定は落下中のみ
+      if(c.isHit && this.vel.y >2){
         this.hp--;
       }
     }
@@ -65,7 +66,7 @@ export default class eBullet2 extends Enemy{
     if(stone)EntityManager.addEntity(stone);
     }
     this.Physics();
-    if(Math.abs(this.vel.y)>1)this.vel.y *= 0.7;
+    if(Math.abs(this.vel.y)>1)this.vel.y *= 1;
     this.Collision();
     this.Hurt();
     this.Animation();

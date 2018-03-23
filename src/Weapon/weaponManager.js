@@ -20,7 +20,7 @@ export default class WeaponManager{
 
   /*プレイヤーの参照を受け取って武器を変更*/
   static ChangeWeapon(player,name){
-    Audio.PlaySE("changeWeapon");
+    Audio.PlaySE("changeWeapon",0);
     UIManager.bullet.ChangeWeapon(name);
     player.weapon = this.weapons[name];
     Param.player.equip = name;

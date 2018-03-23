@@ -74,7 +74,7 @@ export default class Enemy6 extends Enemy{
   }
   Bomb(){
     if(DIST(this.pos,EntityManager.player.pos)<32){
-      EntityManager.player.Damage(-99);
+      EntityManager.player.Damage(-33);
     }
     Audio.PlaySE("missileHit");
     EntityManager.addEntity(new Explosion1(this.pos));

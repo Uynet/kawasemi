@@ -11,11 +11,11 @@ export default class GameOverEvent extends Event{
       let frame = 0;
       EventManager.eventList.push(new FadeEvent("fadeout"));
 
+      Audio.PlaySE("stageChange");
       while(frame<30){
         frame++;
         yield;
       }
-      Audio.PlaySE("stageChange");
       Game.scene.PushSubState("SEQ");
       yield;
     }

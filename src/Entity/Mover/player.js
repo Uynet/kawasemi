@@ -78,6 +78,8 @@ export default class Player extends Entity{
       this.scArg = 0;//スクロール用
     this.toArg = 0;
     this.scPos = VEC0();//スクロール位置
+    UIManager.HP.SetBar(this.hp);//HPbarの更新
+    UIManager.bullet.SetBar(this.bullet);//HPbarの更新
 
       this.vxMax = Param.player.vxMax;
     this.vyMax = Param.player.vyMax;
@@ -141,7 +143,7 @@ export default class Player extends Entity{
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
       this.state = STATE.RUNNING;
-      this.dir = DIR.R;
+      if(!this.isJump)this.dir = DIR.R;
       this.isRun = true;
       this.toArg = 0;
       this.acc.x = Param.player.runVel;
@@ -149,7 +151,7 @@ export default class Player extends Entity{
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
       this.state = STATE.RUNNING;
-      this.dir = DIR.L;
+      if(!this.isJump)this.dir = DIR.L;
       this.isRun = true;
       this.toArg = Math.PI;
       this.acc.x = -Param.player.runVel;
@@ -320,7 +322,6 @@ export default class Player extends Entity{
           this.floor.on = true;
           /*直せ*/
           if(l.name == "enemy6"){
-            if(!l.isSwelling)  Audio.PlaySE("enemy6Swell");
             l.isSwelling = true;
           }
             if(this.isJump){

@@ -62,6 +62,11 @@ export default class UIManager{
       y : 64,
     }
     UIManager.addUI(new Font(p1,"さいはてどろっぷ","MES"));//SCORE
+    let p2 = {
+      x : p1.x, 
+      y : p1.y+10,
+    }
+    UIManager.addUI(new Font(p2,"- ver0.1 -","MES"));//SCORE
     let p = {
       x : 172, 
       y : 192,
@@ -112,10 +117,16 @@ export default class UIManager{
      * POP 新しくフレームを作る
      * PAGE フレームを作らず改ページのみ
      */
-    if(type == "POP"){
-      UIManager.addUI(new Message(P_MES,text));//枠
-    }else if(type == "PAGE"){
-      this.message.Page(text);
+    switch(type){
+      case "POP" : 
+        UIManager.addUI(new Message(P_MES,text));//枠
+        break;
+      case "PAGE" :
+        this.message.Page(text);
+        break;
+      case "SELECT" : 
+        //選択肢イベントが入る予定
+        break;
     }
   }
   static CloseMessage(){
@@ -135,6 +146,7 @@ export default class UIManager{
       case "SCORE" : this.score = ui;break;
       case "MES" : this.message = ui;break;
       case "MENU" : this.menu = ui;break;
+      case "PUSH" : /*noth*/break;
       default : console.warn(ui);
     }
     //スプライトの追加
