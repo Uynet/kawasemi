@@ -68,7 +68,7 @@ export default class UIManager{
     }
     UIManager.addUI(new Font(p2,"- ver0.1 -","MES"));//SCORE
     let p3 = {
-      x : p1.x-12, 
+      x : p1.x-8, 
       y : p2.y+48,
     }
     UIManager.addUI(new Font(p3,"Press Any Key","MES"));//SCORE
