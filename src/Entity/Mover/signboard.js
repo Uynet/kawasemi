@@ -10,6 +10,7 @@ import Game from '../../game.js';
 import BackEntity from '../backEntity.js';
 import UIManager from '../../UI/uiManager.js';
 import Signpop from '../Effect/signpop.js';
+import QuakeEvent from '../../Event/quakeEvent.js';
 
 
 export default class Signboard extends BackEntity{
@@ -51,11 +52,13 @@ export default class Signboard extends BackEntity{
     }else{
       /*イベント発生用メッセージ*/
       //イベントを発生させてページを読み進める
-      //テスト用イベント(死ぬ)
+      //最初のイベントせんよう
       if(this.message[this.page] == "EVENT"){;
-        //第一引数いらんのでは?
         let event = new MessageEvent(this.message[this.page],"EVENT");
         EventManager.eventList.push(event);
+        //クソポイント
+        //ここでメッセージを変更するな
+        this.message = ["..."];
         this.page++;
       }
       if(this.page < this.message.length){

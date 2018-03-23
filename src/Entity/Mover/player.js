@@ -491,6 +491,9 @@ export default class Player extends Entity{
   }
 
   Update(){
+    if(Input.isKeyClick(KEY.K)){
+      cl(this.pos);
+    }
     if(this.isAlive){
       /*Init*/
       if(!this.isJump) {
