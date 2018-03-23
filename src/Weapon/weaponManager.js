@@ -1,3 +1,4 @@
+import Audio from '../audio.js';
 import Weapon1 from './weapon1.js';
 import Weapon2 from './weapon2.js';
 import Weapon3 from './weapon3.js';
@@ -19,6 +20,7 @@ export default class WeaponManager{
 
   /*プレイヤーの参照を受け取って武器を変更*/
   static ChangeWeapon(player,name){
+    Audio.PlaySE("changeWeapon");
     UIManager.bullet.ChangeWeapon(name);
     player.weapon = this.weapons[name];
     Param.player.equip = name;

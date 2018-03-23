@@ -104,10 +104,14 @@ export default class Audio{
       this.LoadSE('normalShot');
       this.LoadSE('landing1');//着地
       this.LoadSE('landing2');//着地鉄骨
+      this.LoadSE('landing3');//着地鉄骨
       this.LoadSE('blockBreak');//
       this.LoadSE('stageChange');//
       this.LoadSE('empty');//
       this.LoadSE('enemy3Shot');//
+      this.LoadSE('enemy5Shot');//
+         this.LoadSE('enemy6Swell');//
+      this.LoadSE('changeWeapon');//
       res();
     })
   };
