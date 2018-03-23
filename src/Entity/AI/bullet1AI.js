@@ -33,7 +33,7 @@ export default class Bullet1AI{
           //wall
           }else{
             // ■ SoundEffect : hitWall
-            if(w.material == "steel")Audio.PlaySE("landing2",3,2);
+            if(w.material == "steel")Audio.PlaySE("landing3",3);
             this.bullet.hp = 0;
           }
       }

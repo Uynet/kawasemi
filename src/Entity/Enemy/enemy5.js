@@ -1,5 +1,6 @@
 import Enemy from './enemy.js';
 import Art from '../../art.js';
+import Audio from '../../audio.js'
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
@@ -123,6 +124,8 @@ export default class Enemy5 extends Enemy{
             y : -1,
           }
           let b = new eBullet2(p,v);
+          //SE
+          Audio.PlaySE("enemy5Shot");
           EntityManager.addEntity(b);
       }
     }else{

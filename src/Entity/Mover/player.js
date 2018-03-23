@@ -320,6 +320,7 @@ export default class Player extends Entity{
           this.floor.on = true;
           /*直せ*/
           if(l.name == "enemy6"){
+            if(!l.isSwelling)  Audio.PlaySE("enemy6Swell");
             l.isSwelling = true;
           }
             if(this.isJump){
