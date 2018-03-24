@@ -52,14 +52,12 @@ export default class Audio{
     source.buffer = buffer; // buffer をセット
     source.connect(this.context.destination); // context に connect
     source.loop = true; // 再生
-      /*
       if(gain){
         let gainNode = this.context.createGain();
         source.connect(gainNode);
         gainNode.connect(this.context.destination);
         gainNode.gain.value = gain;
       }
-      */
     source.start(0);
   };
   static PlaySE(name,gain,pitch){
@@ -85,12 +83,8 @@ export default class Audio{
     return new Promise(res=>{
       this.Init();
       //!ココで読み込むnameはファイル名に統一すること!
-      this.LoadBGM('title');
-      this.LoadBGM('stage1');
-      this.LoadBGM('stage2');
-      this.LoadBGM('stage3');
-      this.LoadBGM('stage4');
-      this.LoadBGM('boss');
+  //    this.LoadBGM('stage4');
+      this.LoadBGM('stage5');
 
       this.LoadSE('jump1');
       this.LoadSE('jump2');//空中ジャンプ

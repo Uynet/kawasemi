@@ -73,7 +73,6 @@ export default class Player extends Entity{
     /*パラメータ*/
     this.param = Param.player;
     this.maxHP = Param.player.maxHp;
-    cl(this.maxHp);
     this.hp = this.maxHP;
     this.maxBullet = Param.player.maxBullet;
     this.bullet = this.maxBullet;
@@ -494,19 +493,22 @@ export default class Player extends Entity{
   }
 
   Update(){
-    if(Input.isKeyClick(KEY.K)){
+    if(this.maxHP == 100 && Input.isKeyClick(KEY.K) && this.isAlive){
       let p = {
         x : 64,
         y : 96
       }
-      UIManager.addUI(new StagePop(p,"-ミサイルをてにいれた "));//SCORE
+      UIManager.addUI(new StagePop(p,"-HPがふえた "));//SCORE
       p.y += 10;
-      UIManager.addUI(new StagePop(p,"-レーザーをてにいれた "));//SCORE
-      this.param.havingWeaponList.missile = true;
-      this.param.havingWeaponList.laser = true;
-      UIManager.bullet.Push("missile");
-      UIManager.bullet.Push("laser");
-      this.param.maxHp = 255;
+      if(!this.param.havingWeaponList.missile){
+        this.param.havingWeaponList.missile = true;
+        UIManager.bullet.Push("missile");
+      }
+      if(!this.param.havingWeaponList.laser){
+        this.param.havingWeaponList.laser = true;
+        UIManager.bullet.Push("laser");
+      }
+      this.param.maxHp = 300;
       this.Damage(-999);
       Audio.PlaySE("missileHit");
     }
