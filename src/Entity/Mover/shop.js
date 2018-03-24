@@ -1,5 +1,6 @@
 import Entity from '../entity.js';
 import Art from '../../art.js';
+import Audio from '../../audio.js';
 import Collider from '../../Collision/collider.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
@@ -49,14 +50,14 @@ export default class Shop extends BackEntity{
   }
   Read(){
     this.isRead = !this.isRead;
+    let weapon = this.message[0];
     if(this.isRead){
       Game.scene.PushSubState("MES");
 
       //this.messageの武器を手に入れる
       //もう持っていたら発生しない
-      let weapon = this.message[0];
       if(!Param.player.havingWeaponList[weapon]){
-        let text = this.ToJap(weapon)+"をてにいれた!\ncキーでチェンジできるよ↓"; 
+        let text = this.ToJap(weapon)+"をてにいれた\ncキーでチェンジできるよ↓"; 
         UIManager.PopMessage(text,"POP");
         //テスト
         Param.player.havingWeaponList[weapon] = true;
@@ -69,11 +70,16 @@ export default class Shop extends BackEntity{
     else{
       Game.scene.PopSubState();
       UIManager.CloseMessage();//枠を閉じる
+
+      let p = {
+        x : 64,
+        y : 96
+      }
+      UIManager.addUI(new StagePop(p,"-" + this.ToJap(weapon) +"をてにいれた "));//SCORE
     }
   }
   //武器名を日本語にするだけ
   ToJap(weapon){
-    cl(weapon)
     switch(weapon){
       case "missile" : return "ミサイル";
       case "laser" : return "レーザー";

@@ -26,7 +26,7 @@ export default class Enemy5 extends Enemy{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
-    //this.addAI(new Enemy5AI(this,200));
+    this.addAI(new Enemy5AI(this,200));
     this.addAI(new moveReflect(this));
     this.param = Param.enemy5;
     this.atkMin = this.param.atkMin;
@@ -112,7 +112,7 @@ export default class Enemy5 extends Enemy{
     for (let AI of this.AIList){
       AI.Do();//activationのみ
     }
-    this.isActive = (Math.abs(this.pos.x - EntityManager.player.pos.x) < 200)
+    //this.isActive = (Math.abs(this.pos.x - EntityManager.player.pos.x) < 200)
     //動く
     //弾を発射
     if(this.isActive){

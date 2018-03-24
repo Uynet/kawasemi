@@ -118,12 +118,13 @@ export default class Enemy4 extends Enemy{
 
     if(this.isActive){
       this.spid = 1;
-      if(this.isJump){
-        this.vel.x = (EntityManager.player.pos.x - this.pos.x > 0)?0.7:-0.7;
+      if(!this.isJump){
+        this.vel.x *= 0.7;
       }
       //たまにじゃんぷ　
       if(this.frame%40 == 0 && !this.isJump){
         this.vel.y = -3;
+        this.vel.x = (EntityManager.player.pos.x - this.pos.x > 0)?0.7:-0.7;
         this.isJump = true;
       }
     }else{

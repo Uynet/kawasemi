@@ -22,6 +22,7 @@ import Explosion2 from '../Effect/explosion2.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import WeaponIcon from '../Effect/weaponIcon.js';
 import Pool from '../../Stage/pool.js';
+import StagePop from '../../UI/stagePop.js';
 
 const STATE = {
   WAITING : "WAITING",
@@ -72,6 +73,7 @@ export default class Player extends Entity{
     /*パラメータ*/
     this.param = Param.player;
     this.maxHP = Param.player.maxHp;
+    cl(this.maxHp);
     this.hp = this.maxHP;
     this.maxBullet = Param.player.maxBullet;
     this.bullet = this.maxBullet;
@@ -295,9 +297,11 @@ export default class Player extends Entity{
 
       //bulletが少ないと防御力がさがる(思いつき)
       //0~1
+      /*
       let def = (1 - this.bullet/this.maxBullet)
       atk *= (1 + 30*def*def);
       atk = Math.floor(atk);
+      */
 
       this.hp+=atk;
       //フォントはダメージ数に応じて数字を表示する　
@@ -333,7 +337,7 @@ export default class Player extends Entity{
         /*フラグの解除*/
 
         //床との衝突
-        if(c.n.y == -1){
+        if(c.n.y == -1 && this.vel.y > 0){
           this.floor.under = l;
           this.floor.on = true;
           /*直せ*/
@@ -379,8 +383,6 @@ export default class Player extends Entity{
     if(this.floor.on){
       this.pos.x += this.floor.under.vel.x; 
       this.pos.y += this.floor.under.vel.y; 
-      this.vel.x += this.floor.under.acc.x; 
-      this.vel.y += this.floor.under.acc.y; 
     }
     this.acc.y += this.gravity;
     this.pos.x += this.vel.x; 
@@ -493,7 +495,20 @@ export default class Player extends Entity{
 
   Update(){
     if(Input.isKeyClick(KEY.K)){
-      cl(this.pos);
+      let p = {
+        x : 64,
+        y : 96
+      }
+      UIManager.addUI(new StagePop(p,"-ミサイルをてにいれた "));//SCORE
+      p.y += 10;
+      UIManager.addUI(new StagePop(p,"-レーザーをてにいれた "));//SCORE
+      this.param.havingWeaponList.missile = true;
+      this.param.havingWeaponList.laser = true;
+      UIManager.bullet.Push("missile");
+      UIManager.bullet.Push("laser");
+      this.param.maxHp = 255;
+      this.Damage(-999);
+      Audio.PlaySE("missileHit");
     }
     if(this.isAlive){
       /*Init*/
