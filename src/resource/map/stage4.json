@@ -124,28 +124,6 @@
                  "width":16,
                  "x":272,
                  "y":256
-                }, 
-                {
-                 "gid":162,
-                 "height":16,
-                 "id":611,
-                 "name":"",
-                 "properties":
-                    {
-                     "1":"\u3061\u3085\u3046\u3044!\u2193\n",
-                     "2":"\u3060\u3093\u3084\u304f\u304c\u3078\u308b\u3068\n\u307c\u3046\u304e\u3087\u304c\u3055\u304c\u308b"
-                    },
-                 "propertytypes":
-                    {
-                     "1":"string",
-                     "2":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":80,
-                 "y":448
                 }],
          "opacity":0.959999978542328,
          "type":"objectgroup",

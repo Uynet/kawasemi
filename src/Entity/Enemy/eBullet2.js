@@ -67,7 +67,7 @@ export default class eBullet2 extends Enemy{
     }
     this.Physics();
     if(Math.abs(this.vel.y)>1)this.vel.y *= 1;
-    //this.Collision();
+    this.Collision();
     this.Hurt();
     this.Animation();
     this.frame++;

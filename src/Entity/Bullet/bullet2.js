@@ -12,6 +12,7 @@ import Explosion1 from '../Effect/explosion1.js';
 import Explosion2 from '../Effect/explosion2.js';
 import Param from '../../param.js';
 import Audio from '../../audio.js';
+import Pool from '../../Stage/pool.js';
 
 const bullet2 = Param.bullet2;
 
@@ -34,7 +35,7 @@ export default class Bullet2 extends Bullet{
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
     this.sprite.alpha = 0.7;
     /*コライダ*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,2,2));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,6,6));//衝突判定の形状
     /*パラメータ*/
     this.hp = Param.bullet2.hp;//弾丸のHP 0になると消滅
     this.atkMax = Param.bullet2.atkMax;//攻撃力
@@ -56,7 +57,9 @@ export default class Bullet2 extends Bullet{
       if(c.isHit){
         if(w.isBreakable) {
           w.Damage(-1);
-          EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
+          let e = new Explosion2(CPV(this.pos),this.arg + Math.PI);
+          //e = Pool.GetSmoke(CPV(this.pos),VEC0(),3);
+          EntityManager.addEntity(e);
         }
         else if(w.type == "ENEMY"){
           EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));

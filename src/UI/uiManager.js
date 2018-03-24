@@ -1,4 +1,5 @@
 import Drawer from '../drawer.js';
+import Audio from '../audio.js';
 import UI from './ui.js';
 import StagePop from './stagePop.js';
 import GaugeHP from './gaugeHP.js';
@@ -122,6 +123,7 @@ export default class UIManager{
      * POP 新しくフレームを作る
      * PAGE フレームを作らず改ページのみ
      */
+    Audio.PlaySE("changeWeapon");
     switch(type){
       case "POP" : 
         UIManager.addUI(new Message(P_MES,text));//枠

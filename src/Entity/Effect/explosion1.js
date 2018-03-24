@@ -36,12 +36,12 @@ export default class Explosion1 extends EFFECT{
       let v = Rand2D(16);
       let p = ADV(v,this.pos);
       let fire = Pool.GetFire(p,VEC0());
-      EntityManager.addEntity(fire);
+      if(fire)EntityManager.addEntity(fire);
     }
     for(let i =0;i<3;i++){
       let p = ADV(this.pos,Rand2D(16));
       let flash = Pool.GetFlash(this.pos,VEC0());
-      EntityManager.addEntity(flash);
+      if(flash)EntityManager.addEntity(flash);
     }
   }
   Collision(){

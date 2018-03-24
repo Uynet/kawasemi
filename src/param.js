@@ -63,13 +63,13 @@ export default class Param{
       coin : 2
     }
     this.enemy6 = {
-      hp : 10,
+      hp : 1,
       atkMax : 3,
       atkMin : 1,
       gravity : 0,
       term : 50,
       coin : 1,
-      exp : 999,
+      exp : 49,
     }
     this.eBullet1 = {
       hp : 1,
@@ -85,7 +85,7 @@ export default class Param{
     this.weapon1 = {
       //status
       agi : 20,
-      cost : 20,
+      cost : 17,
       speed : 7, 
       length : 580,
       //optional
@@ -101,7 +101,7 @@ export default class Param{
     }
     this.weapon2 = {
       agi : 26,
-      cost : 2,
+      cost : 20,
       length : 300,
       //optional
       isTarget : true,
@@ -111,11 +111,11 @@ export default class Param{
     //normal
     this.weapon3 = {
       agi : 16,
-      cost : 8,
+      cost : 6,
       speed : 4, 
       length : 300,
       //optional
-      isTarget : false,
+      isTarget : true,
      // isHorming : false,
       isLasersight : false,
     }
