@@ -23,8 +23,8 @@ export default class GameClearEvent extends Event{
         frame++;
         yield;
       }
-      if(Game.stage == 2)Audio.PlayBGM("stage4",0);
-      if(Game.stage == 9)Drawer.entityContainer.filters = [Drawer.testFilter];
+      if(Game.stage == 2)Audio.PlayBGM("stage5",0.2);
+      //if(Game.stage == 9)Drawer.entityContainer.filters = [Drawer.testFilter];
       yield;
     }
     let itt = gen();
