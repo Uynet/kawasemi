@@ -84,7 +84,7 @@ export default class Audio{
     return new Promise(res=>{
       this.Init();
       //!ココで読み込むnameはファイル名に統一すること!
-  //    this.LoadBGM('stage4');
+      this.LoadBGM('stage4');
       this.LoadBGM('stage5');
       this.LoadSE('jump1');
       this.LoadSE('jump2');//空中ジャンプ
