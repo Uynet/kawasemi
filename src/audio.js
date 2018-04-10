@@ -46,7 +46,7 @@ export default class Audio{
     req.send('');
   }
   // サウンドを再生
-  static PlayBGM(name,gain){
+  static async PlayBGM(name,gain){
     let buffer = this.BGM[name];
     source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
@@ -59,6 +59,7 @@ export default class Audio{
         gainNode.gain.value = gain;
       }
     source.start(0);
+    return;
   };
   static PlaySE(name,gain,pitch){
     //同じ効果音は同時にならないようにする
@@ -85,7 +86,6 @@ export default class Audio{
       //!ココで読み込むnameはファイル名に統一すること!
   //    this.LoadBGM('stage4');
       this.LoadBGM('stage5');
-
       this.LoadSE('jump1');
       this.LoadSE('jump2');//空中ジャンプ
       this.LoadSE('coin1');
