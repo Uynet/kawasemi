@@ -43,9 +43,14 @@ export default class Game{
 
   static async Load(){
     await Art.LoadTexture();
-    Audio.Load().then(_=>{
+    Audio.Load();
+
+    const po = ()=>{
       Game.Init();
-    })
+      let a = document.getElementById("po");
+      a.innerHTML = "こんにちわ";
+    }
+    setTimeout(po,5000);
   }
 
   //タイトル画面中の処理
