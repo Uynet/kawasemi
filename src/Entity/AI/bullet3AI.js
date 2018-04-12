@@ -35,7 +35,7 @@ export default class Bullet3AI{
             // ■ SoundEffect : hitWall
             switch(w.material){
               case  "wall" : Audio.PlaySE("landing1",-1,2);break;
-              case  "steel": Audio.PlaySE("landing3",0,2);break;
+              case  "steel": Audio.PlaySE("landing3",4,2);break;
               }
             this.bullet.hp = 0;
           }

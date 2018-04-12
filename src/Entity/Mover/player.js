@@ -254,7 +254,7 @@ export default class Player extends Entity{
           //■ SE : foot
           switch(this.floor.under.material){
             case "wall" : Audio.PlaySE("landing1",0);break;
-           case "steel": Audio.PlaySE("landing2",-0.4,0.8);Audio.PlaySE("landing1",-1);break;
+           case "steel": Audio.PlaySE("landing2",-0.0,0.8);Audio.PlaySE("landing1",-1);break;
             default : break;
           }
         }
