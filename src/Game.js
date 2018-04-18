@@ -50,7 +50,7 @@ export default class Game{
       let a = document.getElementById("po");
       a.innerHTML = "こんにちわ";
     }
-    setTimeout(po,2000);
+    setTimeout(po,2500);
   }
 
   //タイトル画面中の処理

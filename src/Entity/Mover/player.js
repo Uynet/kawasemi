@@ -197,7 +197,8 @@ export default class Player extends Entity{
     }
     /*for debug*/
     if(Input.isKeyInput(KEY.J)){
-      this.Damage(-999);
+      this.bullet += 100;
+      //this.Damage(-999);
     }
     if(Input.isKeyClick(KEY.C) && this.isAlive){
       //武器チェンジ

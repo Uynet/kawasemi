@@ -19,8 +19,8 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile : true,//debug
-        laser : true,//debug
+        missile : false,
+        laser : false,
       },
       //装備中の武器
       equip : "normal",
@@ -84,8 +84,8 @@ export default class Param{
     }
     this.weapon1 = {
       //status
-      agi : 20,
-      cost : 17,
+      agi : 3,
+      cost : 1,
       speed : 7, 
       length : 580,
       //optional
@@ -110,7 +110,7 @@ export default class Param{
     }
     //normal
     this.weapon3 = {
-      agi : 16,
+      agi : 6,
       cost : 6,
       speed : 4, 
       length : 300,
