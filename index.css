@@ -6,8 +6,8 @@ body {background-color: #2f2d46; }
   background: #ac3765;
   box-shadow: 2px 2px 4px gray;
   position:absolute;
-  top:128px;
-  left:390px;
+  top:308px;
+  left:100px;
   transition: all 300ms 0s ease;
   animation: rotate 2s;linear 0s;         
 }
@@ -19,13 +19,20 @@ h3{
 .textbox {
   padding : 20px ;
   background: #7f92b5;
+  background-image: url("./src/resource/WebBG.png");
   box-shadow: 2px 2px 4px gray;
-  font-family: "Yu Gothic";
+  font-family: "Rounded Mplus 1c";
+  border: 5px solid #2f2d46;
 }
 .text {
   position:relative;
   top:0px;
   left:310px;
+}
+.textR {
+  position:relative;
+  top:0px;
+  left:0px;
 }
 
 .tweet {
@@ -44,4 +51,19 @@ h3{
 @keyframes rotate {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); } 
+}
+
+.prof{
+}
+.icon{
+}
+.name{
+  position:relative;
+  top:-32px;
+  left:50px;
+}
+.bio{
+  position:relative;
+  top:-64px;
+  left:120px;
 }
