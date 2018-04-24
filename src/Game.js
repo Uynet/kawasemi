@@ -48,7 +48,7 @@ export default class Game{
     const po = ()=>{
       Game.Init();
       let a = document.getElementById("po");
-      a.innerHTML = "こんにちわ";
+      a.parentNode.removeChild(a);
     }
     setTimeout(po,2500);
   }
