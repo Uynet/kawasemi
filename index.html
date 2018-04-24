@@ -2,37 +2,58 @@
 <html>
   <head>
     <title>ぽよぽよ</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="shortcut icon" href="src/resource/favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script src="lib/pixi.min.js"></script> 
     <script src="lib/jquery.min.js"></script> 
     <script src="src/global.js"></script>
     <script type = "module" src = "src/main.js"></script>
 
-<link rel="shortcut icon" href="src/resource/favicon.ico">
 
   </head>
   <body>
-    <div id="pixiview"></div>
-<iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/tweet_button.html?url=<?php the_permalink(); ?>&text=kawasemi.uynet.trap.show&lang=ja" style="width:100px; height:20px;"></iframe>
+    <div id="pixiview" align = "center"></div>
     <div>
-    <text id = "po">Now Loading...</text>
-    <h3>操作方法</h3>
-    矢印 : 移動/向き</br>
-    Z : ジャンプ</br>
-    X : 看板/ショット</br>
-    C : 武器切り替え(最初はできません</br>
-    <h3>このゲームについて</h3>
-    エフェクトや操作感にこだわった2Dドット絵ゲー</br>
-    現在開発中です.</br>
-    Chrome推奨</br>
-    読み込みがバグった時はリロードしてください</br>
-    第7回GAME<sup>3</sup>優勝作品
-    <h3>つくった人</h3>
-    <img src = ./src/resource/icon.jpg>
-    <a href = "https://twitter.com/highsate">uynet</a><br>
-    個人制作してます<br>
-    他作品:NinjaFlickerなど(音楽)
+      <div class = "box" id = "po">
+        <div class = "tweet">
+          <text>(✿╹◡╹)Loading..</text>
+        </div>
+      </div>
+      <div class = "textbox">
+        <div class = text>
+          <iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/tweet_button.html?url=<?php the_permalink(); ?>&text=kawasemi.uynet.trap.show&lang=ja" style="color:#334; width:100px; height:20px;"></iframe>
+          <h3>操作方法</h3>
+          矢印 : 移動/向き</br>
+          Z : ジャンプ</br>
+          X : 看板/ショット</br>
+          C : 武器切り替え(最初はできません</br>
+        </div>
+      </div>
+
+
+
+
+      <div class = "textbox">
+        <div class = "text">
+
+          <h3>このゲームについて</h3>
+          エフェクトや操作感にこだわった2Dドット絵ゲー</br>
+          現在開発中です.</br>
+          Chrome推奨</br>
+          読み込みがバグった時はリロードしてください</br>
+          第7回GAME<sup>3</sup>優勝作品
+        </div>
+      </div>
+      <div class = "textbox">
+        <div class = "text">
+          <h3>つくった人</h3>
+          <img src = ./src/resource/icon.jpg>
+          <a href = "https://twitter.com/highsate">uynet</a><br>
+          個人制作してます<br>
+          他作品:NinjaFlickerなど(音楽)
+        </div>
+      </div>
     </div>
   </body>
 </html>
