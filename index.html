@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="shortcut icon" href="src/resource/favicon.ico">
     <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet"/>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script src="lib/pixi.min.js"></script> 
     <script src="lib/jquery.min.js"></script> 
@@ -17,14 +18,19 @@
     <div id="pixiview" align = "center"></div>
     <div>
       <div class = "box" id = "po">
-        <div class = "tweet">
+        <div class = "loading">
           <text>(✿╹◡╹)Loading..</text>
         </div>
       </div>
       <div class = "textbox">
         <div class = text>
-          <iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/tweet_button.html?url=<?php the_permalink(); ?>&text=kawasemi.uynet.trap.show&lang=ja" style="color:#334; width:100px; height:20px;"></iframe>
-          <h3> <img src = ./src/resource/sign.png> 操作方法</h3>
+          <a href ="https://twitter.com/intent/tweet?text=&hashtags=サイハテドロップ kawasemi.uynet.trap.show">
+            <div class = "twitter" align = "center">
+              <i class="fab fa-twitter fa-lg"></i>
+              ツイート
+            </div>
+          </a>
+          <h3 id="sign"> 操作方法</h3>
           ↑↓←→   : 移動/向き</br>
           Z      : ジャンプ</br>
           X      : 看板/ショット</br>
@@ -35,8 +41,7 @@
       <div class = "textbox">
         <div class = "text">
 
-          <h3> <img src = ./src/resource/sign.png> 
-            このゲームについて</h3>
+          <h3 id = "sign"> このゲームについて</h3>
           ミサイルで敵を吹き飛ばしながら進む系2Dドット絵ゲーム</br>
           未完成で10ステージしかできてません</br>
           Chrome推奨</br>
@@ -45,15 +50,12 @@
         </div>
       </div>
       <div class = "textbox">
+        <a href="https://twitter.com/uynet">
         <div class = "text">
-          <h3> <img src = ./src/resource/sign.png> 
-            つくった人</h3>
+          <h3 id="icon">つくった人</h3>
           <div class = "prof">
-            <div class = "icon">
-            <img src = ./src/resource/favicon.png>
-            </div>
             <div class = "name">
-            <a href="https://twitter.com/uynet">uynet</a><br>
+              <a href="https://twitter.com/uynet"><b>uynet</b></a><br>
             </div>
             <div class = "bio">
               個人制作してます<br>
@@ -61,6 +63,7 @@
             </div>
           </div>
         </div>
+        </a>
       </div>
     </div>
   </body>
