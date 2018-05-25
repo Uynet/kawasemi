@@ -1079,7 +1079,7 @@ class Audio{
     req.send('');
   }
   // サウンドを再生
-  static PlayBGM(name,gain){
+  static async PlayBGM(name,gain){
     let buffer = this.BGM[name];
     source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
@@ -1092,6 +1092,7 @@ class Audio{
         gainNode.gain.value = gain;
       }
     source.start(0);
+    return;
   };
   static PlaySE(name,gain,pitch){
     //同じ効果音は同時にならないようにする
@@ -1116,9 +1117,8 @@ class Audio{
     return new Promise(res=>{
       this.Init();
       //!ココで読み込むnameはファイル名に統一すること!
-  //    this.LoadBGM('stage4');
+      this.LoadBGM('stage4');
       this.LoadBGM('stage5');
-
       this.LoadSE('jump1');
       this.LoadSE('jump2');//空中ジャンプ
       this.LoadSE('coin1');
@@ -1504,8 +1504,8 @@ class Param{
     }
     this.weapon1 = {
       //status
-      agi : 20,
-      cost : 17,
+      agi : 13,
+      cost : 10,
       speed : 7, 
       length : 580,
       //optional
@@ -1530,7 +1530,7 @@ class Param{
     }
     //normal
     this.weapon3 = {
-      agi : 16,
+      agi : 6,
       cost : 6,
       speed : 4, 
       length : 300,
@@ -1816,9 +1816,14 @@ class Game{
 
   static async Load(){
     await __WEBPACK_IMPORTED_MODULE_10__art_js__["a" /* default */].LoadTexture();
-    __WEBPACK_IMPORTED_MODULE_16__audio_js__["a" /* default */].Load().then(_=>{
+    __WEBPACK_IMPORTED_MODULE_16__audio_js__["a" /* default */].Load();
+
+    const po = ()=>{
       Game.Init();
-    })
+      let a = document.getElementById("po");
+      a.parentNode.removeChild(a);
+    }
+    setTimeout(po,2500);
   }
 
   //タイトル画面中の処理
@@ -4525,7 +4530,7 @@ class Bullet1AI{
           //wall
           }else{
             // ■ SoundEffect : hitWall
-            if(w.material == "steel")__WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing3",3);
+            if(w.material == "steel")__WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing3",5);
             this.bullet.hp = 0;
           }
       }
@@ -5296,7 +5301,7 @@ class GameClearEvent extends __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* defa
         frame++;
         yield;
       }
-      if(__WEBPACK_IMPORTED_MODULE_4__game_js__["a" /* default */].stage == 2)__WEBPACK_IMPORTED_MODULE_7__audio_js__["a" /* default */].PlayBGM("stage5",0.2);
+    if(__WEBPACK_IMPORTED_MODULE_4__game_js__["a" /* default */].stage == 2)__WEBPACK_IMPORTED_MODULE_7__audio_js__["a" /* default */].PlayBGM("stage5",0.0);
       if(__WEBPACK_IMPORTED_MODULE_4__game_js__["a" /* default */].stage == 5)__WEBPACK_IMPORTED_MODULE_5__drawer_js__["a" /* default */].entityContainer.filters = [__WEBPACK_IMPORTED_MODULE_5__drawer_js__["a" /* default */].testFilter];
       yield;
     }
@@ -5320,7 +5325,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /*拡大方式をニアレストネイバーに*/
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+
 __WEBPACK_IMPORTED_MODULE_0__game_js__["a" /* default */].Load();
+
 
 
 
@@ -6225,7 +6232,8 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
     }
     /*for debug*/
     if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyInput(KEY.J)){
-      this.Damage(-999);
+      this.bullet += 100;
+      //this.Damage(-999);
     }
     if(__WEBPACK_IMPORTED_MODULE_7__input_js__["a" /* default */].isKeyClick(KEY.C) && this.isAlive){
       //武器チェンジ
@@ -6282,7 +6290,7 @@ class Player extends __WEBPACK_IMPORTED_MODULE_0__entity_js__["a" /* default */]
           //■ SE : foot
           switch(this.floor.under.material){
             case "wall" : __WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing1",0);break;
-           case "steel": __WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing2",-0.4,0.8);__WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing1",-1);break;
+           case "steel": __WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing2",-0.0,0.8);__WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing1",-1);break;
             default : break;
           }
         }
@@ -7186,7 +7194,7 @@ class Bullet3AI{
             // ■ SoundEffect : hitWall
             switch(w.material){
               case  "wall" : __WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing1",-1,2);break;
-              case  "steel": __WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing3",0,2);break;
+              case  "steel": __WEBPACK_IMPORTED_MODULE_3__audio_js__["a" /* default */].PlaySE("landing3",4,2);break;
               }
             this.bullet.hp = 0;
           }
