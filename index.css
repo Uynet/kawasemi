@@ -42,6 +42,7 @@
       wifth:90px;
     }
 }
+/*赤いライン*/
 .box {
   z-index:4;
   content:"in";
@@ -49,7 +50,7 @@
   height: 0x;
   background: #ac3765;
   position:absolute;
-  top:300px;
+  top:50%;
   left:0px;
   animation-fill-mode: forwards;
   animation: spread 10s;

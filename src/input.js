@@ -21,6 +21,29 @@ export default class Input{
   static isAnyKeyClick(){
     return anyKeyPress;
   }
+  //スクロール禁止用関数
+  static noScroll(){
+    //PC用
+    const scroll_event = 
+      'onwheel' in document ? 'wheel' :
+      'onmousewheel' in document ? 'mousewheel' :
+      'DOMMouseScroll';
+    $(document).on(scroll_event,e=>{e.preventDefault();});
+    //SP用
+    $(document).on('touchmove.noScroll',e=>{e.preventDefault();});
+  }
+  //スクロール復活用関数
+  static returnScroll(){
+    cl("retuo")
+    //PC用
+    const scroll_event =
+    'onwheel' in document ? 'wheel' :
+    'onmousewheel' in document ? 'mousewheel' :
+    'DOMMouseScroll';
+    $(document).off(scroll_event);
+    //SP用
+    $(document).off('.noScroll');
+  }
 }
 /*receive input event*/
 $(document).on("keydown",(e)=> {
@@ -45,4 +68,3 @@ $(document).on("keyup",(e)=> {
   clickedKeyList[event.keyCode] = false;
   inputedKeyList[event.keyCode] = false;
 });
-
