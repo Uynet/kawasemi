@@ -72,7 +72,7 @@ h3#icon::before {
 .text {
   position: relative;
   top: 0px;
-  left: 310px; }
+  left: 0px; }
 
 .textR {
   position: relative;
@@ -85,7 +85,7 @@ h3#icon::before {
 
 .bio {
   position: relative;
-  top: -32px;
-  left: 70px; }
+  top: 0px;
+  left: 0px; }
 
 /*# sourceMappingURL=style.css.map */
