@@ -58,7 +58,7 @@ export default class Param{
       hp : 10,
       atkMax : 3,
       atkMin : 1,
-      gravity : 0.2,
+      gravity : 0,
       term : 80,
       coin : 2
     }
@@ -112,7 +112,7 @@ export default class Param{
     this.weapon3 = {
       agi : 6,
       cost : 6,
-      speed : 4, 
+      speed : 10, 
       length : 300,
       //optional
       isTarget : true,

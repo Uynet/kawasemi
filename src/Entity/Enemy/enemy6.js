@@ -19,9 +19,7 @@ export default class Enemy6 extends Enemy{
     super(pos,VEC0());
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    this.frame = 0;
     this.type = ENTITY.ENEMY;
-    this.dir = 1;
     this.name = "enemy6";
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy6;
@@ -31,13 +29,7 @@ export default class Enemy6 extends Enemy{
     this.sprite.anchor.set(0.5);
     /*パラメータ*/
     this.addAI(new Enemy5AI(this,200));
-    this.param = Param.enemy6
-    this.atkMin = this.param.atkMin;
-    this.atkMax = this.param.atkMax;
-    this.hp = this.param.hp;
-    this.gravity = 0 * this.param.gravity;
-    this.coin = this.param.coin;
-    this.exp = this.param.exp;
+    this.SetParam(Param.enemy6);
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
