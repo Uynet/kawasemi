@@ -17,31 +17,17 @@ export default class Enemy4 extends Enemy{
     super(pos,VEC0());
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    this.frame = 0;
-    this.type = ENTITY.ENEMY;
-    this.dir = 1;
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy4;
-    this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.addAI(new Enemy5AI(this,130));
-    this.param = Param.enemy4
-    this.atkMin = this.param.atkMin;
-    this.atkMax = this.param.atkMax;
-    this.hp = this.param.hp;
-    this.gravity = this.param.gravity;
-    this.coin = this.param.coin;
+    this.SetParam(Param.enemy4)
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
     this.isActive = false;
-    /*床の親子関係*/
-    this.floor = {
-      on : false,
-      under : null
-    }
   }
   //衝突判定
   Collision(){

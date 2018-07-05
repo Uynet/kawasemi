@@ -14,10 +14,17 @@ export default class Enemy extends Entity{
     this.isUpdater = true;
     this.colType = "through";
     this.material = "wall";
+    this.frame = 0;
+    this.spid = 0; //spriteIndex 現在のスプライト番号
     /*固有情報*/
     this.AIList = [];//AIの配列
     /*レイヤー*/
     this.layer = "ENTITY";
+    /*床の親子関係*/
+    this.floor = {
+      on : false,
+      under : null
+    }
   }
   addAI(AI){
     this.AIList.push(AI);
@@ -71,5 +78,10 @@ export default class Enemy extends Entity{
     for (let AI of this.AIList){
       AI.Do();
     }
+  }
+  SetParam(param){
+    Object.keys(param).forEach(key=>{
+      this[key]=param[key];
+    })
   }
 }

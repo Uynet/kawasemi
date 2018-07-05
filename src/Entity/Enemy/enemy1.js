@@ -17,9 +17,7 @@ export default class Enemy1 extends Enemy{
     super(pos,VEC0());
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    this.frame = 0;
     this.type = ENTITY.ENEMY;
-    this.dir = 1;
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy1;
     this.spid = 0; //spriteIndex 現在のスプライト番号
@@ -27,11 +25,7 @@ export default class Enemy1 extends Enemy{
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.addAI(new Enemy1AI(this));
-    this.param = Param.enemy1
-    this.atkMin = this.param.atkMin;
-    this.atkMax = this.param.atkMax;
-    this.hp = this.param.hp;
-    this.gravity = this.param.gravity;
+    this.SetParam(Param.enemy1);
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;

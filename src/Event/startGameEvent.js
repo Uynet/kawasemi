@@ -13,9 +13,12 @@ export default class StartGameEvent extends Event{
     super(1);
     function* gen(){
       Audio.PlayBGM("title",0);
-      Game.scene.ChangeState(STATE.INIT,STATE.TITLE);
+      if(Game.debug) Game.scene.ChangeState(STATE.INIT,STATE.STAGE);
+      else Game.scene.ChangeState(STATE.INIT,STATE.TITLE);
       MapData.DeleteStage();
-      MapData.CreateStage(0,"ENTER");
+      if(Game.debug) MapData.CreateStage(11,"ENTER");
+      else MapData.CreateStage(1,"ENTER");
+      
       yield ;
     }
     let itt = gen();

@@ -28,13 +28,7 @@ export default class Enemy5 extends Enemy{
     /*パラメータ*/
     this.addAI(new Enemy5AI(this,200));
     this.addAI(new moveReflect(this));
-    this.param = Param.enemy5;
-    this.atkMin = this.param.atkMin;
-    this.atkMax = this.param.atkMax;
-    this.hp = this.param.hp;
-    this.gravity = 0 * this.param.gravity;
-    this.coin = this.param.coin;
-    this.term = this.param.term;
+    this.SetParam(Param.enemy5);
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;

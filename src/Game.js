@@ -42,7 +42,7 @@ export default class Game{
   }
 
   static async Load(){
-    //Input.noScroll();//ロード中にスクロール禁止
+    Game.debug=true;//デバッグモード
 
     await Art.LoadTexture();
     Audio.Load();
@@ -52,7 +52,10 @@ export default class Game{
       let a = document.getElementById("po");
       a.parentNode.removeChild(a);
     }
-    setTimeout(po,2500);//直せ
+    let b = document.getElementById("screen");
+
+    if(!Game.debug) setTimeout(po,2500);//直せ
+    else po();
 
     Input.returnScroll();//スクロール解除
   }

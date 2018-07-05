@@ -33,14 +33,9 @@ export default class Enemy3 extends Enemy{
     this.sprite.position = ADV(this.pos , VECN(8));
     this.sprite.anchor.set(0.5);
     /*パラメータ*/
-    this.param = Param.enemy3;
+    this.SetParam(Param.enemy3);
     this.addAI(new Shot(this));
     this.addAI(new MoveLissajous(this));
-    this.atkMin = this.param.atkMin;
-    this.atkMax = this.param.atkMax;
-    this.hp = this.param.hp;
-    this.range = this.param.range;
-    this.coin = this.param.coin;
     /*state*/
     this.state = "WAITING";
     /*フラグ*/
