@@ -105,6 +105,7 @@ const UI_ = {
 }
 
 /*Vector*/
+const VEC2 = (x,y)=>{return {x:x,y:y}};
 const VEC0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
 const VECN = (n)=>{return {x:n,y:n}};//
 const VECX = (vx)=>{return {x:vx,y:0}};//

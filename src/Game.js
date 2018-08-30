@@ -31,7 +31,9 @@ export default class Game{
     StageGen.Init();
 
     /*initialize Game state*/
-    Game.stage = 1;//現在のステージ番号
+    //現在のステージ番号
+    if(Game.debug) Game.stage = 1;
+    else Game.stage = 1;
     Game.scene = new Scene();
 
     //Gameにタイトル画面状態をプッシュ

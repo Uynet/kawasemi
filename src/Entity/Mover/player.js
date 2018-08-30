@@ -19,6 +19,7 @@ import FontEffect from '../Effect/fontEffect.js';
 import BulletShot from '../Effect/bulletShot.js';
 import Explosion1 from '../Effect/explosion1.js';
 import Explosion2 from '../Effect/explosion2.js';
+import Explosion3 from '../Effect/explosion3.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import WeaponIcon from '../Effect/weaponIcon.js';
 import Pool from '../../Stage/pool.js';
@@ -111,12 +112,16 @@ export default class Player extends Entity{
   Input(){
     /*ジャンプ*/
     if(Input.isKeyClick(KEY.Z)){
+
       if(this.isJump == false){
+        EntityManager.addEntity(new Explosion3(CPV(this.pos)));
         this.vel.y = - Param.player.jumpVel;
         this.isJump = true;
         this.state = STATE.JUMPING;
         // ■ SoundEffect : jump
-        Audio.PlaySE("jump1");
+        //Audio.PlaySE("jump1");
+        Audio.PlaySE("changeWeapon",-1);
+        EventManager.PushEvent(new QuakeEvent(10,0.1));
         //effect
         let p = ADV(this.pos,VECY(12));
         let v = {
@@ -136,7 +141,7 @@ export default class Player extends Entity{
           if(this.bullet >= jumpCost){
             Audio.PlaySE("jump2");
             EntityManager.addEntity(new Explosion2(CPV(this.pos),Math.PI*(1/2)));
-            EventManager.eventList.push(new QuakeEvent(20,5));
+            EventManager.PushEvent(new QuakeEvent(20,5));
             this.frameShot = this.frame;//最終ショット時刻
               this.vel.y = - Param.player.jumpVel;
             this.bullet -= 20;
@@ -231,7 +236,7 @@ export default class Player extends Entity{
           state = "jump";
           break;
       case STATE.FALLING :
-        this.spid = (Math.floor(this.frame/Param.player.animRun))%4;
+        this.spid = (Math.floor(this.frame/Param.player.animRun))%1;
           state = "fall";
         break;
       case STATE.RUNNING :
@@ -310,7 +315,7 @@ export default class Player extends Entity{
       //ダメージを受けて一定時間無敵になる
       this.isInvincible = true;
       this.frameDamaged = this.frame;
-      EventManager.eventList.push(new QuakeEvent(5,2));
+      EventManager.PushEvent(new QuakeEvent(10,0.6));
     }
   }
   //コイン取得
@@ -352,7 +357,7 @@ export default class Player extends Entity{
                 y : Rand(0.4),
               }
               let s = Pool.GetSmoke(p,v,10);
-              EntityManager.addEntity(s);
+              EventManager.PushEvent(new QuakeEvent(10,0.1));
               switch(l.material){
                 case "wall": Audio.PlaySE("landing1",1);break;
                 case "steel": Audio.PlaySE("landing2",1);Audio.PlaySE("landing1");break;
@@ -456,7 +461,7 @@ export default class Player extends Entity{
         if(this.isDying){
           //this.state = STATE.DEAD
           let g = new GameOverEvent();
-          EventManager.eventList.push(g);
+          EventManager.PushEvent(g);
         }
         this.isDying = false;
       }

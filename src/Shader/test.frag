@@ -3,17 +3,11 @@ varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
 
 void main(void) {
-  vec4 color = texture2D(uSampler, vTextureCoord);
+  //vec4 color = texture2D(uSampler, vTextureCoord);
+  vec4 color = vec4(0);
 
-  float y = vTextureCoord.y;
+  vec2 uv = vTextureCoord.xy/16.0-vec2(0.5);
 
-  color.r = min(1.0, color.r + y*y/2.0);
-  color.g = min(1.0, color.g + y*y/4.0);
-  //color.b = min(1.0, color.b + y*y/5.0);
-
-  if(color.a == 0.0){
-    color = texture2D(uSampler, vTextureCoord);
-  }
-
+  if(uv.x + uv.y<0.1)color = vec4(1);
   gl_FragColor = color;
 }
