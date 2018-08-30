@@ -415,8 +415,8 @@ export default class Art{
     this.LoadFont();
 
     //shader
-    let filter = new PIXI.Filter(null,resources.shader.data);
-    Drawer.testFilter = filter;
+    Drawer.testFilter = new PIXI.Filter(null,resources.shader.data);
+    //Drawer.smokeFilter =new PIXI.Filter(null,resources.smokeShader.data);
   }
 
   static async LoadTexture(){
@@ -431,6 +431,7 @@ export default class Art{
         .add('pattern7','src/resource/img/font.json')
         .add('src/resource/effect/dark.png')
         .add('shader', 'src/Shader/test.frag')
+        //.add('smokeShader', 'src/Shader/smoke.frag')
         .load((loader,resources)=>Art.Load(resources)).onComplete.add(res)); }
 
   //pattern : str

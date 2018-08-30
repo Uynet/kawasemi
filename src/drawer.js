@@ -54,7 +54,8 @@ export default class Drawer{
     this.blurFilter = new PIXI.filters.BlurFilter();
     this.blurFilter.blur = 2;
     this.noiseFilter = new PIXI.filters.NoiseFilter(0.5);
-    //
+    //shderはなぜかartにある
+    
     this.mapSize = {
       width : 32,
       height : 32,

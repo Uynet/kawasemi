@@ -9,9 +9,9 @@ import Drawer from '../drawer.js';
 export default class QuakeEvent extends Event{
   constructor(size,time){
     //undefined
-    if(!time) {
+    if(time>=1 || !time) {
       console.warn("invalid time : " + time);
-      time = 5
+      time = 0.9
     };
     super(1);
     function* gen(){
@@ -20,7 +20,7 @@ export default class QuakeEvent extends Event{
       while(size > 0.1){
         d = Rand2D(size);
         Drawer.Quake(d);
-        size *= 0.9;
+        size *= time;
         frame++;
         yield ;
       }

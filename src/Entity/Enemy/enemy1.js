@@ -16,12 +16,13 @@ export default class Enemy1 extends Enemy{
   constructor(pos){
     super(pos,VEC0());
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,96,96));//衝突判定の形状
     this.type = ENTITY.ENEMY;
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy1;
     this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+    this.sprite.scale.set(6);
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.addAI(new Enemy1AI(this));
@@ -45,6 +46,11 @@ export default class Enemy1 extends Enemy{
         if(c.n.x != 0) this.vel.x = 0;
         //地面との衝突
         if(c.n.y == -1){ 
+          if(this.isJump == true){
+            //着地
+            //なおす
+            this.AIList[0].Landing();
+          }
           this.isJump = false;
           this.vel.y = Math.min(0,this.vel.y * -0.3);
         }
@@ -91,7 +97,7 @@ export default class Enemy1 extends Enemy{
     }
   }
   Animation(){
-    this.spid = Math.floor(this.frame/2)%4;
+    //this.spid = Math.floor(this.frame/2)%1;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
   }

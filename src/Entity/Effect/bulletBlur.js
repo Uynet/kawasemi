@@ -25,6 +25,9 @@ export default class BulletBlur extends EFFECT{
     this.sprite.scale = VECN((Rand(0.5)+1)/1);
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+
+    //this.sprite.filters = [Drawer.smokeFilter];
+    this.sprite.filters = [Drawer.testFilter];
   }
   Physics(){
     this.pos = ADV(this.pos,this.vel);
