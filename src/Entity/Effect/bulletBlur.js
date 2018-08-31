@@ -27,7 +27,7 @@ export default class BulletBlur extends EFFECT{
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
 
     //this.sprite.filters = [Drawer.smokeFilter];
-    this.sprite.filters = [Drawer.testFilter];
+    //this.sprite.filters = [Drawer.testFilter];
   }
   Physics(){
     this.pos = ADV(this.pos,this.vel);
