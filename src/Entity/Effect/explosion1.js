@@ -23,7 +23,7 @@ export default class Explosion1 extends EFFECT{
     if(sonic)EntityManager.addEntity(sonic);
     //stone(というか火花?)
     for(let i = 0;i<8;i++){
-      let v = Rand2D(30);
+      let v = Rand2D(40);
       let stone = Pool.GetStone(CPV(this.pos),v);
       if(stone)EntityManager.addEntity(stone);
     }

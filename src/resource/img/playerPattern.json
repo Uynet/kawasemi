@@ -471,19 +471,19 @@
       "sourceSize": {"w": 16, "h": 16}
     },
     "playerE4.png": {
-      "frame": {"x":64, "y":224, "w":16, "h":16},
+      "frame": {"x":64, "y":208, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
     "playerE5.png": {
-      "frame": {"x":80, "y":224, "w":16, "h":16},
+      "frame": {"x":80, "y":208, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
     "playerE6.png": {
-      "frame": {"x":96, "y":224, "w":16, "h":16},
+      "frame": {"x":96, "y":208, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
     "playerE7.png": {
-      "frame": {"x":112, "y":224, "w":16, "h":16},
+      "frame": {"x":112, "y":208, "w":16, "h":16},
       "sourceSize": {"w": 16, "h": 16}
     },
     "playerF0.png": {

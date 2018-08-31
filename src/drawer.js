@@ -38,7 +38,7 @@ export default class Drawer{
 
 
     /*拡大率*/
-    this.magnification = 3;
+    this.magnification = 2;
     let po = VECN(this.magnification);
     this.backGroundContainer.scale = po;
     this.backContainer.scale = po;

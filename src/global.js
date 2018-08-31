@@ -134,9 +134,11 @@ const BET = (min,x,max)=>{
 
 //-d ~ +d までの値を返す
 let Rand2D = (d)=>{
+  const angle = Rand(Math.PI);
+  let vi = Rand(d/2)+d/2;
   let p = {
-    x:Rand(d),
-    y:Rand(d)
+    x:Math.cos(angle)*vi,
+    y:Math.sin(angle)*vi,
   }
   return p;
 }
@@ -147,6 +149,10 @@ let DIST = (p1,p2)=>{
 //チェビシェフ
 let DIST_C = (p1,p2)=>{
   return Math.max(Math.abs(p1.x-p2.x)+Math.abs(p1.y-p2.y));
+}
+//
+let length = (v)=>{
+  return Math.sqrt(v.x * v.x + v.y + v.y);
 }
 /*for debug*/
 let cl = console.log;
