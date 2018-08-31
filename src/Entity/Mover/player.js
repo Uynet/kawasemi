@@ -161,6 +161,7 @@ export default class Player extends Entity{
       this.isRun = true;
       this.toArg = 0;
       this.acc.x = Param.player.runVel;
+      this.vel.x = Math.max(0 , this.vel.x);
     }
     /*左向き*/
     if(Input.isKeyInput(KEY.LEFT)){
@@ -169,6 +170,7 @@ export default class Player extends Entity{
       this.isRun = true;
       this.toArg = Math.PI;
       this.acc.x = -Param.player.runVel;
+      this.vel.x = Math.min(0 , this.vel.x);
     }
     /*上向き*/
     if(Input.isKeyInput(KEY.UP)){
@@ -236,7 +238,7 @@ export default class Player extends Entity{
           state = "jump";
           break;
       case STATE.FALLING :
-        this.spid = (Math.floor(this.frame/Param.player.animRun))%1;
+        this.spid = (Math.floor(this.frame/Param.player.animRun))%4;
           state = "fall";
         break;
       case STATE.RUNNING :
