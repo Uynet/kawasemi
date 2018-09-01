@@ -63,7 +63,7 @@ export default class Game{
   }
 
   //タイトル画面中の処理
-  static UpdateTitle(){
+  static UpdateTitle(){ 
     if(Input.isAnyKeyClick()){
       let event = new StartStageEvent();
       EventManager.PushEvent(event);
@@ -93,6 +93,7 @@ export default class Game{
   }
 
   static Run(){
+ 
     requestAnimationFrame(Game.Run);
     for (let l of EventManager.eventList){
       if(l.Do().done){

@@ -2,9 +2,9 @@
 export default class Param{
   static Init(){
     this.player = {
-      jumpVel : 6.0,//ジャンプ力
+      jumpVel : 8.0,//ジャンプ力
       runVel : 0.4,//はしり速度
-      gravity : 0.25,
+      gravity : 0.45,
       maxHp : 100,
       maxBullet : 100,
       fliction : 0.7,
@@ -15,7 +15,7 @@ export default class Param{
       score : 0,
 
       vxMax : 3,
-      vyMax : 80,
+      vyMax : 8,
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,

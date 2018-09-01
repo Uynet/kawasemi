@@ -87,25 +87,9 @@ export default class UIManager{
     UIManager.addUI(new WeaponList(P_BUL));//WList;
     UIManager.addUI(new Score(P_SCORE));//SCORE
   }
-  //フィルタ
-  static SetFilter(filters){
-    /*
-    Drawer.entityContainer.filters = filters;
-    Drawer.backContainer.filters = filters;
-    Drawer.backGroundContainer.filters = filters;
-    Drawer.foreContainer.filters = filters;
-    Drawer.UIContainer.filters = filters;
-    */
-    Drawer.testFilter.uniforms.time = Timer.timer;
-    Drawer.entityContainer.aplha = 0.5;
-    Drawer.backContainer.filters = filters;
-    Drawer.backGroundContainer.filters = filters;
-    Drawer.foreContainer.filters = filters;
-    Drawer.UIContainer.filters = filters;
-  }
   //メニューを開く
   static SetMenu(){
-    UIManager.SetFilter([Drawer.testFilter]);
+    Drawer.SetFilter([Drawer.testFilter]);
     UIManager.addUI(new Menu(ADV(P_MENU,VECY(16))));
   }
   //UIをすべて削除
@@ -114,7 +98,7 @@ export default class UIManager{
       this.removeUI(this.UIList[0]);
     }
     let filters = [];
-    UIManager.SetFilter(filters);
+    Drawer.SetFilter(filters);
   }
   //メッセージイベント
   /* text : 入力文字列

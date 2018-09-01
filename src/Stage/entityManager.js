@@ -73,6 +73,7 @@ export default class EntityManager{
     this.entityList.splice(i,1);
     this.entityIndex--;
 
+
     if(entity.isMultiple) Drawer.removeContainer(entity.container,entity.layer);
     else if(entity.isNoSprite)/*Nothing to do*/;
     else Drawer.removeContainer(entity.sprite,entity.layer);

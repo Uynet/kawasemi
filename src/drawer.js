@@ -19,6 +19,11 @@ export default class Drawer{
        * fore:手前に描画
        * UIコンテナ:UIを描画するレイヤ
        * */
+
+    let Re = new PIXI.Rectangle(0,0,400,320);
+    let tex = new PIXI.Texture.fromImage("src/resource/img/dummy.png");
+    this.renderTarget = new PIXI.Sprite();
+
     this.backGroundContainer = new PIXI.Container();//背景
     this.backContainer = new PIXI.Container();//backEntity
     this.entityContainer = new PIXI.Container();//Entity
@@ -27,18 +32,21 @@ export default class Drawer{
     this.filterContainer = new PIXI.Container();//画面遷移フィルター
     this.UIContainer = new PIXI.Container();//UI
 
-    this.app.stage.addChild(this.backGroundContainer);
-    this.app.stage.addChild(this.backContainer);
-    this.app.stage.addChild(this.entityContainer);
-    this.app.stage.addChild(this.foreEntityContainer);
-    this.app.stage.addChild(this.foreContainer);
-    this.app.stage.addChild(this.filterContainer);
-    this.app.stage.addChild(this.UIContainer);
+    this.renderTarget.addChild(this.backGroundContainer);
+    this.renderTarget.addChild(this.backContainer);
+    this.renderTarget.addChild(this.entityContainer);
+    this.renderTarget.addChild(this.foreEntityContainer);
+    this.renderTarget.addChild(this.foreContainer);
+    this.renderTarget.addChild(this.filterContainer);
+    this.renderTarget.addChild(this.UIContainer);
+    this.Stage.addChild(this.renderTarget);
+
+
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH,PIXI_HEIGHT);
 
 
     /*拡大率*/
-    this.magnification = 2;
+    this.magnification = 3;
     let po = VECN(this.magnification);
     this.backGroundContainer.scale = po;
     this.backContainer.scale = po;
@@ -116,6 +124,7 @@ export default class Drawer{
     this.backGroundContainer.x = Math.floor(toX/4 % 256);
     this.backGroundContainer.y = Math.floor(toY/4 % 256);
     //Entityレイヤ
+
     this.backContainer.x = Math.floor(toX);
     this.backContainer.y = Math.floor(toY);
     this.entityContainer.x = Math.floor(toX);
@@ -140,11 +149,16 @@ export default class Drawer{
     this.foreContainer.x = Math.floor(centerX);
     this.foreContainer.y = Math.floor(centerY);
   }
+  //フィルタ
+  static SetFilter(filters){
+    Drawer.renderTarget.filters = filters;
+  }
 
   static Quake(diff){
     this.Stage.x = Math.floor(diff.x);
     this.Stage.y = Math.floor(diff.y);
   }
+
 
 
 }
