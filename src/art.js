@@ -414,11 +414,17 @@ export default class Art{
     //font
     this.LoadFont();
 
+    let a = new Array(30).fill(0.0);
+
     //shader
     Drawer.testFilter = new PIXI.Filter(null,resources.shader.data , {
       time: { // 変数名
         type: '1f', // 型
         value: 0 // 初期値
+      },
+      particles: {
+        type: '1f', // 型
+        value: a // 初期値
       }
     });
     
