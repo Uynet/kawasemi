@@ -24,8 +24,7 @@ export default class GameClearEvent extends Event{
         yield;
       }
 
-    if(Game.stage == 11)Audio.PlayBGM("stage5",0.2);
-    //  if(Game.stage == 5)Drawer.entityContainer.filters = [Drawer.testFilter];
+      if(Game.stage == 11)Audio.PlayBGM("stage5",0.2);
       yield;
     }
     let itt = gen();

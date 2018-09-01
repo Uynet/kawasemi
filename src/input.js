@@ -34,7 +34,6 @@ export default class Input{
   }
   //スクロール復活用関数
   static returnScroll(){
-    cl("retuo")
     //PC用
     const scroll_event =
     'onwheel' in document ? 'wheel' :

@@ -26,7 +26,7 @@ export default class Param{
       equip : "normal",
     }
     this.enemy1 = {
-      hp : 1,
+      hp : 3000,
       atkMax : 114514,
       atkMin : 1,
       gravity : 0.030,

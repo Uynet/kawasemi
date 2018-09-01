@@ -32,7 +32,7 @@ export default class BulletBlur2 extends EFFECT{
 
   Update(){
     if(this.isAlive){
-      this.sprite.scale = ADV(this.sprite.scale,VECN(-this.frame/256));
+      this.sprite.scale = ADV(this.sprite.scale,VECN(-this.frame/128));
       this.Physics();
       this.sprite.position = ADV(this.pos.x,VECN(8));
       this.sprite.texture = this.pattern[this.spid];

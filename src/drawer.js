@@ -50,10 +50,10 @@ export default class Drawer{
     $("#pixiview").append(this.Renderer.view);
 
     //フィルタ
-    //this.filters = 
     this.blurFilter = new PIXI.filters.BlurFilter();
     this.blurFilter.blur = 2;
     this.noiseFilter = new PIXI.filters.NoiseFilter(0.5);
+
     //shderはなぜかartにある
     
     this.mapSize = {

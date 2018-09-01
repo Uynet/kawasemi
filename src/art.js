@@ -415,7 +415,14 @@ export default class Art{
     this.LoadFont();
 
     //shader
-    Drawer.testFilter = new PIXI.Filter(null,resources.shader.data);
+    Drawer.testFilter = new PIXI.Filter(null,resources.shader.data , {
+      time: { // 変数名
+        type: '1f', // 型
+        value: 0 // 初期値
+      }
+    });
+    
+
     //Drawer.smokeFilter =new PIXI.Filter(null,resources.smokeShader.data);
   }
 

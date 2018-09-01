@@ -14,7 +14,8 @@ export default class GameOverEvent extends Event{
 
       Audio.PlaySE("stageChange");
       //Audio.PlayBGM("stage5",0.2);
-      //Drawer.entityContainer.filters = [Drawer.testFilter];
+      Drawer.entityContainer.filters = [Drawer.testFilter];
+
       while(frame<30){
         frame++;
         yield;
@@ -25,5 +26,4 @@ export default class GameOverEvent extends Event{
     let itt = gen();
     this.func = itt;
   }
-
 }
