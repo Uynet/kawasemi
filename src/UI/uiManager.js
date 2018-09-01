@@ -11,6 +11,7 @@ import Menu from './menu.js';
 import Score from './score.js';
 import EntityManager from '../Stage/entityManager.js';
 import Game from '../game.js';
+import Timer from "../timer.js";
 
 //HP
 const P_HP = {
@@ -95,6 +96,7 @@ export default class UIManager{
     Drawer.foreContainer.filters = filters;
     Drawer.UIContainer.filters = filters;
     */
+    Drawer.testFilter.uniforms.time = Timer.timer;
     Drawer.entityContainer.aplha = 0.5;
     Drawer.backContainer.filters = filters;
     Drawer.backGroundContainer.filters = filters;
