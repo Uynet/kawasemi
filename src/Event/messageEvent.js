@@ -20,13 +20,23 @@ function* page(text){
 }
 //突貫工事クソイベントなので必ず直すこと
 function* event(){
-  let e = new QuakeEvent(5,10);
+  let e = new QuakeEvent(20,0.9);
   //stage1で開く壁の為 だけ に 作られている!
-  EntityManager.removeEntity(EntityManager.wallList[93]);
+  EntityManager.removeEntity(EntityManager.wallList[82]);
+  EntityManager.removeEntity(EntityManager.wallList[80]);
+  EntityManager.removeEntity(EntityManager.wallList[72]);
+  EntityManager.removeEntity(EntityManager.wallList[67]);
+  EntityManager.removeEntity(EntityManager.wallList[61]);
+  EntityManager.removeEntity(EntityManager.wallList[56]);
+
   let p = {
     x : 160,
     y : 352,
   }
+  EntityManager.addEntity(new Explosion1(p));
+  p.y -=32
+  EntityManager.addEntity(new Explosion1(p));
+  p.y -=32
   EntityManager.addEntity(new Explosion1(p));
   EventManager.eventList.push(e);
   Audio.PlaySE("missileHit");

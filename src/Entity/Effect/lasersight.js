@@ -18,7 +18,7 @@ export default class Lasersight extends EFFECT{
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     this.sprite.scale.x = 1;
-    this.sprite.aplha = 0.1;
+    this.sprite.aplha = 0.05;
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
   Delete(){

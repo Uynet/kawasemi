@@ -32,7 +32,7 @@ export default class Game{
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(Game.debug) Game.stage = 8;
+    if(Game.debug) Game.stage = 6;
     else Game.stage = 1;
     Game.scene = new Scene();
 
@@ -45,6 +45,7 @@ export default class Game{
 
   static async Load(){
     Game.debug=true;//デバッグモード
+    //Game.debug=false;
 
     await Art.LoadTexture();
     Audio.Load();
