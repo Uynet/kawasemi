@@ -118,8 +118,8 @@
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":48,
-                 "y":336
+                 "x":92.4323540079797,
+                 "y":337.813565469713
                 }, 
                 {
                  "gid":171,
@@ -459,7 +459,7 @@
                 }],
          "opacity":0.959999978542328,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "width":32,
          "x":0,
          "y":0
@@ -481,7 +481,7 @@
          "name":"Entity",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":48,
          "x":0,
          "y":0

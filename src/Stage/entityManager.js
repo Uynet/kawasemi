@@ -3,8 +3,7 @@ import Target from '../Entity/Effect/target.js';
 import Timer from '../timer.js';
 import Art from '../art.js';
 import Stone from '../Entity/Effect/stone.js';
-import Smoke from '../Entity/Effect/smoke.js';
-/*エンティティマネージャ*/
+
 export default class EntityManager{
   static Init(){
     this.entityList = [];//全Entityのリスト

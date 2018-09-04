@@ -15,7 +15,7 @@ export default class Param{
       score : 0,
 
       vxMax : 3,
-      vyMax : 8,
+      vyMax : 7,
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
@@ -111,7 +111,7 @@ export default class Param{
     //normal
     this.weapon3 = {
       agi : 6,
-      cost : 0,
+      cost : 5,
       speed : 10, 
       length : 300,
       //optional

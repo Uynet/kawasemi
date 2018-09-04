@@ -16,6 +16,7 @@ import Signpop from '../Effect/signpop.js';
 import StagePop from '../../UI/stagePop.js';
 import Font from '../../UI/font.js';
 import GaugeBullet from '../../UI/gaugeBullet.js';
+import BrightCoin from "../Effect/brightCoin.js";
 
 export default class Shop extends BackEntity{
   constructor(pos,message){
@@ -90,11 +91,16 @@ export default class Shop extends BackEntity{
   Update(){
     //page : 現在のページ番号
     let player = EntityManager.player;
+    if(this.frame%8 == 0){
+      let trail = new BrightCoin(ADV(this.pos,Rand2D(16)),Rand2D(0.5));
+      EntityManager.addEntity(trail);
+    }
     if(DIST(player.pos,this.pos) <  16 && player.isAlive){
         player.isCanRead = true;
       if( Input.isKeyClick(KEY.X)){
         this.Read();
       }
     }
+    this.frame++;
   }
 }

@@ -14,6 +14,7 @@ export default class GameOverEvent extends Event{
 
       Audio.PlaySE("stageChange");
       //Audio.PlayBGM("stage5",0.2);
+      if(Game.debug)Audio.PlayBGM("stage5",0.0);
 
 
       while(frame<30){
