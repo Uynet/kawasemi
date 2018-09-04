@@ -421,10 +421,6 @@ export default class Art{
       time: { // 変数名
         type: '1f', // 型
         value: 0 // 初期値
-      },
-      particles: {
-        type: '1f', // 型
-        value: a // 初期値
       }
     });
     

@@ -74,7 +74,7 @@ export default class Bullet1 extends Bullet{
     if(this.hp<=0){
       Pool.Remove(this);
       Audio.PlaySE("missileHit",1);
-      EventManager.eventList.push(new QuakeEvent(6,3));//ゆれ
+      EventManager.eventList.push(new QuakeEvent(50,0.8));//ゆれ
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
     }
     if(this.frame > 100){

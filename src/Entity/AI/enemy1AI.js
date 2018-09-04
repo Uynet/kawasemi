@@ -29,7 +29,6 @@ export default class Enemy1AI extends AI{
       this.enemy.acc.y = -2.3;
       this.enemy.isJump = true;
       let p = ADV(this.enemy.pos,VEC2(-20,90));
-      EventManager.PushEvent(new QuakeEvent(10,5));
       Audio.PlaySE("enemy5Shot");
 
     }
@@ -39,7 +38,7 @@ export default class Enemy1AI extends AI{
       }
   }
   Landing(){
-      EventManager.PushEvent(new QuakeEvent(32,50));
+      EventManager.PushEvent(new QuakeEvent(40,0.97));
       Audio.PlaySE("missileHit");
   }
 }

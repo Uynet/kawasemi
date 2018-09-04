@@ -32,7 +32,7 @@ export default class Game{
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(Game.debug) Game.stage = 1;
+    if(Game.debug) Game.stage = 8;
     else Game.stage = 1;
     Game.scene = new Scene();
 
@@ -93,7 +93,7 @@ export default class Game{
   }
 
   static Run(){
- 
+    Drawer.testFilter.uniforms.time = Timer.time;//後で消す
     requestAnimationFrame(Game.Run);
     for (let l of EventManager.eventList){
       if(l.Do().done){

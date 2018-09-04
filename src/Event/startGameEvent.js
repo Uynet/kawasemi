@@ -16,7 +16,7 @@ export default class StartGameEvent extends Event{
       if(Game.debug) Game.scene.ChangeState(STATE.INIT,STATE.STAGE);
       else Game.scene.ChangeState(STATE.INIT,STATE.TITLE);
       MapData.DeleteStage();
-      if(Game.debug) MapData.CreateStage(11,"ENTER");
+      if(Game.debug) MapData.CreateStage(Game.stage,"ENTER");
       else MapData.CreateStage(1,"ENTER");
       
       yield ;

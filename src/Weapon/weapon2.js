@@ -59,7 +59,7 @@ export default class Weapon2 extends Weapon{
     //player.vel.x -= v.x/11;
     //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;
     //振動
-    EventManager.eventList.push(new QuakeEvent(17,0.5));
+    EventManager.eventList.push(new QuakeEvent(27,0.8));
   }
   Update(player){
     if(this.isTarget) this.Target(player);
