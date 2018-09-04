@@ -2,7 +2,7 @@
 export default class Param{
   static Init(){
     this.player = {
-      jumpVel : 6.5,//ジャンプ力
+      jumpVel : 6.2,//ジャンプ力
       runVel : 0.4,//はしり速度
       gravity : 0.30,
       maxHp : 100,
@@ -19,7 +19,7 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile : true,
+        missile : false,
         laser : false,
       },
       //装備中の武器
@@ -49,7 +49,7 @@ export default class Param{
     }
     this.enemy4 = {
       hp : 10,
-      atkMax : 3,
+      atkMax : 5,
       atkMin : 1,
       gravity : 0.2,
       coin : 2
@@ -73,8 +73,8 @@ export default class Param{
     }
     this.eBullet1 = {
       hp : 1,
-      atkMin : 1,
-      atkMax : 1,
+      atkMin : 2,
+      atkMax : 4,
     }
     this.eBullet2 = {
       hp : 1,
@@ -106,7 +106,7 @@ export default class Param{
       //optional
       isTarget : true,
      // isHorming : false,
-      isLasersight : false,
+      isLasersight : true,
     }
     //normal
     this.weapon3 = {

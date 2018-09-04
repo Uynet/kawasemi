@@ -84,7 +84,7 @@
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":64,
+                 "x":96,
                  "y":240
                 }, 
                 {
@@ -124,7 +124,7 @@
          "name":"BackEntity",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":32,
          "x":0,
          "y":0

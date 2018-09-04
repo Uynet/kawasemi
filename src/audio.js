@@ -107,6 +107,7 @@ export default class Audio{
       this.LoadSE('enemy5Shot');//
       this.LoadSE('enemy6Swell');//
       this.LoadSE('changeWeapon');//
+      this.LoadSE('bomb');//
       res();
     })
   };

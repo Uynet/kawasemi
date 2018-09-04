@@ -119,8 +119,8 @@ export default class Player extends Entity{
         this.isJump = true;
         this.state = STATE.JUMPING;
         // ■ SoundEffect : jump
-        //Audio.PlaySE("jump1");
-        Audio.PlaySE("changeWeapon",-1);
+        Audio.PlaySE("jump1");
+        //Audio.PlaySE("changeWeapon",-1);
         EventManager.PushEvent(new QuakeEvent(10,0.1));
         //effect
         let p = ADV(this.pos,VECY(12));
@@ -443,7 +443,10 @@ export default class Player extends Entity{
     if(this.hp <= 0){
       if(this.isAlive){
         //死亡開始時に一回だけ呼ばれる部分
+        EventManager.PushEvent(new QuakeEvent(50,0.9));
         EntityManager.addEntity(new Explosion1(CPV(this.pos)));
+        Audio.PlaySE("bomb",-1.4);
+        Audio.PlaySE("missileHit");
         this.weapon.Reset();
         this.frameDead = this.frame;
         this.isDying = true;
