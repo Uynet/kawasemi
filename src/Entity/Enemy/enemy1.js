@@ -52,7 +52,7 @@ export default class Enemy1 extends Enemy{
             this.AIList[0].Landing();
           }
           this.isJump = false;
-          this.vel.y = Math.min(0,this.vel.y * -0.3);
+          this.vel.y = Math.min(0,this.vel.y * -0.0);
         }
         //天井との衝突
         if(c.n.y == 1 ){

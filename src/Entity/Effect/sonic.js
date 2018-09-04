@@ -2,6 +2,7 @@ import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Pool from '../../Stage/pool.js';
+import Drawer from "../../drawer.js";
 
 export default class Sonic extends EFFECT{
   constructor(pos){
@@ -20,8 +21,9 @@ export default class Sonic extends EFFECT{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
-    this.sprite.scale.set(1);
+    this.sprite.scale.set(5);
     this.sprite.alpha = 0.16;
+    this.sprite.filters = [Drawer.testFilter];
     //this.arg = ADV(VECN(2),Rand2D(1));
   }
 
@@ -31,7 +33,7 @@ export default class Sonic extends EFFECT{
     //phys
     this.pos = ADV(this.pos,this.vel);
 
-    this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)));
+    //this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)));
     this.sprite.alpha *= 0.8;
 
     if(this.spid == 4){

@@ -24,7 +24,7 @@ export default class GameClearEvent extends Event{
         yield;
       }
 
-      if(Game.stage == 11)Audio.PlayBGM("stage5",0.2);
+      if(Game.stage == 10)Audio.PlayBGM("stage5",1.2);
       yield;
     }
     let itt = gen();

@@ -473,11 +473,13 @@ export default class Player extends Entity{
   //bulletのかいふく
   Supply(){
     //最後に撃った時刻から経過するほど早くなる
+    /*
     let t = (this.frame-this.frameShot);
     if(t<=50 && t%10 == 0) this.bullet++;
     else if(t>50 && t<=100 && t%5 == 0) this.bullet++;
     else if(t>100 && t<=150 && t%3 == 0) this.bullet++;
     else if(t>150) this.bullet++;
+    */
     this.bullet = BET(0,this.bullet,this.maxBullet);
     UIManager.bullet.SetBar(this.bullet); //BulletBarの更新
   }
@@ -501,7 +503,7 @@ export default class Player extends Entity{
   }
 
   Update(){
-    if(this.maxHP == 100 && Input.isKeyClick(KEY.K) && this.isAlive){
+    if(this.maxHP == 100 && Input.isKeyClick(KEY.K) && this.isAlive && Game.debug){
       let p = {
         x : 64,
         y : 96

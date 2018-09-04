@@ -2,9 +2,9 @@
 export default class Param{
   static Init(){
     this.player = {
-      jumpVel : 8.0,//ジャンプ力
+      jumpVel : 6.5,//ジャンプ力
       runVel : 0.4,//はしり速度
-      gravity : 0.45,
+      gravity : 0.30,
       maxHp : 100,
       maxBullet : 100,
       fliction : 0.7,
@@ -86,7 +86,7 @@ export default class Param{
       //status
       agi : 13,
       cost : 10,
-      speed : 7, 
+      speed : 2, 
       length : 580,
       //optional
       isTarget : true,
@@ -111,7 +111,7 @@ export default class Param{
     //normal
     this.weapon3 = {
       agi : 6,
-      cost : 6,
+      cost : 0,
       speed : 10, 
       length : 300,
       //optional
