@@ -114,7 +114,8 @@ export default class Player extends Entity{
     if(Input.isKeyClick(KEY.Z)){
 
       if(this.isJump == false){
-        EntityManager.addEntity(new Explosion3(CPV(this.pos)));
+        //なんかバグる
+        //EntityManager.addEntity(new Explosion3(CPV(this.pos)));
         this.vel.y = - Param.player.jumpVel;
         this.isJump = true;
         this.state = STATE.JUMPING;
@@ -203,7 +204,7 @@ export default class Player extends Entity{
       this.weapon.shot(this);
     }
     /*for debug*/
-    if(Input.isKeyInput(KEY.J)){
+    if(Input.isKeyInput(KEY.J) && Game.Debug){
       this.bullet += 100;
       //this.Damage(-999);
     }
@@ -445,7 +446,7 @@ export default class Player extends Entity{
         //死亡開始時に一回だけ呼ばれる部分
         EventManager.PushEvent(new QuakeEvent(50,0.9));
         EntityManager.addEntity(new Explosion1(CPV(this.pos)));
-        Audio.PlaySE("bomb",-1.4);
+        Audio.PlaySE("bomb",-1.0);
         Audio.PlaySE("missileHit");
         this.weapon.Reset();
         this.frameDead = this.frame;
@@ -476,12 +477,12 @@ export default class Player extends Entity{
   //bulletのかいふく
   Supply(){
     //最後に撃った時刻から経過するほど早くなる
-    /*
     let t = (this.frame-this.frameShot);
     if(t<=50 && t%10 == 0) this.bullet++;
     else if(t>50 && t<=100 && t%5 == 0) this.bullet++;
     else if(t>100 && t<=150 && t%3 == 0) this.bullet++;
-    else if(t>150) this.bullet++;
+    else if(t>150) this.bullet+=2;
+    /*
     */
     this.bullet = BET(0,this.bullet,this.maxBullet);
     UIManager.bullet.SetBar(this.bullet); //BulletBarの更新

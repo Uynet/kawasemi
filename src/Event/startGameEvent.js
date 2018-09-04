@@ -18,6 +18,8 @@ export default class StartGameEvent extends Event{
       MapData.DeleteStage();
       if(Game.debug) MapData.CreateStage(Game.stage,"ENTER");
       else MapData.CreateStage(0,"ENTER");
+
+
       
       yield ;
     }
