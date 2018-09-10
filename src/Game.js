@@ -32,8 +32,10 @@ export default class Game{
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(Game.debug) Game.stage = 5;
+    if(Game.debug) Game.stage = 10;
     else Game.stage = 1;
+    Game.continuePoint = 1;//コンティニュー地点
+
     Game.scene = new Scene();
 
     //Gameにタイトル画面状態をプッシュ
@@ -45,7 +47,7 @@ export default class Game{
 
   static async Load(){
     Game.debug=true;//デバッグモード
-    Game.debug=false;
+    //Game.debug=false;
 
     await Art.LoadTexture();
     Audio.Load();
