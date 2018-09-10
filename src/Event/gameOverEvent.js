@@ -9,12 +9,13 @@ export default class GameOverEvent extends Event{
   constructor(){
     super();
     function* gen(){
+      Game.stage = Game.continuePoint;
       let frame = 0;
       EventManager.eventList.push(new FadeEvent("fadeout"));
 
       Audio.PlaySE("stageChange");
       //Audio.PlayBGM("stage5",0.2);
-      if(Game.debug)Audio.PlayBGM("stage5",0.0);
+      //if(Game.debug)Audio.PlayBGM("stage5",0.0);
 
 
       while(frame<30){

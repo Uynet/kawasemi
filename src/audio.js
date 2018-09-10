@@ -10,6 +10,10 @@ export default class Audio{
     this.stack = [];
     this.time = Timer.timer;
     this.lastSE;
+    this.PlayingBGM = {
+      name : null,
+      source : null,
+    }
   };
   static LoadSE(name){
     let url = "src/resource/SE/" + name + ".wav";
@@ -58,9 +62,20 @@ export default class Audio{
         gainNode.connect(this.context.destination);
         gainNode.gain.value = gain;
       }
+    this.PlayingBGM = {
+      name : name,
+      source : source,
+    }
     source.start(0);
     return;
   };
+  static StopBGM(){
+    this.PlayingBGM.source.stop();
+    this.PlayingBGM = {
+      name : null,
+      source : null,
+    }
+  }
   static PlaySE(name,gain,pitch){
     //同じ効果音は同時にならないようにする
     if(Timer.timer-this.time > 2|| name != this.lastSE){
@@ -86,6 +101,7 @@ export default class Audio{
       //!ココで読み込むnameはファイル名に統一すること!
       this.LoadBGM('stage4');
       this.LoadBGM('stage5');
+      this.LoadBGM('boss');
       this.LoadSE('jump1');
       this.LoadSE('jump2');//空中ジャンプ
       this.LoadSE('coin1');
