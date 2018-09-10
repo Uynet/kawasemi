@@ -104,10 +104,7 @@ export default class MapData{
         }
         let message;
         switch(ID){
-          case 161 :
-            obj = new Player(p); 
-            obj.SetStatus();
-            break;
+          case 161 : obj = new Player(p); break;
           case 162 :
             message = this.objData[i].properties;
             obj = new Signboard(p,message);
