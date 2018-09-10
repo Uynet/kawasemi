@@ -108,18 +108,6 @@ export default class Player extends Entity{
         //??
         this.poyo = true;
   }
-  //死亡後に初期状態に回復するため
-  ResetStatus(){
-    this.param.status={
-      hp: this.param.maxHp,
-      bullet:this.param.maxBullet,
-    }
-  }
-  //ステージクリア後にStatusを引き継ぐため
-  SetStatus(){
-    this.hp = this.param.status.hp;
-    this.bullet = this.param.status.bullet;
-  }
   /*キー入力による移動*/
   Input(){
     /*ジャンプ*/
@@ -339,8 +327,6 @@ export default class Player extends Entity{
       this.score+=1;
       this.param.score = this.score;
       this.bullet += 5;//とりあえずbulletも回復しとくか
-      this.hp += 1;//とりあえずhpも回復しとくか
-//      this.hp = BET(0,this.hp,this.maxHP);
       UIManager.score.SetScore(this.score);
     }
   }
@@ -458,7 +444,6 @@ export default class Player extends Entity{
     if(this.hp <= 0){
       if(this.isAlive){
         //死亡開始時に一回だけ呼ばれる部分
-        this.ResetStatus();
         EventManager.PushEvent(new QuakeEvent(50,0.9));
         EntityManager.addEntity(new Explosion1(CPV(this.pos)));
         Audio.PlaySE("bomb",-1.0);
@@ -493,11 +478,11 @@ export default class Player extends Entity{
   Supply(){
     //最後に撃った時刻から経過するほど早くなる
     let t = (this.frame-this.frameShot);
-    /*
     if(t<=50 && t%10 == 0) this.bullet++;
     else if(t>50 && t<=100 && t%5 == 0) this.bullet++;
     else if(t>100 && t<=150 && t%3 == 0) this.bullet++;
     else if(t>150) this.bullet+=2;
+    /*
     */
     this.bullet = BET(0,this.bullet,this.maxBullet);
     UIManager.bullet.SetBar(this.bullet); //BulletBarの更新

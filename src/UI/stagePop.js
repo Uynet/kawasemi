@@ -8,19 +8,12 @@ import Game from '../game.js';
 
 
 export default class StagePop extends UI{
-  constructor(pos,text,interval){
-    //interval ... 文字の出る速さ
+  constructor(pos,text){
     super(pos);
-    if(!interval){
-      this.interval = 3;
-    }else{
-      this.interval = interval;
-    }
     /*基本情報*/
     this.isAlive = true;//消えたらfalse
     this.type = "PUSH";
     this.isMultiple = true;
-    pos.x -= (text.length)*8/2;
     this.pos = pos;
     this.frame = 0;
     //文字
@@ -38,7 +31,7 @@ export default class StagePop extends UI{
 
   //1文字ずつ出ていって消える
   Update(){
-    if(this.frame%this.interval == 0){
+    if(this.frame%3 == 0){
       this.diff = 4;
       this.i = Math.min(this.i+1,this.d-1);
       let str = this.text[this.i];
