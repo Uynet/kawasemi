@@ -54,7 +54,13 @@ export default class UIManager{
       x : 96,
       y : 64
     }
-    UIManager.addUI(new StagePop(p,"--すてーじ "+Game.stage+"- "));//SCORE
+    switch(Game.stage){
+      case 11: UIManager.addUI(new StagePop(p,"^- こんてぃにゅーぽいんと -$" ,));
+        break;
+      case 12: UIManager.addUI(new StagePop(p,"^-   ぼ  す   -$" , 10));
+        break;
+      default : UIManager.addUI(new StagePop(p,"^-すてーじ "+Game.stage+"-$"));//SCORE
+    }
   }
 
   /*タイトルでのUI配置に変更*/
