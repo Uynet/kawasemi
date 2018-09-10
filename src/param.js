@@ -2,6 +2,11 @@
 export default class Param{
   static Init(){
     this.player = {
+      //プレイ中ステータス
+      status : {
+        hp : 100,
+        bullet : 100,
+      },
       jumpVel : 6.2,//ジャンプ力
       runVel : 0.4,//はしり速度
       gravity : 0.30,
@@ -85,7 +90,7 @@ export default class Param{
     this.weapon1 = {
       //status
       agi : 13,
-      cost : 10,
+      cost : 6,
       speed : 2, 
       length : 580,
       //optional
@@ -101,7 +106,7 @@ export default class Param{
     }
     this.weapon2 = {
       agi : 26,
-      cost : 20,
+      cost : 10,
       length : 300,
       //optional
       isTarget : true,
@@ -111,7 +116,7 @@ export default class Param{
     //normal
     this.weapon3 = {
       agi : 6,
-      cost : 5,
+      cost : 1,
       speed : 10, 
       length : 300,
       //optional
