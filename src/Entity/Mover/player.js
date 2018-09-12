@@ -339,8 +339,8 @@ export default class Player extends Entity{
       this.score+=1;
       this.param.score = this.score;
       this.bullet += 5;//とりあえずbulletも回復しとくか
-      this.hp += 1;//とりあえずhpも回復しとくか
-//      this.hp = BET(0,this.hp,this.maxHP);
+      this.hp += 2;//とりあえずhpも回復しとくか
+      this.hp = BET(0,this.hp,this.maxHP);
       UIManager.score.SetScore(this.score);
     }
   }

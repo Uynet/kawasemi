@@ -33,7 +33,7 @@ export default class Sonic extends EFFECT{
     //phys
     this.pos = ADV(this.pos,this.vel);
 
-    //this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)));
+    this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)));
     this.sprite.alpha *= 0.8;
 
     if(this.spid == 4){

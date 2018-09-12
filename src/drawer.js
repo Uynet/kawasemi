@@ -46,15 +46,15 @@ export default class Drawer{
 
 
     /*拡大率*/
-    this.magnification = 3;
+    this.magnification = 2;
     let po = VECN(this.magnification);
-    this.backGroundContainer.scale = po;
+    this.backGroundContainer.scale.set(3);
     this.backContainer.scale = po;
     this.entityContainer.scale = po;
     this.UIContainer.scale = po;
     this.foreContainer.scale.set(4);
     this.foreEntityContainer.scale = po;
-    this.filterContainer.scale = po;
+    this.filterContainer.scale.set(3);
     $("#pixiview").append(this.Renderer.view);
 
     //フィルタ

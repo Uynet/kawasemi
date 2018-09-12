@@ -50,7 +50,7 @@ export default class StagePop extends UI{
 
     this.textObject.SetPos(p);
 
-    if(this.frame>70) this.container.alpha -= 0.01;
+    if(this.frame>this.text.length * this.interval) this.container.alpha -= 0.01;
     if(this.frame>300)UIManager.removeUI(this);
     this.frame ++;
   }

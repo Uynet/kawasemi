@@ -24,18 +24,18 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile : false,
-        laser : false,
+        missile : true,//false,
+        laser : true,//false,
       },
       //装備中の武器
       equip : "normal",
     }
     this.enemy1 = {
       hp : 3000,
-      atkMax : 114514,
+      atkMax : 10000,
       atkMin : 1,
       gravity : 0.030,
-      coin : 1
+      coin : 15
     }
     this.enemy2 = {
       hp : 20,
@@ -53,7 +53,7 @@ export default class Param{
       coin : 3
     }
     this.enemy4 = {
-      hp : 10,
+      hp : 20,
       atkMax : 5,
       atkMin : 1,
       gravity : 0.2,
@@ -127,14 +127,14 @@ export default class Param{
     //Missile
     this.bullet1 = {
       atkMax : 50,
-      atkMin : 10,
+      atkMin : 20,
       hp : 1,
       curve : 0.2
     }
     //Laser
     this.bullet2 = {
       atkMax : 50,
-      atkMin : 1,
+      atkMin : 25,
       hp : 99999,
     }
     //normal
