@@ -23,7 +23,7 @@ export default class Pool{
       flashes : [],
       missiles : [],
     }
-    for(let i = 0;i<1000;i++){
+    for(let i = 0;i<10000;i++){
       this.unused.stones.push(new Stone(VEC0(),VEC0()));
     }
     for(let i = 0;i<80;i++){

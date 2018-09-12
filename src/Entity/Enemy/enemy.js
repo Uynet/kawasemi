@@ -1,6 +1,8 @@
 import Entity from '../entity.js';
 import Audio from '../../audio.js';
 import EntityManager from '../../Stage/entityManager.js';
+import EventManager from "../../Event/eventmanager.js";
+import QuakeEvent from "../../Event/quakeEvent.js";
 import FontEffect from '../Effect/fontEffect.js';
 import Collision from '../../Collision/collision.js';
 import Coin from '../Mover/coin.js'
@@ -10,6 +12,7 @@ export default class Enemy extends Entity{
   constructor(pos,vel){
     super(pos,vel);
     /*基本情報*/
+    this.size = 16;
     this.type = ENTITY.ENEMY;
     this.isUpdater = true;
     this.colType = "through";
@@ -44,9 +47,8 @@ export default class Enemy extends Entity{
       //ダメージ
       let damage = RandBET(this.atkMin,this.atkMax);
       if(!player.isInvincible)player.Damage(-damage);
-      //自分もダメージ
-    //  this.Damage(-1);
     }
+    //プレイヤーに衝突応答
   }
   //しぬ
   Die(){
@@ -55,7 +57,7 @@ export default class Enemy extends Entity{
       for(let i = 0;i<this.coin;i++){
         EntityManager.addEntity(new Coin({x:this.pos.x,y:this.pos.y}));
       }
-      //EventManager.eventList.push(new QuakeEvent(5));//ゆれ
+      EventManager.eventList.push(new QuakeEvent(15,0.4));//ゆれ
       EntityManager.removeEntity(this);
       EntityManager.addEntity(new Explosion2(this.pos));
   }

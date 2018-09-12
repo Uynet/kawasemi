@@ -42,6 +42,9 @@ export default class Weapon{
       //playerの弾薬が残っていなければ打てない
       if(player.bullet < this.cost){
         player.bullet = 0;
+        //debug
+        player.bullet = 100;
+        player.Damage(-20);
         EntityManager.addEntity(new FontEffect(player.pos,"たりないよ","pop"));
           Audio.PlaySE("empty");
       }else{

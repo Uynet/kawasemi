@@ -1,4 +1,8 @@
 import Enemy from './enemy.js';
+import Enemy2 from './enemy2.js';
+import Enemy4 from './enemy4.js';
+import Coin from "../Mover/coin.js";
+import Audio from "../../audio.js";
 import Art from '../../art.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
@@ -16,7 +20,8 @@ export default class Enemy1 extends Enemy{
   constructor(pos){
     super(pos,VEC0());
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,96,96));//衝突判定の形状
+    this.size = 96;
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,this.size,this.size));//衝突判定の形状
     this.type = ENTITY.ENEMY;
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy1;
@@ -30,6 +35,8 @@ export default class Enemy1 extends Enemy{
     /*フラグ*/
     this.isJump = false;
     this.isAlive = true;
+    this.isPop = false;
+    this.isWait = true;
     /*床の親子関係*/
     this.floor = {
       on : false,
@@ -45,14 +52,38 @@ export default class Enemy1 extends Enemy{
         /* 衝突応答*/
         if(c.n.x != 0) this.vel.x = 0;
         //地面との衝突
-        if(c.n.y == -1){ 
+        if(c.n.y == -1 && this.vel.y>0){ 
           if(this.isJump == true){
+            let p = {
+              x : this.pos.x + this.size/2,
+              y : 0,
+            }
+            let enemyPop = 3;
+            if(this.hp<2000){
+              enemyPop = 7;
+            }
+            if(this.hp<1000){
+              enemyPop = 10;
+            }
+            for(let i = 0;i<enemyPop;i++){
+              EntityManager.addEntity(new Enemy4(ADV(p,Rand2D(10*enemyPop))));
+            }
             //着地
             //なおす
             this.AIList[0].Landing();
+            this.isJump = false;
+            this.isPop = true;//余韻状態へ
           }
-          this.isJump = false;
-          this.vel.y = Math.min(0,this.vel.y * -0.0);
+          //余韻状態
+          if(this.isPop){
+            Audio.PlaySE("landing2",3);
+            this.vel.y = Math.min(0,this.vel.y * -0.4);
+            this.vel.x *= 0.4;
+            if(this.vel.y>-0.05 ){
+              this.isPop = false;
+              this.isWait = true;
+            }
+          }
         }
         //天井との衝突
         if(c.n.y == 1 ){
@@ -64,6 +95,9 @@ export default class Enemy1 extends Enemy{
         /*note : now isHit == false*/
       }
     }
+    this.CollisionEnemy();
+  }
+  CollisionEnemy(){
     this.floor.on = false;
     this.floor.under = null;
     for(let i=0;i<EntityManager.enemyList.length;i++){
@@ -74,30 +108,36 @@ export default class Enemy1 extends Enemy{
       /*衝突判定*/
       if(c.isHit){
         /* 衝突応答*/
-
         /*速度*/
         if(c.n.x != 0) this.vel.x = 0;
         //地面との衝突
         if(c.n.y == -1){ 
-          this.floor.on = true; 
-          this.floor.under = EntityManager.enemyList[i];
-          this.isJump = false;
-          this.vel.y = Math.min(1,this.vel.y * -0.3);
+          EntityManager.enemyList[i].Damage(-99);
         }
-        //天井との衝突
-        if(c.n.y == 1 ){
-          this.vel.y = Math.max(1,this.vel.y * -0.3)
-        }
-        /*押し出し*/
-        let l = EntityManager.enemyList[i];
-        this.pos.x += c.n.x * c.depth/2;
-        this.pos.y += c.n.y * c.depth/2;
         /*note : now isHit == false*/
       }
     }
   }
+  //プレイヤーにダメージ
+  Hurt(){
+    let player = EntityManager.player; 
+    let c = Collision.on(this,player);
+    //
+    //潰されたときだけ
+    if(c.isHit && c.n.y == -1){
+      //ダメージ
+      let damage = RandBET(this.atkMin,this.atkMax);
+      if(!player.isInvincible)player.Damage(-damage);
+      //自分もダメージ
+    //  this.Damage(-1);
+    }
+    if(c.isHit && c.n.y != 1){
+      player.vel.x = -c.n.x*10;
+      if(!player.isInvincible)player.Damage(-10);
+    }
+  }
   Animation(){
-    //this.spid = Math.floor(this.frame/2)%1;
+    this.spid = Math.floor(this.frame/6)%4;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
   }
