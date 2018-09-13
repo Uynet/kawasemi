@@ -33,16 +33,16 @@ export default class Enemy1AI extends AI{
       this.enemy.isJump = true;
       let p = ADV(this.enemy.pos,VEC2(-20,90));
     //  Audio.PlaySE("enemy5Shot");
-    Audio.PlaySE("landing2",2);
+    Audio.PlaySE("landing2",1.6);
     }
     if(this.enemy.isJump){
-      this.enemy.acc.x = (this.enemy.pos.x < EntityManager.player.pos.x)? 0.010 : -0.010;
+      this.enemy.acc.x = (this.enemy.pos.x+this.enemy.size/2 < EntityManager.player.pos.x)? 0.010 : -0.010;
       this.enemy.vel.x = Math.max(-1,Math.min(this.enemy.vel.x,1));
     }
   }
   Landing(){
     this.enemy.acc.x = 0;
     EventManager.PushEvent(new QuakeEvent(40,0.97));
-    Audio.PlaySE("missileHit");
+    Audio.PlaySE("missileHit",2);
   }
 }
