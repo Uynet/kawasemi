@@ -27,6 +27,7 @@ export default class Param{
         missile :false,
         laser : false,
         weapon4 : false,//false,
+        weapon5 : false,//false,
       },
       //装備中の武器
       equip : "normal",
@@ -99,12 +100,6 @@ export default class Param{
       isHorming : true,
       isLasersight : false,
     }
-    this.weapon11 = {
-      agi : 2,
-      cost : 6,
-      speed : 0.0001, 
-      length : 180,
-    }
     this.weapon2 = {
       agi : 26,
       cost : 10,
@@ -130,6 +125,17 @@ export default class Param{
       agi : 1,
       cost : 1,
       speed : 10, 
+      length : 30,
+      //optional
+      isTarget : true,
+     // isHorming : false,
+      isLasersight : false,
+    }
+    //??
+    this.weapon5 = {
+      agi : 300,
+      cost : 1,
+      speed : 1, 
       length : 300,
       //optional
       isTarget : true,

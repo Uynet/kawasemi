@@ -7,6 +7,11 @@ Array.prototype.Last = function(){
     return this[this.length-1];
   }
 }
+//配列から要素を削除
+Array.prototype.remove = function(e){
+  let i = this.indexOf(e);
+  this.splice(i,1);
+}
 Array.prototype.maxIndex = function(){
   let max = this[0];
   let maxI = 0;

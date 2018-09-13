@@ -189,13 +189,15 @@ export default class Art{
           missile : PIXI.Texture.fromFrame('UI18.png'),
           laser : PIXI.Texture.fromFrame('UI19.png'),
           normal : PIXI.Texture.fromFrame('UI1A.png'),
-          weapon4 : PIXI.Texture.fromFrame('UI1A.png'),
+          weapon4 : PIXI.Texture.fromFrame('UI1B.png'),
+          weapon5 : PIXI.Texture.fromFrame('UI1C.png'),
         },
         pop : {
           normal : PIXI.Texture.fromFrame('UI30.png'),
           missile : PIXI.Texture.fromFrame('UI31.png'),
           laser : PIXI.Texture.fromFrame('UI32.png'),
-          weapon4 : PIXI.Texture.fromFrame('UI32.png'),
+          weapon4 : PIXI.Texture.fromFrame('UI33.png'),
+          weapon5 : PIXI.Texture.fromFrame('UI34.png'),
         }
       },
       score : {

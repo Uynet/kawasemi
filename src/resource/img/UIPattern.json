@@ -1,17 +1,26 @@
 {
   "frames": {
+    "comment": { "HP":" HP" },
     "UI00.png": { "frame": {"x":0, "y":0, "w":64, "h":16} },
     "UI04.png": { "frame": {"x":64, "y":0, "w":64, "h":16} },
     "UI08.png": { "frame": {"x":128, "y":0, "w":16, "h":16} },
+    "comment": { "コイン": "コイン " },
     "UI09.png": { "frame": {"x":144, "y":0, "w":16, "h":16} },
+    "comment": { "Bullet":" Bullet" },
     "UI10.png": { "frame": {"x":0, "y":16, "w":64, "h":16} },
     "UI14.png": { "frame": {"x":64, "y":16, "w":64, "h":16} },
+    "comment": { "Bullet":" アイコン" },
     "UI18.png": { "frame": {"x":128, "y":16, "w":16, "h":16} },
-    "comment": { "": "this is a comment " },
     "UI19.png": { "frame": {"x":144, "y":16, "w":16, "h":16} },
     "UI1A.png": { "frame": {"x":160, "y":16, "w":16, "h":16} },
+    "UI1B.png": { "frame": {"x":176, "y":16, "w":16, "h":16} },
+    "UI1C.png": { "frame": {"x":192, "y":16, "w":16, "h":16} },
+    "comment": { "message":" メッセージ" },
     "UI20.png": { "frame": {"x":0, "y":32, "w":96, "h":32} },
+    "comment": { "Bullet":" ミニアイコン" },
     "UI30.png": { "frame": {"x":0, "y":64, "w":8, "h":8} },
-    "UI31.png": { "frame": {"x":16, "y":64, "w":8, "h":8} },
-    "UI32.png": { "frame": {"x":32, "y":64, "w":8, "h":8} }
+    "UI31.png": { "frame": {"x":8, "y":64, "w":8, "h":8} },
+    "UI32.png": { "frame": {"x":16, "y":64, "w":8, "h":8} },
+    "UI33.png": { "frame": {"x":24, "y":64, "w":8, "h":8} },
+    "UI34.png": { "frame": {"x":32, "y":64, "w":8, "h":8} }
   }, "meta": { "image": "./UIPattern.png" } }

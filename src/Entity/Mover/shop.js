@@ -85,6 +85,7 @@ export default class Shop extends BackEntity{
       case "missile" : return "ミサイル";
       case "laser" : return "レーザー";
       case "weapon4" : return "weapon4";
+      case "weapon5" : return "weapon5";
       default : console.warn("Error ToJapWeaponName");
     }
   }
