@@ -2,6 +2,7 @@ import Audio from '../audio.js';
 import Weapon1 from './weapon1.js';
 import Weapon2 from './weapon2.js';
 import Weapon3 from './weapon3.js';
+import Weapon4 from './weapon4.js';
 import Param from '../param.js';
 import UIManager from '../UI/uiManager.js';
 
@@ -12,7 +13,8 @@ export default class WeaponManager{
     this.weapons = {
       missile : new Weapon1(),
       laser : new Weapon2(),
-      normal : new Weapon3()
+      normal : new Weapon3(),
+      weapon4 : new Weapon4()
     };
     /*selectBoxの選択*/
     this.select;
