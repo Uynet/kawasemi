@@ -1,61 +1,17 @@
 {
   "frames": {
-    "UI00.png": {
-      "frame": {"x":0, "y":0, "w":64, "h":16},
-      "sourceSize": {"w": 64, "h": 16}
-    },
-    "UI04.png": {
-      "frame": {"x":64, "y":0, "w":64, "h":16},
-      "sourceSize": {"w": 64, "h": 16}
-    },
-    "UI08.png": {
-      "frame": {"x":128, "y":0, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "UI09.png": {
-      "frame": {"x":144, "y":0, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "UI10.png": {
-      "frame": {"x":0, "y":16, "w":64, "h":16},
-      "sourceSize": {"w": 64, "h": 16}
-    },
-    "UI14.png": {
-      "frame": {"x":64, "y":16, "w":64, "h":16},
-      "sourceSize": {"w": 64, "h": 16}
-    },
-    "UI18.png": {
-      "frame": {"x":128, "y":16, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "UI19.png": {
-      "frame": {"x":144, "y":16, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "UI1A.png": {
-      "frame": {"x":160, "y":16, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "UI20.png": {
-      "frame": {"x":0, "y":32, "w":96, "h":32},
-      "sourceSize": {"w": 96, "h": 32}
-    },
-    "UI30.png": {
-      "frame": {"x":0, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "UI31.png": {
-      "frame": {"x":16, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "UI32.png": {
-      "frame": {"x":32, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    }
-
-  },
-
-  "meta": {
-    "image": "./UIPattern.png"
-  }
-}
+    "UI00.png": { "frame": {"x":0, "y":0, "w":64, "h":16} },
+    "UI04.png": { "frame": {"x":64, "y":0, "w":64, "h":16} },
+    "UI08.png": { "frame": {"x":128, "y":0, "w":16, "h":16} },
+    "UI09.png": { "frame": {"x":144, "y":0, "w":16, "h":16} },
+    "UI10.png": { "frame": {"x":0, "y":16, "w":64, "h":16} },
+    "UI14.png": { "frame": {"x":64, "y":16, "w":64, "h":16} },
+    "UI18.png": { "frame": {"x":128, "y":16, "w":16, "h":16} },
+    "comment": { "": "this is a comment " },
+    "UI19.png": { "frame": {"x":144, "y":16, "w":16, "h":16} },
+    "UI1A.png": { "frame": {"x":160, "y":16, "w":16, "h":16} },
+    "UI20.png": { "frame": {"x":0, "y":32, "w":96, "h":32} },
+    "UI30.png": { "frame": {"x":0, "y":64, "w":8, "h":8} },
+    "UI31.png": { "frame": {"x":16, "y":64, "w":8, "h":8} },
+    "UI32.png": { "frame": {"x":32, "y":64, "w":8, "h":8} }
+  }, "meta": { "image": "./UIPattern.png" } }

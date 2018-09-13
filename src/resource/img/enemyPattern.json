@@ -1,155 +1,41 @@
 {
   "frames": {
-    "enemy00.png": {
-      "frame": {"x":0, "y":0, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy01.png": {
-      "frame": {"x":16, "y":0, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy02.png": {
-      "frame": {"x":32, "y":0, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy03.png": {
-      "frame": {"x":48, "y":0, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy10.png": {
-      "frame": {"x":0, "y":16, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy11.png": {
-      "frame": {"x":16, "y":16, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy12.png": {
-      "frame": {"x":32, "y":16, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy13.png": {
-      "frame": {"x":48, "y":16, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy20.png": {
-      "frame": {"x":0, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy21.png": {
-      "frame": {"x":16, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy22.png": {
-      "frame": {"x":32, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy23.png": {
-      "frame": {"x":48, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy24.png": {
-      "frame": {"x":64, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy25.png": {
-      "frame": {"x":80, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy26.png": {
-      "frame": {"x":96, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy27.png": {
-      "frame": {"x":112, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy28.png": {
-      "frame": {"x":128, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy29.png": {
-      "frame": {"x":144, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy2a.png": {
-      "frame": {"x":160, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy2b.png": {
-      "frame": {"x":176, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy2c.png": {
-      "frame": {"x":192, "y":32, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy30.png": {
-      "frame": {"x":0, "y":48, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy31.png": {
-      "frame": {"x":16, "y":48, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy40.png": {
-      "frame": {"x":0, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "enemy41.png": {
-      "frame": {"x":16, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "enemy42.png": {
-      "frame": {"x":32, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "enemy43.png": {
-      "frame": {"x":48, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "enemy50.png": {
-      "frame": {"x":0, "y":80, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy51.png": {
-      "frame": {"x":16, "y":80, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy60.png": {
-      "frame": {"x":0, "y":96, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy61.png": {
-      "frame": {"x":16, "y":96, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy70.png": {
-      "frame": {"x":0, "y":112, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "enemy71.png": {
-      "frame": {"x":16, "y":112, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "enemy72.png": {
-      "frame": {"x":32, "y":112, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "enemy73.png": {
-      "frame": {"x":48, "y":112, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "enemy80.png": {
-      "frame": {"x":0, "y":128, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    },
-    "enemy81.png": {
-      "frame": {"x":16, "y":128, "w":16, "h":16},
-      "sourceSize": {"w": 16, "h": 16}
-    }
-  },
-  "meta": {
-    "image": "./enemyPattern.png"
-  }
-}
+    "enemy00.png": { "frame": {"x":0, "y":0, "w":16, "h":16} },
+    "enemy01.png": { "frame": {"x":16, "y":0, "w":16, "h":16} },
+    "enemy02.png": { "frame": {"x":32, "y":0, "w":16, "h":16} },
+    "enemy03.png": { "frame": {"x":48, "y":0, "w":16, "h":16} },
+    "enemy10.png": { "frame": {"x":0, "y":16, "w":16, "h":16} },
+    "enemy11.png": { "frame": {"x":16, "y":16, "w":16, "h":16} },
+    "enemy12.png": { "frame": {"x":32, "y":16, "w":16, "h":16} },
+    "enemy13.png": { "frame": {"x":48, "y":16, "w":16, "h":16} },
+    "enemy20.png": { "frame": {"x":0, "y":32, "w":16, "h":16} },
+    "enemy21.png": { "frame": {"x":16, "y":32, "w":16, "h":16} },
+    "enemy22.png": { "frame": {"x":32, "y":32, "w":16, "h":16} },
+    "enemy23.png": { "frame": {"x":48, "y":32, "w":16, "h":16} },
+    "enemy24.png": { "frame": {"x":64, "y":32, "w":16, "h":16} },
+    "enemy25.png": { "frame": {"x":80, "y":32, "w":16, "h":16} },
+    "enemy26.png": { "frame": {"x":96, "y":32, "w":16, "h":16} },
+    "enemy27.png": { "frame": {"x":112, "y":32, "w":16, "h":16} },
+    "enemy28.png": { "frame": {"x":128, "y":32, "w":16, "h":16} },
+    "enemy29.png": { "frame": {"x":144, "y":32, "w":16, "h":16} },
+    "enemy2a.png": { "frame": {"x":160, "y":32, "w":16, "h":16} },
+    "enemy2b.png": { "frame": {"x":176, "y":32, "w":16, "h":16} },
+    "enemy2c.png": { "frame": {"x":192, "y":32, "w":16, "h":16} },
+    "enemy30.png": { "frame": {"x":0, "y":48, "w":16, "h":16} },
+    "enemy31.png": { "frame": {"x":16, "y":48, "w":16, "h":16} },
+    "enemy40.png": { "frame": {"x":0, "y":64, "w":8, "h":8} },
+    "enemy41.png": { "frame": {"x":16, "y":64, "w":8, "h":8} },
+    "enemy42.png": { "frame": {"x":32, "y":64, "w":8, "h":8} },
+    "enemy43.png": { "frame": {"x":48, "y":64, "w":8, "h":8} },
+    "enemy50.png": { "frame": {"x":0, "y":80, "w":16, "h":16} },
+    "enemy51.png": { "frame": {"x":16, "y":80, "w":16, "h":16} },
+    "enemy60.png": { "frame": {"x":0, "y":96, "w":16, "h":16} },
+    "enemy61.png": { "frame": {"x":16, "y":96, "w":16, "h":16} },
+    "enemy70.png": { "frame": {"x":0, "y":112, "w":8, "h":8} },
+    "enemy71.png": { "frame": {"x":16, "y":112, "w":8, "h":8} },
+    "enemy72.png": { "frame": {"x":32, "y":112, "w":8, "h":8} },
+    "enemy73.png": { "frame": {"x":48, "y":112, "w":8, "h":8} },
+    "enemy80.png": { "frame": {"x":0, "y":128, "w":16, "h":16} },
+    "enemy81.png": { "frame": {"x":16, "y":128, "w":16, "h":16} }
+  }, "meta": { "image": "./enemyPattern.png"
+  } }

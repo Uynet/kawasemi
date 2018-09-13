@@ -14,7 +14,7 @@
                  "type":"",
                  "visible":true,
                  "width":16,
-                 "x":16,
+                 "x":256,
                  "y":336
                 }, 
                 {
@@ -122,7 +122,7 @@
                  "name":"",
                  "properties":
                     {
-                     "1":"\u304b\u307f\u306e\u3061\u304b\u3089\u3092\u3055\u305a\u3051\u3088\u3046"
+                     "1":"weapon4"
                     },
                  "propertytypes":
                     {

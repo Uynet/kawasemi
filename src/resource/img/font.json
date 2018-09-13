@@ -1,1097 +1,277 @@
 {
   "frames": {
-    "font00.png": {
-      "frame": {"x":0, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font01.png": {
-      "frame": {"x":8, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font02.png": {
-      "frame": {"x":16, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font03.png": {
-      "frame": {"x":24, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font04.png": {
-      "frame": {"x":32, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font05.png": {
-      "frame": {"x":40, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font06.png": {
-      "frame": {"x":48, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font07.png": {
-      "frame": {"x":56, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font08.png": {
-      "frame": {"x":64, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font09.png": {
-      "frame": {"x":72, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font10.png": {
-      "frame": {"x":0, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font11.png": {
-      "frame": {"x":8, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font12.png": {
-      "frame": {"x":16, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font13.png": {
-      "frame": {"x":24, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font14.png": {
-      "frame": {"x":32, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font15.png": {
-      "frame": {"x":40, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font16.png": {
-      "frame": {"x":48, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font17.png": {
-      "frame": {"x":56, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font18.png": {
-      "frame": {"x":64, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font19.png": {
-      "frame": {"x":72, "y":8, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font0a.png": {
-      "frame": {"x":80, "y":0, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font20.png": {
-      "frame": {"x":0, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font21.png": {
-      "frame": {"x":8, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font22.png": {
-      "frame": {"x":16, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font23.png": {
-      "frame": {"x":24, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font24.png": {
-      "frame": {"x":32, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font25.png": {
-      "frame": {"x":40, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font26.png": {
-      "frame": {"x":48, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font27.png": {
-      "frame": {"x":56, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font28.png": {
-      "frame": {"x":64, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font29.png": {
-      "frame": {"x":72, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font2a.png": {
-      "frame": {"x":80, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font2b.png": {
-      "frame": {"x":88, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font2c.png": {
-      "frame": {"x":96, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font2d.png": {
-      "frame": {"x":104, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font2e.png": {
-      "frame": {"x":112, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font2f.png": {
-      "frame": {"x":120, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-      "font210.png": {
-      "frame": {"x":128, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font211.png": {
-      "frame": {"x":136, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font212.png": {
-      "frame": {"x":144, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font213.png": {
-      "frame": {"x":152, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font214.png": {
-      "frame": {"x":160, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font215.png": {
-      "frame": {"x":168, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font216.png": {
-      "frame": {"x":176, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font217.png": {
-      "frame": {"x":184, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font218.png": {
-      "frame": {"x":192, "y":16, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font30.png": {
-      "frame": {"x":0, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font31.png": {
-      "frame": {"x":8, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font32.png": {
-      "frame": {"x":16, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font33.png": {
-      "frame": {"x":24, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font34.png": {
-      "frame": {"x":32, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font35.png": {
-      "frame": {"x":40, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font36.png": {
-      "frame": {"x":48, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font37.png": {
-      "frame": {"x":56, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font38.png": {
-      "frame": {"x":64, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font39.png": {
-      "frame": {"x":72, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font3a.png": {
-      "frame": {"x":80, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font3b.png": {
-      "frame": {"x":88, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font3c.png": {
-      "frame": {"x":96, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font3d.png": {
-      "frame": {"x":104, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font3e.png": {
-      "frame": {"x":112, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font3f.png": {
-      "frame": {"x":120, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-      "font310.png": {
-      "frame": {"x":128, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font311.png": {
-      "frame": {"x":136, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font312.png": {
-      "frame": {"x":144, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font313.png": {
-      "frame": {"x":152, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font314.png": {
-      "frame": {"x":160, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font315.png": {
-      "frame": {"x":168, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font316.png": {
-      "frame": {"x":176, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font317.png": {
-      "frame": {"x":184, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font318.png": {
-      "frame": {"x":192, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font319.png": {
-      "frame": {"x":200, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font31a.png": {
-      "frame": {"x":208, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font31b.png": {
-      "frame": {"x":216, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font31c.png": {
-      "frame": {"x":224, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font31d.png": {
-      "frame": {"x":232, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font31e.png": {
-      "frame": {"x":240, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font40.png": {
-      "frame": {"x":0, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font41.png": {
-      "frame": {"x":8, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font42.png": {
-      "frame": {"x":16, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font43.png": {
-      "frame": {"x":24, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font44.png": {
-      "frame": {"x":32, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font45.png": {
-      "frame": {"x":40, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font46.png": {
-      "frame": {"x":48, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font47.png": {
-      "frame": {"x":56, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font48.png": {
-      "frame": {"x":64, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font49.png": {
-      "frame": {"x":72, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font4a.png": {
-      "frame": {"x":80, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font4b.png": {
-      "frame": {"x":88, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font4c.png": {
-      "frame": {"x":96, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font4d.png": {
-      "frame": {"x":104, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font4e.png": {
-      "frame": {"x":112, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font4f.png": {
-      "frame": {"x":120, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-      "font410.png": {
-      "frame": {"x":128, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font411.png": {
-      "frame": {"x":136, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font412.png": {
-      "frame": {"x":144, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font413.png": {
-      "frame": {"x":152, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font414.png": {
-      "frame": {"x":160, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font415.png": {
-      "frame": {"x":168, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font416.png": {
-      "frame": {"x":176, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font417.png": {
-      "frame": {"x":184, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font418.png": {
-      "frame": {"x":192, "y":32, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font50.png": {
-      "frame": {"x":0, "y":40, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font51.png": {
-      "frame": {"x":8, "y":40, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font52.png": {
-      "frame": {"x":16, "y":40, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font53.png": {
-      "frame": {"x":24, "y":40, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font54.png": {
-      "frame": {"x":32, "y":40, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font55.png": {
-      "frame": {"x":40, "y":40, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font56.png": {
-      "frame": {"x":48, "y":40, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font57.png": {
-      "frame": {"x":56, "y":40, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font58.png": {
-      "frame": {"x":64, "y":40, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-
-
-     "font60.png": {
-      "frame": {"x":0, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font61.png": {
-      "frame": {"x":8, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font62.png": {
-      "frame": {"x":16, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font63.png": {
-      "frame": {"x":24, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font64.png": {
-      "frame": {"x":32, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font65.png": {
-      "frame": {"x":40, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font66.png": {
-      "frame": {"x":48, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font67.png": {
-      "frame": {"x":56, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font68.png": {
-      "frame": {"x":64, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font69.png": {
-      "frame": {"x":72, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font6a.png": {
-      "frame": {"x":80, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font6b.png": {
-      "frame": {"x":88, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font6c.png": {
-      "frame": {"x":96, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font6d.png": {
-      "frame": {"x":104, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font6e.png": {
-      "frame": {"x":112, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font6f.png": {
-      "frame": {"x":120, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-      "font610.png": {
-      "frame": {"x":128, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font611.png": {
-      "frame": {"x":136, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font612.png": {
-      "frame": {"x":144, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font613.png": {
-      "frame": {"x":152, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font614.png": {
-      "frame": {"x":160, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font615.png": {
-      "frame": {"x":168, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font616.png": {
-      "frame": {"x":176, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font617.png": {
-      "frame": {"x":184, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font618.png": {
-      "frame": {"x":192, "y":48, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font70.png": {
-      "frame": {"x":0, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font71.png": {
-      "frame": {"x":8, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font72.png": {
-      "frame": {"x":16, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font73.png": {
-      "frame": {"x":24, "y":24, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font74.png": {
-      "frame": {"x":32, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font75.png": {
-      "frame": {"x":40, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font76.png": {
-      "frame": {"x":48, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font77.png": {
-      "frame": {"x":56, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font78.png": {
-      "frame": {"x":64, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font79.png": {
-      "frame": {"x":72, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font7a.png": {
-      "frame": {"x":80, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font7b.png": {
-      "frame": {"x":88, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font7c.png": {
-      "frame": {"x":96, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font7d.png": {
-      "frame": {"x":104, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font7e.png": {
-      "frame": {"x":112, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font7f.png": {
-      "frame": {"x":120, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-      "font710.png": {
-      "frame": {"x":128, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font711.png": {
-      "frame": {"x":136, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font712.png": {
-      "frame": {"x":144, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font713.png": {
-      "frame": {"x":152, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font714.png": {
-      "frame": {"x":160, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font715.png": {
-      "frame": {"x":168, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font716.png": {
-      "frame": {"x":176, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font717.png": {
-      "frame": {"x":184, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font718.png": {
-      "frame": {"x":192, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font719.png": {
-      "frame": {"x":200, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font71a.png": {
-      "frame": {"x":208, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font71b.png": {
-      "frame": {"x":216, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font71c.png": {
-      "frame": {"x":224, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font71d.png": {
-      "frame": {"x":232, "y":56, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font80.png": {
-      "frame": {"x":0, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font81.png": {
-      "frame": {"x":8, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font82.png": {
-      "frame": {"x":16, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font83.png": {
-      "frame": {"x":24, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font84.png": {
-      "frame": {"x":32, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font85.png": {
-      "frame": {"x":40, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font86.png": {
-      "frame": {"x":48, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font87.png": {
-      "frame": {"x":56, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font88.png": {
-      "frame": {"x":64, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font89.png": {
-      "frame": {"x":72, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font8a.png": {
-      "frame": {"x":80, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font8b.png": {
-      "frame": {"x":88, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font8c.png": {
-      "frame": {"x":96, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font8d.png": {
-      "frame": {"x":104, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font8e.png": {
-      "frame": {"x":112, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font8f.png": {
-      "frame": {"x":120, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-      "font810.png": {
-      "frame": {"x":128, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font811.png": {
-      "frame": {"x":136, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font812.png": {
-      "frame": {"x":144, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font813.png": {
-      "frame": {"x":152, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font814.png": {
-      "frame": {"x":160, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font815.png": {
-      "frame": {"x":168, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font816.png": {
-      "frame": {"x":176, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font817.png": {
-      "frame": {"x":184, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "font818.png": {
-      "frame": {"x":192, "y":64, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font90.png": {
-      "frame": {"x":0, "y":72, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font91.png": {
-      "frame": {"x":8, "y":72, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font92.png": {
-      "frame": {"x":16, "y":72, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font93.png": {
-      "frame": {"x":24, "y":72, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font94.png": {
-      "frame": {"x":32, "y":72, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font95.png": {
-      "frame": {"x":40, "y":72, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "font96.png": {
-      "frame": {"x":48, "y":72, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font97.png": {
-      "frame": {"x":56, "y":72, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "font98.png": {
-      "frame": {"x":64, "y":72, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontA0.png": {
-      "frame": {"x":0, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA1.png": {
-      "frame": {"x":8, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA2.png": {
-      "frame": {"x":16, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontA3.png": {
-      "frame": {"x":24, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontA4.png": {
-      "frame": {"x":32, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA5.png": {
-      "frame": {"x":40, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontA6.png": {
-      "frame": {"x":48, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA7.png": {
-      "frame": {"x":56, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA8.png": {
-      "frame": {"x":64, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontA9.png": {
-      "frame": {"x":72, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontAa.png": {
-      "frame": {"x":80, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontAb.png": {
-      "frame": {"x":88, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontAc.png": {
-      "frame": {"x":96, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontAd.png": {
-      "frame": {"x":104, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontAe.png": {
-      "frame": {"x":112, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontAf.png": {
-      "frame": {"x":120, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-      "fontA10.png": {
-      "frame": {"x":128, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA11.png": {
-      "frame": {"x":136, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA12.png": {
-      "frame": {"x":144, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA13.png": {
-      "frame": {"x":152, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA14.png": {
-      "frame": {"x":160, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA15.png": {
-      "frame": {"x":168, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "fontA16.png": {
-      "frame": {"x":176, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-        "fontA17.png": {
-      "frame": {"x":184, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA18.png": {
-      "frame": {"x":192, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontA19.png": {
-      "frame": {"x":200, "y":80, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontB0.png": {
-      "frame": {"x":0, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB1.png": {
-      "frame": {"x":8, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB2.png": {
-      "frame": {"x":16, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontB3.png": {
-      "frame": {"x":24, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontB4.png": {
-      "frame": {"x":32, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB5.png": {
-      "frame": {"x":40, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontB6.png": {
-      "frame": {"x":48, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB7.png": {
-      "frame": {"x":56, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB8.png": {
-      "frame": {"x":64, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontB9.png": {
-      "frame": {"x":72, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontBa.png": {
-      "frame": {"x":80, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontBb.png": {
-      "frame": {"x":88, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontBc.png": {
-      "frame": {"x":96, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontBd.png": {
-      "frame": {"x":104, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontBe.png": {
-      "frame": {"x":112, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontBf.png": {
-      "frame": {"x":120, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-      "fontB10.png": {
-      "frame": {"x":128, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB11.png": {
-      "frame": {"x":136, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB12.png": {
-      "frame": {"x":144, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB13.png": {
-      "frame": {"x":152, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB14.png": {
-      "frame": {"x":160, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB15.png": {
-      "frame": {"x":168, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB16.png": {
-      "frame": {"x":176, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB17.png": {
-      "frame": {"x":184, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB18.png": {
-      "frame": {"x":192, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontB19.png": {
-      "frame": {"x":200, "y":88, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontC0.png": {
-      "frame": {"x":0, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontC1.png": {
-      "frame": {"x":8, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontC2.png": {
-      "frame": {"x":16, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontC3.png": {
-      "frame": {"x":24, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontC4.png": {
-      "frame": {"x":32, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontC5.png": {
-      "frame": {"x":40, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontC6.png": {
-      "frame": {"x":48, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontC7.png": {
-      "frame": {"x":56, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontC8.png": {
-      "frame": {"x":64, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontC9.png": {
-      "frame": {"x":72, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-     "fontCa.png": {
-      "frame": {"x":80, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontCb.png": {
-      "frame": {"x":88, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontCc.png": {
-      "frame": {"x":96, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontCd.png": {
-      "frame": {"x":104, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontCe.png": {
-      "frame": {"x":112, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontCf.png": {
-      "frame": {"x":120, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-      "fontC10.png": {
-      "frame": {"x":128, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontC11.png": {
-      "frame": {"x":136, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontC12.png": {
-      "frame": {"x":144, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    },
-    "fontC13.png": {
-      "frame": {"x":152, "y":96, "w":8, "h":8},
-      "sourceSize": {"w": 8, "h": 8}
-    }
-
-
+    "font00.png": { "frame": {"x":0, "y":0, "w":8, "h":8} },
+    "font01.png": { "frame": {"x":8, "y":0, "w":8, "h":8} },
+    "font02.png": { "frame": {"x":16, "y":0, "w":8, "h":8} },
+    "font03.png": { "frame": {"x":24, "y":0, "w":8, "h":8} },
+    "font04.png": { "frame": {"x":32, "y":0, "w":8, "h":8} },
+    "font05.png": { "frame": {"x":40, "y":0, "w":8, "h":8} },
+    "font06.png": { "frame": {"x":48, "y":0, "w":8, "h":8} },
+    "font07.png": { "frame": {"x":56, "y":0, "w":8, "h":8} },
+    "font08.png": { "frame": {"x":64, "y":0, "w":8, "h":8} },
+    "font09.png": { "frame": {"x":72, "y":0, "w":8, "h":8} },
+    "font10.png": { "frame": {"x":0, "y":8, "w":8, "h":8} },
+    "font11.png": { "frame": {"x":8, "y":8, "w":8, "h":8} },
+    "font12.png": { "frame": {"x":16, "y":8, "w":8, "h":8} },
+    "font13.png": { "frame": {"x":24, "y":8, "w":8, "h":8} },
+    "font14.png": { "frame": {"x":32, "y":8, "w":8, "h":8} },
+    "font15.png": { "frame": {"x":40, "y":8, "w":8, "h":8} },
+    "font16.png": { "frame": {"x":48, "y":8, "w":8, "h":8} },
+    "font17.png": { "frame": {"x":56, "y":8, "w":8, "h":8} },
+    "font18.png": { "frame": {"x":64, "y":8, "w":8, "h":8} },
+    "font19.png": { "frame": {"x":72, "y":8, "w":8, "h":8} },
+    "font0a.png": { "frame": {"x":80, "y":0, "w":8, "h":8} },
+    "font20.png": { "frame": {"x":0, "y":16, "w":8, "h":8} },
+    "font21.png": { "frame": {"x":8, "y":16, "w":8, "h":8} },
+    "font22.png": { "frame": {"x":16, "y":16, "w":8, "h":8} },
+    "font23.png": { "frame": {"x":24, "y":16, "w":8, "h":8} },
+    "font24.png": { "frame": {"x":32, "y":16, "w":8, "h":8} },
+    "font25.png": { "frame": {"x":40, "y":16, "w":8, "h":8} },
+    "font26.png": { "frame": {"x":48, "y":16, "w":8, "h":8} },
+    "font27.png": { "frame": {"x":56, "y":16, "w":8, "h":8} },
+    "font28.png": { "frame": {"x":64, "y":16, "w":8, "h":8} },
+    "font29.png": { "frame": {"x":72, "y":16, "w":8, "h":8} },
+    "font2a.png": { "frame": {"x":80, "y":16, "w":8, "h":8} },
+    "font2b.png": { "frame": {"x":88, "y":16, "w":8, "h":8} },
+    "font2c.png": { "frame": {"x":96, "y":16, "w":8, "h":8} },
+    "font2d.png": { "frame": {"x":104, "y":16, "w":8, "h":8} },
+    "font2e.png": { "frame": {"x":112, "y":16, "w":8, "h":8} },
+    "font2f.png": { "frame": {"x":120, "y":16, "w":8, "h":8} },
+    "font210.png": { "frame": {"x":128, "y":16, "w":8, "h":8} },
+    "font211.png": { "frame": {"x":136, "y":16, "w":8, "h":8} },
+    "font212.png": { "frame": {"x":144, "y":16, "w":8, "h":8} },
+    "font213.png": { "frame": {"x":152, "y":16, "w":8, "h":8} },
+    "font214.png": { "frame": {"x":160, "y":16, "w":8, "h":8} },
+    "font215.png": { "frame": {"x":168, "y":16, "w":8, "h":8} },
+    "font216.png": { "frame": {"x":176, "y":16, "w":8, "h":8} },
+    "font217.png": { "frame": {"x":184, "y":16, "w":8, "h":8} },
+    "font218.png": { "frame": {"x":192, "y":16, "w":8, "h":8} },
+    "font30.png": { "frame": {"x":0, "y":24, "w":8, "h":8} },
+    "font31.png": { "frame": {"x":8, "y":24, "w":8, "h":8} },
+    "font32.png": { "frame": {"x":16, "y":24, "w":8, "h":8} },
+    "font33.png": { "frame": {"x":24, "y":24, "w":8, "h":8} },
+    "font34.png": { "frame": {"x":32, "y":24, "w":8, "h":8} },
+    "font35.png": { "frame": {"x":40, "y":24, "w":8, "h":8} },
+    "font36.png": { "frame": {"x":48, "y":24, "w":8, "h":8} },
+    "font37.png": { "frame": {"x":56, "y":24, "w":8, "h":8} },
+    "font38.png": { "frame": {"x":64, "y":24, "w":8, "h":8} },
+    "font39.png": { "frame": {"x":72, "y":24, "w":8, "h":8} },
+    "font3a.png": { "frame": {"x":80, "y":24, "w":8, "h":8} },
+    "font3b.png": { "frame": {"x":88, "y":24, "w":8, "h":8} },
+    "font3c.png": { "frame": {"x":96, "y":24, "w":8, "h":8} },
+    "font3d.png": { "frame": {"x":104, "y":24, "w":8, "h":8} },
+    "font3e.png": { "frame": {"x":112, "y":24, "w":8, "h":8} },
+    "font3f.png": { "frame": {"x":120, "y":24, "w":8, "h":8} },
+    "font310.png": { "frame": {"x":128, "y":24, "w":8, "h":8} },
+    "font311.png": { "frame": {"x":136, "y":24, "w":8, "h":8} },
+    "font312.png": { "frame": {"x":144, "y":24, "w":8, "h":8} },
+    "font313.png": { "frame": {"x":152, "y":24, "w":8, "h":8} },
+    "font314.png": { "frame": {"x":160, "y":24, "w":8, "h":8} },
+    "font315.png": { "frame": {"x":168, "y":24, "w":8, "h":8} },
+    "font316.png": { "frame": {"x":176, "y":24, "w":8, "h":8} },
+    "font317.png": { "frame": {"x":184, "y":24, "w":8, "h":8} },
+    "font318.png": { "frame": {"x":192, "y":24, "w":8, "h":8} },
+    "font319.png": { "frame": {"x":200, "y":24, "w":8, "h":8} },
+    "font31a.png": { "frame": {"x":208, "y":24, "w":8, "h":8} },
+    "font31b.png": { "frame": {"x":216, "y":24, "w":8, "h":8} },
+    "font31c.png": { "frame": {"x":224, "y":24, "w":8, "h":8} },
+    "font31d.png": { "frame": {"x":232, "y":24, "w":8, "h":8} },
+    "font31e.png": { "frame": {"x":240, "y":24, "w":8, "h":8} },
+    "font40.png": { "frame": {"x":0, "y":32, "w":8, "h":8} },
+    "font41.png": { "frame": {"x":8, "y":32, "w":8, "h":8} },
+    "font42.png": { "frame": {"x":16, "y":32, "w":8, "h":8} },
+    "font43.png": { "frame": {"x":24, "y":32, "w":8, "h":8} },
+    "font44.png": { "frame": {"x":32, "y":32, "w":8, "h":8} },
+    "font45.png": { "frame": {"x":40, "y":32, "w":8, "h":8} },
+    "font46.png": { "frame": {"x":48, "y":32, "w":8, "h":8} },
+    "font47.png": { "frame": {"x":56, "y":32, "w":8, "h":8} },
+    "font48.png": { "frame": {"x":64, "y":32, "w":8, "h":8} },
+    "font49.png": { "frame": {"x":72, "y":32, "w":8, "h":8} },
+    "font4a.png": { "frame": {"x":80, "y":32, "w":8, "h":8} },
+    "font4b.png": { "frame": {"x":88, "y":32, "w":8, "h":8} },
+    "font4c.png": { "frame": {"x":96, "y":32, "w":8, "h":8} },
+    "font4d.png": { "frame": {"x":104, "y":32, "w":8, "h":8} },
+    "font4e.png": { "frame": {"x":112, "y":32, "w":8, "h":8} },
+    "font4f.png": { "frame": {"x":120, "y":32, "w":8, "h":8} },
+    "font410.png": { "frame": {"x":128, "y":32, "w":8, "h":8} },
+    "font411.png": { "frame": {"x":136, "y":32, "w":8, "h":8} },
+    "font412.png": { "frame": {"x":144, "y":32, "w":8, "h":8} },
+    "font413.png": { "frame": {"x":152, "y":32, "w":8, "h":8} },
+    "font414.png": { "frame": {"x":160, "y":32, "w":8, "h":8} },
+    "font415.png": { "frame": {"x":168, "y":32, "w":8, "h":8} },
+    "font416.png": { "frame": {"x":176, "y":32, "w":8, "h":8} },
+    "font417.png": { "frame": {"x":184, "y":32, "w":8, "h":8} },
+    "font418.png": { "frame": {"x":192, "y":32, "w":8, "h":8} },
+    "font50.png": { "frame": {"x":0, "y":40, "w":8, "h":8} },
+    "font51.png": { "frame": {"x":8, "y":40, "w":8, "h":8} },
+    "font52.png": { "frame": {"x":16, "y":40, "w":8, "h":8} },
+    "font53.png": { "frame": {"x":24, "y":40, "w":8, "h":8} },
+    "font54.png": { "frame": {"x":32, "y":40, "w":8, "h":8} },
+    "font55.png": { "frame": {"x":40, "y":40, "w":8, "h":8} },
+    "font56.png": { "frame": {"x":48, "y":40, "w":8, "h":8} },
+    "font57.png": { "frame": {"x":56, "y":40, "w":8, "h":8} },
+    "font58.png": { "frame": {"x":64, "y":40, "w":8, "h":8} },
+    "font60.png": { "frame": {"x":0, "y":48, "w":8, "h":8} },
+    "font61.png": { "frame": {"x":8, "y":48, "w":8, "h":8} },
+    "font62.png": { "frame": {"x":16, "y":48, "w":8, "h":8} },
+    "font63.png": { "frame": {"x":24, "y":48, "w":8, "h":8} },
+    "font64.png": { "frame": {"x":32, "y":48, "w":8, "h":8} },
+    "font65.png": { "frame": {"x":40, "y":48, "w":8, "h":8} },
+    "font66.png": { "frame": {"x":48, "y":48, "w":8, "h":8} },
+    "font67.png": { "frame": {"x":56, "y":48, "w":8, "h":8} },
+    "font68.png": { "frame": {"x":64, "y":48, "w":8, "h":8} },
+    "font69.png": { "frame": {"x":72, "y":48, "w":8, "h":8} },
+    "font6a.png": { "frame": {"x":80, "y":48, "w":8, "h":8} },
+    "font6b.png": { "frame": {"x":88, "y":48, "w":8, "h":8} },
+    "font6c.png": { "frame": {"x":96, "y":48, "w":8, "h":8} },
+    "font6d.png": { "frame": {"x":104, "y":48, "w":8, "h":8} },
+    "font6e.png": { "frame": {"x":112, "y":48, "w":8, "h":8} },
+    "font6f.png": { "frame": {"x":120, "y":48, "w":8, "h":8} },
+    "font610.png": { "frame": {"x":128, "y":48, "w":8, "h":8} },
+    "font611.png": { "frame": {"x":136, "y":48, "w":8, "h":8} },
+    "font612.png": { "frame": {"x":144, "y":48, "w":8, "h":8} },
+    "font613.png": { "frame": {"x":152, "y":48, "w":8, "h":8} },
+    "font614.png": { "frame": {"x":160, "y":48, "w":8, "h":8} },
+    "font615.png": { "frame": {"x":168, "y":48, "w":8, "h":8} },
+    "font616.png": { "frame": {"x":176, "y":48, "w":8, "h":8} },
+    "font617.png": { "frame": {"x":184, "y":48, "w":8, "h":8} },
+    "font618.png": { "frame": {"x":192, "y":48, "w":8, "h":8} },
+    "font70.png": { "frame": {"x":0, "y":56, "w":8, "h":8} },
+    "font71.png": { "frame": {"x":8, "y":56, "w":8, "h":8} },
+    "font72.png": { "frame": {"x":16, "y":56, "w":8, "h":8} },
+    "font73.png": { "frame": {"x":24, "y":24, "w":8, "h":8} },
+    "font74.png": { "frame": {"x":32, "y":56, "w":8, "h":8} },
+    "font75.png": { "frame": {"x":40, "y":56, "w":8, "h":8} },
+    "font76.png": { "frame": {"x":48, "y":56, "w":8, "h":8} },
+    "font77.png": { "frame": {"x":56, "y":56, "w":8, "h":8} },
+    "font78.png": { "frame": {"x":64, "y":56, "w":8, "h":8} },
+    "font79.png": { "frame": {"x":72, "y":56, "w":8, "h":8} },
+    "font7a.png": { "frame": {"x":80, "y":56, "w":8, "h":8} },
+    "font7b.png": { "frame": {"x":88, "y":56, "w":8, "h":8} },
+    "font7c.png": { "frame": {"x":96, "y":56, "w":8, "h":8} },
+    "font7d.png": { "frame": {"x":104, "y":56, "w":8, "h":8} },
+    "font7e.png": { "frame": {"x":112, "y":56, "w":8, "h":8} },
+    "font7f.png": { "frame": {"x":120, "y":56, "w":8, "h":8} },
+    "font710.png": { "frame": {"x":128, "y":56, "w":8, "h":8} },
+    "font711.png": { "frame": {"x":136, "y":56, "w":8, "h":8} },
+    "font712.png": { "frame": {"x":144, "y":56, "w":8, "h":8} },
+    "font713.png": { "frame": {"x":152, "y":56, "w":8, "h":8} },
+    "font714.png": { "frame": {"x":160, "y":56, "w":8, "h":8} },
+    "font715.png": { "frame": {"x":168, "y":56, "w":8, "h":8} },
+    "font716.png": { "frame": {"x":176, "y":56, "w":8, "h":8} },
+    "font717.png": { "frame": {"x":184, "y":56, "w":8, "h":8} },
+    "font718.png": { "frame": {"x":192, "y":56, "w":8, "h":8} },
+    "font719.png": { "frame": {"x":200, "y":56, "w":8, "h":8} },
+    "font71a.png": { "frame": {"x":208, "y":56, "w":8, "h":8} },
+    "font71b.png": { "frame": {"x":216, "y":56, "w":8, "h":8} },
+    "font71c.png": { "frame": {"x":224, "y":56, "w":8, "h":8} },
+    "font71d.png": { "frame": {"x":232, "y":56, "w":8, "h":8} },
+    "font80.png": { "frame": {"x":0, "y":64, "w":8, "h":8} },
+    "font81.png": { "frame": {"x":8, "y":64, "w":8, "h":8} },
+    "font82.png": { "frame": {"x":16, "y":64, "w":8, "h":8} },
+    "font83.png": { "frame": {"x":24, "y":64, "w":8, "h":8} },
+    "font84.png": { "frame": {"x":32, "y":64, "w":8, "h":8} },
+    "font85.png": { "frame": {"x":40, "y":64, "w":8, "h":8} },
+    "font86.png": { "frame": {"x":48, "y":64, "w":8, "h":8} },
+    "font87.png": { "frame": {"x":56, "y":64, "w":8, "h":8} },
+    "font88.png": { "frame": {"x":64, "y":64, "w":8, "h":8} },
+    "font89.png": { "frame": {"x":72, "y":64, "w":8, "h":8} },
+    "font8a.png": { "frame": {"x":80, "y":64, "w":8, "h":8} },
+    "font8b.png": { "frame": {"x":88, "y":64, "w":8, "h":8} },
+    "font8c.png": { "frame": {"x":96, "y":64, "w":8, "h":8} },
+    "font8d.png": { "frame": {"x":104, "y":64, "w":8, "h":8} },
+    "font8e.png": { "frame": {"x":112, "y":64, "w":8, "h":8} },
+    "font8f.png": { "frame": {"x":120, "y":64, "w":8, "h":8} },
+    "font810.png": { "frame": {"x":128, "y":64, "w":8, "h":8} },
+    "font811.png": { "frame": {"x":136, "y":64, "w":8, "h":8} },
+    "font812.png": { "frame": {"x":144, "y":64, "w":8, "h":8} },
+    "font813.png": { "frame": {"x":152, "y":64, "w":8, "h":8} },
+    "font814.png": { "frame": {"x":160, "y":64, "w":8, "h":8} },
+    "font815.png": { "frame": {"x":168, "y":64, "w":8, "h":8} },
+    "font816.png": { "frame": {"x":176, "y":64, "w":8, "h":8} },
+    "font817.png": { "frame": {"x":184, "y":64, "w":8, "h":8} },
+    "font818.png": { "frame": {"x":192, "y":64, "w":8, "h":8} },
+    "font90.png": { "frame": {"x":0, "y":72, "w":8, "h":8} },
+    "font91.png": { "frame": {"x":8, "y":72, "w":8, "h":8} },
+    "font92.png": { "frame": {"x":16, "y":72, "w":8, "h":8} },
+    "font93.png": { "frame": {"x":24, "y":72, "w":8, "h":8} },
+    "font94.png": { "frame": {"x":32, "y":72, "w":8, "h":8} },
+    "font95.png": { "frame": {"x":40, "y":72, "w":8, "h":8} },
+    "font96.png": { "frame": {"x":48, "y":72, "w":8, "h":8} },
+    "font97.png": { "frame": {"x":56, "y":72, "w":8, "h":8} },
+    "font98.png": { "frame": {"x":64, "y":72, "w":8, "h":8} },
+    "fontA0.png": { "frame": {"x":0, "y":80, "w":8, "h":8} },
+    "fontA1.png": { "frame": {"x":8, "y":80, "w":8, "h":8} },
+    "fontA2.png": { "frame": {"x":16, "y":80, "w":8, "h":8} },
+    "fontA3.png": { "frame": {"x":24, "y":80, "w":8, "h":8} },
+    "fontA4.png": { "frame": {"x":32, "y":80, "w":8, "h":8} },
+    "fontA5.png": { "frame": {"x":40, "y":80, "w":8, "h":8} },
+    "fontA6.png": { "frame": {"x":48, "y":80, "w":8, "h":8} },
+    "fontA7.png": { "frame": {"x":56, "y":80, "w":8, "h":8} },
+    "fontA8.png": { "frame": {"x":64, "y":80, "w":8, "h":8} },
+    "fontA9.png": { "frame": {"x":72, "y":80, "w":8, "h":8} },
+    "fontAa.png": { "frame": {"x":80, "y":80, "w":8, "h":8} },
+    "fontAb.png": { "frame": {"x":88, "y":80, "w":8, "h":8} },
+    "fontAc.png": { "frame": {"x":96, "y":80, "w":8, "h":8} },
+    "fontAd.png": { "frame": {"x":104, "y":80, "w":8, "h":8} },
+    "fontAe.png": { "frame": {"x":112, "y":80, "w":8, "h":8} },
+    "fontAf.png": { "frame": {"x":120, "y":80, "w":8, "h":8} },
+    "fontA10.png": { "frame": {"x":128, "y":80, "w":8, "h":8} },
+    "fontA11.png": { "frame": {"x":136, "y":80, "w":8, "h":8} },
+    "fontA12.png": { "frame": {"x":144, "y":80, "w":8, "h":8} },
+    "fontA13.png": { "frame": {"x":152, "y":80, "w":8, "h":8} },
+    "fontA14.png": { "frame": {"x":160, "y":80, "w":8, "h":8} },
+    "fontA15.png": { "frame": {"x":168, "y":80, "w":8, "h":8} },
+    "fontA16.png": { "frame": {"x":176, "y":80, "w":8, "h":8} },
+    "fontA17.png": { "frame": {"x":184, "y":80, "w":8, "h":8} },
+    "fontA18.png": { "frame": {"x":192, "y":80, "w":8, "h":8} },
+    "fontA19.png": { "frame": {"x":200, "y":80, "w":8, "h":8} },
+    "fontB0.png": { "frame": {"x":0, "y":88, "w":8, "h":8} },
+    "fontB1.png": { "frame": {"x":8, "y":88, "w":8, "h":8} },
+    "fontB2.png": { "frame": {"x":16, "y":88, "w":8, "h":8} },
+    "fontB3.png": { "frame": {"x":24, "y":88, "w":8, "h":8} },
+    "fontB4.png": { "frame": {"x":32, "y":88, "w":8, "h":8} },
+    "fontB5.png": { "frame": {"x":40, "y":88, "w":8, "h":8} },
+    "fontB6.png": { "frame": {"x":48, "y":88, "w":8, "h":8} },
+    "fontB7.png": { "frame": {"x":56, "y":88, "w":8, "h":8} },
+    "fontB8.png": { "frame": {"x":64, "y":88, "w":8, "h":8} },
+    "fontB9.png": { "frame": {"x":72, "y":88, "w":8, "h":8} },
+    "fontBa.png": { "frame": {"x":80, "y":88, "w":8, "h":8} },
+    "fontBb.png": { "frame": {"x":88, "y":88, "w":8, "h":8} },
+    "fontBc.png": { "frame": {"x":96, "y":88, "w":8, "h":8} },
+    "fontBd.png": { "frame": {"x":104, "y":88, "w":8, "h":8} },
+    "fontBe.png": { "frame": {"x":112, "y":88, "w":8, "h":8} },
+    "fontBf.png": { "frame": {"x":120, "y":88, "w":8, "h":8} },
+    "fontB10.png": { "frame": {"x":128, "y":88, "w":8, "h":8} },
+    "fontB11.png": { "frame": {"x":136, "y":88, "w":8, "h":8} },
+    "fontB12.png": { "frame": {"x":144, "y":88, "w":8, "h":8} },
+    "fontB13.png": { "frame": {"x":152, "y":88, "w":8, "h":8} },
+    "fontB14.png": { "frame": {"x":160, "y":88, "w":8, "h":8} },
+    "fontB15.png": { "frame": {"x":168, "y":88, "w":8, "h":8} },
+    "fontB16.png": { "frame": {"x":176, "y":88, "w":8, "h":8} },
+    "fontB17.png": { "frame": {"x":184, "y":88, "w":8, "h":8} },
+    "fontB18.png": { "frame": {"x":192, "y":88, "w":8, "h":8} },
+    "fontB19.png": { "frame": {"x":200, "y":88, "w":8, "h":8} },
+    "fontC0.png": { "frame": {"x":0, "y":96, "w":8, "h":8} },
+    "fontC1.png": { "frame": {"x":8, "y":96, "w":8, "h":8} },
+    "fontC2.png": { "frame": {"x":16, "y":96, "w":8, "h":8} },
+    "fontC3.png": { "frame": {"x":24, "y":96, "w":8, "h":8} },
+    "fontC4.png": { "frame": {"x":32, "y":96, "w":8, "h":8} },
+    "fontC5.png": { "frame": {"x":40, "y":96, "w":8, "h":8} },
+    "fontC6.png": { "frame": {"x":48, "y":96, "w":8, "h":8} },
+    "fontC7.png": { "frame": {"x":56, "y":96, "w":8, "h":8} },
+    "fontC8.png": { "frame": {"x":64, "y":96, "w":8, "h":8} },
+    "fontC9.png": { "frame": {"x":72, "y":96, "w":8, "h":8} },
+    "fontCa.png": { "frame": {"x":80, "y":96, "w":8, "h":8} },
+    "fontCb.png": { "frame": {"x":88, "y":96, "w":8, "h":8} },
+    "fontCc.png": { "frame": {"x":96, "y":96, "w":8, "h":8} },
+    "fontCd.png": { "frame": {"x":104, "y":96, "w":8, "h":8} },
+    "fontCe.png": { "frame": {"x":112, "y":96, "w":8, "h":8} },
+    "fontCf.png": { "frame": {"x":120, "y":96, "w":8, "h":8} },
+    "fontC10.png": { "frame": {"x":128, "y":96, "w":8, "h":8} },
+    "fontC11.png": { "frame": {"x":136, "y":96, "w":8, "h":8} },
+    "fontC12.png": { "frame": {"x":144, "y":96, "w":8, "h":8} },
+    "fontC13.png": { "frame": {"x":152, "y":96, "w":8, "h":8} }
   },
 
   "meta": {

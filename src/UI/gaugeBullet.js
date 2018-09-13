@@ -80,13 +80,13 @@ export default class GaugeBullet extends UI{
     }
 
   }
-  Push(w){
+  Push(weaponName){
     let p = CPV(this.wlist.pos); 
-    let s = Art.SpriteFactory(Art.UIPattern.bullet.pop[w]);
+    let s = Art.SpriteFactory(Art.UIPattern.bullet.pop[weaponName]);
     p.x += (this.wlist.list.length-1)*8;
     s.position = p;
     this.container.addChild(s);
-    this.wlist.list.push(w);
+    this.wlist.list.push(weaponName);
     //samall weapon list
   }
   SetBar(bullet){
