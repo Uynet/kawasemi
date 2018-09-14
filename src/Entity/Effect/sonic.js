@@ -23,7 +23,7 @@ export default class Sonic extends EFFECT{
     this.sprite.anchor.set(0.5);
     this.sprite.scale.set(5);
     this.sprite.alpha = 0.16;
-    this.sprite.filters = [Drawer.testFilter];
+    //this.sprite.filters = [Drawer.testFilter];
     //this.arg = ADV(VECN(2),Rand2D(1));
   }
 
