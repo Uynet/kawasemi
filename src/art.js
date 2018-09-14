@@ -418,8 +418,6 @@ export default class Art{
     //font
     this.LoadFont();
 
-    let a = new Array(30).fill(0.0);
-
     //shader
     Drawer.testFilter = new PIXI.Filter(null,resources.shader.data , {
       time: { // 変数名
@@ -427,7 +425,7 @@ export default class Art{
         value: 0 // 初期値
       }
     });
-    
+
 
     //Drawer.smokeFilter =new PIXI.Filter(null,resources.smokeShader.data);
   }

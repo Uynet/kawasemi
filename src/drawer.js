@@ -20,7 +20,7 @@ export default class Drawer{
        * UIコンテナ:UIを描画するレイヤ
        * */
 
-    let Re = new PIXI.Rectangle(0,0,400,320);
+    let Re = new PIXI.Rectangle(0,0,PIXI_WIDTH/2,PIXI_HEIGHT/2);
     let tex = new PIXI.Texture.fromImage("src/resource/img/dummy.png");
     this.renderTarget = new PIXI.Sprite();
 
@@ -46,15 +46,15 @@ export default class Drawer{
 
 
     /*拡大率*/
-    this.magnification = 3;
+    this.magnification = 2;
     let po = VECN(this.magnification);
     this.backGroundContainer.scale.set(3);
     this.backContainer.scale = po;
     this.entityContainer.scale = po;
     this.UIContainer.scale = po;
-    this.foreContainer.scale.set(4);
+    this.foreContainer.scale.set(this.magnification + 1);
     this.foreEntityContainer.scale = po;
-    this.filterContainer.scale.set(3);
+    this.filterContainer.scale.set(this.magnification + 1);
     $("#pixiview").append(this.Renderer.view);
 
     //フィルタ
@@ -63,6 +63,8 @@ export default class Drawer{
     this.noiseFilter = new PIXI.filters.NoiseFilter(0.5);
 
     //shderはなぜかartにある
+    cl(Drawer.Stage)
+    Drawer.Stage.filters = [Drawer.testFilter];
     
     this.mapSize = {
       width : 32,
@@ -106,15 +108,14 @@ export default class Drawer{
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
     centerX = BET(
-      this.magnification*(-this.mapSize.width*16 + 134) + 400,
-      //10ブロック戻すもどす
-      this.magnification*(- pos.x-8) + 400,
+      this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
+      this.magnification*(-pos.x-8)+PIXI_WIDTH/2,
       0
     );
     centerY = BET(
       //8ブロックぶん上げる
-      this.magnification*(-this.mapSize.height*16 +8*16) + 300,
-      this.magnification*(-pos.y-8) + 300,
+      this.magnification*(-this.mapSize.height*16) + PIXI_HEIGHT,
+      this.magnification*(-pos.y-8) + PIXI_HEIGHT/2,
       0
     );
     toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
@@ -138,8 +139,17 @@ export default class Drawer{
   }
   /*スクロール位置を一瞬で移動させる*/
   static ScrollSet(pos){
-    centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
-    centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
+    centerX = BET(
+      this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
+      this.magnification*(-pos.x-8)+PIXI_WIDTH/2,
+      0
+    );
+    centerY = BET(
+      //8ブロックぶん上げる
+      this.magnification*(-this.mapSize.height*16) + PIXI_HEIGHT,
+      this.magnification*(-pos.y-8) + PIXI_HEIGHT/2,
+      0
+    );
     this.backContainer.x = Math.floor(centerX);
     this.backContainer.y = Math.floor(centerY);
     this.entityContainer.x = Math.floor(centerX);
