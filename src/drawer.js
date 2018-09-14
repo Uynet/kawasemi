@@ -87,8 +87,8 @@ export default class Drawer{
   }
 
   /*コンテナからスプライトを削除*/
-  static removeContainer(sprite,CONTAINER){//,id){
-    switch (CONTAINER){
+  static removeContainer(sprite,container){
+    switch (container){
       case "UI" : this.UIContainer.removeChild(sprite); break;
       case "ENTITY": this.entityContainer.removeChild(sprite); break;
       case "FILTER": this.filterContainer.removeChild(sprite); break;
@@ -96,7 +96,7 @@ export default class Drawer{
       case "FOREENTITY": this.foreEntityContainer.removeChild(sprite); break;
       case "BACK": this.backContainer.removeChild(sprite); break;
       case "BG": this.backGroundContainer.removeChild(sprite); break;
-      default : console.warn("container");
+      default : console.warn(container);
     }
   }
 

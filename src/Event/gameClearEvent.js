@@ -36,7 +36,6 @@ export default class GameClearEvent extends Event{
         Audio.StopBGM();//todo : フェードアウト 
         Game.continuePoint = 11;
       }
-      if(Audio.PlayingBGM.name!="boss" && Game.stage == 12)Audio.PlayBGM("boss",0.5);
 
       yield;
     }

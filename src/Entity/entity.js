@@ -23,6 +23,9 @@ export default class Entity{
   Physics(){};
   Collision(){};
   Update(){};
+  Set(param , value){
+    this[param] = value;
+  }
   /*Hurt()*/
 }
 
