@@ -1,4 +1,5 @@
 import UI from './ui.js';
+import Audio from "../audio.js";
 import UIManager from './uiManager.js';
 import EntityManager from '../Stage/entityManager.js';
 import Art from '../art.js';
@@ -42,6 +43,7 @@ export default class StagePop extends UI{
       this.diff = 4;
       this.i = Math.min(this.i+1,this.d-1);
       let str = this.text[this.i];
+      if(str != " " && str != "$")Audio.PlaySE("empty",-0.5);
       this.textObject.PushText(str);
     }
     this.diff *= 0.3;

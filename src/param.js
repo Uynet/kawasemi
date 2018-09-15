@@ -3,17 +3,17 @@ export default class Param{
   static Init(){
     this.player = {
       //プレイ中ステータス
-      status : {
-        hp : 100,
-        bullet : 100,
-      },
       jumpVel : 6.2,//ジャンプ力
       runVel : 0.4,//はしり速度
       gravity : 0.30,
-      maxHp : 100,
+      maxHp : 10,
       maxBullet : 100,
       fliction : 0.7,
-      invTime : 5,//無敵時間
+      invTime : 150,//無敵時間
+      status : {
+        hp : 10,
+        bullet : 100,
+      },
       
       animRun : 4,
       animWait : 7,
@@ -33,21 +33,21 @@ export default class Param{
       equip : "normal",
     }
     this.enemy1 = {
-      hp : 3000,
+      hp : 300,
       atkMax : 10000,
       atkMin : 1,
       gravity : 0.030,
       coin : 15
     }
     this.enemy2 = {
-      hp : 20,
+      hp : 10,
       atkMax : 10,
       atkMin : 5,
       gravity : 0.0,
       coin : 4
     }
     this.enemy3 = {
-      hp : 30,
+      hp : 5,
       atkMax : 10,
       atkMin : 5,
       gravity : 0,
@@ -55,14 +55,14 @@ export default class Param{
       coin : 3
     }
     this.enemy4 = {
-      hp : 20,
+      hp : 5,
       atkMax : 5,
       atkMin : 1,
       gravity : 0.2,
       coin : 2
     }
     this.enemy5 = {
-      hp : 10,
+      hp : 5,
       atkMax : 3,
       atkMin : 1,
       gravity : 0,
@@ -95,6 +95,7 @@ export default class Param{
       cost : 6,
       speed : 2, 
       length : 580,
+      remain : 180,
       //optional
       isTarget : true,
       isHorming : true,
@@ -111,10 +112,10 @@ export default class Param{
     }
     //normal
     this.weapon3 = {
-      agi : 6,
+      agi : 15,
       cost : 1,
-      speed : 10, 
-      length : 300,
+      speed : 4, 
+      length : 150,
       //optional
       isTarget : true,
      // isHorming : false,
@@ -144,21 +145,21 @@ export default class Param{
     }
     //Missile
     this.bullet1 = {
-      atkMax : 50,
-      atkMin : 20,
+      atkMax : 10,
+      atkMin : 8,
       hp : 1,
       curve : 0.2
     }
     //Laser
     this.bullet2 = {
-      atkMax : 50,
-      atkMin : 25,
+      atkMax : 20,
+      atkMin : 15,
       hp : 99999,
     }
     //normal
     this.bullet3 = {
-      atkMax : 12,
-      atkMin : 8,
+      atkMax : 3,
+      atkMin : 2,
       hp : 1,
       curve : 0.2
     }

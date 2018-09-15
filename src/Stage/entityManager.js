@@ -36,7 +36,7 @@ export default class EntityManager{
       case ENTITY.PLAYER : this.colliderList.push(entity);this.player = entity; break;
       case ENTITY.ENEMY : this.colliderList.push(entity);this.enemyList.push(entity); break;
       case ENTITY.WALL : this.colliderList.push(entity);this.wallList.push(entity); break;
-      default : console.warn(addEntity.caller.name);
+      default : console.warn(entity);
     }
 
     if(entity.isMultiple) Drawer.addContainer(entity.container,entity.layer);

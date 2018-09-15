@@ -18,12 +18,12 @@ export default class BGMStartEvent extends Event{
     super();
     function* gen(){
     let p = {
-      x : 96,
+      x : 96+96,
       y : 64
     }
       Audio.PlayBGM(BGMTitle,0.5);
-      UIManager.addUI(new StagePop(p,"^-   ぼ  す   -$" , 10));
-      cl("oi");
+      UIManager.addUI(new StagePop(p,"^   - どうくつ   ぼす -$" , 7));
+      UIManager.SetBoss();
       yield;
     }
     let itt = gen();

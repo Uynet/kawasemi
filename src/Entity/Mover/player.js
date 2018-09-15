@@ -134,7 +134,6 @@ export default class Player extends Entity{
         // ■ SoundEffect : jump
         Audio.PlaySE("jump1");
         //Audio.PlaySE("changeWeapon",-1);
-        EventManager.PushEvent(new QuakeEvent(10,0.1));
         //effect
         let p = ADV(this.pos,VECY(12));
         let v = {
@@ -148,24 +147,7 @@ export default class Player extends Entity{
     /*空中ジャンプ*/
     //空中でZ押すとbulletを消費してジャンプできる
     if(Input.isKeyClick(KEY.Z)){
-      /*
-      if(this.state == STATE.FALLING){
-        let jumpCost = 20
-          if(this.bullet >= jumpCost){
-            Audio.PlaySE("jump2");
-            EntityManager.addEntity(new Explosion2(CPV(this.pos),Math.PI*(1/2)));
-            EventManager.PushEvent(new QuakeEvent(20,5));
-            this.frameShot = this.frame;//最終ショット時刻
-              this.vel.y = - Param.player.jumpVel;
-            this.bullet -= 20;
-            this.state = STATE.JUMPING;
-          }else{
-            //足りないとできない
-            Audio.PlaySE("empty");
-            EntityManager.addEntity(new FontEffect(this.pos,"たりないよ","pop"));
-          }
-      }
-      */
+      //this.AirJump();
     }
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
@@ -236,9 +218,34 @@ export default class Player extends Entity{
       this.ChangeWeapon(wNameNext);
     }
   }
-
+  AirJump(){
+    if(this.state == STATE.FALLING){
+      let jumpCost = 20
+        if(this.bullet >= jumpCost){
+          Audio.PlaySE("jump2");
+          EntityManager.addEntity(new Explosion2(CPV(this.pos),Math.PI*(1/2)));
+          EventManager.PushEvent(new QuakeEvent(20,0.8));
+          this.frameShot = this.frame;//最終ショット時刻
+            this.vel.y = - Param.player.jumpVel;
+          this.bullet -= 20;
+          this.state = STATE.JUMPING;
+        }else{
+          //足りないとできない
+          Audio.PlaySE("empty");
+          EntityManager.addEntity(new FontEffect(this.pos,"たりないよ","pop"));
+        }
+    }
+  }
   /*状態からアニメーションを行う*/
   Animation(){
+    //無敵時間中の点滅
+    if(this.isInvincible){
+      if(this.frame%4 < 2)this.sprite.alpha = 1;
+      else this.sprite.alpha = 0;
+    }else{
+      this.sprite.alpha = 1;
+    }
+
     this.frame++;
     let state;
     switch(this.state){
@@ -340,7 +347,7 @@ export default class Player extends Entity{
       this.param.score = this.score;
       this.bullet += 5;//とりあえずbulletも回復しとくか
       this.hp += 2;//とりあえずhpも回復しとくか
-      this.hp = BET(0,this.hp,this.maxHP);
+      this.hp = clamp(this.hp,0,this.maxHP);
       UIManager.score.SetScore(this.score);
     }
   }
@@ -412,7 +419,7 @@ export default class Player extends Entity{
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
     //最大速度制限:
-    this.vel.x = BET(-this.vxMax , this.vel.x , this.vxMax);
+    this.vel.x = clamp(this.vel.x,-this.vxMax, this.vxMax);
     if(this.vel.y > this.vyMax)this.vel.y = this.vyMax;
     //if(this.vel.y < -this.vyMax)this.vel.y = -this.vyMax;
     /*摩擦
@@ -432,10 +439,8 @@ export default class Player extends Entity{
      this.acc.x = 0;
      this.acc.y = 0;
 
-
      //画面端の制限
-     this.pos.x = Math.min(this.pos.x,Drawer.mapSize.width * 16-4);//右端
-     this.pos.x = Math.max(this.pos.x,0);//←端
+     this.pos.x = clamp(this.pos.x , 0 , 16*Drawer.mapSize.width-8);
      this.pos.y = Math.max(this.pos.y,0);//↑端
      if(this.pos.y > Drawer.mapSize.height * 16+8)this.Damage(-999);//下端
   }
@@ -499,7 +504,7 @@ export default class Player extends Entity{
     else if(t>100 && t<=150 && t%3 == 0) this.bullet++;
     else if(t>150) this.bullet+=2;
     */
-    this.bullet = BET(0,this.bullet,this.maxBullet);
+    this.bullet = clamp(this.bullet,0,this.maxBullet);
     UIManager.bullet.SetBar(this.bullet); //BulletBarの更新
   }
 
@@ -522,7 +527,7 @@ export default class Player extends Entity{
   }
 
   Update(){
-    if(this.maxHP == 100 && Input.isKeyClick(KEY.K) && this.isAlive && Game.debug){
+    if(this.maxHP != 300 && Input.isKeyClick(KEY.K) && this.isAlive && Game.debug){
       let p = {
         x : 64,
         y : 96
@@ -537,7 +542,9 @@ export default class Player extends Entity{
         this.param.havingWeaponList.laser = true;
         UIManager.bullet.Push("laser");
       }
+      //最大HP変更
       this.param.maxHp = 300;
+      UIManager.HP.max = 300;
       this.Damage(-999);
       Audio.PlaySE("missileHit");
     }
