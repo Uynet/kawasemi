@@ -1,6 +1,5 @@
 import Bullet from '../Entity/Bullet/bullet.js';
-import Bullet3 from '../Entity/Bullet/bullet3.js';
-import Bullet1 from '../Entity/Bullet/bullet1.js';
+import Bullet4 from '../Entity/Bullet/bullet4.js';
 import EntityManager from '../Stage/entityManager.js';
 import Pool from '../Stage/pool.js';
 import Weapon from './weapon.js';
@@ -16,6 +15,7 @@ import Explosion1 from '../Entity/Effect/explosion1.js';
 import Explosion2 from '../Entity/Effect/explosion2.js';
 import Lasersight from '../Entity/Effect/lasersight.js';
 
+//炎
 export default class Weapon4 extends Weapon{
   constructor(){
     //ここの名前を忘れずに変更すること
@@ -38,14 +38,12 @@ export default class Weapon4 extends Weapon{
       x: player.pos.x -4 + 10 * Math.cos(this.arg),
       y: player.pos.y + 10 * Math.sin(this.arg),
     }
-    let bullet = new Bullet3(p,this);
+    let bullet = new Bullet4(p,this);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */
-    Audio.PlaySE("normalShot",-0.2);
-    /* □ Effect : shot */
-    EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
+    Audio.PlaySE("playerDamage",-0.2);
     //振動
-    //EventManager.eventList.push(new QuakeEvent(8,2));
+    EventManager.eventList.push(new QuakeEvent(10,0.5));
   }
   Update(player){
     if(this.isTarget) this.Target(player);

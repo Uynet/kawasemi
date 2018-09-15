@@ -6,6 +6,7 @@ import Enemy2 from './enemy2.js';
 import Enemy4 from './enemy4.js';
 import Explosion1 from "../Effect/explosion1.js";
 import Explosion2 from "../Effect/explosion2.js";
+import Shockwave from "../Effect/shockwave.js";
 import Coin from "../Mover/coin.js";
 import Audio from "../../audio.js";
 import Art from '../../art.js';
@@ -46,6 +47,7 @@ export default class Enemy1 extends Enemy{
     /*パラメータ*/
     //this.addAI(new Enemy1AI(this));
     this.SetParam(Param.enemy1);
+    this.maxHP = this.hp;
     /*フラグ*/
     this.state = State.INIT;
     this.isAlive = true;
@@ -54,11 +56,6 @@ export default class Enemy1 extends Enemy{
       on : false,
       under : null
     }
-  }
-  SetSize(size){
-    this.size = size;
-    this.sprite.scale.set(this.size/16);
-    this.collider = new Collider(SHAPE.BOX,new Box(this.pos,this.size,this.size));//衝突判定の形状
   }
   Initing(){
     this.state = "POP";
@@ -94,13 +91,13 @@ export default class Enemy1 extends Enemy{
       y : 0,
     }
     let enemyPop = 3;
-    if(this.hp<50) enemyPop = 5;
-    if(this.hp<20) enemyPop = 7;
+    if(this.hp/this.maxHP<0.5) enemyPop = 5;
+    if(this.hp/this.maxHP<0.2) enemyPop = 7;
     for(let i = 0;i<enemyPop;i++){
       let e = new Enemy4(ADV(p,Rand2D(10*enemyPop)));
       //ちょっと特殊
       e.AIList[0].dist = 1000;
-      e.coin = Dice(1)+1;
+      e.coin = Dice(2)+1;
       EntityManager.addEntity(e);
 
     }
@@ -109,6 +106,8 @@ export default class Enemy1 extends Enemy{
     this.acc.x = 0;
     EventManager.PushEvent(new QuakeEvent(40,0.97));
     Audio.PlaySE("missileHit",2);
+    EntityManager.addEntity(new Shockwave(p));
+    EntityManager.player.AddForce({x: (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 7 : -7 , y:-0.7});
     for(let i = 0;i<4;i++){
       EntityManager.addEntity(new Explosion1(p));
       p.x += this.size/4;
@@ -196,7 +195,7 @@ export default class Enemy1 extends Enemy{
       this.hp += atk;
       //ダメージをポップ
       EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));
-      this.SetSize(this.size - atk/2);
+      this.SetSize(lerp(96,192,this.hp/this.maxHP));
       UIManager.BossHP.SetBar(this.hp);
     }
   }
@@ -215,7 +214,14 @@ export default class Enemy1 extends Enemy{
 
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
-    this.pos.x = clamp(this.pos.x , 0 , 16*Drawer.mapSize.width);
+    if(this.pos.x < 0){
+       this.pos.x =0;
+       this.vel.x = 0;
+    }
+    if(this.pos.x > 16*Drawer.mapSize.width){
+      this.posx = 16*Drawer.mapSize.width;
+      this.vel.x = 0;
+    }
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
     this.acc.y = 0;

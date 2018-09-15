@@ -290,9 +290,10 @@ export default class Art{
         fire : [PIXI.Texture.fromFrame('bulletA0.png')],
         stone : [PIXI.Texture.fromFrame('bulletB0.png')],
         smoke : [PIXI.Texture.fromFrame('bulletC0.png')],
-        sonic :this.Cor("bullet",70,4),
-        
-      }
+        sonic :this.Frame("bullet",70,4),
+      },
+      buringFire : this.Frame("bullet" ,120 , 4 ),
+
     }
     this.enemyPattern = {
       coin : [
@@ -316,13 +317,13 @@ export default class Art{
         PIXI.Texture.fromFrame('enemy02.png'),
         PIXI.Texture.fromFrame('enemy03.png')
       ],
-      enemy2 :this.Cor("enemy",10,4),
-      enemy3 : this.Cor("enemy",30,2),
-      eBullet1 : this.Cor("enemy",40,4),
-      enemy4 : this.Cor("enemy",50,2),
-      enemy5 : this.Cor("enemy",60,2),
-      eBullet2 : this.Cor("enemy",70,4),
-      enemy6 : this.Cor("enemy",80,2),
+      enemy2 :this.Frame("enemy",10,4),
+      enemy3 : this.Frame("enemy",30,2),
+      eBullet1 : this.Frame("enemy",40,4),
+      enemy4 : this.Frame("enemy",50,2),
+      enemy5 : this.Frame("enemy",60,2),
+      eBullet2 : this.Frame("enemy",70,4),
+      enemy6 : this.Frame("enemy",80,2),
       //壊せる木箱
       woodbox : [
         PIXI.Texture.fromFrame('enemy40.png')
@@ -395,8 +396,8 @@ export default class Art{
       },
       //鉄骨
       steel : {
-        entity : this.Cor("wall",90,4),
-        back : this.Cor("wall",94,4),
+        entity : this.Frame("wall",90,4),
+        back : this.Frame("wall",94,4),
       },
       //背景
       backGround : [PIXI.Texture.fromFrame('wallA0.png')],
@@ -419,9 +420,23 @@ export default class Art{
     this.LoadFont();
 
     //shader
-    Drawer.testFilter = new PIXI.Filter(null,resources.shader.data , {
+    Drawer.testFilter = new PIXI.Filter(null,resources.testShader.data , {
       time: { // 変数名
         type: '1f', // 型
+        value: 300 // 初期値
+      },
+      x: { // 変数名
+        type: '1f', // 型
+        value: 0 // 初期値
+      },
+      y: { // 変数名
+        type: '1f', // 型
+        value: 0 // 初期値
+      }
+    });
+    Drawer.fireFilter = new PIXI.Filter(null,resources.fireShader.data , {
+      frame: {
+        type: '1f',
         value: 0 // 初期値
       }
     });
@@ -441,13 +456,14 @@ export default class Art{
         .add('pattern6','src/resource/img/seqPattern.json')
         .add('pattern7','src/resource/img/font.json')
         .add('src/resource/effect/dark.png')
-        .add('shader', 'src/Shader/test.frag')
+        .add('testShader', 'src/Shader/test.frag')
+        .add('fireShader', 'src/Shader/fire.frag')
         //.add('smokeShader', 'src/Shader/smoke.frag')
         .load((loader,resources)=>Art.Load(resources)).onComplete.add(res)); }
 
   //pattern : str
   //start ,frames : int
-  static Cor(pattern,start,frames){
+  static Frame(pattern,start,frames){
     let filename;
     let a = [];//戻り値
     for(let i=0;i<frames;i++){

@@ -64,7 +64,7 @@ export default class Bullet2 extends Bullet{
         else if(w.type == "ENEMY"){
           EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
           w.Damage(-RandBET(this.atkMin,this.atkMax));
-          isNext = false;//
+          //isNext = false;//
           }
         else {
           if(w.material == "steel"){

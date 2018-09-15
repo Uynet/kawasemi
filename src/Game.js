@@ -96,7 +96,6 @@ export default class Game{
   }
 
   static Run(){
-    Drawer.testFilter.uniforms.time = Timer.time;//後で消す
     requestAnimationFrame(Game.Run);
     for (let l of EventManager.eventList){
       if(l.Do().done){
