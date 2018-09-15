@@ -83,6 +83,7 @@ export default class Player extends Entity{
     this.toArg = 0;
     this.scPos = VEC0();//スクロール位置
     this.score = this.param.score;
+    this.force = VEC0();
     //UIManager.HP.SetBar(this.hp);//HPbarの更新
     //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
 
@@ -119,6 +120,11 @@ export default class Player extends Entity{
   SetStatus(){
     this.hp = this.param.status.hp;
     this.bullet = this.param.status.bullet;
+  }
+
+  AddForce(f){
+    this.force.x = f.x;
+    this.force.y = f.y;
   }
   /*キー入力による移動*/
   Input(){
@@ -346,7 +352,7 @@ export default class Player extends Entity{
       this.score+=1;
       this.param.score = this.score;
       this.bullet += 5;//とりあえずbulletも回復しとくか
-      this.hp += 2;//とりあえずhpも回復しとくか
+      this.hp += 1;//とりあえずhpも回復しとくか
       this.hp = clamp(this.hp,0,this.maxHP);
       UIManager.score.SetScore(this.score);
     }
@@ -413,6 +419,8 @@ export default class Player extends Entity{
       this.pos.x += this.floor.under.vel.x; 
       this.pos.y += this.floor.under.vel.y; 
     }
+    this.acc.x += this.force.x;
+    this.acc.y += this.force.y;
     this.acc.y += this.gravity;
     this.pos.x += this.vel.x; 
     this.pos.y += this.vel.y; 
@@ -443,6 +451,8 @@ export default class Player extends Entity{
      this.pos.x = clamp(this.pos.x , 0 , 16*Drawer.mapSize.width-8);
      this.pos.y = Math.max(this.pos.y,0);//↑端
      if(this.pos.y > Drawer.mapSize.height * 16+8)this.Damage(-999);//下端
+    this.force.x *= 0.9;
+    this.force.y *= 0.9;
   }
 
   ScrollByDir(){

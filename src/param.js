@@ -26,14 +26,14 @@ export default class Param{
         normal : true,
         missile :true,//false,
         laser : true,//false,
-        weapon4 : false,//false,
-        weapon5 : false,//false,
+        weapon4 : true,//
+        weapon5 : false,
       },
       //装備中の武器
       equip : "normal",
     }
     this.enemy1 = {
-      hp : 300,
+      hp : 500,
       atkMax : 10000,
       atkMin : 1,
       gravity : 0.030,
@@ -56,8 +56,8 @@ export default class Param{
     }
     this.enemy4 = {
       hp : 5,
-      atkMax : 5,
-      atkMin : 1,
+      atkMax : 3,
+      atkMin : 2,
       gravity : 0.2,
       coin : 2
     }
@@ -93,7 +93,7 @@ export default class Param{
       //status
       agi : 13,
       cost : 6,
-      speed : 2, 
+      speed : 3, 
       length : 580,
       remain : 180,
       //optional
@@ -112,9 +112,9 @@ export default class Param{
     }
     //normal
     this.weapon3 = {
-      agi : 15,
-      cost : 1,
-      speed : 4, 
+      agi : 10,
+      cost : 0,
+      speed : 6, 
       length : 150,
       //optional
       isTarget : true,
@@ -126,7 +126,7 @@ export default class Param{
       agi : 1,
       cost : 1,
       speed : 10, 
-      length : 30,
+      length : 100,
       //optional
       isTarget : true,
      // isHorming : false,
@@ -161,6 +161,12 @@ export default class Param{
       atkMax : 3,
       atkMin : 2,
       hp : 1,
+      curve : 0.2
+    }
+    this.bullet4 = {
+      atkMax : 1,
+      atkMin : 1,
+      hp : 10,
       curve : 0.2
     }
   }

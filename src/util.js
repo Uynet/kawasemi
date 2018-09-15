@@ -141,6 +141,10 @@ const BET = (min,x,max)=>{
 const clamp = (x,min,max)=>{
   return Math.min(Math.max(x,min),max);
 }
+const lerp = (x,y,t)=>{
+  if(t<0 || t>1)console.warn(t)
+  return x*t + y*(1-t);
+}
 
 //-d ~ +d までの値を返す
 let Rand2D = (d)=>{

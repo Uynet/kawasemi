@@ -1,6 +1,5 @@
 import Bullet from '../Entity/Bullet/bullet.js';
-import Bullet3 from '../Entity/Bullet/bullet3.js';
-import Bullet1 from '../Entity/Bullet/bullet1.js';
+//import Bullet4 from '../Entity/Bullet/bullet4.js';//debug
 import EntityManager from '../Stage/entityManager.js';
 import Pool from '../Stage/pool.js';
 import Weapon from './weapon.js';
@@ -15,16 +14,13 @@ import Param from '../param.js';
 import Explosion1 from '../Entity/Effect/explosion1.js';
 import Explosion2 from '../Entity/Effect/explosion2.js';
 import Lasersight from '../Entity/Effect/lasersight.js';
-import Sonic from '../Entity/Effect/sonic.js';
 
-//バリア?
-export default class Weapon5 extends Weapon{
+export default class Weapon3 extends Weapon{
   constructor(){
-    //ここの名前を忘れずに変更すること
-    super("weapon5");
+    super("normal");
     /*基本情報*/
     /*パラメータ*/
-    this.param = Param.weapon4;
+    this.param = Param.weapon3;
     this.agi = this.param.agi;//間隔
     this.cost = this.param.cost;
     this.speed = this.param.speed;//弾速
@@ -34,22 +30,24 @@ export default class Weapon5 extends Weapon{
     this.isHorming = this.param.isHorming;
     this.isLasersight = this.param.isLasersight;
   }
-  shot(player){
-    //最後に撃ってからframeまで停止
-    if((player.frame - player.frameShot) > this.agi){
-    let e = new Explosion1(player.pos);
-    EntityManager.addEntity(e);
-      //shot時刻
-      player.frameShot = player.frame;
-      //playerの弾薬が残っていなければ打てない
-      //弾薬消費
-      player.bullet -= this.cost;
-      player.bullet = Math.max(0,player.bullet);
-
-      this.arg = player.arg;
+  Set(player){
+    this.arg = player.arg;
+    let p = {
+      x: player.pos.x -4 + 10 * Math.cos(this.arg),
+      y: player.pos.y + 10 * Math.sin(this.arg),
     }
+//    let bullet = new Bullet5(p,this);
+//    EntityManager.addEntity(bullet);
+    /* ■ SoundEffect : shot */
+    Audio.PlaySE("normalShot",-0.6);
+    /* □ Effect : shot */
+    EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
+    //振動
+    //EventManager.eventList.push(new QuakeEvent(8,2));
   }
   Update(player){
+    if(this.isTarget) this.Target(player);
+    if(this.isLasersight) this.Lasersight(player);
   }
   Option(option,value){
     switch(option){

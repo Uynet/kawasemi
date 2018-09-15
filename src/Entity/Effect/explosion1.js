@@ -66,8 +66,11 @@ export default class Explosion1 extends EFFECT{
 
   Update(){
     //爆発して自分は消える
-    this.Bomb();
-    this.Collision();
-    EntityManager.removeEntity(this);
+    if(this.frame == 0){
+      this.Bomb();
+      this.Collision();
+    }
+    if(this.frame > 300) EntityManager.removeEntity(this);
+    this.frame++;
   }
 }
