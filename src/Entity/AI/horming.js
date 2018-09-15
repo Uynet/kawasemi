@@ -14,7 +14,10 @@ export default class horming{
       let closs = this.bullet.vel.x * to.y - this.bullet.vel.y * to.x; 
       this.bullet.Set("arg",this.bullet.arg + closs/Math.abs(closs) * this.bullet.curve);
       //これめっちゃ楽しい
+      //this.bullet.targetedEnemy.vel.x += this.bullet.vel.x;
+      //this.bullet.targetedEnemy.vel.y += this.bullet.vel.y;
       //this.bullet.Set("vel", ADV(to,this.bullet.vel)); 
+      
     }
   }
 }

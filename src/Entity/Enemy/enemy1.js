@@ -1,4 +1,5 @@
 import Enemy from './enemy.js';
+import Drawer from "../../drawer.js";
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import Enemy2 from './enemy2.js';
@@ -33,7 +34,7 @@ export default class Enemy1 extends Enemy{
   constructor(pos){
     super(pos,VEC0());
     /*基本情報*/
-    this.size = 96+16;
+    this.size = 96;
     this.collider = new Collider(SHAPE.BOX,new Box(pos,this.size,this.size));//衝突判定の形状
     this.type = ENTITY.ENEMY;
     /*スプライト*/
@@ -87,7 +88,23 @@ export default class Enemy1 extends Enemy{
     }
   }
   Landing(){
-    let p = CPV(this.pos);
+
+    let p = {
+      x : this.pos.x + this.size/2,
+      y : 0,
+    }
+    let enemyPop = 3;
+    if(this.hp<50) enemyPop = 5;
+    if(this.hp<20) enemyPop = 7;
+    for(let i = 0;i<enemyPop;i++){
+      let e = new Enemy4(ADV(p,Rand2D(10*enemyPop)));
+      //ちょっと特殊
+      e.AIList[0].dist = 1000;
+      e.coin = Dice(1)+1;
+      EntityManager.addEntity(e);
+
+    }
+    p = CPV(this.pos);
     p.y += this.size;
     this.acc.x = 0;
     EventManager.PushEvent(new QuakeEvent(40,0.97));
@@ -98,25 +115,6 @@ export default class Enemy1 extends Enemy{
     }
   }
   Jumping(){
-    let p = {
-      x : this.pos.x + this.size/2,
-      y : 0,
-    }
-    let enemyPop = 5;
-    if(this.hp<2000){
-      enemyPop = 7;
-    }
-    if(this.hp<1000){
-      enemyPop = 10;
-    }
-    for(let i = 0;i<enemyPop;i++){
-      let e = new Enemy4(ADV(p,Rand2D(10*enemyPop)));
-      //ちょっと特殊
-      e.AIList[0].dist = 1000;
-      e.coin = Dice(1)+1;
-      EntityManager.addEntity(e);
-
-    }
     //着地
     this.Landing();
     this.state = "POP"  
@@ -193,11 +191,14 @@ export default class Enemy1 extends Enemy{
     }
   }
   Damage(atk){
-    Audio.PlaySE("enemyDamage",-0.5);
-    this.hp += atk;
-    //ダメージをポップ
-    EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));
-    //this.SetSize(this.size-(this.size-80))
+    if(this.state != "INIT"){
+      Audio.PlaySE("enemyDamage",-0.5);
+      this.hp += atk;
+      //ダメージをポップ
+      EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));
+      this.SetSize(this.size - atk/2);
+      UIManager.BossHP.SetBar(this.hp);
+    }
   }
   Animation(){
     this.spid = Math.floor(this.frame/6)%4;
@@ -205,6 +206,22 @@ export default class Enemy1 extends Enemy{
     this.sprite.position = this.pos;
   }
 
+  Physics(){
+    if(this.floor.on){
+      this.pos.x += this.floor.under.vel.x;
+      //this.pos.y += this.floor.under.vel.y;
+    }
+    if(this.gravity)this.acc.y += this.gravity;
+
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+    this.pos.x = clamp(this.pos.x , 0 , 16*Drawer.mapSize.width);
+    this.vel.x += this.acc.x;
+    this.vel.y += this.acc.y;
+    this.acc.y = 0;
+    this.acc.x = 0;
+    //最大速度制限
+  }
   Update(){
     //AI
     if(this.state == "JUMP"){
@@ -220,6 +237,10 @@ export default class Enemy1 extends Enemy{
     //observer
     if(this.hp<=0){
       this.Die();
+      EventManager.PushEvent(new QuakeEvent(30,0.99));
+      Audio.PlaySE("stageChange",1,0.8);
+      Audio.PlaySE("bomb",1,0.6);
+      Audio.StopBGM();
     }
     this.frame++;
   }

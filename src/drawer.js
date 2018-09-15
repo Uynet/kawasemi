@@ -63,7 +63,6 @@ export default class Drawer{
     this.noiseFilter = new PIXI.filters.NoiseFilter(0.5);
 
     //shderはなぜかartにある
-    cl(Drawer.Stage)
     Drawer.Stage.filters = [Drawer.testFilter];
     
     this.mapSize = {
@@ -107,15 +106,15 @@ export default class Drawer{
 
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
-    centerX = BET(
-      this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
+    centerX = clamp(
       this.magnification*(-pos.x-8)+PIXI_WIDTH/2,
+      this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
       0
     );
-    centerY = BET(
+    centerY = clamp(
       //8ブロックぶん上げる
-      this.magnification*(-this.mapSize.height*16) + PIXI_HEIGHT,
       this.magnification*(-pos.y-8) + PIXI_HEIGHT/2,
+      this.magnification*(-this.mapSize.height*16) + PIXI_HEIGHT,
       0
     );
     toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;

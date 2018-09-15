@@ -137,6 +137,10 @@ const RandBET = (min,max)=>{
 const BET = (min,x,max)=>{
   return Math.min(Math.max(x,min),max);
 }
+/*maxmin*/
+const clamp = (x,min,max)=>{
+  return Math.min(Math.max(x,min),max);
+}
 
 //-d ~ +d までの値を返す
 let Rand2D = (d)=>{

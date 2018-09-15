@@ -77,7 +77,7 @@ export default class Bullet1 extends Bullet{
       EventManager.eventList.push(new QuakeEvent(50,0.8));//ゆれ
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
     }
-    if(this.frame > 360){
+    if(this.frame > 180){
       Pool.Remove(this);
       EntityManager.addEntity(new BulletShot(CPV(this.pos)));
     }
