@@ -64,15 +64,15 @@ export default class Bullet2 extends Bullet{
         else if(w.type == "ENEMY"){
           EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
           w.Damage(-RandBET(this.atkMin,this.atkMax));
-          //isNext = false;//
+          if(w.hp > 0)isNext = false;//
           }
         else {
           if(w.material == "steel"){
             let i = POV(this.arg,-16);//入射角ベクトル
             //r = i+2n*(i・n)
 
-            let r = ADV(i,MLV(VECN(2),MLV(c.n,VECN(DOT(i,c.n)))));
-            this.arg = Math.atan(r.y/r.x);
+            let r = reflect(i,c.n);
+            this.arg = argument(r);
             //if(r.y<0)this.arg += Math.PI;
           //鉄で反射
           }else{
@@ -88,6 +88,12 @@ export default class Bullet2 extends Bullet{
       let p = ADV(this.pos,POV(this.arg,16));
       let bullet = new Bullet2(p,this.arg,isNext,step);
       EntityManager.addEntity(bullet);
+    }else{
+      /*
+      let p = ADV(this.pos,POV(this.arg,-16));
+      EntityManager.player.pos.x = p.x;
+      EntityManager.player.pos.y = p.y;
+      */
     }
   }
 

@@ -1,4 +1,5 @@
 import UI from './ui.js';
+import Audio from "../audio.js";
 import Enemy1 from "../Entity/Enemy/enemy1.js";
 import UIManager from './uiManager.js';
 import EntityManager from '../Stage/entityManager.js';
@@ -58,14 +59,26 @@ export default class gaugeBossHP extends UI{
     this.max = maxHP;
     /*state*/
     this.isPopIn = true;
+    this.isInitialized = false;
+    this.initHP = 0;
+    this.isUpdater = true;
   }
   SetBar(hp){
-    //barの長さを更新
-    this.container.children[1].scale.x = this.scale * hp/this.max;
-    //HP数字の更新
-    this.amount.SetFont(hp);
+    if(this.isInitialized){
+      //barの長さを更新
+      this.container.children[1].scale.x = this.scale * hp/this.max;
+      //HP数字の更新
+      this.amount.SetFont(hp);
+    }
   }
   Update(){
+    if(!this.isInitialized){
+      Audio.PlaySE("empty");
+      this.container.children[1].scale.x = this.scale * this.initHP/this.max;
+      this.initHP+=this.max/50;
+      this.amount.SetFont(this.initHP);
+      if(this.initHP >= this.max)this.isInitialized = true;
+    }
     this.container.position.x = this.pos.x;
   }
 }

@@ -26,6 +26,7 @@ export default class Bullet4 extends Bullet{
     this.name = "weapon4";//これはどこで使われてる?
     this.arg = weapon.arg;
     this.vi = weapon.speed;
+    this.vel = POV(this.arg,this.vi);
     this.isTargetOn = weapon.isTargetOn;
     if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
     this.isUpdater = true;
@@ -47,7 +48,7 @@ export default class Bullet4 extends Bullet{
     this.AIList = [];
     this.AIList.push(new Bullet4AI(this));
     //if(weapon.isHorming) this.AIList.push(new Horming(this));
-    this.SetSize(this.size+8 + Rand(16));
+    this.SetSize(this.size+Rand(8));
 //    this.pos = ADV(Rand2D(15),this.pos);
   }
 
@@ -60,7 +61,7 @@ export default class Bullet4 extends Bullet{
     //this.sprite.filters = [Drawer.fireFilter];
     //this.sprite.filters[0].uniforms.frame = this.frame;
     if(this.hp<=0 ||
-      this.frame > 30) {
+      this.frame > 330) {
       EntityManager.removeEntity(this);
     }
     this.sprite.anchor.set(0.0);
@@ -70,7 +71,7 @@ export default class Bullet4 extends Bullet{
     this.sprite.rotation = this.arg + Math.PI/2;
     this.spid = (this.spid+1)%4;
     this.sprite.texture = this.pattern[this.spid];
-    this.sprite.alpha *= 0.94;
+    //this.sprite.alpha *= 0.94;
 
     this.frame++;
   }

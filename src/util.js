@@ -121,7 +121,22 @@ const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗�
 const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
 const NOMALIZE = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化
 const normalize = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化
+const scala = (a,v)=>{
+  return {
+    x:v.x * a,
+    y:v.y * a,
+  }
+}
+const argument = (v)=>{
+  let a = Math.atan(v.y/v.x);
+  if(v.x<0) a += Math.PI;
+  return a;
+}
 const DOT = (v1,v2)=>{return v1.x*v2.x + v1.y*v2.y};//内積
+const dot = (v1,v2)=>{return v1.x*v2.x + v1.y*v2.y};//内積
+const reflect = (v,n)=>{
+  return ADV(v,scala(-2*dot(v,n),n));
+}
 /*Random*/
 const Rand = (d)=>{
   return 2 * d * (Math.random()-0.5);

@@ -43,7 +43,10 @@ export default class StagePop extends UI{
       this.diff = 4;
       this.i = Math.min(this.i+1,this.d-1);
       let str = this.text[this.i];
-      if(str != " " && str != "$")Audio.PlaySE("empty",-0.5);
+      if(str != " " && str != "$"){
+        Audio.PlaySE("empty",-0.5);
+        Audio.PlaySE("changeWeapon",-0.1);
+        }
       this.textObject.PushText(str);
     }
     this.diff *= 0.3;
