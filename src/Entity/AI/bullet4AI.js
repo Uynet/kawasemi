@@ -9,16 +9,19 @@ export default class Bullet4AI{
     this.bullet = bullet;
   }
   Phisics(){
-    this.bullet.vi *= 0.9;
-    this.bullet.vel = POV(this.bullet.arg,this.bullet.vi);
+    //this.bullet.vi *= 0.9;
+    //this.bullet.vi = length(this.bullet.vel)
+    //this.bullet.vel = POV(this.bullet.arg,this.bullet.vi);
+    this.bullet.vel.y += 0.1;
     this.bullet.pos.x += this.bullet.vel.x;
     this.bullet.pos.y += this.bullet.vel.y;
+    this.bullet.arg = argument(this.bullet.vel); 
   }
   /* 衝突判定 */
   collision(){
     for(let l of EntityManager.enemyList){
       if(Collision.on(this.bullet,l).isHit){
-        if(Dice(10)==1){
+        if(Dice(30)==1){
           l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
         }
   //     this.bullet.hp--;
@@ -28,9 +31,11 @@ export default class Bullet4AI{
     }
       for(let w of EntityManager.wallList){
         let c = Collision.on(this.bullet,w);
-        if(c.isHit){
-          //  this.bullet.hp = 0;
-          //this.bullet.vi = 0;
+        if(c.isHit || this.bullet.vel > 0){
+          Collision.Resolve(this.bullet,w)
+          this.bullet.vel.x = 0;
+          //this.bullet.vel = reflect(this.bullet.vel,c.n);
+          this.bullet.arg = -Math.PI/2;
         }
       }
   }

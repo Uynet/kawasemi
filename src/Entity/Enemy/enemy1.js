@@ -20,7 +20,6 @@ import FontEffect from '../Effect/fontEffect.js';
 import Param from '../../param.js';
 import StartBossBattleEvent from "../../Event/StartBossBattleEvent.js";
 
-
 let EntityList = EntityManager.entityList;
 
 //enum
@@ -56,58 +55,67 @@ export default class Enemy1 extends Enemy{
       on : false,
       under : null
     }
+    this.enemyPop = 3;
+  }
+  PopEnemy(enemyPop){
+    let p = {
+      x : this.pos.x + this.size/2,
+      y : 0,
+    }
+    for(let i = 0;i<enemyPop;i++){
+      let e = new Enemy4(ADV(p,Rand2D(enemyPop)));
+      //ちょっと特殊
+      e.AIList[0].dist = 1000;
+     // e.coin = Dice(2)+1;
+      EntityManager.addEntity(e);
+    }
   }
   Initing(){
+    this.PopEnemy(12);
     this.state = "POP";
     this.Landing();
     let e = new StartBossBattleEvent("boss");
     EventManager.PushEvent(e);
   }
-  Waiting(){
-    //たまにジャンプする
-    if(this.frame % 100 == 19){
-
-      EventManager.PushEvent(new QuakeEvent(10,0.99));
-      this.vel.y = -0.2;
-      this.acc.y = -2.3;
-      this.state = "JUMP";
-      let p = ADV(this.pos,VEC2(-20,90));
+  Jump(){
+    EventManager.PushEvent(new QuakeEvent(10,0.99));
+    this.vel.y = -0.2;
+    this.acc.y = -2.3;
+    this.state = "JUMP";
+    let p = ADV(this.pos,VEC2(-20,90));
     //  Audio.PlaySE("enemy5Shot");
     Audio.PlaySE("landing2",1.6);
-    }
+  }
+  Waiting(){
+    //たまにジャンプする
+      this.Jump();
   }
   Poping(){
-    Audio.PlaySE("landing2",3);
-    this.vel.y = Math.min(0,this.vel.y * -0.4);
+    Audio.PlaySE("landing3",3);
+    this.vel.y = Math.min(0,this.vel.y * -0.3);
     this.vel.x *= 0.4;
     if(this.vel.y>-0.05 ){
       this.state = "WAIT";
     }
   }
   Landing(){
-
-    let p = {
-      x : this.pos.x + this.size/2,
-      y : 0,
+    let f = {x: (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 1 : -1 , y:-0.8};
+    EntityManager.player.AddForce(f);
+    for(let e of EntityManager.enemyList){
+      f = {x: (this.pos.x+this.size/2 < e.pos.x)? 0.3 : -0.3 , y:-0.7};
+      e.AddForce(f);
     }
-    let enemyPop = 3;
-    if(this.hp/this.maxHP<0.5) enemyPop = 5;
-    if(this.hp/this.maxHP<0.2) enemyPop = 7;
-    for(let i = 0;i<enemyPop;i++){
-      let e = new Enemy4(ADV(p,Rand2D(10*enemyPop)));
-      //ちょっと特殊
-      e.AIList[0].dist = 1000;
-      e.coin = Dice(2)+1;
-      EntityManager.addEntity(e);
 
-    }
-    p = CPV(this.pos);
+    if(this.hp/this.maxHP<0.5) this.enemyPop = 5;
+    if(this.hp/this.maxHP<0.2) this.enemyPop = 7;
+    this.PopEnemy(this.enemyPop);
+
+    let p = CPV(this.pos);
     p.y += this.size;
     this.acc.x = 0;
     EventManager.PushEvent(new QuakeEvent(40,0.97));
     Audio.PlaySE("missileHit",2);
     EntityManager.addEntity(new Shockwave(p));
-    EntityManager.player.AddForce({x: (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 7 : -7 , y:-0.7});
     for(let i = 0;i<4;i++){
       EntityManager.addEntity(new Explosion1(p));
       p.x += this.size/4;
@@ -177,12 +185,12 @@ export default class Enemy1 extends Enemy{
     if(c.isHit && c.n.y == -1){
       //ダメージ
       let damage = RandBET(this.atkMin,this.atkMax);
-      //if(!player.isInvincible)player.Damage(-damage);
+      if(!player.isInvincible)player.Damage(-damage);
       //if(!player.isInvincible)player.Damage(-damage);
     }
     if(c.isHit && c.n.y != 1){
       player.vel.x = -c.n.x*10;
-      if(!player.isInvincible)player.Damage(-10);
+      //if(!player.isInvincible)player.Damage(-10);
     }
     if(c.isHit && c.n.y == 1){
       //上に乗られたらダメージ
@@ -192,10 +200,10 @@ export default class Enemy1 extends Enemy{
   Damage(atk){
     if(this.state != "INIT"){
       Audio.PlaySE("enemyDamage",-0.5);
-      this.hp += atk;
+      this.hp = Math.max(this.hp+atk,0);
       //ダメージをポップ
       EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));
-      this.SetSize(lerp(96,192,this.hp/this.maxHP));
+      //this.SetSize(lerp(96,192,this.hp/this.maxHP));
       UIManager.BossHP.SetBar(this.hp);
     }
   }

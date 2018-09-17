@@ -28,6 +28,7 @@ export default class Enemy extends Entity{
       on : false,
       under : null
     }
+    this.force = VEC0();
   }
   addAI(AI){
     this.AIList.push(AI);
@@ -68,12 +69,16 @@ export default class Enemy extends Entity{
     }
     if(this.gravity)this.acc.y += this.gravity;
 
+    this.acc.x += this.force.x;
+    this.acc.y += this.force.y;
     this.pos.x += this.vel.x;
     this.pos.y += this.vel.y;
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
     this.acc.y = 0;
     this.acc.x = 0;
+    this.force.x *= 0.9;
+    this.force.y *= 0.9;
     //最大速度制限
   }
   ExecuteAI(){

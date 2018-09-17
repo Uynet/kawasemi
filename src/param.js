@@ -41,15 +41,15 @@ export default class Param{
     }
     this.enemy2 = {
       hp : 10,
-      atkMax : 10,
-      atkMin : 5,
+      atkMax : 5,
+      atkMin : 1,
       gravity : 0.0,
       coin : 4
     }
     this.enemy3 = {
       hp : 5,
-      atkMax : 10,
-      atkMin : 5,
+      atkMax : 4,
+      atkMin : 1,
       gravity : 0,
       range : 80,
       coin : 3
@@ -93,7 +93,7 @@ export default class Param{
       //status
       agi : 13,
       cost : 6,
-      speed : 3, 
+      speed : 8, 
       length : 580,
       remain : 180,
       //optional
@@ -102,7 +102,7 @@ export default class Param{
       isLasersight : false,
     }
     this.weapon2 = {
-      agi : 26,
+      agi : 25,
       cost : 10,
       length : 300,
       //optional
@@ -125,8 +125,8 @@ export default class Param{
     this.weapon4 = {
       agi : 1,
       cost : 1,
-      speed : 10, 
-      length : 100,
+      speed : 4, 
+      length : 400,
       //optional
       isTarget : true,
      // isHorming : false,

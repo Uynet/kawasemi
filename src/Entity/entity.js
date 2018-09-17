@@ -35,6 +35,10 @@ export default class Entity{
     this.sprite.scale.set(this.size/16);
     this.collider = new Collider(SHAPE.BOX,new Box(this.pos,this.size,this.size));//衝突判定の形状
   }
+  AddForce(f){
+    this.force.x = f.x;
+    this.force.y = f.y;
+  }
   /*Hurt()*/
 }
 

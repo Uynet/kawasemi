@@ -122,10 +122,6 @@ export default class Player extends Entity{
     this.bullet = this.param.status.bullet;
   }
 
-  AddForce(f){
-    this.force.x = f.x;
-    this.force.y = f.y;
-  }
   /*キー入力による移動*/
   Input(){
     /*ジャンプ*/
