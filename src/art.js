@@ -3,7 +3,7 @@ import Drawer from './drawer.js';
 
 export default class Art{
   static Load(resources){
-    this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
+    this.test = PIXI.Texture.fromFrame('distance00.png'),
     /*forにして*/
     this.playerPattern = {
       runR : [
@@ -455,7 +455,7 @@ export default class Art{
         .add('pattern5','src/resource/img/wallPattern.json')
         .add('pattern6','src/resource/img/seqPattern.json')
         .add('pattern7','src/resource/img/font.json')
-        .add('src/resource/effect/dark.png')
+        .add('distance','src/resource/img/distance.json')
         .add('testShader', 'src/Shader/test.frag')
         .add('fireShader', 'src/Shader/fire.frag')
         //.add('smokeShader', 'src/Shader/smoke.frag')

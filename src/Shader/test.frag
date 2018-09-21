@@ -12,7 +12,7 @@ void main(void) {
   vec2 p = vec2(x,y)-0.5;
   float L = abs(abs(uv.x-p.x)-time*0.02);
   //uv.x += exp(-L*40.0)*sin(L*10.0)*0.5;
-  uv.y += exp(-L*40.0-4.0)*1.5;
+  uv.x += exp(-L*40.0-4.0)*5.5/(1.0+time*0.2);
   uv.x = clamp(uv.x , -0.5 , 0.5);
 
   vec4 color = texture2D(uSampler, uv+0.5);

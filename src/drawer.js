@@ -21,7 +21,6 @@ export default class Drawer{
        * */
 
     let Re = new PIXI.Rectangle(0,0,PIXI_WIDTH/2,PIXI_HEIGHT/2);
-    let tex = new PIXI.Texture.fromImage("src/resource/img/dummy.png");
     this.renderTarget = new PIXI.Sprite();
 
     this.backGroundContainer = new PIXI.Container();//背景
@@ -162,10 +161,20 @@ export default class Drawer{
   static SetFilter(filters){
     Drawer.renderTarget.filters = filters;
   }
+  static Dist(){
+    let extract = this.Renderer.plugins.extract;
+    let canvas = extract.canvas();
+    const distContext = canvas.getContext("2d");
+    var rgba = context.getImageData(p.x, p.y, 1, 1).data;
+  }
 
   static Quake(diff){
     this.Stage.x = Math.floor(diff.x);
     this.Stage.y = Math.floor(diff.y);
+  }
+  static QuakeRot(arg){
+    this.renderTarget.anchor.set(0.5);
+    this.renderTarget.rotation = arg;
   }
 
 
