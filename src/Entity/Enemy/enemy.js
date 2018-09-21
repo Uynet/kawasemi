@@ -77,8 +77,6 @@ export default class Enemy extends Entity{
     this.vel.y += this.acc.y;
     this.acc.y = 0;
     this.acc.x = 0;
-    this.force.x *= 0.9;
-    this.force.y *= 0.9;
     //最大速度制限
   }
   ExecuteAI(){

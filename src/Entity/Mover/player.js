@@ -24,6 +24,7 @@ import QuakeEvent from '../../Event/quakeEvent.js';
 import WeaponIcon from '../Effect/weaponIcon.js';
 import Pool from '../../Stage/pool.js';
 import StagePop from '../../UI/stagePop.js';
+import DistanceField from "../../Stage/distanceField.js";
 
 const STATE = {
   WAITING : "WAITING",
@@ -200,10 +201,6 @@ export default class Player extends Entity{
       this.weapon.shot(this);
     }
     /*for debug*/
-    if(Input.isKeyInput(KEY.J) && Game.Debug){
-      this.bullet += 100;
-      //this.Damage(-999);
-    }
     if(Input.isKeyClick(KEY.C) && this.isAlive){
       //武器チェンジ
       //持っている武器の中で次の武器をセレクト
@@ -348,7 +345,7 @@ export default class Player extends Entity{
       this.score+=1;
       this.param.score = this.score;
       this.bullet += 5;//とりあえずbulletも回復しとくか
-      this.hp += 1;//とりあえずhpも回復しとくか
+      //this.hp += 1;//とりあえずhpも回復しとくか
       this.hp = clamp(this.hp,0,this.maxHP);
       UIManager.score.SetScore(this.score);
     }
@@ -383,7 +380,6 @@ export default class Player extends Entity{
                 y : Rand(0.4),
               }
               let s = Pool.GetSmoke(p,v,10);
-              EventManager.PushEvent(new QuakeEvent(10,0.1));
               switch(l.material){
                 case "wall": Audio.PlaySE("landing1",1);break;
                 case "steel": Audio.PlaySE("landing2",1);Audio.PlaySE("landing1");break;
@@ -449,6 +445,17 @@ export default class Player extends Entity{
      if(this.pos.y > Drawer.mapSize.height * 16+8)this.Damage(-999);//下端
     this.force.x *= 0.9;
     this.force.y *= 0.9;
+
+    if(DistanceField.GetDistance(this.pos)<=1){
+      let t = 0;
+      while(DistanceField.GetDistance(this.pos)<=1 && t <16){
+        let grad = DistanceField.GetDistanceGrad(this.pos);
+        this.pos.x += grad.x;
+        this.pos.y += grad.y;
+        t ++;
+      }
+      this.isJump = false;
+    }
   }
 
   ScrollByDir(){
@@ -531,8 +538,7 @@ export default class Player extends Entity{
       this.Damage(-999);
     }
   }
-
-  Update(){
+  Debug(){
     if(this.maxHP != 300 && Input.isKeyClick(KEY.K) && this.isAlive && Game.debug){
       let p = {
         x : 64,
@@ -554,6 +560,10 @@ export default class Player extends Entity{
       this.Damage(-999);
       Audio.PlaySE("missileHit");
     }
+  }
+
+  Update(){
+    if(Game.debug)this.Debug();
     if(this.isAlive){
       /*Init*/
       if(!this.isJump) {

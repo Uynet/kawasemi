@@ -111,6 +111,7 @@ const UI_ = {
 
 /*Vector*/
 const VEC2 = (x,y)=>{return {x:x,y:y}};
+const vec2 = (x,y)=>{return {x:x,y:y}};
 const VEC0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
 const VECN = (n)=>{return {x:n,y:n}};//
 const VECX = (vx)=>{return {x:vx,y:0}};//
@@ -181,7 +182,7 @@ let DIST_C = (p1,p2)=>{
 }
 //
 let length = (v)=>{
-  return Math.sqrt(v.x * v.x + v.y + v.y);
+  return Math.sqrt(v.x * v.x + v.y * v.y);
 }
 /*for debug*/
 let cl = console.log;

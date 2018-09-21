@@ -85,6 +85,26 @@ export default class Enemy4 extends Enemy{
       }
     }
   }
+  Physics(){
+    if(this.floor.on){
+      this.pos.x += this.floor.under.vel.x;
+      //this.pos.y += this.floor.under.vel.y;
+    }
+    if(this.gravity)this.acc.y += this.gravity;
+    this.vel.y = Math.min(this.vel.y,2.8);
+
+    this.acc.x += this.force.x;
+    this.acc.y += this.force.y;
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+    this.vel.x += this.acc.x;
+    this.vel.y += this.acc.y;
+    this.acc.y = 0;
+    this.acc.x = 0;
+    this.force.x *= 0.9;
+    this.force.y *= 0.9;
+    //最大速度制限
+  }
   Animation(){
     //this.spid = Math.floor(this.frame/2)%4;
     this.sprite.texture = this.pattern[this.spid];
@@ -119,7 +139,7 @@ export default class Enemy4 extends Enemy{
     }
 
     //observer
-    if(this.hp<=0){
+    if(this.hp<=0 || this.pos.y > 400){
       this.Die();
     }
     this.frame++;

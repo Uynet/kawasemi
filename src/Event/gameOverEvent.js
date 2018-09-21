@@ -9,7 +9,7 @@ export default class GameOverEvent extends Event{
   constructor(){
     super();
     function* gen(){
-      Game.stage = Game.continuePoint;
+      //if(!Game.debug)Game.stage = Game.continuePoint;
       let frame = 0;
       EventManager.eventList.push(new FadeEvent("fadeout"));
 

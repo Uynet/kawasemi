@@ -16,6 +16,7 @@ import Param from './param.js';
 import Menu from './UI/menu.js';
 import Audio from './audio.js';
 import StageGen from './Stage/stageGen.js';
+import DistanceField from "./Stage/distanceField.js";
 
 export default class Game{
   static Init(){
@@ -29,6 +30,7 @@ export default class Game{
     Timer.Init();
     UIManager.Init();
     StageGen.Init();
+    DistanceField.Init();
 
     /*initialize Game state*/
     //現在のステージ番号

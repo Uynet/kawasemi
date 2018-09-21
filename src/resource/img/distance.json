@@ -1,0 +1,4 @@
+{
+  "frames": {
+    "distance00.png": { "frame": {"x":0, "y":0, "w":64, "h":64} }
+  }, "meta": { "image": "./distance.png" } }

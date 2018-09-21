@@ -113,7 +113,7 @@ export default class Enemy1 extends Enemy{
     let p = CPV(this.pos);
     p.y += this.size;
     this.acc.x = 0;
-    EventManager.PushEvent(new QuakeEvent(40,0.97));
+    EventManager.PushEvent(new QuakeEvent(40,0.97,true));
     Audio.PlaySE("missileHit",2);
     EntityManager.addEntity(new Shockwave(p));
     for(let i = 0;i<4;i++){
