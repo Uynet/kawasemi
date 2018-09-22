@@ -446,12 +446,14 @@ export default class Player extends Entity{
     this.force.x *= 0.9;
     this.force.y *= 0.9;
 
-    if(DistanceField.GetDistance(this.pos)<=1){
+    if(DistanceField.GetDistance(this.pos)<=0){
       let t = 0;
-      while(DistanceField.GetDistance(this.pos)<=1 && t <16){
+      while(DistanceField.GetDistance(this.pos)<=0 && t <16){
         let grad = DistanceField.GetDistanceGrad(this.pos);
-        this.pos.x += grad.x;
-        this.pos.y += grad.y;
+        let dist = DistanceField.GetDistance(this.pos);
+        cl(grad.x)
+        this.pos.x += -dist * grad.x*8;
+        this.pos.y += -dist * grad.y*8;
         t ++;
       }
       this.isJump = false;

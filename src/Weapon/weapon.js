@@ -104,8 +104,8 @@ export default class Weapon{
         this.isTargetOn = false;
       }else{
         //方向を指定
-        player.toArg = Math.atan((this.target.pos.y-player.pos.y)/(this.target.pos.x-player.pos.x));
-        if(player.pos.x > this.target.pos.x ) player.toArg += Math.PI;
+        player.toArg = Math.atan((this.target.ofsetPos.y-player.pos.y)/(this.target.ofsetPos.x-player.pos.x));
+        if(player.pos.x > this.target.ofsetPos.x ) player.toArg += Math.PI;
       }
     }
   }
