@@ -17,7 +17,7 @@ export default class Signboard extends BackEntity{
   constructor(pos,message){
     super(pos,Art.wallPattern.signboard);
     /*基本情報*/
-    this.layer= "BACK";
+    this.layer= "ENTITY";
     this.name = "signboard";
     this.isUpdater = true;
       /* 固有情報
@@ -58,7 +58,7 @@ export default class Signboard extends BackEntity{
         EventManager.eventList.push(event);
         //クソポイント
         //ここでメッセージを変更するな
-        this.message = ["..."];
+        this.message = ["こんにちは"];
         this.page++;
       }
       if(this.page < this.message.length){

@@ -16,7 +16,7 @@ import Timer from "../timer.js";
 
 //BossHP
 const P_BossHP = {
-  x : 24, 
+  x : 36, 
   y : 270
 };
 //HP
@@ -36,8 +36,8 @@ const P_SCORE = {
 }
 //message
 const P_MES = {
-  x:64,
-  y:128
+  x:8,
+  y:232,
 }
 //Menu
 let P_MENU = {

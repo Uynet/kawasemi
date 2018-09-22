@@ -78,7 +78,7 @@ export default class Audio{
   }
   static PlaySE(name,gain,pitch){
     //同じ効果音は同時にならないようにする
-    if(Timer.timer-this.time > 2|| name != this.lastSE){
+    if(Timer.timer-this.time > 4|| name != this.lastSE){
       this.time = Timer.timer;
       this.lastSE = name;
       source = this.context.createBufferSource();
@@ -101,6 +101,7 @@ export default class Audio{
       //!ココで読み込むnameはファイル名に統一すること!
       this.LoadBGM('stage4');
       this.LoadBGM('stage5');
+      this.LoadBGM('stage6');
       this.LoadBGM('boss');
       this.LoadSE('jump1');
       this.LoadSE('jump2');//空中ジャンプ

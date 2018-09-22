@@ -87,6 +87,7 @@ export default class DistanceField{
     return d;
   }
   static GetDistanceGrad(pos){
+    let p = this.TransformWorldToFiled(pos);
     let pdx = {
       x:pos.x + 1,
       y:pos.y,
@@ -95,10 +96,14 @@ export default class DistanceField{
       x:pos.x,
       y:pos.y + 1,
     }
-    let dx = this.GetDistance(pdx)-this.GetDistance(pos);
-    let dy = this.GetDistance(pdy)-this.GetDistance(pos);
+    //let dx = this.GetDistance(pdx)-this.GetDistance(pos);
+    //let dy = this.GetDistance(pdy)-this.GetDistance(pos);
+    let d = this.distanceFiled[p.y][p.x];
+
+    let dx = this.distanceFiled[p.y][p.x+1]-d;
+    let dy = this.distanceFiled[p.y+1][p.x]-d;
             
-    return normalize(vec2(dx,dy));
+    return vec2(dx,dy);
   }
 
 

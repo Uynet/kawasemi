@@ -22,7 +22,7 @@ export default class Shop extends BackEntity{
   constructor(pos,message){
     super(pos,0);
     /*基本情報*/
-    this.layer= "BACK";
+    this.layer= "ENTITY";
     this.name = "shop";
     this.isUpdater = true;
       /* 固有情報

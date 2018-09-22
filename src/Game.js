@@ -15,7 +15,7 @@ import Timer from './timer.js';
 import Param from './param.js';
 import Menu from './UI/menu.js';
 import Audio from './audio.js';
-import StageGen from './Stage/stageGen.js';
+import StageData from './Stage/stageData.js';
 import DistanceField from "./Stage/distanceField.js";
 
 export default class Game{
@@ -29,12 +29,12 @@ export default class Game{
     Pool.Init();
     Timer.Init();
     UIManager.Init();
-    StageGen.Init();
+    StageData.Init();
     DistanceField.Init();
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(Game.debug) Game.stage = 12;
+    if(Game.debug) Game.stage = 11;
     else Game.stage = 1;
     Game.continuePoint = 1;//コンティニュー地点
 

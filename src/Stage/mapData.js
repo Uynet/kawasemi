@@ -1,6 +1,7 @@
-import EntityManager from './entityManager.js'
-import Entity from '../Entity/entity.js'
-import Wall from '../Entity/wall.js'
+import EntityManager from './entityManager.js';
+import StageData from "./stageData.js";
+import Entity from '../Entity/entity.js';
+import Wall from '../Entity/wall.js';
 import BackEntity from '../Entity/backEntity.js';
 import BackGround from '../Entity/backGround.js';
 import Signboard from '../Entity/Mover/signboard.js';
@@ -23,7 +24,6 @@ import Pool from './pool.js';
 /*マップデータ*/
 export default class MapData{
   constructor(){
-    this.stageNo;
     this.entityData;
     this.width;
     this.height;
@@ -134,7 +134,8 @@ export default class MapData{
   static async CreateStage(stageNo,state){
     await this.Load(stageNo);
     //背景の生成
-    this.AddBackGround();
+    let BG = StageData.StageBackGround[stageNo];
+    this.AddBackGround(BG);
     //entityの生成
     this.CreateEntityLayer("backEntityData");
     this.CreateEntityLayer("entityData");
@@ -268,13 +269,13 @@ export default class MapData{
   }
 
   //背景を追加
-  static AddBackGround(){
+  static AddBackGround(BG){
     let back;
-    let w = 20;
-    let h = 20;
+    let w = 1;
+    let h = 1;
     for(let y = 0;y<h;y++){
       for(let x = 0;x<w;x++){
-        let tex = Art.wallPattern.backGround[0];
+        let tex = Art.wallPattern.backGround[BG];
         let p = {
           x : (x - w/2)*32,
           y : (y - h/2)*32

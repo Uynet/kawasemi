@@ -445,15 +445,17 @@ export default class Player extends Entity{
      if(this.pos.y > Drawer.mapSize.height * 16+8)this.Damage(-999);//下端
     this.force.x *= 0.9;
     this.force.y *= 0.9;
+    //this.CollisionByDistance();
 
+  }
+  CollisionByDistance(){
     if(DistanceField.GetDistance(this.pos)<=0){
       let t = 0;
       while(DistanceField.GetDistance(this.pos)<=0 && t <16){
         let grad = DistanceField.GetDistanceGrad(this.pos);
         let dist = DistanceField.GetDistance(this.pos);
-        cl(grad.x)
-        this.pos.x += -dist * grad.x*8;
-        this.pos.y += -dist * grad.y*8;
+        this.pos.x += grad.x;
+        this.pos.y += grad.y;
         t ++;
       }
       this.isJump = false;
