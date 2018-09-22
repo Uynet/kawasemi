@@ -75,32 +75,38 @@ export default class DistanceField{
     let p = this.TransformWorldToFiled(pos);
     //正規化済み
     let uv = {
-      x : (pos.x/8 - p.x)/8,
-      y : (pos.y/8 - p.y)/8,
+      x : (pos.x/8 - p.x),
+      y : (pos.y/8 - p.y),
     }
     //biliniar補間
     let p0 = this.distanceFiled[p.y][p.x];
     let p1 = this.distanceFiled[p.y][p.x+1];
     let p2 = this.distanceFiled[p.y+1][p.x];
     let p3 = this.distanceFiled[p.y+1][p.x+1];
-    let d = p0*(1-uv.x)*(1-uv.y) + p1*uv.x*(1-uv.y) +p2*uv.x*(1-uv.y)    + p3*uv.x*uv.y;
+    let d = p0*(1-uv.x)*(1-uv.y) + p1*uv.y*(1-uv.x) +p2*uv.y*(1-uv.x)    + p3*uv.x*uv.y;
     return d;
   }
   static GetDistanceGrad(pos){
-    let p = this.TransformWorldToFiled(pos);
-    let dx = this.distanceFiled[p.y][p.x+1]
-            -this.distanceFiled[p.y][p.x];
-    let dy = this.distanceFiled[p.y+1][p.x]
-            -this.distanceFiled[p.y][p.x];
-    return vec2(dx,dy);
+    let pdx = {
+      x:pos.x + 1,
+      y:pos.y,
+    }
+    let pdy = {
+      x:pos.x,
+      y:pos.y + 1,
+    }
+    let dx = this.GetDistance(pdx)-this.GetDistance(pos);
+    let dy = this.GetDistance(pdy)-this.GetDistance(pos);
+            
+    return normalize(vec2(dx,dy));
   }
 
 
   static TransformWorldToFiled(pos){
     //8 = 16 / magnification
     return {
-      x: Math.floor((pos.x+8)/8),
-      y: Math.floor((pos.y+8)/8),
+      x: Math.floor((pos.x)/8),
+      y: Math.floor((pos.y)/8),
     }
   }
 }

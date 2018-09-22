@@ -21,7 +21,7 @@ export default class BGMStartEvent extends Event{
       x : 96+96,
       y : 64
     }
-      Audio.PlayBGM(BGMTitle,0.5);
+      Audio.PlayBGM(BGMTitle,0.9);
       //Drawer.Stage.filters.push(Drawer.testFilter);
       UIManager.addUI(new StagePop(p,"^   - どうくつ   ぼす -$" , 7));
       UIManager.SetBoss();
