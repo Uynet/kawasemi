@@ -20,8 +20,8 @@ export default class Message extends UI{
       sprite : Art.SpriteFactory(Art.UIPattern.message.frame), 
     }
     //文字の長さに応じて枠を調整
-    this.outer.sprite.scale.x *= 1.5;
-    this.outer.sprite.scale.y *= 1.5; //yは固定
+    this.outer.sprite.scale.x *= 4.0;
+    this.outer.sprite.scale.y *= 2.5; //yは固定
     /*スプライト*/
     this.isMultiple = true;
     //枠スプライト追加
@@ -32,7 +32,10 @@ export default class Message extends UI{
     p = ADV(p,P_TEXT);
     //テキスト
     for(let i = 0;i<sent.length;i++){
-      this.sentence.push(new Font(p,sent[i],"MES"));//テキスト 
+      let f = new Font(p,sent[i],"MES")
+      f.container.scale.x = 1;
+      f.container.scale.y = 1;
+      this.sentence.push(f);//テキスト 
       p.y += COLUMN;
     }
     //各行各文字のスプライトを追加

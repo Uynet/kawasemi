@@ -21,28 +21,28 @@ export default class Explosion1 extends EFFECT{
   }
   Bomb(){
     let sonic = Pool.GetSonic(this.pos,VEC0());
-    if(sonic)EntityManager.addEntity(sonic);
+    if(sonic!==false)EntityManager.addEntity(sonic);
     //stone(というか火花?)
     for(let i = 0;i<8;i++){
       let v = Rand2D(40);
       let stone = Pool.GetStone(CPV(this.pos),v);
-      if(stone !== undefined)EntityManager.addEntity(stone);
+      if(stone !== false)EntityManager.addEntity(stone);
     }
     //smoke
     for(let i = 0;i<2;i++){
       let smoke = Pool.GetStone(CPV(this.pos),{x:Rand(8),y:-1});
-      if(smoke!== undefined)EntityManager.addEntity(smoke);
+      if(smoke!== false)EntityManager.addEntity(smoke);
     }
     for(let i =0;i<3;i++){
       let v = Rand2D(24);
       let p = ADV(v,this.pos);
       let fire = Pool.GetFire(p,VEC0());
-      if(fire!== undefined)EntityManager.addEntity(fire);
+      if(fire!== false)EntityManager.addEntity(fire);
     }
     for(let i =0;i<3;i++){
       let p = ADV(this.pos,Rand2D(16));
       let flash = Pool.GetFlash(this.pos,VEC0());
-      if(flash!== undefined)EntityManager.addEntity(flash);
+      if(flash!== false)EntityManager.addEntity(flash);
     }
   }
   Collision(){

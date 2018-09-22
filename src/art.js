@@ -400,7 +400,11 @@ export default class Art{
         back : this.Frame("wall",94,4),
       },
       //背景
-      backGround : [PIXI.Texture.fromFrame('wallA0.png')],
+      backGround : [
+        PIXI.Texture.fromImage("src/resource/img/BG0.png"),
+        PIXI.Texture.fromImage("src/resource/img/BG1.png"),
+      ],
+
       //すり抜け床
       through : [PIXI.Texture.fromFrame('wallC0.png')],
       //トゲが飛び出る床

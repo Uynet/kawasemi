@@ -31,9 +31,9 @@ export default class GameClearEvent extends Event{
         yield;
       }
 
-      if(Audio.PlayingBGM.name!="stage5" && Game.stage != 12)Audio.PlayBGM("stage5",0.0);
+      if(Audio.PlayingBGM.name!="stage6" && Game.stage != 12)Audio.PlayBGM("stage6",1.0);
       if(Game.stage == 11){
-        Audio.StopBGM();//todo : フェードアウト 
+        //Audio.StopBGM();//todo : フェードアウト 
         Game.continuePoint = 11;
       }
 
