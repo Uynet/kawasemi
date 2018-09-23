@@ -43,38 +43,50 @@ export default class Signboard extends BackEntity{
     this.popup = new Signpop(p);
     EntityManager.addEntity(this.popup);
   }
-  Read(){
-    if(!this.isRead){
-      this.isRead = true;
-      let event = new MessageEvent(this.message[this.page],"POP");
-      EventManager.eventList.push(event);
-      this.page++;
-    }else{
-      /*イベント発生用メッセージ*/
-      //イベントを発生させてページを読み進める
-      //最初のイベントせんよう
-      if(this.message[this.page] == "EVENT"){;
-        let event = new MessageEvent(this.message[this.page],"EVENT");
+  OpenMessage(){
+    this.isRead = true;
+    let event = new MessageEvent(this.message[this.page],"POP");
+    EventManager.eventList.push(event);
+    this.page++;
+  }
+  EmitEvent(){
+    /*イベント発生用メッセージ*/
+    //イベントを発生させてページを読み進める
+    //最初のイベントせんよう
+    let m = this.message[this.page];
+    if(m !== undefined){
+      if(m.slice(0,5) == "EVENT"){;
+        let event = new MessageEvent(m,"EVENT");
         EventManager.eventList.push(event);
         //クソポイント
         //ここでメッセージを変更するな
-        this.message = ["こんにちは"];
+        this.message[this.page] = "はっこうずみ"
         this.page++;
       }
-      if(this.page < this.message.length){
-        let event = new MessageEvent(this.message[this.page],"PAGE");
-        EventManager.eventList.push(event);
-        this.page++;
-        //続きがあれば読む
-        }else{
-          //なければ終了
-          Game.scene.PopSubState();
-          UIManager.CloseMessage();//枠を閉じる
-          this.isRead = false;
-          this.isNear = false;
-          this.page = 0;
-          this.popup;
-        }
+    }
+  }
+  ReadNextPage(){
+    let event = new MessageEvent(this.message[this.page],"PAGE");
+    EventManager.eventList.push(event);
+    this.page++;
+  }
+  CloseMessage(){
+    Game.scene.PopSubState();
+    UIManager.CloseMessage();//枠を閉じる
+    this.isRead = false;
+    this.isNear = false;
+    this.page = 0;
+    this.popup;
+  }
+
+  Read(){
+    if(!this.isRead) this.OpenMessage();
+    else{
+      this.EmitEvent();
+      //続きがあれば読む
+      if(this.page < this.message.length) this.ReadNextPage();
+      //なければ終了
+      else this.CloseMessage();
     }
   }
 

@@ -105,6 +105,9 @@ export default class Drawer{
 
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
+    //this.renderTarget.anchor.x = 0.5;
+    //this.renderTarget.anchor.y = 0.5;
+    //this.renderTarget.rotation = Math.PI + Math.sin(Timer.timer/100)*0.1;
     centerX = clamp(
       this.magnification*(-pos.x-8)+PIXI_WIDTH/2,
       this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
