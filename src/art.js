@@ -403,6 +403,7 @@ export default class Art{
       backGround : [
         PIXI.Texture.fromImage("src/resource/img/BG0.png"),
         PIXI.Texture.fromImage("src/resource/img/BG1.png"),
+        PIXI.Texture.fromImage("src/resource/img/BG2.png"),
       ],
 
       //すり抜け床

@@ -139,7 +139,7 @@ export default class Enemy4 extends Enemy{
     }
 
     //observer
-    if(this.hp<=0 || this.pos.y > 400){
+    if(this.hp<=0){
       this.Die();
     }
     this.frame++;

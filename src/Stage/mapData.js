@@ -16,6 +16,7 @@ import Enemy6 from '../Entity/Enemy/enemy6.js'
 import Goal from '../Entity/Mover/goal.js'
 import Game from '../game.js'
 import Art from '../art.js'
+import Audio from '../audio.js'
 import Drawer from '../drawer.js';
 import Woodbox from '../Entity/Mover/woodbox.js';
 import Needle from '../Entity/Mover/needle.js';
@@ -132,6 +133,8 @@ export default class MapData{
    * RESET : 死んでやり直す時
    */
   static async CreateStage(stageNo,state){
+    //BGM再生
+    if(Audio.PlayingBGM.name!=StageData.StageBGM[stageNo])Audio.PlayBGM(StageData.StageBGM[stageNo],1.0);
     await this.Load(stageNo);
     //背景の生成
     let BG = StageData.StageBackGround[stageNo];
