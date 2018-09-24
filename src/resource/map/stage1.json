@@ -25,12 +25,14 @@
                  "properties":
                     {
                      "1":"x\u3092\u304a\u3059\u3068\n\u304b\u3093\u3070\u3093\u304c\u3088\u3081\u308b\u3088",
-                     "2":"EVENTOpenWall"
+                     "2":"EVENTOpenWall",
+                     "3":"aa"
                     },
                  "propertytypes":
                     {
                      "1":"string",
-                     "2":"string"
+                     "2":"string",
+                     "3":"string"
                     },
                  "rotation":0,
                  "type":"",
@@ -164,7 +166,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":589,
+ "nextobjectid":590,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":16,

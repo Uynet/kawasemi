@@ -15,6 +15,10 @@ const P_ICON = {
   x : -16, 
   y : 0, 
 };
+const P_BAR = {
+  x : -3.5, 
+  y : 1, 
+};
 
 export default class gaugeHP extends UI{
   constructor(pos){
@@ -24,22 +28,32 @@ export default class gaugeHP extends UI{
     this.type = "HP"; 
     this.isMultiple = true;
     this.pos = pos;
+    /*パラメータ*/
+    this.max = Param.player.maxHp;
+    this.color = 0xBB2E5D;
     /*child*/
     this.outer = {pos:CPV(pos)};
-    this.bar = {pos:CPV(pos)};
+    this.bar = {pos:ADV(CPV(pos),P_BAR)};
     this.icon = {pos:ADV(pos,P_ICON)};
-    let maxHP = Param.player.maxHp;
-    this.amount = new Font(ADV(pos,P_AMOUNT)," " + maxHP,"HP");//数字
+    this.amount = new Font(ADV(pos,P_AMOUNT)," " + this.max,"HP");//数字
     /*スプライト*/
     this.spid = 0;
     this.container = new PIXI.Container();
+    this.InitChildren();
+  }
+  InitChildren(){
     let s;
     //outer
     s = Art.SpriteFactory(Art.UIPattern.HP.outer);
     s.position = this.outer.pos; 
     this.container.addChild(s);
     //bar
-    s = Art.SpriteFactory(Art.UIPattern.HP.bar);
+    let rect = new PIXI.Graphics();
+    rect.beginFill(this.color);
+    rect.drawRect(this.bar.pos.x,this.bar.pos.y,62,12);
+    rect.endFill();
+    s = rect;
+    //s = Art.SpriteFactory(Art.UIPattern.HP.bar);
     s.position = this.bar.pos; 
     this.container.addChild(s);
     //icon
@@ -48,10 +62,6 @@ export default class gaugeHP extends UI{
     this.container.addChild(s);
     //amount
     this.container.addChild(this.amount.container);
-    /*パラメータ*/
-    this.max = Param.player.maxHp;
-    /*state*/
-    this.isPopIn = true;
   }
   SetBar(hp){
     //barの長さを更新

@@ -45,9 +45,8 @@ export default class Signboard extends BackEntity{
   }
   OpenMessage(){
     this.isRead = true;
-    let event = new MessageEvent(this.message[this.page],"POP");
+    let event = new MessageEvent("","POP");
     EventManager.eventList.push(event);
-    this.page++;
   }
   EmitEvent(){
     /*イベント発生用メッセージ*/
@@ -80,17 +79,14 @@ export default class Signboard extends BackEntity{
 
   Read(){
     if(!this.isRead) this.OpenMessage();
-    else{
-      this.EmitEvent();
-      //続きがあれば読む
-      if(this.page < this.message.length) this.ReadNextPage();
-      //なければ終了
-      else this.CloseMessage();
-    }
+    this.EmitEvent();
+    //続きがあれば読む
+    if(this.page < this.message.length) this.ReadNextPage();
+    //なければ終了
+    else this.CloseMessage();
   }
 
   Update(){
-    //メッセージ文が"EVENT"ならばイベントを発生させる
     //page : 現在のページ番号
     let player = EntityManager.player;
     if(DIST(player.pos,this.pos) <  16 && player.isAlive){
