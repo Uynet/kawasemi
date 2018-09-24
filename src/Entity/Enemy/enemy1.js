@@ -100,7 +100,11 @@ export default class Enemy1 extends Enemy{
     }
   }
   Landing(){
-    let f = {x: (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 1 : -1 , y:-0.8};
+    let f = {x: (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 2 : -2 , y:-0.8};
+    if(EntityManager.player.isJump){
+      f.x *= 0;
+      f.y = -0.3;
+    }
     EntityManager.player.AddForce(f);
     for(let e of EntityManager.enemyList){
       f = {x: (this.pos.x+this.size/2 < e.pos.x)? 0.3 : -0.3 , y:-0.7};
@@ -201,7 +205,7 @@ export default class Enemy1 extends Enemy{
   }
   Damage(atk){
     if(this.state != "INIT"){
-      Audio.PlaySE("enemyDamage",-0.5);
+      Audio.PlaySE("enemyDamage",-0.7);
       this.hp = Math.max(this.hp+atk,0);
       //ダメージをポップ
       EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));

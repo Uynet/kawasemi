@@ -121,26 +121,9 @@ export default class UIManager{
   /* text : 入力文字列
    * sentence : textを改行文字で区切った配列
    */
-  static PopMessage(text,type){
-    /*type : 
-     * POP 新しくフレームを作る
-     * PAGE フレームを作らず改ページのみ
-     */
+  static PopMessage(signboard){
     Audio.PlaySE("changeWeapon");
-    switch(type){
-      case "POP" : 
-        UIManager.addUI(new Message(P_MES,text));//枠
-        break;
-      case "PAGE" :
-        this.message.Page(text);
-        break;
-      case "SELECT" : 
-        //選択肢イベントが入る予定
-        break;
-    }
-  }
-  static CloseMessage(){
-    UIManager.removeUI(this.message);
+    UIManager.addUI(new Message(P_MES,signboard));//枠
   }
 
   //UIをリストに登録
@@ -175,9 +158,7 @@ export default class UIManager{
     let layer = ui.layer;
     if(!layer)layer = "UI";
     
-    let i = this.UIList.indexOf(ui);
-    //要素の子であるFontはリストに無いため参照を消さない
-    if(i != -1) this.UIList.splice(i,1);
+    this.UIList.remove(ui)
     if(ui.isMultiple){
       //複数スプライトを持つオブジェクト
         Drawer.removeContainer(ui.container,layer);

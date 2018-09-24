@@ -480,6 +480,7 @@ export default class Player extends Entity{
     if(this.hp <= 0){
       if(this.isAlive){
         //死亡開始時に一回だけ呼ばれる部分
+        Audio.StopBGM();
         this.ResetStatus();
         EventManager.PushEvent(new QuakeEvent(50,0.9));
         EntityManager.addEntity(new Explosion1(CPV(this.pos)));

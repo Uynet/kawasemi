@@ -5,7 +5,6 @@ import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Input from '../../input.js';
 import EventManager from '../../Event/eventmanager.js';
-import MessageEvent from '../../Event/messageEvent.js';
 import Game from '../../game.js';
 import BackEntity from '../backEntity.js';
 import UIManager from '../../UI/uiManager.js';
@@ -43,47 +42,11 @@ export default class Signboard extends BackEntity{
     this.popup = new Signpop(p);
     EntityManager.addEntity(this.popup);
   }
-  OpenMessage(){
-    this.isRead = true;
-    let event = new MessageEvent("","POP");
-    EventManager.eventList.push(event);
-  }
-  EmitEvent(){
-    /*イベント発生用メッセージ*/
-    let m = this.message[this.page];
-    cl(this.page)
-    if(m !== undefined){
-      if(m.slice(0,5) == "EVENT"){;
-        let event = new MessageEvent(m,"EVENT");
-        EventManager.eventList.push(event);
-        //クソポイント
-        //ここでメッセージを変更するな
-        this.message[this.page] = "はっこうずみ"
-        this.page++;
-      }
-    }
-  }
-  ReadNextPage(){
-    let event = new MessageEvent(this.message[this.page],"PAGE");
-    EventManager.eventList.push(event);
-    this.page++;
-  }
-  CloseMessage(){
-    Game.scene.PopSubState();
-    UIManager.CloseMessage();//枠を閉じる
-    this.isRead = false;
-    this.isNear = false;
-    this.page = 0;
-    this.popup;
-  }
 
   Read(){
-    if(!this.isRead) this.OpenMessage();
-    this.EmitEvent();
-    //続きがあれば読む
-    if(this.page < this.message.length) this.ReadNextPage();
-    //なければ終了
-    else this.CloseMessage();
+    this.isRead = true;
+    Game.scene.PushSubState("MES");
+    UIManager.PopMessage(this);
   }
 
   Update(){
@@ -91,7 +54,8 @@ export default class Signboard extends BackEntity{
     let player = EntityManager.player;
     if(DIST(player.pos,this.pos) <  16 && player.isAlive){
       player.isCanRead = true;
-      if( Input.isKeyClick(KEY.X)){
+      if(!this.isRead && Input.isKeyClick(KEY.X)){
+        //UI側にMESSAGEを生成し、以降の入力はそちらで処理
         this.Read();
       }
     }

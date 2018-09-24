@@ -35,7 +35,7 @@ export default class Enemy extends Entity{
   }
   //自分がダメージを食らう
   Damage(atk){
-    Audio.PlaySE("enemyDamage",-0.5);
+    Audio.PlaySE("enemyDamage",-0.7);
     this.hp += atk;
     //ダメージをポップ
     EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));

@@ -10,6 +10,7 @@ Array.prototype.Last = function(){
 //配列から要素を削除
 Array.prototype.remove = function(e){
   let i = this.indexOf(e);
+  if(i == -1) return;//そんな要素は無い
   this.splice(i,1);
 }
 Array.prototype.maxIndex = function(){

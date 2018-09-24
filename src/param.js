@@ -91,7 +91,7 @@ export default class Param{
     }
     this.weapon1 = {
       //status
-      agi : 13,
+      agi : 25,
       cost : 6,
       speed : 8, 
       length : 580,
@@ -145,7 +145,7 @@ export default class Param{
     }
     //Missile
     this.bullet1 = {
-      atkMax : 10,
+      atkMax : 15,
       atkMin : 8,
       hp : 1,
       curve : 0.2
@@ -158,8 +158,8 @@ export default class Param{
     }
     //normal
     this.bullet3 = {
-      atkMax : 3,
-      atkMin : 2,
+      atkMax : 5,
+      atkMin : 3,
       hp : 1,
       curve : 0.2
     }
