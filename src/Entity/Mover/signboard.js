@@ -51,9 +51,8 @@ export default class Signboard extends BackEntity{
   }
   EmitEvent(){
     /*イベント発生用メッセージ*/
-    //イベントを発生させてページを読み進める
-    //最初のイベントせんよう
     let m = this.message[this.page];
+    cl(this.page)
     if(m !== undefined){
       if(m.slice(0,5) == "EVENT"){;
         let event = new MessageEvent(m,"EVENT");

@@ -86,6 +86,32 @@
                  "width":16,
                  "x":254.419541178412,
                  "y":244.012543323981
+                }, 
+                {
+                 "gid":162,
+                 "height":16,
+                 "id":588,
+                 "name":"",
+                 "properties":
+                    {
+                     "1":"EVENTSelect\n{\n   message:\u305b\u3093\u305f\u304f\u3057\u30a4\u30d9\u30f3\u30c8\u306e\u30c6\u30b9\u30c8,\n   3 : \u306f\u3044 , \n   4 : \u3044\u3044\u3048  ,\n}",
+                     "2":"\u307d",
+                     "3":"\u3053\u3093\u306b\u3061\u306f",
+                     "4":"\u307d\u3084\u3057\u307f"
+                    },
+                 "propertytypes":
+                    {
+                     "1":"string",
+                     "2":"string",
+                     "3":"string",
+                     "4":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":48,
+                 "y":368
                 }],
          "opacity":0.959999978542328,
          "type":"objectgroup",
@@ -138,7 +164,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":588,
+ "nextobjectid":589,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":16,

@@ -23,15 +23,17 @@ function* page(text){
 
 function* event(text){
   //5 = "EVENT".length
-  let eventMessage = text;
+  let eventMessage = text.split("\n")[0];
   let e;
   switch(eventMessage){
     case "EVENTOpenWall" : e = new OpenWallEvent(); break;
+    case "EVENTSelect" :  e = new OpenWallEvent(); break;
     default : cl("missing event:"+eventMessage);
   }
   EventManager.eventList.push(e);
   yield ;
 }
+
 
 let itt;
 //メッセージイベント
