@@ -16,7 +16,7 @@ export default class Param{
       },
       
       animRun : 4,
-      animWait : 7,
+      animWait : 11,
       score : 0,
 
       vxMax : 3,
