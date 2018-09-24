@@ -1,5 +1,6 @@
 import UI from './ui.js';
 import UIManager from './uiManager.js';
+import Audio from "../audio.js";
 import Art from '../art.js';
 import Input from '../input.js';
 import Font from './font.js';
@@ -7,8 +8,13 @@ import Game from "../game.js";
 import MessageEvent from '../Event/messageEvent.js';
 import EventManager from "../Event/eventmanager.js";
 
-const P_TEXT = VECN(8);//テキストの相対位置
+const P_TEXT = {
+  x:16,
+  y:24,
+}
 const COLUMN = 10;//行間
+
+
 
 export default class Message extends UI{
   constructor(pos,signboard){
@@ -35,15 +41,18 @@ export default class Message extends UI{
     this.container.addChild(this.outer.sprite);
     p = ADV(p,P_TEXT);
 
+    this.OpeningSelection = false;
+    this.isRead = true;
     this.page=0;
     //テキスト
     /*
     */
   }
   ReadNextPage(text){
+    Audio.PlaySE("changeWeapon");
     this.ClearMessage();
     this.EmitEvent();
-    this.RenderText();
+    if(this.isRead)this.RenderText();
     this.page++;
   }
   ClearMessage(){
@@ -68,6 +77,8 @@ export default class Message extends UI{
     p = ADV(p,P_TEXT);
     for(let i = 0;i<sent.length;i++){
       let f = new Font(p,sent[i],"MES")
+        f.container.scale.x = 1;
+        f.container.scale.y = 1;
       sentenceSprite.push(f);//テキスト 
       p.y += COLUMN;
     }
@@ -89,10 +100,73 @@ export default class Message extends UI{
         this.page++;
       }//
       if(m.slice(0,6) == "SELECT"){;
-        let event = new MessageEvent(m,"SELECT");
-        EventManager.eventList.push(event);
+        this.OpenSelection();
+      }
+      //指定したページに飛ぶ
+      if(m.slice(0,4) == "GOTO"){;
+        let page = m.split("\n")[1];
+        if(page == "END"){
+          this.isRead = false;
+          this.CloseMessage();
+        }
+        else this.page = page;
       }
     }
+  }
+  //選択肢を表示
+  OpenSelection(){
+    this.OpeningSelection = true;
+    let p = CPV(this.pos);
+    p.x += 300;
+    p.y += 16;
+    p.y += COLUMN;
+
+    this.Selector = {
+      Init : function(){
+        this.cusor.select = this.cusor.item[this.cusor.pointer];
+      },
+      GetSelection : function(){
+        return this.cusor.item[this.cusor.pointer];
+      },
+      cusor : {
+        pos : p,
+        item : [
+          "はい",
+          "いいえ",
+        ],
+        pointer : 0,//カーソル位置
+        font : new Font(p,"→","MES"),
+        select : null,
+        Move : function(dir){
+          Audio.PlaySE("changeWeapon");
+          if(dir == "UP") this.pointer--;
+          if(dir == "DOWN") this.pointer++;
+          this.pointer = clamp(this.pointer,0,this.item.length-1);
+          this.font.container.position.y = 0 + COLUMN*this.pointer;
+        },
+      }
+    };
+    this.Selector.Init();
+
+    let f;
+    this.Selector.container = new PIXI.Container();
+    this.Selector.container.addChild(this.Selector.cusor.font.container);
+    p.x += 16;
+    for(let item of this.Selector.cusor.item){
+      f = new Font(p,item,"MES");
+      this.Selector.container.addChild(f.container);
+      p.y += COLUMN;
+    }
+    this.container.addChild(this.Selector.container);
+  }
+  //選択肢決定
+  Select(){
+    this.OpeningSelection = false;
+    //決め打ち
+    switch(this.Selector.GetSelection()){
+      case "はい" : this.page = 2 ; break;
+      case "いいえ" : this.page = 4;break;
+    };
   }
   CloseMessage(){
     this.signboard.isRead = false;
@@ -102,12 +176,22 @@ export default class Message extends UI{
   }
   Update(){
     if( Input.isKeyClick(KEY.X)){
+      if(this.OpeningSelection){
+        this.Select();
+      }
       if(this.page < this.message.length){
         this.ReadNextPage();
       }else{
         this.CloseMessage();
       }
     }
-    this.frame++;
+    if(this.OpeningSelection){
+      if( Input.isKeyClick(KEY.DOWN)){
+        this.Selector.cusor.Move("DOWN");
+      }
+      if( Input.isKeyClick(KEY.UP)){
+        this.Selector.cusor.Move("UP");
+      }
+    }
   }
 }

@@ -122,7 +122,6 @@ export default class UIManager{
    * sentence : textを改行文字で区切った配列
    */
   static PopMessage(signboard){
-    Audio.PlaySE("changeWeapon");
     UIManager.addUI(new Message(P_MES,signboard));//枠
   }
 
