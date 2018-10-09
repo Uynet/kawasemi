@@ -3,7 +3,7 @@ export default class StageData{
   static Init(){
     this.StageBackGround = {
       0 : 0,
-      1 : 0,
+      1 : 1,
       2 : 0,
       3 : 0,
       4 : 0,
@@ -27,8 +27,8 @@ export default class StageData{
       7 : "stage6",
       8 : "stage6",
       9 : "stage6",
-      10 : "stage6",
-      11 : "stage6",
+      10 : "stage5",
+      11 : "0",
       12 : "0",
     }
   }

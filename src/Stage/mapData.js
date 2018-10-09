@@ -54,7 +54,27 @@ export default class MapData{
       this.stageNo = stageNo;
     });
   }
-  
+  //周囲8マスのステージ壁の有無
+  static GetIsAdjacent(layer,x,y){
+    /*
+     * [0,1,2,
+     *  3,4,5,
+     *  6,7,8]
+     * */
+     const adaptiveWallID = 58;//...ステージ壁 
+     return [ 
+      (adaptiveWallID == (this[layer][this.width*(y-1) + (x-1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y-1) + (x+0)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y-1) + (x+1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+0) + (x-1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+0) + (x+0)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+0) + (x+1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+1) + (x-1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+1) + (x+0)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+1) + (x+1)]-1)),
+     ];
+  }
+
   static CreateEntityLayer(layer){
     let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
     let entity;
@@ -66,17 +86,17 @@ export default class MapData{
         //tiledのIDがjsonデータより1小さいので引く
         if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
         if(!wallTiletype[ID])cl(x + "  " + y)
-        let p = {x:16*x,y:16*y};
+        let p = {x:16*x,y:16*y};//座標を変換
         switch(wallTiletype[ID].type){
           case TILE.WALL :
             switch(wallTiletype[ID].name){
               case "woodbox" : entity = new Woodbox(p);break;
               case "needle" : entity = new Needle(p,ID);break;
-              default : entity = new Wall(p,ID);
+              default : entity = new Wall(p,this.WallData(ID,layer,x,y));
             }
             break;
           case TILE.BACK :
-            entity = new BackEntity(p,ID);
+            entity = new BackEntity(p,this.WallData(ID,layer,x,y));
             switch(layer){
               case "backEntityData" : entity.layer = "BACK";break;
               case "entityData" : entity.layer = "ENTITY";break;
@@ -184,11 +204,15 @@ export default class MapData{
     }
     StageGen.Init();
   }
+  static MapToWorldPos(x,y){
+    return new Vec2(16*x , 16*y);
+  }
   //壁タイルの対応
   //タイルIDを渡すとテクスチャを返す
-  static Tile(i){
+  static WallData(i,layer,x,y){
     //エイリアス
     let wall = Art.wallPattern;
+    let adaptive = Art.wallPattern.edge.adapt;
     let out = Art.wallPattern.edge.out;
     let inner = Art.wallPattern.edge.inner;
     let backOut = Art.wallPattern.edge.back.out;
@@ -210,6 +234,8 @@ export default class MapData{
       case 84 : tex = wall.block;break;
       case 85 : tex = wall.HPBlock;break;
       case 86 : tex = wall.bulletBlock;break;
+      //adaptive 
+      case 58 : return this.WallData(this.AdaptMap(layer,x,y));break;
       //edge in
       case 49 : tex = inner[0];break;
       case 51 : tex = inner[1];break;
@@ -269,6 +295,53 @@ export default class MapData{
       texture : tex,
       isBreakable : isBreakable,
     }
+  }
+  //エッジを自動的にいい感じに対応させるやつ
+  //IDが帰ってくる
+  static AdaptMap(layer,x,y){
+    let adj = this.GetIsAdjacent(layer,x,y);
+    /* 外枠(非背景)のTiled上のID
+     * 52 53 54
+     * 60 61 62
+     * 68 69 70
+     * */
+    /* 隣接項
+     * 0 1 2
+     * 3 4 5 < 4は自分なので冗長であるが入れている
+     * 6 7 8
+     * */
+    // 外側の辺
+    // 上
+    if(!adj[1]){
+      if(!adj[3]) return 52; //左上
+      if(!adj[5]) return 54; //右上外
+      else return 53; //真上
+    }
+    // 下
+    if(!adj[7]){
+      if(!adj[3]) return 68; //左下
+      if(!adj[5]) return 70; //右下
+      else return 69; //真下
+    }
+    //左
+    if(!adj[3]) return 60; 
+    //右
+    if(!adj[5]) return 62; 
+
+    /* 内枠(非背景)のTiled上のID
+     * 57 65
+     * 51 49
+     * */
+
+    // 内側
+    if(adj[1] &&adj[3]&&adj[5] &&adj[7]){
+      if(!adj[0]) return 67;//左上
+      if(!adj[2]) return 65;//右上
+      if(!adj[6]) return 51;//左下
+      if(!adj[8]) return 49;//右下
+      return 61　//中央
+    };
+    console.error("invalid tile");
   }
 
   //背景を追加

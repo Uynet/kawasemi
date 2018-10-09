@@ -8,7 +8,7 @@ import EntityManaer from '../Stage/entityManager.js';
 import MapData from '../Stage/mapData.js';
 
 export default class Wall extends Entity{
-  constructor(pos,ID){
+  constructor(pos,wall){
     super(pos,VEC0());
     /*基本情報*/
     //this.name = name; 必要になったら
@@ -17,14 +17,13 @@ export default class Wall extends Entity{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     this.isUpdater = false;
     /*性質*/
-    let wall = MapData.Tile(ID)
     this.material = wall.material;
     this.colType = wall.colType;
     if(this.colType == "through"){
-      this.collider.hitbox.height = 8;
+      this.collider.hitbox.height = 16;
     }
     /*スプライト*/
-    this.tex = MapData.Tile(ID).texture;
+    this.tex = wall.texture;
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
   }

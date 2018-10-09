@@ -22,7 +22,7 @@ export default class Sonic extends EFFECT{
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     this.sprite.scale.set(5);
-    this.sprite.alpha = 0.16;
+    this.sprite.alpha = 0.1;
     //this.sprite.filters = [Drawer.testFilter];
     //this.arg = ADV(VECN(2),Rand2D(1));
   }
@@ -33,7 +33,7 @@ export default class Sonic extends EFFECT{
     //phys
     this.pos = ADV(this.pos,this.vel);
 
-    this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)));
+    this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)*2));
     this.sprite.alpha *= 0.8;
 
     if(this.spid == 4){
