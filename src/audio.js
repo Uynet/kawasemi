@@ -5,6 +5,9 @@ export default class Audio{
   static Init(){
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new AudioContext();
+    this.testLowPass = this.context.createBiquadFilter();
+    this.testLowPass.type = 'lowpass';
+    this.testLowPass.frequency.value = 22050;
     this.BGM = { } 
     this.SE = { }
     this.stack = [];
@@ -54,14 +57,17 @@ export default class Audio{
     let buffer = this.BGM[name];
     source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
-    source.connect(this.context.destination); // context に connect
-    source.loop = true; // 再生
-      if(gain){
-        let gainNode = this.context.createGain();
-        source.connect(gainNode);
-        gainNode.connect(this.context.destination);
-        gainNode.gain.value = gain;
-      }
+    //source.connect(this.context.destination); // context に connect
+    //if(gain){
+    let gainNode = this.context.createGain();
+    source.loop = true;
+    source.connect(gainNode);
+    gainNode.connect(this.testLowPass);
+    this.testLowPass.connect(this.context.destination);
+
+    gainNode.gain.value = gain;
+    //}
+
     this.PlayingBGM = {
       name : name,
       source : source,
@@ -69,6 +75,10 @@ export default class Audio{
     source.start(0);
     return;
   };
+  static LowPassFadeOutBGM(){
+    let p = this.testLowPass.frequency.value;
+    this.testLowPass.frequency.value= p-(p-440)*0.01;
+  }
   static StopBGM(){
     this.PlayingBGM.source.stop();
     this.PlayingBGM = {
@@ -93,6 +103,11 @@ export default class Audio{
       gainNode.gain.value = 1;
       if(gain) gainNode.gain.value += gain;
       source.start(0);
+    }
+  };
+  static Update(){
+    if(this.isFadeout){
+      this.LowPassFadeOutBGM();
     }
   };
   static Load() {

@@ -356,6 +356,7 @@ export default class Art{
       ],
       //壁縁あり
       edge : {
+        adapt : PIXI.Texture.fromFrame('wall72.png'),
         inner : [
           PIXI.Texture.fromFrame('wall61.png'),
           PIXI.Texture.fromFrame('wall63.png'),

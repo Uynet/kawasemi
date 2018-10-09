@@ -60,6 +60,7 @@ export default class Drawer{
     this.blurFilter = new PIXI.filters.BlurFilter();
     this.blurFilter.blur = 2;
     this.noiseFilter = new PIXI.filters.NoiseFilter(0.5);
+    this.outlineFilter = new PIXI.filters.NoiseFilter();
 
     //shderはなぜかartにある
     Drawer.Stage.filters = [Drawer.testFilter];
@@ -167,7 +168,7 @@ export default class Drawer{
   static Dist(){
     let extract = this.Renderer.plugins.extract;
     let canvas = extract.canvas();
-    const distContext = canvas.getContext("2d");
+    const distContext = canvas.getContext("webgl");
     var rgba = context.getImageData(p.x, p.y, 1, 1).data;
   }
 

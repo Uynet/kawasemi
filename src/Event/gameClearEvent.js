@@ -31,7 +31,7 @@ export default class GameClearEvent extends Event{
       }
 
       if(Game.stage == 11){
-        Audio.StopBGM();//todo : フェードアウト 
+        Audio.isFadeout=true;
         Game.continuePoint = 11;
       }
 

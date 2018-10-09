@@ -31,7 +31,7 @@ const P_BUL = {
 };
 //score
 const P_SCORE = {
-  x : 216,
+  x : 336,
   y : P_HP.y + 8, 
 }
 //message

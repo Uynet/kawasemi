@@ -34,7 +34,7 @@ export default class Game{
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(Game.debug) Game.stage = 1;
+    if(Game.debug) Game.stage = 21;
     else Game.stage = 1;
     Game.continuePoint = 1;//コンティニュー地点
 
@@ -83,10 +83,10 @@ export default class Game{
     UIManager.Update();
 
     /*ポーズ状態に遷移*/
-    if(Input.isKeyClick(KEY.ESC)){
-      UIManager.SetMenu();
-      Game.scene.PushSubState("PAUSE");
-    }
+    //if(Input.isKeyClick(KEY.ESC)){
+    //  UIManager.SetMenu();
+    //  Game.scene.PushSubState("PAUSE");
+    //}
   }
   static UpdatePause(){
     UIManager.Update();
@@ -127,6 +127,7 @@ export default class Game{
     }
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);
+    Audio.Update();
     Timer.IncTime();
   }
 }
