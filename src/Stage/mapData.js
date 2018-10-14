@@ -347,8 +347,8 @@ export default class MapData{
   //背景を追加
   static AddBackGround(BG){
     let back;
-    let w = 1;
-    let h = 1;
+    let w = 16;
+    let h = 16;
     for(let y = 0;y<h;y++){
       for(let x = 0;x<w;x++){
         let tex = Art.wallPattern.backGround[BG];

@@ -89,10 +89,10 @@ export default class Collision{
     let l = Collision.on(e1,e2);
     if(l.n.x != 0) e1.vel.x = 0;
     if(l.n.y == -1) e1.vel.y =0;
-    if(l.n.y == 1) e1.vel.y =0;
+    if(l.n.y == 1) e1.vel.y =0.1;//0にすると天井に張り付いてしまう
     //while(Collision.on(e1,e2).isHit){
       e1.pos.x += l.n.x*l.depth;
-      e1.pos.y += l.n.y*l.depth;
+      e1.pos.y += l.n.y*(l.depth-0.1);//0にすると地上での着地判定がトグルしてしまう
     //}
     /*note : now isHit == false*/
   }
