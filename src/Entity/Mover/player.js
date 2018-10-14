@@ -49,6 +49,34 @@ let po = (i)=>{
   else return -(1 + 2 * Math.atan(-i-10)/Math.PI);
 };
 
+//ぽよぽよイベント
+class Elast{
+  constructor(){
+    function* elast(){
+      let timer = 30;
+      let player = EntityManager.player;
+      player.sprite.scale.y = 0.4;
+      player.sprite.scale.x = 2.0;
+      while(timer > 0){
+        timer--;
+        let difY= 1 - player.sprite.scale.y;
+        player.sprite.scale.y += difY*0.2;
+        player.sprite.scale.x = 1/player.sprite.scale.y;
+        player.sprite.position.x -= 16*(player.sprite.scale.x-1)/2;
+        player.sprite.position.y -= 16*(player.sprite.scale.y-1);
+        yield;
+      }
+      player.sprite.scale.y = 1;
+      yield;
+    } 
+    this.func = elast();
+  }
+
+  Do(){
+    return this.func.next();
+  }
+}
+
 export default class Player extends Entity{
   constructor(pos){
     super(pos,VEC0(),VEC0());
@@ -87,8 +115,7 @@ export default class Player extends Entity{
     this.force = VEC0();
     //UIManager.HP.SetBar(this.hp);//HPbarの更新
     //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
-
-      this.vxMax = Param.player.vxMax;
+    this.vxMax = Param.player.vxMax;
     this.vyMax = Param.player.vyMax;
     /*状態*/
     this.state = STATE.WAITING;
@@ -109,6 +136,7 @@ export default class Player extends Entity{
         }
         //??
         this.poyo = true;
+      this.eventList = [];
   }
   //死亡後に初期状態に回復するため
   ResetStatus(){
@@ -237,6 +265,10 @@ export default class Player extends Entity{
   }
   /*状態からアニメーションを行う*/
   Animation(){
+    this.sprite.position = {
+      x : Math.floor(this.pos.x-4),
+      y : Math.floor(this.pos.y)
+    }
     //無敵時間中の点滅
     if(this.isInvincible){
       if(this.frame%4 < 2)this.sprite.alpha = 1;
@@ -266,10 +298,10 @@ export default class Player extends Entity{
         //走り中は画像をちょっとだけ跳ねさせる
         //スプライト位置を動かしているだけなので当たり判定は変化していない
         let a = 2;//振幅
-          let l = 9;//周期
+        let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        if(this.frame%5 == 0 && this.floor.on){;
+        if(this.frame%10 == 0 && this.floor.on){;
           //歩き土埃エフェクト
           let p = ADV(this.pos,VECY(16));
           let v = {
@@ -281,8 +313,9 @@ export default class Player extends Entity{
           //■ SE : foot
           switch(this.floor.under.material){
             case "wall" : Audio.PlaySE("landing1",0);break;
-           case "steel": Audio.PlaySE("landing2",-0.0,0.8);Audio.PlaySE("landing1",-1);break;
-            default : break;
+            case "steel": Audio.PlaySE("landing2",-0.0,0.8);Audio.PlaySE("landing1",-1);break;
+            case "wood": Audio.PlaySE("landing1",1);break;
+            default : console.warn("マテリアルが設定されていません");break;
           }
         }
         break;
@@ -296,6 +329,12 @@ export default class Player extends Entity{
       this.sprite.texture = this.pattern[state][this.spid];
     }else{
       this.sprite.texture = this.pattern[state+this.dir][this.spid];
+    }
+    //elast
+    for(let e of this.eventList){
+      if(e.Do().done){
+        this.eventList.remove(e);
+      }
     }
   }
 
@@ -380,16 +419,18 @@ export default class Player extends Entity{
                 y : Rand(0.4),
               }
               let s = Pool.GetSmoke(p,v,10);
+              //ぽよぽよイベント
+              this.eventList.push(new Elast);
+              //着地効果音
               switch(l.material){
                 case "wall": Audio.PlaySE("landing1",1);break;
                 case "steel": Audio.PlaySE("landing2",1);Audio.PlaySE("landing1");break;
                 case "wood": Audio.PlaySE("landing1",1);break;
                 default : console.warn(l.material);
               }
+              this.isJump = false;
             }
-            this.isJump = false;
         }
-
         //Resolve
         switch(l.colType){
           case "through" : 
@@ -402,8 +443,9 @@ export default class Player extends Entity{
           default : console.warn(l.colType);break;
         /*note : now isHit == false*/
         }
-      }
-    }
+      }//衝突処理ここまで
+    }//forここまで
+    if(!this.floor.on)this.isJump = true;
   }
   Physics(){
     //動く床に乗っている時
@@ -569,6 +611,8 @@ export default class Player extends Entity{
 
   Update(){
     if(Game.debug)this.Debug();
+    //player関連のイベントを裁く
+      
     if(this.isAlive){
       /*Init*/
       if(!this.isJump) {
@@ -592,10 +636,6 @@ export default class Player extends Entity{
     //無敵時間の有向時間
     if(this.frame - this.frameDamaged > Param.player.invTime){
       this.isInvincible = false;
-    }
-    this.sprite.position = {
-      x : Math.floor(this.pos.x-4),
-      y : Math.floor(this.pos.y)
     }
     /*パラメータ*/
     this.offset *= 0.99;
