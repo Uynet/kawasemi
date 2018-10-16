@@ -1,46 +1,48 @@
 import EFFECT from './effect.js';
+import Drawer from "../../drawer.js";
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Pool from '../../Stage/pool.js';
 import Sonic from './sonic.js';
 import Stone from './stone.js';
+import Stone2 from './stone2.js';
 import Flash from './flash.js';
 import Fire from './fire.js';
 import Smoke from './smoke.js';
 
 //爆発エフェクト
-export default class explosion3 extends EFFECT{
-  constructor(pos,arg){
-    super(pos,VEC0());
+export default class Explosion3 extends EFFECT{
+  constructor(pos,vel){
+    super(pos,vel);
     //微妙に左上に寄ってるので中心に
     this.pos = ADV(this.pos,VECN(8));
-    this.arg = arg;
-    this.vi = 15;
     /*基本情報*/
     this.frame = 0;
     this.isNoSprite = true;
   }
   Bomb(){
-    /*stone*/
-    for(let i = 0;i<8;i++){
-      let arg = this.arg + Rand(0.7);
-      let vi = this.vi + Rand(8);
-      let v = POV(arg,vi);
+    //stone(というか火花?)
+    for(let i = 0;i<4;i++){
+      let arg = Rand(Math.PI);
+      let v = POV(arg,3);
+      let stone2 = new Stone2(CPV(this.pos),v);
+      EntityManager.addEntity(stone2);
     }
-    /*smoke*/
-    for(let j = 0;j<6;j++){
-      let v = {
-        x : Rand(4),
-        y : Rand(1)
-      }
-      let smoke = Pool.GetSmoke(CPV(this.pos),v,15+Rand(10)); 
-      if(smoke)EntityManager.addEntity(smoke);
+    //smoke
+    for(let i = 0;i<1;i++){
+      let arg = Rand(Math.PI);
+      let v = POV(arg,6);
+      let smoke = Pool.GetSmoke(CPV(this.pos),v,50);
+      if(smoke!== false)EntityManager.addEntity(smoke);
     }
   }
 
   Update(){
     //爆発して自分は消える
-    this.Bomb();
-    EntityManager.removeEntity(this);
+    if(this.frame == 0){
+      this.Bomb();
+    }
+    if(this.frame > 300) EntityManager.removeEntity(this);
+    this.frame++;
   }
 }

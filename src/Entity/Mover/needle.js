@@ -27,7 +27,7 @@ export default class Needle extends Wall{
     /*スプライト*/
     this.pattern = Art.wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号
-    this.sprite = Art.SpriteFactory(this.tex);//現在表示中のスプライト
+    this.sprite = Art.SpriteFactory(wall.texture);//現在表示中のスプライト
     this.sprite.position = this.pos;
   }
   //自分がダメージを食らう

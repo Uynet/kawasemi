@@ -91,7 +91,7 @@ export default class MapData{
           case TILE.WALL :
             switch(wallTiletype[ID].name){
               case "woodbox" : entity = new Woodbox(p);break;
-              case "needle" : entity = new Needle(p,ID);break;
+              case "needle" : entity = new Needle(p,this.WallData(ID,layer,x,y));break;
               default : entity = new Wall(p,this.WallData(ID,layer,x,y));
             }
             break;

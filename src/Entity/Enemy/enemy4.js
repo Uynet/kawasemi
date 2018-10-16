@@ -91,7 +91,7 @@ export default class Enemy4 extends Enemy{
       //this.pos.y += this.floor.under.vel.y;
     }
     if(this.gravity)this.acc.y += this.gravity;
-    this.vel.y = Math.min(this.vel.y,2.8);
+    this.vel.y = Math.min(this.vel.y,4.8);
 
     this.acc.x += this.force.x;
     this.acc.y += this.force.y;

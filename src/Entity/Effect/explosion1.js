@@ -5,6 +5,7 @@ import EntityManager from '../../Stage/entityManager.js';
 import Pool from '../../Stage/pool.js';
 import Sonic from './sonic.js';
 import Stone from './stone.js';
+import Stone2 from './stone2.js';
 import Flash from './flash.js';
 import Fire from './fire.js';
 import Smoke from './smoke.js';
@@ -23,14 +24,17 @@ export default class Explosion1 extends EFFECT{
     let sonic = Pool.GetSonic(this.pos,VEC0());
     if(sonic!==false)EntityManager.addEntity(sonic);
     //stone(というか火花?)
-    for(let i = 0;i<8;i++){
-      let v = Rand2D(40);
-      let stone = Pool.GetStone(CPV(this.pos),v);
-      if(stone !== false)EntityManager.addEntity(stone);
+    for(let i = 0;i<14;i++){
+      let arg = Rand(Math.PI);
+      let v = POV(arg,8);
+      let stone2 = new Stone2(CPV(this.pos),v);
+      EntityManager.addEntity(stone2);
     }
     //smoke
-    for(let i = 0;i<2;i++){
-      let smoke = Pool.GetStone(CPV(this.pos),{x:Rand(8),y:-1});
+    for(let i = 0;i<8;i++){
+      let arg = Rand(Math.PI);
+      let v = POV(arg,6);
+      let smoke = Pool.GetSmoke(CPV(this.pos),v,50);
       if(smoke!== false)EntityManager.addEntity(smoke);
     }
     for(let i =0;i<3;i++){

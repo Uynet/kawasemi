@@ -34,7 +34,7 @@ export default class Sonic extends EFFECT{
     this.pos = ADV(this.pos,this.vel);
 
     this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)*2));
-    this.sprite.alpha *= 0.8;
+    this.sprite.alpha *= 0.9;
 
     if(this.spid == 4){
       Pool.Remove(this);
