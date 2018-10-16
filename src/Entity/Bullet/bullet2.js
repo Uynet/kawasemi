@@ -10,6 +10,7 @@ import Bullet from './bullet.js';
 import BulletBlur from '../Effect/bulletBlur.js';
 import Explosion1 from '../Effect/explosion1.js';
 import Explosion2 from '../Effect/explosion2.js';
+import Explosion3 from '../Effect/explosion3.js';
 import Param from '../../param.js';
 import Audio from '../../audio.js';
 import Pool from '../../Stage/pool.js';
@@ -57,7 +58,7 @@ export default class Bullet2 extends Bullet{
       if(c.isHit){
         if(w.isBreakable) {
           w.Damage(-1);
-          let e = new Explosion2(CPV(this.pos),this.arg + Math.PI);
+          let e = new Explosion3(CPV(this.pos),VEC0());
           //e = Pool.GetSmoke(CPV(this.pos),VEC0(),3);
           EntityManager.addEntity(e);
         }

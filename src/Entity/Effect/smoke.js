@@ -27,15 +27,19 @@ export default class Sonic extends EFFECT{
   Update(){
     let b = 10;
     this.pos = ADV(this.pos,this.vel);
-    this.vel.x *= (1-this.frame/10);
-    if(this.vel.y > 0) this.vel.y *= 0.9;
+    this.vel.x *= 0.8;
+    this.vel.y *= 0.8;
     this.sprite.scale = VECN((this.size/2)/(this.frame+5));
     this.sprite.alpha -= 0.03;
-    if(this.frame == 40){
+    if(this.frame%4 == 0) this.sprite.rotation += Math.PI/2;
+    if(this.frame%10 == 0)this.spid++;
+    if(this.frame == 40 || this.spid >= 4){
+      this.spid = 0;
       Pool.Remove(this);
     }
     this.sprite.position = this.pos;
 
+    this.sprite.texture = this.pattern[this.spid];
     this.frame++;
   }
 }

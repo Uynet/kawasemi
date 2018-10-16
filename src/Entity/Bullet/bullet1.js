@@ -12,6 +12,7 @@ import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
 import BulletShot from '../Effect/bulletShot.js';
 import BulletBlur from '../Effect/bulletBlur.js';
+import Fire2 from "../Effect/fire2.js";
 import Explosion1 from '../Effect/explosion1.js';
 import Param from '../../param.js';
 
@@ -54,9 +55,10 @@ export default class Bullet1 extends Bullet{
   Update(){
     /*□Effect BulletBulr*/
       let p = CPV(this.pos);
+      let v = POV(this.arg+Math.PI,4);
+      let p2 = ADV(p,v);
       let d = Rand2D(5);
       p = ADV(p,d);
-      let v = POV(this.arg+Math.PI,4);
       let blur = Pool.GetBulletBlur(p,v);
       if(blur)EntityManager.addEntity(blur);
     /*Effect Sonic*/

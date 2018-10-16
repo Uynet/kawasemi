@@ -55,7 +55,7 @@ class Elast{
     function* elast(){
       let timer = 30;
       let player = EntityManager.player;
-      player.sprite.scale.y = 0.4;
+      player.sprite.scale.y = 0.6;
       player.sprite.scale.x = 2.0;
       while(timer > 0){
         timer--;

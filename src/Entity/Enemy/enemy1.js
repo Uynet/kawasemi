@@ -92,7 +92,7 @@ export default class Enemy1 extends Enemy{
       this.Jump();
   }
   Poping(){
-    Audio.PlaySE("landing3",3);
+    Audio.PlaySE("landing3",1);
     this.vel.y = Math.min(0,this.vel.y * -0.3);
     this.vel.x *= 0.4;
     if(this.vel.y>-0.05 ){

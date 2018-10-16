@@ -159,7 +159,7 @@ const clamp = (x,min,max)=>{
   return Math.min(Math.max(x,min),max);
 }
 const lerp = (x,y,t)=>{
-  if(t<0 || t>1)console.warn(t)
+  //if(t<0 || t>1)console.warn(t)
   return x*t + y*(1-t);
 }
 
