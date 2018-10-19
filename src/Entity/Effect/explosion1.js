@@ -33,8 +33,8 @@ export default class Explosion1 extends EFFECT{
     //smoke
     for(let i = 0;i<8;i++){
       let arg = Rand(Math.PI);
-      let v = POV(arg,6);
-      let smoke = Pool.GetSmoke(CPV(this.pos),v,50);
+      let v = POV(arg,Rand(3));
+      let smoke = Pool.GetSmoke(CPV(this.pos),v,2+Rand(1));
       if(smoke!== false)EntityManager.addEntity(smoke);
     }
     for(let i =0;i<3;i++){

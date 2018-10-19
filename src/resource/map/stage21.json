@@ -16,18 +16,6 @@
                  "width":16,
                  "x":208,
                  "y":240
-                }, 
-                {
-                 "gid":163,
-                 "height":16,
-                 "id":660,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":336,
-                 "y":160
                 }],
          "opacity":0.959999978542328,
          "type":"objectgroup",

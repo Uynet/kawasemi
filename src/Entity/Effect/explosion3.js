@@ -24,16 +24,9 @@ export default class Explosion3 extends EFFECT{
     //stone(というか火花?)
     for(let i = 0;i<4;i++){
       let arg = Rand(Math.PI);
-      let v = POV(arg,3);
+      let v = POV(arg,2);
       let stone2 = new Stone2(CPV(this.pos),v);
       EntityManager.addEntity(stone2);
-    }
-    //smoke
-    for(let i = 0;i<1;i++){
-      let arg = Rand(Math.PI);
-      let v = POV(arg,6);
-      let smoke = Pool.GetSmoke(CPV(this.pos),v,50);
-      if(smoke!== false)EntityManager.addEntity(smoke);
     }
   }
 
