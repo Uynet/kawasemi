@@ -19,7 +19,7 @@ export default class Fire extends EFFECT{
     this.pattern = Art.bulletPattern.explosion.fire;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     let texture = new PIXI.Graphics();
-    this.color = 0xFF8219;
+    this.color = 0xFFA219;
     this.size = 16;
     texture.beginFill(this.color);
     texture.drawCircle(0,0,this.size);
@@ -40,7 +40,7 @@ export default class Fire extends EFFECT{
     let d = (2 - this.sprite.scale.x)*0.2;
     this.sprite.scale.x += d;
     this.sprite.scale.y += d;
-    this.sprite.alpha *= 0.94;
+    this.sprite.alpha *= 0.92;
     if(this.frame%3==0) this.spid = 1;//this.spid+=1;
     if(this.spid >= 8 || this.frame > 40){
       this.spid = 0;

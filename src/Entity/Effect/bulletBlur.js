@@ -21,11 +21,10 @@ export default class BulletBlur extends EFFECT{
     this.pattern = Art.bulletPattern.blur;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.anchor.set(0.5);
-    //this.sprite.alpha = 0.5;
+    this.sprite.alpha = 0.5;
     this.sprite.scale = VECN((Rand(0.5)+1)/1);
     this.sprite.position = ADV(this.pos,VECN(8));
-    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
-
+    //this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
   Physics(){
     this.pos = ADV(this.pos,this.vel);
@@ -34,14 +33,14 @@ export default class BulletBlur extends EFFECT{
   Update(){
     if(this.isAlive){
       //this.sprite.alpha *= 0.9
-      //this.sprite.scale = ADV(this.sprite.scale,VECN(this.frame/256));
+      this.sprite.scale = ADV(this.sprite.scale,VECN(this.frame/256));
       this.sprite.scale.x *= 0.9;
       this.sprite.scale.y *= 0.9;
       this.Physics();
       this.sprite.position = ADV(this.pos.x,VECN(8));
       this.sprite.texture = this.pattern[this.spid];
-      this.spid = Math.floor(this.frame/4)%4;
-      if(this.frame >= 40){
+      this.spid = Math.floor(this.frame/4);
+      if(this.spid >= 6){
         //消える時に一回だけ呼ばれる
         if(this.isAlive){
           //EntityManager.removeEntity(this);

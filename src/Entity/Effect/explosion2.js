@@ -35,7 +35,7 @@ export default class Explosion2 extends EFFECT{
         x : Rand(4),
         y : Rand(1)
       }
-      let smoke = Pool.GetSmoke(CPV(this.pos),v,15+Rand(10)); 
+      let smoke = Pool.GetSmoke(CPV(this.pos),v,1 + Rand(0.2)); 
       if(smoke!==false)EntityManager.addEntity(smoke);
     }
   }

@@ -63,7 +63,7 @@ export default class Bullet2 extends Bullet{
           EntityManager.addEntity(e);
         }
         else if(w.type == "ENEMY"){
-          EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
+          EntityManager.addEntity(new Explosion3(CPV(this.pos),this.arg + Math.PI));
           w.Damage(-RandBET(this.atkMin,this.atkMax));
           if(w.hp > 0)isNext = false;//
           }

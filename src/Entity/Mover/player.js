@@ -171,8 +171,8 @@ export default class Player extends Entity{
           x : Rand(1),
           y : Rand(0.4),
         }
-        let s = Pool.GetSmoke(p,v,10);
-        EntityManager.addEntity(s);
+        let s = Pool.GetSmoke(p,v,1);
+        if(s!==false) EntityManager.addEntity(s);
       }
     }
     /*空中ジャンプ*/
@@ -308,8 +308,8 @@ export default class Player extends Entity{
             x : -this.vel.x/2,
             y : -0.3 + Rand(0.1),
           }
-          let s = Pool.GetSmoke(p,v,6 + Rand(2));
-          EntityManager.addEntity(s);
+          let s = Pool.GetSmoke(p,v,0.6);
+          if(s!==false) EntityManager.addEntity(s);
           //■ SE : foot
           switch(this.floor.under.material){
             case "wall" : Audio.PlaySE("landing1",0);break;
@@ -418,7 +418,6 @@ export default class Player extends Entity{
                 x : 2 + Rand(1),
                 y : Rand(0.4),
               }
-              let s = Pool.GetSmoke(p,v,10);
               //ぽよぽよイベント
               this.eventList.push(new Elast);
               //着地効果音
