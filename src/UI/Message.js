@@ -120,7 +120,9 @@ export default class Message extends UI{
     }
   }
   GetWeapon(){
-    let weaponName = this.message[this.page+1]
+    this.page++;
+    let weaponName = this.message[this.page]
+      cl(this.message[this.page])
       if(!Param.player.havingWeaponList[weaponName]){
         let text = this.ToJap(weaponName)+"をてにいれた\ncキーでチェンジできるよ↓"; 
         //UIManager.PopMessage(text,"POP");

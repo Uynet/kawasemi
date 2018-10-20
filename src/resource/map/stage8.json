@@ -109,14 +109,16 @@
                  "properties":
                     {
                      "1":"GET",
-                     "2":"laser"
+                     "2":"laser",
+                     "3":"\u30ec\u30fc\u30b6\u30fc\u3092\u3066\u306b\u3044\u308c\u305f!"
                     },
                  "propertytypes":
                     {
                      "1":"string",
-                     "2":"string"
+                     "2":"string",
+                     "3":"string"
                     },
-                 "rotation":0,
+                 "rotation":90,
                  "type":"",
                  "visible":true,
                  "width":16,
@@ -510,7 +512,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":659,
+ "nextobjectid":660,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":16,

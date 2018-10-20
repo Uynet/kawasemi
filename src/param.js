@@ -6,12 +6,12 @@ export default class Param{
       jumpVel : 6.2,//ジャンプ力
       runVel : 0.4,//はしり速度
       gravity : 0.30,
-      maxHp : 10,
+      maxHp : 30,
       maxBullet : 100,
       fliction : 0.7,
       invTime : 150,//無敵時間
       status : {
-        hp : 10,
+        hp : 30,
         bullet : 100,
       },
       
@@ -112,8 +112,8 @@ export default class Param{
     }
     //normal
     this.weapon3 = {
-      agi : 10,
-      cost : 0,
+      agi : 7,
+      cost : 3,
       speed : 6, 
       length : 150,
       //optional

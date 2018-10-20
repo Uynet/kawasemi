@@ -75,14 +75,14 @@ export default class Enemy1 extends Enemy{
   Initing(){
     this.PopEnemy(12);
     this.state = "POP";
- //   this.Landing();
+    this.Landing();
     let e = new StartBossBattleEvent("boss");
     EventManager.PushEvent(new QuakeEvent(40,0.97));
     EventManager.PushEvent(e);
     let p = CPV(this.pos);
     p.y += this.size;
     p.x += this.size/2;
-    EntityManager.addEntity(new Explosion4(p));
+  //  EntityManager.addEntity(new Explosion4(p));
   }
   Jump(){
     EventManager.PushEvent(new QuakeEvent(10,0.99));
