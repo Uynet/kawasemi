@@ -22,12 +22,13 @@ export default class Smoke extends EFFECT{
     this.spid = 0;
     this.pattern = Art.bulletPattern.explosion.smoke;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
-    this.sprite.alpha = 0.5;
+    this.sprite.alpha = 0.6;
     this.sprite.position = this.pos;
     this.sprite.scale.set(0.0);
     this.sprite.anchor.set(0.5);
     this.e = 0.4;
     this.sprite.blendMode = PIXI.BLEND_MODES.DARKEN;
+
   }
 
   Update(){
@@ -38,9 +39,11 @@ export default class Smoke extends EFFECT{
     let d = this.size - this.sprite.scale.x;
     this.sprite.scale.x += d * 0.1;
     this.sprite.scale.y += d * 0.1;
+    //this.sprite.rotation += Math.PI/32
+    let l = this.spid*8+10;
     if(this.frame%20 == 19)this.sprite.alpha -= 0.1;
-    if(this.frame%20 == 19)this.spid++;
-    if(this.frame == 400 || this.spid >= 4){
+    if(this.frame%l == l-1)this.spid++;
+    if(this.frame == 400 || this.spid >= 8){
       this.spid = 0;
       Pool.Remove(this);
     }

@@ -2,6 +2,7 @@ import EFFECT from './effect.js';
 import Drawer from "../../drawer.js";
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
+import BrightCoin from "./brightCoin.js";
 import Pool from '../../Stage/pool.js';
 import Sonic from './sonic.js';
 import Stone from './stone.js';

@@ -24,7 +24,7 @@ export default class Stone2 extends EFFECT{
     this.sprite.alpha = 1;
     this.size = 8 + Rand(6);
     this.sprite.anchor.set(0.5);
-    //this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 
   Update(){

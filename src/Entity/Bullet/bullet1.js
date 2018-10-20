@@ -55,11 +55,11 @@ export default class Bullet1 extends Bullet{
   Update(){
     /*□Effect BulletBulr*/
       let p = CPV(this.pos);
-      let v = POV(this.arg+Math.PI,4);
-      let p2 = ADV(p,v);
-      let d = Rand2D(5);
+      let v = POV(this.arg+Math.PI,8);
+      let d = Rand2D(5); 
+
       p = ADV(p,d);
-      let blur = Pool.GetBulletBlur(p,v);
+      let blur = Pool.GetBulletBlur(p,VEC0());
       if(blur)EntityManager.addEntity(blur);
     /*Effect Sonic*/
     /*

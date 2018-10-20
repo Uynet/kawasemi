@@ -21,7 +21,7 @@ export default class BulletBlur2 extends EFFECT{
     this.sprite.anchor.set(0.5);
     this.sprite.scale = VECN(Rand(0.5)+1);
     this.sprite.position = ADV(this.pos,VECN(8));
-    //this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+    this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 
   Physics(){
