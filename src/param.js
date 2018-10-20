@@ -24,9 +24,9 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile :true,//false,
-        laser : true,//false,
-        weapon4 : true,//
+        missile :false,
+        laser : false,
+        weapon4 : false,//
         weapon5 : false,
       },
       //装備中の武器
@@ -94,7 +94,7 @@ export default class Param{
       agi : 25,
       cost : 6,
       speed : 8, 
-      length : 580,
+      length : 280,
       remain : 180,
       //optional
       isTarget : true,

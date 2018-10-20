@@ -108,11 +108,13 @@
                  "name":"",
                  "properties":
                     {
-                     "1":"laser"
+                     "1":"GET",
+                     "2":"laser"
                     },
                  "propertytypes":
                     {
-                     "1":"string"
+                     "1":"string",
+                     "2":"string"
                     },
                  "rotation":0,
                  "type":"",

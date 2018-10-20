@@ -23,6 +23,18 @@ import Needle from '../Entity/Mover/needle.js';
 import StageGen from './stageGen.js';
 import Pool from './pool.js';
 /*マップデータ*/
+
+let wallTileInfo = {
+  outer : [52,53,54,60,61,62,68,69,70],
+  inner : [67,65,51,49],
+  ID : 58,
+}
+let backTileInfo = {
+  outer : [28,29,30,36,37,38,44,45,46],
+  inner : [43,41,27,25],
+  ID : 34,
+}
+
 export default class MapData{
   constructor(){
     this.entityData;
@@ -55,24 +67,46 @@ export default class MapData{
     });
   }
   //周囲8マスのステージ壁の有無
-  static GetIsAdjacent(layer,x,y){
+  static GetIsAdjacent(layer,x,y,tileInfo){
     /*
      * [0,1,2,
      *  3,4,5,
      *  6,7,8]
      * */
-     const adaptiveWallID = 58;//...ステージ壁 
-     return [ 
+     const adaptiveWallID = tileInfo.ID;//...ステージ壁 
+     let adj =  [ 
       (adaptiveWallID == (this[layer][this.width*(y-1) + (x-1)]-1)),
       (adaptiveWallID == (this[layer][this.width*(y-1) + (x+0)]-1)),
       (adaptiveWallID == (this[layer][this.width*(y-1) + (x+1)]-1)),
       (adaptiveWallID == (this[layer][this.width*(y+0) + (x-1)]-1)),
-      (adaptiveWallID == (this[layer][this.width*(y+0) + (x+0)]-1)),
+      true,
       (adaptiveWallID == (this[layer][this.width*(y+0) + (x+1)]-1)),
       (adaptiveWallID == (this[layer][this.width*(y+1) + (x-1)]-1)),
       (adaptiveWallID == (this[layer][this.width*(y+1) + (x+0)]-1)),
       (adaptiveWallID == (this[layer][this.width*(y+1) + (x+1)]-1)),
      ];
+     if(x == 0){
+       adj[0] = true;
+       adj[3] = true;
+       adj[6] = true;
+     }
+     if(x == this.width-1){
+       adj[2] = true;
+       adj[5] = true;
+       adj[8] = true;
+     }
+     if(y == 0){
+       adj[0] = true;
+       adj[1] = true;
+       adj[2] = true;
+     }
+     if(y == this.height-1){
+       adj[6] = true;
+       adj[7] = true;
+       adj[8] = true;
+     }
+
+     return adj;
   }
 
   static CreateEntityLayer(layer){
@@ -131,12 +165,13 @@ export default class MapData{
             break;
           case 162 :
             message = this.objData[i].properties;
-            obj = new Signboard(p,message);
+            obj = new Signboard(p,message,"signboard");
             break;
           case 163 : obj = new Goal(p); break;
           case 164 :
+            //直せ
             message = this.objData[i].properties;
-            obj = new Shop(p,message);
+            obj = new Signboard(p,message,"shop");
             break;
           case 169 : obj = new Enemy1(p); break;
           case 170 : obj = new Enemy2(p); break;
@@ -234,8 +269,10 @@ export default class MapData{
       case 84 : tex = wall.block;break;
       case 85 : tex = wall.HPBlock;break;
       case 86 : tex = wall.bulletBlock;break;
-      //adaptive 
-      case 58 : return this.WallData(this.AdaptMap(layer,x,y));break;
+      //adaptive wall
+      case 58 : return this.WallData(this.AdaptMap(layer,x,y,wallTileInfo));break;
+      //adaptive wall
+      case 34 : return this.WallData(this.AdaptMap(layer,x,y,backTileInfo));break;
       //edge in
       case 49 : tex = inner[0];break;
       case 51 : tex = inner[1];break;
@@ -298,48 +335,49 @@ export default class MapData{
   }
   //エッジを自動的にいい感じに対応させるやつ
   //IDが帰ってくる
-  static AdaptMap(layer,x,y){
-    let adj = this.GetIsAdjacent(layer,x,y);
-    /* 外枠(非背景)のTiled上のID
-     * 52 53 54
-     * 60 61 62
-     * 68 69 70
-     * */
+  static AdaptMap(layer,x,y,tileInfo){
     /* 隣接項
      * 0 1 2
      * 3 4 5 < 4は自分なので冗長であるが入れている
      * 6 7 8
      * */
+    let adj = this.GetIsAdjacent(layer,x,y,tileInfo);
+    /* 外枠(非背景)のTiled上のID
+     * 0 1 2
+     * 3 4 5
+     * 6 7 8
+     * */
     // 外側の辺
     // 上
     if(!adj[1]){
-      if(!adj[3]) return 52; //左上
-      if(!adj[5]) return 54; //右上外
-      else return 53; //真上
+      if(!adj[3]) return tileInfo.outer[0];//左上
+      if(!adj[5]) return tileInfo.outer[2];//右上
+      else return tileInfo.outer[1];//真上
     }
     // 下
     if(!adj[7]){
-      if(!adj[3]) return 68; //左下
-      if(!adj[5]) return 70; //右下
-      else return 69; //真下
+      if(!adj[3]) return tileInfo.outer[6]; //左下
+      if(!adj[5]) return tileInfo.outer[8]; //右下
+      else return  tileInfo.outer[7]; //ました
     }
     //左
-    if(!adj[3]) return 60; 
+    if(!adj[3]) return tileInfo.outer[3];
     //右
-    if(!adj[5]) return 62; 
+    if(!adj[5]) return tileInfo.outer[5];
 
     /* 内枠(非背景)のTiled上のID
-     * 57 65
-     * 51 49
+     * 01
+     * 23
      * */
 
     // 内側
     if(adj[1] &&adj[3]&&adj[5] &&adj[7]){
-      if(!adj[0]) return 67;//左上
-      if(!adj[2]) return 65;//右上
-      if(!adj[6]) return 51;//左下
-      if(!adj[8]) return 49;//右下
-      return 61　//中央
+      if(!adj[0]) return tileInfo.inner[0];//左上
+      if(!adj[2]) return tileInfo.inner[1];//
+      if(!adj[6]) return tileInfo.inner[2];//
+      if(!adj[8]) return tileInfo.inner[3];//
+      return tileInfo.outer[4]　//中央
+
     };
     console.error("invalid tile");
   }
