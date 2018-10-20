@@ -241,12 +241,14 @@
                  "properties":
                     {
                      "1":"GET",
-                     "missile":"missile"
+                     "2":"missile",
+                     "3":"\u30df\u30b5\u30a4\u30eb\u3092\u3066\u306b\u3044\u308c\u305f!"
                     },
                  "propertytypes":
                     {
                      "1":"string",
-                     "missile":"string"
+                     "2":"string",
+                     "3":"string"
                     },
                  "rotation":0,
                  "type":"",

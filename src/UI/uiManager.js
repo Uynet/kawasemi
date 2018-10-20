@@ -59,7 +59,7 @@ export default class UIManager{
   static PopStage(stage){
     let p = {
       x : 96,
-      y : 64
+      y : 96
     }
     switch(Game.stage){
       case 11: UIManager.addUI(new StagePop(p,"^- こんてぃにゅーぽいんと -$" ,));
