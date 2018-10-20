@@ -1,4 +1,5 @@
 import Timer from './timer.js';
+import Game from "./game.js";
 //サウンド管理
 let source,buffer,gainNode;
 export default class Audio{
@@ -80,6 +81,7 @@ export default class Audio{
     this.testLowPass.frequency.value= p-(p-440)*0.01;
   }
   static StopBGM(){
+    if(Game.debug)return;
     this.PlayingBGM.source.stop();
     this.PlayingBGM = {
       name : null,

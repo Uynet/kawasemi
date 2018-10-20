@@ -1,7 +1,9 @@
 import UI from './ui.js';
 import UIManager from './uiManager.js';
+import StagePop from './stagePop.js';
 import Audio from "../audio.js";
 import Art from '../art.js';
+import Param from '../param.js';
 import Input from '../input.js';
 import Font from './font.js';
 import Game from "../game.js";
@@ -102,6 +104,10 @@ export default class Message extends UI{
       if(m.slice(0,6) == "SELECT"){;
         this.OpenSelection();
       }
+      if(m.slice(0,3) == "GET"){;
+        this.GetWeapon();
+        this.page++;
+      }
       //指定したページに飛ぶ
       if(m.slice(0,4) == "GOTO"){;
         let page = m.split("\n")[1];
@@ -111,6 +117,34 @@ export default class Message extends UI{
         }
         else this.page = page;
       }
+    }
+  }
+  GetWeapon(){
+    let weaponName = this.message[this.page+1]
+      if(!Param.player.havingWeaponList[weaponName]){
+        let text = this.ToJap(weaponName)+"をてにいれた\ncキーでチェンジできるよ↓"; 
+        //UIManager.PopMessage(text,"POP");
+        //テスト
+        Param.player.havingWeaponList[weaponName] = true;
+        UIManager.bullet.Push(weaponName);
+        let p = {
+          x : 64,
+          y : 96
+        }
+        UIManager.addUI(new StagePop(p,"-" + this.ToJap(weaponName) +"をてにいれた "));//SCORE
+      }else{
+        let text = "きりかえはc だよ↓"; 
+        //     UIManager.PopMessage(text,"POP");
+        }
+  }
+  //武器名を日本語にするだけ
+  ToJap(weaponName){
+    switch(weaponName){
+      case "missile" : return "ミサイル";
+      case "laser" : return "レーザー";
+      case "weapon4" : return "weapon4";
+      case "weapon5" : return "weapon5";
+      default : console.warn("Error ToJapWeaponName");
     }
   }
   //選択肢を表示
