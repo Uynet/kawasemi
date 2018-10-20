@@ -6,6 +6,8 @@ import Enemy2 from './enemy2.js';
 import Enemy4 from './enemy4.js';
 import Explosion1 from "../Effect/explosion1.js";
 import Explosion2 from "../Effect/explosion2.js";
+import Explosion3 from "../Effect/explosion3.js";
+import Explosion4 from "../Effect/explosion4.js";
 import Shockwave from "../Effect/shockwave.js";
 import Coin from "../Mover/coin.js";
 import Audio from "../../audio.js";
@@ -73,10 +75,14 @@ export default class Enemy1 extends Enemy{
   Initing(){
     this.PopEnemy(12);
     this.state = "POP";
-    this.Landing();
+ //   this.Landing();
     let e = new StartBossBattleEvent("boss");
     EventManager.PushEvent(new QuakeEvent(40,0.97));
     EventManager.PushEvent(e);
+    let p = CPV(this.pos);
+    p.y += this.size;
+    p.x += this.size/2;
+    EntityManager.addEntity(new Explosion4(p));
   }
   Jump(){
     EventManager.PushEvent(new QuakeEvent(10,0.99));

@@ -21,7 +21,6 @@ export default class Stone extends EFFECT{
     this.pattern = Art.bulletPattern.explosion.stone;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
-    this.sprite.alpha = 1;
     this.sprite.scale.set(1);
     this.sprite.anchor.set(0.5);
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
