@@ -27,7 +27,6 @@ export default class StartStageEvent extends Event{
       //ここで非同期
       Game.scene.ChangeState(STATE.TITLE,STATE.STAGE);
       //Game.scene.PopSubState("TRANS");
-      //Drawer.entityContainer.filters = [Drawer.testFilter];
       UIManager.PopStage(); 
       yield;
     }

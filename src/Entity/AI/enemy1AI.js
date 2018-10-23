@@ -23,22 +23,5 @@ export default class Enemy1AI extends AI{
 
   Do(){
     //this.enemy.vel.x = Math.max(-1,Math.min(this.enemy.vel.x,1));
-    //たまにジャンプする
-    if(!this.enemy.isJump && (this.enemy.frame % 100 == 19)){
-      this.enemy.vel.y = -0.2;
-      this.enemy.acc.y = -2.3;
-      this.enemy.isJump = true;
-      let p = ADV(this.enemy.pos,VEC2(-20,90));
-      Audio.PlaySE("enemy5Shot");
-
-    }
-    if(this.enemy.isJump){
-    this.enemy.acc.x = (this.enemy.pos.x < EntityManager.player.pos.x)? 0.005 : -0.005;
-      this.enemy.vel.x = Math.max(-1,Math.min(this.enemy.vel.x,1));
-      }
-  }
-  Landing(){
-      EventManager.PushEvent(new QuakeEvent(40,0.97));
-      Audio.PlaySE("missileHit");
   }
 }

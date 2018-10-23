@@ -9,7 +9,9 @@ export default class Bullet1AI{
     this.bullet = bullet;
   }
   Phisics(){
-    this.bullet.vel = POV(this.bullet.arg,this.bullet.vi);
+    //this.bullet.vi *= 1.1;
+    //this.bullet.vi = Math.min(10,this.bullet.vi);
+    this.bullet.Set("vel", POV(this.bullet.arg,this.bullet.vi));
     this.bullet.pos.x += this.bullet.vel.x;
     this.bullet.pos.y += this.bullet.vel.y;
   }

@@ -22,7 +22,7 @@ export default class Shop extends BackEntity{
   constructor(pos,message){
     super(pos,0);
     /*基本情報*/
-    this.layer= "BACK";
+    this.layer= "ENTITY";
     this.name = "shop";
     this.isUpdater = true;
       /* 固有情報
@@ -51,18 +51,18 @@ export default class Shop extends BackEntity{
   }
   Read(){
     this.isRead = !this.isRead;
-    let weapon = this.message[0];
+    let weaponName = this.message[0];
     if(this.isRead){
       Game.scene.PushSubState("MES");
 
       //this.messageの武器を手に入れる
       //もう持っていたら発生しない
-      if(!Param.player.havingWeaponList[weapon]){
-        let text = this.ToJap(weapon)+"をてにいれた\ncキーでチェンジできるよ↓"; 
+      if(!Param.player.havingWeaponList[weaponName]){
+        let text = this.ToJap(weaponName)+"をてにいれた\ncキーでチェンジできるよ↓"; 
         UIManager.PopMessage(text,"POP");
         //テスト
-        Param.player.havingWeaponList[weapon] = true;
-        UIManager.bullet.Push(weapon);
+        Param.player.havingWeaponList[weaponName] = true;
+        UIManager.bullet.Push(weaponName);
       }else{
         let text = "きりかえはc だよ↓"; 
         UIManager.PopMessage(text,"POP");
@@ -76,15 +76,17 @@ export default class Shop extends BackEntity{
         x : 64,
         y : 96
       }
-      UIManager.addUI(new StagePop(p,"-" + this.ToJap(weapon) +"をてにいれた "));//SCORE
+      UIManager.addUI(new StagePop(p,"-" + this.ToJap(weaponName) +"をてにいれた "));//SCORE
     }
   }
   //武器名を日本語にするだけ
-  ToJap(weapon){
-    switch(weapon){
+  ToJap(weaponName){
+    switch(weaponName){
       case "missile" : return "ミサイル";
       case "laser" : return "レーザー";
-      default : cl("po"); 
+      case "weapon4" : return "weapon4";
+      case "weapon5" : return "weapon5";
+      default : console.warn("Error ToJapWeaponName");
     }
   }
 

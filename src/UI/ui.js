@@ -4,6 +4,7 @@ export default class UI{
     this.sprite;
     this.type;//enum
     this.isMultiple = false;
+    this.isUpdater = true;
   }
 }
 

@@ -24,6 +24,7 @@ import QuakeEvent from '../../Event/quakeEvent.js';
 import WeaponIcon from '../Effect/weaponIcon.js';
 import Pool from '../../Stage/pool.js';
 import StagePop from '../../UI/stagePop.js';
+import DistanceField from "../../Stage/distanceField.js";
 
 const STATE = {
   WAITING : "WAITING",
@@ -47,6 +48,34 @@ let po = (i)=>{
   if(i>0) return 1 + 2 * Math.atan(i-10)/Math.PI;
   else return -(1 + 2 * Math.atan(-i-10)/Math.PI);
 };
+
+//ぽよぽよイベント
+class Elast{
+  constructor(){
+    function* elast(){
+      let timer = 30;
+      let player = EntityManager.player;
+      player.sprite.scale.y = 0.6;
+      player.sprite.scale.x = 2.0;
+      while(timer > 0){
+        timer--;
+        let difY= 1 - player.sprite.scale.y;
+        player.sprite.scale.y += difY*0.2;
+        player.sprite.scale.x = 1/player.sprite.scale.y;
+        player.sprite.position.x -= 16*(player.sprite.scale.x-1)/2;
+        player.sprite.position.y -= 16*(player.sprite.scale.y-1);
+        yield;
+      }
+      player.sprite.scale.y = 1;
+      yield;
+    } 
+    this.func = elast();
+  }
+
+  Do(){
+    return this.func.next();
+  }
+}
 
 export default class Player extends Entity{
   constructor(pos){
@@ -83,10 +112,10 @@ export default class Player extends Entity{
     this.toArg = 0;
     this.scPos = VEC0();//スクロール位置
     this.score = this.param.score;
+    this.force = VEC0();
     //UIManager.HP.SetBar(this.hp);//HPbarの更新
     //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
-
-      this.vxMax = Param.player.vxMax;
+    this.vxMax = Param.player.vxMax;
     this.vyMax = Param.player.vyMax;
     /*状態*/
     this.state = STATE.WAITING;
@@ -107,7 +136,21 @@ export default class Player extends Entity{
         }
         //??
         this.poyo = true;
+      this.eventList = [];
   }
+  //死亡後に初期状態に回復するため
+  ResetStatus(){
+    this.param.status={
+      hp: this.param.maxHp,
+      bullet:this.param.maxBullet,
+    }
+  }
+  //ステージクリア後にStatusを引き継ぐため
+  SetStatus(){
+    this.hp = this.param.status.hp;
+    this.bullet = this.param.status.bullet;
+  }
+
   /*キー入力による移動*/
   Input(){
     /*ジャンプ*/
@@ -122,38 +165,20 @@ export default class Player extends Entity{
         // ■ SoundEffect : jump
         Audio.PlaySE("jump1");
         //Audio.PlaySE("changeWeapon",-1);
-        EventManager.PushEvent(new QuakeEvent(10,0.1));
         //effect
         let p = ADV(this.pos,VECY(12));
         let v = {
           x : Rand(1),
           y : Rand(0.4),
         }
-        let s = Pool.GetSmoke(p,v,10);
-        EntityManager.addEntity(s);
+        let s = Pool.GetSmoke(p,v,1);
+        if(s!==false) EntityManager.addEntity(s);
       }
     }
     /*空中ジャンプ*/
     //空中でZ押すとbulletを消費してジャンプできる
     if(Input.isKeyClick(KEY.Z)){
-      /*
-      if(this.state == STATE.FALLING){
-        let jumpCost = 20
-          if(this.bullet >= jumpCost){
-            Audio.PlaySE("jump2");
-            EntityManager.addEntity(new Explosion2(CPV(this.pos),Math.PI*(1/2)));
-            EventManager.PushEvent(new QuakeEvent(20,5));
-            this.frameShot = this.frame;//最終ショット時刻
-              this.vel.y = - Param.player.jumpVel;
-            this.bullet -= 20;
-            this.state = STATE.JUMPING;
-          }else{
-            //足りないとできない
-            Audio.PlaySE("empty");
-            EntityManager.addEntity(new FontEffect(this.pos,"たりないよ","pop"));
-          }
-      }
-      */
+      //this.AirJump();
     }
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
@@ -204,10 +229,6 @@ export default class Player extends Entity{
       this.weapon.shot(this);
     }
     /*for debug*/
-    if(Input.isKeyInput(KEY.J) && Game.Debug){
-      this.bullet += 100;
-      //this.Damage(-999);
-    }
     if(Input.isKeyClick(KEY.C) && this.isAlive){
       //武器チェンジ
       //持っている武器の中で次の武器をセレクト
@@ -224,9 +245,38 @@ export default class Player extends Entity{
       this.ChangeWeapon(wNameNext);
     }
   }
-
+  AirJump(){
+    if(this.state == STATE.FALLING){
+      let jumpCost = 20
+        if(this.bullet >= jumpCost){
+          Audio.PlaySE("jump2");
+          EntityManager.addEntity(new Explosion2(CPV(this.pos),Math.PI*(1/2)));
+          EventManager.PushEvent(new QuakeEvent(20,0.8));
+          this.frameShot = this.frame;//最終ショット時刻
+            this.vel.y = - Param.player.jumpVel;
+          this.bullet -= 20;
+          this.state = STATE.JUMPING;
+        }else{
+          //足りないとできない
+          Audio.PlaySE("empty");
+          EntityManager.addEntity(new FontEffect(this.pos,"たりないよ","pop"));
+        }
+    }
+  }
   /*状態からアニメーションを行う*/
   Animation(){
+    this.sprite.position = {
+      x : Math.floor(this.pos.x-4),
+      y : Math.floor(this.pos.y)
+    }
+    //無敵時間中の点滅
+    if(this.isInvincible){
+      if(this.frame%4 < 2)this.sprite.alpha = 1;
+      else this.sprite.alpha = 0;
+    }else{
+      this.sprite.alpha = 1;
+    }
+
     this.frame++;
     let state;
     switch(this.state){
@@ -248,23 +298,24 @@ export default class Player extends Entity{
         //走り中は画像をちょっとだけ跳ねさせる
         //スプライト位置を動かしているだけなので当たり判定は変化していない
         let a = 2;//振幅
-          let l = 9;//周期
+        let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        if(this.frame%5 == 0 && this.floor.on){;
+        if(this.frame%10 == 0 && this.floor.on){;
           //歩き土埃エフェクト
           let p = ADV(this.pos,VECY(16));
           let v = {
             x : -this.vel.x/2,
             y : -0.3 + Rand(0.1),
           }
-          let s = Pool.GetSmoke(p,v,6 + Rand(2));
-          EntityManager.addEntity(s);
+          let s = Pool.GetSmoke(p,v,0.6);
+          if(s!==false) EntityManager.addEntity(s);
           //■ SE : foot
           switch(this.floor.under.material){
             case "wall" : Audio.PlaySE("landing1",0);break;
-           case "steel": Audio.PlaySE("landing2",-0.0,0.8);Audio.PlaySE("landing1",-1);break;
-            default : break;
+            case "steel": Audio.PlaySE("landing2",-0.0,0.8);Audio.PlaySE("landing1",-1);break;
+            case "wood": Audio.PlaySE("landing1",1);break;
+            default : console.warn("マテリアルが設定されていません");break;
           }
         }
         break;
@@ -278,6 +329,12 @@ export default class Player extends Entity{
       this.sprite.texture = this.pattern[state][this.spid];
     }else{
       this.sprite.texture = this.pattern[state+this.dir][this.spid];
+    }
+    //elast
+    for(let e of this.eventList){
+      if(e.Do().done){
+        this.eventList.remove(e);
+      }
     }
   }
 
@@ -327,6 +384,8 @@ export default class Player extends Entity{
       this.score+=1;
       this.param.score = this.score;
       this.bullet += 5;//とりあえずbulletも回復しとくか
+      //this.hp += 1;//とりあえずhpも回復しとくか
+      this.hp = clamp(this.hp,0,this.maxHP);
       UIManager.score.SetScore(this.score);
     }
   }
@@ -359,18 +418,18 @@ export default class Player extends Entity{
                 x : 2 + Rand(1),
                 y : Rand(0.4),
               }
-              let s = Pool.GetSmoke(p,v,10);
-              EventManager.PushEvent(new QuakeEvent(10,0.1));
+              //ぽよぽよイベント
+              this.eventList.push(new Elast);
+              //着地効果音
               switch(l.material){
                 case "wall": Audio.PlaySE("landing1",1);break;
                 case "steel": Audio.PlaySE("landing2",1);Audio.PlaySE("landing1");break;
                 case "wood": Audio.PlaySE("landing1",1);break;
                 default : console.warn(l.material);
               }
+              this.isJump = false;
             }
-            this.isJump = false;
         }
-
         //Resolve
         switch(l.colType){
           case "through" : 
@@ -383,8 +442,9 @@ export default class Player extends Entity{
           default : console.warn(l.colType);break;
         /*note : now isHit == false*/
         }
-      }
-    }
+      }//衝突処理ここまで
+    }//forここまで
+    if(!this.floor.on)this.isJump = true;
   }
   Physics(){
     //動く床に乗っている時
@@ -392,13 +452,15 @@ export default class Player extends Entity{
       this.pos.x += this.floor.under.vel.x; 
       this.pos.y += this.floor.under.vel.y; 
     }
+    this.acc.x += this.force.x;
+    this.acc.y += this.force.y;
     this.acc.y += this.gravity;
     this.pos.x += this.vel.x; 
     this.pos.y += this.vel.y; 
     this.vel.x += this.acc.x;
     this.vel.y += this.acc.y;
     //最大速度制限:
-    this.vel.x = BET(-this.vxMax , this.vel.x , this.vxMax);
+    this.vel.x = clamp(this.vel.x,-this.vxMax, this.vxMax);
     if(this.vel.y > this.vyMax)this.vel.y = this.vyMax;
     //if(this.vel.y < -this.vyMax)this.vel.y = -this.vyMax;
     /*摩擦
@@ -418,12 +480,27 @@ export default class Player extends Entity{
      this.acc.x = 0;
      this.acc.y = 0;
 
-
      //画面端の制限
-     this.pos.x = Math.min(this.pos.x,Drawer.mapSize.width * 16-4);//右端
-     this.pos.x = Math.max(this.pos.x,0);//←端
+     this.pos.x = clamp(this.pos.x , 0 , 16*Drawer.mapSize.width-8);
      this.pos.y = Math.max(this.pos.y,0);//↑端
      if(this.pos.y > Drawer.mapSize.height * 16+8)this.Damage(-999);//下端
+    this.force.x *= 0.9;
+    this.force.y *= 0.9;
+    //this.CollisionByDistance();
+
+  }
+  CollisionByDistance(){
+    if(DistanceField.GetDistance(this.pos)<=0){
+      let t = 0;
+      while(DistanceField.GetDistance(this.pos)<=0 && t <16){
+        let grad = DistanceField.GetDistanceGrad(this.pos);
+        let dist = DistanceField.GetDistance(this.pos);
+        this.pos.x += grad.x;
+        this.pos.y += grad.y;
+        t ++;
+      }
+      this.isJump = false;
+    }
   }
 
   ScrollByDir(){
@@ -444,6 +521,8 @@ export default class Player extends Entity{
     if(this.hp <= 0){
       if(this.isAlive){
         //死亡開始時に一回だけ呼ばれる部分
+        Audio.StopBGM();
+        this.ResetStatus();
         EventManager.PushEvent(new QuakeEvent(50,0.9));
         EntityManager.addEntity(new Explosion1(CPV(this.pos)));
         Audio.PlaySE("bomb",-1.0);
@@ -478,13 +557,13 @@ export default class Player extends Entity{
   Supply(){
     //最後に撃った時刻から経過するほど早くなる
     let t = (this.frame-this.frameShot);
+    /*
     if(t<=50 && t%10 == 0) this.bullet++;
     else if(t>50 && t<=100 && t%5 == 0) this.bullet++;
     else if(t>100 && t<=150 && t%3 == 0) this.bullet++;
     else if(t>150) this.bullet+=2;
-    /*
     */
-    this.bullet = BET(0,this.bullet,this.maxBullet);
+    this.bullet = clamp(this.bullet,0,this.maxBullet);
     UIManager.bullet.SetBar(this.bullet); //BulletBarの更新
   }
 
@@ -505,9 +584,8 @@ export default class Player extends Entity{
       this.Damage(-999);
     }
   }
-
-  Update(){
-    if(this.maxHP == 100 && Input.isKeyClick(KEY.K) && this.isAlive && Game.debug){
+  Debug(){
+    if(this.maxHP != 300 && Input.isKeyClick(KEY.K) && this.isAlive && Game.debug){
       let p = {
         x : 64,
         y : 96
@@ -522,10 +600,18 @@ export default class Player extends Entity{
         this.param.havingWeaponList.laser = true;
         UIManager.bullet.Push("laser");
       }
+      //最大HP変更
       this.param.maxHp = 300;
+      UIManager.HP.max = 300;
       this.Damage(-999);
       Audio.PlaySE("missileHit");
     }
+  }
+
+  Update(){
+    if(Game.debug)this.Debug();
+    //player関連のイベントを裁く
+      
     if(this.isAlive){
       /*Init*/
       if(!this.isJump) {
@@ -549,10 +635,6 @@ export default class Player extends Entity{
     //無敵時間の有向時間
     if(this.frame - this.frameDamaged > Param.player.invTime){
       this.isInvincible = false;
-    }
-    this.sprite.position = {
-      x : Math.floor(this.pos.x-4),
-      y : Math.floor(this.pos.y)
     }
     /*パラメータ*/
     this.offset *= 0.99;

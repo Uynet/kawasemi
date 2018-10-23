@@ -23,6 +23,8 @@ export default class WoodBox extends Wall{
     this.name = "woodbox";
     this.isBreakable = true;//破壊可能
     this.isUpdater = true;
+    this.colType = "wall";
+    this.material = "wood";
     /*スプライト*/
     this.pattern = Art.wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号

@@ -1,27 +1,37 @@
 import UI from './ui.js';
 import UIManager from './uiManager.js';
+import Audio from "../audio.js";
 import Art from '../art.js';
 import Input from '../input.js';
 import Font from './font.js';
+import Game from "../game.js";
+import MessageEvent from '../Event/messageEvent.js';
+import EventManager from "../Event/eventmanager.js";
 
-const P_TEXT = VECN(8);//テキストの相対位置
+const P_TEXT = {
+  x:16,
+  y:24,
+}
 const COLUMN = 10;//行間
 
+
+
 export default class Message extends UI{
-  constructor(pos,text){
+  constructor(pos,signboard){
     super(pos); 
     /*基本情報*/
-    this.text = text;
-    let sent = this.text.split("\n");
-    this.sentence = [];//Font
-      this.type = "MES";
+    this.signboard = signboard;
+    this.message = signboard.message;
+    this.frame = 0;
+
     /*child*/
+    this.type = "MES";
     this.outer = {
       sprite : Art.SpriteFactory(Art.UIPattern.message.frame), 
     }
     //文字の長さに応じて枠を調整
-    this.outer.sprite.scale.x *= 1.5;
-    this.outer.sprite.scale.y *= 1.5; //yは固定
+    this.outer.sprite.scale.x *= 4.0;
+    this.outer.sprite.scale.y *= 2.5; //yは固定
     /*スプライト*/
     this.isMultiple = true;
     //枠スプライト追加
@@ -30,41 +40,158 @@ export default class Message extends UI{
     this.container = new PIXI.Container();
     this.container.addChild(this.outer.sprite);
     p = ADV(p,P_TEXT);
+
+    this.OpeningSelection = false;
+    this.isRead = true;
+    this.page=0;
     //テキスト
-    for(let i = 0;i<sent.length;i++){
-      this.sentence.push(new Font(p,sent[i],"MES"));//テキスト 
-      p.y += COLUMN;
-    }
-    //各行各文字のスプライトを追加
-    for(let l of this.sentence){
-      this.container.addChild(l.container);
-    }
+    /*
+    */
   }
-  Page(text){
+  ReadNextPage(text){
+    Audio.PlaySE("changeWeapon");
+    this.ClearMessage();
+    this.EmitEvent();
+    if(this.isRead)this.RenderText();
+    this.page++;
+  }
+  ClearMessage(){
     //改ページするために文字だけを消す
-    for(let i=0;i<this.sentence.length;i++){
-      UIManager.removeUI(this.sentence[i]);
+    let mes = this.message[this.page];
+    let sentence = mes.split("\n");
+    for(let i=0;i<sentence.length;i++){
+      UIManager.removeUI(sentence[i]);
     }
     //これをすると先頭以外の要素が消える
     //つまり枠スプライトを残し他の文字を消す
     this.container.children.length = 1;//は？
-      //新しい文字
-      this.text = text;
-    let sent = this.text.split("\n");
-    this.sentence = [];//Font
-      let p = CPV(this.pos);
+  }
+  //テキストを表示する
+  RenderText(){
+    let mes = this.message[this.page];
+    let sent = mes.split("\n");
+    let sentenceSprite = [];
+    this.isRead = true;
+
+    let p = CPV(this.pos);
     p = ADV(p,P_TEXT);
-    //テキスト
     for(let i = 0;i<sent.length;i++){
-      this.sentence.push(new Font(p,sent[i],"MES"));//テキスト 
+      let f = new Font(p,sent[i],"MES")
+        f.container.scale.x = 1;
+        f.container.scale.y = 1;
+      sentenceSprite.push(f);//テキスト 
       p.y += COLUMN;
     }
     //各行各文字のスプライトを追加
-    for(let l of this.sentence){
+    for(let l of sentenceSprite){
       this.container.addChild(l.container);
     }
-    UIManager.addUI(this);
+  }
+  EmitEvent(){
+    /*イベント発生用メッセージ*/
+    let m = this.message[this.page];
+    if(m !== undefined){
+      if(m.slice(0,5) == "EVENT"){;
+        let event = new MessageEvent("OPEN",m);
+        EventManager.eventList.push(event);
+        //クソポイント
+        //ここでメッセージを変更するな
+        this.message[this.page] = "はっこうずみ"
+        this.page++;
+      }//
+      if(m.slice(0,6) == "SELECT"){;
+        this.OpenSelection();
+      }
+      //指定したページに飛ぶ
+      if(m.slice(0,4) == "GOTO"){;
+        let page = m.split("\n")[1];
+        if(page == "END"){
+          this.isRead = false;
+          this.CloseMessage();
+        }
+        else this.page = page;
+      }
+    }
+  }
+  //選択肢を表示
+  OpenSelection(){
+    this.OpeningSelection = true;
+    let p = CPV(this.pos);
+    p.x += 300;
+    p.y += 16;
+    p.y += COLUMN;
+
+    this.Selector = {
+      Init : function(){
+        this.cusor.select = this.cusor.item[this.cusor.pointer];
+      },
+      GetSelection : function(){
+        return this.cusor.item[this.cusor.pointer];
+      },
+      cusor : {
+        pos : p,
+        item : [
+          "はい",
+          "いいえ",
+        ],
+        pointer : 0,//カーソル位置
+        font : new Font(p,"→","MES"),
+        select : null,
+        Move : function(dir){
+          Audio.PlaySE("changeWeapon");
+          if(dir == "UP") this.pointer--;
+          if(dir == "DOWN") this.pointer++;
+          this.pointer = clamp(this.pointer,0,this.item.length-1);
+          this.font.container.position.y = 0 + COLUMN*this.pointer;
+        },
+      }
+    };
+    this.Selector.Init();
+
+    let f;
+    this.Selector.container = new PIXI.Container();
+    this.Selector.container.addChild(this.Selector.cusor.font.container);
+    p.x += 16;
+    for(let item of this.Selector.cusor.item){
+      f = new Font(p,item,"MES");
+      this.Selector.container.addChild(f.container);
+      p.y += COLUMN;
+    }
+    this.container.addChild(this.Selector.container);
+  }
+  //選択肢決定
+  Select(){
+    this.OpeningSelection = false;
+    //決め打ち
+    switch(this.Selector.GetSelection()){
+      case "はい" : this.page = 2 ; break;
+      case "いいえ" : this.page = 4;break;
+    };
+  }
+  CloseMessage(){
+    this.signboard.isRead = false;
+    this.signboard.isNear = false;
+    Game.scene.PopSubState();
+    UIManager.removeUI(this);
   }
   Update(){
+    if( Input.isKeyClick(KEY.X)){
+      if(this.OpeningSelection){
+        this.Select();
+      }
+      if(this.page < this.message.length){
+        this.ReadNextPage();
+      }else{
+        this.CloseMessage();
+      }
+    }
+    if(this.OpeningSelection){
+      if( Input.isKeyClick(KEY.DOWN)){
+        this.Selector.cusor.Move("DOWN");
+      }
+      if( Input.isKeyClick(KEY.UP)){
+        this.Selector.cusor.Move("UP");
+      }
+    }
   }
 }

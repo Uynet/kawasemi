@@ -7,6 +7,12 @@ Array.prototype.Last = function(){
     return this[this.length-1];
   }
 }
+//配列から要素を削除
+Array.prototype.remove = function(e){
+  let i = this.indexOf(e);
+  if(i == -1) return;//そんな要素は無い
+  this.splice(i,1);
+}
 Array.prototype.maxIndex = function(){
   let max = this[0];
   let maxI = 0;
@@ -106,6 +112,7 @@ const UI_ = {
 
 /*Vector*/
 const VEC2 = (x,y)=>{return {x:x,y:y}};
+const vec2 = (x,y)=>{return {x:x,y:y}};
 const VEC0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
 const VECN = (n)=>{return {x:n,y:n}};//
 const VECX = (vx)=>{return {x:vx,y:0}};//
@@ -115,7 +122,23 @@ const ADV = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加�
 const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
 const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
 const NOMALIZE = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化
+const normalize = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化
+const scala = (a,v)=>{
+  return {
+    x:v.x * a,
+    y:v.y * a,
+  }
+}
+const argument = (v)=>{
+  let a = Math.atan(v.y/v.x);
+  if(v.x<0) a += Math.PI;
+  return a;
+}
 const DOT = (v1,v2)=>{return v1.x*v2.x + v1.y*v2.y};//内積
+const dot = (v1,v2)=>{return v1.x*v2.x + v1.y*v2.y};//内積
+const reflect = (v,n)=>{
+  return ADV(v,scala(-2*dot(v,n),n));
+}
 /*Random*/
 const Rand = (d)=>{
   return 2 * d * (Math.random()-0.5);
@@ -130,6 +153,14 @@ const RandBET = (min,max)=>{
 /*maxmin*/
 const BET = (min,x,max)=>{
   return Math.min(Math.max(x,min),max);
+}
+/*maxmin*/
+const clamp = (x,min,max)=>{
+  return Math.min(Math.max(x,min),max);
+}
+const lerp = (x,y,t)=>{
+  //if(t<0 || t>1)console.warn(t)
+  return x*t + y*(1-t);
 }
 
 //-d ~ +d までの値を返す
@@ -152,7 +183,7 @@ let DIST_C = (p1,p2)=>{
 }
 //
 let length = (v)=>{
-  return Math.sqrt(v.x * v.x + v.y + v.y);
+  return Math.sqrt(v.x * v.x + v.y * v.y);
 }
 /*for debug*/
 let cl = console.log;

@@ -85,7 +85,7 @@ export default class Pool{
       case "bulletblur" : this.unused.bulletblurs.push(s);break;
       case "fire" : this.unused.fires.push(s);break;
       case "stone" : this.unused.stones.push(s);break;
-      case "smoke" : this.unused.smokes.push(s);break;
+      case "smoke" :  this.unused.smokes.push(s);break;
       case "sonic" : this.unused.sonics.push(s);break;
       case "flash" : this.unused.flashes.push(s);break;
       case "missile" : this.unused.missiles.push(s);break;

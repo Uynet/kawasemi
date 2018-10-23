@@ -13,8 +13,8 @@ let EntityList = EntityManager.entityList;
 
 //トゲ
 export default class Needle extends Wall{
-  constructor(pos,ID){
-    super(pos,ID);
+  constructor(pos,wall){
+    super(pos,wall);
     /*基本情報*/
     this.collider = new Collider(SHAPE.BOX,new Box({x:pos.x,y:pos.y},16,16));//衝突判定の形状
     this.name = "needle";
@@ -22,13 +22,12 @@ export default class Needle extends Wall{
     this.isUpdater  =true;
     this.hp = 1;
     //wall parameter
-    let wall = MapData.Tile(ID);
     this.isBreakable = wall.isBreakable;
     this.coltype = "none";
     /*スプライト*/
     this.pattern = Art.wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号
-    this.sprite = Art.SpriteFactory(this.tex);//現在表示中のスプライト
+    this.sprite = Art.SpriteFactory(wall.texture);//現在表示中のスプライト
     this.sprite.position = this.pos;
   }
   //自分がダメージを食らう

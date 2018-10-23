@@ -2,16 +2,21 @@
 export default class Param{
   static Init(){
     this.player = {
+      //プレイ中ステータス
       jumpVel : 6.2,//ジャンプ力
       runVel : 0.4,//はしり速度
       gravity : 0.30,
-      maxHp : 100,
+      maxHp : 10,
       maxBullet : 100,
       fliction : 0.7,
-      invTime : 5,//無敵時間
+      invTime : 150,//無敵時間
+      status : {
+        hp : 10,
+        bullet : 100,
+      },
       
       animRun : 4,
-      animWait : 7,
+      animWait : 11,
       score : 0,
 
       vxMax : 3,
@@ -19,43 +24,45 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile : false,
-        laser : false,
+        missile :true,//false,
+        laser : true,//false,
+        weapon4 : true,//
+        weapon5 : false,
       },
       //装備中の武器
       equip : "normal",
     }
     this.enemy1 = {
-      hp : 3000,
-      atkMax : 114514,
+      hp : 500,
+      atkMax : 10000,
       atkMin : 1,
       gravity : 0.030,
-      coin : 1
+      coin : 15
     }
     this.enemy2 = {
-      hp : 20,
-      atkMax : 10,
-      atkMin : 5,
+      hp : 10,
+      atkMax : 5,
+      atkMin : 1,
       gravity : 0.0,
       coin : 4
     }
     this.enemy3 = {
-      hp : 30,
-      atkMax : 10,
-      atkMin : 5,
+      hp : 5,
+      atkMax : 4,
+      atkMin : 1,
       gravity : 0,
       range : 80,
       coin : 3
     }
     this.enemy4 = {
-      hp : 10,
-      atkMax : 5,
-      atkMin : 1,
+      hp : 5,
+      atkMax : 3,
+      atkMin : 2,
       gravity : 0.2,
       coin : 2
     }
     this.enemy5 = {
-      hp : 10,
+      hp : 5,
       atkMax : 3,
       atkMin : 1,
       gravity : 0,
@@ -84,24 +91,19 @@ export default class Param{
     }
     this.weapon1 = {
       //status
-      agi : 13,
-      cost : 10,
-      speed : 2, 
+      agi : 25,
+      cost : 6,
+      speed : 8, 
       length : 580,
+      remain : 180,
       //optional
       isTarget : true,
       isHorming : true,
       isLasersight : false,
     }
-    this.weapon11 = {
-      agi : 2,
-      cost : 6,
-      speed : 0.0001, 
-      length : 180,
-    }
     this.weapon2 = {
-      agi : 26,
-      cost : 20,
+      agi : 25,
+      cost : 10,
       length : 300,
       //optional
       isTarget : true,
@@ -110,9 +112,31 @@ export default class Param{
     }
     //normal
     this.weapon3 = {
-      agi : 6,
-      cost : 5,
-      speed : 10, 
+      agi : 10,
+      cost : 0,
+      speed : 6, 
+      length : 150,
+      //optional
+      isTarget : true,
+     // isHorming : false,
+      isLasersight : false,
+    }
+    //??
+    this.weapon4 = {
+      agi : 1,
+      cost : 1,
+      speed : 4, 
+      length : 400,
+      //optional
+      isTarget : true,
+     // isHorming : false,
+      isLasersight : false,
+    }
+    //??
+    this.weapon5 = {
+      agi : 300,
+      cost : 1,
+      speed : 1, 
       length : 300,
       //optional
       isTarget : true,
@@ -121,22 +145,28 @@ export default class Param{
     }
     //Missile
     this.bullet1 = {
-      atkMax : 50,
-      atkMin : 10,
+      atkMax : 15,
+      atkMin : 8,
       hp : 1,
       curve : 0.2
     }
     //Laser
     this.bullet2 = {
-      atkMax : 50,
-      atkMin : 1,
+      atkMax : 20,
+      atkMin : 15,
       hp : 99999,
     }
     //normal
     this.bullet3 = {
-      atkMax : 12,
-      atkMin : 8,
+      atkMax : 5,
+      atkMin : 3,
       hp : 1,
+      curve : 0.2
+    }
+    this.bullet4 = {
+      atkMax : 1,
+      atkMin : 1,
+      hp : 10,
       curve : 0.2
     }
   }

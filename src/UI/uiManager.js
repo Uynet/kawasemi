@@ -3,6 +3,7 @@ import Audio from '../audio.js';
 import UI from './ui.js';
 import StagePop from './stagePop.js';
 import GaugeHP from './gaugeHP.js';
+import GaugeBossHP from './gaugeBossHP.js';
 import GaugeBullet from './gaugeBullet.js';
 import WeaponList from './WeaponList.js';
 import Font from './font.js';
@@ -13,6 +14,11 @@ import EntityManager from '../Stage/entityManager.js';
 import Game from '../game.js';
 import Timer from "../timer.js";
 
+//BossHP
+const P_BossHP = {
+  x : 36, 
+  y : 270
+};
 //HP
 const P_HP = {
   x : 8, 
@@ -25,13 +31,13 @@ const P_BUL = {
 };
 //score
 const P_SCORE = {
-  x : 216,
+  x : 336,
   y : P_HP.y + 8, 
 }
 //message
 const P_MES = {
-  x:64,
-  y:128
+  x:8,
+  y:232,
 }
 //Menu
 let P_MENU = {
@@ -43,6 +49,7 @@ export default class UIManager{
   static Init(){
     this.UIList = [];//UI全部のリスト
     this.HP;
+    this.BossHP;
     this.bullet;
     this.wlistk
     this.score;
@@ -54,7 +61,17 @@ export default class UIManager{
       x : 96,
       y : 64
     }
-    UIManager.addUI(new StagePop(p,"--すてーじ "+Game.stage+"- "));//SCORE
+    switch(Game.stage){
+      case 11: UIManager.addUI(new StagePop(p,"^- こんてぃにゅーぽいんと -$" ,));
+        break;
+      case 12: break;
+      default : UIManager.addUI(new StagePop(p,"^-すてーじ "+Game.stage+"-$"));//SCORE
+    }
+  }
+
+  //call by startbossBattleEvent
+  static SetBoss(){
+    UIManager.addUI(new GaugeBossHP(P_BossHP));//HP
   }
 
   /*タイトルでのUI配置に変更*/
@@ -104,26 +121,8 @@ export default class UIManager{
   /* text : 入力文字列
    * sentence : textを改行文字で区切った配列
    */
-  static PopMessage(text,type){
-    /*type : 
-     * POP 新しくフレームを作る
-     * PAGE フレームを作らず改ページのみ
-     */
-    Audio.PlaySE("changeWeapon");
-    switch(type){
-      case "POP" : 
-        UIManager.addUI(new Message(P_MES,text));//枠
-        break;
-      case "PAGE" :
-        this.message.Page(text);
-        break;
-      case "SELECT" : 
-        //選択肢イベントが入る予定
-        break;
-    }
-  }
-  static CloseMessage(){
-    UIManager.removeUI(this.message);
+  static PopMessage(signboard){
+    UIManager.addUI(new Message(P_MES,signboard));//枠
   }
 
   //UIをリストに登録
@@ -135,6 +134,7 @@ export default class UIManager{
     switch (ui.type){
       case "HP" : this.HP = ui; break;
       case "BULLET" : this.bullet = ui; break;
+      case "BossHP" : this.BossHP = ui; break;
       case "WLIST" : this.wlist = ui; break;
       case "SCORE" : this.score = ui;break;
       case "MES" : this.message = ui;break;
@@ -157,9 +157,7 @@ export default class UIManager{
     let layer = ui.layer;
     if(!layer)layer = "UI";
     
-    let i = this.UIList.indexOf(ui);
-    //要素の子であるFontはリストに無いため参照を消さない
-    if(i != -1) this.UIList.splice(i,1);
+    this.UIList.remove(ui)
     if(ui.isMultiple){
       //複数スプライトを持つオブジェクト
         Drawer.removeContainer(ui.container,layer);

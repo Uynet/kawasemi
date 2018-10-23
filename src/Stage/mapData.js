@@ -1,6 +1,7 @@
-import EntityManager from './entityManager.js'
-import Entity from '../Entity/entity.js'
-import Wall from '../Entity/wall.js'
+import EntityManager from './entityManager.js';
+import StageData from "./stageData.js";
+import Entity from '../Entity/entity.js';
+import Wall from '../Entity/wall.js';
 import BackEntity from '../Entity/backEntity.js';
 import BackGround from '../Entity/backGround.js';
 import Signboard from '../Entity/Mover/signboard.js';
@@ -15,6 +16,7 @@ import Enemy6 from '../Entity/Enemy/enemy6.js'
 import Goal from '../Entity/Mover/goal.js'
 import Game from '../game.js'
 import Art from '../art.js'
+import Audio from '../audio.js'
 import Drawer from '../drawer.js';
 import Woodbox from '../Entity/Mover/woodbox.js';
 import Needle from '../Entity/Mover/needle.js';
@@ -23,7 +25,6 @@ import Pool from './pool.js';
 /*マップデータ*/
 export default class MapData{
   constructor(){
-    this.stageNo;
     this.entityData;
     this.width;
     this.height;
@@ -53,7 +54,27 @@ export default class MapData{
       this.stageNo = stageNo;
     });
   }
-  
+  //周囲8マスのステージ壁の有無
+  static GetIsAdjacent(layer,x,y){
+    /*
+     * [0,1,2,
+     *  3,4,5,
+     *  6,7,8]
+     * */
+     const adaptiveWallID = 58;//...ステージ壁 
+     return [ 
+      (adaptiveWallID == (this[layer][this.width*(y-1) + (x-1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y-1) + (x+0)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y-1) + (x+1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+0) + (x-1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+0) + (x+0)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+0) + (x+1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+1) + (x-1)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+1) + (x+0)]-1)),
+      (adaptiveWallID == (this[layer][this.width*(y+1) + (x+1)]-1)),
+     ];
+  }
+
   static CreateEntityLayer(layer){
     let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
     let entity;
@@ -65,17 +86,17 @@ export default class MapData{
         //tiledのIDがjsonデータより1小さいので引く
         if(ID == -1)continue;//空白はjsonで0なので(引くと)-1となる
         if(!wallTiletype[ID])cl(x + "  " + y)
-        let p = {x:16*x,y:16*y};
+        let p = {x:16*x,y:16*y};//座標を変換
         switch(wallTiletype[ID].type){
           case TILE.WALL :
             switch(wallTiletype[ID].name){
               case "woodbox" : entity = new Woodbox(p);break;
-              case "needle" : entity = new Needle(p,ID);break;
-              default : entity = new Wall(p,ID);
+              case "needle" : entity = new Needle(p,this.WallData(ID,layer,x,y));break;
+              default : entity = new Wall(p,this.WallData(ID,layer,x,y));
             }
             break;
           case TILE.BACK :
-            entity = new BackEntity(p,ID);
+            entity = new BackEntity(p,this.WallData(ID,layer,x,y));
             switch(layer){
               case "backEntityData" : entity.layer = "BACK";break;
               case "entityData" : entity.layer = "ENTITY";break;
@@ -104,7 +125,10 @@ export default class MapData{
         }
         let message;
         switch(ID){
-          case 161 : obj = new Player(p); break;
+          case 161 :
+            obj = new Player(p); 
+            obj.SetStatus();
+            break;
           case 162 :
             message = this.objData[i].properties;
             obj = new Signboard(p,message);
@@ -129,9 +153,12 @@ export default class MapData{
    * RESET : 死んでやり直す時
    */
   static async CreateStage(stageNo,state){
+    //BGM再生
+    if(Audio.PlayingBGM.name!=StageData.StageBGM[stageNo])Audio.PlayBGM(StageData.StageBGM[stageNo],1.0);
     await this.Load(stageNo);
     //背景の生成
-    this.AddBackGround();
+    let BG = StageData.StageBackGround[stageNo];
+    this.AddBackGround(BG);
     //entityの生成
     this.CreateEntityLayer("backEntityData");
     this.CreateEntityLayer("entityData");
@@ -177,11 +204,15 @@ export default class MapData{
     }
     StageGen.Init();
   }
+  static MapToWorldPos(x,y){
+    return new Vec2(16*x , 16*y);
+  }
   //壁タイルの対応
   //タイルIDを渡すとテクスチャを返す
-  static Tile(i){
+  static WallData(i,layer,x,y){
     //エイリアス
     let wall = Art.wallPattern;
+    let adaptive = Art.wallPattern.edge.adapt;
     let out = Art.wallPattern.edge.out;
     let inner = Art.wallPattern.edge.inner;
     let backOut = Art.wallPattern.edge.back.out;
@@ -203,6 +234,8 @@ export default class MapData{
       case 84 : tex = wall.block;break;
       case 85 : tex = wall.HPBlock;break;
       case 86 : tex = wall.bulletBlock;break;
+      //adaptive 
+      case 58 : return this.WallData(this.AdaptMap(layer,x,y));break;
       //edge in
       case 49 : tex = inner[0];break;
       case 51 : tex = inner[1];break;
@@ -263,15 +296,62 @@ export default class MapData{
       isBreakable : isBreakable,
     }
   }
+  //エッジを自動的にいい感じに対応させるやつ
+  //IDが帰ってくる
+  static AdaptMap(layer,x,y){
+    let adj = this.GetIsAdjacent(layer,x,y);
+    /* 外枠(非背景)のTiled上のID
+     * 52 53 54
+     * 60 61 62
+     * 68 69 70
+     * */
+    /* 隣接項
+     * 0 1 2
+     * 3 4 5 < 4は自分なので冗長であるが入れている
+     * 6 7 8
+     * */
+    // 外側の辺
+    // 上
+    if(!adj[1]){
+      if(!adj[3]) return 52; //左上
+      if(!adj[5]) return 54; //右上外
+      else return 53; //真上
+    }
+    // 下
+    if(!adj[7]){
+      if(!adj[3]) return 68; //左下
+      if(!adj[5]) return 70; //右下
+      else return 69; //真下
+    }
+    //左
+    if(!adj[3]) return 60; 
+    //右
+    if(!adj[5]) return 62; 
+
+    /* 内枠(非背景)のTiled上のID
+     * 57 65
+     * 51 49
+     * */
+
+    // 内側
+    if(adj[1] &&adj[3]&&adj[5] &&adj[7]){
+      if(!adj[0]) return 67;//左上
+      if(!adj[2]) return 65;//右上
+      if(!adj[6]) return 51;//左下
+      if(!adj[8]) return 49;//右下
+      return 61　//中央
+    };
+    console.error("invalid tile");
+  }
 
   //背景を追加
-  static AddBackGround(){
+  static AddBackGround(BG){
     let back;
-    let w = 20;
-    let h = 20;
+    let w = 16;
+    let h = 16;
     for(let y = 0;y<h;y++){
       for(let x = 0;x<w;x++){
-        let tex = Art.wallPattern.backGround[0];
+        let tex = Art.wallPattern.backGround[BG];
         let p = {
           x : (x - w/2)*32,
           y : (y - h/2)*32

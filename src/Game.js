@@ -15,7 +15,8 @@ import Timer from './timer.js';
 import Param from './param.js';
 import Menu from './UI/menu.js';
 import Audio from './audio.js';
-import StageGen from './Stage/stageGen.js';
+import StageData from './Stage/stageData.js';
+import DistanceField from "./Stage/distanceField.js";
 
 export default class Game{
   static Init(){
@@ -28,12 +29,15 @@ export default class Game{
     Pool.Init();
     Timer.Init();
     UIManager.Init();
-    StageGen.Init();
+    StageData.Init();
+    DistanceField.Init();
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(Game.debug) Game.stage = 5;
+    if(Game.debug) Game.stage = 12;
     else Game.stage = 1;
+    Game.continuePoint = 1;//コンティニュー地点
+
     Game.scene = new Scene();
 
     //Gameにタイトル画面状態をプッシュ
@@ -45,7 +49,7 @@ export default class Game{
 
   static async Load(){
     Game.debug=true;//デバッグモード
-    Game.debug=false;
+    //Game.debug=false;
 
     await Art.LoadTexture();
     Audio.Load();
@@ -94,7 +98,6 @@ export default class Game{
   }
 
   static Run(){
-    Drawer.testFilter.uniforms.time = Timer.time;//後で消す
     requestAnimationFrame(Game.Run);
     for (let l of EventManager.eventList){
       if(l.Do().done){
@@ -124,6 +127,7 @@ export default class Game{
     }
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);
+    Audio.Update();
     Timer.IncTime();
   }
 }
