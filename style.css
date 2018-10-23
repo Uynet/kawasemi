@@ -27,7 +27,8 @@ canvas {
   font-family: "Rounded Mplus 1c"; }
 
 .loading:before {
-  content: "(✿╹◡╹)Loading..."; }
+  content: "(*´ω｀*)Loading..."; }
+
 
 a:visited {
   color: #3737ac; }
