@@ -6,12 +6,12 @@ export default class Param{
       jumpVel : 6.2,//ジャンプ力
       runVel : 0.4,//はしり速度
       gravity : 0.30,
-      maxHp : 10,
+      maxHp : 30,
       maxBullet : 100,
       fliction : 0.7,
       invTime : 150,//無敵時間
       status : {
-        hp : 10,
+        hp : 30,
         bullet : 100,
       },
       
@@ -24,9 +24,9 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile :true,//false,
-        laser : true,//false,
-        weapon4 : true,//
+        missile :false,
+        laser : false,
+        weapon4 : false,//
         weapon5 : false,
       },
       //装備中の武器
@@ -94,7 +94,7 @@ export default class Param{
       agi : 25,
       cost : 6,
       speed : 8, 
-      length : 580,
+      length : 280,
       remain : 180,
       //optional
       isTarget : true,
@@ -112,8 +112,8 @@ export default class Param{
     }
     //normal
     this.weapon3 = {
-      agi : 10,
-      cost : 0,
+      agi : 7,
+      cost : 3,
       speed : 6, 
       length : 150,
       //optional

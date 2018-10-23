@@ -22,6 +22,10 @@ export default class GameClearEvent extends Event{
       let frame = 0;
       Game.scene.PushSubState("TRANS");
       Game.stage++;
+      if(Game.stage == 11){
+        //Audio.isFadeout=true;
+        Audio.StopBGM();
+      }
       Audio.PlaySE("stageChange");
       UIManager.PopStage(Game.stage);
       EventManager.eventList.push(new FadeEvent("fadeout"));
@@ -30,11 +34,8 @@ export default class GameClearEvent extends Event{
         yield;
       }
 
-      if(Game.stage == 11){
-        Audio.isFadeout=true;
-        Game.continuePoint = 11;
-      }
 
+        Game.continuePoint = 11;
       yield;
     }
     let itt = gen();

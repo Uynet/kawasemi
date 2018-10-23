@@ -1,4 +1,5 @@
 import Entity from '../entity.js';
+import BrightCoin from "../Effect/brightCoin.js";
 import Art from '../../art.js';
 import Collider from '../../Collision/collider.js';
 import Box from '../../Collision/box.js';
@@ -13,11 +14,12 @@ import QuakeEvent from '../../Event/quakeEvent.js';
 
 
 export default class Signboard extends BackEntity{
-  constructor(pos,message){
+  constructor(pos,message,name){
     super(pos,Art.wallPattern.signboard);
     /*基本情報*/
     this.layer= "ENTITY";
-    this.name = "signboard";
+    //なおせ
+    this.name = name;
     this.isUpdater = true;
       /* 固有情報
        * message : 複数のページからなる文章
@@ -33,7 +35,8 @@ export default class Signboard extends BackEntity{
     this.page = 0;//現在のページ番号
     this.isRead = false;//会話中かどうか
     /*スプライト*/
-    this.tex = Art.wallPattern.signboard;//テクスチャ
+    if(name == "signboard") this.tex = Art.wallPattern.signboard;//テクスチャ
+    if(name == "shop") this.tex = Art.wallPattern.shop;//テクスチャ
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
     //pop
@@ -52,6 +55,10 @@ export default class Signboard extends BackEntity{
   Update(){
     //page : 現在のページ番号
     let player = EntityManager.player;
+    if(!this.isRead && this.name == "shop" && this.frame%8 == 0){
+      let trail = new BrightCoin(ADV(this.pos,Rand2D(16)),Rand2D(0.5));
+      EntityManager.addEntity(trail);
+    }
     if(DIST(player.pos,this.pos) <  16 && player.isAlive){
       player.isCanRead = true;
       if(!this.isRead && Input.isKeyClick(KEY.X)){
@@ -59,5 +66,6 @@ export default class Signboard extends BackEntity{
         this.Read();
       }
     }
+    this.frame++;
   }
 }

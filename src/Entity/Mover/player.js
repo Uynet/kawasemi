@@ -520,8 +520,9 @@ export default class Player extends Entity{
   Observer(){
     if(this.hp <= 0){
       if(this.isAlive){
-        //死亡開始時に一回だけ呼ばれる部分
+        //なおせ
         Audio.StopBGM();
+        //死亡開始時に一回だけ呼ばれる部分
         this.ResetStatus();
         EventManager.PushEvent(new QuakeEvent(50,0.9));
         EntityManager.addEntity(new Explosion1(CPV(this.pos)));
@@ -557,12 +558,10 @@ export default class Player extends Entity{
   Supply(){
     //最後に撃った時刻から経過するほど早くなる
     let t = (this.frame-this.frameShot);
-    /*
-    if(t<=50 && t%10 == 0) this.bullet++;
-    else if(t>50 && t<=100 && t%5 == 0) this.bullet++;
-    else if(t>100 && t<=150 && t%3 == 0) this.bullet++;
-    else if(t>150) this.bullet+=2;
-    */
+    if(t<=500 && t%10 == 0) this.bullet++;
+    else if(t>500 && t<=1000 && t%5 == 0) this.bullet++;
+    else if(t>1000 && t<=1500 && t%3 == 0) this.bullet++;
+    else if(t>1500) this.bullet+=2;
     this.bullet = clamp(this.bullet,0,this.maxBullet);
     UIManager.bullet.SetBar(this.bullet); //BulletBarの更新
   }
