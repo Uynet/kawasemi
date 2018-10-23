@@ -19,6 +19,11 @@ const P_WLIST = {
   x : -12,
   y : 16,
 }
+const P_BAR = {
+  x : -3.5, 
+  y : -7, 
+};
+
 export default class GaugeBullet extends UI{
   constructor(pos){
     super(pos);
@@ -29,10 +34,10 @@ export default class GaugeBullet extends UI{
     this.pos = pos;
     /*パラメータ*/
     this.max = Param.player.maxBullet;
-
+    this.color = 0xCA5148;
     /*child*/
     this.outer = {pos:CPV(pos)};
-    this.bar = {pos:CPV(pos)};
+    this.bar = {pos:ADV(CPV(pos),P_BAR)};
     this.icon = {pos:ADV(pos,P_ICON)};
     this.amount = new Font(ADV(pos,P_AMOUNT),this.max + "","BULLET");//数字
     this.wlist = {
@@ -47,23 +52,12 @@ export default class GaugeBullet extends UI{
     this.frame = new PIXI.Rectangle(0, 0,16,16);
     this.spid = 0;
     this.container = new PIXI.Container();
-    let s;
-    //outer
-    s = Art.SpriteFactory(Art.UIPattern.bullet.outer);
-    s.position = this.outer.pos; 
-    this.container.addChild(s);
-    //bar
-    s = Art.SpriteFactory(Art.UIPattern.bullet.bar);
-    s.position = this.bar.pos; 
-    this.container.addChild(s);
-    //icon
-    let equip = Param.player.equip;
-    s = Art.SpriteFactory(Art.UIPattern.bullet.icon[equip]);
-    s.position = this.icon.pos; 
-    this.container.addChild(s);
-    //amount
-    this.container.addChild(this.amount.container);
+    this.InitChildren();
 
+
+  }
+  InitList(){
+    let s;
     let list = Object.keys(Param.player.havingWeaponList);
     list = list.filter((arr)=>{
       return Param.player.havingWeaponList[arr];
@@ -78,15 +72,38 @@ export default class GaugeBullet extends UI{
       this.container.addChild(s);
       p.x += 8;
     }
-
   }
-  Push(w){
+  InitChildren(){
+    let s;
+    //outer
+    s = Art.SpriteFactory(Art.UIPattern.bullet.outer);
+    s.position = this.outer.pos; 
+    this.container.addChild(s);
+    //bar
+    let rect = new PIXI.Graphics();
+    rect.beginFill(this.color);
+    rect.drawRect(this.bar.pos.x,this.bar.pos.y,62,12);
+    rect.endFill();
+    s = rect;
+    //s = Art.SpriteFactory(Art.UIPattern.bullet.bar);
+    s.position = this.bar.pos; 
+    this.container.addChild(s);
+    //icon
+    let equip = Param.player.equip;
+    s = Art.SpriteFactory(Art.UIPattern.bullet.icon[equip]);
+    s.position = this.icon.pos; 
+    this.container.addChild(s);
+    //amount
+    this.container.addChild(this.amount.container);
+    this.InitList();
+  }
+  Push(weaponName){
     let p = CPV(this.wlist.pos); 
-    let s = Art.SpriteFactory(Art.UIPattern.bullet.pop[w]);
+    let s = Art.SpriteFactory(Art.UIPattern.bullet.pop[weaponName]);
     p.x += (this.wlist.list.length-1)*8;
     s.position = p;
     this.container.addChild(s);
-    this.wlist.list.push(w);
+    this.wlist.list.push(weaponName);
     //samall weapon list
   }
   SetBar(bullet){

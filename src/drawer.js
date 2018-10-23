@@ -20,8 +20,7 @@ export default class Drawer{
        * UIコンテナ:UIを描画するレイヤ
        * */
 
-    let Re = new PIXI.Rectangle(0,0,400,320);
-    let tex = new PIXI.Texture.fromImage("src/resource/img/dummy.png");
+    let Re = new PIXI.Rectangle(0,0,PIXI_WIDTH/2,PIXI_HEIGHT/2);
     this.renderTarget = new PIXI.Sprite();
 
     this.backGroundContainer = new PIXI.Container();//背景
@@ -46,23 +45,25 @@ export default class Drawer{
 
 
     /*拡大率*/
-    this.magnification = 3;
+    this.magnification = 2;
     let po = VECN(this.magnification);
-    this.backGroundContainer.scale = po;
+    this.backGroundContainer.scale.set(3);
     this.backContainer.scale = po;
     this.entityContainer.scale = po;
     this.UIContainer.scale = po;
-    this.foreContainer.scale.set(4);
+    this.foreContainer.scale.set(this.magnification + 1);
     this.foreEntityContainer.scale = po;
-    this.filterContainer.scale = po;
+    this.filterContainer.scale.set(this.magnification + 1);
     $("#pixiview").append(this.Renderer.view);
 
     //フィルタ
     this.blurFilter = new PIXI.filters.BlurFilter();
     this.blurFilter.blur = 2;
     this.noiseFilter = new PIXI.filters.NoiseFilter(0.5);
+    this.outlineFilter = new PIXI.filters.NoiseFilter();
 
     //shderはなぜかartにある
+    Drawer.Stage.filters = [Drawer.testFilter];
     
     this.mapSize = {
       width : 32,
@@ -85,8 +86,8 @@ export default class Drawer{
   }
 
   /*コンテナからスプライトを削除*/
-  static removeContainer(sprite,CONTAINER){//,id){
-    switch (CONTAINER){
+  static removeContainer(sprite,container){
+    switch (container){
       case "UI" : this.UIContainer.removeChild(sprite); break;
       case "ENTITY": this.entityContainer.removeChild(sprite); break;
       case "FILTER": this.filterContainer.removeChild(sprite); break;
@@ -94,7 +95,7 @@ export default class Drawer{
       case "FOREENTITY": this.foreEntityContainer.removeChild(sprite); break;
       case "BACK": this.backContainer.removeChild(sprite); break;
       case "BG": this.backGroundContainer.removeChild(sprite); break;
-      default : console.warn("container");
+      default : console.warn(container);
     }
   }
 
@@ -105,16 +106,18 @@ export default class Drawer{
 
   /* プレイヤー中心にスクロール*/
   static ScrollOn(pos){
-    centerX = BET(
-      this.magnification*(-this.mapSize.width*16 + 134) + 400,
-      //10ブロック戻すもどす
-      this.magnification*(- pos.x-8) + 400,
+    //this.renderTarget.anchor.x = 0.5;
+    //this.renderTarget.anchor.y = 0.5;
+    //this.renderTarget.rotation = Math.PI + Math.sin(Timer.timer/100)*0.1;
+    centerX = clamp(
+      this.magnification*(-pos.x-8)+PIXI_WIDTH/2,
+      this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
       0
     );
-    centerY = BET(
+    centerY = clamp(
       //8ブロックぶん上げる
-      this.magnification*(-this.mapSize.height*16 +8*16) + 300,
-      this.magnification*(-pos.y-8) + 300,
+      this.magnification*(-pos.y-8) + PIXI_HEIGHT/2,
+      this.magnification*(-this.mapSize.height*16) + PIXI_HEIGHT,
       0
     );
     toX = this.entityContainer.x + ( centerX - this.entityContainer.x )/8;
@@ -138,8 +141,17 @@ export default class Drawer{
   }
   /*スクロール位置を一瞬で移動させる*/
   static ScrollSet(pos){
-    centerX = BET(-700,this.magnification*(- pos.x-8 + 400/this.magnification),-64);
-    centerY = this.magnification*(- pos.y-8 + 300/this.magnification);
+    centerX = BET(
+      this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
+      this.magnification*(-pos.x-8)+PIXI_WIDTH/2,
+      0
+    );
+    centerY = BET(
+      //8ブロックぶん上げる
+      this.magnification*(-this.mapSize.height*16) + PIXI_HEIGHT,
+      this.magnification*(-pos.y-8) + PIXI_HEIGHT/2,
+      0
+    );
     this.backContainer.x = Math.floor(centerX);
     this.backContainer.y = Math.floor(centerY);
     this.entityContainer.x = Math.floor(centerX);
@@ -153,10 +165,20 @@ export default class Drawer{
   static SetFilter(filters){
     Drawer.renderTarget.filters = filters;
   }
+  static Dist(){
+    let extract = this.Renderer.plugins.extract;
+    let canvas = extract.canvas();
+    const distContext = canvas.getContext("webgl");
+    var rgba = context.getImageData(p.x, p.y, 1, 1).data;
+  }
 
   static Quake(diff){
     this.Stage.x = Math.floor(diff.x);
     this.Stage.y = Math.floor(diff.y);
+  }
+  static QuakeRot(arg){
+    this.renderTarget.anchor.set(0.5);
+    this.renderTarget.rotation = arg;
   }
 
 

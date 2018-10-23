@@ -18,6 +18,12 @@ export default class Input{
       return false;
     }
   }
+  static VirtualKeyDown(key){
+    inputedKeyList[key] = true;
+  }
+  static VirtualKeyUp(key){
+    inputedKeyList[key] = false;
+  }
   static isAnyKeyClick(){
     return anyKeyPress;
   }

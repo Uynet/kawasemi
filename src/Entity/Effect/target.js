@@ -6,7 +6,10 @@ import EntityManager from '../../Stage/entityManager.js';
 /*Targetクラス*/
 export default class Target extends EFFECT{
   constructor(enemy){
+    //このposは参照型なので常にenemyを追尾している
     super(enemy.pos,VEC0());
+    this.ofset = enemy.size/2;
+    this.ofsetPos = ADV(this.pos , VECN(this.ofset));
     /*基本情報*/
     this.name = "target";
     this.frame = 0;
@@ -28,7 +31,8 @@ export default class Target extends EFFECT{
     //シュッてなるやつ
     //ゼロ除算回避
     this.sprite.scale = VECN(1.5 + 1.5/(this.frame+1));
-    this.sprite.position = ADV(this.pos,VECN(8));
+    this.ofsetPos = ADV(this.pos , VECN(this.ofset));
+    this.sprite.position = this.ofsetPos;
     this.frame++;
   }
 }

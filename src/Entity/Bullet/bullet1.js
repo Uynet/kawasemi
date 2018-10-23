@@ -12,6 +12,7 @@ import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
 import BulletShot from '../Effect/bulletShot.js';
 import BulletBlur from '../Effect/bulletBlur.js';
+import Fire2 from "../Effect/fire2.js";
 import Explosion1 from '../Effect/explosion1.js';
 import Param from '../../param.js';
 
@@ -54,10 +55,11 @@ export default class Bullet1 extends Bullet{
   Update(){
     /*□Effect BulletBulr*/
       let p = CPV(this.pos);
-      let d = Rand2D(5);
+      let v = POV(this.arg+Math.PI,8);
+      let d = Rand2D(5); 
+
       p = ADV(p,d);
-      let v = POV(this.arg+Math.PI,4);
-      let blur = Pool.GetBulletBlur(p,v);
+      let blur = Pool.GetBulletBlur(p,VEC0());
       if(blur)EntityManager.addEntity(blur);
     /*Effect Sonic*/
     /*
@@ -77,7 +79,7 @@ export default class Bullet1 extends Bullet{
       EventManager.eventList.push(new QuakeEvent(50,0.8));//ゆれ
       EntityManager.addEntity(new Explosion1(CPV(this.pos)));
     }
-    if(this.frame > 120){
+    if(this.frame > 180){
       Pool.Remove(this);
       EntityManager.addEntity(new BulletShot(CPV(this.pos)));
     }

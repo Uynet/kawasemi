@@ -10,6 +10,7 @@ import Bullet from './bullet.js';
 import BulletBlur from '../Effect/bulletBlur.js';
 import Explosion1 from '../Effect/explosion1.js';
 import Explosion2 from '../Effect/explosion2.js';
+import Explosion3 from '../Effect/explosion3.js';
 import Param from '../../param.js';
 import Audio from '../../audio.js';
 import Pool from '../../Stage/pool.js';
@@ -57,21 +58,22 @@ export default class Bullet2 extends Bullet{
       if(c.isHit){
         if(w.isBreakable) {
           w.Damage(-1);
-          let e = new Explosion2(CPV(this.pos),this.arg + Math.PI);
+          let e = new Explosion3(CPV(this.pos),VEC0());
           //e = Pool.GetSmoke(CPV(this.pos),VEC0(),3);
           EntityManager.addEntity(e);
         }
         else if(w.type == "ENEMY"){
-          EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
+          EntityManager.addEntity(new Explosion3(CPV(this.pos),this.arg + Math.PI));
           w.Damage(-RandBET(this.atkMin,this.atkMax));
+          if(w.hp > 0)isNext = false;//
           }
         else {
           if(w.material == "steel"){
             let i = POV(this.arg,-16);//入射角ベクトル
             //r = i+2n*(i・n)
 
-            let r = ADV(i,MLV(VECN(2),MLV(c.n,VECN(DOT(i,c.n)))));
-            this.arg = Math.atan(r.y/r.x);
+            let r = reflect(i,c.n);
+            this.arg = argument(r);
             //if(r.y<0)this.arg += Math.PI;
           //鉄で反射
           }else{
@@ -87,6 +89,12 @@ export default class Bullet2 extends Bullet{
       let p = ADV(this.pos,POV(this.arg,16));
       let bullet = new Bullet2(p,this.arg,isNext,step);
       EntityManager.addEntity(bullet);
+    }else{
+      /*
+      let p = ADV(this.pos,POV(this.arg,-16));
+      EntityManager.player.pos.x = p.x;
+      EntityManager.player.pos.y = p.y;
+      */
     }
   }
 

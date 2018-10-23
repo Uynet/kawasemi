@@ -1,9 +1,12 @@
 import EFFECT from './effect.js';
+import Drawer from "../../drawer.js";
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
+import BrightCoin from "./brightCoin.js";
 import Pool from '../../Stage/pool.js';
 import Sonic from './sonic.js';
 import Stone from './stone.js';
+import Stone2 from './stone2.js';
 import Flash from './flash.js';
 import Fire from './fire.js';
 import Smoke from './smoke.js';
@@ -20,34 +23,37 @@ export default class Explosion1 extends EFFECT{
   }
   Bomb(){
     let sonic = Pool.GetSonic(this.pos,VEC0());
-    if(sonic)EntityManager.addEntity(sonic);
+    if(sonic!==false)EntityManager.addEntity(sonic);
     //stone(というか火花?)
-    for(let i = 0;i<8;i++){
-      let v = Rand2D(40);
-      let stone = Pool.GetStone(CPV(this.pos),v);
-      if(stone)EntityManager.addEntity(stone);
+    for(let i = 0;i<14;i++){
+      let arg = Rand(Math.PI);
+      let v = POV(arg,8);
+      let stone2 = new Stone2(CPV(this.pos),v);
+      EntityManager.addEntity(stone2);
     }
     //smoke
-    for(let i = 0;i<2;i++){
-      let smoke = Pool.GetStone(CPV(this.pos),{x:Rand(8),y:-1});
-      if(smoke)EntityManager.addEntity(smoke);
+    for(let i = 0;i<8;i++){
+      let arg = Rand(Math.PI);
+      let v = POV(arg,Rand(3));
+      let smoke = Pool.GetSmoke(CPV(this.pos),v,2+Rand(1));
+      if(smoke!== false)EntityManager.addEntity(smoke);
     }
     for(let i =0;i<3;i++){
-      let v = Rand2D(16);
+      let v = Rand2D(24);
       let p = ADV(v,this.pos);
       let fire = Pool.GetFire(p,VEC0());
-      if(fire)EntityManager.addEntity(fire);
+      if(fire!== false)EntityManager.addEntity(fire);
     }
     for(let i =0;i<3;i++){
       let p = ADV(this.pos,Rand2D(16));
       let flash = Pool.GetFlash(this.pos,VEC0());
-      if(flash)EntityManager.addEntity(flash);
+      if(flash!== false)EntityManager.addEntity(flash);
     }
   }
   Collision(){
     for(let l of EntityManager.enemyList){
       if(DIST(this.pos,l.pos) < 32){
-        l.Damage(-RandBET(50,99));
+        l.Damage(-RandBET(5,8));
         /* ■ SoundEffect : hitWall */
         /* □ Effect : hitWall */
       };
@@ -65,8 +71,11 @@ export default class Explosion1 extends EFFECT{
 
   Update(){
     //爆発して自分は消える
-    this.Bomb();
-    this.Collision();
-    EntityManager.removeEntity(this);
+    if(this.frame == 0){
+      this.Bomb();
+      this.Collision();
+    }
+    if(this.frame > 300) EntityManager.removeEntity(this);
+    this.frame++;
   }
 }

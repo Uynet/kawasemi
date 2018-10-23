@@ -3,7 +3,7 @@ import Drawer from './drawer.js';
 
 export default class Art{
   static Load(resources){
-    this.darkTexture = PIXI.utils.TextureCache["src/resource/effect/dark.png"];
+    this.test = PIXI.Texture.fromFrame('distance00.png'),
     /*forにして*/
     this.playerPattern = {
       runR : [
@@ -189,11 +189,15 @@ export default class Art{
           missile : PIXI.Texture.fromFrame('UI18.png'),
           laser : PIXI.Texture.fromFrame('UI19.png'),
           normal : PIXI.Texture.fromFrame('UI1A.png'),
+          weapon4 : PIXI.Texture.fromFrame('UI1B.png'),
+          weapon5 : PIXI.Texture.fromFrame('UI1C.png'),
         },
         pop : {
           normal : PIXI.Texture.fromFrame('UI30.png'),
           missile : PIXI.Texture.fromFrame('UI31.png'),
           laser : PIXI.Texture.fromFrame('UI32.png'),
+          weapon4 : PIXI.Texture.fromFrame('UI33.png'),
+          weapon5 : PIXI.Texture.fromFrame('UI34.png'),
         }
       },
       score : {
@@ -245,7 +249,9 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet60.png'),//bullet blur
         PIXI.Texture.fromFrame('bullet61.png'),
         PIXI.Texture.fromFrame('bullet62.png'),
-        PIXI.Texture.fromFrame('bullet63.png') 
+        PIXI.Texture.fromFrame('bullet63.png'), 
+        PIXI.Texture.fromFrame('bullet64.png'), 
+        PIXI.Texture.fromFrame('bullet65.png') 
       ],
       blur2 : [ 
         PIXI.Texture.fromFrame('bulletF0.png'),//bullet blur
@@ -283,12 +289,31 @@ export default class Art{
         ],
       explosion : {
         flash : [PIXI.Texture.fromFrame('bullet80.png')],
-        fire : [PIXI.Texture.fromFrame('bulletA0.png')],
+        fire : [
+          PIXI.Texture.fromFrame('bulletA0.png'),
+          PIXI.Texture.fromFrame('bulletA1.png'),
+          PIXI.Texture.fromFrame('bulletA2.png'),
+          PIXI.Texture.fromFrame('bulletA3.png'),
+          PIXI.Texture.fromFrame('bulletA4.png'),
+          PIXI.Texture.fromFrame('bulletA5.png'),
+          PIXI.Texture.fromFrame('bulletA6.png'),
+          PIXI.Texture.fromFrame('bulletA7.png'),
+        ],
         stone : [PIXI.Texture.fromFrame('bulletB0.png')],
-        smoke : [PIXI.Texture.fromFrame('bulletC0.png')],
-        sonic :this.Cor("bullet",70,4),
-        
-      }
+        smoke : [
+          PIXI.Texture.fromFrame('bulletC0.png'),
+          PIXI.Texture.fromFrame('bulletC1.png'),
+          PIXI.Texture.fromFrame('bulletC2.png'),
+          PIXI.Texture.fromFrame('bulletC3.png'),
+          PIXI.Texture.fromFrame('bulletC4.png'),
+          PIXI.Texture.fromFrame('bulletC5.png'),
+          PIXI.Texture.fromFrame('bulletC6.png'),
+          PIXI.Texture.fromFrame('bulletC7.png'),
+        ],
+        sonic :this.Frame("bullet",70,4),
+      },
+      buringFire : this.Frame("bullet" ,120 , 4 ),
+
     }
     this.enemyPattern = {
       coin : [
@@ -312,13 +337,13 @@ export default class Art{
         PIXI.Texture.fromFrame('enemy02.png'),
         PIXI.Texture.fromFrame('enemy03.png')
       ],
-      enemy2 :this.Cor("enemy",10,4),
-      enemy3 : this.Cor("enemy",30,2),
-      eBullet1 : this.Cor("enemy",40,4),
-      enemy4 : this.Cor("enemy",50,2),
-      enemy5 : this.Cor("enemy",60,2),
-      eBullet2 : this.Cor("enemy",70,4),
-      enemy6 : this.Cor("enemy",80,2),
+      enemy2 :this.Frame("enemy",10,4),
+      enemy3 : this.Frame("enemy",30,2),
+      eBullet1 : this.Frame("enemy",40,4),
+      enemy4 : this.Frame("enemy",50,2),
+      enemy5 : this.Frame("enemy",60,2),
+      eBullet2 : this.Frame("enemy",70,4),
+      enemy6 : this.Frame("enemy",80,2),
       //壊せる木箱
       woodbox : [
         PIXI.Texture.fromFrame('enemy40.png')
@@ -351,6 +376,7 @@ export default class Art{
       ],
       //壁縁あり
       edge : {
+        adapt : PIXI.Texture.fromFrame('wall72.png'),
         inner : [
           PIXI.Texture.fromFrame('wall61.png'),
           PIXI.Texture.fromFrame('wall63.png'),
@@ -391,11 +417,16 @@ export default class Art{
       },
       //鉄骨
       steel : {
-        entity : this.Cor("wall",90,4),
-        back : this.Cor("wall",94,4),
+        entity : this.Frame("wall",90,4),
+        back : this.Frame("wall",94,4),
       },
       //背景
-      backGround : [PIXI.Texture.fromFrame('wallA0.png')],
+      backGround : [
+        PIXI.Texture.fromImage("src/resource/img/BG0.png"),
+        PIXI.Texture.fromImage("src/resource/img/BG1.png"),
+        PIXI.Texture.fromImage("src/resource/img/BG2.png"),
+      ],
+
       //すり抜け床
       through : [PIXI.Texture.fromFrame('wallC0.png')],
       //トゲが飛び出る床
@@ -414,16 +445,28 @@ export default class Art{
     //font
     this.LoadFont();
 
-    let a = new Array(30).fill(0.0);
-
     //shader
-    Drawer.testFilter = new PIXI.Filter(null,resources.shader.data , {
+    Drawer.testFilter = new PIXI.Filter(null,resources.testShader.data , {
       time: { // 変数名
+        type: '1f', // 型
+        value: 300 // 初期値
+      },
+      x: { // 変数名
+        type: '1f', // 型
+        value: 0 // 初期値
+      },
+      y: { // 変数名
         type: '1f', // 型
         value: 0 // 初期値
       }
     });
-    
+    Drawer.fireFilter = new PIXI.Filter(null,resources.fireShader.data , {
+      frame: {
+        type: '1f',
+        value: 0 // 初期値
+      }
+    });
+
 
     //Drawer.smokeFilter =new PIXI.Filter(null,resources.smokeShader.data);
   }
@@ -438,14 +481,15 @@ export default class Art{
         .add('pattern5','src/resource/img/wallPattern.json')
         .add('pattern6','src/resource/img/seqPattern.json')
         .add('pattern7','src/resource/img/font.json')
-        .add('src/resource/effect/dark.png')
-        .add('shader', 'src/Shader/test.frag')
+        .add('distance','src/resource/img/distance.json')
+        .add('testShader', 'src/Shader/test.frag')
+        .add('fireShader', 'src/Shader/fire.frag')
         //.add('smokeShader', 'src/Shader/smoke.frag')
         .load((loader,resources)=>Art.Load(resources)).onComplete.add(res)); }
 
   //pattern : str
   //start ,frames : int
-  static Cor(pattern,start,frames){
+  static Frame(pattern,start,frames){
     let filename;
     let a = [];//戻り値
     for(let i=0;i<frames;i++){

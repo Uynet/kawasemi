@@ -7,7 +7,7 @@ import Drawer from '../drawer.js';
  * UIのセット
  */
 export default class QuakeEvent extends Event{
-  constructor(size,time){
+  constructor(size,time,isRot){
     //undefined
     if(time>=1 || !time) {
       console.warn("invalid time : " + time);
@@ -15,18 +15,33 @@ export default class QuakeEvent extends Event{
     };
     super(1);
     function* gen(){
-      let frame = 0;
-      let d;
-      while(size > 0.1){
-        d = Rand2D(size);
-        Drawer.Quake(d);
-        size *= time;
-        frame++;
+      if(isRot){
+        let frame = 0;
+        let arg;
+        while(frame < 200){
+          arg = Math.sin(frame*0.1)*Math.exp(-frame*0.1)*0.4;
+          Drawer.QuakeRot(arg);
+          frame++;
+          yield ;
+        }
+        Drawer.Stage.x = 0;
+        Drawer.Stage.y = 0;
         yield ;
       }
-      Drawer.Stage.x = 0;
-      Drawer.Stage.y = 0;
-      yield ;
+      else { 
+        let frame = 0;
+        let d;
+        while(size > 0.1){
+          d = Rand2D(size);
+          Drawer.Quake(d);
+          size *= time;
+          frame++;
+          yield ;
+        }
+        Drawer.Stage.x = 0;
+        Drawer.Stage.y = 0;
+        yield ;
+      }
     }
     let itt = gen();
     this.func = itt;

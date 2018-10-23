@@ -5,7 +5,6 @@ import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Input from '../../input.js';
 import EventManager from '../../Event/eventmanager.js';
-import MessageEvent from '../../Event/messageEvent.js';
 import Game from '../../game.js';
 import BackEntity from '../backEntity.js';
 import UIManager from '../../UI/uiManager.js';
@@ -17,7 +16,7 @@ export default class Signboard extends BackEntity{
   constructor(pos,message){
     super(pos,Art.wallPattern.signboard);
     /*基本情報*/
-    this.layer= "BACK";
+    this.layer= "ENTITY";
     this.name = "signboard";
     this.isUpdater = true;
       /* 固有情報
@@ -43,48 +42,20 @@ export default class Signboard extends BackEntity{
     this.popup = new Signpop(p);
     EntityManager.addEntity(this.popup);
   }
+
   Read(){
-    if(!this.isRead){
-      this.isRead = true;
-      let event = new MessageEvent(this.message[this.page],"POP");
-      EventManager.eventList.push(event);
-      this.page++;
-    }else{
-      /*イベント発生用メッセージ*/
-      //イベントを発生させてページを読み進める
-      //最初のイベントせんよう
-      if(this.message[this.page] == "EVENT"){;
-        let event = new MessageEvent(this.message[this.page],"EVENT");
-        EventManager.eventList.push(event);
-        //クソポイント
-        //ここでメッセージを変更するな
-        this.message = ["..."];
-        this.page++;
-      }
-      if(this.page < this.message.length){
-        let event = new MessageEvent(this.message[this.page],"PAGE");
-        EventManager.eventList.push(event);
-        this.page++;
-        //続きがあれば読む
-        }else{
-          //なければ終了
-          Game.scene.PopSubState();
-          UIManager.CloseMessage();//枠を閉じる
-          this.isRead = false;
-          this.isNear = false;
-          this.page = 0;
-          this.popup;
-        }
-    }
+    this.isRead = true;
+    Game.scene.PushSubState("MES");
+    UIManager.PopMessage(this);
   }
 
   Update(){
-    //メッセージ文が"EVENT"ならばイベントを発生させる
     //page : 現在のページ番号
     let player = EntityManager.player;
     if(DIST(player.pos,this.pos) <  16 && player.isAlive){
       player.isCanRead = true;
-      if( Input.isKeyClick(KEY.X)){
+      if(!this.isRead && Input.isKeyClick(KEY.X)){
+        //UI側にMESSAGEを生成し、以降の入力はそちらで処理
         this.Read();
       }
     }
