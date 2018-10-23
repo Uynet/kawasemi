@@ -1,4 +1,5 @@
 import Timer from './timer.js';
+import Game from "./game.js";
 //サウンド管理
 let source,buffer,gainNode;
 export default class Audio{
