@@ -32,7 +32,7 @@ export default class Message extends UI{
       sprite : Art.SpriteFactory(Art.UIPattern.message.frame), 
     }
     //文字の長さに応じて枠を調整
-    this.outer.sprite.scale.x *= 4.0;
+    this.outer.sprite.scale.x *= 2.6;
     this.outer.sprite.scale.y *= 2.5; //yは固定
     /*スプライト*/
     this.isMultiple = true;

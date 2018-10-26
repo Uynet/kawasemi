@@ -42,11 +42,12 @@ export default class gaugeBossHP extends UI{
     //outer
     s = Art.SpriteFactory(this.pattern.outer);//
     s.position = this.outer.pos; 
-    s.scale.x = this.scale;
+    s.scale.x = this.scale*0.97;
     this.container.addChild(s);
     //bar
     s = Art.SpriteFactory(this.pattern.bar);
     s.position = this.bar.pos; 
+    s.position.x += 0
     s.scale.x = this.scale;
     this.container.addChild(s);
     //icon

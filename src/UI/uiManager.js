@@ -16,8 +16,8 @@ import Timer from "../timer.js";
 
 //BossHP
 const P_BossHP = {
-  x : 36, 
-  y : 270
+  x : 4, 
+  y : 180
 };
 //HP
 const P_HP = {
@@ -31,13 +31,13 @@ const P_BUL = {
 };
 //score
 const P_SCORE = {
-  x : 336,
+  x : 208,
   y : P_HP.y + 8, 
 }
 //message
 const P_MES = {
   x:8,
-  y:232,
+  y:132,
 }
 //Menu
 let P_MENU = {
@@ -59,7 +59,7 @@ export default class UIManager{
   static PopStage(stage){
     let p = {
       x : 96,
-      y : 96
+      y : 72
     }
     switch(Game.stage){
       case 11: UIManager.addUI(new StagePop(p,"^- こんてぃにゅーぽいんと -$" ,));
@@ -85,7 +85,7 @@ export default class UIManager{
       x : p1.x, 
       y : p1.y+10,
     }
-    UIManager.addUI(new Font(p2,"- ver0.1 -","MES"));//SCORE
+    UIManager.addUI(new Font(p2,"- ver0.2 -","MES"));//SCORE
     let p3 = {
       x : p1.x-8, 
       y : p2.y+48,

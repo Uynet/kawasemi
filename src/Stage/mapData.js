@@ -385,7 +385,7 @@ export default class MapData{
   //背景を追加
   static AddBackGround(BG){
     let back;
-    let w = 16;
+    let w = 24;
     let h = 16;
     for(let y = 0;y<h;y++){
       for(let x = 0;x<w;x++){
