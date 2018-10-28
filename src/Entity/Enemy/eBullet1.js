@@ -5,7 +5,6 @@ import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Param from '../../param.js';
-import Explosion2 from '../Effect/explosion2.js';
 
 //敵の弾丸その1
 export default class eBullet1 extends Enemy{

@@ -1,7 +1,7 @@
-import EFFECT from './effect.js';
-import Art from '../../art.js';
-import EntityManager from '../../Stage/entityManager.js';
-import Pool from '../../Stage/pool.js';
+import EFFECT from '../effect.js';
+import Art from '../../../art.js';
+import EntityManager from '../../../Stage/entityManager.js';
+import Pool from '../../../Stage/pool.js';
 
 //火花?
 export default class Stone extends EFFECT{

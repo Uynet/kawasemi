@@ -13,8 +13,8 @@ import Bullet from './bullet.js';
 import EmitTrail from "../AI/emitTrail.js";
 import BulletShot from '../Effect/bulletShot.js';
 import BulletTrail from '../Effect/bulletTrail.js';
-import Fire2 from "../Effect/fire2.js";
-import Explosion1 from '../Effect/explosion1.js';
+import Fire2 from "../Effect/Explosion/fire2.js";
+import Explosion1 from '../Effect/Explosion/explosion1.js';
 import Param from '../../param.js';
 
 const bullet1 = Param.bullet1;

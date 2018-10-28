@@ -1,6 +1,6 @@
-import EFFECT from './effect.js';
-import Art from '../../art.js';
-import EntityManager from '../../Stage/entityManager.js';
+import EFFECT from '../effect.js';
+import Art from '../../../art.js';
+import EntityManager from '../../../Stage/entityManager.js';
 
 //火花2
 export default class Stone2 extends EFFECT{

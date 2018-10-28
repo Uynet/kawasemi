@@ -10,7 +10,7 @@ import MoveLissajous from '../AI/moveLissajous.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import Param from '../../param.js';
-import Explosion2 from '../Effect/explosion2.js';
+import Explosion2 from '../Effect/Explosion/explosion2.js';
 
 let STATE = {
   WAITING : "WAITING",

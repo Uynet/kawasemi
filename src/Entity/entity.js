@@ -12,6 +12,7 @@ export default class Entity{
     //this.e = 0.9;
     /*standard*/
     this.frame = 0;
+    this.spid = 0;
     this.type = "MOVER";//最も深い階層に書いたもので上書きされる
     //this.collider;
     //this.isUpdater = true;    
@@ -22,6 +23,7 @@ export default class Entity{
     /*未実装*/
     this.layer;
     /* Other */
+    this.AIList = [];
   }
   /*common*/
   Physics(){};

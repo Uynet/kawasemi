@@ -2,7 +2,6 @@ import Drawer from '../drawer.js';
 import Target from '../Entity/Effect/target.js';
 import Timer from '../timer.js';
 import Art from '../art.js';
-import Stone from '../Entity/Effect/stone.js';
 
 export default class EntityManager{
   static Init(){

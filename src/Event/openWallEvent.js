@@ -5,7 +5,7 @@ import EventManager from './eventmanager.js';
 import Game from '../game.js';
 import EntityManager from '../Stage/entityManager.js';
 import QuakeEvent from '../Event/quakeEvent.js';
-import Explosion1 from '../Entity/Effect/explosion1.js';
+import Explosion1 from '../Entity/Effect/Explosion/explosion1.js';
 
 export default class OpenWallEvent extends Event{
   constructor(){

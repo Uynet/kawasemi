@@ -1,4 +1,5 @@
 import Art from '../../art.js';
+import Animator from "../AI/animator.js";
 import Audio from '../../audio.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
@@ -7,7 +8,7 @@ import EntityManager from '../../Stage/entityManager.js';
 import Entity from '../entity.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
 import GetCoin from '../Effect/getCoin.js';
-import BrightCoin from '../Effect/brightCoin.js';
+import Bright from '../Effect/bright.js';
 
 let player;
 //コイン
@@ -18,7 +19,6 @@ export default class Coin extends Entity{
     /*基本情報*/
     this.frame = 0;
     this.e = 0.9;
-    this.isUpdater = true;    
     this.type = "MOVER";
     /*スプライト*/
     this.pattern = Art.enemyPattern.coin;
@@ -30,8 +30,10 @@ export default class Coin extends Entity{
     /*パラメータ*/
     this.gravity = 0.5 + Rand(0.2);
     this.layer = "ENTITY";
+    this.isUpdater = true;
     /*AI*/
     this.vel.y = 0.3;
+    this.AIList.push(new Animator(this,true,3,12));
   }
   Collision(){
     this.isJump = true;
@@ -90,29 +92,22 @@ export default class Coin extends Entity{
       }
     }
   }
-
   Update(){
-    //Animation
-    if(this.frame%3 == 0){
-      this.spid = (this.spid+1)%12;
-    }
+    this.ExecuteAI();
     //たまに光る
     if(this.frame%(8 + Math.floor(Rand(1))) == 0){
       let p = ADV(this.pos,Rand2D(5));
       console.assert(p);
-      EntityManager.addEntity(new BrightCoin(p));
+      EntityManager.addEntity(new Bright(p));
     }
     //Collision
     if(this.coltype!="none")this.Collision();
     this.Physics();
     if(EntityManager.player.isAlive)this.GetByPlayer();
     //時間立つと点滅
-    if( this.frame > 300 && this.frame%8 <4) this.sprite.texture = this.pattern[12];
-    else this.sprite.texture = this.pattern[this.spid];
-    //消える
-    if( this.frame > 450 ){
-      EntityManager.removeEntity(this);
-    }
+    if( this.frame > 300 && this.frame%8 <4) this.sprite.alpha = 0;
+    else this.sprite.alpha = 1;
+    if( this.frame > 450 ) EntityManager.removeEntity(this);
     this.sprite.position = this.pos;
 
     this.frame++;

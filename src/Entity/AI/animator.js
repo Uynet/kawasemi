@@ -9,7 +9,7 @@ export default class Animator{
     this.animFrames = frames;
   }
   Do(){
-    if(this.entity.frame%this.animTerm == 0){
+    if(this.entity.frame%this.animTerm == this.animTerm-1){
       this.entity.sprite.texture = this.entity.pattern[this.entity.spid];
       if(this.isLoop) this.entity.spid = (this.entity.spid+1)%this.animFrames;
       else this.entity.spid = Math.min(this.entity.spid+1,this.animFrames-1);
