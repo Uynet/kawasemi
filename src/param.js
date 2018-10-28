@@ -161,7 +161,8 @@ export default class Param{
       atkMax : 5,
       atkMin : 3,
       hp : 1,
-      curve : 0.2
+      curve : 0.2,
+      deleteFrameCount : 180,//残存時間
     }
     this.bullet4 = {
       atkMax : 1,

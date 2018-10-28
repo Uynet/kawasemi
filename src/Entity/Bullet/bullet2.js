@@ -96,9 +96,7 @@ export default class Bullet2 extends Bullet{
   }
 
   Update(){
-    for (let AI of this.AIList){
-    //  AI.Do();
-    }
+    this.ExecuteAI();
     if(this.frame%2 == 0){
       this.spid = Math.min(this.spid+1,7);
     }
