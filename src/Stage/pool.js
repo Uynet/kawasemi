@@ -1,6 +1,5 @@
 import EntityManager from './entityManager.js';
 import Stone from '../Entity/Effect/stone.js';
-import BulletBlur from '../Entity/Effect/bulletBlur.js';
 import Smoke from '../Entity/Effect/smoke.js';
 import Fire from '../Entity/Effect/fire.js';
 import Bullet1 from '../Entity/Bullet/bullet1.js';
@@ -18,7 +17,6 @@ export default class Pool{
       stones : [],
       smokes : [],
       fires : [],
-      bulletblurs : [],
       sonics : [],
       flashes : [],
       missiles : [],
@@ -38,20 +36,8 @@ export default class Pool{
     for(let i = 0;i<50;i++){
       this.unused.flashes.push(new Flash(VEC0()));
     }
-    for(let i = 0;i<300;i++){
-      this.unused.bulletblurs.push(new BulletBlur(VEC0(),VEC0()));
-    }
     for(let i = 0;i<100;i++){
       this.unused.missiles.push(new Bullet1(VEC0(),"dummyWeapon"));
-    }
-  }
-  static GetBulletBlur(pos,vel){
-    if(this.unused.bulletblurs.length > 0){
-    let s = this.unused.bulletblurs.pop();
-    s.Init(pos,vel);
-    return s;
-    }else{
-      return false;
     }
   }
   static GetMissile(pos,weapon){
@@ -82,7 +68,6 @@ export default class Pool{
   static Remove(s){
     let listname;
     switch(s.name){
-      case "bulletblur" : this.unused.bulletblurs.push(s);break;
       case "fire" : this.unused.fires.push(s);break;
       case "stone" : this.unused.stones.push(s);break;
       case "smoke" :  this.unused.smokes.push(s);break;

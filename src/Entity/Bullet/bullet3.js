@@ -3,7 +3,7 @@ import Audio from '../../audio.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
-import BulletBlur2 from '../Effect/bulletBlur2.js';
+import Bullettrail2 from '../Effect/bullettrail2.js';
 import EntityManager from '../../Stage/entityManager.js';
 import EventManager from '../../Event/eventmanager.js';
 import Bullet3AI from '../AI/bullet3AI.js';
@@ -40,7 +40,7 @@ export default class Bullet3 extends Bullet{
     this.SetParam();
     let emitTerm = 2;
     this.AIList.push(new Bullet3AI(this));
-    this.AIList.push(new EmitTrail(this,BulletBlur2,emitTerm));
+    this.AIList.push(new EmitTrail(this,Bullettrail2,emitTerm));
     //if(weapon.isHorming) this.AIList.push(new Horming(this));
   }
   Update(){

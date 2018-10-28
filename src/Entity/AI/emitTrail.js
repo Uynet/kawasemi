@@ -14,8 +14,8 @@ export default class EmitTrail{
       let d = Rand2D(5);
       p = ADV(p,d);
       let v = POV(this.bullet.arg+Math.PI,4);
-      let blur = new this.Trail(p,v);//引数どうしよ
-      EntityManager.addEntity(blur);
+      let trail = new this.Trail(p,v);//引数どうしよ
+      EntityManager.addEntity(trail);
     }
   }
 }

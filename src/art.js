@@ -245,16 +245,16 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet52.png'),
         PIXI.Texture.fromFrame('bullet53.png'),
       ],
-      blur : [ 
-        PIXI.Texture.fromFrame('bullet60.png'),//bullet blur
+      trail : [ 
+        PIXI.Texture.fromFrame('bullet60.png'),//bullet trail
         PIXI.Texture.fromFrame('bullet61.png'),
         PIXI.Texture.fromFrame('bullet62.png'),
         PIXI.Texture.fromFrame('bullet63.png'), 
         PIXI.Texture.fromFrame('bullet64.png'), 
         PIXI.Texture.fromFrame('bullet65.png') 
       ],
-      blur2 : [ 
-        PIXI.Texture.fromFrame('bulletF0.png'),//bullet blur
+      trail2 : [ 
+        PIXI.Texture.fromFrame('bulletF0.png'),//bullet trail
         PIXI.Texture.fromFrame('bulletF1.png'),
         PIXI.Texture.fromFrame('bulletF2.png'),
         PIXI.Texture.fromFrame('bulletF3.png') 
