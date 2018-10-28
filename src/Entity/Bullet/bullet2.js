@@ -16,86 +16,83 @@ import Audio from '../../audio.js';
 import Pool from '../../Stage/pool.js';
 
 const bullet2 = Param.bullet2;
+const MAX_STEP_COUNT = 30;
 
 //Laser
 export default class Bullet2 extends Bullet{
-  constructor(pos,arg,isNext,step){
+  SetParam(){
+    this.hp = Param.bullet2.hp;//弾丸のHP 0になると消滅
+    this.atkMax = Param.bullet2.atkMax;//攻撃力
+    this.atkMin = Param.bullet2.atkMin;//攻撃力
+  }
+  constructor(pos,arg,isMarchNext,stepCount){
     super(pos,POV(arg,VEC0()));
+    this.Init(pos,arg);
+    this.March(isMarchNext,stepCount);
+  }
+  Init(pos,arg){
     /*基本情報*/
     this.frame = 0;
     this.arg = arg;
     this.isUpdater  =true;
     this.layer = "BACK"//壁に埋めるため
-      this.name = "laser";
+    this.name = "laser";
     /*スプライト*/
     this.pattern = Art.bulletPattern.bullet2;
-    this.spid = 0;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = pos;
-    this.sprite.anchor.set(0.5);
+    this.SetSprite();
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
-    this.sprite.alpha = 0.7;
-    /*コライダ*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,6,6));//衝突判定の形状
-    /*パラメータ*/
-    this.hp = Param.bullet2.hp;//弾丸のHP 0になると消滅
-    this.atkMax = Param.bullet2.atkMax;//攻撃力
-    this.atkMin = Param.bullet2.atkMin;//攻撃力
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,6,6));
+    this.SetParam();
     /*AI*/
-    this.AIList = [];
     this.AIList.push(new Bullet2AI(this));
-
-    this.step = step;
-
+  }
+  Explode(){
+    const e = new Explosion3(CPV(this.pos),VEC0());
+    EntityManager.addEntity(e);
+  }
+  Reflect(collisionInfo){
+    let i = POV(this.arg,-16);//入射角ベクトル
+    let r = reflect(i,collisionInfo.n);
+    this.arg = argument(r);
+  }
+  March(isMarchNext,stepCount){
     //壁にぶつかってなければレーザー光線を進める
-    if(step > 30){
-      isNext = false;
-    }
-    for(let w of EntityManager.colliderList){
-      let c = Collision.on(this,w);
-      //なおせ　
-      if(w.name == "player")continue;
+    if(stepCount > MAX_STEP_COUNT) return;
+    this.stepCount = stepCount;
+    /*
+     * continnue 無視
+     * break ... 貫通
+     * return .. 停止
+     * */
+    for(let collider of EntityManager.colliderList){
+      if(collider.name == "player")continue;
+      let c = Collision.on(this,collider);
       if(c.isHit){
-        if(w.isBreakable) {
-          w.Damage(-1);
-          let e = new Explosion3(CPV(this.pos),VEC0());
-          //e = Pool.GetSmoke(CPV(this.pos),VEC0(),3);
-          EntityManager.addEntity(e);
+        //木箱 破壊したら貫通
+        if(collider.isBreakable){
+          collider.Damage(-1);
+          this.Explode();
+          if(collider.hp > 0)return;
+          break;
         }
-        else if(w.type == "ENEMY"){
+        //敵 倒せたら貫通
+        if(collider.type == "ENEMY"){
           EntityManager.addEntity(new Explosion3(CPV(this.pos),this.arg + Math.PI));
-          w.Damage(-RandBET(this.atkMin,this.atkMax));
-          if(w.hp > 0)isNext = false;//
-          }
-        else {
-          if(w.material == "steel"){
-            let i = POV(this.arg,-16);//入射角ベクトル
-            //r = i+2n*(i・n)
+          collider.Damage(-RandBET(this.atkMin,this.atkMax));
+          if(collider.hp > 0)return;
+          break;
+        } 
+        //鉄 反射
+        if(collider.material == "steel") this.Reflect(c);
 
-            let r = reflect(i,c.n);
-            this.arg = argument(r);
-            //if(r.y<0)this.arg += Math.PI;
-          //鉄で反射
-          }else{
-          //壁にぶつかったので停止
-          EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
-          isNext = false;
-          }
-        }
+        EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
+        return; //壁にぶつかったので停止
       }
     }
-    if(isNext){
-      step++;
-      let p = ADV(this.pos,POV(this.arg,16));
-      let bullet = new Bullet2(p,this.arg,isNext,step);
-      EntityManager.addEntity(bullet);
-    }else{
-      /*
-      let p = ADV(this.pos,POV(this.arg,-16));
-      EntityManager.player.pos.x = p.x;
-      EntityManager.player.pos.y = p.y;
-      */
-    }
+    //再帰呼び出し
+    let p = ADV(this.pos,POV(this.arg,16));
+    let bullet = new Bullet2(p,this.arg,isMarchNext,stepCount++);
+    EntityManager.addEntity(bullet);
   }
 
   Update(){
