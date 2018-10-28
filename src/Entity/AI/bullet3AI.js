@@ -51,16 +51,16 @@ export default class Bullet3AI{
     }
   }
   Animation(){
-    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
-    this.bullet.sprite.rotation = this.bullet.arg + Math.PI/2;
     this.bullet.sprite.texture = this.bullet.pattern[this.bullet.spid];
     this.bullet.spid = (this.bullet.spid+0)%4;
   }
   Do(){
     this.collision();
     this.Phisics();
-    this.Animation();
     this.Observer();
+
+    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
+    this.bullet.sprite.rotation = this.bullet.arg + Math.PI/2;
     this.bullet.frame++;
   }
 }

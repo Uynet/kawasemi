@@ -1,7 +1,6 @@
 import Bullet from '../Entity/Bullet/bullet.js';
 import Bullet1 from '../Entity/Bullet/bullet1.js';
 import EntityManager from '../Stage/entityManager.js';
-import Pool from '../Stage/pool.js';
 import Weapon from './weapon.js';
 import Art from '../art.js';
 import Audio from '../audio.js';
@@ -35,7 +34,7 @@ export default class Weapon1 extends Weapon{
       x: player.pos.x -4 + 10 * Math.cos(this.arg),
       y: player.pos.y + 10 * Math.sin(this.arg),
     }
-    let bullet = Pool.GetMissile(p,this);
+    let bullet = new Bullet1(p,this);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */
     Audio.PlaySE("missileShot",2);

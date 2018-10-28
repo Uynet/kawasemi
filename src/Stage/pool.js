@@ -19,7 +19,6 @@ export default class Pool{
       fires : [],
       sonics : [],
       flashes : [],
-      missiles : [],
     }
     for(let i = 0;i<1000;i++){
       this.unused.stones.push(new Stone(VEC0(),VEC0()));
@@ -36,34 +35,6 @@ export default class Pool{
     for(let i = 0;i<50;i++){
       this.unused.flashes.push(new Flash(VEC0()));
     }
-    for(let i = 0;i<100;i++){
-      this.unused.missiles.push(new Bullet1(VEC0(),"dummyWeapon"));
-    }
-  }
-  static GetMissile(pos,weapon){
-    if(this.unused.missiles.length > 0){
-      let s = this.unused.missiles.pop();
-      s.Init(pos,weapon);
-      //param
-      s.hp = Param.bullet1.hp;//弾丸のHP 0になると消滅
-      //phys
-      s.arg = weapon.arg;
-      s.vi = weapon.speed;
-      s.pos = pos;
-      s.vel = POV(s.arg,s.vi);
-      //basic
-      s.frame = 0;
-      //collider
-      s.collider.hitbox.pos = s.pos;
-      //AI
-      s.isTargetOn = weapon.isTargetOn;
-      s.AIList[0].bullet = s;
-      if(s.isTargetOn) s.targetedEnemy = weapon.target.enemy;
-      //if(weapon.isHorming) s.AIList.push(new Horming(s));
-      return s;
-    }else{
-      return false;
-    }
   }
   static Remove(s){
     let listname;
@@ -73,7 +44,6 @@ export default class Pool{
       case "smoke" :  this.unused.smokes.push(s);break;
       case "sonic" : this.unused.sonics.push(s);break;
       case "flash" : this.unused.flashes.push(s);break;
-      case "missile" : this.unused.missiles.push(s);break;
       default :console.warn(s.name);
     }
     EntityManager.removeEntity(s);

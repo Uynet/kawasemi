@@ -4,13 +4,13 @@ import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
-import Pool from '../../Stage/pool.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import Bullet1AI from '../AI/bullet1AI.js';
 import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
 import EmitTrail from "../AI/emitTrail.js";
+import Animator from "../AI/animator.js";
 import BulletShot from '../Effect/bulletShot.js';
 import BulletTrail from '../Effect/bulletTrail.js';
 import Fire2 from "../Effect/fire2.js";
@@ -23,8 +23,8 @@ const bullet1 = Param.bullet1;
 //Missile
 export default class Bullet1 extends Bullet{
   constructor(pos,weapon){
-    //super(pos,POV(weapon.arg,weapon.speed));
-    super(VEC0(),VEC0());
+    super(pos,POV(weapon.arg,weapon.speed));
+    this.Init(pos,weapon);
   }
   Init(pos,weapon){
     /*基本情報*/
@@ -48,28 +48,13 @@ export default class Bullet1 extends Bullet{
     this.atkMin = Param.bullet1.atkMin;//攻撃力
     this.atkMax = Param.bullet1.atkMax;//攻撃力
     this.curve = Param.bullet1.curve;
-    this.AIList = [];
+    let emitTerm = 2;
+    this.AIList.push(new Animator(this,true,1,4));
     this.AIList.push(new Bullet1AI(this));
     this.AIList.push(new EmitTrail(this,BulletTrail,1));
     if(weapon.isHorming) this.AIList.push(new Horming(this));
   }
   Update(){
     this.ExecuteAI();
-    /*observer*/
-    if(this.hp<=0){
-      Pool.Remove(this);
-      Audio.PlaySE("missileHit",1);
-      EventManager.eventList.push(new QuakeEvent(50,0.8));//ゆれ
-      EntityManager.addEntity(new Explosion1(CPV(this.pos)));
-    }
-    if(this.frame > 180){
-      Pool.Remove(this);
-      EntityManager.addEntity(new BulletShot(CPV(this.pos)));
-    }
-    this.sprite.position = ADV(this.pos,VECN(8));
-    this.sprite.rotation = this.arg + Math.PI/2;
-    this.sprite.texture = this.pattern[this.spid];
-    this.spid = (this.spid+1)%4;
-    this.frame++;
   }
 }

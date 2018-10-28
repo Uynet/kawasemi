@@ -1,7 +1,11 @@
 import EntityManager from '../../Stage/entityManager.js';
+import Pool from "../../Stage/pool.js";
 import Collision from '../../Collision/collision.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
 import Audio from '../../audio.js';
+import EventManager from "../../Event/eventmanager.js";
+import QuakeEvent from "../../Event/quakeEvent.js";
+import Explosion1 from "../Effect/explosion1.js";
 
 export default class Bullet1AI{
   /*bulletの参照を受け取り関数を実行する*/
@@ -9,8 +13,6 @@ export default class Bullet1AI{
     this.bullet = bullet;
   }
   Phisics(){
-    //this.bullet.vi *= 1.1;
-    //this.bullet.vi = Math.min(10,this.bullet.vi);
     this.bullet.Set("vel", POV(this.bullet.arg,this.bullet.vi));
     this.bullet.pos.x += this.bullet.vel.x;
     this.bullet.pos.y += this.bullet.vel.y;
@@ -21,8 +23,6 @@ export default class Bullet1AI{
       if(Collision.on(this.bullet,l).isHit){
         l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
         this.bullet.hp--;
-        /* ■ SoundEffect : hitWall */
-        /* □ Effect : hitWall */
       };
     }
     for(let w of EntityManager.wallList){
@@ -40,62 +40,30 @@ export default class Bullet1AI{
           }
       }
     }
-    /*
-    //壁との判定を二分探索
-    let l = EntityManager.wallList.length;
-    let m = Math.floor(l/2);//判別位置
-    let d = Math.floor(m/2);//移動距離
-    
-    //broad phase
-    for(let i = 0;i<20;i++){
-      let w = EntityManager.wallList[m];
-      if(!w){
-        cl(m);
-      }
-      //上半分
-      if(this.bullet.pos.y < w.pos.y - 16){
-        m -= d;
-        if(m<0)break;
-        d = Math.floor(d/2);
-        continue;
-      }else if(this.bullet.pos.y > w.pos.y){
-      //下半分
-        m += d;
-        if(m >= l){
-          m = l-1;
-          break;
-        }
-        d = Math.floor(d/2);
-        continue;
-      }else{
-        //narrow phase
-        //衝突?
-        for(let j = 0;j<20;j++){
-          if(Collision.on(this.bullet,w).isHit){
-            //breakable object
-            if(w.name == "woodbox"){
-              // ■ SoundEffect : hitWood
-              w.Damage(-this.bullet.atk );
-              this.bullet.hp--;
-              //wall
-              }else{
-                // ■ SoundEffect : hitWall
-                this.bullet.hp = 0;
-              }
-              // □ Effect : Exp
-              break;
-          }else{
-            m = Math.max(m-1,0) ;
-            w = EntityManager.wallList[m];
-          }
-        }
-      }
-    }
-    */
   }
 
+  Observer(){
+    if(this.bullet.hp<=0){
+      EntityManager.removeEntity(this.bullet);
+      Audio.PlaySE("missileHit",1);
+      EventManager.eventList.push(new QuakeEvent(50,0.8));//ゆれ
+      EntityManager.addEntity(new Explosion1(CPV(this.bullet.pos)));
+    }
+    if(this.bullet.frame > 180){
+      EntityManager.removeEntity(this.bullet);
+      EntityManager.addEntity(new BulletShot(CPV(this.bullet.pos)));
+    }
+  }
+  Animation(){
+    this.bullet.sprite.texture = this.bullet.pattern[this.bullet.spid];
+    this.bullet.spid = (this.bullet.spid+1)%4;
+  }
   Do(){
     this.collision();
     this.Phisics();
+    this.Observer();
+    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
+    this.bullet.sprite.rotation = this.bullet.arg + Math.PI/2;
+    this.bullet.frame++;
   }
 }
