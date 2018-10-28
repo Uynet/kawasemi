@@ -8,6 +8,7 @@ import QuakeEvent from '../../Event/quakeEvent.js';
 import Bullet2AI from './../AI/bullet2AI.js';
 import Bullet from './bullet.js';
 import BulletTrail from '../Effect/bulletTrail.js';
+import Animator from "../AI/animator.js";
 import Explosion1 from '../Effect/explosion1.js';
 import Explosion2 from '../Effect/explosion2.js';
 import Explosion3 from '../Effect/explosion3.js';
@@ -45,6 +46,7 @@ export default class Bullet2 extends Bullet{
     this.SetParam();
     /*AI*/
     this.AIList.push(new Bullet2AI(this));
+    this.AIList.push(new Animator(this,false,2,8));
   }
   Explode(){
     const e = new Explosion3(CPV(this.pos),VEC0());
@@ -93,23 +95,5 @@ export default class Bullet2 extends Bullet{
     let p = ADV(this.pos,POV(this.arg,16));
     let bullet = new Bullet2(p,this.arg,isMarchNext,stepCount++);
     EntityManager.addEntity(bullet);
-  }
-
-  Update(){
-    this.ExecuteAI();
-    if(this.frame%2 == 0){
-      this.spid = Math.min(this.spid+1,7);
-    }
-    /*observer*/
-    //HP || 経過時間
-    if( this.frame > 20 || this.hp<=0){
-      EntityManager.removeEntity(this);
-    }
-    this.sprite.position = ADV(this.pos,VECN(8));
-    this.sprite.position.x -=4;
-    this.sprite.rotation = this.arg;
-    this.sprite.texture = this.pattern[this.spid];
-
-    this.frame++;
   }
 }

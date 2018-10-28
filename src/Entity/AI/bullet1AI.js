@@ -18,7 +18,7 @@ export default class Bullet1AI{
     this.bullet.pos.y += this.bullet.vel.y;
   }
   /* 衝突判定 */
-  collision(){
+  Collision(){
     for(let l of EntityManager.enemyList){
       if(Collision.on(this.bullet,l).isHit){
         l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
@@ -54,12 +54,8 @@ export default class Bullet1AI{
       EntityManager.addEntity(new BulletShot(CPV(this.bullet.pos)));
     }
   }
-  Animation(){
-    this.bullet.sprite.texture = this.bullet.pattern[this.bullet.spid];
-    this.bullet.spid = (this.bullet.spid+1)%4;
-  }
   Do(){
-    this.collision();
+    this.Collision();
     this.Phisics();
     this.Observer();
     this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));

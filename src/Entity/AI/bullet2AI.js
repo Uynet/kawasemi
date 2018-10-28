@@ -10,7 +10,7 @@ export default class Bullet2AI{
     this.bullet = bullet;
   }
   /* 衝突判定 */
-  collision(){
+  Collision(){
     for(let l of EntityManager.enemyList){
       if(Collision.on(this.bullet,l).isHit){
         l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
@@ -36,7 +36,18 @@ export default class Bullet2AI{
       }
     }
   }
+  Observer(){
+    if( this.bullet.frame > 20 || this.bullet.hp<=0){
+      EntityManager.removeEntity(this.bullet);
+    }
+  }
   Do(){
-    this.collision();
+    this.Collision();
+    this.Observer();
+    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
+    this.bullet.sprite.position.x -=4;
+    this.bullet.sprite.rotation = this.bullet.arg;
+
+    this.bullet.frame++;
   }
 }

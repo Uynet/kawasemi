@@ -50,10 +50,6 @@ export default class Bullet3AI{
       EntityManager.addEntity(new BulletHitWall(CPV(this.bullet.pos)));
     }
   }
-  Animation(){
-    this.bullet.sprite.texture = this.bullet.pattern[this.bullet.spid];
-    this.bullet.spid = (this.bullet.spid+0)%4;
-  }
   Do(){
     this.collision();
     this.Phisics();
