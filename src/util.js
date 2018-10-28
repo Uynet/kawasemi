@@ -150,6 +150,10 @@ const Dice = (d)=>{
 const RandBET = (min,max)=>{
   return Math.floor((max-min)*Math.random())+min;
 }
+//random Range
+const RandomRange = (min,max)=>{
+  return Math.floor((max-min)*Math.random())+min;
+}
 /*maxmin*/
 const BET = (min,x,max)=>{
   return Math.min(Math.max(x,min),max);

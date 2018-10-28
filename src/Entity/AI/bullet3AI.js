@@ -2,6 +2,8 @@ import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
 import Audio from '../../audio.js'
+import BulletBlur2 from '../Effect/bulletBlur2.js';
+
 
 export default class Bullet3AI{
   /*bulletの参照を受け取り関数を実行する*/
@@ -15,12 +17,10 @@ export default class Bullet3AI{
   }
   /* 衝突判定 */
   collision(){
-    for(let l of EntityManager.enemyList){
-      if(Collision.on(this.bullet,l).isHit){
-        l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
+    for(let enemy of EntityManager.enemyList){
+      if(Collision.on(this.bullet,enemy).isHit){
+        enemy.Damage( -RandomRange(this.bullet.atkMin,this.bullet.atkMax));
         this.bullet.hp--;
-        /* ■ SoundEffect : hitWall */
-        /* □ Effect : hitWall */
       };
     }
     for(let w of EntityManager.wallList){
@@ -43,8 +43,24 @@ export default class Bullet3AI{
     }
   }
 
+  Observer(){
+    if(this.bullet.hp<=0 ||
+      this.bullet.frame > 30) {
+      EntityManager.removeEntity(this.bullet);
+      EntityManager.addEntity(new BulletHitWall(CPV(this.bullet.pos)));
+    }
+  }
+  Animation(){
+    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
+    this.bullet.sprite.rotation = this.bullet.arg + Math.PI/2;
+    this.bullet.sprite.texture = this.bullet.pattern[this.bullet.spid];
+    this.bullet.spid = (this.bullet.spid+0)%4;
+  }
   Do(){
     this.collision();
     this.Phisics();
+    this.Animation();
+    this.Observer();
+    this.bullet.frame++;
   }
 }

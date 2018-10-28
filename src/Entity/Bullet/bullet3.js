@@ -3,14 +3,14 @@ import Audio from '../../audio.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
+import BulletBlur2 from '../Effect/bulletBlur2.js';
 import EntityManager from '../../Stage/entityManager.js';
 import EventManager from '../../Event/eventmanager.js';
 import Bullet3AI from '../AI/bullet3AI.js';
 import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
-import BulletBlur2 from '../Effect/bulletBlur2.js';
-import BulletHitWall from '../Effect/bulletHitWall.js';
 import Param from '../../param.js';
+import EmitTrail from "../AI/emitTrail.js";
 
 //normal bullet
 export default class Bullet3 extends Bullet{
@@ -38,35 +38,12 @@ export default class Bullet3 extends Bullet{
     this.SetSprite();
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
     this.SetParam();
+    let emitTerm = 2;
     this.AIList.push(new Bullet3AI(this));
+    this.AIList.push(new EmitTrail(this,BulletBlur2,emitTerm));
     //if(weapon.isHorming) this.AIList.push(new Horming(this));
   }
-
   Update(){
-    /*□Effect BulletBulr*/
-    if(this.frame%2 == 0){
-      let p = CPV(this.pos);
-      let d = Rand2D(5);
-      p = ADV(p,d);
-      let v = POV(this.arg+Math.PI,4);
-      let blur = new BulletBlur2(p,v);
-      if(blur)EntityManager.addEntity(blur);
-    }
-    for (let AI of this.AIList){
-      AI.Do();
-    }
-    /*observer*/
-    //HP || 経過時間
-    if(this.hp<=0 ||
-      this.frame > 30) {
-      EntityManager.removeEntity(this);
-      EntityManager.addEntity(new BulletHitWall(CPV(this.pos)));
-    }
-    this.sprite.position = ADV(this.pos,VECN(8));
-    this.sprite.rotation = this.arg + Math.PI/2;
-    this.sprite.texture = this.pattern[this.spid];
-
-    this.spid = (this.spid+0)%4;
-    this.frame++;
+    this.ExecuteAI();
   }
 }
