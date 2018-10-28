@@ -10,7 +10,7 @@ import EventManager from '../../Event/eventmanager.js';
 import Bullet4AI from '../AI/bullet4AI.js';
 import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
-import BulletBlur2 from '../Effect/bulletBlur2.js';
+import BulletTrail2 from '../Effect/bulletTrail2.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
 import Param from '../../param.js';
 

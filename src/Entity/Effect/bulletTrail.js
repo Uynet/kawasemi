@@ -5,20 +5,21 @@ import Pool from '../../Stage/pool.js';
 import Drawer from '../../drawer.js';
 
 /*bullet1残像*/
-export default class BulletBlur extends EFFECT{
+export default class Bullettrail extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
+    this.Init(pos,vel);
   }
   Init(pos,vel){
     this.pos = pos;
     this.vel = vel;
     /*基本情報*/
-    this.name = "bulletblur";
+    this.name = "bullettrail";
     this.frame = 0;
     this.isAlive = true;//消えたらfalse
       /*スプライト*/
     this.spid = 0; //12~15
-    this.pattern = Art.bulletPattern.blur;
+    this.pattern = Art.bulletPattern.trail;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.anchor.set(0.5);
     this.sprite.alpha = 0.5;
@@ -43,8 +44,7 @@ export default class BulletBlur extends EFFECT{
       if(this.spid >= 6){
         //消える時に一回だけ呼ばれる
         if(this.isAlive){
-          //EntityManager.removeEntity(this);
-          Pool.Remove(this);
+          EntityManager.removeEntity(this);
           this.isAlive = false
         }
       }

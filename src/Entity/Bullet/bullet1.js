@@ -10,8 +10,9 @@ import QuakeEvent from '../../Event/quakeEvent.js';
 import Bullet1AI from '../AI/bullet1AI.js';
 import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
+import EmitTrail from "../AI/emitTrail.js";
 import BulletShot from '../Effect/bulletShot.js';
-import BulletBlur from '../Effect/bulletBlur.js';
+import BulletTrail from '../Effect/bulletTrail.js';
 import Fire2 from "../Effect/fire2.js";
 import Explosion1 from '../Effect/explosion1.js';
 import Param from '../../param.js';
@@ -49,21 +50,11 @@ export default class Bullet1 extends Bullet{
     this.curve = Param.bullet1.curve;
     this.AIList = [];
     this.AIList.push(new Bullet1AI(this));
+    this.AIList.push(new EmitTrail(this,BulletTrail,1));
     if(weapon.isHorming) this.AIList.push(new Horming(this));
   }
-  EmitTrail(){
-    let p = CPV(this.pos);
-    let v = POV(this.arg+Math.PI,8);
-    let d = Rand2D(5); 
-
-    p = ADV(p,d);
-    let blur = Pool.GetBulletBlur(p,VEC0());
-    if(blur)EntityManager.addEntity(blur);
-  }
-
   Update(){
     this.ExecuteAI();
-    this.EmitTrail();
     /*observer*/
     if(this.hp<=0){
       Pool.Remove(this);
@@ -78,7 +69,6 @@ export default class Bullet1 extends Bullet{
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.rotation = this.arg + Math.PI/2;
     this.sprite.texture = this.pattern[this.spid];
-
     this.spid = (this.spid+1)%4;
     this.frame++;
   }

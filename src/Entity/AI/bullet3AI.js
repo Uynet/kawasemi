@@ -2,7 +2,7 @@ import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
 import Audio from '../../audio.js'
-import BulletBlur2 from '../Effect/bulletBlur2.js';
+import Bullettrail2 from '../Effect/bullettrail2.js';
 
 
 export default class Bullet3AI{

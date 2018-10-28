@@ -7,7 +7,7 @@ import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import Bullet2AI from './../AI/bullet2AI.js';
 import Bullet from './bullet.js';
-import BulletBlur from '../Effect/bulletBlur.js';
+import BulletTrail from '../Effect/bulletTrail.js';
 import Explosion1 from '../Effect/explosion1.js';
 import Explosion2 from '../Effect/explosion2.js';
 import Explosion3 from '../Effect/explosion3.js';
