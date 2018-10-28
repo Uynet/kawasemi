@@ -6,17 +6,20 @@ import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 
 export default class Bullet extends Entity{
+  SetSprite(){
+    this.spid = 0;
+    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.sprite.position = this.pos;
+    this.sprite.anchor.set(0.5);
+  }
   constructor(pos,vel){
     super(pos,vel);
     /*基本情報*/
     this.layer = "ENTITY";
     this.isMultiple = false;
     this.type = "MOVER";
-    /*パラメータ*/
-    this.hp;//弾丸のHP 0になると消滅
-    this.atk;//攻撃力
-    this.length;//これは武器がもつ?
 
     this.isUpdater  =true;
+    this.AIList = [];
   }
 }

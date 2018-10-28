@@ -18,6 +18,12 @@ export default class Bullet3 extends Bullet{
     super(pos,POV(weapon.arg,weapon.speed));
     this.Init(pos,weapon);
   }
+  SetParam(){
+    this.hp = Param.bullet3.hp;//弾丸のHP 0になると消滅
+    this.atkMin = Param.bullet3.atkMin;//攻撃力
+    this.atkMax = Param.bullet3.atkMax;//攻撃力
+    //this.curve = Param.bullet3.curve;
+  }
   Init(pos,weapon){
     /*基本情報*/
     this.frame = 0;
@@ -29,18 +35,9 @@ export default class Bullet3 extends Bullet{
     this.isUpdater = true;
     /*スプライト*/
     this.pattern = Art.bulletPattern.bullet3;
-    this.spid = 0;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = pos;
-    this.sprite.anchor.set(0.5);
-    /*コライダ*/
+    this.SetSprite();
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));//衝突判定の形状
-    /*パラメータ*/
-    this.hp = Param.bullet3.hp;//弾丸のHP 0になると消滅
-    this.atkMin = Param.bullet3.atkMin;//攻撃力
-    this.atkMax = Param.bullet3.atkMax;//攻撃力
-    //this.curve = Param.bullet3.curve;
-    this.AIList = [];
+    this.SetParam();
     this.AIList.push(new Bullet3AI(this));
     //if(weapon.isHorming) this.AIList.push(new Horming(this));
   }
