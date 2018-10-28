@@ -45,7 +45,4 @@ export default class Bullet3 extends Bullet{
     this.AIList.push(new EmitTrail(this,Bullettrail2,emitTerm));
     //if(weapon.isHorming) this.AIList.push(new Horming(this));
   }
-  Update(){
-    this.ExecuteAI();
-  }
 }

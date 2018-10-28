@@ -1,5 +1,6 @@
 import Art from '../../art.js';
 import Audio from '../../audio.js';
+import Animator from "../AI/animator.js";
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
@@ -10,7 +11,6 @@ import Bullet1AI from '../AI/bullet1AI.js';
 import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
 import EmitTrail from "../AI/emitTrail.js";
-import Animator from "../AI/animator.js";
 import BulletShot from '../Effect/bulletShot.js';
 import BulletTrail from '../Effect/bulletTrail.js';
 import Fire2 from "../Effect/fire2.js";
@@ -53,8 +53,5 @@ export default class Bullet1 extends Bullet{
     this.AIList.push(new Bullet1AI(this));
     this.AIList.push(new EmitTrail(this,BulletTrail,1));
     if(weapon.isHorming) this.AIList.push(new Horming(this));
-  }
-  Update(){
-    this.ExecuteAI();
   }
 }

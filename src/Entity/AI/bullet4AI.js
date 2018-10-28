@@ -40,8 +40,22 @@ export default class Bullet4AI{
       }
   }
 
+  Observer(){
+    if(this.bullet.hp<=0 ||
+      this.bullet.frame > 330) {
+      EntityManager.removeEntity(this.bullet);
+    }
+  }
   Do(){
     this.Phisics();
     this.collision();
+    this.Observer();
+    //this.sprite.filters = [Drawer.fireFilter];
+    //this.sprite.filters[0].uniforms.frame = this.frame;
+    //this.bullet.SetSize(this.bullet.size *1.05);
+    this.bullet.sprite.anchor.set(0.5);
+    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
+    this.bullet.sprite.rotation = this.bullet.arg + Math.PI/2;
+    this.bullet.frame++;
   }
 }

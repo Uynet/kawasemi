@@ -26,7 +26,7 @@ export default class Param{
         normal : true,
         missile :true,//false,
         laser : true,//false,
-        weapon4 : false,//
+        weapon4 : true,//
         weapon5 : false,
       },
       //装備中の武器
