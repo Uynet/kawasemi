@@ -1,7 +1,7 @@
 import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
 
-export default class horming{
+export default class Horming{
   /*bulletの参照を受け取り関数を実行する*/
   constructor(bullet){
     this.bullet = bullet;

@@ -51,28 +51,20 @@ export default class Bullet1 extends Bullet{
     this.AIList.push(new Bullet1AI(this));
     if(weapon.isHorming) this.AIList.push(new Horming(this));
   }
+  EmitTrail(){
+    let p = CPV(this.pos);
+    let v = POV(this.arg+Math.PI,8);
+    let d = Rand2D(5); 
+
+    p = ADV(p,d);
+    let blur = Pool.GetBulletBlur(p,VEC0());
+    if(blur)EntityManager.addEntity(blur);
+  }
 
   Update(){
-    /*□Effect BulletBulr*/
-      let p = CPV(this.pos);
-      let v = POV(this.arg+Math.PI,8);
-      let d = Rand2D(5); 
-
-      p = ADV(p,d);
-      let blur = Pool.GetBulletBlur(p,VEC0());
-      if(blur)EntityManager.addEntity(blur);
-    /*Effect Sonic*/
-    /*
-    if(this.frame%4 == 0){
-      let sonic = Pool.GetSonic(p,v);
-      if(sonic)EntityManager.addEntity(sonic);
-    }
-    */
-    for (let AI of this.AIList){
-      AI.Do();
-    }
+    this.ExecuteAI();
+    this.EmitTrail();
     /*observer*/
-    //HP || 経過時間
     if(this.hp<=0){
       Pool.Remove(this);
       Audio.PlaySE("missileHit",1);

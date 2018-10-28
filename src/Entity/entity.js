@@ -39,6 +39,11 @@ export default class Entity{
     this.force.x = f.x;
     this.force.y = f.y;
   }
+  ExecuteAI(){
+    for (let AI of this.AIList){
+      AI.Do();
+    }
+  }
   /*Hurt()*/
 }
 

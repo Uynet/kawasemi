@@ -325,7 +325,7 @@ export default class MapData{
         colType="through";
         material = "steel";
         break;
-  }
+    }
     return {
       colType : colType,
       material : material,

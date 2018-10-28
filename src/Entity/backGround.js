@@ -3,7 +3,7 @@ import Art from '../art.js';
 import EntityManaer from '../Stage/entityManager.js';
 
 //真の背景であり背景オブジェクトではない
-export default class BackEntity extends Entity{
+export default class BackGround extends Entity{
   constructor(pos,tex){
     super(pos,VEC0());
     this.layer = "BG";
