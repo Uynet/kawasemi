@@ -1,6 +1,6 @@
 import EntityManager from '../../Stage/entityManager.js';
 import Collision from '../../Collision/collision.js';
-import Explosion1 from "../Effect/explosion1.js";
+import Explosion1 from "../Effect/Explosion/explosion1.js";
 import QuakeEvent from '../../Event/quakeEvent.js';
 import EventManager from '../../Event/eventmanager.js';
 import Audio from '../../audio.js';

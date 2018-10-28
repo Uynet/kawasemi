@@ -6,8 +6,8 @@ import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Pool from '../../Stage/pool.js';
 import Param from '../../param.js';
-import Explosion2 from '../Effect/explosion2.js';
-import Stone from '../Effect/stone.js';
+import Explosion2 from '../Effect/Explosion/explosion2.js';
+import Stone from '../Effect/Explosion/stone.js';
 import MoveReflect from '../AI/moveReflect.js';
 
 //敵の弾丸その2

@@ -5,7 +5,6 @@ import EventManager from './eventmanager.js';
 import Game from '../game.js';
 import EntityManager from '../Stage/entityManager.js';
 import QuakeEvent from '../Event/quakeEvent.js';
-import Explosion1 from '../Entity/Effect/explosion1.js';
 import OpenWallEvent from '../Event/openWallEvent.js';
 import Input from "../input.js";
 

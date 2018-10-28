@@ -1,10 +1,10 @@
-import EFFECT from './effect.js';
-import Art from '../../art.js';
-import EntityManager from '../../Stage/entityManager.js';
-import Pool from '../../Stage/pool.js';
-import Collision from "../../Collision/collision.js";
-import Collider from '../../Collision/collider.js';
-import Box from '../../Collision/box.js';
+import EFFECT from '../effect.js';
+import Art from '../../../art.js';
+import EntityManager from '../../../Stage/entityManager.js';
+import Pool from '../../../Stage/pool.js';
+import Collision from "../../../Collision/collision.js";
+import Collider from '../../../Collision/collider.js';
+import Box from '../../../Collision/box.js';
 
 export default class Smoke extends EFFECT{
   constructor(pos,vel,size){

@@ -1,15 +1,15 @@
 import EntityManager from './entityManager.js';
-import Stone from '../Entity/Effect/stone.js';
-import Smoke from '../Entity/Effect/smoke.js';
-import Fire from '../Entity/Effect/fire.js';
+import Stone from '../Entity/Effect/Explosion/stone.js';
+import Smoke from '../Entity/Effect/Explosion/smoke.js';
+import Fire from '../Entity/Effect/Explosion/fire.js';
 import Bullet1 from '../Entity/Bullet/bullet1.js';
 import Horming from '../Entity/AI/horming.js';
 import Bullet1AI from '../Entity/AI/bullet1AI.js';
 import Collider from '../Collision/collider.js';
 import Box from '../Collision/box.js';
 import Param from '../param.js';
-import Sonic from '../Entity/Effect/sonic.js';
-import Flash from '../Entity/Effect/flash.js';
+import Sonic from '../Entity/Effect/Explosion/sonic.js';
+import Flash from '../Entity/Effect/Explosion/flash.js';
 /*Object Pool*/
 export default class Pool{
   static Init(){

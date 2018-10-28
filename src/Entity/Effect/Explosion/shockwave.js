@@ -1,7 +1,7 @@
-import EFFECT from './effect.js';
-import Drawer from "../../drawer.js";
-import Art from '../../art.js';
-import EntityManager from '../../Stage/entityManager.js';
+import EFFECT from '../effect.js';
+import Drawer from "../../../drawer.js";
+import Art from '../../../art.js';
+import EntityManager from '../../../Stage/entityManager.js';
 
 //衝撃シェーダ
 export default class Shockwave extends EFFECT{

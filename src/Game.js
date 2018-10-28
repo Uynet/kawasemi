@@ -34,7 +34,7 @@ export default class Game{
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(Game.debug) Game.stage = 4
+    if(Game.debug) Game.stage = 3
     else Game.stage = 1;
     Game.continuePoint = 1;//コンティニュー地点
 

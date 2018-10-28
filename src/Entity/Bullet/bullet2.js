@@ -9,9 +9,9 @@ import Bullet2AI from './../AI/bullet2AI.js';
 import Bullet from './bullet.js';
 import BulletTrail from '../Effect/bulletTrail.js';
 import Animator from "../AI/animator.js";
-import Explosion1 from '../Effect/explosion1.js';
-import Explosion2 from '../Effect/explosion2.js';
-import Explosion3 from '../Effect/explosion3.js';
+import Explosion1 from '../Effect/Explosion/explosion1.js';
+import Explosion2 from '../Effect/Explosion/explosion2.js';
+import Explosion3 from '../Effect/Explosion/explosion3.js';
 import Param from '../../param.js';
 import Audio from '../../audio.js';
 import Pool from '../../Stage/pool.js';
@@ -93,7 +93,7 @@ export default class Bullet2 extends Bullet{
     }
     //再帰呼び出し
     let p = ADV(this.pos,POV(this.arg,16));
-    let bullet = new Bullet2(p,this.arg,isMarchNext,stepCount++);
+    let bullet = new Bullet2(p,this.arg,isMarchNext,stepCount+1);
     EntityManager.addEntity(bullet);
   }
 }

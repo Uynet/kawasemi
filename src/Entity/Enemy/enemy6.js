@@ -6,7 +6,7 @@ import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import eBullet2 from '../../Entity/Enemy/eBullet2.js';
-import Explosion1 from '../Effect/explosion1.js';
+import Explosion1 from '../Effect/Explosion/explosion1.js';
 import Enemy5AI from '../AI/enemy5AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';

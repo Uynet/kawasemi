@@ -12,7 +12,6 @@ import Coin from '../Mover/coin.js';
 import EventManager from '../../Event/eventmanager.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import Param from '../../param.js';
-import Explosion2 from '../Effect/explosion2.js';
 
 export default class Enemy2 extends Enemy{
   constructor(pos){

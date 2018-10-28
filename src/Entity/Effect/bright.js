@@ -2,7 +2,7 @@ import EFFECT from './effect.js';
 import Art from '../../art.js';
 import EntityManager from '../../Stage/entityManager.js';
 
-export default class BrightCoin extends EFFECT{
+export default class Bright extends EFFECT{
   constructor(pos,vel){
     //velが渡されなければ0を渡す
     super(pos,vel);

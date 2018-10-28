@@ -6,8 +6,8 @@ import QuakeEvent from "../../Event/quakeEvent.js";
 import FontEffect from '../Effect/fontEffect.js';
 import Collision from '../../Collision/collision.js';
 import Coin from '../Mover/coin.js'
-import Explosion2 from '../Effect/explosion2.js';
-import Explosion3 from '../Effect/explosion3.js';
+import Explosion2 from '../Effect/Explosion/explosion2.js';
+import Explosion3 from '../Effect/Explosion/explosion3.js';
 
 export default class Enemy extends Entity{
   constructor(pos,vel){

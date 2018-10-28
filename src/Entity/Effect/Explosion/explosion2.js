@@ -1,12 +1,7 @@
-import EFFECT from './effect.js';
-import Art from '../../art.js';
-import EntityManager from '../../Stage/entityManager.js';
-import Pool from '../../Stage/pool.js';
-import Sonic from './sonic.js';
-import Stone from './stone.js';
-import Flash from './flash.js';
-import Fire from './fire.js';
-import Smoke from './smoke.js';
+import EFFECT from '../effect.js';
+import Art from '../../../art.js';
+import EntityManager from '../../../Stage/entityManager.js';
+import Pool from '../../../Stage/pool.js';
 
 //爆発エフェクト
 export default class Explosion2 extends EFFECT{
