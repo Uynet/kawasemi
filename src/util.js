@@ -119,6 +119,8 @@ const VECX = (vx)=>{return {x:vx,y:0}};//
 const VECY = (vy)=>{return {x:0,y:vy}};//
 const CPV = (v)=>{return {x:v.x,y:v.y}};//値渡し
 const ADV = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
+const add = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
+const sub = (v1,v2)=>{ return {x:v1.x - v2.x ,y:v1.y - v2.y}};//ベクトル加算
 const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
 const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
 const NOMALIZE = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化

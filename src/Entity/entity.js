@@ -1,4 +1,5 @@
 import Collider from '../Collision/collider.js';
+import EntityManager from "../Stage/entityManager.js";
 import Box from '../Collision/box.js';
 
 export default class Entity{
@@ -45,6 +46,9 @@ export default class Entity{
     for (let AI of this.AIList){
       AI.Do();
     }
+  }
+  Delete(){
+    EntityManager.removeEntity(this);
   }
   /*Hurt()*/
 }

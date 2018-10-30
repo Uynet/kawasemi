@@ -1,4 +1,5 @@
 import Entity from '../entity.js'
+import Timer from "../../timer.js";
 import Param from '../../param.js';
 import Art from '../../art.js'
 import Audio from '../../audio.js';
@@ -25,6 +26,7 @@ import WeaponIcon from '../Effect/weaponIcon.js';
 import Pool from '../../Stage/pool.js';
 import StagePop from '../../UI/stagePop.js';
 import DistanceField from "../../Stage/distanceField.js";
+import Spilit from "./spilit.js";
 
 const STATE = {
   WAITING : "WAITING",
@@ -137,6 +139,9 @@ export default class Player extends Entity{
         //??
         this.poyo = true;
       this.eventList = [];
+    let spilit =  new Spilit(ADV(this.pos,VECY(-16)));
+    this.spilit = spilit;
+    EntityManager.addEntity(spilit);
   }
   //死亡後に初期状態に回復するため
   ResetStatus(){
@@ -226,7 +231,7 @@ export default class Player extends Entity{
         this.state = STATE.WAITING;
         return;
       }
-      this.weapon.shot(this);
+      this.spilit.shot(this);
     }
     /*for debug*/
     if(Input.isKeyClick(KEY.C) && this.isAlive){
@@ -279,21 +284,23 @@ export default class Player extends Entity{
 
     this.frame++;
     let state;
+    let animWait = Math.floor(Param.player.animWait/Timer.timeScale);
+    let animRun = Math.floor(Param.player.animRun/Timer.timeScale);
     switch(this.state){
       case STATE.WAITING :
-        this.spid = (Math.floor(this.frame/Param.player.animWait))%4
+        this.spid = (Math.floor(this.frame/animWait))%4
           state = "wait";
           break;
       case STATE.JUMPING :
-        this.spid = (Math.floor(this.frame/Param.player.animRun))%4
+        this.spid = (Math.floor(this.frame/animRun))%4
           state = "jump";
           break;
       case STATE.FALLING :
-        this.spid = (Math.floor(this.frame/Param.player.animRun))%4;
+        this.spid = (Math.floor(this.frame/animRun))%4;
           state = "fall";
         break;
       case STATE.RUNNING :
-        this.spid = (Math.floor(this.frame/Param.player.animRun))%6;
+        this.spid = (Math.floor(this.frame/animRun))%6;
         state = "run";
         //走り中は画像をちょっとだけ跳ねさせる
         //スプライト位置を動かしているだけなので当たり判定は変化していない
@@ -301,7 +308,7 @@ export default class Player extends Entity{
         let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        if(this.frame%10 == 0 && this.floor.on){;
+        if(this.frame%Math.floor(10/Timer.timeScale) == 0 && this.floor.on){;
           //歩き土埃エフェクト
           let p = ADV(this.pos,VECY(16));
           let v = {
@@ -321,7 +328,7 @@ export default class Player extends Entity{
         break;
         //死亡
         case STATE.DYING:
-          this.spid = Math.min(7,(Math.floor((this.frame - this.frameDead)/Param.player.animRun)));
+          this.spid = Math.min(7,(Math.floor((this.frame - this.frameDead)/animRun)));
           state = "dying"
           break;
     }
@@ -449,16 +456,16 @@ export default class Player extends Entity{
   Physics(){
     //動く床に乗っている時
     if(this.floor.on){
-      this.pos.x += this.floor.under.vel.x; 
-      this.pos.y += this.floor.under.vel.y; 
+      this.pos.x += this.floor.under.vel.x*Timer.timeScale;  
+      this.pos.y += this.floor.under.vel.y*Timer.timeScale;  
     }
     this.acc.x += this.force.x;
     this.acc.y += this.force.y;
     this.acc.y += this.gravity;
-    this.pos.x += this.vel.x; 
-    this.pos.y += this.vel.y; 
-    this.vel.x += this.acc.x;
-    this.vel.y += this.acc.y;
+    this.vel.x += this.acc.x*Timer.timeScale; 
+    this.vel.y += this.acc.y*Timer.timeScale; 
+    this.pos.x += this.vel.x*Timer.timeScale+this.acc.x*this.acc.x*Timer.timeScale; 
+    if(this.isJump)this.pos.y += this.vel.y*Timer.timeScale+this.acc.y*this.acc.y*Timer.timeScale; 
     //最大速度制限:
     this.vel.x = clamp(this.vel.x,-this.vxMax, this.vxMax);
     if(this.vel.y > this.vyMax)this.vel.y = this.vyMax;
@@ -515,6 +522,7 @@ export default class Player extends Entity{
       this.scPos = p;
       this.offset = 0;
     }
+      Drawer.SetMagnification(3-po(this.offset)/2);
   }
 
   Observer(){

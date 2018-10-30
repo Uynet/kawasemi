@@ -127,6 +127,12 @@
     "playerF4.png": { "frame": {"x":64, "y":240, "w":16, "h":16} },
     "playerF5.png": { "frame": {"x":80, "y":240, "w":16, "h":16} },
     "playerF6.png": { "frame": {"x":96, "y":240, "w":16, "h":16} },
-    "playerF7.png": { "frame": {"x":112, "y":240, "w":16, "h":16} }
+    "playerF7.png": { "frame": {"x":112, "y":240, "w":16, "h":16} },
+    "player100.png": { "frame": {"x":0, "y":256, "w":16, "h":16} },
+    "player101.png": { "frame": {"x":16, "y":256, "w":16, "h":16} },
+    "player102.png": { "frame": {"x":32, "y":256, "w":16, "h":16} },
+    "player103.png": { "frame": {"x":48, "y":256, "w":16, "h":16} },
+    "player104.png": { "frame": {"x":64, "y":256, "w":16, "h":16} },
+    "player105.png": { "frame": {"x":80, "y":256, "w":16, "h":16} }
   },
   "meta": { "image": "./playerPattern.png" } }

@@ -70,20 +70,13 @@ export default class Bullet2 extends Bullet{
       if(collider.name == "player")continue;
       let c = Collision.on(this,collider);
       if(c.isHit){
-        //木箱 破壊したら貫通
+        //壊せる物体 破壊したら貫通
         if(collider.isBreakable){
-          collider.Damage(-1);
           this.Explode();
-          if(collider.hp > 0)return;
-          break;
-        }
-        //敵 倒せたら貫通
-        if(collider.type == "ENEMY"){
-          EntityManager.addEntity(new Explosion3(CPV(this.pos),this.arg + Math.PI));
           collider.Damage(-RandBET(this.atkMin,this.atkMax));
           if(collider.hp > 0)return;
-          break;
-        } 
+          else break;
+        }
         //鉄 反射
         if(collider.material == "steel") this.Reflect(c);
 

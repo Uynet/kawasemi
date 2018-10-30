@@ -6,6 +6,7 @@ import Audio from '../../audio.js';
 import EventManager from "../../Event/eventmanager.js";
 import QuakeEvent from "../../Event/quakeEvent.js";
 import Explosion1 from "../Effect/Explosion/explosion1.js";
+import BulletShot from "../Effect/bulletShot.js";
 
 export default class Bullet1AI{
   /*bulletの参照を受け取り関数を実行する*/

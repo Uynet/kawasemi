@@ -33,8 +33,8 @@ export default class Weapon4 extends Weapon{
   Set(player){
     this.arg = player.arg;
     let p = {
-      x: player.pos.x -4 + 10 * Math.cos(this.arg),
-      y: player.pos.y + 10 * Math.sin(this.arg),
+      x: player.spilit.pos.x -4 + 10 * Math.cos(this.arg),
+      y: player.spilit.pos.y + 10 * Math.sin(this.arg),
     }
     let bullet = new Bullet4(p,this);
     EntityManager.addEntity(bullet);
