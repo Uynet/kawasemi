@@ -13,7 +13,7 @@ export default class EmitTrail{
       let p = CPV(this.entity.pos);
       let d = Rand2D(5);
       p = ADV(p,d);
-      let v = POV(this.entity.arg+Math.PI,4);
+      let v = POV(this.entity.arg+Math.PI,1);
       let trail = new this.Trail(p,v);//引数どうしよ
       EntityManager.addEntity(trail);
     }

@@ -18,6 +18,7 @@ export default class Enemy extends Entity{
     this.isUpdater = true;
     this.colType = "through";
     this.material = "wall";
+    this.isBreakable = true;
     this.frame = 0;
     this.spid = 0; //spriteIndex 現在のスプライト番号
     /*固有情報*/

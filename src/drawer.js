@@ -46,13 +46,12 @@ export default class Drawer{
 
     /*拡大率*/
     this.magnification = 3;
-    let po = VECN(this.magnification);
     this.backGroundContainer.scale.set(3);
-    this.backContainer.scale = po;
-    this.entityContainer.scale = po;
-    this.UIContainer.scale = po;
+    this.backContainer.scale.set(this.magnification);
+    this.entityContainer.scale.set(this.magnification);
+    this.UIContainer.scale.set(this.magnification);
     this.foreContainer.scale.set(this.magnification + 1);
-    this.foreEntityContainer.scale = po;
+    this.foreEntityContainer.scale.set(this.magnification);
     this.filterContainer.scale.set(this.magnification + 1);
     $("#pixiview").append(this.Renderer.view);
 
@@ -152,6 +151,17 @@ export default class Drawer{
       this.magnification*(-pos.y-8) + PIXI_HEIGHT/2,
       0
     );
+    centerX = clamp(
+      this.magnification*(-pos.x-8)+PIXI_WIDTH/2,
+      this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
+      0
+    );
+    centerY = clamp(
+      //8ブロックぶん上げる
+      this.magnification*(-pos.y-8) + PIXI_HEIGHT/2,
+      this.magnification*(-this.mapSize.height*16) + PIXI_HEIGHT,
+      0
+    );
     this.backContainer.x = Math.floor(centerX);
     this.backContainer.y = Math.floor(centerY);
     this.entityContainer.x = Math.floor(centerX);
@@ -171,7 +181,6 @@ export default class Drawer{
     const distContext = canvas.getContext("webgl");
     var rgba = context.getImageData(p.x, p.y, 1, 1).data;
   }
-
   static Quake(diff){
     this.Stage.x = Math.floor(diff.x);
     this.Stage.y = Math.floor(diff.y);
@@ -180,7 +189,14 @@ export default class Drawer{
     this.renderTarget.anchor.set(0.5);
     this.renderTarget.rotation = arg;
   }
-
-
-
+  static SetMagnification(magnification){
+    this.magnification = magnification;
+    this.backGroundContainer.scale.set(3);
+    this.backContainer.scale.set(this.magnification);
+    this.entityContainer.scale.set(this.magnification);
+    this.UIContainer.scale.set(this.magnification);
+    this.foreContainer.scale.set(this.magnification + 1);
+    this.foreEntityContainer.scale.set(this.magnification);
+    this.filterContainer.scale.set(this.magnification + 1);
+  }
 }

@@ -9,24 +9,18 @@ export default class WeaponIcon extends EFFECT{
     super(pos,VEC0());
     /*基本情報*/
     /*スプライト*/
-    this.spid = name; //12~15
+    this.spid = name;
     this.layer = "FOREENTITY";
-    this.frame = 0;
     this.pattern = Art.UIPattern.bullet.pop;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
-
-    this.d = 12;
+    this.offSetY = 12;
   }
-  Delete(){
-    EntityManager.removeEntity(this);
-  }
-
   Update(){
-    this.d*= 0.3;
+    this.offSetY*= 0.3;
     this.pos = CPV(EntityManager.player.pos);
     this.pos.y -= 12;
-    this.pos.y -= this.d;
+    this.pos.y -= this.offSetY;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
     if(this.frame>30 || this.spid != EntityManager.player.weapon.name)this.Delete();

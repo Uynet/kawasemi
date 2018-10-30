@@ -47,7 +47,7 @@ export default class Weapon2 extends Weapon{
     let p = ADV(POV(arg,16),CPV(player.pos));
     let bullet;
     //再帰的に生成
-    p = ADV(player.pos,POV(arg,16));
+    p = ADV(player.spilit.pos,POV(arg,16));
     bullet = new Bullet2(p,arg,true,0);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */

@@ -4,8 +4,8 @@ export default class Param{
     this.player = {
       //プレイ中ステータス
       jumpVel : 6.2,//ジャンプ力
-      runVel : 0.4,//はしり速度
-      gravity : 0.30,
+      runVel : 0.3,//はしり速度
+      gravity : 0.26,
       maxHp : 30,
       maxBullet : 100,
       fliction : 0.7,
