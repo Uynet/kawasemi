@@ -35,7 +35,7 @@ export default class Enemy3 extends Enemy{
     /*パラメータ*/
     this.SetParam(Param.enemy3);
     this.addAI(new Shot(this));
-    this.addAI(new MoveLissajous(this));
+    this.addAI(new MoveLissajous(this,1,1,1/10,1/8));
     /*state*/
     this.state = "WAITING";
     /*フラグ*/

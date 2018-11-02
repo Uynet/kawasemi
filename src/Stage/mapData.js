@@ -1,4 +1,5 @@
 import EntityManager from './entityManager.js';
+import TutorialObject from "../Entity/Mover/tutorialObject.js"
 import StageData from "./stageData.js";
 import Entity from '../Entity/entity.js';
 import Wall from '../Entity/wall.js';
@@ -179,6 +180,7 @@ export default class MapData{
           case 172 : obj = new Enemy4(p); break;
           case 173 : obj = new Enemy5(p); break;
           case 174 : obj = new Enemy6(p); break;
+          case 185 : obj = new TutorialObject(p); break;
       }
         EntityManager.addEntity(obj);
     }

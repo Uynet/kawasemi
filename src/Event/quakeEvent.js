@@ -2,12 +2,16 @@ import Event from './event.js';
 import EventManager from './eventmanager.js';
 import Drawer from '../drawer.js';
 
-/*タイトル画面からゲーム開始画面に移行するイベント
- * (UIの退避)
- * UIのセット
- */
+//画面振動エフェクト
 export default class QuakeEvent extends Event{
+
+  /*
+   * @param time 
+   * @param size
+   * @param isRot 回転するかどうかを表すクソboolです
+   * */
   constructor(size,time,isRot){
+
     //undefined
     if(time>=1 || !time) {
       console.warn("invalid time : " + time);

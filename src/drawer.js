@@ -199,4 +199,8 @@ export default class Drawer{
     this.foreEntityContainer.scale.set(this.magnification);
     this.filterContainer.scale.set(this.magnification + 1);
   }
+  //塗りつぶし
+  static ScreenPaint(color){
+    Drawer.Stage.filters = [Drawer.fireFilter];
+  }
 }
