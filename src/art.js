@@ -426,8 +426,9 @@ export default class Art{
         value: 0 // 初期値
       }
     });
+    //今実質的にflashとして使わている
     Drawer.fireFilter = new PIXI.Filter(null,resources.fireShader.data , {
-      frame: {
+      paintCol: {
         type: '1f',
         value: 0 // 初期値
       }

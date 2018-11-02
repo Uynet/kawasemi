@@ -1,4 +1,4 @@
-import Entity from '../entity.js';
+import Entity from "../entity.js";
 
 //これ継承してる意味ある？？
 export default class EFFECT extends Entity{

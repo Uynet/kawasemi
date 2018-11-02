@@ -50,6 +50,9 @@ export default class Entity{
   Delete(){
     EntityManager.removeEntity(this);
   }
+  addAI(AI){
+    this.AIList.push(AI);
+  }
   /*Hurt()*/
 }
 
