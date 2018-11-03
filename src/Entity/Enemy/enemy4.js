@@ -85,48 +85,20 @@ export default class Enemy4 extends Enemy{
       }
     }
   }
-  Physics(){
-    if(this.floor.on){
-      this.pos.x += this.floor.under.vel.x;
-      //this.pos.y += this.floor.under.vel.y;
-    }
-    if(this.gravity)this.acc.y += this.gravity;
-    this.vel.y = Math.min(this.vel.y,4.8);
-
-    this.acc.x += this.force.x;
-    this.acc.y += this.force.y;
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
-    this.vel.x += this.acc.x;
-    this.vel.y += this.acc.y;
-    this.acc.y = 0;
-    this.acc.x = 0;
-    this.force.x *= 0.9;
-    this.force.y *= 0.9;
-    //最大速度制限
-  }
   Animation(){
     //this.spid = Math.floor(this.frame/2)%4;
     this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = this.pos;
   }
 
   Update(){
-    for (let AI of this.AIList){
-      AI.Do();
-    }
-
+    this.ExecuteAI();
 
     this.Collision();
-    this.Physics();
     this.Hurt();
     this.Animation();
 
     if(this.isActive){
       this.spid = 1;
-      if(!this.isJump){
-        this.vel.x *= 0.7;
-      }
       //たまにじゃんぷ　
       if(this.frame%40 == 0 && !this.isJump){
         this.vel.y = -3;
@@ -137,11 +109,9 @@ export default class Enemy4 extends Enemy{
       this.spid = 0;
       this.frame = 0;
     }
-
-    //observer
-    if(this.hp<=0){
-      this.Die();
-    }
-    this.frame++;
+    //this.Physics();
+    this.vel.y = Math.min(this.vel.y,4.8);
+    this.force.x *= 0.9;
+    this.force.y *= 0.9;
   }
 }

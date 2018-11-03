@@ -20,7 +20,6 @@ export default class Enemy2 extends Enemy{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy2;
-    this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
@@ -35,25 +34,12 @@ export default class Enemy2 extends Enemy{
       under : null
     }
     this.vel = Rand2D(1);
-  }
-  //die
-  Animation(){
-    this.spid = Math.floor(this.frame/2)%4;
-    this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = this.pos;
+    this.addAnimator(true,2,4);
   }
 
   Update(){
-    for (let AI of this.AIList){
-      AI.Do();
-    }
-    this.Physics();
+    this.ExecuteAI();
+    //this.Physics();
     this.Hurt();
-    this.Animation();
-    this.frame++;
-    //observer
-    if(this.hp<=0){
-      this.Die();
-    }
   }
 }

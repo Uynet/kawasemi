@@ -23,7 +23,6 @@ export default class Enemy6 extends Enemy{
     this.name = "enemy6";
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy6;
-    this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
@@ -73,12 +72,14 @@ export default class Enemy6 extends Enemy{
     EntityManager.addEntity(new Explosion1(this.pos));
     this.Die();
   }
-
+  onDying(){
+    this.isSwelling = true;
+  }
 
   Update(){
-    /*きょうつう*/
+    this.ExecuteAI();
     this.Collision();
-    this.Physics();
+    //this.Physics();
     this.Hurt();
     this.Animation();
     if(this.isSwelling){
@@ -88,11 +89,5 @@ export default class Enemy6 extends Enemy{
     if(this.isShrinking){
       this.Shrink();
     }
-    //observer
-    if(this.hp<=0){
-      //this.Bomb();
-      this.isSwelling = true;
-    }
-    this.frame++;
   }
 }

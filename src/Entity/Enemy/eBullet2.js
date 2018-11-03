@@ -15,17 +15,15 @@ export default class eBullet2 extends Enemy{
   constructor(pos,vel){
     super(pos,vel);
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));
     this.frame = 0;
     this.type = "MOVER"
     /*スプライト*/
     this.pattern = Art.enemyPattern.eBullet2;
-    this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.param = Param.eBullet2;
-    //this.addAI(new MoveReflect(this));
     this.atkMin = this.param.atkMin;
     this.atkMax = this.param.atkMax;
     this.hp = this.param.hp;
@@ -46,6 +44,7 @@ export default class eBullet2 extends Enemy{
       }
     }
   }
+  
 
   Update(){
     this.ExecuteAI();

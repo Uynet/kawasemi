@@ -113,6 +113,7 @@ export default class Enemy1 extends Enemy{
     }
     EntityManager.player.AddForce(f);
     for(let e of EntityManager.enemyList){
+      if(e == this)continue;
       f = {x: (this.pos.x+this.size/2 < e.pos.x)? 0.3 : -0.3 , y:-0.7};
       e.AddForce(f);
     }
@@ -220,15 +221,7 @@ export default class Enemy1 extends Enemy{
     }
   }
 
-  Physics(){
-    if(this.floor.on){
-      this.pos.x += this.floor.under.vel.x;
-      //this.pos.y += this.floor.under.vel.y;
-    }
-    if(this.gravity)this.acc.y += this.gravity;
-
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
+  ClampPos(){
     if(this.pos.x < 0){
        this.pos.x =0;
        this.vel.x = 0;
@@ -237,11 +230,6 @@ export default class Enemy1 extends Enemy{
       this.posx = 16*Drawer.mapSize.width;
       this.vel.x = 0;
     }
-    this.vel.x += this.acc.x;
-    this.vel.y += this.acc.y;
-    this.acc.y = 0;
-    this.acc.x = 0;
-    //最大速度制限
   }
   Update(){
     this.ExecuteAI();
@@ -251,7 +239,8 @@ export default class Enemy1 extends Enemy{
     }
 
     this.Collision();
-    this.Physics();
+  //  this.Physics();
+    this.ClampPos();
     this.Hurt();
     //アニメーション
     //observer
@@ -262,6 +251,5 @@ export default class Enemy1 extends Enemy{
       Audio.PlaySE("bomb",1,0.6);
       Audio.StopBGM();
     }
-    this.frame++;
   }
 }

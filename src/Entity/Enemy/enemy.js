@@ -8,6 +8,8 @@ import Collision from '../../Collision/collision.js';
 import Coin from '../Mover/coin.js'
 import Explosion2 from '../Effect/Explosion/explosion2.js';
 import Explosion3 from '../Effect/Explosion/explosion3.js';
+import BasicAI from "../AI/basicAI.js";
+import BasicEnemyPhysics from "../AI/basicEnemyPhysics.js";
 
 export default class Enemy extends Entity{
   constructor(pos,vel){
@@ -15,12 +17,11 @@ export default class Enemy extends Entity{
     /*基本情報*/
     this.size = 16;
     this.type = ENTITY.ENEMY;
+    this.spid = 0; //spriteIndex 現在のスプライト番号
     this.isUpdater = true;
     this.colType = "through";
     this.material = "wall";
     this.isBreakable = true;
-    this.frame = 0;
-    this.spid = 0; //spriteIndex 現在のスプライト番号
     /*固有情報*/
     this.AIList = [];//AIの配列
     /*レイヤー*/
@@ -31,9 +32,8 @@ export default class Enemy extends Entity{
       under : null
     }
     this.force = VEC0();
-  }
-  addAI(AI){
-    this.AIList.push(AI);
+    this.addAI(new BasicAI(this));
+    this.addAI(new BasicEnemyPhysics(this));
   }
   //自分がダメージを食らう
   Damage(atk){
@@ -53,6 +53,9 @@ export default class Enemy extends Entity{
     }
     //プレイヤーに衝突応答
   }
+  onDying(){
+    this.Die();
+  }
   //しぬ
   Die(){
     this.isAlive = false;
@@ -64,27 +67,14 @@ export default class Enemy extends Entity{
       EntityManager.removeEntity(this);
       EntityManager.addEntity(new Explosion3(this.pos));
   }
-  Physics(){
+  EnemyPhysics(){
     if(this.floor.on){
       this.pos.x += this.floor.under.vel.x;
       //this.pos.y += this.floor.under.vel.y;
     }
     if(this.gravity)this.acc.y += this.gravity;
-
-    this.acc.x += this.force.x;
-    this.acc.y += this.force.y;
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
-    this.vel.x += this.acc.x;
-    this.vel.y += this.acc.y;
-    this.acc.y = 0;
-    this.acc.x = 0;
+    this.BasicPhysics();
     //最大速度制限
-  }
-  ExecuteAI(){
-    for (let AI of this.AIList){
-      AI.Do();
-    }
   }
   SetParam(param){
     Object.keys(param).forEach(key=>{

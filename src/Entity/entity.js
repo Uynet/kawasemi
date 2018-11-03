@@ -1,4 +1,5 @@
 import Collider from '../Collision/collider.js';
+import Timer from "../timer.js";
 import EntityManager from "../Stage/entityManager.js";
 import Box from '../Collision/box.js';
 import Animator from "./AI/animator.js";
@@ -9,6 +10,7 @@ export default class Entity{
     this.pos = pos;
     this.vel = vel;
     this.acc = VEC0();
+    this.force = VEC0();
     this.gravity;
     this.size = 16;
     //this.e = 0.9;
@@ -29,6 +31,26 @@ export default class Entity{
   }
   /*common*/
   Physics(){};
+  BasicPhysics(){
+    this.acc.x += this.force.x*Timer.timeScale; 
+    this.acc.y += this.force.y*Timer.timeScale; 
+    this.vel.x += this.acc.x*Timer.timeScale; 
+    this.vel.y += this.acc.y*Timer.timeScale; 
+    this.pos.x += this.vel.x*Timer.timeScale+this.acc.x*this.acc.x*Timer.timeScale; 
+    this.pos.y += this.vel.y*Timer.timeScale+this.acc.y*this.acc.y*Timer.timeScale; 
+    this.acc.y = 0;
+    this.acc.x = 0;
+  }
+  MoveByGravity(){
+    if(this.gravity)this.acc.y += this.gravity;
+  }
+  MoveOnFloor(){
+    //動く床に乗っている時
+    if(this.floor.on){
+      this.pos.x += this.floor.under.vel.x*Timer.timeScale;  
+      this.pos.y += this.floor.under.vel.y*Timer.timeScale;  
+    }
+  }
   Collision(){};
   Update(){};
   Set(param , value){
