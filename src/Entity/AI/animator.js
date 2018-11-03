@@ -9,10 +9,17 @@ export default class Animator{
     this.animFrames = frames;
   }
   Do(){
-    if(this.entity.frame%this.animTerm == this.animTerm-1){
       this.entity.sprite.texture = this.entity.pattern[this.entity.spid];
-      if(this.isLoop) this.entity.spid = (this.entity.spid+1)%this.animFrames;
-      else this.entity.spid = Math.min(this.entity.spid+1,this.animFrames-1);
+    if(this.entity.frame%this.animTerm == this.animTerm-1){
+      this.entity.spid++;
+      if(this.isLoop) this.entity.spid = this.entity.spid%this.animFrames;
+      else{
+        if(this.entity.spid == this.animFrames){
+          this.entity.spid--;
+          this.entity.onAnimationEnd();
+        }
+      }
     }
+    this.entity.sprite.position = this.entity.pos;
   }
 }

@@ -13,14 +13,11 @@ export default class BulletHitWall extends EFFECT{
     this.pattern = Art.bulletPattern.hitWall
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
+    this.addAnimator(false,3,4);
   }
 
   Update(){
-    this.sprite.texture = this.pattern[this.spid];
-    this.spid = Math.floor(this.frame/3);
-    if(this.spid == 4){
-      EntityManager.removeEntity(this);
-    }
+    this.ExecuteAI();
     this.frame++;
   }
 }

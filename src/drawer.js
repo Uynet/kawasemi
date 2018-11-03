@@ -140,17 +140,6 @@ export default class Drawer{
   }
   /*スクロール位置を一瞬で移動させる*/
   static ScrollSet(pos){
-    centerX = BET(
-      this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
-      this.magnification*(-pos.x-8)+PIXI_WIDTH/2,
-      0
-    );
-    centerY = BET(
-      //8ブロックぶん上げる
-      this.magnification*(-this.mapSize.height*16) + PIXI_HEIGHT,
-      this.magnification*(-pos.y-8) + PIXI_HEIGHT/2,
-      0
-    );
     centerX = clamp(
       this.magnification*(-pos.x-8)+PIXI_WIDTH/2,
       this.magnification*(-this.mapSize.width*16) + PIXI_WIDTH,
@@ -201,6 +190,12 @@ export default class Drawer{
   }
   //塗りつぶし
   static ScreenPaint(color){
-    Drawer.Stage.filters = [Drawer.fireFilter];
+    Drawer.SetFilter([Drawer.fireFilter]);
+  }
+  static ScreenPos(pos){
+    return sub(pos,this.entityContainer.position);
+  }
+  static SetFilter(filters){
+    Drawer.Stage.filters = filters;
   }
 }

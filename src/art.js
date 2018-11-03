@@ -279,7 +279,7 @@ export default class Art{
         sonic :this.Frame("bullet",70,4),
       },
       buringFire : this.Frame("bullet" ,120 , 4 ),
-
+      screenFlash : this.Frame("bullet" ,130, 2),
     }
     this.enemyPattern = {
       coin : [

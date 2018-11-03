@@ -41,7 +41,6 @@ export default class Enemy1 extends Enemy{
     this.type = ENTITY.ENEMY;
     /*スプライト*/
     this.pattern = Art.enemyPattern.enemy1;
-    this.spid = 0; //spriteIndex 現在のスプライト番号
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.scale.set(this.size/16);
     this.sprite.position = this.pos;
@@ -58,6 +57,7 @@ export default class Enemy1 extends Enemy{
       under : null
     }
     this.enemyPop = 3;
+    this.addAnimator(true,6,4);
   }
   PopEnemy(enemyPop){
     let p = {
@@ -219,11 +219,6 @@ export default class Enemy1 extends Enemy{
       UIManager.BossHP.SetBar(this.hp);
     }
   }
-  Animation(){
-    this.spid = Math.floor(this.frame/6)%4;
-    this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = this.pos;
-  }
 
   Physics(){
     if(this.floor.on){
@@ -249,7 +244,7 @@ export default class Enemy1 extends Enemy{
     //最大速度制限
   }
   Update(){
-    //AI
+    this.ExecuteAI();
     if(this.state == "JUMP"){
       this.acc.x = (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 0.010 : -0.010;
       this.vel.x = Math.max(-1,Math.min(this.vel.x,1));
@@ -259,7 +254,6 @@ export default class Enemy1 extends Enemy{
     this.Physics();
     this.Hurt();
     //アニメーション
-    this.Animation();
     //observer
     if(this.hp<=0){
       this.Die();

@@ -11,7 +11,6 @@ import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
 import Param from '../../param.js';
 import EmitTrail from "../AI/emitTrail.js";
-import Animator from "../AI/animator.js";
 
 //normal bullet
 export default class Bullet3 extends Bullet{

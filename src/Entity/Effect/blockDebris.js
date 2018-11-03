@@ -13,11 +13,15 @@ export default class BlockDebris extends EFFECT{
     /*基本情報*/
     this.name = "blockDebris";
     this.gravity = 0.1;
-    this.pattern = Art.bulletPattern.blockDebris;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.InitSprite();
     this.sprite.position = ADV(this.pos,VECN(8));
     this.sprite.rotation = Rand(2);
-    this.AIList.push(new Animator(this,false,4,4));
+    this.addAnimator(false,4,4);
+  }
+  InitSprite(){
+    this.patternName = "blockDebris"
+    this.pattern = Art.bulletPattern[this.patternName];
+    this.sprite = new PIXI.Sprite(this.pattern[this.spid]);
   }
   Physics(){
     this.vel.y += this.gravity;

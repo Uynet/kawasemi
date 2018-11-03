@@ -20,6 +20,7 @@ export default class Stone extends EFFECT{
     this.spid = 0;
     this.pattern = Art.bulletPattern.explosion.stone;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
     this.sprite.scale.set(1);
     this.sprite.anchor.set(0.5);

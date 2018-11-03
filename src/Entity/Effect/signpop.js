@@ -13,11 +13,10 @@ export default class Signpop extends EFFECT{
     this.pattern = Art.bulletPattern.signpop;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
-    this.AIList.push(new Animator(this,true,4,4));
+    this.addAnimator(true,4,4);
   }
   Update(){
     this.ExecuteAI();
-    this.sprite.position = this.pos;
     this.frame++;
   }
 }

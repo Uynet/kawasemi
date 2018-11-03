@@ -45,7 +45,10 @@ export default class Bullet4 extends Bullet{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));
     this.SetParam();
     this.AIList.push(new Bullet4AI(this));
-    this.AIList.push(new Animator(this,false,1,4));
+    this.addAnimator(true,1,4);
     this.SetSize(this.size+Rand(8));
+  }
+  onAnimationEnd(){
+    //nothing to do
   }
 }

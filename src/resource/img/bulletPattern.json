@@ -91,7 +91,10 @@
     "bullet120.png": { "frame": {"x":0, "y":288, "w":16, "h":16} },
     "bullet121.png": { "frame": {"x":16, "y":288, "w":16, "h":16} },
     "bullet122.png": { "frame": {"x":32, "y":288, "w":16, "h":16} },
-    "bullet123.png": { "frame": {"x":48, "y":288, "w":16, "h":16} }
+    "bullet123.png": { "frame": {"x":48, "y":288, "w":16, "h":16} },
+    "comment": { "":" screenFlash" },
+    "bullet130.png": { "frame": {"x":0, "y":304, "w":32, "h":32} },
+    "bullet131.png": { "frame": {"x":32, "y":304, "w":32, "h":32} }
   },
 
   "meta": {

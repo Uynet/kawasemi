@@ -1,6 +1,5 @@
 import Art from '../../art.js';
 import EmitTrail from "../AI/emitTrail.js";
-import Animator from "../AI/animator.js";
 import Audio from '../../audio.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
@@ -25,7 +24,7 @@ export default class Spilit extends Entity{
     this.layer = "ENTITY";
     this.isUpdater = true;
     this.arg = 0;
-    this.AIList.push(new Animator(this,true,3,6));
+    this.addAnimator(true,3,6);
     this.AIList.push(new EmitTrail(this,Bright,8));
   }
   Phisics(){

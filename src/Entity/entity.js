@@ -1,6 +1,7 @@
 import Collider from '../Collision/collider.js';
 import EntityManager from "../Stage/entityManager.js";
 import Box from '../Collision/box.js';
+import Animator from "./AI/animator.js";
 
 export default class Entity{
   constructor(pos,vel){
@@ -52,6 +53,12 @@ export default class Entity{
   }
   addAI(AI){
     this.AIList.push(AI);
+  }
+  addAnimator(isLoop,term,frames){
+    this.addAI(new Animator(this,isLoop,term,frames));
+  }
+  onAnimationEnd(){
+    this.Delete();
   }
   /*Hurt()*/
 }
