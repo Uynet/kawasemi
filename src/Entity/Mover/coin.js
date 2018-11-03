@@ -1,5 +1,4 @@
 import Art from '../../art.js';
-import Animator from "../AI/animator.js";
 import Audio from '../../audio.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
@@ -33,7 +32,7 @@ export default class Coin extends Entity{
     this.isUpdater = true;
     /*AI*/
     this.vel.y = 0.3;
-    this.AIList.push(new Animator(this,true,3,12));
+    this.addAnimator(true,3,12);
   }
   Collision(){
     this.isJump = true;

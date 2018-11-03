@@ -15,6 +15,7 @@ export default class Shockwave extends EFFECT{
   }
 
   Update(){
+    Drawer.Stage.filters = [Drawer.testFilter];
     Drawer.Stage.filters[0].uniforms.x = this.pos.x/800; 
     Drawer.Stage.filters[0].uniforms.y = this.pos.y/640; 
     Drawer.Stage.filters[0].uniforms.time = this.frame;

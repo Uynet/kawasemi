@@ -6,6 +6,7 @@ import Audio from '../../audio.js';
 import EventManager from "../../Event/eventmanager.js";
 import QuakeEvent from "../../Event/quakeEvent.js";
 import Explosion1 from "../Effect/Explosion/explosion1.js";
+import Explosion4 from "../Effect/Explosion/explosion4.js";
 import BulletShot from "../Effect/bulletShot.js";
 
 export default class Bullet1AI{
@@ -22,7 +23,7 @@ export default class Bullet1AI{
   Collision(){
     for(let l of EntityManager.enemyList){
       if(Collision.on(this.bullet,l).isHit){
-        l.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
+        l.Damage(-RandomRange(this.bullet.atkMin,this.bullet.atkMax));
         this.bullet.hp--;
       };
     }
@@ -31,7 +32,7 @@ export default class Bullet1AI{
         //breakable object
         if(w.isBreakable){
           // ■ SoundEffect : hitWood
-          w.Damage(-RandBET(this.bullet.atkMin,this.bullet.atkMax));
+          w.Damage(-RandomRange(this.bullet.atkMin,this.bullet.atkMax));
           this.bullet.hp--;
           //wall
           }else{

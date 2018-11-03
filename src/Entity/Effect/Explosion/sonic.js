@@ -7,18 +7,19 @@ import Drawer from "../../../drawer.js";
 export default class Sonic extends EFFECT{
   constructor(pos){
     super(pos,VEC0());
+    this.pattern = Art.bulletPattern.explosion.sonic;
+    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.addAnimator(false,3,4);
   }
   Init(pos,vel,arg){
     this.pos = pos;
     this.vel = vel;
     this.arg = arg;
     /*基本情報*/
-    this.frame = 0;
     this.name = "sonic";
-    /*スプライト*/
     this.spid = 0;
-    this.pattern = Art.bulletPattern.explosion.sonic;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.frame = 0;
+    /*スプライト*/
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     this.sprite.scale.set(5);
@@ -26,20 +27,17 @@ export default class Sonic extends EFFECT{
     //this.sprite.filters = [Drawer.testFilter];
     //this.arg = ADV(VECN(2),Rand2D(1));
   }
-
+  onAnimationEnd(){
+      Pool.Remove(this);
+  }
   Update(){
-    this.sprite.texture = this.pattern[this.spid];
-    this.spid = Math.floor(this.frame/3);
+    this.ExecuteAI();
     //phys
     this.pos = ADV(this.pos,this.vel);
 
     this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)*2));
     this.sprite.alpha *= 0.9;
 
-    if(this.spid == 4){
-      Pool.Remove(this);
-    }
-    this.sprite.position = this.pos;
     this.frame++;
   }
 }

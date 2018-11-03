@@ -20,17 +20,19 @@ export default class Explosion5 extends EFFECT{
     this.isNoSprite = true;
   }
   Bomb(){
-   let exp = new Explosion1(CPV(this.pos));
+    let exp = new Explosion1(CPV(this.pos));
     EntityManager.addEntity(exp);
-    EventManager.PushEvent(new ScreenFlashEvent());
   }
 
   Update(){
     //爆発して自分は消える
     if(this.frame == 0){
-      this.Bomb();
+      EventManager.PushEvent(new ScreenFlashEvent(this.pos));
+      let screenFlash = new ScreenFlash(CPV(this.pos));
+      EntityManager.addEntity(screenFlash);
     }
-    if(this.frame > 300) EntityManager.removeEntity(this);
+    if(this.frame == 4) this.Bomb();
+    if(this.frame > 5) EntityManager.removeEntity(this);
     this.frame++;
   }
 }

@@ -6,24 +6,16 @@ import EntityManager from '../../Stage/entityManager.js';
 export default class BulletShot extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
-    /*基本情報*/
-    this.frame = 0;
-    /*スプライト*/
-    this.spid = 0;
     this.pattern = Art.bulletPattern.shot;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.position = this.pos;
+    this.addAnimator(false,3,4);
   }
 
   Update(){
-    this.sprite.texture = this.pattern[this.spid];
-    this.spid = Math.floor(this.frame/3);
+    this.ExecuteAI();
     //phys
     this.pos = ADV(this.pos,this.vel);
-    if(this.spid == 4){
-      EntityManager.removeEntity(this);
-    }
-    this.sprite.position = this.pos;
     this.frame++;
   }
 }

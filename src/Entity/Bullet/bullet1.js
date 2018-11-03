@@ -49,7 +49,7 @@ export default class Bullet1 extends Bullet{
     this.atkMax = Param.bullet1.atkMax;//攻撃力
     this.curve = Param.bullet1.curve;
     let emitTerm = 2;
-    this.AIList.push(new Animator(this,true,1,4));
+    this.addAnimator(true,1,4);
     this.AIList.push(new Bullet1AI(this));
     this.AIList.push(new EmitTrail(this,BulletTrail,1));
     if(weapon.isHorming) this.AIList.push(new Horming(this));

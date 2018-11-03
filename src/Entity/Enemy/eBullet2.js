@@ -30,20 +30,10 @@ export default class eBullet2 extends Enemy{
     this.atkMax = this.param.atkMax;
     this.hp = this.param.hp;
     this.gravity = this.param.gravity;
-    /*フラグ*/
-    this.isAlive = true;
-    /*床の親子関係*/
-    this.floor = {
-      on : false,
-      under : null
-    }
+
+    this.addAnimator(true,2,4);
   }
-  Animation(){
-    this.spid = Math.floor(this.frame/2)%4;
-    this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = this.pos;
-  }
-  Die(){
+  Delete(){
     EntityManager.removeEntity(this);
     EntityManager.addEntity(new Explosion2(CPV(this.pos),1.5*Math.PI))
   }
@@ -58,22 +48,18 @@ export default class eBullet2 extends Enemy{
   }
 
   Update(){
-    //for (let AI of this.AIList){
-    // AI.Do();
-    //}
-   if(this.frame%3 == 0){
-    let stone = Pool.GetStone(ADV(this.pos,VECX(4)),VEC0());
-    if(stone)EntityManager.addEntity(stone);
+    this.ExecuteAI();
+    if(this.frame%3 == 0){
+      let stone = Pool.GetStone(ADV(this.pos,VECX(4)),VEC0());
+      if(stone)EntityManager.addEntity(stone);
     }
     this.Physics();
-    if(Math.abs(this.vel.y)>1)this.vel.y *= 1;
     this.Collision();
     this.Hurt();
-    this.Animation();
     this.frame++;
     //observer
     if(this.hp<=0 || this.frame > 300){
-      this.Die();
+      this.Delete();
     }
   }
 }

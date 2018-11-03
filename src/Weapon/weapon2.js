@@ -12,6 +12,7 @@ import QuakeEvent from '../Event/quakeEvent.js';
 import Param from '../param.js';
 import Explosion1 from '../Entity/Effect/Explosion/explosion1.js';
 import Explosion2 from '../Entity/Effect/Explosion/explosion2.js';
+import Explosion5 from '../Entity/Effect/Explosion/explosion5.js';
 import Lasersight from '../Entity/Effect/lasersight.js';
 
 const DIR = {

@@ -26,21 +26,12 @@ export default class eBullet1 extends Enemy{
     this.atkMax = this.param.atkMax;
     //this.hp = ENEMY3.HP;
     //this.gravity = ENEMY3.GRAVITY;
-    /*フラグ*/
-    this.isAlive = true;
     /*床の親子関係*/
     this.floor = {
       on : false,
       under : null
     }
-  }
-  Animation(){
-    this.spid = Math.floor(this.frame/2)%4;
-    this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = this.pos;
-  }
-  Die(){
-    EntityManager.removeEntity(this);
+    this.addAnimator(true,2,4);
   }
   Collision(){
     for(let w of EntityManager.wallList){
@@ -52,19 +43,14 @@ export default class eBullet1 extends Enemy{
   }
 
   Update(){
-    /*
-    for (let AI of this.AIList){
-      AI.Do();
-    }
-    */
+    this.ExecuteAI();
     this.Physics();
     this.Collision();
     this.Hurt();
-    this.Animation();
     this.frame++;
     //observer
     if(this.hp<=0 || this.frame > 300){
-      this.Die();
+      this.Delete();
     }
   }
 }

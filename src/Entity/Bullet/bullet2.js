@@ -8,7 +8,6 @@ import QuakeEvent from '../../Event/quakeEvent.js';
 import Bullet2AI from './../AI/bullet2AI.js';
 import Bullet from './bullet.js';
 import BulletTrail from '../Effect/bulletTrail.js';
-import Animator from "../AI/animator.js";
 import Explosion1 from '../Effect/Explosion/explosion1.js';
 import Explosion2 from '../Effect/Explosion/explosion2.js';
 import Explosion3 from '../Effect/Explosion/explosion3.js';
@@ -46,7 +45,7 @@ export default class Bullet2 extends Bullet{
     this.SetParam();
     /*AI*/
     this.AIList.push(new Bullet2AI(this));
-    this.AIList.push(new Animator(this,false,2,8));
+    this.addAnimator(false,2,8);
   }
   Explode(){
     const e = new Explosion3(CPV(this.pos),VEC0());
