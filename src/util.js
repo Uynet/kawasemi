@@ -111,9 +111,12 @@ const UI_ = {
 }
 
 /*Vector*/
-const VEC2 = (x,y)=>{return {x:x,y:y}};
-const vec2 = (x,y)=>{return {x:x,y:y}};
+const vec2 = (x,y)=>{
+  if(y===undefined) return {x:x,y:x}
+  else return {x:x,y:y}
+};
 const VEC0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
+const vec0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
 const VECN = (n)=>{return {x:n,y:n}};//
 const VECX = (vx)=>{return {x:vx,y:0}};//
 const VECY = (vy)=>{return {x:0,y:vy}};//
@@ -123,7 +126,6 @@ const add = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加�
 const sub = (v1,v2)=>{ return {x:v1.x - v2.x ,y:v1.y - v2.y}};//ベクトル加算
 const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
 const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
-const NOMALIZE = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化
 const normalize = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化
 const scala = (a,v)=>{
   return {

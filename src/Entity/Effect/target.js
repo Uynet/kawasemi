@@ -9,7 +9,7 @@ export default class Target extends EFFECT{
     //このposは参照型なので常にenemyを追尾している
     super(enemy.pos,VEC0());
     this.ofset = enemy.size/2;
-    this.ofsetPos = ADV(this.pos , VECN(this.ofset));
+    this.ofsetPos = ADV(this.pos , vec2(this.ofset));
     /*基本情報*/
     this.name = "target";
     /*スプライト*/
@@ -24,8 +24,8 @@ export default class Target extends EFFECT{
     this.sprite.anchor.set(0.5);
     this.sprite.rotation = this.frame/50;
     //シュッてなるやつ
-    this.sprite.scale = VECN(1.5 + 1.5/(this.frame+1)); //ゼロ除算回避
-    this.ofsetPos = ADV(this.pos , VECN(this.ofset));
+    this.sprite.scale = vec2(1.5 + 1.5/(this.frame+1)); //ゼロ除算回避
+    this.ofsetPos = ADV(this.pos , vec2(this.ofset));
     this.sprite.position = this.ofsetPos;
     this.frame++;
   }

@@ -9,6 +9,6 @@ export default class BasicAI{
     this.entity.frame++;
     this.entity.sprite.position = this.entity.pos;
     this.entity.sprite.texture = this.entity.pattern[this.spid];
-    if(this.entity.hp<0)this.entity.onDying();
+    if(this.entity.hp<=0)this.entity.OnDying();
   }
 }

@@ -19,44 +19,27 @@ let STATE = {
 
 export default class Enemy3 extends Enemy{
   constructor(pos){
-    super(pos,VEC0());
+    super(pos,vec0());
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
+    this.name = "enemy3";
     this.arg = 0;
-    this.frame = 0;
     this.frameShot = 0;//最後にshotした時刻
-      this.e = 0;
+    this.BasicEnemyInit();
     /*スプライト*/
-    this.pattern = Art.enemyPattern.enemy3;
-    this.spid = 0; //spriteIndex 現在のスプライト番号
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
-    this.sprite.position = ADV(this.pos , VECN(8));
+    this.sprite.position = ADV(this.pos , vec2(8));
     this.sprite.anchor.set(0.5);
     /*パラメータ*/
-    this.SetParam(Param.enemy3);
     this.addAI(new Shot(this));
     this.addAI(new MoveLissajous(this,1,1,1/10,1/8));
     /*state*/
     this.state = "WAITING";
-    /*フラグ*/
-    this.isAlive = true;
-    /*床の親子関係*/
-    this.floor = {
-      on : false,
-      under : null
-    }
   }
   Animation(){
     this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = ADV(this.pos , VECN(8));
+    this.sprite.position = ADV(this.pos , vec2(8));
   }
-  Collision(){
-    for(let w of EntityManager.wallList){
-      let c = Collision.on(this,w);
-      if(c.isHit){
-        Collision.Resolve(this,w);
-      }
-    }
+  OnCollision(c,entity){
+    Collision.Resolve(this,entity);
   }
 
   Update(){
@@ -72,7 +55,7 @@ export default class Enemy3 extends Enemy{
         this.sprite.scale.set(1);
         this.sprite.rotation = 0; 
         this.spid = 0;
-        this.vel = VEC0();
+        this.vel = vec0();
         break;
       case "ACTIVE" :
         this.sprite.rotation += 0.1;

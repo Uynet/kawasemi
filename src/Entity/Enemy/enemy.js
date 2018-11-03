@@ -1,4 +1,8 @@
 import Entity from '../entity.js';
+import Collider from "../../Collision/collider.js";
+import Box from "../../Collision/box.js";
+import Param from "../../param.js";
+import Art from "../../art.js";
 import Audio from '../../audio.js';
 import EntityManager from '../../Stage/entityManager.js';
 import EventManager from "../../Event/eventmanager.js";
@@ -31,10 +35,28 @@ export default class Enemy extends Entity{
       on : false,
       under : null
     }
-    this.force = VEC0();
+    this.force = vec0();
     this.addAI(new BasicAI(this));
     this.addAI(new BasicEnemyPhysics(this));
   }
+  BasicEnemyInit(){
+    /*基本情報*/
+    this.collider = new Collider(SHAPE.BOX,new Box(this.pos,16,16));
+    /*床の親子関係*/
+    this.floor = {
+      on : false,
+      under : null
+    }
+    /*フラグ*/
+    this.isJump = false;
+    this.isAlive = true;
+    this.SetParam(Param[this.name]);
+    /*スプライト*/
+    this.pattern = Art.enemyPattern[this.name];
+    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+    this.sprite.position = this.pos;
+    this.e = 0;
+  };
   //自分がダメージを食らう
   Damage(atk){
     Audio.PlaySE("enemyDamage",-0.7);
@@ -53,7 +75,7 @@ export default class Enemy extends Entity{
     }
     //プレイヤーに衝突応答
   }
-  onDying(){
+  OnDying(){
     this.Die();
   }
   //しぬ
@@ -66,6 +88,16 @@ export default class Enemy extends Entity{
       EventManager.eventList.push(new QuakeEvent(15,0.4));//ゆれ
       EntityManager.removeEntity(this);
       EntityManager.addEntity(new Explosion3(this.pos));
+  }
+  //衝突判定
+  Collision(){
+    let list = EntityManager.colliderList;
+    for(let i =0;i<list.length;i++){
+      let l = list[i];
+      if(l == this) continue;
+      let c = Collision.on(this,l);
+      if(c.isHit) this.OnCollision(c,l);
+    }
   }
   EnemyPhysics(){
     if(this.floor.on){

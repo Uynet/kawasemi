@@ -1,9 +1,7 @@
 import Enemy from './enemy.js';
 import Art from '../../art.js';
 import Audio from '../../audio.js';
-import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
-import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import eBullet2 from '../../Entity/Enemy/eBullet2.js';
 import Explosion1 from '../Effect/Explosion/explosion1.js';
@@ -16,34 +14,22 @@ import Param from '../../param.js';
 //膨らんで爆発
 export default class Enemy6 extends Enemy{
   constructor(pos){
-    super(pos,VEC0());
+    super(pos,vec0());
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    this.type = ENTITY.ENEMY;
     this.name = "enemy6";
+    this.BasicEnemyInit();
     /*スプライト*/
-    this.pattern = Art.enemyPattern.enemy6;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
-    this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     /*パラメータ*/
     this.addAI(new Enemy5AI(this,200));
-    this.SetParam(Param.enemy6);
     /*フラグ*/
-    this.isJump = false;
-    this.isAlive = true;
     this.isActive = false;
     this.isSwelling = false;//膨らんでいるとtrue;
     this.isShrinking = false;//縮んでいる時true
-    /*床の親子関係*/
-    this.floor = {
-      on : false,
-      under : null
-    }
   }
   Animation(){
     this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = ADV(this.pos,VECN(8));
+    this.sprite.position = ADV(this.pos,vec2(8));
   }
   Swell(){
     //1.5まで大きくなる
@@ -72,14 +58,13 @@ export default class Enemy6 extends Enemy{
     EntityManager.addEntity(new Explosion1(this.pos));
     this.Die();
   }
-  onDying(){
+  OnDying(){
     this.isSwelling = true;
   }
 
   Update(){
     this.ExecuteAI();
-    this.Collision();
-    //this.Physics();
+    //this.Collision();
     this.Hurt();
     this.Animation();
     if(this.isSwelling){

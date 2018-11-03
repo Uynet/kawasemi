@@ -9,7 +9,7 @@ import MapData from "../Stage/mapData.js";
 //背景オブジェクト 何もしない
 export default class BackEntity extends Entity{
   constructor(pos,wall){
-    super(pos,VEC0());
+    super(pos,vec0());
     this.isUpdater = false;
     this.colType = "none";
     this.tex = wall.texture;

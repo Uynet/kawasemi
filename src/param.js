@@ -152,7 +152,7 @@ export default class Param{
     }
     //Laser
     this.bullet2 = {
-      atkMax : 20,
+      atkMax : 20000,
       atkMin : 15,
       hp : 99999,
     }

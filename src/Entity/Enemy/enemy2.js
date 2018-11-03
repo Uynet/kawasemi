@@ -15,31 +15,17 @@ import Param from '../../param.js';
 
 export default class Enemy2 extends Enemy{
   constructor(pos){
-    super(pos,VEC0());
-    /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,16,16));//衝突判定の形状
-    /*スプライト*/
-    this.pattern = Art.enemyPattern.enemy2;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
-    this.sprite.position = this.pos;
+    super(pos,vec0());
+    this.name = "enemy2";
     /*パラメータ*/
-    this.SetParam(Param.enemy2);
-    this.addAI(new moveReflect(this));
-    /*フラグ*/
-    this.isJump = false;
-    this.isAlive = true;
-    /*床の親子関係*/
-    this.floor = {
-      on : false,
-      under : null
-    }
+    this.BasicEnemyInit();
     this.vel = Rand2D(1);
+    this.addAI(new moveReflect(this));
     this.addAnimator(true,2,4);
   }
 
   Update(){
     this.ExecuteAI();
-    //this.Physics();
     this.Hurt();
   }
 }

@@ -36,26 +36,19 @@ export default class Enemy1 extends Enemy{
   constructor(pos){
     super(pos,VEC0());
     /*基本情報*/
+    this.name = "enemy1";
+    this.BasicEnemyInit();
     this.size = 96;
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,this.size,this.size));//衝突判定の形状
-    this.type = ENTITY.ENEMY;
+    this.collider = new Collider(SHAPE.BOX,new Box(pos,this.size,this.size));
     /*スプライト*/
-    this.pattern = Art.enemyPattern.enemy1;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.scale.set(this.size/16);
-    this.sprite.position = this.pos;
     /*パラメータ*/
     //this.addAI(new Enemy1AI(this));
     this.SetParam(Param.enemy1);
     this.maxHP = this.hp;
     /*フラグ*/
     this.state = State.INIT;
-    this.isAlive = true;
-    /*床の親子関係*/
-    this.floor = {
-      on : false,
-      under : null
-    }
+    
     this.enemyPop = 3;
     this.addAnimator(true,6,4);
   }
@@ -89,7 +82,7 @@ export default class Enemy1 extends Enemy{
     this.vel.y = -0.2;
     this.acc.y = -2.3;
     this.state = "JUMP";
-    let p = ADV(this.pos,VEC2(-20,90));
+    let p = ADV(this.pos,vec2(-20,90));
     //  Audio.PlaySE("enemy5Shot");
     Audio.PlaySE("landing2",1.6);
   }
@@ -231,6 +224,13 @@ export default class Enemy1 extends Enemy{
       this.vel.x = 0;
     }
   }
+  OnDying(){
+    this.Die();
+    EventManager.PushEvent(new QuakeEvent(30,0.99));
+    Audio.PlaySE("stageChange",1,0.8);
+    Audio.PlaySE("bomb",1,0.6);
+    Audio.StopBGM();
+  };
   Update(){
     this.ExecuteAI();
     if(this.state == "JUMP"){
@@ -239,17 +239,7 @@ export default class Enemy1 extends Enemy{
     }
 
     this.Collision();
-  //  this.Physics();
     this.ClampPos();
     this.Hurt();
-    //アニメーション
-    //observer
-    if(this.hp<=0){
-      this.Die();
-      EventManager.PushEvent(new QuakeEvent(30,0.99));
-      Audio.PlaySE("stageChange",1,0.8);
-      Audio.PlaySE("bomb",1,0.6);
-      Audio.StopBGM();
-    }
   }
 }

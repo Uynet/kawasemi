@@ -41,23 +41,24 @@ export default class WoodBox extends Wall{
        Audio.PlaySE("blockBreak");
   }
 
+  OnDying(){
+    this.Delete();
+    let p = CPV(this.pos);
+    EntityManager.addEntity(new BulletShot(p,vec0()));
+    let v;
+    for(let i = 0;i<2 ;i++){
+      v = {
+        x : Rand(1) + (2*i-1),//←と→に飛ばす
+        y : -1-Rand(3)/5,
+      }
+      EntityManager.addEntity(new BlockDebris(p,v));
+    }
+  }
   Update(){
     this.sprite.position = this.pos;
 
-    /*observer*/
     if(this.hp<=0){
-      EntityManager.removeEntity(this);
-      let p = CPV(this.pos);
-      EntityManager.addEntity(new BulletShot(p,VEC0()));
-      let v;
-      for(let i = 0;i<2 ;i++){
-        v = {
-          x : Rand(1) + (2*i-1),//←と→に飛ばす
-          y : -1-Rand(3)/5,
-        }
-        EntityManager.addEntity(new BlockDebris(p,v));
-      }
-     
+      this.OnDying(); 
     }
   }
 }
