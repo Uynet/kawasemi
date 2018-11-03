@@ -81,7 +81,7 @@ class Elast{
 
 export default class Player extends Entity{
   constructor(pos){
-    super(pos,VEC0(),VEC0());
+    super(pos,vec0(),vec0());
     /*基本情報*/
     let p = CPV(this.pos);
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,16));//衝突判定の形状
@@ -112,7 +112,7 @@ export default class Player extends Entity{
     this.arg = 0;//狙撃角度 0 - 2π
     this.scArg = 0;//スクロール用
     this.toArg = 0;
-    this.scPos = VEC0();//スクロール位置
+    this.scPos = vec0();//スクロール位置
     this.score = this.param.score;
     //UIManager.HP.SetBar(this.hp);//HPbarの更新
     //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
@@ -138,7 +138,7 @@ export default class Player extends Entity{
         //??
         this.poyo = true;
       this.eventList = [];
-    let spilit =  new Spilit(ADV(this.pos,VECY(-16)));
+    let spilit =  new Spilit(add(this.pos,VECY(-16)));
     this.spilit = spilit;
     EntityManager.addEntity(spilit);
   }
@@ -170,7 +170,7 @@ export default class Player extends Entity{
         Audio.PlaySE("jump1");
         //Audio.PlaySE("changeWeapon",-1);
         //effect
-        let p = ADV(this.pos,VECY(12));
+        let p = add(this.pos,VECY(12));
         let v = {
           x : Rand(1),
           y : Rand(0.4),
@@ -309,7 +309,7 @@ export default class Player extends Entity{
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
         if(this.frame%Math.floor(10/Timer.timeScale) == 0 && this.floor.on){;
           //歩き土埃エフェクト
-          let p = ADV(this.pos,VECY(16));
+          let p = add(this.pos,VECY(16));
           let v = {
             x : -this.vel.x/2,
             y : -0.3 + Rand(0.1),
@@ -419,7 +419,7 @@ export default class Player extends Entity{
           }
             if(this.isJump){
               //着地エフェクト
-              let p = ADV(this.pos,VECY(16));
+              let p = add(this.pos,VECY(16));
               let v = {
                 x : 2 + Rand(1),
                 y : Rand(0.4),
@@ -499,10 +499,10 @@ export default class Player extends Entity{
 
   ScrollByDir(){
     let d = POV(this.arg,100*po(this.offset));
-    let p = ADV(this.pos,d);
+    let p = add(this.pos,d);
     if(Input.isKeyInput(KEY.SP)) {
-      let to = ADV(p,MLV(this.scPos,VECN(-1)));
-      this.scPos = ADV(this.scPos , MLV(to,VECN(1/20)));
+      let to = add(p,MLV(this.scPos,vec2(-1)));
+      this.scPos = add(this.scPos , MLV(to,vec2(1/20)));
       this.offset = Math.min(this.offset+0.5,20);
       Drawer.ScrollOn(this.scPos);
     }else{

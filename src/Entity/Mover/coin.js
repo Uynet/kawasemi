@@ -41,53 +41,38 @@ export default class Coin extends Entity{
       if(l == this) continue;
       let c = Collision.on(this,l);
       if(c.isHit){
-        /* 衝突応答*/
-        Audio.PlaySE("coin2");
-
-        /*速度*/
-        if(c.n.x != 0) this.vel.x *= -this.e;
-        //地面との衝突
-        if(c.n.y == -1){ 
-          this.isJump = false;
-          this.vel.y = Math.min(0,this.vel.y * -this.e);
-        }
-        //天井との衝突
-        if(c.n.y == 1 ){
-          this.vel.y = Math.min(0,this.vel.y * -0.3)
-        }
-        /*押し出し*/
-        this.pos.x += c.n.x * c.depth;
-        this.pos.y += c.n.y * c.depth;
-        /*note : now isHit == false*/
+        this.OnCollision(c);
       }
     }
   }
-  //phys
-  Physics(){
-    this.acc = VEC0();
-    this.acc.y += this.gravity;
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
-    this.vel.x += this.acc.x;
-    //最大速度制限
-    this.vel.y = BET(-0.5,this.vel.y,0.5);
-    this.vel.x = BET(-3,this.vel.x,3);
+  OnCollision(colInfo){
+    /* 衝突応答*/
+    Audio.PlaySE("coin2");
+
+    this.vel = reflect(this.vel,colInfo.n);
+    /*押し出し*/
+    this.pos.x += colInfo.n.x * colInfo.depth;
+    this.pos.y += colInfo.n.y * colInfo.depth;
+    /*note : now isHit == false*/
+  }
+  ClampVel(){
+    this.vel.y = clamp(this.vel.y,-0.5,0.5);
+    this.vel.x = clamp(this.vel.x,-3,3);
   }
   GetByPlayer(){
     //プレイヤーに回収される
     if(DIST(this.pos,player.pos)<48){
       this.coltype = "none";
-      let vec = NOMALIZE({
-        x : player.pos.x - this.pos.x,
-        y : player.pos.y - this.pos.y
-      });
+      let vec = normalize(
+        sub(player.pos,this.pos)
+      );
       this.pos.x += 5 * vec.x;
       this.pos.y += 5 * vec.y;
       if(DIST(this.pos,player.pos)<2){
         Audio.PlaySE("coin1",-1);
-        EntityManager.addEntity(new GetCoin(this.pos,{x:0,y:0}));
+        EntityManager.addEntity(new GetCoin(this.pos,vec0()));
         player.GetScore(1);
-        EntityManager.removeEntity(this);
+        this.Delete();
       }
     }
   }
@@ -101,7 +86,7 @@ export default class Coin extends Entity{
     }
     //Collision
     if(this.coltype!="none")this.Collision();
-    this.Physics();
+    this.BasicPhysics();
     if(EntityManager.player.isAlive)this.GetByPlayer();
     //時間立つと点滅
     if( this.frame > 300 && this.frame%8 <4) this.sprite.alpha = 0;

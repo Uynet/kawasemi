@@ -13,7 +13,7 @@ import Audio from "../../audio.js";
 
 export default class TutorialObject extends Entity{
   constructor(pos){
-    super(pos,VEC0());
+    super(pos,vec0());
     this.type = "MOVER";
     this.name = "tutorialObject";
     this.pattern = Art.enemyPattern.coin;
@@ -25,7 +25,7 @@ export default class TutorialObject extends Entity{
     this.addAI(new MoveLissajous(this,0.4,0.4,0.13+Rand(0.03),0.17));
   }
   Explode(){
-    const e = new Explosion5(CPV(this.pos),VEC0());
+    const e = new Explosion5(CPV(this.pos),vec0());
     EntityManager.addEntity(e);
   }
   Clear(){

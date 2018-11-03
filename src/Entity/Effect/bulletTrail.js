@@ -20,19 +20,19 @@ export default class Bullettrail extends EFFECT{
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
     this.sprite.anchor.set(0.5);
     this.sprite.alpha = 0.5;
-    this.sprite.scale = VECN((Rand(0.5)+1)/1);
+    this.sprite.scale = vec2((Rand(0.5)+1)/1);
     this.sprite.position = this.pos;
     //this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
     this.addAnimator(false,4,6);
   }
   Physics(){
     this.pos = add(this.pos,this.vel);
-    this.vel = MLV(this.vel,VECN(0.9));
+    this.vel = MLV(this.vel,vec2(0.9));
   }
   Update(){
     this.ExecuteAI();
     //this.sprite.alpha *= 0.9
-    this.sprite.scale = ADV(this.sprite.scale,VECN(this.frame/256));
+    this.sprite.scale = ADV(this.sprite.scale,vec2(this.frame/256));
     this.sprite.scale.x *= 0.9;
     this.sprite.scale.y *= 0.9;
     this.Physics();

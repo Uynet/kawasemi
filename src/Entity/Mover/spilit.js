@@ -14,7 +14,7 @@ let player;
 export default class Spilit extends Entity{
   constructor(pos){
     player = EntityManager.player;
-    super(pos,VEC0());
+    super(pos,vec0());
     this.type = "MOVER";
     this.name = "spilit";
     this.pattern = Art.enemyPattern.coin;//
