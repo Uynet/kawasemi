@@ -47,7 +47,6 @@ export default class Enemy3 extends Enemy{
     }
   }
   Animation(){
-  //  this.spid = Math.floor(this.frame/2)%4;
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = ADV(this.pos , VECN(8));
   }
@@ -61,13 +60,10 @@ export default class Enemy3 extends Enemy{
   }
 
   Update(){
-    //if(DIST(this.pos,EntityManager.player.pos) < this.range){
+    this.AIList[0].Do();
+    this.AIList[1].Do();
     if(EntityManager.player.weapon.isSeen(EntityManager.player,this)){
-      //if(EntityManager.player.weapon.target.enemy == this){
         this.state = "ACTIVE";
-      //}else{
-       // this.state = "WAITING"
-      //}
     }else{
       this.state = "WAITING";
     }
@@ -82,23 +78,16 @@ export default class Enemy3 extends Enemy{
         this.sprite.rotation += 0.1;
         this.sprite.scale.set(1 + Math.cos(this.frame/2)/5);
         this.spid = 1
-        this.AIList[0].Do();
-        this.AIList[1].Do();
+        this.AIList[2].Do();
+        this.AIList[3].Do();
         break;
       default :
         console.warn(this.state);
     }
 
-    this.Physics();
     this.Collision();
     this.Hurt();
     this.Animation();
-    this.frame++;
-    //observer
-    if(this.hp<=0){
-      this.Die();
-    }
-    this.arg = Math.atan((EntityManager.player.pos.y-this.pos.y)/(EntityManager.player.pos.x-this.pos.x));
-    if(this.pos.x > EntityManager.player.pos.x ) this.arg += Math.PI;
+    this.arg = argument(sub(EntityManager.player.pos,this.pos))
   }
 }

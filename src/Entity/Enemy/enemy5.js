@@ -127,15 +127,8 @@ export default class Enemy5 extends Enemy{
       this.spid = 0;
       this.frame = 0;
     }
-    /*きょうつう*/
- //   this.Collision();
-    this.Physics();
+    //this.Physics();
     this.Hurt();
     this.Animation();
-    //observer
-    if(this.hp<=0){
-      this.Die();
-    }
-    this.frame++;
   }
 }
