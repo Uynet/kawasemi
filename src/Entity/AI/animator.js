@@ -8,6 +8,7 @@ export default class Animator{
     this.animTerm = term;
     this.animFrames = frames;
   }
+  //note : 先にanimationendでEntityが消えるとその後のスプライト処理でバグる事がある
   Do(){
       this.entity.sprite.texture = this.entity.pattern[this.entity.spid];
     if(this.entity.frame%this.animTerm == this.animTerm-1){

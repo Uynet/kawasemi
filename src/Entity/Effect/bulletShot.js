@@ -7,15 +7,12 @@ export default class BulletShot extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
     this.pattern = Art.bulletPattern.shot;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
+    this.BasicEffectInit();
+    this.addBasic();
     this.addAnimator(false,3,4);
   }
 
   Update(){
     this.ExecuteAI();
-    //phys
-    this.pos = ADV(this.pos,this.vel);
-    this.frame++;
   }
 }

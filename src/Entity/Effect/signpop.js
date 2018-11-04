@@ -6,17 +6,16 @@ import Animator from "../AI/animator.js";
 
 export default class Signpop extends EFFECT{
   constructor(pos){
-    super(pos,VEC0());
+    super(pos,vec0());
     /*基本情報*/
     this.name = "signpop";
     /*スプライト*/
     this.pattern = Art.bulletPattern.signpop;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
+    this.BasicEffectInit();
+    this.addBasic();
     this.addAnimator(true,4,4);
   }
   Update(){
     this.ExecuteAI();
-    this.frame++;
   }
 }
