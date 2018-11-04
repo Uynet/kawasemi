@@ -6,16 +6,16 @@ import Pool from '../../../Stage/pool.js';
 //閃光
 export default class Fire2 extends EFFECT{
   constructor(pos){
-    super(pos,VEC0());
-    this.Init(pos,VEC0());
+    super(pos,vec0());
+    this.Init(pos,vec0());
   }
   Init(pos,vel){
     /*基本情報*/
     this.pos = pos;
     this.vel = vel;
     this.name = "fire2";
-    this.frame = 0;
     /*スプライト*/
+    this.frame = 0;
     this.spid = 0;
     this.pattern = Art.bulletPattern.explosion.fire;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
@@ -24,22 +24,16 @@ export default class Fire2 extends EFFECT{
     this.sprite.scale.set(1);
     this.sprite.anchor.set(0.5);
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+    this.addAnimator(false,1,8);
+    cl("unko")
   }
-
-  Update(){
-    this.sprite.position = this.pos;
-    let a = 10;
-    this.pos = ADV(this.pos,this.vel);
+  Scaling(){
     this.sprite.scale.x *= 0.82;
     this.sprite.scale.y *= 0.82;
-    //this.sprite.scale = ADV(this.sprite.scale, VECN(1/(this.frame+4)));
-    //this.sprite.alpha = 0.5 - this.frame/40;
-    if(this.frame%1==0)this.spid = 1;
-    if(this.spid >= 8){
-      this.spid = 0;
-      EntityManager.removeEntity(this);
-    }
+  }
+  Update(){
+    this.Scaling();
+    this.sprite.position = this.pos;
     this.frame++;
-    this.sprite.texture = this.pattern[this.spid];
   }
 }

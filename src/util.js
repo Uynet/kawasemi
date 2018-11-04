@@ -120,12 +120,15 @@ const vec0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
 const VECN = (n)=>{return {x:n,y:n}};//
 const VECX = (vx)=>{return {x:vx,y:0}};//
 const VECY = (vy)=>{return {x:0,y:vy}};//
+const copy= (v)=>{return {x:v.x,y:v.y}};//値渡し
 const CPV = (v)=>{return {x:v.x,y:v.y}};//値渡し
 const ADV = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
 const add = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
 const sub = (v1,v2)=>{ return {x:v1.x - v2.x ,y:v1.y - v2.y}};//ベクトル加算
 const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
+const mul = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
 const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
+const fromPolar =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
 const normalize = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化
 const scala = (a,v)=>{
   return {
@@ -183,6 +186,10 @@ let Rand2D = (d)=>{
 }
 /*distance*/
 let DIST = (p1,p2)=>{
+  return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
+}
+/*distance*/
+let dist = (p1,p2)=>{
   return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
 }
 //チェビシェフ

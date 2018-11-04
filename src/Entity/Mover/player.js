@@ -21,6 +21,7 @@ import BulletShot from '../Effect/bulletShot.js';
 import Explosion1 from '../Effect/Explosion/explosion1.js';
 import Explosion2 from '../Effect/Explosion/explosion2.js';
 import Explosion3 from '../Effect/Explosion/explosion3.js';
+import Explosion5 from '../Effect/Explosion/explosion5.js';
 import QuakeEvent from '../../Event/quakeEvent.js';
 import WeaponIcon from '../Effect/weaponIcon.js';
 import Pool from '../../Stage/pool.js';
@@ -83,7 +84,7 @@ export default class Player extends Entity{
   constructor(pos){
     super(pos,vec0(),vec0());
     /*基本情報*/
-    let p = CPV(this.pos);
+    let p = copy(this.pos);
     this.collider = new Collider(SHAPE.BOX,new Box(pos,8,16));//衝突判定の形状
     this.type = ENTITY.PLAYER;
     this.layer = "ENTITY";
@@ -162,7 +163,7 @@ export default class Player extends Entity{
 
       if(this.isJump == false){
         //なんかバグる
-        //EntityManager.addEntity(new Explosion3(CPV(this.pos)));
+        //EntityManager.addEntity(new Explosion3(copy(this.pos)));
         this.vel.y = - Param.player.jumpVel;
         this.isJump = true;
         this.state = STATE.JUMPING;
@@ -254,7 +255,7 @@ export default class Player extends Entity{
       let jumpCost = 20
         if(this.bullet >= jumpCost){
           Audio.PlaySE("jump2");
-          EntityManager.addEntity(new Explosion2(CPV(this.pos),Math.PI*(1/2)));
+          EntityManager.addEntity(new Explosion2(copy(this.pos),Math.PI*(1/2)));
           EventManager.PushEvent(new QuakeEvent(20,0.8));
           this.frameShot = this.frame;//最終ショット時刻
             this.vel.y = - Param.player.jumpVel;
@@ -351,7 +352,7 @@ export default class Player extends Entity{
     WeaponManager.ChangeWeapon(this,name);
     UIManager.bullet.ChangeWeapon(name);
     //変更先の武器アイコンをpop
-    let p = CPV(this.pos);
+    let p = copy(this.pos);
     p.y-=8;
     EntityManager.addEntity(new WeaponIcon(p,name));
   }
@@ -498,7 +499,7 @@ export default class Player extends Entity{
   }
 
   ScrollByDir(){
-    let d = POV(this.arg,100*po(this.offset));
+    let d = fromPolar(this.arg,100*po(this.offset));
     let p = add(this.pos,d);
     if(Input.isKeyInput(KEY.SP)) {
       let to = add(p,MLV(this.scPos,vec2(-1)));
@@ -512,23 +513,26 @@ export default class Player extends Entity{
       Drawer.SetMagnification(3-po(this.offset)/2);
   }
 
+  OnDying(){
+    //なおせ
+    Audio.StopBGM();
+    //死亡開始時に一回だけ呼ばれる部分
+    this.ResetStatus();
+    EventManager.PushEvent(new QuakeEvent(50,0.9));
+    EntityManager.addEntity(new Explosion5(copy(this.pos)));
+    Audio.PlaySE("bomb",-1.0);
+    Audio.PlaySE("missileHit");
+    this.weapon.Reset();
+    this.frameDead = this.frame;
+    this.isDying = true;
+    this.isAlive = false;
+  }
   Observer(){
     if(this.hp <= 0){
-      if(this.isAlive){
-        //なおせ
-        Audio.StopBGM();
-        //死亡開始時に一回だけ呼ばれる部分
-        this.ResetStatus();
-        EventManager.PushEvent(new QuakeEvent(50,0.9));
-        EntityManager.addEntity(new Explosion1(CPV(this.pos)));
-        Audio.PlaySE("bomb",-1.0);
-        Audio.PlaySE("missileHit");
-        this.weapon.Reset();
-        this.frameDead = this.frame;
-        this.isDying = true;
-        this.isAlive = false;
-      }
       this.state = STATE.DYING;
+      if(this.isAlive){
+        this.OnDying();
+      }
     }
   }
   Dying(){
