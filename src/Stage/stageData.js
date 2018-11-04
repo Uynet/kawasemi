@@ -15,6 +15,7 @@ export default class StageData{
       10 : 1,
       11 : 1,
       12 : 1,
+      21 : 1,
     }
     this.StageBGM = {
       0 : 0,
@@ -30,6 +31,7 @@ export default class StageData{
       10 : "stage5",
       11 : "0",
       12 : "0",
+      21 : "0",
     }
   }
 }

@@ -29,8 +29,6 @@ export default class Explosion3 extends EFFECT{
     this.sprite.position = this.pos;
     this.sprite.scale.set(1);
   }
-  Bomb(){
-  }
 
   Update(){
     let d = (5 - this.size)*0.1;
@@ -39,7 +37,7 @@ export default class Explosion3 extends EFFECT{
     let t = (this.frame-200)/100;
     this.sprite.alpha = lerp(0,1,t);
 
-    if(this.frame > 300) EntityManager.removeEntity(this);
+    if(this.frame > 300) this.Delete();
     this.frame++;
   }
 }

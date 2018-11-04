@@ -6,7 +6,7 @@ import Pool from '../../../Stage/pool.js';
 //閃光
 export default class Flash extends EFFECT{
   constructor(pos){
-    super(pos,VEC0());
+    super(pos,vec0());
   }
   Init(pos,vel){
     this.pos = pos;
@@ -21,18 +21,14 @@ export default class Flash extends EFFECT{
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     this.sprite.alpha = 0.2;
-    this.sprite.scale.set(1);
+    this.sprite.scale.set(2);
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 
   Update(){
-    //this.sprite.texture = this.pattern[this.spid];
     this.sprite.alpha *=0.8;
-    this.sprite.scale = VECN(2);
-    if(this.frame == 4){
-      Pool.Remove(this);
-      //EntityManager.removeEntity(this);
-    }
+
+    if(this.frame == 4) Pool.Remove(this);
     this.sprite.position = this.pos;
     this.frame++;
   }

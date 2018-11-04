@@ -25,19 +25,15 @@ export default class Sonic extends EFFECT{
     this.sprite.scale.set(5);
     this.sprite.alpha = 0.1;
     //this.sprite.filters = [Drawer.testFilter];
-    //this.arg = ADV(VECN(2),Rand2D(1));
+    //this.arg = add(vec2(2),Rand2D(1));
   }
   onAnimationEnd(){
       Pool.Remove(this);
   }
   Update(){
     this.ExecuteAI();
-    //phys
-    this.pos = ADV(this.pos,this.vel);
-
-    this.sprite.scale = ADV(this.sprite.scale,VECN(4/(this.frame+2)*2));
+    this.sprite.scale = add(this.sprite.scale,vec2(4/(this.frame+2)*2));
     this.sprite.alpha *= 0.9;
-
     this.frame++;
   }
 }

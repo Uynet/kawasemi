@@ -48,6 +48,20 @@ export default class Pool{
     }
     EntityManager.removeEntity(s);
   }
+  static addEntityForm(name,pos,vel,size){
+    let entity = this.Get(name,pos,vel,size);
+    if(entity)entity.addEntity();
+  }
+  static Get(name,pos,vel,size){
+    switch(name){
+      case "fire" : return this.GetFire(pos,vel);break;
+      case "stone" :return this.GetStone(pos,vel);break;
+      case "smoke" :return this.GetSmoke(pos,vel,size);break;
+      case "sonic" :return this.GetSonic(pos,vel);break;
+      case "flash" :return this.GetFlash(pos,vel);break;
+      default : console.warn(name);
+    }
+  }
   static GetFlash(pos,vel){
     if(this.unused.flashes.length > 0){
     let s = this.unused.flashes.pop();

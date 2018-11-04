@@ -11,8 +11,9 @@ export default class Smoke extends EFFECT{
     super(pos,vel);
     this.pattern = Art.bulletPattern.explosion.smoke;
     this.sprite = new PIXI.Sprite(this.pattern[this.spid]);
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,32,32));//衝突判定の形状
-      this.addAnimator(false,20,8);
+//    this.collider = new Collider(SHAPE.BOX,new Box(pos,32,32));//衝突判定の形状
+    this.addBasic();
+    this.addAnimator(false,20,8);
   }
   Init(pos,vel,size){
     /*基本情報*/
@@ -33,17 +34,16 @@ export default class Smoke extends EFFECT{
   onAnimationEnd(){
       Pool.Remove(this);
   }
-  Update(){
-    this.ExecuteAI();
-    let b = 10;
-    this.pos = ADV(this.pos,this.vel);
-    this.vel.x *= 0.91;
-    this.vel.y *= 0.91;
+  Scaling(){
     let d = this.size - this.sprite.scale.x;
     this.sprite.scale.x += d * 0.1;
     this.sprite.scale.y += d * 0.1;
-    //this.sprite.rotation += Math.PI/32
+  }
+  Update(){
+    this.ExecuteAI();
+    this.vel.x *= 0.9;
+    this.vel.y *= 0.9;
+    this.Scaling();
     if(this.frame%20 == 19)this.sprite.alpha -= 0.1;
-    this.frame++;
   }
 }

@@ -2,15 +2,15 @@ import EFFECT from '../effect.js';
 import Art from '../../../art.js';
 import EntityManager from '../../../Stage/entityManager.js';
 import Pool from '../../../Stage/pool.js';
+import Explosion from "./explosion.js";
+
+const stoneIntence = 15;
 
 //爆発エフェクト
-export default class Explosion2 extends EFFECT{
+export default class Explosion2 extends Explosion{
   constructor(pos,arg){
-    super(pos,VEC0());
-    //微妙に左上に寄ってるので中心に
-    this.pos = ADV(this.pos,VECN(8));
+    super(pos,vec0());
     this.arg = arg;
-    this.vi = 15;
     /*基本情報*/
     this.frame = 0;
     this.isNoSprite = true;
@@ -19,10 +19,9 @@ export default class Explosion2 extends EFFECT{
     /*stone*/
     for(let i = 0;i<8;i++){
       let arg = this.arg + Rand(0.7);
-      let vi = this.vi + Rand(8);
-      let v = POV(arg,vi);
-      let stone = Pool.GetStone(CPV(this.pos),v);
-      if(stone!==false)EntityManager.addEntity(stone);
+      let intence = stoneIntence + Rand(8);
+      let v = fromPolar(arg,intence);
+      Pool.addEntityForm("stone",copy(this.pos),v);
     }
     /*smoke*/
     for(let j = 0;j<6;j++){
@@ -30,14 +29,8 @@ export default class Explosion2 extends EFFECT{
         x : Rand(4),
         y : Rand(1)
       }
-      let smoke = Pool.GetSmoke(CPV(this.pos),v,1 + Rand(0.2)); 
-      if(smoke!==false)EntityManager.addEntity(smoke);
+      Pool.addEntityForm("smoke",copy(this.pos),v,1 + Rand(0.2)); 
     }
-  }
-
-  Update(){
-    //爆発して自分は消える
-    this.Bomb();
-    EntityManager.removeEntity(this);
+    this.Delete();
   }
 }

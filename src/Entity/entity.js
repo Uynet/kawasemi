@@ -73,6 +73,9 @@ export default class Entity{
   Delete(){
     EntityManager.removeEntity(this);
   }
+  addEntity(){
+    EntityManager.addEntity(this);
+  }
   addAI(AI){
     this.AIList.push(AI);
   }
