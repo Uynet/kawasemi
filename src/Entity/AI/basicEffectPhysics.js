@@ -1,10 +1,10 @@
 import Collision from '../../Collision/collision.js';
 
 export default class BasicAI{
-  constructor(enemy){
-    this.enemy = enemy;
+  constructor(effect){
+    this.effect = effect;
   }
   Do(){
-    this.enemy.EnemyPhysics();
+    this.effect.EffectPhysics();
   }
 }

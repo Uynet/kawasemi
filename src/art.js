@@ -469,6 +469,9 @@ export default class Art{
   static SpriteFactory(texture){
     return new PIXI.Sprite(texture);
   }
+  static CreateSprite(texture){
+    return new PIXI.Sprite(texture);
+  }
   static LoadFont(){
     this.font = new Array(256);
     this.font["0"] = PIXI.Texture.fromFrame('font00.png');

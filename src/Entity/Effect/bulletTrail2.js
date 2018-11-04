@@ -14,26 +14,23 @@ export default class BulletTrail2 extends EFFECT{
     this.name = "bullettrail2";
       /*スプライト*/
     this.pattern = Art.bulletPattern.trail2;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.BasicEffectInit();
     this.sprite.anchor.set(0.5);
     this.sprite.scale = vec2(Rand(0.5)+1);
     this.sprite.position = ADV(this.pos,vec2(8));
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
+    this.addBasic();
     this.addAnimator(false,4,4);
   }
-
+  /*
   Physics(){
     this.pos = add(this.pos,this.vel);
     this.vel = MLV(this.vel,vec2(0.9));
   }
-
-
+  */
   Update(){
     this.ExecuteAI();
-      this.Physics();
-      this.sprite.scale = ADV(this.sprite.scale,vec2(-this.frame/128));
-      this.sprite.alpha *= 0.94;
-      this.sprite.position = ADV(this.pos,vec2(8));
-      this.frame++;
+    this.sprite.scale = ADV(this.sprite.scale,vec2(-this.frame/128));
+    this.sprite.alpha *= 0.94;
   }
 }

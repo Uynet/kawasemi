@@ -5,15 +5,14 @@ import Drawer from '../../drawer.js';
 
 export default class Lasersight extends EFFECT{
   constructor(pos,arg){
-    super(pos,VEC0());
+    super(pos,vec0());
     /*基本情報*/
     this.name = "lasersight";
     this.layer = "BACK";
     this.arg = arg;
     /*スプライト*/
     this.pattern = Art.bulletPattern.lasersight;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
+    this.BasicEffectInit();
     this.sprite.anchor.set(0.5);
     this.sprite.scale.x = 1;
     this.sprite.aplha = 0.05;
@@ -21,15 +20,15 @@ export default class Lasersight extends EFFECT{
   }
   Rotate(player,weapon){
     this.arg = player.arg;
-    this.pos = CPV(ADV(player.spilit.pos,POV(player.arg,8)));
+    this.pos = CPV(add(player.spilit.pos,POV(player.arg,8)));
     if(weapon.isTargetOn && Math.abs(player.arg - player.toArg < 5)){
       this.sprite.scale.x = DIST(weapon.target.enemy.pos,player.pos)/16 -0.5;
     }else this.sprite.scale.x = 16;
   }
   Update(){
-    this.sprite.position = ADV(this.pos,vec2(8));
+    this.sprite.position = add(this.pos,vec2(8));
     //this.sprite.position.x -= 4;
-    this.sprite.position = ADV(this.sprite.position,POV(this.arg,8*this.sprite.scale.x));
+    this.sprite.position = add(this.sprite.position,POV(this.arg,8*this.sprite.scale.x));
     this.sprite.rotation = this.arg;
   }
 }

@@ -6,14 +6,13 @@ import Drawer from '../../drawer.js';
 //武器チェンジ時のアイコンのポップ
 export default class WeaponIcon extends EFFECT{
   constructor(pos,name){
-    super(pos,VEC0());
+    super(pos,vec0());
     /*基本情報*/
     /*スプライト*/
     this.spid = name;
     this.layer = "FOREENTITY";
     this.pattern = Art.UIPattern.bullet.pop;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
-    this.sprite.position = this.pos;
+    this.BasicEffectInit()
     this.offSetY = 12;
   }
   Update(){

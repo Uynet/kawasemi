@@ -34,7 +34,7 @@ const State = {
 
 export default class Enemy1 extends Enemy{
   constructor(pos){
-    super(pos,VEC0());
+    super(pos,vec0());
     /*基本情報*/
     this.name = "enemy1";
     this.BasicEnemyInit();
