@@ -1,16 +1,17 @@
 import Entity from '../entity.js';
 import Art from '../../art.js';
-import Collider from '../../Collision/collider.js';
-import Collision from '../../Collision/collision.js';
-import Box from '../../Collision/box.js';
-import EntityManager from '../../Stage/entityManager.js';
+import Param from '../../param.js';
 
 export default class Bullet extends Entity{
   SetSprite(){
-    this.spid = 0;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.pattern = Art.bulletPattern[this.name];
+    this.sprite = Art.CreateSprite(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
+  }
+  BasicBulletInit(){
+    this.SetSprite();
+    this.SetParam(Param[this.name]);
   }
   constructor(pos,vel){
     super(pos,vel);
@@ -18,7 +19,6 @@ export default class Bullet extends Entity{
     this.layer = "ENTITY";
     this.isMultiple = false;
     this.type = "MOVER";
-
     this.isUpdater  =true;
     this.AIList = [];
   }

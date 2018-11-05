@@ -1,58 +1,39 @@
-import Art from '../../art.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
-import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import EventManager from '../../Event/eventmanager.js';
-import QuakeEvent from '../../Event/quakeEvent.js';
 import Bullet2AI from './../AI/bullet2AI.js';
 import Bullet from './bullet.js';
-import BulletTrail from '../Effect/bulletTrail.js';
-import Explosion1 from '../Effect/Explosion/explosion1.js';
 import Explosion2 from '../Effect/Explosion/explosion2.js';
 import Explosion3 from '../Effect/Explosion/explosion3.js';
-import Param from '../../param.js';
-import Audio from '../../audio.js';
-import Pool from '../../Stage/pool.js';
 
-const bullet2 = Param.bullet2;
 const MAX_STEP_COUNT = 30;
 
 //Laser
 export default class Bullet2 extends Bullet{
-  SetParam(){
-    this.hp = Param.bullet2.hp;//弾丸のHP 0になると消滅
-    this.atkMax = Param.bullet2.atkMax;//攻撃力
-    this.atkMin = Param.bullet2.atkMin;//攻撃力
-  }
   constructor(pos,arg,isMarchNext,stepCount){
-    super(pos,POV(arg,VEC0()));
+    super(pos,fromPolar(arg,vec0()));
     this.Init(pos,arg);
+    this.AIList.push(new Bullet2AI(this));
+    this.addAnimator(false,2,8);
     this.March(isMarchNext,stepCount);
   }
   Init(pos,arg){
     /*基本情報*/
-    this.frame = 0;
     this.arg = arg;
-    this.isUpdater  =true;
     this.layer = "BACK"//壁に埋めるため
-    this.name = "laser";
-    /*スプライト*/
-    this.pattern = Art.bulletPattern.bullet2;
-    this.SetSprite();
+    this.name = "bullet2";
+    this.BasicBulletInit();
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,6,6));
-    this.SetParam();
+    this.SetBoxCollider(6,6);
     /*AI*/
-    this.AIList.push(new Bullet2AI(this));
-    this.addAnimator(false,2,8);
   }
   Explode(){
-    const e = new Explosion3(CPV(this.pos),VEC0());
-    EntityManager.addEntity(e);
+    const e = new Explosion3(copy(this.pos),vec0());
+    e.addEntity();
   }
   Reflect(collisionInfo){
-    let i = POV(this.arg,-16);//入射角ベクトル
+    let i = fromPolar(this.arg,-16);//入射角ベクトル
     let r = reflect(i,collisionInfo.n);
     this.arg = argument(r);
   }
@@ -79,13 +60,13 @@ export default class Bullet2 extends Bullet{
         //鉄 反射
         if(collider.material == "steel") this.Reflect(c);
 
-        EntityManager.addEntity(new Explosion2(CPV(this.pos),this.arg + Math.PI));
+        EntityManager.addEntity(new Explosion2(copy(this.pos),this.arg + Math.PI));
         return; //壁にぶつかったので停止
       }
     }
     //再帰呼び出し
-    let p = ADV(this.pos,POV(this.arg,16));
+    let p = add(this.pos,fromPolar(this.arg,16));
     let bullet = new Bullet2(p,this.arg,isMarchNext,stepCount+1);
-    EntityManager.addEntity(bullet);
+    bullet.addEntity();
   }
 }
