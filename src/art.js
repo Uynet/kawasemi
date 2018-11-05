@@ -180,45 +180,20 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet02.png'),
         PIXI.Texture.fromFrame('bullet03.png'),
       ],
-      bullet2 : [
-        PIXI.Texture.fromFrame('bullet10.png'),
-        PIXI.Texture.fromFrame('bullet11.png'),
-        PIXI.Texture.fromFrame('bullet12.png'),
-        PIXI.Texture.fromFrame('bullet13.png'),
-        PIXI.Texture.fromFrame('bullet14.png'),
-        PIXI.Texture.fromFrame('bullet15.png'),
-        PIXI.Texture.fromFrame('bullet16.png'),
-        PIXI.Texture.fromFrame('bullet17.png'),
-      ],
+      bullet2 : this.Frame("bullet",10,8),
       bullet3 : [
         PIXI.Texture.fromFrame('bullet100.png'),
       ],
+      bullet4 : this.Frame("bullet" ,120 , 4 ),//Fire
       lasersight : [
         PIXI.Texture.fromFrame('bullet20.png'),
       ],
       target : [
         PIXI.Texture.fromFrame('bullet30.png'),//Target
       ],
-      shot : [
-        PIXI.Texture.fromFrame('bullet40.png'),//bullet shot
-        PIXI.Texture.fromFrame('bullet41.png'),
-        PIXI.Texture.fromFrame('bullet42.png'),
-        PIXI.Texture.fromFrame('bullet43.png'),
-      ],
-      hitWall : [
-        PIXI.Texture.fromFrame('bullet50.png'),//bullet hit at wall
-        PIXI.Texture.fromFrame('bullet51.png'),
-        PIXI.Texture.fromFrame('bullet52.png'),
-        PIXI.Texture.fromFrame('bullet53.png'),
-      ],
-      trail : [ 
-        PIXI.Texture.fromFrame('bullet60.png'),//bullet trail
-        PIXI.Texture.fromFrame('bullet61.png'),
-        PIXI.Texture.fromFrame('bullet62.png'),
-        PIXI.Texture.fromFrame('bullet63.png'), 
-        PIXI.Texture.fromFrame('bullet64.png'), 
-        PIXI.Texture.fromFrame('bullet65.png') 
-      ],
+      shot : this.Frame("bullet",40,4),
+      hitWall : this.Frame("bullet",50,4),
+      trail : this.Frame("bullet",60,6),
       trail2 : [ 
         PIXI.Texture.fromFrame('bulletF0.png'),//bullet trail
         PIXI.Texture.fromFrame('bulletF1.png'),
@@ -226,12 +201,7 @@ export default class Art{
         PIXI.Texture.fromFrame('bulletF3.png') 
       ],
       //ブロックの破片
-      blockDebris : [
-        PIXI.Texture.fromFrame('bullet110.png'),
-        PIXI.Texture.fromFrame('bullet111.png'),
-        PIXI.Texture.fromFrame('bullet112.png'),
-        PIXI.Texture.fromFrame('bullet113.png'), 
-      ],
+      blockDebris : this.Frame("bullet",110,4),
       coin : {
         get : [
           PIXI.Texture.fromFrame('bulletD0.png'),
@@ -278,7 +248,6 @@ export default class Art{
         ],
         sonic :this.Frame("bullet",70,4),
       },
-      buringFire : this.Frame("bullet" ,120 , 4 ),
       screenFlash : this.Frame("bullet" ,130, 2),
     }
     this.enemyPattern = {

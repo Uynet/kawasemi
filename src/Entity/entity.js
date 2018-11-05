@@ -92,6 +92,9 @@ export default class Entity{
       this[key]=param[key];
     })
   }
+  SetBoxCollider(width,height){
+    this.collider = new Collider(SHAPE.BOX,new Box(this.pos,width,height));//衝突判定の形状
+  }
 }
 
 

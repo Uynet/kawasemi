@@ -1,18 +1,9 @@
 import Art from '../../art.js';
-import Animator from "../AI/animator.js";
 import Timer from "../../timer.js";
-import Drawer from "../../drawer.js";
-import Audio from '../../audio.js';
 import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
-import Box from '../../Collision/box.js';
-import EntityManager from '../../Stage/entityManager.js';
-import EventManager from '../../Event/eventmanager.js';
 import Bullet4AI from '../AI/bullet4AI.js';
-import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
-import BulletTrail2 from '../Effect/bulletTrail2.js';
-import BulletHitWall from '../Effect/bulletHitWall.js';
 import Param from '../../param.js';
 
 //normal bullet
@@ -29,21 +20,17 @@ export default class Bullet4 extends Bullet{
   }
   Init(pos,weapon){
     /*基本情報*/
-    this.frame = 0;
-    this.name = "weapon4";//これはどこで使われてる?
+    this.name = "bullet4";
     this.arg = weapon.arg;
     this.vi = weapon.speed;
     this.vel = POV(this.arg,this.vi);
     this.isTargetOn = weapon.isTargetOn;
-    if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy
-    this.isUpdater = true;
+    if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy;
     /*スプライト*/
-    this.pattern = Art.bulletPattern.buringFire;
-    this.SetSprite();
+    this.BasicBulletInit();
     this.sprite.alpha = 0.8;
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,4,4));
-    this.SetParam();
+    this.SetBoxCollider(4,4);
     this.AIList.push(new Bullet4AI(this));
     this.addAnimator(true,1,4);
     this.SetSize(this.size+Rand(8));
