@@ -4,7 +4,7 @@ import AI from './ai.js';
 
 let player;
 
-export default class Enemy5AI extends AI{
+export default class SetActiveRange extends AI{
   /*enemyの参照を受け取り関数を実行する*/
 
   constructor(enemy,dist){

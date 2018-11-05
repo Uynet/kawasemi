@@ -9,6 +9,7 @@ import Entity from '../entity.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
 import Bright from '../Effect/bright.js';
 import BulletTrail from "../Effect/bulletTrail.js";
+import BasicAI from "../AI/basicAI.js";
 
 let player;
 export default class Spilit extends Entity{
@@ -17,17 +18,17 @@ export default class Spilit extends Entity{
     super(pos,vec0());
     this.type = "MOVER";
     this.name = "spilit";
-    this.pattern = Art.enemyPattern.coin;//
     this.pattern = Art.playerPattern.spilit;//
     this.sprite = new PIXI.Sprite(this.pattern[this.spid]);
     this.sprite.position = pos;
     this.layer = "ENTITY";
     this.isUpdater = true;
     this.arg = 0;
+    this.addAI(new EmitTrail(this,Bright,8));
+    this.addAI(new BasicAI(this));
     this.addAnimator(true,3,6);
-    this.AIList.push(new EmitTrail(this,Bright,8));
   }
-  Phisics(){
+  SpilitPhisics(){
     player = EntityManager.player;
     let repel = {
       x : -(player.pos.x - this.pos.x),
@@ -51,16 +52,13 @@ export default class Spilit extends Entity{
     this.pos = add(this.pos,f);
     this.pos = add(this.pos,repel);
     this.pos = add(this.pos,absorp);
-    this.pos = add(this.pos,POV(player.arg,8));
+    this.pos = add(this.pos,fromPolar(player.arg,8));
   }
   shot(player){
     player.weapon.shot(player);
   }
   Update(){
-    this.arg = Rand(5);
     this.ExecuteAI();
-    this.Phisics();
-    this.sprite.position = this.pos;
-    this.frame++;
+    this.SpilitPhisics();
   }
 }

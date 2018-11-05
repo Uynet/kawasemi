@@ -34,11 +34,10 @@ export default class Enemy3 extends Enemy{
     /*state*/
     this.state = "WAITING";
   }
-  Animation(){
-    this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = ADV(this.pos , vec2(8));
+  OnCollisionEnemy(c,entity){
+    Collision.Resolve(this,entity);
   }
-  OnCollision(c,entity){
+  OnCollisionWall(c,entity){
     Collision.Resolve(this,entity);
   }
 
@@ -67,10 +66,8 @@ export default class Enemy3 extends Enemy{
       default :
         console.warn(this.state);
     }
-
     this.Collision();
-    this.Hurt();
-    this.Animation();
     this.arg = argument(sub(EntityManager.player.pos,this.pos))
+    this.sprite.position = ADV(this.pos,vec2(8));
   }
 }

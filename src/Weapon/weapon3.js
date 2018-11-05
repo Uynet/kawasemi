@@ -39,7 +39,7 @@ export default class Weapon3 extends Weapon{
     /* ■ SoundEffect : shot */
     Audio.PlaySE("normalShot",-0.6);
     /* □ Effect : shot */
-    EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
+    EntityManager.addEntity(new BulletShot(copy(p),vec0()));
     //振動
     //EventManager.eventList.push(new QuakeEvent(8,2));
   }

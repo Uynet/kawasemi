@@ -45,17 +45,17 @@ export default class Weapon2 extends Weapon{
   }
   Set(player){
     let arg = player.arg;
-    let p = ADV(POV(arg,16),CPV(player.pos));
+    let p = add(fromPolar(arg,16),copy(player.pos));
     let bullet;
     //再帰的に生成
-    p = ADV(player.spilit.pos,POV(arg,16));
+    p = add(player.spilit.pos,fromPolar(arg,16));
     bullet = new Bullet2(p,arg,true,0);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */
     Audio.PlaySE("laserShot",0.7);
     /* □ Effect : shot */
-    EntityManager.addEntity(new BulletShot(CPV(p),VEC0()));
-    EntityManager.addEntity(new Explosion1(CPV(p)));
+    EntityManager.addEntity(new BulletShot(copy(p),vec0()));
+    EntityManager.addEntity(new Explosion1(copy(p)));
     //反動
     //player.vel.x -= v.x/11;
     //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;

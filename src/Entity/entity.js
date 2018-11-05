@@ -9,8 +9,8 @@ export default class Entity{
     /*phys*/
     this.pos = pos;
     this.vel = vel;
-    this.acc = VEC0();
-    this.force = VEC0();
+    this.acc = vec0();
+    this.force = vec0();
     this.gravity;
     this.size = 16;
     //this.e = 0.9;
@@ -52,7 +52,9 @@ export default class Entity{
     }
   }
   Collision(){};
-  Update(){};
+  Update(){
+    this.ExecuteAI();
+  }
   Set(param , value){
     this[param] = value;
   }
@@ -62,8 +64,8 @@ export default class Entity{
     this.collider = new Collider(SHAPE.BOX,new Box(this.pos,this.size,this.size));//衝突判定の形状
   }
   AddForce(f){
-    this.force.x = f.x;
-    this.force.y = f.y;
+    this.force.x = f.x*Timer.timeScale;
+    this.force.y = f.y*Timer.timeScale;
   }
   ExecuteAI(){
     for (let AI of this.AIList){
@@ -85,7 +87,11 @@ export default class Entity{
   onAnimationEnd(){
     this.Delete();
   }
-  /*Hurt()*/
+  SetParam(param){
+    Object.keys(param).forEach(key=>{
+      this[key]=param[key];
+    })
+  }
 }
 
 

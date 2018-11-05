@@ -8,7 +8,6 @@ import Pool from '../../Stage/pool.js';
 import Param from '../../param.js';
 import Explosion2 from '../Effect/Explosion/explosion2.js';
 import Stone from '../Effect/Explosion/stone.js';
-import MoveReflect from '../AI/moveReflect.js';
 
 //敵の弾丸その2
 export default class eBullet2 extends Enemy{

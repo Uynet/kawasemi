@@ -1,14 +1,7 @@
 import Enemy from './enemy.js';
-import Art from '../../art.js';
-import Collision from '../../Collision/collision.js';
 import EntityManager from '../../Stage/entityManager.js';
-//import Enemy4AI from '../AI/enemy4AI.js';
-import Enemy5AI from '../AI/enemy5AI.js';
-import UIManager from '../../UI/uiManager.js'
-import FontEffect from '../Effect/fontEffect.js';
-import Param from '../../param.js';
+import SetActiveRange from '../AI/setActiveRange.js';
 
-let EntityList = EntityManager.entityList;
 
 export default class Enemy4 extends Enemy{
   constructor(pos){
@@ -16,7 +9,7 @@ export default class Enemy4 extends Enemy{
     this.name = "enemy4";
     this.BasicEnemyInit();
     /*スプライト*/
-    this.addAI(new Enemy5AI(this,130));
+    this.addAI(new SetActiveRange(this,130));
     /*フラグ*/
     this.isActive = false;
   }
@@ -37,10 +30,6 @@ export default class Enemy4 extends Enemy{
     this.pos.x += c.n.x * c.depth;
     this.pos.y += c.n.y * c.depth;
     /*note : now isHit == false*/
-  }
-  OnCollision(c,entity){
-    if(entity.type == ENTITY.ENEMY)this.OnCollisionEnemy(c,entity);
-    else if(entity.type == ENTITY.WALL)this.OnCollisionWall(c,entity);
   }
   OnCollisionEnemy(c,enemy){
     /* 衝突応答*/
@@ -63,17 +52,10 @@ export default class Enemy4 extends Enemy{
     this.pos.y += c.n.y * c.depth/2;
     /*note : now isHit == false*/
   }
-  Animation(){
-    //this.spid = Math.floor(this.frame/2)%4;
-    this.sprite.texture = this.pattern[this.spid];
-  }
-
   Update(){
     this.ExecuteAI();
 
     this.Collision();
-    this.Hurt();
-    this.Animation();
 
     if(this.isActive){
       this.spid = 1;
@@ -87,7 +69,6 @@ export default class Enemy4 extends Enemy{
       this.spid = 0;
       this.frame = 0;
     }
-    //this.Physics();
     this.vel.y = Math.min(this.vel.y,4.8);
     this.force.x *= 0.9;
     this.force.y *= 0.9;
