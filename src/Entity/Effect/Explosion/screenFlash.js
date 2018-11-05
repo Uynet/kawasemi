@@ -5,12 +5,12 @@ import Pool from '../../../Stage/pool.js';
 
 //閃光
 export default class ScreenFlash extends EFFECT{
-  constructor(pos){
-    super(pos,vec0());
-    this.Init(pos);
+  constructor(pos,vel){
+    super(pos,vel);
+    this.Init(pos,vel);
+    this.addBasic();
   }
-  Init(pos){
-    this.pos = pos;
+  Init(pos,vel){
     /*基本情報*/
     this.frame = 0;
     this.name = "flash"
@@ -26,11 +26,10 @@ export default class ScreenFlash extends EFFECT{
     this.sprite.scale.y = this.frame*2;
   }
   Update(){
+    this.ExecuteAI();
     this.Scaling();
     this.sprite.texture = this.pattern[this.spid];
     this.spid = (this.spid+1)%2 ;
     if(this.frame == 4) this.Delete();
-    this.sprite.position = this.pos;
-    this.frame++;
   }
 }

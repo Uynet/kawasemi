@@ -112,7 +112,7 @@ export default class Weapon{
   Lasersight(player,weapon){
     if(!this.isLaserOn){
       let effect;
-      let p = CPV(ADV(player.spilit.pos,POV(player.toArg,16)));
+      let p = copy(add(player.spilit.pos,fromPolar(player.toArg,16)));
       effect = new Lasersight(p,player.toArg);
       EntityManager.addEntity(effect);
       this.lasersight = effect;

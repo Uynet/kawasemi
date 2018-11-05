@@ -5,7 +5,7 @@ import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Enemy2AI from '../AI/enemy2AI.js';
-import moveReflect from '../AI/moveReflect.js';
+import ReflectOnCollision from '../AI/ReflectOnCollision.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Coin from '../Mover/coin.js';
@@ -20,12 +20,7 @@ export default class Enemy2 extends Enemy{
     /*パラメータ*/
     this.BasicEnemyInit();
     this.vel = Rand2D(1);
-    this.addAI(new moveReflect(this));
+    this.addAI(new ReflectOnCollision(this));
     this.addAnimator(true,2,4);
-  }
-
-  Update(){
-    this.ExecuteAI();
-    this.Hurt();
   }
 }

@@ -5,7 +5,7 @@ import Collision from '../../Collision/collision.js';
 import EntityManager from '../../Stage/entityManager.js';
 import eBullet2 from '../../Entity/Enemy/eBullet2.js';
 import Explosion1 from '../Effect/Explosion/explosion1.js';
-import Enemy5AI from '../AI/enemy5AI.js';
+import SetActiveRange from '../AI/setActiveRange.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Param from '../../param.js';
@@ -21,15 +21,11 @@ export default class Enemy6 extends Enemy{
     /*スプライト*/
     this.sprite.anchor.set(0.5);
     /*パラメータ*/
-    this.addAI(new Enemy5AI(this,200));
+    this.addAI(new SetActiveRange(this,200));
     /*フラグ*/
     this.isActive = false;
     this.isSwelling = false;//膨らんでいるとtrue;
     this.isShrinking = false;//縮んでいる時true
-  }
-  Animation(){
-    this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = ADV(this.pos,vec2(8));
   }
   Swell(){
     //1.5まで大きくなる
@@ -64,9 +60,6 @@ export default class Enemy6 extends Enemy{
 
   Update(){
     this.ExecuteAI();
-    //this.Collision();
-    this.Hurt();
-    this.Animation();
     if(this.isSwelling){
       this.spid = 1;
       this.Swell();
@@ -74,5 +67,6 @@ export default class Enemy6 extends Enemy{
     if(this.isShrinking){
       this.Shrink();
     }
+    this.sprite.position = ADV(this.pos,vec2(8));
   }
 }

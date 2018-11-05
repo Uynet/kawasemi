@@ -72,7 +72,7 @@ export default class Enemy1 extends Enemy{
     let e = new StartBossBattleEvent("boss");
     EventManager.PushEvent(new QuakeEvent(40,0.97));
     EventManager.PushEvent(e);
-    let p = CPV(this.pos);
+    let p = copy(this.pos);
     p.y += this.size;
     p.x += this.size/2;
   //  EntityManager.addEntity(new Explosion4(p));
@@ -115,7 +115,7 @@ export default class Enemy1 extends Enemy{
     if(this.hp/this.maxHP<0.2) this.enemyPop = 7;
     this.PopEnemy(this.enemyPop);
 
-    let p = CPV(this.pos);
+    let p = copy(this.pos);
     p.y += this.size;
     this.acc.x = 0;
     EventManager.PushEvent(new QuakeEvent(10,0.97));
@@ -149,35 +149,9 @@ export default class Enemy1 extends Enemy{
             case "INIT" : this.Initing();break;//この名前何
           }
         }
-        //天井との衝突
-        if(c.n.y == 1 ){
-          this.vel.y = Math.max(0,this.vel.y * -0.3)
-        }
         /*押し出し*/
         this.pos.x += c.n.x * c.depth;
         this.pos.y += c.n.y * c.depth;
-        /*note : now isHit == false*/
-      }
-    }
-    this.CollisionEnemy();
-  }
-  CollisionEnemy(){
-    this.floor.on = false;
-    this.floor.under = null;
-    for(let i=0;i<EntityManager.enemyList.length;i++){
-      let l = EntityManager.enemyList[i];
-      let c = Collision.on(this,l);
-      //これないと自分と衝突判定してバグ
-      if(i == EntityManager.enemyList.indexOf(this))continue;
-      /*衝突判定*/
-      if(c.isHit){
-        /* 衝突応答*/
-        /*速度*/
-        if(c.n.x != 0) this.vel.x = 0;
-        //地面との衝突
-        if(c.n.y == -1){ 
-//          EntityManager.enemyList[i].Damage(-99);
-        }
         /*note : now isHit == false*/
       }
     }
@@ -186,21 +160,15 @@ export default class Enemy1 extends Enemy{
   Hurt(){
     let player = EntityManager.player; 
     let c = Collision.on(this,player);
-    //
-    //潰されたときだけ
+    //潰されたとき
     if(c.isHit && c.n.y == -1){
       //ダメージ
-      let damage = RandBET(this.atkMin,this.atkMax);
+      let damage = RandomRange(this.atkMin,this.atkMax);
       if(!player.isInvincible)player.Damage(-damage);
-      //if(!player.isInvincible)player.Damage(-damage);
     }
+    //横から当たると弾く
     if(c.isHit && c.n.y != 1){
       player.vel.x = -c.n.x*10;
-      //if(!player.isInvincible)player.Damage(-10);
-    }
-    if(c.isHit && c.n.y == 1){
-      //上に乗られたらダメージ
-      //this.Damage(-1);
     }
   }
   Damage(atk){
@@ -237,9 +205,7 @@ export default class Enemy1 extends Enemy{
       this.acc.x = (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 0.010 : -0.010;
       this.vel.x = Math.max(-1,Math.min(this.vel.x,1));
     }
-
     this.Collision();
     this.ClampPos();
-    this.Hurt();
   }
 }

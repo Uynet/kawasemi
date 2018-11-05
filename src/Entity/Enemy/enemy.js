@@ -10,10 +10,9 @@ import QuakeEvent from "../../Event/quakeEvent.js";
 import FontEffect from '../Effect/fontEffect.js';
 import Collision from '../../Collision/collision.js';
 import Coin from '../Mover/coin.js'
-import Explosion2 from '../Effect/Explosion/explosion2.js';
 import Explosion3 from '../Effect/Explosion/explosion3.js';
 import BasicAI from "../AI/basicAI.js";
-import BasicEnemyPhysics from "../AI/basicEnemyPhysics.js";
+import BasicEnemyAI from "../AI/basicEnemyAI.js";
 
 export default class Enemy extends Entity{
   constructor(pos,vel){
@@ -21,7 +20,6 @@ export default class Enemy extends Entity{
     /*基本情報*/
     this.size = 16;
     this.type = ENTITY.ENEMY;
-    this.spid = 0; //spriteIndex 現在のスプライト番号
     this.isUpdater = true;
     this.colType = "through";
     this.material = "wall";
@@ -37,7 +35,7 @@ export default class Enemy extends Entity{
     }
     this.force = vec0();
     this.addAI(new BasicAI(this));
-    this.addAI(new BasicEnemyPhysics(this));
+    this.addAI(new BasicEnemyAI(this));
   }
   BasicEnemyInit(){
     /*基本情報*/
@@ -54,9 +52,19 @@ export default class Enemy extends Entity{
     /*スプライト*/
     this.pattern = Art.enemyPattern[this.name];
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+    this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;
     this.e = 0;
   };
+  BasicEnemyPhysics(){
+    if(this.floor.on){
+      this.pos.x += this.floor.under.vel.x;
+      //this.pos.y += this.floor.under.vel.y;
+    }
+    if(this.gravity)this.acc.y += this.gravity;
+    this.BasicPhysics();
+    //最大速度制限
+  }
   //自分がダメージを食らう
   Damage(atk){
     Audio.PlaySE("enemyDamage",-0.7);
@@ -70,7 +78,7 @@ export default class Enemy extends Entity{
     let c = Collision.on(this,player);
     if(c.isHit && c.n.y != 1){
       //ダメージ
-      let damage = RandBET(this.atkMin,this.atkMax);
+      let damage = RandomRange(this.atkMin,this.atkMax);
       if(!player.isInvincible)player.Damage(-damage);
     }
     //プレイヤーに衝突応答
@@ -99,18 +107,8 @@ export default class Enemy extends Entity{
       if(c.isHit) this.OnCollision(c,l);
     }
   }
-  EnemyPhysics(){
-    if(this.floor.on){
-      this.pos.x += this.floor.under.vel.x;
-      //this.pos.y += this.floor.under.vel.y;
-    }
-    if(this.gravity)this.acc.y += this.gravity;
-    this.BasicPhysics();
-    //最大速度制限
-  }
-  SetParam(param){
-    Object.keys(param).forEach(key=>{
-      this[key]=param[key];
-    })
+  OnCollision(c,entity){
+    if(entity.type == ENTITY.ENEMY)this.OnCollisionEnemy(c,entity);
+    else if(entity.type == ENTITY.WALL)this.OnCollisionWall(c,entity);
   }
 }
