@@ -16,6 +16,7 @@ export default class Entity{
     //this.e = 0.9;
     /*standard*/
     this.frame = 0;
+    this.continuasFrame = 0;
     this.spid = 0;
     this.type = "MOVER";//最も深い階層に書いたもので上書きされる
     //this.collider;
@@ -79,6 +80,10 @@ export default class Entity{
     EntityManager.addEntity(this);
   }
   addAI(AI){
+    //check
+    this.AIList.forEach(ai=>{
+      if(AI==ai)console.warn("AIが重複しています:"+entity.name);
+    })
     this.AIList.push(AI);
   }
   addAnimator(isLoop,term,frames){

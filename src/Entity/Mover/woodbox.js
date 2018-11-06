@@ -11,8 +11,6 @@ import Wall from '../wall.js';
 import BulletShot from '../Effect/bulletShot.js';
 import BlockDebris from '../Effect/blockDebris.js';
 
-let EntityList = EntityManager.entityList;
-
 //壊せる木箱
 export default class WoodBox extends Wall{
   constructor(pos){
@@ -43,7 +41,7 @@ export default class WoodBox extends Wall{
 
   OnDying(){
     this.Delete();
-    let p = CPV(this.pos);
+    let p = copy(this.pos);
     EntityManager.addEntity(new BulletShot(p,vec0()));
     let v;
     for(let i = 0;i<2 ;i++){

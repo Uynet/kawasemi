@@ -40,7 +40,7 @@ export default class Signboard extends BackEntity{
     this.sprite = Art.SpriteFactory(this.tex);
     this.sprite.position = pos;
     //pop
-    let p = CPV(this.pos);
+    let p = copy(this.pos);
     p.y -= 16;
     this.popup = new Signpop(p);
     EntityManager.addEntity(this.popup);
@@ -56,7 +56,7 @@ export default class Signboard extends BackEntity{
     //page : 現在のページ番号
     let player = EntityManager.player;
     if(!this.isRead && this.name == "shop" && this.frame%8 == 0){
-      let trail = new Bright(ADV(this.pos,Rand2D(16)),Rand2D(0.5));
+      let trail = new Bright(add(this.pos,Rand2D(16)),Rand2D(0.5));
       EntityManager.addEntity(trail);
     }
     if(DIST(player.pos,this.pos) <  16 && player.isAlive){

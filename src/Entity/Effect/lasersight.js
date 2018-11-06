@@ -27,7 +27,7 @@ export default class Lasersight extends EFFECT{
   }
   Update(){
     this.sprite.position = add(this.pos,vec2(8));
-    //this.sprite.position.x -= 4;
+    this.sprite.position.x -= 4;
     this.sprite.position = add(this.sprite.position,POV(this.arg,8*this.sprite.scale.x));
     this.sprite.rotation = this.arg;
   }

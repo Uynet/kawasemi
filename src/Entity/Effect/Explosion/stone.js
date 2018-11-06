@@ -14,6 +14,7 @@ export default class Stone extends EFFECT{
     this.vel = vel;
     /*基本情報*/
     this.name = "stone";
+    this.continuasFrame = 0;
     this.frame = 0;
     this.isNext = false;
     /*スプライト*/

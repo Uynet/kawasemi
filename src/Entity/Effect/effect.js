@@ -27,4 +27,9 @@ export default class EFFECT extends Entity{
     if(this.gravity)this.acc.y += this.gravity;
     this.BasicPhysics();
   }
+  ScaleTo(to,rate){
+    let d = to - this.sprite.scale.x;
+    this.sprite.scale.x += d * rate;
+    this.sprite.scale.y += d * rate;
+  }
 }

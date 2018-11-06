@@ -60,8 +60,8 @@ export default class Needle extends Wall{
     /*observer*/
     if(this.hp<=0){
       EntityManager.removeEntity(this);
-      let p = CPV(this.pos);
-      EntityManager.addEntity(new BulletShot(p,VEC0()));
+      let p = copy(this.pos);
+      EntityManager.addEntity(new BulletShot(p,vec0()));
       Audio.PlaySE("blockBreak");
     }
   }

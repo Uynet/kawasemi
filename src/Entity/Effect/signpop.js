@@ -15,7 +15,4 @@ export default class Signpop extends EFFECT{
     this.addBasic();
     this.addAnimator(true,4,4);
   }
-  Update(){
-    this.ExecuteAI();
-  }
 }

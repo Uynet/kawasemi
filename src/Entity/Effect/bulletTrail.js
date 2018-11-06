@@ -1,8 +1,7 @@
 import EFFECT from './effect.js';
 import Art from '../../art.js';
-import EntityManager from '../../Stage/entityManager.js';
-import Pool from '../../Stage/pool.js';
-import Drawer from '../../drawer.js';
+import Ease from "../../Math/ease.js";
+import PowSizeAI from "../AI/powSizeAI.js";
 
 /*bullet1残像*/
 export default class Bullettrail extends EFFECT{
@@ -23,17 +22,7 @@ export default class Bullettrail extends EFFECT{
     this.sprite.scale = vec2((Rand(0.5)+1)/1);
     //this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
     this.addBasic();
+    this.addAI(new PowSizeAI(this,0.9));
     this.addAnimator(false,4,6);
-  }
-  Physics(){
-    this.pos = add(this.pos,this.vel);
-    this.vel = MLV(this.vel,vec2(0.9));
-  }
-  Update(){
-    this.ExecuteAI();
-    this.sprite.scale.x *= 0.9;
-    this.sprite.scale.y *= 0.9;
-    //this.Physics();
-    //this.frame++;
   }
 }

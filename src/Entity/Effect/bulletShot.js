@@ -11,8 +11,4 @@ export default class BulletShot extends EFFECT{
     this.addBasic();
     this.addAnimator(false,3,4);
   }
-
-  Update(){
-    this.ExecuteAI();
-  }
 }

@@ -5,8 +5,6 @@ import Timer from "../../timer.js";
 export default class BasicAI{
   constructor(entity){
     this.entity = entity;
-    this.entity.continuasFrame = entity.frame;//must be 0
-    console.assert(this.entity.continuasFrame == 0);
   }
   Do(){
     this.entity.continuasFrame += Timer.timeScale;

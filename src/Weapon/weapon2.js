@@ -55,7 +55,7 @@ export default class Weapon2 extends Weapon{
     Audio.PlaySE("laserShot",0.7);
     /* □ Effect : shot */
     EntityManager.addEntity(new BulletShot(copy(p),vec0()));
-    EntityManager.addEntity(new Explosion1(copy(p)));
+    EntityManager.addEntity(new Explosion1(copy(p),fromPolar(arg,-3)));
     //反動
     //player.vel.x -= v.x/11;
     //if(player.dir == DIR.DR || player.dir == DIR.DL) player.vel.y = -1.2;

@@ -7,12 +7,13 @@ import Pool from '../../../Stage/pool.js';
 export default class Flash extends EFFECT{
   constructor(pos){
     super(pos,vec0());
+    this.addBasic();
   }
   Init(pos,vel){
     this.pos = pos;
     this.vel = vel;
     /*基本情報*/
-    this.frame = 0;
+    this.continuasFrame =  0;
     this.name = "flash"
     /*スプライト*/
     this.spid = 0;
@@ -26,10 +27,8 @@ export default class Flash extends EFFECT{
   }
 
   Update(){
+    this.ExecuteAI();
     this.sprite.alpha *=0.8;
-
     if(this.frame == 4) Pool.Remove(this);
-    this.sprite.position = this.pos;
-    this.frame++;
   }
 }
