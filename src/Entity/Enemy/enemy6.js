@@ -67,6 +67,6 @@ export default class Enemy6 extends Enemy{
     if(this.isShrinking){
       this.Shrink();
     }
-    this.sprite.position = ADV(this.pos,vec2(8));
+    this.sprite.position = add(this.pos,vec2(8));
   }
 }

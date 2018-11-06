@@ -15,7 +15,7 @@ export default class Bullet1AI{
     this.bullet = bullet;
   }
   Phisics(){
-    this.bullet.Set("vel", POV(this.bullet.arg,this.bullet.vi));
+    this.bullet.Set("vel", fromPolar(this.bullet.arg,this.bullet.vi));
     this.bullet.pos.x += this.bullet.vel.x;
     this.bullet.pos.y += this.bullet.vel.y;
   }
@@ -49,18 +49,18 @@ export default class Bullet1AI{
       EntityManager.removeEntity(this.bullet);
       Audio.PlaySE("missileHit",1);
       EventManager.eventList.push(new QuakeEvent(50,0.8));//ゆれ
-      EntityManager.addEntity(new Explosion1(CPV(this.bullet.pos)));
+      EntityManager.addEntity(new Explosion1(copy(this.bullet.pos)));
     }
     if(this.bullet.frame > 180){
       EntityManager.removeEntity(this.bullet);
-      EntityManager.addEntity(new BulletShot(CPV(this.bullet.pos)));
+      EntityManager.addEntity(new BulletShot(copy(this.bullet.pos)));
     }
   }
   Do(){
     this.Collision();
     this.Phisics();
     this.Observer();
-    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
+    this.bullet.sprite.position = add(this.bullet.pos,vec2(8));
     this.bullet.sprite.rotation = this.bullet.arg + Math.PI/2;
     this.bullet.frame++;
   }

@@ -13,7 +13,7 @@ import BulletTrail from '../Effect/bulletTrail.js';
 //Missile
 export default class Bullet1 extends Bullet{
   constructor(pos,weapon){
-    super(pos,POV(weapon.arg,weapon.speed));
+    super(pos,fromPolar(weapon.arg,weapon.speed));
     this.Init(pos,weapon);
     /*コライダ*/
     this.SetBoxCollider(4,4);

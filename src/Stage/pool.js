@@ -21,19 +21,19 @@ export default class Pool{
       flashes : [],
     }
     for(let i = 0;i<1000;i++){
-      this.unused.stones.push(new Stone(VEC0(),VEC0()));
+      this.unused.stones.push(new Stone(vec0(),vec0()));
     }
     for(let i = 0;i<80;i++){
-      this.unused.smokes.push(new Smoke(VEC0(),VEC0(),0));
+      this.unused.smokes.push(new Smoke(vec0(),vec0(),0));
     }
     for(let i = 0;i<100;i++){
-      this.unused.fires.push(new Fire(VEC0(),VEC0()));
+      this.unused.fires.push(new Fire(vec0(),vec0()));
     }
     for(let i = 0;i<50;i++){
-      this.unused.sonics.push(new Sonic(VEC0()));
+      this.unused.sonics.push(new Sonic(vec0()));
     }
     for(let i = 0;i<50;i++){
-      this.unused.flashes.push(new Flash(VEC0()));
+      this.unused.flashes.push(new Flash(vec0()));
     }
   }
   static Remove(s){

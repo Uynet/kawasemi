@@ -204,7 +204,7 @@ export default class MapData{
     this.CreateObjectLayer();
       let p;
     if(stageNo >= 1){
-      p = CPV(EntityManager.player.pos);
+      p = copy(EntityManager.player.pos);
     }else{
       p = {
         x : 240,
@@ -396,7 +396,7 @@ export default class MapData{
           x : (x - w/2)*32,
           y : (y - h/2)*32
         }
-        EntityManager.addEntity(new BackGround(CPV(p),tex));
+        EntityManager.addEntity(new BackGround(copy(p),tex));
       }
     }
   }

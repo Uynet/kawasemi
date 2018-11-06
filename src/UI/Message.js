@@ -37,11 +37,11 @@ export default class Message extends UI{
     /*スプライト*/
     this.isMultiple = true;
     //枠スプライト追加
-    let p = CPV(pos);
+    let p = copy(pos);
     this.outer.sprite.position = p;
     this.container = new PIXI.Container();
     this.container.addChild(this.outer.sprite);
-    p = ADV(p,P_TEXT);
+    p = add(p,P_TEXT);
 
     this.OpeningSelection = false;
     this.isRead = true;
@@ -75,8 +75,8 @@ export default class Message extends UI{
     let sentenceSprite = [];
     this.isRead = true;
 
-    let p = CPV(this.pos);
-    p = ADV(p,P_TEXT);
+    let p = copy(this.pos);
+    p = add(p,P_TEXT);
     for(let i = 0;i<sent.length;i++){
       let f = new Font(p,sent[i],"MES")
         f.container.scale.x = 1;
@@ -152,7 +152,7 @@ export default class Message extends UI{
   //選択肢を表示
   OpenSelection(){
     this.OpeningSelection = true;
-    let p = CPV(this.pos);
+    let p = copy(this.pos);
     p.x += 300;
     p.y += 16;
     p.y += COLUMN;

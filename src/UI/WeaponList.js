@@ -34,9 +34,9 @@ export default class WeaponList extends UI{
       return Param.player.havingWeaponList[arr];
     })
     //渡されるposはbulletゲージの位置なので少しずらす　
-    this.pos = ADV(this.pos,P_OFFSET);
+    this.pos = add(this.pos,P_OFFSET);
     //アイコンリストをぷっしゅ　
-    let p = CPV(this.pos); 
+    let p = copy(this.pos); 
     for(let w of wList){
       s = Art.SpriteFactory(this.pattern[w.name]);
       s.position = p;

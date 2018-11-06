@@ -9,7 +9,7 @@ import Param from '../../param.js';
 //normal bullet
 export default class Bullet4 extends Bullet{
   constructor(pos,weapon){
-    super(pos,POV(weapon.arg,weapon.speed));
+    super(pos,fromPolar(weapon.arg,weapon.speed));
     this.Init(pos,weapon);
   }
  SetParam(){
@@ -23,7 +23,7 @@ export default class Bullet4 extends Bullet{
     this.name = "bullet4";
     this.arg = weapon.arg;
     this.vi = weapon.speed;
-    this.vel = POV(this.arg,this.vi);
+    this.vel = fromPolar(this.arg,this.vi);
     this.isTargetOn = weapon.isTargetOn;
     if(this.isTargetOn) this.targetedEnemy = weapon.target.enemy;
     /*スプライト*/

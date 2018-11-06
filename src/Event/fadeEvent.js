@@ -23,7 +23,7 @@ export default class FadeEvent extends Event{
       let sp = Art.SpriteFactory(pattern[spid]);
       let y = Math.floor(i/20);
       let x = i%20;
-      sp.scale = VECN(2);
+      sp.scale = vec2(2);
       sp.position.x = x*16-24;
       sp.position.y = y*16-24;
       seq[i] = sp;

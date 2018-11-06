@@ -17,7 +17,7 @@ export default class Menu extends UI{
     /*基本情報*/
     this.type = "MENU";
     this.isMultiple = true;
-    let p = CPV(pos);
+    let p = copy(pos);
     this.title = new Font({x:p.x,y:p.y + -1 * COLUMN},"-PAUSE-","MENU"),
     this.index = 0;
     this.layer = "FILTER";
@@ -41,7 +41,7 @@ export default class Menu extends UI{
         y : this.pos.y + (j+1)*COLUMN,
       }
       if(j==i){
-        this.items[j].Move(ADV(p,INDENT));
+        this.items[j].Move(add(p,INDENT));
       }
       else {
         this.items[j].Move(p);

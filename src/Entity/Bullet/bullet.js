@@ -22,7 +22,4 @@ export default class Bullet extends Entity{
     this.isUpdater  =true;
     this.AIList = [];
   }
-  Update(){
-    this.ExecuteAI();
-  }
 }

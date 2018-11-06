@@ -50,7 +50,7 @@ export default class StagePop extends UI{
       this.textObject.PushText(str);
     }
     this.diff *= 0.3;
-    let p = CPV(this.pos);
+    let p = copy(this.pos);
     p.y += this.diff;
 
     this.textObject.SetPos(p);

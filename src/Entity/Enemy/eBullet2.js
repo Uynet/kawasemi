@@ -32,7 +32,7 @@ export default class eBullet2 extends Enemy{
   }
   Delete(){
     EntityManager.removeEntity(this);
-    EntityManager.addEntity(new Explosion2(CPV(this.pos),1.5*Math.PI))
+    EntityManager.addEntity(new Explosion2(copy(this.pos),1.5*Math.PI))
   }
   Collision(){
     for(let w of EntityManager.wallList){
@@ -48,7 +48,7 @@ export default class eBullet2 extends Enemy{
   Update(){
     this.ExecuteAI();
     if(this.frame%3 == 0){
-      let stone = Pool.GetStone(ADV(this.pos,VECX(4)),VEC0());
+      let stone = Pool.GetStone(add(this.pos,VECX(4)),vec0());
       if(stone)EntityManager.addEntity(stone);
     }
     this.Physics();

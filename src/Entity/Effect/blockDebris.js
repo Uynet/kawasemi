@@ -16,7 +16,7 @@ export default class BlockDebris extends EFFECT{
     this.patternName = "blockDebris"
     this.pattern = Art.bulletPattern[this.patternName];
     this.BasicEffectInit();
-    this.sprite.position = ADV(this.pos,VECN(8));
+    this.sprite.position = add(this.pos,vec2(8));
     this.sprite.rotation = Rand(2);
     this.addBasic(); 
     this.addAnimator(false,4,4);

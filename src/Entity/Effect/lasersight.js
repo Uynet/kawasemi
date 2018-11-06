@@ -20,7 +20,7 @@ export default class Lasersight extends EFFECT{
   }
   Rotate(player,weapon){
     this.arg = player.arg;
-    this.pos = CPV(add(player.spilit.pos,POV(player.arg,8)));
+    this.pos = copy(add(player.spilit.pos,fromPolar(player.arg,8)));
     if(weapon.isTargetOn && Math.abs(player.arg - player.toArg < 5)){
       this.sprite.scale.x = DIST(weapon.target.enemy.pos,player.pos)/16 -0.5;
     }else this.sprite.scale.x = 16;
@@ -28,7 +28,7 @@ export default class Lasersight extends EFFECT{
   Update(){
     this.sprite.position = add(this.pos,vec2(8));
     this.sprite.position.x -= 4;
-    this.sprite.position = add(this.sprite.position,POV(this.arg,8*this.sprite.scale.x));
+    this.sprite.position = add(this.sprite.position,fromPolar(this.arg,8*this.sprite.scale.x));
     this.sprite.rotation = this.arg;
   }
 }

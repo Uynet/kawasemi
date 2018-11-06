@@ -36,12 +36,12 @@ export default class GaugeBullet extends UI{
     this.max = Param.player.maxBullet;
     this.color = 0xCA5148;
     /*child*/
-    this.outer = {pos:CPV(pos)};
-    this.bar = {pos:ADV(CPV(pos),P_BAR)};
-    this.icon = {pos:ADV(pos,P_ICON)};
-    this.amount = new Font(ADV(pos,P_AMOUNT),this.max + "","BULLET");//数字
+    this.outer = {pos:copy(pos)};
+    this.bar = {pos:add(copy(pos),P_BAR)};
+    this.icon = {pos:add(pos,P_ICON)};
+    this.amount = new Font(add(pos,P_AMOUNT),this.max + "","BULLET");//数字
     this.wlist = {
-      pos:ADV(pos,P_WLIST),
+      pos:add(pos,P_WLIST),
       list: null,
       container : new PIXI.Container(),
     };
@@ -98,7 +98,7 @@ export default class GaugeBullet extends UI{
     this.InitList();
   }
   Push(weaponName){
-    let p = CPV(this.wlist.pos); 
+    let p = copy(this.wlist.pos); 
     let s = Art.SpriteFactory(Art.UIPattern.bullet.pop[weaponName]);
     p.x += (this.wlist.list.length-1)*8;
     s.position = p;

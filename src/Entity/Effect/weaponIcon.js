@@ -17,7 +17,7 @@ export default class WeaponIcon extends EFFECT{
   }
   Update(){
     this.offSetY*= 0.3;
-    this.pos = CPV(EntityManager.player.pos);
+    this.pos = copy(EntityManager.player.pos);
     this.pos.y -= 12;
     this.pos.y -= this.offSetY;
     this.sprite.texture = this.pattern[this.spid];

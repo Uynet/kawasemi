@@ -20,7 +20,7 @@ export default class Score extends UI{
     this.isMultiple = true;
     this.pos = pos;
     //child
-    this.icon = {pos:ADV(pos,P_ICON)};
+    this.icon = {pos:add(pos,P_ICON)};
     this.amount = new Font(pos,"    0","SCORE");//数字
     //スプライト
     this.spid = 0;
