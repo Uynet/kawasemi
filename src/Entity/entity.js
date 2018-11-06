@@ -33,12 +33,12 @@ export default class Entity{
   /*common*/
   Physics(){};
   BasicPhysics(){
-    this.acc.x += this.force.x*Timer.timeScale; 
-    this.acc.y += this.force.y*Timer.timeScale; 
-    this.vel.x += this.acc.x*Timer.timeScale; 
-    this.vel.y += this.acc.y*Timer.timeScale; 
-    this.pos.x += this.vel.x*Timer.timeScale+this.acc.x*this.acc.x*Timer.timeScale; 
-    this.pos.y += this.vel.y*Timer.timeScale+this.acc.y*this.acc.y*Timer.timeScale; 
+    this.acc.x += this.force.x*Timer.GetTimeScale(); 
+    this.acc.y += this.force.y*Timer.GetTimeScale(); 
+    this.vel.x += this.acc.x*Timer.GetTimeScale(); 
+    this.vel.y += this.acc.y*Timer.GetTimeScale(); 
+    this.pos.x += this.vel.x*Timer.GetTimeScale()+this.acc.x*this.acc.x*Timer.GetTimeScale(); 
+    this.pos.y += this.vel.y*Timer.GetTimeScale()+this.acc.y*this.acc.y*Timer.GetTimeScale(); 
     this.acc.y = 0;
     this.acc.x = 0;
   }
@@ -48,8 +48,8 @@ export default class Entity{
   MoveOnFloor(){
     //動く床に乗っている時
     if(this.floor.on){
-      this.pos.x += this.floor.under.vel.x*Timer.timeScale;  
-      this.pos.y += this.floor.under.vel.y*Timer.timeScale;  
+      this.pos.x += this.floor.under.vel.x*Timer.GetTimeScale();  
+      this.pos.y += this.floor.under.vel.y*Timer.GetTimeScale();  
     }
   }
   Collision(){};
@@ -65,8 +65,8 @@ export default class Entity{
     this.collider = new Collider(SHAPE.BOX,new Box(this.pos,this.size,this.size));//衝突判定の形状
   }
   AddForce(f){
-    this.force.x = f.x*Timer.timeScale;
-    this.force.y = f.y*Timer.timeScale;
+    this.force.x = f.x*Timer.GetTimeScale();
+    this.force.y = f.y*Timer.GetTimeScale();
   }
   ExecuteAI(){
     for (let AI of this.AIList){

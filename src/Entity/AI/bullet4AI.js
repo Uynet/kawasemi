@@ -9,10 +9,10 @@ export default class Bullet4AI{
     this.bullet = bullet;
   }
   Phisics(){
-    //this.bullet.vi *= 0.9;
+    this.bullet.vi *= 0.9;
     //this.bullet.vi = length(this.bullet.vel)
-    //this.bullet.vel = fromPolar(this.bullet.arg,this.bullet.vi);
-    this.bullet.vel.y += 0.1;
+    this.bullet.vel = fromPolar(this.bullet.arg,this.bullet.vi);
+    //this.bullet.vel.y += 0.1;
     this.bullet.pos.x += this.bullet.vel.x;
     this.bullet.pos.y += this.bullet.vel.y;
     this.bullet.arg = argument(this.bullet.vel); 
@@ -41,10 +41,7 @@ export default class Bullet4AI{
   }
 
   Observer(){
-    if(this.bullet.hp<=0 ||
-      this.bullet.frame > 330) {
-      EntityManager.removeEntity(this.bullet);
-    }
+      if(this.bullet.frame > 130) this.bullet.Delete();
   }
   Do(){
     this.Phisics();

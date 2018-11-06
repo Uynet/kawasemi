@@ -12,12 +12,6 @@ export default class Bullet4 extends Bullet{
     super(pos,fromPolar(weapon.arg,weapon.speed));
     this.Init(pos,weapon);
   }
- SetParam(){
-    this.hp = Param.bullet4.hp;//弾丸のHP 0になると消滅
-    this.atkMin = Param.bullet4.atkMin;//攻撃力
-    this.atkMax = Param.bullet4.atkMax;//攻撃力
-    //this.curve = Param.bullet3.curve;
-  }
   Init(pos,weapon){
     /*基本情報*/
     this.name = "bullet4";

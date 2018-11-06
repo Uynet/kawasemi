@@ -9,4 +9,10 @@ export default class Timer{
   static IncTime(){
     this.timer++;
   }
+  static GetTimeScale(){
+    return this.timeScale; 
+  }
+  static SetTimeScale(timeScale){
+    this.timeScale = timeScale;
+  }
 }
