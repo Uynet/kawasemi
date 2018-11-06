@@ -1,5 +1,4 @@
 import EFFECT from '../effect.js';
-import Drawer from "../../../drawer.js";
 import Art from '../../../art.js';
 import EntityManager from '../../../Stage/entityManager.js';
 import Pool from '../../../Stage/pool.js';
@@ -30,6 +29,7 @@ export default class Explosion1 extends Explosion{
     for(let i = 0;i<this.particleNum.smoke;i++){
       let arg = Rand(Math.PI);
       let v = fromPolar(arg,Rand(3));
+      v = add(v,this.vel);
       let smoke = Pool.Get("smoke",copy(this.pos),v,2+Rand(1));
       if(smoke!== false)this.Pack(smoke);
     }
@@ -63,9 +63,5 @@ export default class Explosion1 extends Explosion{
         entity.Damage(-RandomRange(5,8));
       };
     }
-  }
-
-  Update(){
-    this.Bomb();
   }
 }

@@ -526,6 +526,7 @@ export default class Player extends Entity{
     this.frameDead = this.frame;
     this.isDying = true;
     this.isAlive = false;
+    Timer.timeScale = 0.1;
   }
   Observer(){
     if(this.hp <= 0){
@@ -538,13 +539,14 @@ export default class Player extends Entity{
   Dying(){
     //死亡中
     if(this.isDying){//まだ死んでない  
-      if(this.frame - this.frameDead < 50){
+      if(this.frame - this.frameDead < 150){
         this.isDying = true;
       }else{
         //完全に死んだ
         //完全死亡時に一回だけ呼ばれる部分
         if(this.isDying){
           //this.state = STATE.DEAD
+          Timer.timeScale = 1;
           let g = new GameOverEvent();
           EventManager.PushEvent(g);
         }

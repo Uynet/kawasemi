@@ -1,7 +1,6 @@
 import EFFECT from '../effect.js';
 import Drawer from "../../../drawer.js";
-import Art from '../../../art.js';
-import EntityManager from '../../../Stage/entityManager.js';
+import Timer from "../../../timer.js";
 
 //衝撃シェーダ
 export default class Shockwave extends EFFECT{
@@ -9,6 +8,7 @@ export default class Shockwave extends EFFECT{
     super(pos,vel);
     /*基本情報*/
     this.frame = 0;
+    this.continuasFrame = this.frame;
     this.isNoSprite = true;
   }
 
@@ -17,7 +17,8 @@ export default class Shockwave extends EFFECT{
     Drawer.Stage.filters[0].uniforms.x = this.pos.x/800; 
     Drawer.Stage.filters[0].uniforms.y = this.pos.y/640; 
     Drawer.Stage.filters[0].uniforms.time = this.frame;
+    this.continuasFrame += Timer.timeScale;
+    this.frame = Math.floor(this.continuasFrame);
     if(this.frame > 100) this.Delete();
-    this.frame++;
   }
 }

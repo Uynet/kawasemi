@@ -22,7 +22,7 @@ export default class Fire extends EFFECT{
     this.pos = pos;
     this.vel = vel;
     this.name = "fire";
-    this.frame = 0;
+    this.continuasFrame =  0;
     this.spid = 0;
     /*スプライト*/
     this.sprite.position = this.pos;
@@ -38,10 +38,9 @@ export default class Fire extends EFFECT{
     this.sprite.scale.y += d;
   }
   Update(){
-    this.sprite.position = this.pos;
+    this.ExecuteAI();
     this.Scaling();
     this.sprite.alpha *= 0.92;
     if( this.frame > 40) Pool.Remove(this);
-    this.frame++;
   }
 }

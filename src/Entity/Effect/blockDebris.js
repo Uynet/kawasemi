@@ -21,13 +21,4 @@ export default class BlockDebris extends EFFECT{
     this.addBasic(); 
     this.addAnimator(false,4,4);
   }
-  /*
-  Physics(){
-    this.vel.y += this.gravity;
-    this.pos = ADV(this.pos,this.vel);
-  }
-  */
-  Update(){
-    this.ExecuteAI();
-  }
 }

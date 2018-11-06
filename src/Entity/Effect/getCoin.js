@@ -15,8 +15,4 @@ export default class GetCoin extends EFFECT{
     this.addBasic();
     this.addAnimator(false,3,4);
   }
-
-  Update(){
-    this.ExecuteAI();
-  }
 }

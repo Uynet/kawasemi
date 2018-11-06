@@ -20,7 +20,7 @@ export default class Smoke extends EFFECT{
     this.pos = pos;
     this.vel = vel;
     this.name = "smoke";
-    this.frame = 0;
+    this.continuasFrame =  0;
     this.size = size;//煙の大きさ 浮力にも関わってくる
     /*スプライト*/
     this.spid = 0;
@@ -34,16 +34,10 @@ export default class Smoke extends EFFECT{
   onAnimationEnd(){
       Pool.Remove(this);
   }
-  Scaling(){
-    let d = this.size - this.sprite.scale.x;
-    this.sprite.scale.x += d * 0.1;
-    this.sprite.scale.y += d * 0.1;
-  }
   Update(){
     this.ExecuteAI();
-    this.vel.x *= 0.9;
-    this.vel.y *= 0.9;
-    this.Scaling();
+    this.ScaleTo(this.size,0.1);
+    this.vel = scala(0.9,this.vel);
     if(this.frame%20 == 19)this.sprite.alpha -= 0.1;
   }
 }

@@ -29,7 +29,6 @@ export default class Explosion3 extends EFFECT{
     this.sprite.position = this.pos;
     this.sprite.scale.set(1);
   }
-
   Update(){
     let d = (5 - this.size)*0.1;
     this.size += d;

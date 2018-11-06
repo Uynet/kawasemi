@@ -17,7 +17,7 @@ export default class TutorialObject extends Entity{
     this.type = "MOVER";
     this.name = "tutorialObject";
     this.pattern = Art.enemyPattern.coin;
-    this.sprite = new PIXI.Sprite(Art.font["z"]);
+    this.sprite = new PIXI.Sprite(Art.font["ゆ"]);
     this.sprite.position = pos;
     this.layer = "ENTITY";
     this.isUpdater = true;
@@ -25,7 +25,7 @@ export default class TutorialObject extends Entity{
     this.addAI(new MoveLissajous(this,0.4,0.4,0.13+Rand(0.03),0.17));
   }
   Explode(){
-    const e = new Explosion5(CPV(this.pos),vec0());
+    const e = new Explosion5(copy(this.pos),vec0());
     EntityManager.addEntity(e);
   }
   Clear(){
