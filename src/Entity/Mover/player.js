@@ -28,6 +28,7 @@ import Pool from '../../Stage/pool.js';
 import StagePop from '../../UI/stagePop.js';
 import DistanceField from "../../Stage/distanceField.js";
 import Spilit from "./spilit.js";
+import BasicAI from "../AI/basicAI.js";
 
 const STATE = {
   WAITING : "WAITING",
@@ -142,6 +143,7 @@ export default class Player extends Entity{
     let spilit =  new Spilit(add(this.pos,VECY(-16)));
     this.spilit = spilit;
     EntityManager.addEntity(spilit);
+    this.addAI(new BasicAI(this));
   }
   //死亡後に初期状態に回復するため
   ResetStatus(){
@@ -184,6 +186,11 @@ export default class Player extends Entity{
     //空中でZ押すとbulletを消費してジャンプできる
     if(Input.isKeyClick(KEY.Z)){
       //this.AirJump();
+    }
+    if(Input.isKeyInput(KEY.C)){
+      Timer.SetTimeScale(0.1);
+    }else{
+      Timer.SetTimeScale(1.0);
     }
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
@@ -284,8 +291,8 @@ export default class Player extends Entity{
 
     this.frame++;
     let state;
-    let animWait = Math.floor(Param.player.animWait/Timer.timeScale);
-    let animRun = Math.floor(Param.player.animRun/Timer.timeScale);
+    let animWait = Math.floor(Param.player.animWait/Timer.GetTimeScale());
+    let animRun = Math.floor(Param.player.animRun/Timer.GetTimeScale());
     switch(this.state){
       case STATE.WAITING :
         this.spid = (Math.floor(this.frame/animWait))%4
@@ -308,7 +315,7 @@ export default class Player extends Entity{
         let l = 9;//周期
         let f = (Math.abs((this.frame%l -l/2))-l/2);
         this.sprite.position.y = this.pos.y - a*4*f*f/l/l;
-        if(this.frame%Math.floor(10/Timer.timeScale) == 0 && this.floor.on){;
+        if(this.frame%Math.floor(10/Timer.GetTimeScale()) == 0 && this.floor.on){;
           //歩き土埃エフェクト
           let p = add(this.pos,VECY(16));
           let v = {
@@ -514,6 +521,7 @@ export default class Player extends Entity{
   }
 
   OnDying(){
+    Timer.SetTimeScale(0.1);
     //なおせ
     Audio.StopBGM();
     //死亡開始時に一回だけ呼ばれる部分
@@ -526,7 +534,6 @@ export default class Player extends Entity{
     this.frameDead = this.frame;
     this.isDying = true;
     this.isAlive = false;
-    Timer.timeScale = 0.1;
   }
   Observer(){
     if(this.hp <= 0){
@@ -539,14 +546,14 @@ export default class Player extends Entity{
   Dying(){
     //死亡中
     if(this.isDying){//まだ死んでない  
-      if(this.frame - this.frameDead < 150){
+      if(this.frame - this.frameDead < 100){
         this.isDying = true;
       }else{
         //完全に死んだ
         //完全死亡時に一回だけ呼ばれる部分
         if(this.isDying){
           //this.state = STATE.DEAD
-          Timer.timeScale = 1;
+          Timer.SetTimeScale(1);
           let g = new GameOverEvent();
           EventManager.PushEvent(g);
         }
@@ -609,6 +616,7 @@ export default class Player extends Entity{
   }
 
   Update(){
+    this.ExecuteAI();
     if(Game.debug)this.Debug();
     //player関連のイベントを裁く
       

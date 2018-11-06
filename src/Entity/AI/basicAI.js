@@ -7,7 +7,7 @@ export default class BasicAI{
     this.entity = entity;
   }
   Do(){
-    this.entity.continuasFrame += Timer.timeScale;
+    this.entity.continuasFrame += Timer.GetTimeScale();
     this.entity.frame=Math.floor(this.entity.continuasFrame);
     this.entity.sprite.position = this.entity.pos;
     this.entity.sprite.texture = this.entity.pattern[this.entity.spid];

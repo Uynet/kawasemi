@@ -97,6 +97,7 @@ export default class Audio{
       source.connect(this.context.destination);
       source.loop = false; // 再生
       if(!pitch)pitch = 1;
+      pitch *= (1-Math.pow(1-Timer.GetTimeScale(),4));
       source.playbackRate.value = pitch + Rand(0.05);
       gainNode = this.context.createGain();
       source.connect(gainNode);
