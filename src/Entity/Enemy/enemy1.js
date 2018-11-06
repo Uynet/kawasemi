@@ -58,7 +58,7 @@ export default class Enemy1 extends Enemy{
       y : 0,
     }
     for(let i = 0;i<enemyPop;i++){
-      let e = new Enemy4(ADV(p,Rand2D(enemyPop)));
+      let e = new Enemy4(add(p,Rand2D(enemyPop)));
       //ちょっと特殊
       e.AIList[0].dist = 1000;
      // e.coin = Dice(2)+1;
@@ -82,7 +82,7 @@ export default class Enemy1 extends Enemy{
     this.vel.y = -0.2;
     this.acc.y = -2.3;
     this.state = "JUMP";
-    let p = ADV(this.pos,vec2(-20,90));
+    let p = add(this.pos,vec2(-20,90));
     //  Audio.PlaySE("enemy5Shot");
     Audio.PlaySE("landing2",1.6);
   }

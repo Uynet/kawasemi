@@ -107,7 +107,7 @@ export default class UIManager{
   //メニューを開く
   static SetMenu(){
     Drawer.SetFilter([Drawer.testFilter]);
-    UIManager.addUI(new Menu(ADV(P_MENU,VECY(16))));
+    UIManager.addUI(new Menu(add(P_MENU,VECY(16))));
   }
   //UIをすべて削除
   static Clean(){

@@ -26,7 +26,7 @@ export default class Enemy3 extends Enemy{
     this.frameShot = 0;//最後にshotした時刻
     this.BasicEnemyInit();
     /*スプライト*/
-    this.sprite.position = ADV(this.pos , vec2(8));
+    this.sprite.position = add(this.pos , vec2(8));
     this.sprite.anchor.set(0.5);
     /*パラメータ*/
     this.addAI(new Shot(this));
@@ -68,6 +68,6 @@ export default class Enemy3 extends Enemy{
     }
     this.Collision();
     this.arg = argument(sub(EntityManager.player.pos,this.pos))
-    this.sprite.position = ADV(this.pos,vec2(8));
+    this.sprite.position = add(this.pos,vec2(8));
   }
 }

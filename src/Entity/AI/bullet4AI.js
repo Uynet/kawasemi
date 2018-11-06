@@ -11,7 +11,7 @@ export default class Bullet4AI{
   Phisics(){
     //this.bullet.vi *= 0.9;
     //this.bullet.vi = length(this.bullet.vel)
-    //this.bullet.vel = POV(this.bullet.arg,this.bullet.vi);
+    //this.bullet.vel = fromPolar(this.bullet.arg,this.bullet.vi);
     this.bullet.vel.y += 0.1;
     this.bullet.pos.x += this.bullet.vel.x;
     this.bullet.pos.y += this.bullet.vel.y;
@@ -54,7 +54,7 @@ export default class Bullet4AI{
     //this.sprite.filters[0].uniforms.frame = this.frame;
     //this.bullet.SetSize(this.bullet.size *1.05);
     this.bullet.sprite.anchor.set(0.5);
-    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
+    this.bullet.sprite.position = add(this.bullet.pos,vec2(8));
     this.bullet.sprite.rotation = this.bullet.arg + Math.PI/2;
     this.bullet.frame++;
   }

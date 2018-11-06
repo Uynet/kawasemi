@@ -11,7 +11,7 @@ export default class Bullet3AI{
     this.bullet = bullet;
   }
   Phisics(){
-    this.bullet.vel = POV(this.bullet.arg,this.bullet.vi);
+    this.bullet.vel = fromPolar(this.bullet.arg,this.bullet.vi);
     this.bullet.pos.x += this.bullet.vel.x;
     this.bullet.pos.y += this.bullet.vel.y;
   }
@@ -47,7 +47,7 @@ export default class Bullet3AI{
     if(this.bullet.hp<=0 ||
       this.bullet.frame > 30) {
       EntityManager.removeEntity(this.bullet);
-      EntityManager.addEntity(new BulletHitWall(CPV(this.bullet.pos)));
+      EntityManager.addEntity(new BulletHitWall(copy(this.bullet.pos)));
     }
   }
   Do(){
@@ -55,7 +55,7 @@ export default class Bullet3AI{
     this.Phisics();
     this.Observer();
 
-    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
+    this.bullet.sprite.position = add(this.bullet.pos,vec2(8));
     this.bullet.sprite.rotation = this.bullet.arg + Math.PI/2;
     this.bullet.frame++;
   }

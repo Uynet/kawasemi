@@ -27,9 +27,9 @@ export default class gaugeBossHP extends UI{
     this.isMultiple = true;
     this.pos = pos;
     /*child*/
-    this.outer = {pos:CPV(pos)};
-    this.bar = {pos:CPV(pos)};
-    this.icon = {pos:ADV(pos,P_ICON)};
+    this.outer = {pos:copy(pos)};
+    this.bar = {pos:copy(pos)};
+    this.icon = {pos:add(pos,P_ICON)};
     let maxHP = Param.enemy1.hp;//
     /*スプライト*/
     this.spid = 0;
@@ -38,7 +38,7 @@ export default class gaugeBossHP extends UI{
     let s;
     this.scale = 4;
     P_AMOUNT.x = 16*4*this.scale/2-8;
-    this.amount = new Font(ADV(pos,P_AMOUNT),"" + maxHP,"HP");//数字
+    this.amount = new Font(add(pos,P_AMOUNT),"" + maxHP,"HP");//数字
     //outer
     s = Art.SpriteFactory(this.pattern.outer);//
     s.position = this.outer.pos; 

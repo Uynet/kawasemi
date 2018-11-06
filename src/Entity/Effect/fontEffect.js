@@ -11,7 +11,7 @@ export default class FontEffect extends EFFECT{
       x:Rand(1.5),
       y:-2
     }
-    super(CPV(pos),v);
+    super(copy(pos),v);
     /*基本情報*/
     this.fonttype = fonttype;
     this.name = "FontEffect";

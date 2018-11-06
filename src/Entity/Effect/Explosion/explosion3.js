@@ -15,7 +15,7 @@ export default class Explosion4 extends Explosion{
     //stone(というか火花?)
     for(let i = 0;i<4;i++){
       let arg = Rand(Math.PI);
-      let v = POV(arg,2);
+      let v = fromPolar(arg,2);
       let stone2 = new Stone2(copy(this.pos),v);
       stone2.addEntity();
     }

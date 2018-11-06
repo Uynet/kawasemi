@@ -115,19 +115,13 @@ const vec2 = (x,y)=>{
   if(y===undefined) return {x:x,y:x}
   else return {x:x,y:y}
 };
-const VEC0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
 const vec0 = ()=>{return {x:0,y:0}};//0ベクトルを返す
-const VECN = (n)=>{return {x:n,y:n}};//
 const VECX = (vx)=>{return {x:vx,y:0}};//
 const VECY = (vy)=>{return {x:0,y:vy}};//
 const copy= (v)=>{return {x:v.x,y:v.y}};//値渡し
-const CPV = (v)=>{return {x:v.x,y:v.y}};//値渡し
-const ADV = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
 const add = (v1,v2)=>{ return {x:v1.x + v2.x ,y:v1.y + v2.y}};//ベクトル加算
 const sub = (v1,v2)=>{ return {x:v1.x - v2.x ,y:v1.y - v2.y}};//ベクトル加算
-const MLV = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
 const mul = (v1,v2)=>{ return {x:v1.x * v2.x ,y:v1.y * v2.y}};//ベクトル乗算
-const POV =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
 const fromPolar =  (arg,vi)=>{return {x:vi*Math.cos(arg),y:vi*Math.sin(arg)}}//極表示のベクトルを直交座標に変換
 const normalize = v=>{ let a = Math.sqrt(v.x * v.x + v.y * v.y); v.x /= a; v.y /= a; return v; }//正規化
 const scala = (a,v)=>{
@@ -141,10 +135,9 @@ const argument = (v)=>{
   if(v.x<0) a += Math.PI;
   return a;
 }
-const DOT = (v1,v2)=>{return v1.x*v2.x + v1.y*v2.y};//内積
 const dot = (v1,v2)=>{return v1.x*v2.x + v1.y*v2.y};//内積
 const reflect = (v,n)=>{
-  return ADV(v,scala(-2*dot(v,n),n));
+  return add(v,scala(-2*dot(v,n),n));
 }
 /*Random*/
 const Rand = (d)=>{

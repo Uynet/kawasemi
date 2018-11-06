@@ -16,7 +16,7 @@ export default class Bullet2AI{
   }
   Do(){
     this.Observer();
-    this.bullet.sprite.position = ADV(this.bullet.pos,VECN(8));
+    this.bullet.sprite.position = add(this.bullet.pos,vec2(8));
     this.bullet.sprite.position.x -=4;
     this.bullet.sprite.rotation = this.bullet.arg;
 

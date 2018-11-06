@@ -9,7 +9,7 @@ import MapData from '../Stage/mapData.js';
 
 export default class Wall extends Entity{
   constructor(pos,wall){
-    super(pos,VEC0());
+    super(pos,vec0());
     /*基本情報*/
     //this.name = name; 必要になったら
     this.type = ENTITY.WALL;

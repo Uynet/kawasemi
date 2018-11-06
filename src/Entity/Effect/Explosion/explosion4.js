@@ -15,7 +15,7 @@ export default class Explosion3 extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
     //微妙に左上に寄ってるので中心に
-    this.pos = ADV(this.pos,VECN(8));
+    this.pos = add(this.pos,vec2(8));
     /*基本情報*/
     this.frame = 0;
     //this.isNoSprite = true;

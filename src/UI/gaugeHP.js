@@ -32,10 +32,10 @@ export default class gaugeHP extends UI{
     this.max = Param.player.maxHp;
     this.color = 0xBB2E5D;
     /*child*/
-    this.outer = {pos:CPV(pos)};
-    this.bar = {pos:ADV(CPV(pos),P_BAR)};
-    this.icon = {pos:ADV(pos,P_ICON)};
-    this.amount = new Font(ADV(pos,P_AMOUNT)," " + this.max,"HP");//数字
+    this.outer = {pos:copy(pos)};
+    this.bar = {pos:add(copy(pos),P_BAR)};
+    this.icon = {pos:add(pos,P_ICON)};
+    this.amount = new Font(add(pos,P_AMOUNT)," " + this.max,"HP");//数字
     /*スプライト*/
     this.spid = 0;
     this.container = new PIXI.Container();

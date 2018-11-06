@@ -9,14 +9,14 @@ export default class Horming{
   Do(){
     //敵方向へのベクトル
     if(this.bullet.isTargetOn){
-      let to = ADV(this.bullet.targetedEnemy.pos , MLV(VECN(-1),this.bullet.pos));
+      let to = add(this.bullet.targetedEnemy.pos , mul(vec2(-1),this.bullet.pos));
       //外積を取って正負を判定
       let closs = this.bullet.vel.x * to.y - this.bullet.vel.y * to.x; 
       this.bullet.Set("arg",this.bullet.arg + closs/Math.abs(closs) * this.bullet.curve);
       //これめっちゃ楽しい
       //this.bullet.targetedEnemy.vel.x += this.bullet.vel.x;
       //this.bullet.targetedEnemy.vel.y += this.bullet.vel.y;
-      //this.bullet.Set("vel", ADV(to,this.bullet.vel)); 
+      //this.bullet.Set("vel", add(to,this.bullet.vel)); 
       
     }
   }

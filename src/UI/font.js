@@ -9,7 +9,7 @@ let small = [
 export default class Font extends UI{
   //strは表示する文字(今は数字のみ)
   constructor(pos,str,type){
-    super(CPV(pos));
+    super(copy(pos));
     /*基本情報*/
     this.type = type;
     this.name = "font";
@@ -75,7 +75,7 @@ export default class Font extends UI{
     let spid = str + "";//str型にすること
     let tex = Art.font[spid];
     let sprite = new PIXI.Sprite(tex);
-    let pos = CPV(this.pos);
+    let pos = copy(this.pos);
     pos.x += this.d * 9;
     sprite.position = pos;
     this.container.addChild(sprite);
@@ -85,7 +85,7 @@ export default class Font extends UI{
     this.container.children = [];
     this.str = text; //0~9
     this.d = this.str.length;//桁数
-    this.SetPos(CPV(pos));
+    this.SetPos(copy(pos));
   }
 
   SetPos(pos){
