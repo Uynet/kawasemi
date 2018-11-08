@@ -9,6 +9,7 @@ import BulletHitWall from '../Effect/bulletHitWall.js';
 import GetCoin from '../Effect/getCoin.js';
 import Bright from '../Effect/bright.js';
 import BasicAI from "../AI/basicAI.js";
+import EmitTrail from "../AI/emitTrail.js";
 
 const START_FLASH_FRAME = 300;
 const MAX_REAMIN_FRAME = 450;
@@ -34,6 +35,7 @@ export default class Coin extends Entity{
     this.vel.y = 0.3;
     /*AI*/
     this.addAI(new BasicAI(this));
+    this.addAI(new EmitTrail(this,Bright,8));
     this.addAnimator(true,3,12);
   }
   Collision(){
@@ -82,12 +84,6 @@ export default class Coin extends Entity{
   }
   Update(){
     this.ExecuteAI();
-    //たまに光る
-    if(this.frame%(8 + Math.floor(Rand(1))) == 0){
-      let p = add(this.pos,Rand2D(5));
-      console.assert(p);
-      EntityManager.addEntity(new Bright(p));
-    }
     //Collision
     if(this.coltype!="none")this.Collision();
     this.BasicPhysics();
