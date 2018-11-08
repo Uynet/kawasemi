@@ -107,10 +107,10 @@ export default class Player extends Entity{
     /*パラメータ*/
     this.param = Param.player;
     this.maxHP = Param.player.maxHp;
-    this.hp = this.maxHP;
     this.maxBullet = Param.player.maxBullet;
-    this.bullet = this.maxBullet;
     this.gravity = Param.player.gravity;
+    this.bullet = this.maxBullet;
+    this.hp = this.maxHP;
     this.arg = 0;//狙撃角度 0 - 2π
     this.scArg = 0;//スクロール用
     this.toArg = 0;
@@ -188,7 +188,7 @@ export default class Player extends Entity{
       //this.AirJump();
     }
     if(Input.isKeyInput(KEY.C)){
-      Timer.SetTimeScale(0.1);
+      Timer.SetTimeScale(0.08);
     }else{
       Timer.SetTimeScale(1.0);
     }
@@ -289,7 +289,6 @@ export default class Player extends Entity{
       this.sprite.alpha = 1;
     }
 
-    this.frame++;
     let state;
     let animWait = Math.floor(Param.player.animWait/Timer.GetTimeScale());
     let animRun = Math.floor(Param.player.animRun/Timer.GetTimeScale());
@@ -509,8 +508,8 @@ export default class Player extends Entity{
     let d = fromPolar(this.arg,100*po(this.offset));
     let p = add(this.pos,d);
     if(Input.isKeyInput(KEY.SP)) {
-      let to = add(p,MLV(this.scPos,vec2(-1)));
-      this.scPos = add(this.scPos , MLV(to,vec2(1/20)));
+      let to = add(p,mul(this.scPos,vec2(-1)));
+      this.scPos = add(this.scPos , mul(to,vec2(1/20)));
       this.offset = Math.min(this.offset+0.5,20);
       Drawer.ScrollOn(this.scPos);
     }else{
@@ -521,27 +520,23 @@ export default class Player extends Entity{
   }
 
   OnDying(){
-    Timer.SetTimeScale(0.1);
-    //なおせ
-    Audio.StopBGM();
     //死亡開始時に一回だけ呼ばれる部分
-    this.ResetStatus();
-    EventManager.PushEvent(new QuakeEvent(50,0.9));
-    EntityManager.addEntity(new Explosion5(copy(this.pos)));
-    Audio.PlaySE("bomb",-1.0);
-    Audio.PlaySE("missileHit");
-    this.weapon.Reset();
-    this.frameDead = this.frame;
-    this.isDying = true;
-    this.isAlive = false;
-  }
-  Observer(){
-    if(this.hp <= 0){
+    if(this.isAlive){
+      Timer.SetTimeScale(0.1);
+      //なおせ
+      Audio.StopBGM();
+      this.ResetStatus();
+      EventManager.PushEvent(new QuakeEvent(50,0.9));
+      EntityManager.addEntity(new Explosion5(copy(this.pos)));
+      Audio.PlaySE("bomb",-1.0);
+      Audio.PlaySE("missileHit");
+      this.weapon.Reset();
+      this.frameDead = this.frame;
+      this.isDying = true;
+      this.isAlive = false;
       this.state = STATE.DYING;
-      if(this.isAlive){
-        this.OnDying();
+      //死亡開始時に一回だけ呼ばれる部分
       }
-    }
   }
   Dying(){
     //死亡中
@@ -563,7 +558,7 @@ export default class Player extends Entity{
   }
 
   //bulletのかいふく
-  Supply(){
+  AutoSupplyBullet(){
     //最後に撃った時刻から経過するほど早くなる
     let t = (this.frame-this.frameShot);
     if(t<=500 && t%10 == 0) this.bullet++;
@@ -571,7 +566,6 @@ export default class Player extends Entity{
     else if(t>1000 && t<=1500 && t%3 == 0) this.bullet++;
     else if(t>1500) this.bullet+=2;
     this.bullet = clamp(this.bullet,0,this.maxBullet);
-    UIManager.bullet.SetBar(this.bullet); //BulletBarの更新
   }
 
   SetArg(arg){
@@ -581,15 +575,6 @@ export default class Player extends Entity{
     if(d > Math.PI)d -= 2*Math.PI;
     if(d < -Math.PI)d += 2*Math.PI;
     this.arg += d*0.2;
-  }
-
-  CreateStage(){
-    if(this.pos.y < StageGen.checkpoint * 16){
-      StageGen.GenerateChunk(StageGen.checkpoint);
-    }
-    if(this.pos.y > StageGen.wall.left.lastGrid.y * 16){
-      this.Damage(-999);
-    }
   }
   Debug(){
     if(this.maxHP != 300 && Input.isKeyClick(KEY.K) && this.isAlive && Game.debug){
@@ -631,14 +616,13 @@ export default class Player extends Entity{
       this.weapon.Update(this);//weapon
       this.Physics();//物理
       this.Collision();//衝突
-      this.Supply();//bulletのかいふく　
-      UIManager.HP.SetBar(this.hp);//HPbarの更新
+      this.AutoSupplyBullet();//bulletのかいふく　
     }
+    UIManager.bullet.SetBar(this.bullet); //BulletBarの更新
+    UIManager.HP.SetBar(this.hp);//HPbarの更新
     this.isCanRead = false;
-    //this.CreateStage();//マップ生成
     this.ScrollByDir();//向きに応じてスクロール位置を変更
     Drawer.ScrollOn(this.pos);//プレイヤー中心にスクロール
-    this.Observer(); //死亡チェック
     this.Dying();//死亡中
     //無敵時間の有向時間
     if(this.frame - this.frameDamaged > Param.player.invTime){

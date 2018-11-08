@@ -9,7 +9,7 @@ export default class EmitTrail{
     this.Trail = Trail;//クラス渡し
   }
   Do(){
-    if(this.entity.frame%this.emitTerm == this.emitTerm-1){
+    if(this.entity.Modulo(this.emitTerm)){
       let p = copy(this.entity.pos);
       let d = Rand2D(5);
       p = add(p,d);

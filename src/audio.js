@@ -9,6 +9,9 @@ export default class Audio{
     this.testLowPass = this.context.createBiquadFilter();
     this.testLowPass.type = 'lowpass';
     this.testLowPass.frequency.value = 22050;
+    //
+    this.testLowPass.type = 'lowpass';
+    this.testLowPass.frequency.value = 22050;
     this.BGM = { } 
     this.SE = { }
     this.stack = [];
@@ -58,7 +61,6 @@ export default class Audio{
     let buffer = this.BGM[name];
     source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
-    //source.connect(this.context.destination); // context に connect
     //if(gain){
     let gainNode = this.context.createGain();
     source.loop = true;
@@ -80,11 +82,16 @@ export default class Audio{
     let p = this.testLowPass.frequency.value;
     this.testLowPass.frequency.value= p-(p-440)*0.01;
   }
+  static SetPitch(pitch){
+    if(this.PlayingBGM.name!==null) this.PlayingBGM.source.playbackRate.value = pitch;
+  }
   static StopBGM(){
-    this.PlayingBGM.source.stop();
-    this.PlayingBGM = {
-      name : null,
-      source : null,
+    if(this.PlayingBGM.name !== null){
+      this.PlayingBGM.source.stop();
+      this.PlayingBGM = {
+        name : null,
+        source : null,
+      }
     }
   }
   static PlaySE(name,gain,pitch){

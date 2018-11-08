@@ -21,8 +21,11 @@ export default class Lasersight extends EFFECT{
   Rotate(player,weapon){
     this.arg = player.arg;
     this.pos = copy(add(player.spilit.pos,fromPolar(player.arg,8)));
-    if(weapon.isTargetOn && Math.abs(player.arg - player.toArg < 5)){
-      this.sprite.scale.x = DIST(weapon.target.enemy.pos,player.pos)/16 -0.5;
+    let LaserLength = DIST(weapon.target.enemy.pos,player.spilit.pos);
+    let offset = Math.tan(Math.abs(player.arg - player.toArg))*LaserLength;
+    cl(LaserLength)
+    if(weapon.isTargetOn && weapon.target.size/2 > offset){
+      this.sprite.scale.x = LaserLength/16-0.5;
     }else this.sprite.scale.x = 16;
   }
   Update(){

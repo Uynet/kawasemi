@@ -100,6 +100,12 @@ export default class Entity{
   SetBoxCollider(width,height){
     this.collider = new Collider(SHAPE.BOX,new Box(this.pos,width,height));//衝突判定の形状
   }
+  Modulo(term){
+    if(this.frame%term==term-1){
+      if(Math.floor(this.continuasFrame-Timer.GetTimeScale())!=this.frame) return true;
+    }
+    return false;
+  }
 }
 
 
