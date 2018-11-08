@@ -127,14 +127,12 @@ export default class Drawer{
     this.backGroundContainer.y = Math.floor(toY/4 % 256);
     //Entityレイヤ
 
-    this.backContainer.x = Math.floor(toX);
-    this.backContainer.y = Math.floor(toY);
-    this.entityContainer.x = Math.floor(toX);
-    this.entityContainer.y = Math.floor(toY);
-    this.foreEntityContainer.x = Math.floor(toX);
-    this.foreEntityContainer.y = Math.floor(toY);
-    this.foreContainer.x = Math.floor(toX*4/3);
-    this.foreContainer.y = Math.floor(toY*4/3);
+    let to = vec2(Math.floor(toX-toX%2), Math.floor(toY-toY%2));
+    let toDelay = vec2(Math.floor(toX*4/3-toX%2), Math.floor(toY*4/3-toY%2));
+    this.backContainer.position = to;
+    this.entityContainer.position = to;
+    this.foreEntityContainer.position = to;
+    this.foreContainer.position = toDelay;
     //UIは動かない
 
   }

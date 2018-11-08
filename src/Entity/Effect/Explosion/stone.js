@@ -2,11 +2,13 @@ import EFFECT from '../effect.js';
 import Art from '../../../art.js';
 import EntityManager from '../../../Stage/entityManager.js';
 import Pool from '../../../Stage/pool.js';
+import BasicAI from "../../AI/basicAI.js";
 
 //火花?
 export default class Stone extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
+    this.addAI(new BasicAI(this));
   }
   Init(pos,vel){
     //constructor
@@ -16,6 +18,7 @@ export default class Stone extends EFFECT{
     this.name = "stone";
     this.continuasFrame = 0;
     this.frame = 0;
+    this.count = 0;
     this.isNext = false;
     /*スプライト*/
     this.spid = 0;
@@ -44,17 +47,17 @@ export default class Stone extends EFFECT{
     }
   }
   Update(){
+    this.ExecuteAI();
     this.vel = mul(this.vel,vec2(0.9)); //減速
     this.pos.y += 0.3;//重力
     //this.pos = Util.advec(this.pos,this.vel);
-    this.sprite.position = this.pos;
     this.sprite.alpha -= 0.02;
 
-    if(this.frame == 1)this.isNext = true;
-    if(this.frame > 3) Pool.Remove(this);
+    if(this.count == 1)this.isNext = true;
+    if(this.count > 3) Pool.Remove(this);
 
+    this.count++;
     //再帰
     this.March()
-    this.frame++;
   }
 }
