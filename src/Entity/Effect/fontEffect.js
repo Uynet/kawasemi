@@ -16,21 +16,20 @@ export default class FontEffect extends EFFECT{
     this.fonttype = fonttype;
     this.name = "FontEffect";
     this.isAlive = true;//消えたらfalse
-    this.e = 0.0;
     this.isMultiple = true;//このEntityは複数スプライトを持つか
     /*スプライト*/
     this.str = str; //0~9
     this.container = new PIXI.Container();
     this.strLength = this.str.length;//桁数
-    //this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
     for(let i = 0;i<this.strLength;i++){
       let spid = this.str[i] + "";//str型にすること
-      let tex;
+      let texture;
       switch(this.fonttype){
-        case "player" : tex = Art.font[spid + "r"]; break;
-        case "enemy" :case "pop" : tex = Art.font[spid]; break;
+        case "player" : texture = Art.font[spid + "r"]; break;
+        case "enemy" : texture = Art.font[spid]; break;
+        default : console.warn(this.fonttype); 
       }
-      let sp =  Art.CreateSprite(tex) ;
+      let sp =  Art.CreateSprite(texture) ;
       sp.position = {x:this.pos.x + i*6,y:this.pos.y};
       this.container.addChild(sp);
     }
@@ -46,19 +45,14 @@ export default class FontEffect extends EFFECT{
       //ここはあとで書き直す
       //というか別クラスにする
       if(this.fonttype == "pop"){
+        cl("uno")
         this.container.children[i].position = {x:this.pos.x + i * 9,y:this.pos.y};
       }else{
         this.container.children[i].position = {x:this.pos.x + i * 6,y:this.pos.y};
       }
     }
-    for(let i = 0;i<this.strLength;i++){
-      if(this.frame > 30){
-        this.container.children[i].alpha -=0.05; 
-      }
-    }
-    if(this.frame > 90){
-      this.Delete();
-    }
+    if(this.frame > 30) this.container.alpha -=0.05; 
+    if(this.frame > 90) this.Delete();
     this.frame++;
   }
 }

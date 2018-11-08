@@ -68,12 +68,9 @@ export default class Weapon{
       if(this.isTargetOn &&
         l == this.target.enemy){
         if(DIST_C(l.pos, player.pos) < this.length
-          //各方向+-45度まで許容
-          && this.isSeen(player,l)
-        ){
-          continue;
-        }
-        EntityManager.removeEntity(this.target);
+          && this.isSeen(player,l) //各方向+-45度まで許容
+        )continue;
+        this.target.Delete();
         this.isTargetOn = false;
         continue;
       }
@@ -85,13 +82,12 @@ export default class Weapon{
           DIST_C(l.pos,player.pos) +1< DIST_C(this.target.pos,player.pos)){
           //今のロック先を解除して
           if(this.isTargetOn){
-            EntityManager.removeEntity(this.target);
+            this.target.Delete();
             this.isTargetOn = false;
           }
           //targetを追加する
           this.target = new Target(l);
-          EntityManager.addEntity(this.target);
-          Audio.PlaySE("targetOn");
+          this.target.addEntity();
           this.isTargetOn = true;
         }
       }
@@ -99,7 +95,7 @@ export default class Weapon{
     if(this.isTargetOn == true){
       //lockしていた敵が視界から消えたら消去
       if(!this.target.enemy.isAlive){
-        EntityManager.removeEntity(this.target);
+        this.target.Delete();
         this.isTargetOn = false;
       }else{
         //方向を指定
@@ -122,8 +118,8 @@ export default class Weapon{
     }
   }
   Reset(){
-    if(this.isTargetOn)EntityManager.removeEntity(this.target);
-    if(this.isLasersight)EntityManager.removeEntity(this.lasersight);
+    if(this.isTargetOn)this.target.Delete();
+    if(this.isLasersight)this.lasersight.Delete();
     this.Init();
   }
 

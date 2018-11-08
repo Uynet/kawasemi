@@ -26,10 +26,11 @@ export default class ScreenFlash extends EFFECT{
     this.sprite.scale.y = this.frame*2;
   }
   Update(){
-    this.ExecuteAI();
+    //this.ExecuteAI();
     this.Scaling();
     this.sprite.texture = this.pattern[this.spid];
     this.spid = (this.spid+1)%2 ;
     if(this.frame == 4) this.Delete();
+    this.frame++;
   }
 }
