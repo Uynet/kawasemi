@@ -4,7 +4,7 @@ import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
-import Enemy2AI from '../AI/enemy2AI.js';
+import Enemy2AI from '../AI/Enemy/enemy2AI.js';
 import ReflectOnCollision from '../AI/ReflectOnCollision.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';

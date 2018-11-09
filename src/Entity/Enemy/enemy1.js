@@ -16,7 +16,7 @@ import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
-import Enemy1AI from '../AI/enemy1AI.js';
+import Enemy1AI from '../AI/Enemy/enemy1AI.js';
 import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Param from '../../param.js';

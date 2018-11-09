@@ -24,8 +24,8 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile :false,
-        laser : false,
+        missile :true,
+        laser : true,
         weapon4 : true,//
         weapon5 : false,
       },

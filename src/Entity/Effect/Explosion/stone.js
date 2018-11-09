@@ -2,7 +2,7 @@ import EFFECT from '../effect.js';
 import Art from '../../../art.js';
 import EntityManager from '../../../Stage/entityManager.js';
 import Pool from '../../../Stage/pool.js';
-import BasicAI from "../../AI/basicAI.js";
+import BasicAI from "../../AI/Basic/basicAI.js";
 
 //火花?
 export default class Stone extends EFFECT{

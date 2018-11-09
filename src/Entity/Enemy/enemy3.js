@@ -4,7 +4,6 @@ import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
 import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
-import Enemy2AI from '../AI/enemy2AI.js';
 import Shot from '../AI/shot.js';
 import MoveLissajous from '../AI/moveLissajous.js';
 import EventManager from '../../Event/eventmanager.js';

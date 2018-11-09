@@ -1,4 +1,3 @@
-import Collision from '../../Collision/collision.js';
 
 export default class BasicAI{
   constructor(enemy){
