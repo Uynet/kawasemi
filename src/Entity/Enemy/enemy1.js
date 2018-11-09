@@ -164,7 +164,7 @@ export default class Enemy1 extends Enemy{
     if(c.isHit && c.n.y == -1){
       //ダメージ
       let damage = RandomRange(this.atkMin,this.atkMax);
-      if(!player.isInvincible)player.Damage(-damage);
+      if(!player.isInvincible)player.Damage(damage);
     }
     //横から当たると弾く
     if(c.isHit && c.n.y != 1){
@@ -176,7 +176,7 @@ export default class Enemy1 extends Enemy{
       Audio.PlaySE("enemyDamage",-0.7);
       this.hp = Math.max(this.hp+atk,0);
       //ダメージをポップ
-      EntityManager.addEntity(new FontEffect(this.pos,-atk+"","enemy"));
+      EntityManager.addEntity(new FontEffect(this.pos,atk+"","enemy"));
       //this.SetSize(lerp(96,192,this.hp/this.maxHP));
       UIManager.BossHP.SetBar(this.hp);
     }

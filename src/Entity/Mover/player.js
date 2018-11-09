@@ -22,7 +22,6 @@ import Explosion1 from '../Effect/Explosion/explosion1.js';
 import Explosion2 from '../Effect/Explosion/explosion2.js';
 import Explosion3 from '../Effect/Explosion/explosion3.js';
 import Explosion5 from '../Effect/Explosion/explosion5.js';
-import QuakeEvent from '../../Event/quakeEvent.js';
 import WeaponIcon from '../Effect/weaponIcon.js';
 import Pool from '../../Stage/pool.js';
 import StagePop from '../../UI/stagePop.js';
@@ -242,18 +241,18 @@ export default class Player extends Entity{
     }
     /*for debug*/
     if(Input.isKeyClick(KEY.C) && this.isAlive){
-      //武器チェンジ
-      //持っている武器の中で次の武器をセレクト
-      //リストの末尾でループ
-      
-      //武器リストから持っている物だけを抽出
-      let wList = Object.keys(this.param.havingWeaponList);
-      wList = wList.filter((arr)=>{
-        return this.param.havingWeaponList[arr];
-      })
-      let wIndex = wList.indexOf(this.weapon.name);
-      let wNameNext = wList[wIndex+1];//次の武器をセレクト
-      if(!wNameNext)wNameNext = wList[0];//最後尾でループ
+    //武器チェンジ
+    //持っている武器の中で次の武器をセレクト
+    //リストの末尾でループ
+
+    //武器リストから持っている物だけを抽出
+    let wList = Object.keys(this.param.havingWeaponList);
+    wList = wList.filter((arr)=>{
+      return this.param.havingWeaponList[arr];
+    })
+    let wIndex = wList.indexOf(this.weapon.name);
+    let wNameNext = wList[wIndex+1];//次の武器をセレクト
+    if(!wNameNext)wNameNext = wList[0];//最後尾でループ
       this.ChangeWeapon(wNameNext);
     }
   }
@@ -263,7 +262,7 @@ export default class Player extends Entity{
         if(this.bullet >= jumpCost){
           Audio.PlaySE("jump2");
           EntityManager.addEntity(new Explosion2(copy(this.pos),Math.PI*(1/2)));
-          EventManager.PushEvent(new QuakeEvent(20,0.8));
+          this.Quake(20,0.8);
           this.frameShot = this.frame;//最終ショット時刻
             this.vel.y = - Param.player.jumpVel;
           this.bullet -= 20;
@@ -354,6 +353,7 @@ export default class Player extends Entity{
   //他から呼ばれる系
   /*武器チェンジ*/
   ChangeWeapon(name){
+
     this.weapon.Reset();
     WeaponManager.ChangeWeapon(this,name);
     UIManager.bullet.ChangeWeapon(name);
@@ -363,7 +363,6 @@ export default class Player extends Entity{
     EntityManager.addEntity(new WeaponIcon(p,name));
   }
   /*ダメージ*/
-  /*負の値を入れる*/
   Damage(atk){
     if(atk>0 && atk%1>0){
       console.warn(atk);
@@ -381,14 +380,14 @@ export default class Player extends Entity{
       atk = Math.floor(atk);
       */
 
-      this.hp+=atk;
+      this.hp-=atk;
       //フォントはダメージ数に応じて数字を表示する　
-      EntityManager.addEntity(new FontEffect(this.pos,-atk+"","player"));
+      EntityManager.addEntity(new FontEffect(this.pos,atk+"","player"));
       this.hp = Math.max(this.hp,0);
       //ダメージを受けて一定時間無敵になる
       this.isInvincible = true;
       this.frameDamaged = this.frame;
-      EventManager.PushEvent(new QuakeEvent(10,0.6));
+      this.Quake(10,0.6);
     }
   }
   //コイン取得
@@ -485,7 +484,7 @@ export default class Player extends Entity{
      //画面端の制限
      this.pos.x = clamp(this.pos.x , 0 , 16*Drawer.mapSize.width-8);
      this.pos.y = Math.max(this.pos.y,0);//↑端
-     if(this.pos.y > Drawer.mapSize.height * 16+8)this.Damage(-999);//下端
+     if(this.pos.y > Drawer.mapSize.height * 16+8)this.Damage(999);//下端
     this.force.x *= 0.9;
     this.force.y *= 0.9;
     //this.CollisionByDistance();
@@ -526,7 +525,7 @@ export default class Player extends Entity{
       //なおせ
       Audio.StopBGM();
       this.ResetStatus();
-      EventManager.PushEvent(new QuakeEvent(50,0.9));
+      this.Quake(50,0.9);
       EntityManager.addEntity(new Explosion5(copy(this.pos)));
       Audio.PlaySE("bomb",-1.0);
       Audio.PlaySE("missileHit");
@@ -595,7 +594,7 @@ export default class Player extends Entity{
       //最大HP変更
       this.param.maxHp = 300;
       UIManager.HP.SetMaxGaugeValue(300);
-      this.Damage(-999);
+      this.Damage(999);
       Audio.PlaySE("missileHit");
     }
   }

@@ -14,25 +14,14 @@ export default class eBullet2 extends Enemy{
   constructor(pos,vel){
     super(pos,vel);
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));
-    this.frame = 0;
+    this.SetBoxCollider(8,8);
     this.type = "MOVER"
-    /*スプライト*/
     this.pattern = Art.enemyPattern.eBullet2;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+    this.sprite = Art.CreateSprite(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
-    /*パラメータ*/
-    this.param = Param.eBullet2;
-    this.atkMin = this.param.atkMin;
-    this.atkMax = this.param.atkMax;
-    this.hp = this.param.hp;
-    this.gravity = this.param.gravity;
+    this.SetParam(Param.eBullet2);
 
     this.addAnimator(true,2,4);
-  }
-  Delete(){
-    EntityManager.removeEntity(this);
-    EntityManager.addEntity(new Explosion2(copy(this.pos),1.5*Math.PI))
   }
   Collision(){
     for(let w of EntityManager.wallList){
@@ -43,21 +32,13 @@ export default class eBullet2 extends Enemy{
       }
     }
   }
-  
-
   Update(){
     this.ExecuteAI();
-    if(this.frame%3 == 0){
+    if(this.Modulo(3)){
       let stone = Pool.GetStone(add(this.pos,VECX(4)),vec0());
       if(stone)EntityManager.addEntity(stone);
     }
-    this.Physics();
     this.Collision();
-    this.Hurt();
-    this.frame++;
-    //observer
-    if(this.hp<=0 || this.frame > 300){
-      this.Delete();
-    }
+    if( this.frame > 300) this.Delete();
   }
 }
