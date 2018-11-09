@@ -1,10 +1,8 @@
 import EntityManager from '../../Stage/entityManager.js';
 import Pool from "../../Stage/pool.js";
 import Collision from '../../Collision/collision.js';
-import BulletHitWall from '../Effect/bulletHitWall.js';
 import Audio from '../../audio.js';
 import EventManager from "../../Event/eventmanager.js";
-import QuakeEvent from "../../Event/quakeEvent.js";
 import Explosion1 from "../Effect/Explosion/explosion1.js";
 import Explosion4 from "../Effect/Explosion/explosion4.js";
 import BulletShot from "../Effect/bulletShot.js";
@@ -14,54 +12,23 @@ export default class Bullet1AI{
   constructor(bullet){
     this.bullet = bullet;
   }
-  Phisics(){
-    this.bullet.Set("vel", fromPolar(this.bullet.arg,this.bullet.vi));
-    this.bullet.pos.x += this.bullet.vel.x;
-    this.bullet.pos.y += this.bullet.vel.y;
-  }
   /* 衝突判定 */
   Collision(){
-    for(let l of EntityManager.enemyList){
-      if(Collision.on(this.bullet,l).isHit){
-        l.Damage(-RandomRange(this.bullet.atkMin,this.bullet.atkMax));
-        this.bullet.hp--;
+    for(let collider of EntityManager.colliderList){
+      if(collider.type == ENTITY.PLAYER)continue;
+      if(Collision.on(this.bullet,collider).isHit){
+        this.bullet.OnCollision(collider);
       };
     }
-    for(let w of EntityManager.wallList){
-      if(Collision.on(this.bullet,w).isHit){
-        //breakable object
-        if(w.isBreakable){
-          // ■ SoundEffect : hitWood
-          w.Damage(-RandomRange(this.bullet.atkMin,this.bullet.atkMax));
-          this.bullet.hp--;
-          //wall
-          }else{
-            // ■ SoundEffect : hitWall
-            if(w.material == "steel")Audio.PlaySE("landing3",5);
-            this.bullet.hp = 0;
-          }
-      }
-    }
   }
-
   Observer(){
-    if(this.bullet.hp<=0){
-      EntityManager.removeEntity(this.bullet);
-      Audio.PlaySE("missileHit",1);
-      EventManager.eventList.push(new QuakeEvent(50,0.8));//ゆれ
-      EntityManager.addEntity(new Explosion1(copy(this.bullet.pos)));
-    }
     if(this.bullet.frame > 180){
-      EntityManager.removeEntity(this.bullet);
-      EntityManager.addEntity(new BulletShot(copy(this.bullet.pos)));
+      this.bullet.Delete();
     }
   }
   Do(){
     this.Collision();
-    this.Phisics();
+    this.bullet.SetArg();
     this.Observer();
-    this.bullet.sprite.position = add(this.bullet.pos,vec2(8));
-    this.bullet.sprite.rotation = this.bullet.arg + Math.PI/2;
-    this.bullet.frame++;
   }
 }

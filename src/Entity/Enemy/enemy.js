@@ -11,8 +11,8 @@ import FontEffect from '../Effect/fontEffect.js';
 import Collision from '../../Collision/collision.js';
 import Coin from '../Mover/coin.js'
 import Explosion3 from '../Effect/Explosion/explosion3.js';
-import BasicAI from "../AI/basicAI.js";
-import BasicEnemyAI from "../AI/basicEnemyAI.js";
+import BasicAI from "../AI/Basic/basicAI.js";
+import BasicEnemyAI from "../AI/Basic/basicEnemyAI.js";
 
 export default class Enemy extends Entity{
   constructor(pos,vel){

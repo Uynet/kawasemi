@@ -3,6 +3,7 @@ import Timer from "../timer.js";
 import EntityManager from "../Stage/entityManager.js";
 import Box from '../Collision/box.js';
 import Animator from "./AI/animator.js";
+import EventManager from "../Event/eventmanager.js";
 
 export default class Entity{
   constructor(pos,vel){
@@ -37,8 +38,8 @@ export default class Entity{
     this.acc.y += this.force.y*Timer.GetTimeScale(); 
     this.vel.x += this.acc.x*Timer.GetTimeScale(); 
     this.vel.y += this.acc.y*Timer.GetTimeScale(); 
-    this.pos.x += this.vel.x*Timer.GetTimeScale()+this.acc.x*this.acc.x*Timer.GetTimeScale(); 
-    this.pos.y += this.vel.y*Timer.GetTimeScale()+this.acc.y*this.acc.y*Timer.GetTimeScale(); 
+    this.pos.x += (this.vel.x+this.acc.x*this.acc.x/2)*Timer.GetTimeScale(); 
+    this.pos.y += (this.vel.y+this.acc.y*this.acc.y/2)*Timer.GetTimeScale(); 
     this.acc.y = 0;
     this.acc.x = 0;
   }
@@ -105,6 +106,9 @@ export default class Entity{
       if(Math.floor(this.continuasFrame-Timer.GetTimeScale())!=this.frame) return true;
     }
     return false;
+  }
+  Quake(time,size){
+    EventManager.Quake(time,size);
   }
 }
 

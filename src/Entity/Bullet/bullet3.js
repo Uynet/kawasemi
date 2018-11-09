@@ -10,6 +10,7 @@ import Bullet3AI from '../AI/bullet3AI.js';
 import Horming from '../AI/horming.js';
 import Bullet from './bullet.js';
 import EmitTrail from "../AI/emitTrail.js";
+import BulletHitWall from '../Effect/bulletHitWall.js';
 
 const EMIT_TERM = 2;
 
@@ -30,6 +31,28 @@ export default class Bullet3 extends Bullet{
     this.SetBoxCollider(4,4);
     this.AIList.push(new Bullet3AI(this));
     this.AIList.push(new EmitTrail(this,Bullettrail2,EMIT_TERM));
+    this.addBasic();
     //if(weapon.isHorming) this.AIList.push(new Horming(this));
+  }
+  OnCollision(entity){
+    if(entity.type == ENTITY.ENEMY)this.OnCollisionEnemy(entity);
+    else if(entity.type == ENTITY.WALL)this.OnCollisionWall(entity);
+  }
+  OnCollisionEnemy(enemy){
+    enemy.Damage(-RandomRange(this.atkMin,this.atkMax));
+    this.hp--;
+  }
+  OnCollisionWall(wall){
+    if(wall.isBreakable)wall.Damage(-RandomRange(this.atkMin,this.atkMax));
+    switch(wall.material){
+      case  "wall" : Audio.PlaySE("landing1",-1,2);break;
+      case  "steel": Audio.PlaySE("landing3",4,2);break;
+    }
+    this.hp = 0;
+  }
+  OnDying(){
+    this.Delete();
+    let effect = new BulletHitWall(copy(this.pos));
+    effect.addEntity();
   }
 }

@@ -1,6 +1,6 @@
 import Entity from "../entity.js";
-import BasicEffectPhysics from "../AI/basicEffectPhysics.js";
-import BasicAI from "../AI/basicAI.js";
+import BasicEffectPhysics from "../AI/Basic/basicEffectPhysics.js";
+import BasicAI from "../AI/Basic/basicAI.js";
 import Art from "../../art.js";
 
 //これ継承してる意味ある？？

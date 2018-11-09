@@ -16,13 +16,8 @@ export default class BulletTrail2 extends EFFECT{
     this.BasicEffectInit();
     this.sprite.anchor.set(0.5);
     this.sprite.scale = vec2(Rand(0.5)+1);
-    this.sprite.position = add(this.pos,vec2(8));
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
-    this.addAI(new powSizeAI(this,0.9));
+    this.addAI(new powSizeAI(this,0.6));
     this.addAnimator(false,4,4);
-  }
-  Update(){
-    this.ExecuteAI();
-    this.sprite.position = add(this.pos,vec2(8));
   }
 }

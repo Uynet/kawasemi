@@ -8,7 +8,7 @@ import Entity from '../entity.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
 import GetCoin from '../Effect/getCoin.js';
 import Bright from '../Effect/bright.js';
-import BasicAI from "../AI/basicAI.js";
+import BasicAI from "../AI/Basic/basicAI.js";
 import EmitTrail from "../AI/emitTrail.js";
 
 const START_FLASH_FRAME = 300;

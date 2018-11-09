@@ -28,7 +28,7 @@ import Pool from '../../Stage/pool.js';
 import StagePop from '../../UI/stagePop.js';
 import DistanceField from "../../Stage/distanceField.js";
 import Spilit from "./spilit.js";
-import BasicAI from "../AI/basicAI.js";
+import BasicAI from "../AI/Basic/basicAI.js";
 
 const STATE = {
   WAITING : "WAITING",

@@ -1,11 +1,10 @@
-import BasicExplosionAI from "../../AI/basicExplosionAI.js";
+import BasicExplosionAI from "../../AI/Basic/basicExplosionAI.js";
 import Effect from "../../Effect/effect.js";
 
 export default class Explosion extends Effect{
   constructor(pos,vel){
     super(pos,vel);
     this.isNoSprite = true;
-    this.frame = 0;
     this.GunPowder = [];
     //微妙に左上に寄ってるので中心に
     this.pos = add(this.pos,vec2(8));

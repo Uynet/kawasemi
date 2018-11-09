@@ -9,7 +9,7 @@ import Entity from '../entity.js';
 import BulletHitWall from '../Effect/bulletHitWall.js';
 import Bright from '../Effect/bright.js';
 import BulletTrail from "../Effect/bulletTrail.js";
-import BasicAI from "../AI/basicAI.js";
+import BasicAI from "../AI/Basic/basicAI.js";
 
 let player;
 export default class Spilit extends Entity{

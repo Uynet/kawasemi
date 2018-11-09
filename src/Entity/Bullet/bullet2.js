@@ -53,7 +53,7 @@ export default class Bullet2 extends Bullet{
         //壊せる物体 破壊したら貫通
         if(collider.isBreakable){
           this.Explode();
-          collider.Damage(-RandBET(this.atkMin,this.atkMax));
+          collider.Damage(-RandomRange(this.atkMin,this.atkMax));
           if(collider.hp > 0)return;
           else break;
         }
