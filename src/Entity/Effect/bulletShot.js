@@ -8,7 +8,6 @@ export default class BulletShot extends EFFECT{
     super(pos,vel);
     this.pattern = Art.bulletPattern.shot;
     this.BasicEffectInit();
-    this.addBasic();
     this.addAnimator(false,3,4);
   }
 }

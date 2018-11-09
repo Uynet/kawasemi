@@ -541,7 +541,7 @@ export default class Player extends Entity{
   Dying(){
     //死亡中
     if(this.isDying){//まだ死んでない  
-      if(this.frame - this.frameDead < 100){
+      if(this.frame - this.frameDead < 100*Timer.GetTimeScale()){
         this.isDying = true;
       }else{
         //完全に死んだ
@@ -594,7 +594,7 @@ export default class Player extends Entity{
       }
       //最大HP変更
       this.param.maxHp = 300;
-      UIManager.HP.max = 300;
+      UIManager.HP.SetMaxGaugeValue(300);
       this.Damage(-999);
       Audio.PlaySE("missileHit");
     }

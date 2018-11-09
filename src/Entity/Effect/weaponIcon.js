@@ -16,13 +16,12 @@ export default class WeaponIcon extends EFFECT{
     this.offSetY = 12;
   }
   Update(){
+    this.ExecuteAI();
     this.offSetY*= 0.3;
     this.pos = copy(EntityManager.player.pos);
     this.pos.y -= 12;
     this.pos.y -= this.offSetY;
     this.sprite.texture = this.pattern[this.spid];
-    this.sprite.position = this.pos;
     if(this.frame>30 || this.spid != EntityManager.player.weapon.name)this.Delete();
-    this.frame++;
   }
 }

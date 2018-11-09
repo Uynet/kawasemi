@@ -11,6 +11,7 @@ export default class EFFECT extends Entity{
     this.type = "MOVER";
     this.layer = "ENTITY";
     this.isUpdater = true;
+    this.addBasic();
   }
   BasicEffectInit(){
     this.sprite = Art.CreateSprite(this.pattern[this.spid]);

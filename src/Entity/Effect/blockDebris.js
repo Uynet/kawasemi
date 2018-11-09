@@ -18,7 +18,6 @@ export default class BlockDebris extends EFFECT{
     this.BasicEffectInit();
     this.sprite.position = add(this.pos,vec2(8));
     this.sprite.rotation = Rand(2);
-    this.addBasic(); 
     this.addAnimator(false,4,4);
   }
 }

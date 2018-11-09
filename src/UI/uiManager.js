@@ -14,36 +14,15 @@ import EntityManager from '../Stage/entityManager.js';
 import Game from '../game.js';
 import Timer from "../timer.js";
 
-//BossHP
-const P_BossHP = {
-  x : 4, 
-  y : 180
-};
-//HP
-const P_HP = {
-  x : 8, 
-  y : 0
-};
-//bullet
-const P_BUL = {
-  x : P_HP.x, 
-  y : P_HP.y+16, 
-};
-//score
-const P_SCORE = {
-  x : 208,
-  y : P_HP.y + 8, 
-}
-//message
-const P_MES = {
-  x:8,
-  y:132,
-}
-//Menu
-let P_MENU = {
-  x : 104,
-  y : 48
-}
+const CONTINUEPOINT_STAGENUM = 11;
+const BOSS_STAGENUM = 12;
+
+const POS_BossHP = vec2( 4, 180); //BossHP
+const POS_HP = vec2( 8, 0); //HP
+const POS_BULLET = vec2( POS_HP.x, POS_HP.y+16 ); //bullet
+const POS_SCORE = vec2( 208, POS_HP.y + 8 ); //score
+const POS_MES = vec2(8,132); //message
+let POS_MENU = vec2(104,48); //Menu
 /*UIクラス*/
 export default class UIManager{
   static Init(){
@@ -51,7 +30,7 @@ export default class UIManager{
     this.HP;
     this.BossHP;
     this.bullet;
-    this.wlistk
+    this.wlist;
     this.score;
     this.message;
     this.menu;
@@ -62,52 +41,40 @@ export default class UIManager{
       y : 72
     }
     switch(Game.stage){
-      case 11: UIManager.addUI(new StagePop(p,"^- こんてぃにゅーぽいんと -$" ,));
+      case CONTINUEPOINT_STAGENUM: UIManager.addUI(new StagePop(p,"^- こんてぃにゅーぽいんと -$" ,));
         break;
-      case 12: break;
+      case BOSS_STAGENUM: break;
       default : UIManager.addUI(new StagePop(p,"^-すてーじ "+Game.stage+"-$"));//SCORE
     }
   }
 
-  //call by startbossBattleEvent
+  //call from startbossBattleEvent
   static SetBoss(){
-    UIManager.addUI(new GaugeBossHP(P_BossHP));//HP
+    UIManager.addUI(new GaugeBossHP(POS_BossHP));//HP
   }
 
   /*タイトルでのUI配置に変更*/
   static SetTitle(){
-    let p1 = {
-      x : 96, 
-      y : 64,
-    }
+    let p1 = vec2(96,64);
+    let p2 = vec2(p1.x,p1.y+10);
+    let p3 = vec2(p1.x-8,p2.y+48);
+    let p4 = vec2(172,192);
     UIManager.addUI(new Font(p1,"さいはてどろっぷ","MES"));//SCORE
-    let p2 = {
-      x : p1.x, 
-      y : p1.y+10,
-    }
     UIManager.addUI(new Font(p2,"- ver0.2 -","MES"));//SCORE
-    let p3 = {
-      x : p1.x-8, 
-      y : p2.y+48,
-    }
     UIManager.addUI(new Font(p3,"Press Any Key","MES"));//SCORE
-    let p4 = {
-      x : 172, 
-      y : 192,
-    }
     UIManager.addUI(new Font(p4,"+ 2018 uynet","MES"));//SCORE
   }
   /*ステージ中でのUI配置に変更*/
   static SetStage(){
-    UIManager.addUI(new GaugeHP(P_HP));//HP
-    UIManager.addUI(new GaugeBullet(P_BUL));//BULLET
-    UIManager.addUI(new WeaponList(P_BUL));//WList;
-    UIManager.addUI(new Score(P_SCORE));//SCORE
+    UIManager.addUI(new GaugeHP(POS_HP));//HP
+    UIManager.addUI(new GaugeBullet(POS_BULLET));//BULLET
+    UIManager.addUI(new WeaponList(POS_BULLET));//WList;
+    UIManager.addUI(new Score(POS_SCORE));//SCORE
   }
   //メニューを開く
   static SetMenu(){
     Drawer.SetFilter([Drawer.testFilter]);
-    UIManager.addUI(new Menu(add(P_MENU,VECY(16))));
+    UIManager.addUI(new Menu(add(POS_MENU,VECY(16))));
   }
   //UIをすべて削除
   static Clean(){
@@ -122,7 +89,7 @@ export default class UIManager{
    * sentence : textを改行文字で区切った配列
    */
   static PopMessage(signboard){
-    UIManager.addUI(new Message(P_MES,signboard));//枠
+    UIManager.addUI(new Message(POS_MES,signboard));//枠
   }
 
   //UIをリストに登録
@@ -135,7 +102,7 @@ export default class UIManager{
       case "HP" : this.HP = ui; break;
       case "BULLET" : this.bullet = ui; break;
       case "BossHP" : this.BossHP = ui; break;
-      case "WLIST" : this.wlist = ui; break;
+      case "WEAPON_LIST" : this.wlist = ui; break;
       case "SCORE" : this.score = ui;break;
       case "MES" : this.message = ui;break;
       case "MENU" : this.menu = ui;break;
@@ -168,8 +135,8 @@ export default class UIManager{
   }
   /*UIの更新*/
   static Update(){
-    for(let l of UIManager.UIList){
-      l.Update();
+    for(let UI of UIManager.UIList){
+      UI.Update();
     }
   }
 }

@@ -9,7 +9,6 @@ export default class Fire2 extends EFFECT{
   constructor(pos){
     super(pos,vec0());
     this.Init(pos,vec0());
-    this.addBasic();
     this.addAnimator(false,1,8);
     this.addAI(new PowSizeAI(this,0.82));
   }

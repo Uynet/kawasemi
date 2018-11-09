@@ -19,7 +19,6 @@ export default class Target extends EFFECT{
     this.BasicEffectInit();
     /*パラメータ*/
     this.enemy = enemy;//ロックしているenemyの情報
-    this.addBasic();
   }
 
   Update(){

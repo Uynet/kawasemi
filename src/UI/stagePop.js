@@ -18,7 +18,6 @@ export default class StagePop extends UI{
       this.interval = interval;
     }
     /*基本情報*/
-    this.isAlive = true;//消えたらfalse
     this.type = "PUSH";
     this.isMultiple = true;
     pos.x -= (text.length)*8/2;
@@ -27,21 +26,19 @@ export default class StagePop extends UI{
     //文字
     this.i = 0;
     this.text = text;
-    this.d = this.text.length;
+    this.strLength = this.text.length;
     this.textObject = new Font(pos,"","MES");
-    //スプライト
-    this.spid = 0;
     this.container = new PIXI.Container();
     //text
     this.container.addChild(this.textObject.container);
-    this.diff = 0;//文字のズレ
+    this.strDiff = 0;//文字のズレ
   }
 
   //1文字ずつ出ていって消える
   Update(){
     if(this.frame%this.interval == 0){
-      this.diff = 4;
-      this.i = Math.min(this.i+1,this.d-1);
+      this.strDiff = 4;
+      this.i = Math.min(this.i+1,this.strLength-1);
       let str = this.text[this.i];
       if(str != " " && str != "$"){
         //Audio.PlaySE("empty",-0.5);
@@ -49,14 +46,14 @@ export default class StagePop extends UI{
       }
       this.textObject.PushText(str);
     }
-    this.diff *= 0.3;
+    this.strDiff *= 0.3;
     let p = copy(this.pos);
-    p.y += this.diff;
+    p.y += this.strDiff;
 
     this.textObject.SetPos(p);
 
     if(this.frame>this.text.length * this.interval) this.container.alpha -= 0.01;
-    if(this.frame>300)UIManager.removeUI(this);
+    if(this.frame>300)this.Delete();
     this.frame ++;
   }
 }

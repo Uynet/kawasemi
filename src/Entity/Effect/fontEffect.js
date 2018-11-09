@@ -21,17 +21,19 @@ export default class FontEffect extends EFFECT{
     for(let i = 0;i<this.strLength;i++){
       let spid = this.str[i] + "";//str型にすること
       let texture;
+      //popが使われているのは現状弾薬不足エフェクトのみ?
       switch(this.fonttype){
         case "player" : texture = Art.font[spid + "r"]; break;
-        case "enemy" : texture = Art.font[spid]; break;
+        case "enemy" :texture = Art.font[spid]; break;
+        case "pop": texture = Art.font[spid]; break;
         default : console.warn(this.fonttype); 
       }
+
       let fontSprite =  Art.CreateSprite(texture);
       fontSprite.position.x = i*6;
       this.container.addChild(fontSprite);
     }
     this.gravity = 0.2;
-    this.addBasic();
   }
 
 

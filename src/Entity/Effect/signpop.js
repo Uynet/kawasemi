@@ -12,7 +12,6 @@ export default class Signpop extends EFFECT{
     /*スプライト*/
     this.pattern = Art.bulletPattern.signpop;
     this.BasicEffectInit();
-    this.addBasic();
     this.addAnimator(true,4,4);
   }
 }

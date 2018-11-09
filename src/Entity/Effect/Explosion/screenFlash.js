@@ -8,7 +8,6 @@ export default class ScreenFlash extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
     this.Init(pos,vel);
-    this.addBasic();
   }
   Init(pos,vel){
     /*基本情報*/
