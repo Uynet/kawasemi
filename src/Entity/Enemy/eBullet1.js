@@ -11,26 +11,13 @@ export default class eBullet1 extends Enemy{
   constructor(pos,vel){
     super(pos,vel);
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX,new Box(pos,8,8));//衝突判定の形状
-    this.frame = 0;
+    this.SetBoxCollider(8,8);
     this.type = "MOVER"
     /*スプライト*/
     this.pattern = Art.enemyPattern.eBullet1;
-    this.spid = 0; //spriteIndex 現在のスプライト番号
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);//現在表示中のスプライト
+    this.sprite = Art.CreateSprite(this.pattern[this.spid]);//現在表示中のスプライト
     this.sprite.position = this.pos;
-    /*パラメータ*/
-    this.param = Param.eBullet1;
-    //this.addAI(new moveReflect(this));
-    this.atkMin = this.param.atkMin;
-    this.atkMax = this.param.atkMax;
-    //this.hp = ENEMY3.HP;
-    //this.gravity = ENEMY3.GRAVITY;
-    /*床の親子関係*/
-    this.floor = {
-      on : false,
-      under : null
-    }
+    this.SetParam(Param.eBullet1);
     this.addAnimator(true,2,4);
   }
   Collision(){
@@ -41,16 +28,9 @@ export default class eBullet1 extends Enemy{
       }
     }
   }
-
   Update(){
     this.ExecuteAI();
-    this.Physics();
     this.Collision();
-    this.Hurt();
-    this.frame++;
-    //observer
-    if(this.hp<=0 || this.frame > 300){
-      this.Delete();
-    }
+    if(this.frame > 300) this.Delete();
   }
 }

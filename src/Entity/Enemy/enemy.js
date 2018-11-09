@@ -79,7 +79,7 @@ export default class Enemy extends Entity{
     if(c.isHit && c.n.y != 1){
       //ダメージ
       let damage = RandomRange(this.atkMin,this.atkMax);
-      if(!player.isInvincible)player.Damage(-damage);
+      if(!player.isInvincible)player.Damage(damage);
     }
     //プレイヤーに衝突応答
   }
