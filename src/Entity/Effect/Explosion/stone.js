@@ -8,7 +8,6 @@ import BasicAI from "../../AI/basicAI.js";
 export default class Stone extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
-    this.addAI(new BasicAI(this));
   }
   Init(pos,vel){
     //constructor
@@ -48,8 +47,8 @@ export default class Stone extends EFFECT{
   }
   Update(){
     this.ExecuteAI();
-    this.vel = mul(this.vel,vec2(0.9)); //減速
-    this.pos.y += 0.3;//重力
+    this.vel = mul(this.vel,vec2(0.8)); //減速
+    this.pos.y += 0.3;//重力??
     //this.pos = Util.advec(this.pos,this.vel);
     this.sprite.alpha -= 0.02;
 

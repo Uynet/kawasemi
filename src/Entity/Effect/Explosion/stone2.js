@@ -1,13 +1,11 @@
 import EFFECT from '../effect.js';
 import Art from '../../../art.js';
-import BasicAI from "../../AI/basicAI.js";
 
 //火花2
 export default class Stone2 extends EFFECT{
   constructor(pos,vel){
     super(pos,vel);
     this.Init(pos,vel);
-    this.addAI(new BasicAI(this));
   }
   Init(pos,vel){
     //constructor
@@ -32,7 +30,6 @@ export default class Stone2 extends EFFECT{
     this.sprite.scale.set(this.size/16);
     let d = lerp(0.88,0.96,((14-this.size)/12));
     this.vel = mul(this.vel,vec2(d)); //減速
-    this.pos = add(this.pos,this.vel);
     this.size *= 0.95;
     this.sprite.rotation += Math.PI/16;
     if(this.frame >30) this.Delete();

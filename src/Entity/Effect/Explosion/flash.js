@@ -7,7 +7,6 @@ import Pool from '../../../Stage/pool.js';
 export default class Flash extends EFFECT{
   constructor(pos){
     super(pos,vec0());
-    this.addBasic();
   }
   Init(pos,vel){
     this.pos = pos;

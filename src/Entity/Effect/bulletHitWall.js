@@ -8,7 +8,6 @@ export default class BulletHitWall extends EFFECT{
     super(pos,vec0());
     this.pattern = Art.bulletPattern.hitWall;
     this.BasicEffectInit();
-    this.addBasic();
     this.addAnimator(false,3,4);
   }
 }

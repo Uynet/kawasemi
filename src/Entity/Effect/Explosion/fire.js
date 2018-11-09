@@ -15,7 +15,6 @@ export default class Fire extends EFFECT{
     texture.drawCircle(0,0,this.size);
     texture.endFill();
     this.sprite = texture;
-    this.addBasic();
   }
   Init(pos,vel){
     /*基本情報*/

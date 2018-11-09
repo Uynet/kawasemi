@@ -7,43 +7,36 @@ import Font from './font.js';
 import Param from '../param.js';
 
 //score Icon
-const P_OFFSET = {
-  x : 0,
-  y : 16,
-}
+const POS_OFFSET = vec2( 0, 16);
 
 export default class WeaponList extends UI{
   constructor(pos){
     super(pos);
     /*基本情報*/
-    this.isAlive = true;//消えたらfalse
-    this.type = "WLIST"; 
+    this.type = "WEAPON_LIST"; 
     this.isMultiple = true;
     this.pos = pos;
     this.pattern = Art.UIPattern.bullet.pop;
     //スプライト
-    this.spid = 0;
     this.container = new PIXI.Container();
-    //icon
     this.Push();
   }
   Push(){
-    let s;
-    let wList = Object.keys(Param.player.havingWeaponList);
-    wList = wList.filter((arr)=>{
+    let sprite;
+    let weaponList = Object.keys(Param.player.havingWeaponList);
+    weaponList = weaponList.filter((arr)=>{
       return Param.player.havingWeaponList[arr];
     })
+    return weaponList;
     //渡されるposはbulletゲージの位置なので少しずらす　
-    this.pos = add(this.pos,P_OFFSET);
+    this.pos = add(this.pos,POS_OFFSET);
     //アイコンリストをぷっしゅ　
-    let p = copy(this.pos); 
-    for(let w of wList){
-      s = Art.SpriteFactory(this.pattern[w.name]);
-      s.position = p;
-      this.container.addChild(s);
-      p.x += 8;
+    let pos = copy(this.pos); 
+    for(let smallWeaponIcon of weaponList){
+      sprite = Art.CreateSprite(this.pattern[smallWeaponIcon.name]);
+      sprite.position = pos;
+      this.container.addChild(sprite);
+      pos.x += 8;
     }
-  }
-  Update(){
   }
 }

@@ -10,7 +10,6 @@ export default class Bright extends EFFECT{
     this.pattern = Art.bulletPattern.coin.bright;
     this.BasicEffectInit();
     this.sprite.alpha = 0.7;
-    this.addBasic();
     this.addAnimator(false,3,4);
   }
 }

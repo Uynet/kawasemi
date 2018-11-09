@@ -6,7 +6,7 @@ import Input from '../input.js';
 import Font from './font.js';
 
 //score Icon
-const P_ICON = {
+const POS_ICON = {
   x : 36, 
   y : -4, 
 };
@@ -20,25 +20,24 @@ export default class Score extends UI{
     this.isMultiple = true;
     this.pos = pos;
     //child
-    this.icon = {pos:add(pos,P_ICON)};
-    this.amount = new Font(pos,"    0","SCORE");//数字
+    this.icon = {pos:add(pos,POS_ICON)};
+    this.value = new Font(pos,"    0","SCORE");//数字
     //スプライト
-    this.spid = 0;
     this.container = new PIXI.Container();
     let s;
     //icon
     s = Art.SpriteFactory(Art.UIPattern.score.icon);
     s.position = this.icon.pos; 
     this.container.addChild(s);
-    //amount
-    this.container.addChild(this.amount.container);
+    //value
+    this.container.addChild(this.value.container);
   }
   SetScore(score){
-    this.amount.SetFont(score);
+    this.value.SetFont(score);
   }
   Update(){
-    //this.amount.container.position = this.pos
-    this.amount.Update();
+    //this.value.container.position = this.pos
+    this.value.Update();
     /*nothing to do*/
   }
 }
