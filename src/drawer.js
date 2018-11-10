@@ -2,8 +2,9 @@ import Timer from './timer.js';
 import EntityManager from './Stage/entityManager.js';
 import Input from './input.js';
 
-let PIXI_WIDTH = 800; let PIXI_HEIGHT = 640;
-let size = 1; 
+const PIXI_WIDTH = 800;
+const PIXI_HEIGHT = 640;
+const DEFAULT_MAGNIFICATION = 3;
 let centerX,centerY,toX,toY;
 export default class Drawer{
 
@@ -45,8 +46,8 @@ export default class Drawer{
 
 
     /*拡大率*/
-    this.magnification = 3;
-    this.backGroundContainer.scale.set(3);
+    this.magnification = DEFAULT_MAGNIFICATION;
+    this.backGroundContainer.scale.set(DEFAULT_MAGNIFICATION);
     this.backContainer.scale.set(this.magnification);
     this.entityContainer.scale.set(this.magnification);
     this.UIContainer.scale.set(this.magnification);
@@ -178,10 +179,10 @@ export default class Drawer{
   }
   static SetMagnification(magnification){
     this.magnification = magnification;
-    this.backGroundContainer.scale.set(3);
+    this.backGroundContainer.scale.set(DEFAULT_MAGNIFICATION);
     this.backContainer.scale.set(this.magnification);
     this.entityContainer.scale.set(this.magnification);
-    this.UIContainer.scale.set(this.magnification);
+    //this.UIContainer.scale.set(this.magnification);
     this.foreContainer.scale.set(this.magnification + 1);
     this.foreEntityContainer.scale.set(this.magnification);
     this.filterContainer.scale.set(this.magnification + 1);
@@ -195,5 +196,11 @@ export default class Drawer{
   }
   static SetFilter(filters){
     Drawer.Stage.filters = filters;
+  }
+  static GetGameScreenSize(){
+    return vec2(
+      PIXI_WIDTH / DEFAULT_MAGNIFICATION,
+      PIXI_HEIGHT / DEFAULT_MAGNIFICATION
+    )
   }
 }
