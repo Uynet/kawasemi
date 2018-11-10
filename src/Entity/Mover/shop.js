@@ -1,22 +1,14 @@
-import Entity from '../entity.js';
 import Art from '../../art.js';
-import Audio from '../../audio.js';
-import Collider from '../../Collision/collider.js';
-import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
 import Input from '../../input.js';
-import EventManager from '../../Event/eventmanager.js';
-import QuakeEvent from '../../Event/quakeEvent.js';
 import Param from '../../param.js';
 import Game from '../../game.js';
 import BackEntity from '../backEntity.js';
 import UIManager from '../../UI/uiManager.js';
-import Message from '../../UI/message.js';
 import Signpop from '../Effect/signpop.js';
 import StagePop from '../../UI/stagePop.js';
-import Font from '../../UI/font.js';
-import GaugeBullet from '../../UI/gaugeBullet.js';
 import Bright from "../Effect/bright.js";
+import BasicAI from "../AI/Basic/basicAI.js";
 
 export default class Shop extends BackEntity{
   constructor(pos,message){
@@ -39,70 +31,42 @@ export default class Shop extends BackEntity{
     this.page = 0;//現在のページ番号
     this.isRead = false;//会話中かどうか
     /*スプライト*/
-    this.tex = Art.wallPattern.shop;//テクスチャ
-    this.sprite = Art.SpriteFactory(this.tex);
+    this.pattern = Art.wallPattern.shop;
+    this.sprite = Art.CreateSprite(this.pattern[0]);
     this.sprite.position = pos;
     //pop
     let p = copy(this.pos);
     p.y -= 16;
     this.popup = new Signpop(p);
     EntityManager.addEntity(this.popup);
-
+    //AI
+    this.addAI(new BasicAI(this));
   }
   Read(){
-    this.isRead = !this.isRead;
-    let weaponName = this.message[0];
-    if(this.isRead){
-      Game.scene.PushSubState("MES");
-
-      //this.messageの武器を手に入れる
-      //もう持っていたら発生しない
-      if(!Param.player.havingWeaponList[weaponName]){
-        let text = this.ToJap(weaponName)+"をてにいれた\ncキーでチェンジできるよ↓"; 
-        UIManager.PopMessage(text,"POP");
-        //テスト
-        Param.player.havingWeaponList[weaponName] = true;
-        UIManager.bullet.Push(weaponName);
-      }else{
-        let text = "きりかえはc だよ↓"; 
-        UIManager.PopMessage(text,"POP");
-      }
-    }
-    else{
-      Game.scene.PopSubState();
-      UIManager.CloseMessage();//枠を閉じる
-
-      let p = {
-        x : 64,
-        y : 96
-      }
-      UIManager.addUI(new StagePop(p,"-" + this.ToJap(weaponName) +"をてにいれた "));//SCORE
+    this.isRead = true;
+    Game.scene.PushSubState("MES");
+    UIManager.EnterShop();
+  }
+  isCanRead(){
+    let player = EntityManager.player;
+    return (DIST(player.pos,this.pos) <  16 && player.isAlive);
+  }
+  Bright(){
+    if(this.Modulo(8)){
+      let trail = new Bright(add(this.pos,Rand2D(16)),Rand2D(0.5));
+      trail.addEntity();
     }
   }
-  //武器名を日本語にするだけ
-  ToJap(weaponName){
-    switch(weaponName){
-      case "missile" : return "ミサイル";
-      case "laser" : return "レーザー";
-      case "weapon4" : return "weapon4";
-      case "weapon5" : return "weapon5";
-      default : console.warn("Error ToJapWeaponName");
-    }
-  }
-
   Update(){
+    this.ExecuteAI();
     //page : 現在のページ番号
     let player = EntityManager.player;
-    if(this.frame%8 == 0){
-      let trail = new Bright(add(this.pos,Rand2D(16)),Rand2D(0.5));
-      EntityManager.addEntity(trail);
-    }
-    if(DIST(player.pos,this.pos) <  16 && player.isAlive){
+    //this.Bright();
+    if(this.isCanRead()){
         player.isCanRead = true;
       if( Input.isKeyClick(KEY.X)){
         this.Read();
       }
     }
-    this.frame++;
   }
 }

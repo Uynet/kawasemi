@@ -34,7 +34,7 @@ export default class GaugeHP extends Gauge{
     this.icon = {pos:add(pos,POS_ICON)};
     this.value = new Font(add(pos,POS_VALUE)," " + this.maxGaugeValue,"HP");//数字
     /*スプライト*/
-    this.container = new PIXI.Container();
+    this.sprite = new PIXI.Container();
     this.InitChildren();
   }
 }

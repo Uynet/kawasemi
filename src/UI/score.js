@@ -15,28 +15,25 @@ export default class Score extends UI{
   constructor(pos){
     super(pos);
     /*基本情報*/
-    this.isAlive = true;//消えたらfalse
     this.type = "SCORE"; 
-    this.isMultiple = true;
-    this.pos = pos;
     //child
     this.icon = {pos:add(pos,POS_ICON)};
     this.value = new Font(pos,"    0","SCORE");//数字
     //スプライト
-    this.container = new PIXI.Container();
+    this.sprite = new PIXI.Container();
     let s;
     //icon
-    s = Art.SpriteFactory(Art.UIPattern.score.icon);
+    s = Art.CreateSprite(Art.UIPattern.score.icon);
     s.position = this.icon.pos; 
-    this.container.addChild(s);
+    this.sprite.addChild(s);
     //value
-    this.container.addChild(this.value.container);
+    this.sprite.addChild(this.value.sprite);
   }
   SetScore(score){
     this.value.SetFont(score);
   }
   Update(){
-    //this.value.container.position = this.pos
+    //this.value.sprite.position = this.pos
     this.value.Update();
     /*nothing to do*/
   }

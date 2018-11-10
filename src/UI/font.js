@@ -14,11 +14,10 @@ export default class Font extends UI{
     this.type = type;
     this.name = "font";
     this.isAlive = true;//消えたらfalse
-    this.isMultiple = true;
     this.frame = 0;//stagepopでしか使ってない
     /*スプライト*/
     this.str = str; //0~9
-    this.container = new PIXI.Container();
+    this.sprite = new PIXI.Container();
     //0埋めをするかしないか
     switch(this.type){
       case "MENU" :
@@ -60,14 +59,14 @@ export default class Font extends UI{
     }
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
-        this.container.children[i].texture = Art.font[spid];
+        this.sprite.children[i].texture = Art.font[spid];
     };
   };
   Move(pos){
     /*TODO コンテナ*/
-    for(let i=0;i<this.container.children.length;i++){
-      this.container.children[i].position = pos;
-      this.container.children[i].position.x += 10 * i;
+    for(let i=0;i<this.sprite.children.length;i++){
+      this.sprite.children[i].position = pos;
+      this.sprite.children[i].position.x += 10 * i;
     }
   }
 
@@ -78,11 +77,11 @@ export default class Font extends UI{
     let pos = copy(this.pos);
     pos.x += this.d * 9;
     sprite.position = pos;
-    this.container.addChild(sprite);
+    this.sprite.addChild(sprite);
     this.d++;
   }
   ChangeText(text,pos){
-    this.container.children = [];
+    this.sprite.children = [];
     this.str = text; //0~9
     this.d = this.str.length;//桁数
     this.SetPos(copy(pos));
@@ -107,7 +106,7 @@ export default class Font extends UI{
       }
       sprite = new PIXI.Sprite(tex);
       sprite.position = pos;
-      this.container.addChild(sprite);
+      this.sprite.addChild(sprite);
       pos.x += space;
     };
   }

@@ -42,12 +42,12 @@ export default class GaugeBullet extends Gauge{
     this.weaponList = {
       pos:add(pos,POS_weaponList),
       list: null,
-      container : new PIXI.Container(),
+      sprite : new PIXI.Container(),
     };
 
     /*スプライト*/
     this.weaponListPattern = Art.UIPattern.bullet.pop;
-    this.container = new PIXI.Container();
+    this.sprite = new PIXI.Container();
     this.InitChildren();
 
 
@@ -65,7 +65,7 @@ export default class GaugeBullet extends Gauge{
     for(let w of this.weaponList.list){
       s = Art.CreateSprite(Art.UIPattern.bullet.pop[w]);
       s.position = p;
-      this.container.addChild(s);
+      this.sprite.addChild(s);
       p.x += 8;
     }
   }
@@ -80,14 +80,14 @@ export default class GaugeBullet extends Gauge{
     rect.endFill();
     this.barSprite = rect;
     this.barSprite.position = this.bar.pos; 
-    this.container.addChild(this.barSprite);
+    this.sprite.addChild(this.barSprite);
     //icon
     let equip = Param.player.equip;
     this.iconSprite = Art.CreateSprite(Art.UIPattern.bullet.icon[equip]);
     this.iconSprite.position = this.icon.pos; 
-    this.container.addChild(this.iconSprite);
+    this.sprite.addChild(this.iconSprite);
     //value
-    this.container.addChild(this.value.container);
+    this.sprite.addChild(this.value.sprite);
     this.InitWeaponList();
   }
   Push(weaponName){
@@ -95,7 +95,7 @@ export default class GaugeBullet extends Gauge{
     let s = Art.CreateSprite(Art.UIPattern.bullet.pop[weaponName]);
     p.x += (this.weaponList.list.length-1)*8;
     s.position = p;
-    this.container.addChild(s);
+    this.sprite.addChild(s);
     this.weaponList.list.push(weaponName);
     //samall weapon list
   }

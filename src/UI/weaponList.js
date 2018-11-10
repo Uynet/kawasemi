@@ -14,11 +14,9 @@ export default class WeaponList extends UI{
     super(pos);
     /*基本情報*/
     this.type = "WEAPON_LIST"; 
-    this.isMultiple = true;
-    this.pos = pos;
     this.pattern = Art.UIPattern.bullet.pop;
     //スプライト
-    this.container = new PIXI.Container();
+    this.sprite = new PIXI.Container();
     this.Push();
   }
   Push(){
@@ -35,7 +33,7 @@ export default class WeaponList extends UI{
     for(let smallWeaponIcon of weaponList){
       sprite = Art.CreateSprite(this.pattern[smallWeaponIcon.name]);
       sprite.position = pos;
-      this.container.addChild(sprite);
+      this.sprite.addChild(sprite);
       pos.x += 8;
     }
   }

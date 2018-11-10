@@ -39,8 +39,8 @@ export default class Message extends UI{
     //枠スプライト追加
     let p = copy(pos);
     this.outer.sprite.position = p;
-    this.container = new PIXI.Container();
-    this.container.addChild(this.outer.sprite);
+    this.sprite = new PIXI.Container();
+    this.sprite.addChild(this.outer.sprite);
     p = add(p,P_TEXT);
 
     this.OpeningSelection = false;
@@ -66,7 +66,7 @@ export default class Message extends UI{
     }
     //これをすると先頭以外の要素が消える
     //つまり枠スプライトを残し他の文字を消す
-    this.container.children.length = 1;//は？
+    this.sprite.children.length = 1;//は？
   }
   //テキストを表示する
   RenderText(){
@@ -79,14 +79,14 @@ export default class Message extends UI{
     p = add(p,P_TEXT);
     for(let i = 0;i<sent.length;i++){
       let f = new Font(p,sent[i],"MES")
-        f.container.scale.x = 1;
-        f.container.scale.y = 1;
+        f.sprite.scale.x = 1;
+        f.sprite.scale.y = 1;
       sentenceSprite.push(f);//テキスト 
       p.y += COLUMN;
     }
     //各行各文字のスプライトを追加
     for(let l of sentenceSprite){
-      this.container.addChild(l.container);
+      this.sprite.addChild(l.sprite);
     }
   }
   EmitEvent(){
@@ -178,22 +178,22 @@ export default class Message extends UI{
           if(dir == "UP") this.pointer--;
           if(dir == "DOWN") this.pointer++;
           this.pointer = clamp(this.pointer,0,this.item.length-1);
-          this.font.container.position.y = 0 + COLUMN*this.pointer;
+          this.font.sprite.position.y = 0 + COLUMN*this.pointer;
         },
       }
     };
     this.Selector.Init();
 
     let f;
-    this.Selector.container = new PIXI.Container();
-    this.Selector.container.addChild(this.Selector.cusor.font.container);
+    this.Selector.sprite = new PIXI.Container();
+    this.Selector.sprite.addChild(this.Selector.cusor.font.sprite);
     p.x += 16;
     for(let item of this.Selector.cusor.item){
       f = new Font(p,item,"MES");
-      this.Selector.container.addChild(f.container);
+      this.Selector.sprite.addChild(f.sprite);
       p.y += COLUMN;
     }
-    this.container.addChild(this.Selector.container);
+    this.sprite.addChild(this.Selector.sprite);
   }
   //選択肢決定
   Select(){

@@ -19,7 +19,6 @@ export default class StagePop extends UI{
     }
     /*基本情報*/
     this.type = "PUSH";
-    this.isMultiple = true;
     pos.x -= (text.length)*8/2;
     this.pos = pos;
     this.frame = 0;
@@ -28,9 +27,9 @@ export default class StagePop extends UI{
     this.text = text;
     this.strLength = this.text.length;
     this.textObject = new Font(pos,"","MES");
-    this.container = new PIXI.Container();
+    this.sprite = new PIXI.Container();
     //text
-    this.container.addChild(this.textObject.container);
+    this.sprite.addChild(this.textObject.sprite);
     this.strDiff = 0;//文字のズレ
   }
 
@@ -52,7 +51,7 @@ export default class StagePop extends UI{
 
     this.textObject.SetPos(p);
 
-    if(this.frame>this.text.length * this.interval) this.container.alpha -= 0.01;
+    if(this.frame>this.text.length * this.interval) this.sprite.alpha -= 0.01;
     if(this.frame>300)this.Delete();
     this.frame ++;
   }
