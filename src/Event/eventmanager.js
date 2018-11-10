@@ -10,4 +10,7 @@ export default class EventManager{
   static Quake(size,time){
     this.PushEvent(new QuakeEvent(size,time));
   }
+  static Remove(event){
+    this.eventList.remove(event);
+  }
 }

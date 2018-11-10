@@ -92,7 +92,7 @@ export default class Collision{
     if(l.n.y == 1) e1.vel.y =0.0001;//0にすると天井に張り付いてしまう
     //while(Collision.on(e1,e2).isHit){
       e1.pos.x += l.n.x*l.depth;
-      e1.pos.y += l.n.y*(l.depth-0.0001);//0にすると地上での着地判定がトグルしてしまう
+      e1.pos.y += l.n.y*(l.depth+0);//0にすると地上での着地判定がトグルしてしまう
     //}
     /*note : now isHit == false*/
   }

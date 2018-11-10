@@ -11,12 +11,12 @@ const MAX_STEP_COUNT = 30;
 
 //Laser
 export default class Bullet2 extends Bullet{
-  constructor(pos,arg,isMarchNext,stepCount){
+  constructor(pos,arg,stepCount){
     super(pos,fromPolar(arg,vec0()));
     this.Init(pos,arg);
     this.AIList.push(new Bullet2AI(this));
     this.addAnimator(false,2,8);
-    this.March(isMarchNext,stepCount);
+    this.March(stepCount);
   }
   Init(pos,arg){
     /*基本情報*/
@@ -37,7 +37,7 @@ export default class Bullet2 extends Bullet{
     let r = reflect(i,collisionInfo.n);
     this.arg = argument(r);
   }
-  March(isMarchNext,stepCount){
+  March(stepCount){
     //壁にぶつかってなければレーザー光線を進める
     if(stepCount > MAX_STEP_COUNT) return;
     this.stepCount = stepCount;
@@ -46,6 +46,7 @@ export default class Bullet2 extends Bullet{
      * break ... 貫通
      * return .. 停止
      * */
+     label:
     for(let collider of EntityManager.colliderList){
       if(collider.name == "player")continue;
       let c = Collision.on(this,collider);
@@ -64,9 +65,12 @@ export default class Bullet2 extends Bullet{
         return; //壁にぶつかったので停止
       }
     }
+    this.GenerateNextLaser(stepCount);
+  }
+  GenerateNextLaser(stepCount){
     //再帰呼び出し
     let p = add(this.pos,fromPolar(this.arg,16));
-    let bullet = new Bullet2(p,this.arg,isMarchNext,stepCount+1);
+    let bullet = new Bullet2(p,this.arg,stepCount+1);
     bullet.addEntity();
   }
 }

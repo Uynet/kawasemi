@@ -34,12 +34,13 @@ export default class Entity{
   /*common*/
   Physics(){};
   BasicPhysics(){
-    this.acc.x += this.force.x*Timer.GetTimeScale(); 
-    this.acc.y += this.force.y*Timer.GetTimeScale(); 
-    this.vel.x += this.acc.x*Timer.GetTimeScale(); 
-    this.vel.y += this.acc.y*Timer.GetTimeScale(); 
-    this.pos.x += (this.vel.x+this.acc.x*this.acc.x/2)*Timer.GetTimeScale(); 
-    this.pos.y += (this.vel.y+this.acc.y*this.acc.y/2)*Timer.GetTimeScale(); 
+    let t = Timer.GetTimeScale(); 
+    this.acc.x += this.force.x*t;
+    this.acc.y += this.force.y*t;
+    this.vel.x += this.acc.x*t;
+    this.vel.y += this.acc.y*t;
+    this.pos.x += (this.vel.x*t + this.acc.x/2*t*t);
+    this.pos.y += (this.vel.y*t + this.acc.y/2*t*t);
     this.acc.y = 0;
     this.acc.x = 0;
   }
