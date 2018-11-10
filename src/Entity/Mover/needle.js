@@ -45,7 +45,7 @@ export default class Needle extends Wall{
       let v = player.vel.x * player.vel.x + player.vel.y * player.vel.y;
       if(v >1){
         let damage = Math.floor(v/2) + 1;
-        EntityManager.player.Damage(-damage);
+        EntityManager.player.Damage(damage);
       }
       //反動
       //player.vel.y = -6 * c.n.y;

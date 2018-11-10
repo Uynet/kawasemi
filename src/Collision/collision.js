@@ -87,7 +87,7 @@ export default class Collision{
     //if(e1.e === undefined)e1.e = 0;
     /*速度*/
     let l = Collision.on(e1,e2);
-    if(l.n.x != 0) e1.vel.x = 0;
+    //if(l.n.x != 0) e1.vel.x = 0;
     if(l.n.y == -1) e1.vel.y =0;
     if(l.n.y == 1) e1.vel.y =0.0001;//0にすると天井に張り付いてしまう
     //while(Collision.on(e1,e2).isHit){

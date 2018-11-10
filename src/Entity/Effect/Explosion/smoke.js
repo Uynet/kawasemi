@@ -9,6 +9,7 @@ export default class Smoke extends EFFECT{
   constructor(pos,vel,size){
     super(pos,vel);
     this.pattern = Art.bulletPattern.explosion.smoke;
+    this.layer = "BACK";
     this.sprite = new PIXI.Sprite(this.pattern[this.spid]);
     this.addAnimator(false,20,8);
     pow = Ease.pow(0.8);

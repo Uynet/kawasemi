@@ -3,13 +3,12 @@ import BasicEffectPhysics from "../AI/Basic/basicEffectPhysics.js";
 import BasicAI from "../AI/Basic/basicAI.js";
 import Art from "../../art.js";
 
-//これ継承してる意味ある？？
 export default class EFFECT extends Entity{
   constructor(pos,vel){
     if(!vel) vel = vec0();
     super(pos,vel);
     this.type = "MOVER";
-    this.layer = "BACK";
+    this.layer = "ENTITY";
     this.isUpdater = true;
     this.addBasic();
   }

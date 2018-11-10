@@ -1,4 +1,5 @@
 import Enemy from './enemy.js';
+import Bright from "../Effect/bright.js";
 import Drawer from "../../drawer.js";
 import Pool from "../../Stage/pool.js";
 import EventManager from '../../Event/eventmanager.js';
@@ -40,12 +41,12 @@ export default class Enemy1 extends Enemy{
     /*基本情報*/
     this.name = "enemy1";
     this.BasicEnemyInit();
-    this.size = 96;
+    this.size = 64;
     this.collider = new Collider(SHAPE.BOX,new Box(pos,this.size,this.size));
     /*スプライト*/
     this.sprite.scale.set(this.size/16);
-    this.sprite.scale.x *= 0.5;
-    this.sprite.position.x += this.size*(1-this.sprite.scale.x/2);
+    //this.sprite.scale.x *= 0.5;
+    //this.sprite.position.x += this.size*(1-this.sprite.scale.x/2);
     /*パラメータ*/
     //this.addAI(new Enemy1AI(this));
     this.SetParam(Param.enemy1);
@@ -74,6 +75,14 @@ export default class Enemy1 extends Enemy{
   Explosion(){
     let p = copy(this.pos);
     p.y += this.size;
+    p.x += this.size/2;
+    for(let i = 0;i<2;i++){
+      EntityManager.addEntity(new Explosion1(p,vec2(22*(i-0.5),-8)));
+    }
+  }
+  BigExplosion(){
+    let p = copy(this.pos);
+    p.y += this.size;
     for(let i = 0;i<4;i++){
       EntityManager.addEntity(new Explosion1(p,vec2(0,-24+Rand(8))));
       p.x += this.size/4;
@@ -86,7 +95,6 @@ export default class Enemy1 extends Enemy{
     }
   }
   FirstDrop(){
-    this.SetSize(64);
     Audio.PlaySE("bomb",0,0.5);
     //this.PopEnemy(12);
     this.state = "POP";
@@ -98,7 +106,7 @@ export default class Enemy1 extends Enemy{
     p.y += this.size;
     let exp5 = new Explosion5(p);
     exp5.addEntity();
-    this.Explosion()
+    this.BigExplosion()
 
     EventManager.PushEvent(e);
   }
@@ -108,8 +116,8 @@ export default class Enemy1 extends Enemy{
   }
   Jump(){
     this.Quake(10,0.99);
-    this.vel.y = -0.2;
-    this.acc.y = -2.3;
+    this.vel.y = -3.8;
+    this.acc.y = -4.3;
     this.state = "JUMP";
     let p = add(this.pos,vec2(-20,90));
     //  Audio.PlaySE("enemy5Shot");
@@ -142,7 +150,7 @@ export default class Enemy1 extends Enemy{
 
     if(this.hp/this.maxHP<0.5) this.enemyPop = 5;
     if(this.hp/this.maxHP<0.2) this.enemyPop = 7;
-    this.PopEnemy(this.enemyPop);
+    if(Rand(1)<0)this.PopEnemy(this.enemyPop);
 
     let p = copy(this.pos);
     p.y += this.size;
@@ -150,6 +158,7 @@ export default class Enemy1 extends Enemy{
     this.Quake(10,0.97);
     this.Quake(40,0.97,true);
     Audio.PlaySE("missileHit",2);
+    this.Explosion();
     //EntityManager.addEntity(new Shockwave(p));
   }
   Jumping(){
@@ -228,13 +237,32 @@ export default class Enemy1 extends Enemy{
     this.ExecuteAI();
     if(this.state == "INIT"){
       let player = EntityManager.player;
-      this.pos.x = player.pos.x + 48;
       this.pos.y = -100;
       if(player.pos.x>300)this.Drop();
+      this.pos.x = player.pos.x + 96;
+    }
+    if(this.state == "DROP"){
+      let player = EntityManager.player;
+      this.pos.y = Math.min(this.pos.y,321+this.size);
+      let p = copy(this.pos);
+      p.x += this.size/2-8;
+      for(let i=0;i<2;i++){
+        if(i==1)EntityManager.addEntity(new Explosion3(p));
+        let bright = new Bright(p,Rand2D(2));
+        bright.sprite.scale.set(2);
+        bright.addEntity();
+        p.y-=3;
+      }
     }
     if(this.state == "JUMP"){
       this.acc.x = (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 0.010 : -0.010;
       this.vel.x = Math.max(-1,Math.min(this.vel.x,1));
+      if(this.vel.y>0){
+        this.vel.y *= 1+Math.abs(this.vel.y)/20;
+        this.vel.y = Math.min(this.vel.y,12);
+      }else{
+        this.vel.y *= 0.95;
+      }
     }
     this.Collision();
     this.ClampPos();
