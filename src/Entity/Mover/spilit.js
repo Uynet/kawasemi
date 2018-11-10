@@ -30,6 +30,7 @@ export default class Spilit extends Entity{
   }
   SpilitPhisics(){
     player = EntityManager.player;
+    this.arg = player.arg;
     let repel = {
       x : -(player.pos.x - this.pos.x),
       y : -(player.pos.y - this.pos.y),
@@ -49,13 +50,26 @@ export default class Spilit extends Entity{
       y:Math.cos(this.frame/13),
     }
     f = scala(2,f);
+    this.pos = sub(this.pos,this.force);
+
     this.pos = add(this.pos,f);
     this.pos = add(this.pos,repel);
     this.pos = add(this.pos,absorp);
-    this.pos = add(this.pos,fromPolar(player.arg,8));
+    this.pos = add(this.pos,fromPolar(this.arg,8));
+    this.force = scala(0.8,this.force);
   }
   shot(player){
     player.weapon.shot(player);
+  }
+  OnShot(){
+    let f;
+    f=fromPolar(this.arg , 4);
+    switch(player.weapon.name){
+      case "missile" : f=fromPolar(this.arg , 10);break;
+      case "laser" : f=fromPolar(this.arg , 9);break;
+      case "normal" : f=fromPolar(this.arg , 7);break;
+    }
+    this.AddForce(f);
   }
   Update(){
     this.ExecuteAI();

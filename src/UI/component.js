@@ -9,25 +9,32 @@ import Drawer from "../drawer.js";
 const gameSreensize = Drawer.GetGameScreenSize();
 
 export default class Component extends UI{
-  constructor(style){
-    super(style);
-    this.pos = vec0();
+  constructor(componentTree,style,parentComponent){
+    super(vec0());
+    this.parentComponent=parentComponent;
     this.scale = vec2(1);
     this.originalWidth = 96;
     this.originalHeight = 32;
-    this.ParceStyle(style);
+    this.size = copy(parentComponent.size);
+    this.style = style;
+
     this.sprite = Art.CreateSprite(Art.UIPattern.message.frame); 
+
+    this.ParceStyle(style);
+    this.TraverseComponentTree(componentTree);
+
     this.sprite.position = this.pos;
-    this.sprite.scale.x = this.scale.x;
-    this.sprite.scale.y = this.scale.y;
   }
-  SetFullScreen(){
-    this.sprite.scale.x = gameSreensize.x/this.originalWidth;
-    this.sprite.scale.y = gameSreensize.y/this.originalHeight;
+  TraverseComponentTree(componentTree){
+    Object.keys(componentTree).forEach(component=>{
+      const childTree = componentTree[component];
+      this.addChild(new Component(childTree,this.style,this));
+    })
   }
   SetSize(size){
-    this.scale.x = size.x/this.originalWidth;
-    this.scale.y = size.y/this.originalHeight;
+    this.size = size;
+    this.scale.x = size.x/this.originalWidth/this.parentComponent.scale.x;
+    this.scale.y = size.y/this.originalHeight/this.parentComponent.scale.y;
   }
   ParceStyle(style){
     for(let property in style){
@@ -39,6 +46,10 @@ export default class Component extends UI{
   Padding(padding){
     this.pos.x += padding.x;
     this.pos.y += padding.y;
-    this.SetSize(sub(gameSreensize,scala(2,padding)));
+    this.SetSize(vec2(
+      this.size.x - 2*padding.x,
+      this.size.y - 2*padding.y
+      )
+    )
   }
 }

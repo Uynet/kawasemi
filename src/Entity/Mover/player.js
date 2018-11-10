@@ -631,6 +631,14 @@ export default class Player extends Entity{
     this.offset *= 0.99;
     this.Animation();//状態から画像を更新
     /*reset*/
+    //this.PixelizeSpritePosition();
+  }
+  PixelizeSpritePosition(){
+    let pos = vec2(
+      this.pos.x-this.pos.x%3,
+      this.pos.y-this.pos.y%3
+    )
+    this.sprite.position = pos;
   }
 }
 

@@ -28,6 +28,7 @@ export default class Target extends EFFECT{
     //シュッてなるやつ
     this.sprite.scale = vec2(1.5 + 1.5/(this.continuasFrame+1)); //ゼロ除算回避
     this.ofsetPos = add(this.pos , vec2(this.ofset));
-    this.sprite.position = this.ofsetPos;
+    this.sprite.position.x = this.ofsetPos.x - this.ofsetPos.x%2;
+    this.sprite.position.y = this.ofsetPos.y - this.ofsetPos.y%2;
   }
 }

@@ -23,9 +23,11 @@ export default class Score extends UI{
     this.sprite = new PIXI.Container();
     let s;
     //icon
-    s = Art.CreateSprite(Art.UIPattern.score.icon);
-    s.position = this.icon.pos; 
-    this.sprite.addChild(s);
+    //s = Art.CreateSprite(Art.UIPattern.score.icon);
+    this.pattern = Art.enemyPattern.coin;
+    this.iconSprite = Art.CreateSprite(this.pattern[0]);
+    this.iconSprite.position = this.icon.pos; 
+    this.sprite.addChild(this.iconSprite);
     //value
     this.sprite.addChild(this.value.sprite);
   }
@@ -35,6 +37,9 @@ export default class Score extends UI{
   Update(){
     //this.value.sprite.position = this.pos
     this.value.Update();
+    this.iconSprite.texture = this.pattern[Math.floor(this.frame/4)%12];
+    //this.iconSprite.texture = this.pattern[Math.floor(Math.sin(this.frame/12)*6)+6];
+    this.frame++;
     /*nothing to do*/
   }
 }
