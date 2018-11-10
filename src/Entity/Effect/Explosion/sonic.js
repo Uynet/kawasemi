@@ -3,6 +3,9 @@ import Art from '../../../art.js';
 import EntityManager from '../../../Stage/entityManager.js';
 import Pool from '../../../Stage/pool.js';
 import Drawer from "../../../drawer.js";
+import Ease from "../../../Math/ease.js";
+
+const pow = Ease.pow(0.8);
 
 export default class Sonic extends EFFECT{
   constructor(pos){
@@ -34,6 +37,6 @@ export default class Sonic extends EFFECT{
   Update(){
     this.ExecuteAI();
     this.sprite.scale = add(this.sprite.scale,vec2(4/(this.frame+2)*2));
-    this.sprite.alpha *= 0.8;
+    this.sprite.alpha = 0.3*pow(this.continuasFrame);
   }
 }
