@@ -24,7 +24,6 @@ export default class gaugeBossHP extends UI{
     /*基本情報*/
     this.isAlive = true;//消えたらfalse
     this.type = "BossHP"; 
-    this.isMultiple = true;
     this.pos = pos;
     /*child*/
     this.outer = {pos:copy(pos)};
@@ -33,7 +32,7 @@ export default class gaugeBossHP extends UI{
     let maxHP = Param.enemy1.hp;//
     /*スプライト*/
     this.spid = 0;
-    this.container = new PIXI.Container();
+    this.sprite = new PIXI.Container();
     this.pattern = Art.UIPattern.HP;//
     let s;
     this.scale = 4;
@@ -43,19 +42,19 @@ export default class gaugeBossHP extends UI{
     s = Art.SpriteFactory(this.pattern.outer);//
     s.position = this.outer.pos; 
     s.scale.x = this.scale*0.97;
-    this.container.addChild(s);
+    this.sprite.addChild(s);
     //bar
     s = Art.SpriteFactory(this.pattern.bar);
     s.position = this.bar.pos; 
     s.position.x += 0
     s.scale.x = this.scale;
-    this.container.addChild(s);
+    this.sprite.addChild(s);
     //icon
     s = Art.SpriteFactory(this.pattern.icon);
     s.position = this.icon.pos; 
-    //this.container.addChild(s);
+    //this.sprite.addChild(s);
     //amount
-    this.container.addChild(this.amount.container);
+    this.sprite.addChild(this.amount.container);
     /*パラメータ*/
     this.max = maxHP;
     /*state*/
@@ -67,7 +66,7 @@ export default class gaugeBossHP extends UI{
   SetBar(hp){
     if(this.isInitialized){
       //barの長さを更新
-      this.container.children[1].scale.x = this.scale * hp/this.max;
+      this.sprite.children[1].scale.x = this.scale * hp/this.max;
       //HP数字の更新
       this.amount.SetFont(hp);
     }
@@ -75,11 +74,11 @@ export default class gaugeBossHP extends UI{
   Update(){
     if(!this.isInitialized){
       Audio.PlaySE("empty");
-      this.container.children[1].scale.x = this.scale * this.initHP/this.max;
+      this.sprite.children[1].scale.x = this.scale * this.initHP/this.max;
       this.initHP+=this.max/50;
       this.amount.SetFont(this.initHP);
       if(this.initHP >= this.max)this.isInitialized = true;
     }
-    this.container.position.x = this.pos.x;
+    this.sprite.position.x = this.pos.x;
   }
 }

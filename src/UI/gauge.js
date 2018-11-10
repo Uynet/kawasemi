@@ -9,14 +9,12 @@ import Param from '../param.js';
 export default class Gauge extends UI{
   constructor(pos){
     super(pos);
-    this.isMultiple = true;
-    this.pos = pos;
   } 
   CreateChild(childName){
     const pattern = Art.UIPattern[this.name];
     let sprite = Art.CreateSprite(pattern[childName]);
     sprite.position = this[childName].pos; 
-    this.container.addChild(sprite);
+    this.sprite.addChild(sprite);
   }
   InitChildren(){
     let sprite;
@@ -29,11 +27,11 @@ export default class Gauge extends UI{
     sprite = rect;
     sprite.position = this.bar.pos; 
     this.barSprite = sprite;
-    this.container.addChild(sprite);
+    this.sprite.addChild(sprite);
     //icon
     this.CreateChild("icon");
     //value
-    this.container.addChild(this.value.container);
+    this.sprite.addChild(this.value.sprite);
   }
   SetMaxGaugeValue(value){
     this.maxGaugeValue = value;
@@ -45,6 +43,6 @@ export default class Gauge extends UI{
     this.value.SetFont(value);
   }
   Update(){
-    this.container.position.x = this.pos.x;
+    this.sprite.position.x = this.pos.x;
   }
 }

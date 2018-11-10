@@ -5,13 +5,15 @@ export default class UI{
     this.pos = pos;
     this.sprite;
     this.type;//enum
-    this.isMultiple = false;
     this.isUpdater = true;
   }
   Delete(){
     UIManager.removeUI(this);
   }
   Update(){
+  }
+  addSprite(sprite){
+    this.container.addChild(sprite);
   }
 }
 

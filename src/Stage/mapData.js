@@ -172,7 +172,8 @@ export default class MapData{
           case 164 :
             //直せ
             message = this.objData[i].properties;
-            obj = new Signboard(p,message,"shop");
+            //obj = new Signboard(p,message,"shop");
+            obj = new Shop(p,message);
             break;
           case 169 : obj = new Enemy1(p); break;
           case 170 : obj = new Enemy2(p); break;

@@ -16,7 +16,6 @@ export default class Menu extends UI{
     super(pos); 
     /*基本情報*/
     this.type = "MENU";
-    this.isMultiple = true;
     let p = copy(pos);
     this.title = new Font({x:p.x,y:p.y + -1 * COLUMN},"-PAUSE-","MENU"),
     this.index = 0;
@@ -28,10 +27,10 @@ export default class Menu extends UI{
     ];
     this.Select(this.index);
     /*スプライト*/
-    this.container = new PIXI.Container;
-    this.container.addChild(this.title.container);
+    this.sprite = new PIXI.Container;
+    this.sprite.addChild(this.title.sprite);
     for(let l of this.items){
-      this.container.addChild(l.container);
+      this.sprite.addChild(l.sprite);
     }
   }
   Select(i){

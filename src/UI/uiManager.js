@@ -12,6 +12,7 @@ import Menu from './menu.js';
 import Score from './score.js';
 import EntityManager from '../Stage/entityManager.js';
 import Game from '../game.js';
+import Shop from "./shop.js";
 import Timer from "../timer.js";
 
 const CONTINUEPOINT_STAGENUM = 11;
@@ -91,6 +92,9 @@ export default class UIManager{
   static PopMessage(signboard){
     UIManager.addUI(new Message(POS_MES,signboard));//枠
   }
+  static EnterShop(){
+    UIManager.addUI(new Shop());//枠
+  }
 
   //UIをリストに登録
   static addUI(ui){
@@ -106,15 +110,12 @@ export default class UIManager{
       case "SCORE" : this.score = ui;break;
       case "MES" : this.message = ui;break;
       case "MENU" : this.menu = ui;break;
+      case "SHOP" : this.shop = ui;break;
       case "PUSH" : /*noth*/break;
       default : console.warn(ui);
     }
     //スプライトの追加
-    if(ui.isMultiple){
-      //複スプライト
-        Drawer.addContainer(ui.container,layer);
-    }else{
-      //単スプライト
+    if(!ui.isNoSprite){
       Drawer.addContainer(ui.sprite,layer);
     }
   }
@@ -125,13 +126,7 @@ export default class UIManager{
     if(!layer)layer = "UI";
     
     this.UIList.remove(ui)
-    if(ui.isMultiple){
-      //複数スプライトを持つオブジェクト
-        Drawer.removeContainer(ui.container,layer);
-    }else{
-      //単スプライト
-      Drawer.removeContainer(ui.sprite,layer);
-    }
+    Drawer.removeContainer(ui.sprite,layer);
   }
   /*UIの更新*/
   static Update(){
