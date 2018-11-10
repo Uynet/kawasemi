@@ -108,8 +108,8 @@ export default class Entity{
     }
     return false;
   }
-  Quake(time,size){
-    EventManager.Quake(time,size);
+  Quake(time,size,isRot){
+    EventManager.Quake(time,size,isRot);
   }
 }
 

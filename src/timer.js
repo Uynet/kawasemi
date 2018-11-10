@@ -20,7 +20,7 @@ export default class Timer{
       if(unko<0) this.timeScale += unko*0.12;
     else this.timeScale += unko*0.3;
     //this.timeScale = timeScale;
-    let pitch = (1-(1-this.timeScale)/5);
-    Audio.SetPitch(pitch);
+    //let pitch = (1-(1-this.timeScale)/5);
+    //Audio.SetPitch(pitch);
   }
 }

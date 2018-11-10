@@ -127,6 +127,7 @@ export default class Audio{
       this.LoadBGM('stage5');
       this.LoadBGM('stage6');
       this.LoadBGM('boss');
+      this.LoadBGM('boss3');
       this.LoadSE('jump1');
       this.LoadSE('jump2');//空中ジャンプ
       this.LoadSE('coin1');

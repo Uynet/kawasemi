@@ -7,8 +7,8 @@ export default class EventManager{
   static PushEvent(event){
     this.eventList.push(event);
   }
-  static Quake(size,time){
-    this.PushEvent(new QuakeEvent(size,time));
+  static Quake(size,time,isRot){
+    this.PushEvent(new QuakeEvent(size,time,isRot));
   }
   static Remove(event){
     this.eventList.remove(event);

@@ -9,7 +9,7 @@ export default class EFFECT extends Entity{
     if(!vel) vel = vec0();
     super(pos,vel);
     this.type = "MOVER";
-    this.layer = "ENTITY";
+    this.layer = "BACK";
     this.isUpdater = true;
     this.addBasic();
   }
