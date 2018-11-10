@@ -29,7 +29,7 @@ export default class Message extends UI{
     /*child*/
     this.type = "MES";
     this.outer = {
-      sprite : Art.SpriteFactory(Art.UIPattern.message.frame), 
+      sprite : Art.CreateSprite(Art.UIPattern.message.frame), 
     }
     //文字の長さに応じて枠を調整
     this.outer.sprite.scale.x *= 2.6;

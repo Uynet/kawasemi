@@ -54,7 +54,7 @@ export default class gaugeBossHP extends UI{
     s.position = this.icon.pos; 
     //this.sprite.addChild(s);
     //amount
-    this.sprite.addChild(this.amount.container);
+    this.sprite.addChild(this.amount.sprite);
     /*パラメータ*/
     this.max = maxHP;
     /*state*/

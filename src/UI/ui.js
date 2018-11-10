@@ -12,8 +12,8 @@ export default class UI{
   }
   Update(){
   }
-  addSprite(sprite){
-    this.container.addChild(sprite);
+  addChild(ui){
+    this.sprite.addChild(ui.sprite);
   }
 }
 
