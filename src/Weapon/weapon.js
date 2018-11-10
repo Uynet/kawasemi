@@ -1,4 +1,5 @@
 import Bullet from '../Entity/Bullet/bullet.js';
+import UIManager from "../UI/uiManager.js";
 import EntityManager from '../Stage/entityManager.js';
 import Target from '../Entity/Effect/target.js';
 import Lasersight from '../Entity/Effect/lasersight.js';
@@ -37,6 +38,8 @@ export default class Weapon{
   shot(player){
     //最後に撃ってからframeまで停止
     if((player.frame - player.frameShot) > this.agi){
+      UIManager.bullet.Shot();
+      player.spilit.OnShot();
       //shot時刻
       player.frameShot = player.frame;
       //playerの弾薬が残っていなければ打てない

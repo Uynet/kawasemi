@@ -24,10 +24,28 @@ const POS_BAR = {
   x : -3.5, 
   y : -7, 
 };
+class Shot{
+  constructor(ui){
+    function* shot(){
+      let timer = 3;
+      while(timer > 0){
+        ui.sprite.position.x = ui.pos.x-timer*timer/2;
+        timer--;
+        yield;
+      }
+      yield;
+    } 
+    this.func = shot();
+  }
+  Do(){
+    return this.func.next();
+  }
+} 
 
 export default class GaugeBullet extends Gauge{
   constructor(pos){
     super(pos);
+    this.eventList = [];
     /*基本情報*/
     this.type = "BULLET"; 
     this.name = "bullet";
@@ -102,5 +120,17 @@ export default class GaugeBullet extends Gauge{
   ChangeWeapon(name){
     //アイコンを武器に変更
     this.iconSprite.texture = Art.UIPattern.bullet.icon[name];
+  }
+  Shot(){
+    this.eventList.push(new Shot(this));
+  }
+  Update(){
+    this.sprite.position.x = this.pos.x;
+    //elast
+    for(let e of this.eventList){
+      if(e.Do().done){
+        this.eventList.remove(e);
+      }
+    }
   }
 }

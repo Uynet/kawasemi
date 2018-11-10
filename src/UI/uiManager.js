@@ -13,7 +13,6 @@ import Score from './score.js';
 import EntityManager from '../Stage/entityManager.js';
 import Game from '../game.js';
 import Shop from "./shop.js";
-import Timer from "../timer.js";
 
 const CONTINUEPOINT_STAGENUM = 11;
 const BOSS_STAGENUM = 12;
