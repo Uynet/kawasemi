@@ -49,7 +49,7 @@ export default class Weapon2 extends Weapon{
     let bullet;
     //再帰的に生成
     p = add(player.spilit.pos,fromPolar(arg,16));
-    bullet = new Bullet2(p,arg,true,0);
+    bullet = new Bullet2(p,arg,0);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */
     Audio.PlaySE("laserShot",0.7);

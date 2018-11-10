@@ -99,10 +99,9 @@ export default class Game{
 
   static Run(){
     requestAnimationFrame(Game.Run);
-    for (let l of EventManager.eventList){
-      if(l.Do().done){
-        let i = EventManager.eventList.indexOf(l);
-        EventManager.eventList.splice(i,1);
+    for (let event of EventManager.eventList){
+      if(event.Do().done){
+        EventManager.Remove(event);
       }
     }
     switch(Game.scene.state){
@@ -124,6 +123,7 @@ export default class Game{
         break;
       default :
         console.warn("unknown state");
+        return;
     }
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);
