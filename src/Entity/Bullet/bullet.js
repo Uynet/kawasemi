@@ -21,7 +21,7 @@ export default class Bullet extends Entity{
   }
   Explode(type){
     let explosion; 
-    if(type == 1)explosion = new Explosion1(copy(this.pos));
+    if(type == 1)explosion = new Explosion1(copy(this.pos),fromPolar(this.arg,this.vi));
     Audio.PlaySE("missileHit",1);
     explosion.addEntity();
   }

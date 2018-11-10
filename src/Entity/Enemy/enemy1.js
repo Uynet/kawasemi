@@ -1,13 +1,15 @@
 import Enemy from './enemy.js';
 import Drawer from "../../drawer.js";
+import Pool from "../../Stage/pool.js";
 import EventManager from '../../Event/eventmanager.js';
-import QuakeEvent from '../../Event/quakeEvent.js';
 import Enemy2 from './enemy2.js';
 import Enemy4 from './enemy4.js';
 import Explosion1 from "../Effect/Explosion/explosion1.js";
 import Explosion2 from "../Effect/Explosion/explosion2.js";
 import Explosion3 from "../Effect/Explosion/explosion3.js";
 import Explosion4 from "../Effect/Explosion/explosion4.js";
+import Explosion5 from "../Effect/Explosion/explosion5.js";
+import BrockDebris from "../Effect/blockDebris.js";
 import Shockwave from "../Effect/Explosion/shockwave.js";
 import Coin from "../Mover/coin.js";
 import Audio from "../../audio.js";
@@ -42,12 +44,16 @@ export default class Enemy1 extends Enemy{
     this.collider = new Collider(SHAPE.BOX,new Box(pos,this.size,this.size));
     /*スプライト*/
     this.sprite.scale.set(this.size/16);
+    this.sprite.scale.x *= 0.5;
+    this.sprite.position.x += this.size*(1-this.sprite.scale.x/2);
     /*パラメータ*/
     //this.addAI(new Enemy1AI(this));
     this.SetParam(Param.enemy1);
     this.maxHP = this.hp;
-    /*フラグ*/
+   /*フラグ*/
     this.state = State.INIT;
+    this.pos.y = -2000;
+    this.vel.y = 12;
     
     this.enemyPop = 3;
     this.addAnimator(true,6,4);
@@ -60,25 +66,48 @@ export default class Enemy1 extends Enemy{
     for(let i = 0;i<enemyPop;i++){
       let e = new Enemy4(add(p,Rand2D(enemyPop)));
       //ちょっと特殊
-      e.AIList[0].dist = 1000;
+      e.AIList[2].dist = 1000;
      // e.coin = Dice(2)+1;
       EntityManager.addEntity(e);
     }
   }
-  Initing(){
-    this.PopEnemy(12);
+  Explosion(){
+    let p = copy(this.pos);
+    p.y += this.size;
+    for(let i = 0;i<4;i++){
+      EntityManager.addEntity(new Explosion1(p,vec2(0,-24+Rand(8))));
+      p.x += this.size/4;
+    }
+      p.x = 32;
+    for(let i = 0;i<20;i++){
+     EntityManager.addEntity(new Explosion3(p));
+     // EntityManager.addEntity(new Explosion1(p,vec2(0,-24+Rand(8))));
+      p.x += 16;
+    }
+  }
+  FirstDrop(){
+    this.SetSize(64);
+    Audio.PlaySE("bomb",0,0.5);
+    //this.PopEnemy(12);
     this.state = "POP";
     this.Landing();
     let e = new StartBossBattleEvent("boss");
-    EventManager.PushEvent(new QuakeEvent(40,0.97));
-    EventManager.PushEvent(e);
+    this.Quake(99000000,0.99,true);
     let p = copy(this.pos);
-    p.y += this.size;
     p.x += this.size/2;
-  //  EntityManager.addEntity(new Explosion4(p));
+    p.y += this.size;
+    let exp5 = new Explosion5(p);
+    exp5.addEntity();
+    this.Explosion()
+
+    EventManager.PushEvent(e);
+  }
+  Drop(){
+    this.pos.y = 0;
+    this.state = "DROP";
   }
   Jump(){
-    EventManager.PushEvent(new QuakeEvent(10,0.99));
+    this.Quake(10,0.99);
     this.vel.y = -0.2;
     this.acc.y = -2.3;
     this.state = "JUMP";
@@ -92,7 +121,7 @@ export default class Enemy1 extends Enemy{
   }
   Poping(){
     Audio.PlaySE("landing3",1);
-    this.vel.y = Math.min(0,this.vel.y * -0.3);
+    this.vel.y = clamp(this.vel.y * -0.3,-1,0);
     this.vel.x *= 0.4;
     if(this.vel.y>-0.05 ){
       this.state = "WAIT";
@@ -118,14 +147,10 @@ export default class Enemy1 extends Enemy{
     let p = copy(this.pos);
     p.y += this.size;
     this.acc.x = 0;
-    EventManager.PushEvent(new QuakeEvent(10,0.97));
-    EventManager.PushEvent(new QuakeEvent(40,0.97,true));
+    this.Quake(10,0.97);
+    this.Quake(40,0.97,true);
     Audio.PlaySE("missileHit",2);
-    EntityManager.addEntity(new Shockwave(p));
-    for(let i = 0;i<4;i++){
-      EntityManager.addEntity(new Explosion1(p));
-      p.x += this.size/4;
-    }
+    //EntityManager.addEntity(new Shockwave(p));
   }
   Jumping(){
     //着地
@@ -146,7 +171,7 @@ export default class Enemy1 extends Enemy{
             case "WAIT" : this.Waiting();break;
             case "JUMP" : this.Jumping();break;
             case "POP" : this.Poping();break;
-            case "INIT" : this.Initing();break;//この名前何
+            case "DROP" : this.FirstDrop();break;
           }
         }
         /*押し出し*/
@@ -194,13 +219,19 @@ export default class Enemy1 extends Enemy{
   }
   OnDying(){
     this.Die();
-    EventManager.PushEvent(new QuakeEvent(30,0.99));
+    this.Quake(30,0.99);
     Audio.PlaySE("stageChange",1,0.8);
     Audio.PlaySE("bomb",1,0.6);
     Audio.StopBGM();
   };
   Update(){
     this.ExecuteAI();
+    if(this.state == "INIT"){
+      let player = EntityManager.player;
+      this.pos.x = player.pos.x + 48;
+      this.pos.y = -100;
+      if(player.pos.x>300)this.Drop();
+    }
     if(this.state == "JUMP"){
       this.acc.x = (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 0.010 : -0.010;
       this.vel.x = Math.max(-1,Math.min(this.vel.x,1));

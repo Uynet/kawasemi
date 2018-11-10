@@ -28,9 +28,9 @@ export default class Explosion1 extends Explosion{
     //smoke
     for(let i = 0;i<this.particleNum.smoke;i++){
       let arg = Rand(Math.PI);
-      let v = fromPolar(arg,Rand(3));
+      let v = fromPolar(arg,Rand(6));
       v = add(v,this.vel);
-      let smoke = Pool.Get("smoke",copy(this.pos),v,2+Rand(1));
+      let smoke = Pool.Get("smoke",copy(this.pos),v,2+Rand(1.6));
       if(smoke!== false)this.Pack(smoke);
     }
     for(let i =0;i<this.particleNum.fire;i++){

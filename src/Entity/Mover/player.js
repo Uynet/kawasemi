@@ -187,9 +187,9 @@ export default class Player extends Entity{
       //this.AirJump();
     }
     if(Input.isKeyInput(KEY.C)){
-      Timer.SetTimeScale(0.08);
+      //Timer.SetTimeScale(0.08);
     }else{
-      Timer.SetTimeScale(1.0);
+      //Timer.SetTimeScale(1.0);
     }
     /*右向き*/
     if(Input.isKeyInput(KEY.RIGHT)){
@@ -485,8 +485,8 @@ export default class Player extends Entity{
      this.pos.x = clamp(this.pos.x , 0 , 16*Drawer.mapSize.width-8);
      this.pos.y = Math.max(this.pos.y,0);//↑端
      if(this.pos.y > Drawer.mapSize.height * 16+8)this.Damage(999);//下端
-    this.force.x *= 0.9;
-    this.force.y *= 0.9;
+    this.force.x *= Math.pow(0.9,Timer.GetTimeScale());//遅い
+    this.force.y *= Math.pow(0.9,Timer.GetTimeScale());//遅い
     //this.CollisionByDistance();
   }
   CollisionByDistance(){
@@ -515,7 +515,7 @@ export default class Player extends Entity{
       this.scPos = p;
       this.offset = 0;
     }
-      Drawer.SetMagnification(3-po(this.offset)/2);
+      //Drawer.SetMagnification(3-po(this.offset)/2);
   }
 
   OnDying(){
