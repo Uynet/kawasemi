@@ -83,6 +83,13 @@ export default class Coin extends Entity{
     else this.sprite.alpha = 1;
   }
   Update(){
+    if(this.Modulo(8)){
+      let p = copy(this.pos);
+      let d = Rand2D(5);
+      p = add(p,d);
+      let trail = new Bright(p,vec0());
+      EntityManager.addEntity(trail);
+    }
     this.ExecuteAI();
     //Collision
     if(this.coltype!="none")this.Collision();
