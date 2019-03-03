@@ -34,7 +34,7 @@ export default class Game{
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(Game.debug) Game.stage = 11
+    if(Game.debug) Game.stage = 6
     else Game.stage = 1;
     Game.continuePoint = 1;//コンティニュー地点
 
@@ -48,23 +48,63 @@ export default class Game{
   }
 
   static async Load(){
+    Game.debug=false;
     Game.debug=true;//デバッグモード
-    //Game.debug=false;
 
     await Art.LoadTexture();
     Audio.Load();
 
-    const po = ()=>{
+    let b = document.getElementById("screen");
+
+    //٩(ˊᗜˋ*｡)
+    let iterator = Game.LoadingAnimation(0);
+    (function onLoading(){
+      requestAnimationFrame(onLoading);
+      let t = iterator.next().value;
+      if(t%16==0)cl(t/16);
+    })();
+    //(｡*ˊ~ˋ)۶
+
+    if(!Game.debug) setTimeout(po,70000);//直せ
+    else {
+      //iterator.end();
       Game.Init();
       let a = document.getElementById("po");
       a.parentNode.removeChild(a);
     }
-    let b = document.getElementById("screen");
 
-    if(!Game.debug) setTimeout(po,2500);//直せ
-    else po();
 
     Input.returnScroll();//スクロール解除
+  }
+  //CSS Animation 
+  static * LoadingAnimation(localTimer){
+    let loadingText = document.getElementById("loading");
+    console.log(loadingText);
+    let frame = [
+      "._ro__(｡*ˊ~ˋ)/★_______",
+      "__nO__C｡*ˊ-ˋɔ۶=====☆__",
+      "__Noω_(｡*ˊ~ˋ)۶=-==-=★_",
+      "__NoW_(｡*ˊ~ˋ)۶---_~-☆_",
+      "__Now_(｡*ˊ-ˋ)۶_~___・x",
+      "__Now_(｡*ˊ-ˋ)۶_______✦",
+      "__Now_(｡*ˊ~ˋ)و_______+",
+      "__Now_c>⌄< っ________.",
+      "___★_\\(ˊ˘ˋ*｡)_Io____.",
+      "_☆===٩Cˊᗜˋ*｡ɔ_[Ooo____",
+      "★=--_٩(ˊᗜˋ*｡)_LoOOIho_",
+      "x-_~_٩(ˊᗜˋ*｡)_Loαdｪη9_",
+      "+____٩(ˊᗜˋ*｡)_Loading_",
+      ".____٩(ˊᗜˋ*｡)_Loading_",
+      "_____٩(ˊᗜˋ*｡)_Loading_",
+      "______.c >⌄<っ_oading_",
+      ];
+      let frameCount = 0;
+    while(true){
+      if(localTimer%6==0){
+        loadingText.innerHTML = frame[(frameCount++)%16];
+      }
+      yield localTimer++;
+    }
   }
 
   //タイトル画面中の処理
