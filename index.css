@@ -10,7 +10,7 @@
   transform: translate3d(0,0,0);
   background: #211022;
   transition: all 300ms 0s ease;
-  animation: open 5s;ease-in-out .5s;
+  animation: open 10s;ease-in-out .15s;
   animation-fill-mode: forwards;
 }
 @keyframes open{
@@ -47,24 +47,29 @@
 .box {
   z-index:4;
   content:"in";
+  font-family:Times New Roman;
+  font-family:Georgia;
+  font-family:Tunga;
+  font-family:monospace;
   width: 100vw;
-  height: 0x;
+  height: 48px;
   background: #ac3765;
   position:absolute;
   top:50%;
   left:0px;
   animation-fill-mode: forwards;
-  animation: spread 10s;
+  animation: spread 1.5s;
 }
 .loading {
+  font-size:18pt;
   z-index:5;
   position:relative;
   top:5px;
   color: #ccc;
-  opacity:0;
+  opacity:1;
   animation:
   fadein 0.9s forwards,
-  pulse 0.3s ease 1s infinite alternate;
+  /*pulse 0.3s ease 1s infinite alternate;*/
 }
 @keyframes fadein{
   50% {
@@ -86,10 +91,8 @@
     0% {
       height:0px;
     } 
-    6% { 
-      height:32px; 
-    } 
     100% { 
+      height:48px;
     } 
 }
 @keyframes rotate {
