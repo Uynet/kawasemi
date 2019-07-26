@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "http-server",
     "start": "http-server",
+    "build-css": "sass css/style.scss css/style.css",
     "test": "ls"
   },
   "repository": {

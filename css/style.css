@@ -32,9 +32,9 @@ canvas {
 .fa-twitter {
   font-family: "Rounded Mplus 1c"; }
 
-.loading:before{
- /*content: "(✿╹◡╹)Loading...";*/
-}
+.loading:before {
+  size: 30px;
+  content: "(✿╹◡╹)Loading..."; }
 
 a:visited {
   color: #3737ac; }

@@ -53,7 +53,7 @@ h3#sign::before{
   content: "";
   width: 32px;
   height: 32px;
-  background: url("./src/resource/sign.png") top left no-repeat;
+  background: url("../src/resource/sign.png") top left no-repeat;
 }
 h3#icon::before{
   position: absolute;
@@ -61,13 +61,13 @@ h3#icon::before{
   content: "";
   width: 32px;
   height: 32px;
-  background: url("./src/resource/favicon.png") top left no-repeat;
+  background: url("../src/resource/favicon.png") top left no-repeat;
 }
 .textbox {
   margin : 20px ;
   padding : 20px ;
   background: #7f92b5;
-  background-image: url("./src/resource/WebBG.png");
+  background-image: url("../src/resource/WebBG.png");
   font-family: "Rounded Mplus 1c";
 }
 .text {

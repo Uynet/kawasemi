@@ -1,5 +1,6 @@
 /bundle.js
 /webpack.config.js
+*.map
 doc.md
 # Logs
 logs

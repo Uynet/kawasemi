@@ -576,7 +576,7 @@ export default class Player extends Entity{
     this.arg += d*0.2;
   }
   Debug(){
-    if(this.maxHP != 300 && Input.isKeyClick(KEY.K) && this.isAlive && Game.debug){
+    if(this.maxHP != 300 && Input.isKeyClick(KEY.K) && this.isAlive && isDebugMode){
       let p = {
         x : 64,
         y : 96
@@ -601,7 +601,7 @@ export default class Player extends Entity{
 
   Update(){
     this.ExecuteAI();
-    if(Game.debug)this.Debug();
+    if(isDebugMode)this.Debug();
     //player関連のイベントを裁く
       
     if(this.isAlive){

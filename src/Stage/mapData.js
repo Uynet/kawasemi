@@ -173,7 +173,8 @@ export default class MapData{
             //直せ
             message = this.objData[i].properties;
             //obj = new Signboard(p,message,"shop");
-            obj = new Shop(p,message);
+            obj = new Signboard(p,message,"signboard");
+            //obj = new Shop(p,message);
             break;
           case 169 : obj = new Enemy1(p); break;
           case 170 : obj = new Enemy2(p); break;
@@ -181,7 +182,7 @@ export default class MapData{
           case 172 : obj = new Enemy4(p); break;
           case 173 : obj = new Enemy5(p); break;
           case 174 : obj = new Enemy6(p); break;
-          case 185 : obj = new TutorialObject(p); break;
+          case 185 : if(isDebugMode)obj = new TutorialObject(p); break;
       }
         EntityManager.addEntity(obj);
     }

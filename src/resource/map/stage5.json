@@ -112,26 +112,6 @@
                  "width":16,
                  "x":384,
                  "y":80
-                }, 
-                {
-                 "gid":162,
-                 "height":16,
-                 "id":643,
-                 "name":"",
-                 "properties":
-                    {
-                     " 1":"\u3042\u3044\u3046\u3048\u304a\u30a2\u30a4\u30a6\u30a8\u30aa\nABCabc012!?[\u2193\u2191]"
-                    },
-                 "propertytypes":
-                    {
-                     " 1":"string"
-                    },
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":16,
-                 "x":256,
-                 "y":512
                 }],
          "opacity":0.959999978542328,
          "type":"objectgroup",

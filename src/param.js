@@ -1,5 +1,15 @@
+import Game from "./game.js";
 //パラメータ管理クラス
 export default class Param{
+  static ApplyDebugOption(){
+    this.player .havingWeaponList={
+      normal : true,
+      missile :false,
+      laser : false,
+      weapon4 : false,//
+      weapon5 : false,
+    }
+  }
   static Init(){
     this.player = {
       //プレイ中ステータス
@@ -14,7 +24,7 @@ export default class Param{
         hp : 30,
         bullet : 100,
       },
-      
+
       animRun : 4,
       animWait : 11,
       score : 0,
@@ -107,7 +117,7 @@ export default class Param{
       length : 300,
       //optional
       isTarget : true,
-     // isHorming : false,
+      // isHorming : false,
       isLasersight : true,
     }
     //normal
@@ -118,7 +128,7 @@ export default class Param{
       length : 150,
       //optional
       isTarget : true,
-     // isHorming : false,
+      // isHorming : false,
       isLasersight : false,
     }
     //??
@@ -129,7 +139,7 @@ export default class Param{
       length : 400,
       //optional
       isTarget : true,
-     // isHorming : false,
+      // isHorming : false,
       isLasersight : false,
     }
     //??
@@ -140,7 +150,7 @@ export default class Param{
       length : 300,
       //optional
       isTarget : true,
-     // isHorming : false,
+      // isHorming : false,
       isLasersight : false,
     }
     //Missile
@@ -170,5 +180,6 @@ export default class Param{
       hp : 10,
       curve : 0.2
     }
+  if(!isDebugMode)Param.ApplyDebugOption();
   }
 }
