@@ -64,7 +64,7 @@ export default class Game{
     })();
     //(｡*ˊ~ˋ)۶
     //if(!isDebugMode) 
-    if(false){setTimeout(po,2000);//直せ
+    if(false)setTimeout(po,2000);//直せ
     else {
       //iterator.end();
       Game.Init();
