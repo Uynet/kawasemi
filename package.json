@@ -4,6 +4,8 @@
   "description": "popo",
   "main": "main.js",
   "scripts": {
+   "dev":"http-server",
+   "start":"http-server",
     "test": "ls"
   },
   "repository": {
