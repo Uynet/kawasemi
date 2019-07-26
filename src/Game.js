@@ -18,6 +18,7 @@ import Audio from './audio.js';
 import StageData from './Stage/stageData.js';
 import DistanceField from "./Stage/distanceField.js";
 
+
 export default class Game{
   static Init(){
     /*audioとartはinitしない*/
