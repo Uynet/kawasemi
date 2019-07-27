@@ -35,7 +35,7 @@ export default class Game{
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(isDebugMode) Game.stage = 12
+    if(Game.debug) Game.stage = 6
     else Game.stage = 1;
     Game.continuePoint = 1;//コンティニュー地点
 
@@ -49,6 +49,8 @@ export default class Game{
   }
 
   static async Load(){
+    Game.debug=false;
+    Game.debug=true;//デバッグモード
 
     await Art.LoadTexture();
     Audio.Load();
@@ -60,11 +62,11 @@ export default class Game{
     (function onLoading(){
       requestAnimationFrame(onLoading);
       let t = iterator.next().value;
-      //if(t%16==0)cl(t/16);
+      if(t%16==0)cl(t/16);
     })();
     //(｡*ˊ~ˋ)۶
-    //if(!isDebugMode) 
-    if(false)setTimeout(po,2000);//直せ
+
+    if(!Game.debug) setTimeout(po,70000);//直せ
     else {
       //iterator.end();
       Game.Init();
