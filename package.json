@@ -4,6 +4,9 @@
   "description": "popo",
   "main": "main.js",
   "scripts": {
+    "dev": "http-server",
+    "start": "http-server",
+    "build-css": "sass css/style.scss css/style.css",
     "test": "ls"
   },
   "repository": {
@@ -19,6 +22,7 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "http-server": "^0.11.1",
     "pixi-gl-core": "^1.1.4"
   }
 }

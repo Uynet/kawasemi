@@ -6,6 +6,7 @@ export default class Art{
     this.test = PIXI.Texture.fromFrame('distance00.png'),
     /*forにして*/
     this.playerPattern = {
+      spilit : this.Frame("player",100,6),
       runR : [
         PIXI.Texture.fromFrame('player00.png'),
         PIXI.Texture.fromFrame('player01.png'),
@@ -14,46 +15,11 @@ export default class Art{
         PIXI.Texture.fromFrame('player04.png'),
         PIXI.Texture.fromFrame('player05.png'),
       ],
-      runL : [
-        PIXI.Texture.fromFrame('player10.png'),
-        PIXI.Texture.fromFrame('player11.png'),
-        PIXI.Texture.fromFrame('player12.png'),
-        PIXI.Texture.fromFrame('player13.png'),
-        PIXI.Texture.fromFrame('player14.png'),
-        PIXI.Texture.fromFrame('player15.png'),
-      ],
-      runUR : [
-        PIXI.Texture.fromFrame('player20.png'),
-        PIXI.Texture.fromFrame('player21.png'),
-        PIXI.Texture.fromFrame('player22.png'),
-        PIXI.Texture.fromFrame('player23.png'),
-        PIXI.Texture.fromFrame('player24.png'),
-        PIXI.Texture.fromFrame('player25.png'),
-      ],
-      runUL : [
-        PIXI.Texture.fromFrame('player30.png'),
-        PIXI.Texture.fromFrame('player31.png'),
-        PIXI.Texture.fromFrame('player32.png'),
-        PIXI.Texture.fromFrame('player33.png'),
-        PIXI.Texture.fromFrame('player34.png'),
-        PIXI.Texture.fromFrame('player35.png'),
-      ],
-      runDR : [
-        PIXI.Texture.fromFrame('player40.png'),
-        PIXI.Texture.fromFrame('player41.png'),
-        PIXI.Texture.fromFrame('player42.png'),
-        PIXI.Texture.fromFrame('player43.png'),
-        PIXI.Texture.fromFrame('player44.png'),
-        PIXI.Texture.fromFrame('player45.png'),
-      ],
-      runDL : [
-        PIXI.Texture.fromFrame('player50.png'),
-        PIXI.Texture.fromFrame('player51.png'),
-        PIXI.Texture.fromFrame('player52.png'),
-        PIXI.Texture.fromFrame('player53.png'),
-        PIXI.Texture.fromFrame('player54.png'),
-        PIXI.Texture.fromFrame('player55.png'),
-      ],
+      runL : this.Frame("player",10,6),
+      runUR :  this.Frame("player",20,6),
+      runUL :  this.Frame("player",30,6),
+      runDR :  this.Frame("player",40,6),
+      runDL :  this.Frame("player",50,6),
       waitR :[
         PIXI.Texture.fromFrame('player60.png'),
         PIXI.Texture.fromFrame('player61.png'),
@@ -214,58 +180,28 @@ export default class Art{
         PIXI.Texture.fromFrame('bullet02.png'),
         PIXI.Texture.fromFrame('bullet03.png'),
       ],
-      bullet2 : [
-        PIXI.Texture.fromFrame('bullet10.png'),
-        PIXI.Texture.fromFrame('bullet11.png'),
-        PIXI.Texture.fromFrame('bullet12.png'),
-        PIXI.Texture.fromFrame('bullet13.png'),
-        PIXI.Texture.fromFrame('bullet14.png'),
-        PIXI.Texture.fromFrame('bullet15.png'),
-        PIXI.Texture.fromFrame('bullet16.png'),
-        PIXI.Texture.fromFrame('bullet17.png'),
-      ],
+      bullet2 : this.Frame("bullet",10,8),
       bullet3 : [
         PIXI.Texture.fromFrame('bullet100.png'),
       ],
+      bullet4 : this.Frame("bullet" ,120 , 4 ),//Fire
       lasersight : [
         PIXI.Texture.fromFrame('bullet20.png'),
       ],
       target : [
         PIXI.Texture.fromFrame('bullet30.png'),//Target
       ],
-      shot : [
-        PIXI.Texture.fromFrame('bullet40.png'),//bullet shot
-        PIXI.Texture.fromFrame('bullet41.png'),
-        PIXI.Texture.fromFrame('bullet42.png'),
-        PIXI.Texture.fromFrame('bullet43.png'),
-      ],
-      hitWall : [
-        PIXI.Texture.fromFrame('bullet50.png'),//bullet hit at wall
-        PIXI.Texture.fromFrame('bullet51.png'),
-        PIXI.Texture.fromFrame('bullet52.png'),
-        PIXI.Texture.fromFrame('bullet53.png'),
-      ],
-      blur : [ 
-        PIXI.Texture.fromFrame('bullet60.png'),//bullet blur
-        PIXI.Texture.fromFrame('bullet61.png'),
-        PIXI.Texture.fromFrame('bullet62.png'),
-        PIXI.Texture.fromFrame('bullet63.png'), 
-        PIXI.Texture.fromFrame('bullet64.png'), 
-        PIXI.Texture.fromFrame('bullet65.png') 
-      ],
-      blur2 : [ 
-        PIXI.Texture.fromFrame('bulletF0.png'),//bullet blur
+      shot : this.Frame("bullet",40,4),
+      hitWall : this.Frame("bullet",50,4),
+      trail : this.Frame("bullet",60,6),
+      trail2 : [ 
+        PIXI.Texture.fromFrame('bulletF0.png'),//bullet trail
         PIXI.Texture.fromFrame('bulletF1.png'),
         PIXI.Texture.fromFrame('bulletF2.png'),
         PIXI.Texture.fromFrame('bulletF3.png') 
       ],
       //ブロックの破片
-      blockDebris : [
-        PIXI.Texture.fromFrame('bullet110.png'),
-        PIXI.Texture.fromFrame('bullet111.png'),
-        PIXI.Texture.fromFrame('bullet112.png'),
-        PIXI.Texture.fromFrame('bullet113.png'), 
-      ],
+      blockDebris : this.Frame("bullet",110,4),
       coin : {
         get : [
           PIXI.Texture.fromFrame('bulletD0.png'),
@@ -312,8 +248,7 @@ export default class Art{
         ],
         sonic :this.Frame("bullet",70,4),
       },
-      buringFire : this.Frame("bullet" ,120 , 4 ),
-
+      screenFlash : this.Frame("bullet" ,130, 2),
     }
     this.enemyPattern = {
       coin : [
@@ -361,7 +296,7 @@ export default class Art{
       ],
       goal : PIXI.Texture.fromFrame('wall01.png'),//ゴール
       signboard : PIXI.Texture.fromFrame('wall02.png'),//看板
-      shop : PIXI.Texture.fromFrame('wall03.png'),//看板
+      shop :[ PIXI.Texture.fromFrame('wall03.png') ],//看板
       needle : [
         //壊れる
         PIXI.Texture.fromFrame('wall10.png'),//∧
@@ -460,8 +395,9 @@ export default class Art{
         value: 0 // 初期値
       }
     });
+    //今実質的にflashとして使わている
     Drawer.fireFilter = new PIXI.Filter(null,resources.fireShader.data , {
-      frame: {
+      paintCol: {
         type: '1f',
         value: 0 // 初期値
       }
@@ -500,6 +436,9 @@ export default class Art{
   }
 
   static SpriteFactory(texture){
+    return new PIXI.Sprite(texture);
+  }
+  static CreateSprite(texture){
     return new PIXI.Sprite(texture);
   }
   static LoadFont(){

@@ -1,11 +1,21 @@
+import Game from "./game.js";
 //パラメータ管理クラス
 export default class Param{
+  static ApplyDebugOption(){
+    this.player .havingWeaponList={
+      normal : true,
+      missile :false,
+      laser : false,
+      weapon4 : false,//
+      weapon5 : false,
+    }
+  }
   static Init(){
     this.player = {
       //プレイ中ステータス
       jumpVel : 6.2,//ジャンプ力
-      runVel : 0.4,//はしり速度
-      gravity : 0.30,
+      runVel : 0.3,//はしり速度
+      gravity : 0.26,
       maxHp : 30,
       maxBullet : 100,
       fliction : 0.7,
@@ -14,7 +24,7 @@ export default class Param{
         hp : 30,
         bullet : 100,
       },
-      
+
       animRun : 4,
       animWait : 11,
       score : 0,
@@ -24,9 +34,9 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile :false,
-        laser : false,
-        weapon4 : false,//
+        missile :true,
+        laser : true,
+        weapon4 : true,//
         weapon5 : false,
       },
       //装備中の武器
@@ -107,7 +117,7 @@ export default class Param{
       length : 300,
       //optional
       isTarget : true,
-     // isHorming : false,
+      // isHorming : false,
       isLasersight : true,
     }
     //normal
@@ -118,18 +128,18 @@ export default class Param{
       length : 150,
       //optional
       isTarget : true,
-     // isHorming : false,
+      // isHorming : false,
       isLasersight : false,
     }
     //??
     this.weapon4 = {
       agi : 1,
-      cost : 1,
+      cost : 10,
       speed : 4, 
       length : 400,
       //optional
       isTarget : true,
-     // isHorming : false,
+      // isHorming : false,
       isLasersight : false,
     }
     //??
@@ -140,7 +150,7 @@ export default class Param{
       length : 300,
       //optional
       isTarget : true,
-     // isHorming : false,
+      // isHorming : false,
       isLasersight : false,
     }
     //Missile
@@ -161,7 +171,8 @@ export default class Param{
       atkMax : 5,
       atkMin : 3,
       hp : 1,
-      curve : 0.2
+      curve : 0.2,
+      deleteFrameCount : 180,//残存時間
     }
     this.bullet4 = {
       atkMax : 1,
@@ -169,5 +180,6 @@ export default class Param{
       hp : 10,
       curve : 0.2
     }
+  if(!isDebugMode)Param.ApplyDebugOption();
   }
 }

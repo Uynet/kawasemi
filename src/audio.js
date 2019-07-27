@@ -9,6 +9,9 @@ export default class Audio{
     this.testLowPass = this.context.createBiquadFilter();
     this.testLowPass.type = 'lowpass';
     this.testLowPass.frequency.value = 22050;
+    //
+    this.testLowPass.type = 'lowpass';
+    this.testLowPass.frequency.value = 22050;
     this.BGM = { } 
     this.SE = { }
     this.stack = [];
@@ -58,7 +61,6 @@ export default class Audio{
     let buffer = this.BGM[name];
     source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
-    //source.connect(this.context.destination); // context に connect
     //if(gain){
     let gainNode = this.context.createGain();
     source.loop = true;
@@ -80,11 +82,16 @@ export default class Audio{
     let p = this.testLowPass.frequency.value;
     this.testLowPass.frequency.value= p-(p-440)*0.01;
   }
+  static SetPitch(pitch){
+    if(this.PlayingBGM.name!==null) this.PlayingBGM.source.playbackRate.value = pitch;
+  }
   static StopBGM(){
-    this.PlayingBGM.source.stop();
-    this.PlayingBGM = {
-      name : null,
-      source : null,
+    if(this.PlayingBGM.name !== null){
+      this.PlayingBGM.source.stop();
+      this.PlayingBGM = {
+        name : null,
+        source : null,
+      }
     }
   }
   static PlaySE(name,gain,pitch){
@@ -97,6 +104,7 @@ export default class Audio{
       source.connect(this.context.destination);
       source.loop = false; // 再生
       if(!pitch)pitch = 1;
+      pitch *= (1-Math.pow(1-Timer.GetTimeScale(),4));
       source.playbackRate.value = pitch + Rand(0.05);
       gainNode = this.context.createGain();
       source.connect(gainNode);
@@ -119,6 +127,7 @@ export default class Audio{
       this.LoadBGM('stage5');
       this.LoadBGM('stage6');
       this.LoadBGM('boss');
+      this.LoadBGM('boss3');
       this.LoadSE('jump1');
       this.LoadSE('jump2');//空中ジャンプ
       this.LoadSE('coin1');
