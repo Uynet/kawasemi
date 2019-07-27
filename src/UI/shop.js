@@ -6,10 +6,11 @@ import EntityManager from '../Stage/entityManager.js';
 import Art from '../art.js';
 import Input from '../input.js';
 import Font from './font.js';
-import Component from "./component.js";
+//import component from "./component.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
+//TODO:Implement component
 export default class Shop extends UI{
   constructor(){
     super(vec0());
@@ -26,8 +27,8 @@ export default class Shop extends UI{
 
     const componentTree = { }
 
-    const component = new Component(componentTree,style,this);
-    this.addChild(component);
+    //const component = new Component(componentTree,style,this);
+    //this.addChild(component);
   }
   Update(){
     if(this.frame > 1){

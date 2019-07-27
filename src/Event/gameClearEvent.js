@@ -1,5 +1,6 @@
 import Event from './event.js';
-import UIManager from '../UI/uiManager.js'; import EntityManager from '../Stage/entityManager.js';
+import UIManager from '../UI/uiManager.js';
+import EntityManager from '../Stage/entityManager.js';
 import MapData from '../Stage/mapData.js';
 import Game from '../game.js';
 import Drawer from '../drawer.js';
