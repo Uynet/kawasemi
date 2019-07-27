@@ -10,7 +10,7 @@ export default class BulletTrail2 extends EFFECT{
   }
   Init(pos,vel){
     /*基本情報*/
-    this.name = "bullettrail2";
+    this.name = "bulletTrail2";
       /*スプライト*/
     this.pattern = Art.bulletPattern.trail2;
     this.BasicEffectInit();
