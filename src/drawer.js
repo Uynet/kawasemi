@@ -10,7 +10,9 @@ export default class Drawer{
 
   /*setting stage*/
   static Init(){
-    this.app = new PIXI.Application(PIXI_WIDTH, PIXI_HEIGHT, {backgroundColor : 0x000000});
+    this.width = PIXI_WIDTH;
+    this.height= PIXI_HEIGHT;
+    this.app = new PIXI.Application(PIXI_WIDTH, PIXI_HEIGHT, {backgroundColor : 0xffffff});
     this.Stage = this.app.stage;
       /* コンテナ(レイヤー)は以下の通り 下から優先して描画される
        * Background

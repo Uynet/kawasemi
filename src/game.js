@@ -49,14 +49,16 @@ export default class Game{
   }
 
   static async Load(){
+    Game.debug=false;
+    //Game.debug=true;//デバッグモード
 
     await Art.LoadTexture();
     Audio.Load();
 
-    let b = document.getElementById("screen");
+    //let b = document.getElementById("screen");
 
     //٩(ˊᗜˋ*｡)
-    let iterator = Game.LoadingAnimation(0);
+    //let iterator = Game.LoadingAnimation(0);
     /*
     (function onLoading(){
       requestAnimationFrame(onLoading);
@@ -69,12 +71,14 @@ export default class Game{
     //TODO:FIX
     //iterator.end();
     Game.Init();
-    let a = document.getElementById("po");
-    a.parentNode.removeChild(a);
+    //let a = document.getElementById("po");
+    //a.parentNode.removeChild(a);
+
 
     Input.returnScroll();//スクロール解除
   }
   //CSS Animation 
+  /*
   static * LoadingAnimation(localTimer){
     let loadingText = document.getElementById("loading");
     console.log(loadingText);
@@ -103,6 +107,11 @@ export default class Game{
       }
       yield localTimer++;
     }
+  }
+  */
+  //ローディング画面中の処理
+  static UpdateLoading(){
+    UIManager.Update();
   }
 
   //タイトル画面中の処理
@@ -145,6 +154,8 @@ export default class Game{
     switch(Game.scene.state){
       /*更新*/
       /*Note : Lastは自前関数*/
+      case STATE.LOADING:
+        Game.UpdateLoading();break;
       case STATE.TITLE :
         switch(Game.scene.substate.Last()){
           case "DEFAULT" : Game.UpdateTitle();break;
@@ -160,7 +171,7 @@ export default class Game{
         }
         break;
       default :
-        console.warn("unknown state");
+        console.warn("unknown state:",Game.scene.state);
         return;
     }
     /*描画*/

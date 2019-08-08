@@ -39,18 +39,18 @@ export default class gaugeBossHP extends UI{
     P_AMOUNT.x = 16*4*this.scale/2-8;
     this.amount = new Font(add(pos,P_AMOUNT),"" + maxHP,"HP");//数字
     //outer
-    s = Art.SpriteFactory(this.pattern.outer);//
+    s = Art.Sprite(this.pattern.outer);//
     s.position = this.outer.pos; 
     s.scale.x = this.scale*0.97;
     this.sprite.addChild(s);
     //bar
-    s = Art.SpriteFactory(this.pattern.bar);
+    s = Art.Sprite(this.pattern.bar);
     s.position = this.bar.pos; 
     s.position.x += 0
     s.scale.x = this.scale;
     this.sprite.addChild(s);
     //icon
-    s = Art.SpriteFactory(this.pattern.icon);
+    s = Art.Sprite(this.pattern.icon);
     s.position = this.icon.pos; 
     //this.sprite.addChild(s);
     //amount

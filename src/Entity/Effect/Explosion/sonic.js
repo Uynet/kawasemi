@@ -11,7 +11,7 @@ export default class Sonic extends EFFECT{
   constructor(pos){
     super(pos,vec0());
     this.pattern = Art.bulletPattern.explosion.sonic;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.sprite = Art.Sprite(this.pattern[this.spid]);
     this.addAnimator(false,3,4);
   }
   Init(pos,vel,arg){
