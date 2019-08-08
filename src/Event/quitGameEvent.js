@@ -12,7 +12,7 @@ export default class QuitGameEvent extends Event{
   constructor(){
     super(1);
     function* gen(){
-      Game.scene.ChangeState(STATE.STAGE,STATE.TITLE);
+      Game.scene.ChangeState(STATE.TITLE);
       /*delete all entities*/
       MapData.DeleteStage();
       UIManager.Clean();
