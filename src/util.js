@@ -76,7 +76,8 @@ const STATE = {
   INIT : "INIT",
   STAGE : "STAGE",
   TITLE : "TITLE",
-  PAUSE : "PAUSE"
+  PAUSE : "PAUSE",
+  LOADING : "LOADING"
 }
 
 /*Entity*/

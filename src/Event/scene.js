@@ -1,5 +1,4 @@
 import UIManager from '../UI/uiManager.js';
-import EntityManager from '../Stage/entityManager.js';
  
 export default class Scene{
   constructor(){
@@ -7,11 +6,12 @@ export default class Scene{
     this.substate = ["DEFAULT"];
   }
 
-  ChangeState(oldState,newState){
+  ChangeState(newState){
     //UIのクリア
     UIManager.Clean(); 
     switch(newState){
       /*ゲーム画面用 UIの作成*/
+      case "LOADING" : UIManager.SetLoading(); break;
       case "TITLE" : UIManager.SetTitle(); break;
       case "STAGE" : UIManager.SetStage(); break;
     }

@@ -17,7 +17,7 @@ export default class Flash extends EFFECT{
     /*スプライト*/
     this.spid = 0;
     this.pattern = Art.bulletPattern.explosion.flash;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.sprite = Art.Sprite(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
     this.sprite.alpha = 0.2;
