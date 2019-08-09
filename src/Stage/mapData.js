@@ -170,11 +170,11 @@ export default class MapData{
             break;
           case 163 : obj = new Goal(p); break;
           case 164 :
-            //直せ
+            //TODO:fix 
             message = this.objData[i].properties;
             //obj = new Signboard(p,message,"shop");
-            obj = new Signboard(p,message,"signboard");
-            //obj = new Shop(p,message);
+            //obj = new Signboard(p,message,"signboard");
+            obj = new Shop(p,message);
             break;
           case 169 : obj = new Enemy1(p); break;
           case 170 : obj = new Enemy2(p); break;

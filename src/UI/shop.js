@@ -15,18 +15,37 @@ export default class Shop extends UI{
     super(vec0());
     this.type = "SHOP";
     this.sprite = new PIXI.Sprite();
-    this.size = vec2(96,32)
+    this.size = vec2(96,32);
     this.size = gameSreensize;
+    this.size = scala(0.8,this.size);
 
     this.scale = vec2(1);
 
+    /*SYNTAX
+       オリジナルUI記述文法
+       [node] : 子を持つノード。名前はなんでもいいが、多分のちに上のstyleで使うと思う  
+       leaf : このノードが葉であることを宣言、要素のUIがレンダリングされる
+    */
     const style = {
-      padding : vec2(4),
+      div:{
+        margin : vec2(16),
+      },
+      root:{
+        margin : vec2(0),
+      }
     }
+    let text = new Font(this.pos,"div","MES");
+    let text2 = new Font(this.pos,"div in div","MES");
+    const componentTree = {
+      div: {
+        leaf : text,
+        div:{
+          leaf:text2
+        }
+      }
+    };
 
-    const componentTree = { }
-
-    const component = new Component(componentTree,style,this);
+    const component = new Component(componentTree,style,this,"root");
     this.addChild(component);
   }
   Update(){
