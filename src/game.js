@@ -50,68 +50,14 @@ export default class Game{
 
   static async Load(){
     Game.debug=false;
-    //Game.debug=true;//デバッグモード
+    Game.debug=true;//デバッグモード
 
     await Art.LoadTexture();
     Audio.Load();
 
-    //let b = document.getElementById("screen");
-
-    //٩(ˊᗜˋ*｡)
-    //let iterator = Game.LoadingAnimation(0);
-    /*
-    (function onLoading(){
-      requestAnimationFrame(onLoading);
-      let t = iterator.next().value;
-      if(t%16==0)cl(t/16);
-    })();
-    */
-    //(｡*ˊ~ˋ)۶
-
-    //TODO:FIX
-    //iterator.end();
     Game.Init();
-    //let a = document.getElementById("po");
-    //a.parentNode.removeChild(a);
-
 
     Input.returnScroll();//スクロール解除
-  }
-  //CSS Animation 
-  /*
-  static * LoadingAnimation(localTimer){
-    let loadingText = document.getElementById("loading");
-    console.log(loadingText);
-    let frame = [
-      "._ro__(｡*ˊ~ˋ)/★_______",
-      "__nO__C｡*ˊ-ˋɔ۶=====☆__",
-      "__Noω_(｡*ˊ~ˋ)۶=-==-=★_",
-      "__NoW_(｡*ˊ~ˋ)۶---_~-☆_",
-      "__Now_(｡*ˊ-ˋ)۶_~___・x",
-      "__Now_(｡*ˊ-ˋ)۶_______✦",
-      "__Now_(｡*ˊ~ˋ)و_______+",
-      "__Now_c>⌄< っ________.",
-      "___★_\\(ˊ˘ˋ*｡)_Io____.",
-      "_☆===٩Cˊᗜˋ*｡ɔ_[Ooo____",
-      "★=--_٩(ˊᗜˋ*｡)_LoOOIho_",
-      "x-_~_٩(ˊᗜˋ*｡)_Loαdｪη9_",
-      "+____٩(ˊᗜˋ*｡)_Loading_",
-      ".____٩(ˊᗜˋ*｡)_Loading_",
-      "_____٩(ˊᗜˋ*｡)_Loading_",
-      "______.c >⌄<っ_oading_",
-      ];
-      let frameCount = 0;
-    while(true){
-      if(localTimer%6==0){
-        loadingText.innerHTML = frame[(frameCount++)%16];
-      }
-      yield localTimer++;
-    }
-  }
-  */
-  //ローディング画面中の処理
-  static UpdateLoading(){
-    UIManager.Update();
   }
 
   //タイトル画面中の処理
@@ -154,8 +100,6 @@ export default class Game{
     switch(Game.scene.state){
       /*更新*/
       /*Note : Lastは自前関数*/
-      case STATE.LOADING:
-        Game.UpdateLoading();break;
       case STATE.TITLE :
         switch(Game.scene.substate.Last()){
           case "DEFAULT" : Game.UpdateTitle();break;
@@ -171,7 +115,7 @@ export default class Game{
         }
         break;
       default :
-        console.warn("unknown state:",Game.scene.state);
+        console.warn("unknown state");
         return;
     }
     /*描画*/
