@@ -35,7 +35,7 @@ export default class Font extends UI{
         defaut :
         console.warn(this.type);
     }
-    this.SetPos(this.pos);
+    this.Carning();
   };
 
   //HP,BULLETの表示用
@@ -84,13 +84,19 @@ export default class Font extends UI{
     this.sprite.children = [];
     this.str = text; //0~9
     this.d = this.str.length;//桁数
-    this.SetPos(copy(pos));
+    if(pos!==undefined)this.SetPos(pos);
+    this.Carning();
   }
 
   SetPos(pos){
+    this.pos = copy(pos);
+  }
+
+  Carning(){
     let space;
     let sprite;
     let tex;
+    let pos = copy(this.pos); 
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
       tex = Art.font[spid];
