@@ -35,10 +35,10 @@ export default class Shop extends UI{
       "バリア:まだじっそうしてない"
     ];
     const priceList = [
+      "30",
+      "100",
       "0",
-      "5",
-      "0",
-      "15",
+      "200",
       "5000000000000000"
     ];
     const setPrice = function(p){
@@ -88,6 +88,7 @@ export default class Shop extends UI{
     const component = new Component(componentTree,style,this,"root");
     this.addChild(component);
     this.children.push(cusor);
+    cusor.AddPointer(0);
   }
   GetItemList(){
     return this.itemList;

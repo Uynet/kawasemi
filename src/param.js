@@ -6,7 +6,7 @@ export default class Param{
       normal : true,
       missile :false,
       laser : false,
-      weapon4 : false,//
+      weapon4 : false,
       weapon5 : false,
     }
   }
@@ -40,9 +40,9 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile :true,
-        laser : true,
-        weapon4 : true,//
+        missile :false,
+        laser : false,
+        weapon4 : false,
         weapon5 : false,
       },
       //装備中の武器
@@ -109,7 +109,7 @@ export default class Param{
       //status
       agi : 25,
       cost : 6,
-      speed : 2, 
+      speed : 8, 
       length : 280,
       remain : 180,
       //optional
@@ -186,6 +186,6 @@ export default class Param{
       hp : 10,
       curve : 0.2
     }
-  if(!isDebugMode)Param.ApplyDebugOption();
+  if(isDebugMode)Param.ApplyDebugOption();
   }
 }
