@@ -10,6 +10,12 @@ export default class Param{
       weapon5 : false,
     }
   }
+  static isHaveWeapon(name){
+    return this.player.havingWeaponList[name];
+  }
+  static GetWeapon(name){
+    this.player.havingWeaponList[name] = true;
+  }
   static Init(){
     this.player = {
       //プレイ中ステータス
@@ -103,7 +109,7 @@ export default class Param{
       //status
       agi : 25,
       cost : 6,
-      speed : 8, 
+      speed : 2, 
       length : 280,
       remain : 180,
       //optional
@@ -134,7 +140,7 @@ export default class Param{
     //??
     this.weapon4 = {
       agi : 1,
-      cost : 10,
+      cost : 2,
       speed : 4, 
       length : 400,
       //optional
@@ -155,8 +161,8 @@ export default class Param{
     }
     //Missile
     this.bullet1 = {
-      atkMax : 15,
-      atkMin : 8,
+      atkMax : 1,
+      atkMin : 10,
       hp : 1,
       curve : 0.2
     }

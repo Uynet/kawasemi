@@ -29,7 +29,7 @@ export default class Component extends UI{
 
     this.ParceStyle(style[this.NodeTag]);
 
-    graphics.beginFill(this.color,0.5);
+    graphics.beginFill(this.color,1.0);
     graphics.drawRect(0,0,this.size.x,this.size.y);
     graphics.endFill();
 

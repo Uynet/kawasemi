@@ -9,6 +9,7 @@ import Input from '../input.js';
 import Font from './font.js';
 import Component from "./component.js";
 import Param from '../param.js';
+import shopItemSelectCusor from './shopItemSelectCusor.js';
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
@@ -23,44 +24,56 @@ export default class Shop extends UI{
     this.scale = vec2(1);
     this.children = [];
 
+    this.descriptionTextUI = (new Font(vec2(0),"ここにせつめいぶんがでる","MES"));
+
+    this.keyGuideTextUI = (new Font(vec2(0),"X:けってい / C:もどる","MES"));
+
+    this.priceTextUI = (new Font(vec2(0),"5000G","MES"));
+    this.itemList = []; 
     /*SYNTAX
        オリジナルUI記述文法
        [node] : 子を持つノード。名前はstyleで使う
        leaf : このノードが葉であることを宣言、要素のUIがレンダリングされる
     */
+    const hilight=0xef1f6a
+    const main = 0x403080
+    const base = 0x100030
+    const accent= 0xf3b000
+
     const style = {
       div:{
-        margin : vec2(4),
-        color:0x212020
+        margin : vec2(2),
+        color:base
       },
       price:{
         margin : vec2(8),
         position : vec2(0.8,0),
         size   : vec2(0.2,0.2),
-        color:0x212040
+        color:main
       },
       list:{
         margin : vec2(8),
         size   : vec2(0.5,0.4),
-        color:0x212040
+        color:main
       },
       description:{
         position : vec2(0,0.5),
         margin: vec2(8,0),
-        size   : vec2(1.0,0.4),
-        color:0x212040
+        size   : vec2(1.0,0.2),
+        color:main
+      },
+      keyGuide:{
+        position : vec2(0.40,0.90),
+        margin: vec2(8,0),
+        size   : vec2(0.55,0.07),
+        color:main
       },
       root:{
         margin : mul(vec2(0.05),this.size),
-        color:0xd0d0d0
+        color:hilight 
       }
     }
 
-    let text = (new Font(vec2(0),"ここにせつめいぶんがでる","MES"));
-    let text_price = (new Font(vec2(0),"5000G","MES"));
-
-
-    let itemList = []; 
     let descList = [
       "ミサイル:つよいばくはつ",
       "レーザー:びーむ",
@@ -69,7 +82,7 @@ export default class Shop extends UI{
       "バリア:まだじっそうしてない"
     ];
     let priceList = [
-      "3",
+      "0",
       "5",
       "0",
       "15",
@@ -77,11 +90,10 @@ export default class Shop extends UI{
     ];
     const changePrice = function(p){
         this.price = p;
-        cl(p)
     }
     Object.keys(Art.UIPattern.bullet.icon).forEach((e,i)=>{
       let ui = new UI(vec2(0))
-      itemList.push( ui ) ;
+      this.itemList.push( ui ) ;
       ui.sprite = Art.CreateSprite(Art.UIPattern.bullet.icon[e]); 
       ui.descriptionText = descList[i]; 
       ui.price = priceList[i]; 
@@ -90,67 +102,40 @@ export default class Shop extends UI{
       ui.changePrice = changePrice; 
     })
 
-    let cusor = (new Font(vec2(0),"↑","MES"));
-    cusor.pointer=0; 
-    let f = function(){
-      if(Input.isKeyClick(KEY.RIGHT)) this.pointer++;
-      if(Input.isKeyClick(KEY.LEFT)) this.pointer--;
-      this.pointer = clamp(this.pointer,0,itemList.length);
-      const pointedItem = itemList[this.pointer];
-      if(Input.isKeyClick(KEY.X)) this.Buy(pointedItem);
-      this.pos = copy(pointedItem.pos);
-      this.pos.y += 24;
-      this.pos.x += 12;
-      this.SetPos(this.pos);
-      text.ChangeText(pointedItem.descriptionText);
-      text_price.ChangeText(pointedItem.price);
-    }
-    f.bind(cusor)
-    cusor.Update = f;
-
-    cusor.Buy = function(item){
-      const name = item.name;
-      const price = item.price;
-      const player = EntityManager.player;
-      let p = vec2(96,32)
-      if(price<=player.score){
-        if(!Param.player.havingWeaponList[name]){
-          player.GetScore(-price)
-          item.changePrice(0);
-          Param.player.havingWeaponList[name] = true;
-          UIManager.bullet.Push(name);
-          UIManager.addUI(new StagePop(p,"-"+name+"をてにいれた "));//SCORE
-        }else{
-        UIManager.addUI(new StagePop(p,"-もうもってる! "));//SCORE
-        }
-      }
-      else{
-        UIManager.addUI(new StagePop(p,"-かえません "));//SCORE
-      }
-    }
-    this.children.push(cusor);
+    let cusor = new shopItemSelectCusor(this);
 
     const componentTree = {
       div: {
-        leaf:cusor,
-        list:{
-          leaf1 : itemList[0],
-          leaf2 : itemList[1],
-          leaf3 : itemList[2],
-          leaf4 : itemList[3],
-          leaf5 : itemList[4],
+        list: {
+          leaf1: this.itemList[0],
+          leaf2: this.itemList[1],
+          leaf3: this.itemList[2],
+          leaf4: this.itemList[3],
+          leaf5: this.itemList[4]
         },
-        price:{
-          leaf:text_price
+        leaf: cusor,
+        price: {
+          leaf: this.priceTextUI
         },
-        description:{
-          leaf6:text
-        }
+        description: {
+          leaf: this.descriptionTextUI,
+        },
+        keyGuide:{
+            leaf: this.keyGuideTextUI
+        } 
       }
     };
 
     const component = new Component(componentTree,style,this,"root");
     this.addChild(component);
+    this.children.push(cusor);
+  }
+  GetItemList(){
+    return this.itemList;
+  }
+  OnSelectItem(item){
+      this.descriptionTextUI.ChangeText(item.descriptionText);
+      this.priceTextUI.ChangeText(item.price);
   }
   Update(){
     if(this.frame > 1){

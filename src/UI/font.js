@@ -9,7 +9,7 @@ let small = [
 export default class Font extends UI{
   //strは表示する文字(今は数字のみ)
   constructor(pos,str,type){
-    super(copy(pos));
+    super(pos);   
     /*基本情報*/
     this.type = type;
     this.name = "font";
