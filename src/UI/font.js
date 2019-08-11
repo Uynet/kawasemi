@@ -90,6 +90,8 @@ export default class Font extends UI{
 
   SetPos(pos){
     this.pos = copy(pos);
+    this.sprite.position.x = pos.x;
+    this.sprite.position.y = pos.y;
   }
 
   Carning(){

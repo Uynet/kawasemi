@@ -391,9 +391,9 @@ export default class Player extends Entity{
     }
   }
   //コイン取得
-  GetScore(){
+  GetScore(score){
     if(this.isAlive){
-      this.score+=1;
+      this.score+=score;
       this.param.score = this.score;
       this.bullet += 5;//とりあえずbulletも回復しとくか
       //this.hp += 1;//とりあえずhpも回復しとくか

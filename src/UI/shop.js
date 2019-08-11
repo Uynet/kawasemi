@@ -1,4 +1,5 @@
 import UI from './ui.js';
+import StagePop from './stagePop.js';
 import Game from "../game.js";
 import Drawer from "../drawer.js";
 import UIManager from './uiManager.js';
@@ -7,6 +8,7 @@ import Art from '../art.js';
 import Input from '../input.js';
 import Font from './font.js';
 import Component from "./component.js";
+import Param from '../param.js';
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
@@ -19,6 +21,7 @@ export default class Shop extends UI{
     this.size = gameSreensize;
 
     this.scale = vec2(1);
+    this.children = [];
 
     /*SYNTAX
        オリジナルUI記述文法
@@ -56,25 +59,86 @@ export default class Shop extends UI{
     let text = (new Font(vec2(0),"ここにせつめいぶんがでる","MES"));
     let text_price = (new Font(vec2(0),"5000G","MES"));
 
-    let normal = new UI(this.pos);
-    let missile = new UI(this.pos);
-    let laser = new UI(this.pos);
-    let weapon4 = new UI(this.pos);
-    let weapon5 = new UI(this.pos);
-    normal.sprite = Art.CreateSprite(Art.UIPattern.bullet.icon.normal); 
-    missile.sprite = Art.CreateSprite(Art.UIPattern.bullet.icon.missile); 
-    laser.sprite = Art.CreateSprite(Art.UIPattern.bullet.icon.laser); 
-    weapon4.sprite = Art.CreateSprite(Art.UIPattern.bullet.icon.weapon4); 
-    weapon5.sprite = Art.CreateSprite(Art.UIPattern.bullet.icon.weapon5); 
+
+    let itemList = []; 
+    let descList = [
+      "ミサイル:つよいばくはつ",
+      "レーザー:びーむ",
+      "ふつう:ふつう",
+      "ファイア:ほのおがのこる",
+      "バリア:まだじっそうしてない"
+    ];
+    let priceList = [
+      "3",
+      "5",
+      "0",
+      "15",
+      "5000000000000000"
+    ];
+    const changePrice = function(p){
+        this.price = p;
+        cl(p)
+    }
+    Object.keys(Art.UIPattern.bullet.icon).forEach((e,i)=>{
+      let ui = new UI(vec2(0))
+      itemList.push( ui ) ;
+      ui.sprite = Art.CreateSprite(Art.UIPattern.bullet.icon[e]); 
+      ui.descriptionText = descList[i]; 
+      ui.price = priceList[i]; 
+      ui.name = e;
+      changePrice.bind(ui);
+      ui.changePrice = changePrice; 
+    })
+
+    let cusor = (new Font(vec2(0),"↑","MES"));
+    cusor.pointer=0; 
+    let f = function(){
+      if(Input.isKeyClick(KEY.RIGHT)) this.pointer++;
+      if(Input.isKeyClick(KEY.LEFT)) this.pointer--;
+      this.pointer = clamp(this.pointer,0,itemList.length);
+      const pointedItem = itemList[this.pointer];
+      if(Input.isKeyClick(KEY.X)) this.Buy(pointedItem);
+      this.pos = copy(pointedItem.pos);
+      this.pos.y += 24;
+      this.pos.x += 12;
+      this.SetPos(this.pos);
+      text.ChangeText(pointedItem.descriptionText);
+      text_price.ChangeText(pointedItem.price);
+    }
+    f.bind(cusor)
+    cusor.Update = f;
+
+    cusor.Buy = function(item){
+      const name = item.name;
+      const price = item.price;
+      const player = EntityManager.player;
+      let p = vec2(96,32)
+      if(price<=player.score){
+        if(!Param.player.havingWeaponList[name]){
+          player.GetScore(-price)
+          item.changePrice(0);
+          Param.player.havingWeaponList[name] = true;
+          UIManager.bullet.Push(name);
+          UIManager.addUI(new StagePop(p,"-"+name+"をてにいれた "));//SCORE
+        }else{
+        UIManager.addUI(new StagePop(p,"-もうもってる! "));//SCORE
+        }
+      }
+      else{
+        UIManager.addUI(new StagePop(p,"-かえません "));//SCORE
+      }
+    }
+    this.children.push(cusor);
 
     const componentTree = {
       div: {
+        leaf:cusor,
         list:{
-          leaf1 : normal , 
-          leaf2 : missile, 
-          leaf3 : laser, 
-          leaf4 : weapon4, 
-          leaf5 : weapon5, 
+          leaf1 : itemList[0],
+          leaf2 : itemList[1],
+          leaf3 : itemList[2],
+          leaf4 : itemList[3],
+          leaf5 : itemList[4],
         },
         price:{
           leaf:text_price
@@ -90,6 +154,7 @@ export default class Shop extends UI{
   }
   Update(){
     if(this.frame > 1){
+      this.children.forEach(u=>u.Update());
       if(Input.isKeyClick(KEY.C)){
         Game.scene.PopSubState();
         UIManager.removeUI(this);
