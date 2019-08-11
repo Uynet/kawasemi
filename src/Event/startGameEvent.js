@@ -13,9 +13,9 @@ export default class StartGameEvent extends Event{
   constructor(){
     super(1);
     function* gen() {
-      if (Game.debug) Game.scene.ChangeState(STATE.STAGE);
+      if (isDebugMode) Game.scene.ChangeState(STATE.STAGE);
       else Game.scene.ChangeState(STATE.LOADING);
-      if(!Game.debug){
+      if(!isDebugMode){
         //LOADING ANIMATION
         MapData.DeleteStage();
         for (let i = 0; i < 150; i++) {
@@ -27,7 +27,7 @@ export default class StartGameEvent extends Event{
         Audio.PlayBGM("title", 0);
       }
 
-      if (Game.debug) MapData.CreateStage(Game.stage, "ENTER");
+      if (isDebugMode) MapData.CreateStage(Game.stage, "ENTER");
       else MapData.CreateStage(0, "ENTER");
 
       yield;

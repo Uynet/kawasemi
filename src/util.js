@@ -1,4 +1,4 @@
-const isDebugMode = false; 
+const isDebugMode = true; 
 /*meta*/
 Array.prototype.Last = function(){
   if(this.length == 0){
