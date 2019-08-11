@@ -11,6 +11,8 @@ import Component from "./component.js";
 import Param from '../param.js';
 import shopItemSelectCusor from './shopItemSelectCusor.js';
 
+import {shopStyle}from "./Style/shopStyle.js";
+
 const gameSreensize = Drawer.GetGameScreenSize();
 
 export default class Shop extends UI{
@@ -18,78 +20,29 @@ export default class Shop extends UI{
     super(vec0());
     this.type = "SHOP";
     this.sprite = new PIXI.Sprite();
-    this.size = vec2(96,32);
     this.size = gameSreensize;
-
-    this.scale = vec2(1);
     this.children = [];
 
     this.descriptionTextUI = (new Font(vec2(0),"ここにせつめいぶんがでる","MES"));
-
     this.keyGuideTextUI = (new Font(vec2(0),"X:けってい / C:もどる","MES"));
-
     this.priceTextUI = (new Font(vec2(0),"5000G","MES"));
     this.itemList = []; 
-    /*SYNTAX
-       オリジナルUI記述文法
-       [node] : 子を持つノード。名前はstyleで使う
-       leaf : このノードが葉であることを宣言、要素のUIがレンダリングされる
-    */
-    const hilight=0xef1f6a
-    const main = 0x403080
-    const base = 0x100030
-    const accent= 0xf3b000
-
-    const style = {
-      div:{
-        margin : vec2(2),
-        color:base
-      },
-      price:{
-        margin : vec2(8),
-        position : vec2(0.8,0),
-        size   : vec2(0.2,0.2),
-        color:main
-      },
-      list:{
-        margin : vec2(8),
-        size   : vec2(0.5,0.4),
-        color:main
-      },
-      description:{
-        position : vec2(0,0.5),
-        margin: vec2(8,0),
-        size   : vec2(1.0,0.2),
-        color:main
-      },
-      keyGuide:{
-        position : vec2(0.40,0.90),
-        margin: vec2(8,0),
-        size   : vec2(0.55,0.07),
-        color:main
-      },
-      root:{
-        margin : mul(vec2(0.05),this.size),
-        color:hilight 
-      }
-    }
-
-    let descList = [
+    const descList = [
       "ミサイル:つよいばくはつ",
       "レーザー:びーむ",
       "ふつう:ふつう",
       "ファイア:ほのおがのこる",
       "バリア:まだじっそうしてない"
     ];
-    let priceList = [
+    const priceList = [
       "0",
       "5",
       "0",
       "15",
       "5000000000000000"
     ];
-    const changePrice = function(p){
-        this.price = p;
+    const setPrice = function(p){
+      this.price = p;
     }
     Object.keys(Art.UIPattern.bullet.icon).forEach((e,i)=>{
       let ui = new UI(vec2(0))
@@ -98,13 +51,17 @@ export default class Shop extends UI{
       ui.descriptionText = descList[i]; 
       ui.price = priceList[i]; 
       ui.name = e;
-      changePrice.bind(ui);
-      ui.changePrice = changePrice; 
+      setPrice.bind(ui);
+      ui.setPrice = setPrice; 
     })
 
-    let cusor = new shopItemSelectCusor(this);
-
-    const componentTree = {
+    const cusor = new shopItemSelectCusor(this);
+    /*SYNTAX
+       オリジナルUI記述文法
+       [node] : 子を持つノード。名前はstyleで使う
+       leaf : このノードが葉であることを宣言、要素のUIがレンダリングされる
+       */
+    const shopComponent = {
       div: {
         list: {
           leaf1: this.itemList[0],
@@ -121,11 +78,13 @@ export default class Shop extends UI{
           leaf: this.descriptionTextUI,
         },
         keyGuide:{
-            leaf: this.keyGuideTextUI
+          leaf: this.keyGuideTextUI
         } 
       }
     };
 
+    const style = shopStyle;
+    const componentTree = shopComponent;
     const component = new Component(componentTree,style,this,"root");
     this.addChild(component);
     this.children.push(cusor);

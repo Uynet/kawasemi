@@ -65,8 +65,8 @@ export default class Component extends UI{
   }
   SetSize(size){
     this.size = size;
-    this.scale.x = size.x/this.originalWidth/this.parentComponent.scale.x;
-    this.scale.y = size.y/this.originalHeight/this.parentComponent.scale.y;
+    //this.scale.x = size.x/this.originalWidth/this.parentComponent.scale.x;
+    //this.scale.y = size.y/this.originalHeight/this.parentComponent.scale.y;
     //this.sprite.scale = copy(this.scale);
   }
   ParceStyle(style){

@@ -4,9 +4,10 @@ export default class UI{
   constructor(pos){
     this.frame = 0;
     this.pos = copy(pos);
-    this.sprite;
+    this.sprite = new PIXI.Sprite();
     this.type;//enum
     this.isUpdater = true;
+    this.children = [];
   }
   Delete(){
     UIManager.removeUI(this);
@@ -31,6 +32,7 @@ export default class UI{
   }
   addChild(ui){
     this.sprite.addChild(ui.sprite);
+    this.children.push(ui);
   }
 }
 
