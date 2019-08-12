@@ -81,6 +81,8 @@ export default class Enemy1 extends Enemy{
     }
   }
   BigExplosion(){
+    this.pos.x = 384;
+    this.pos.y = Math.min(this.pos.y,289);
     let p = copy(this.pos);
     p.y += this.size;
     for(let i = 0;i<4;i++){
@@ -136,7 +138,9 @@ export default class Enemy1 extends Enemy{
     }
   }
   Landing(){
-    let f = {x: (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 2 : -2 , y:-0.8};
+    //プレイヤーが斥力を受ける
+    let f = {x: (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 0.1 : -0.1 , y:-0.6};
+    //ジャンプ中は影響を受けない
     if(EntityManager.player.isJump){
       f.x *= 0;
       f.y = -0.3;
@@ -243,7 +247,8 @@ export default class Enemy1 extends Enemy{
     }
     if(this.state == "DROP"){
       let player = EntityManager.player;
-      this.pos.y = Math.min(this.pos.y,321+this.size);
+      this.pos.x = 384;
+      this.pos.y = Math.min(this.pos.y,289);
       let p = copy(this.pos);
       p.x += this.size/2-8;
       for(let i=0;i<2;i++){
@@ -255,12 +260,15 @@ export default class Enemy1 extends Enemy{
       }
     }
     if(this.state == "JUMP"){
+      //プレイヤー側に寄る
       this.acc.x = (this.pos.x+this.size/2 < EntityManager.player.pos.x)? 0.010 : -0.010;
       this.vel.x = Math.max(-1,Math.min(this.vel.x,1));
       if(this.vel.y>0){
+        //落下は急加速
         this.vel.y *= 1+Math.abs(this.vel.y)/20;
         this.vel.y = Math.min(this.vel.y,12);
       }else{
+        //ゆっくり減速
         this.vel.y *= 0.95;
       }
     }
