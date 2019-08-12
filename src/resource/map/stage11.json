@@ -88,6 +88,32 @@
                  "width":16,
                  "x":496,
                  "y":176
+                }, 
+                {
+                 "gid":164,
+                 "height":16,
+                 "id":659,
+                 "name":"",
+                 "properties":
+                    {
+                     "1":"GET",
+                     "2":"missile",
+                     "3":"\u30df\u30b5\u30a4\u30eb\u3092\u3066\u306b\u3044\u308c\u305f!",
+                     "4":"c\u30ad\u30fc\u3067\u30c1\u30a7\u30f3\u30b8\u3067\u304d\u308b\u3088"
+                    },
+                 "propertytypes":
+                    {
+                     "1":"string",
+                     "2":"string",
+                     "3":"string",
+                     "4":"string"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":384,
+                 "y":336
                 }],
          "opacity":0.959999978542328,
          "type":"objectgroup",
@@ -140,7 +166,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":659,
+ "nextobjectid":660,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":16,
@@ -768,7 +794,7 @@
                 },
              "2":
                 {
-                 "type":0
+                 "type":1
                 },
              "3":
                 {

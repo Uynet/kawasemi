@@ -6,9 +6,15 @@ export default class Param{
       normal : true,
       missile :false,
       laser : false,
-      weapon4 : false,//
+      weapon4 : false,
       weapon5 : false,
     }
+  }
+  static isHaveWeapon(name){
+    return this.player.havingWeaponList[name];
+  }
+  static GetWeapon(name){
+    this.player.havingWeaponList[name] = true;
   }
   static Init(){
     this.player = {
@@ -34,9 +40,9 @@ export default class Param{
       //手に入れた武器の情報
       havingWeaponList : {
         normal : true,
-        missile :true,
-        laser : true,
-        weapon4 : true,//
+        missile :false,
+        laser : false,
+        weapon4 : false,
         weapon5 : false,
       },
       //装備中の武器
@@ -134,7 +140,7 @@ export default class Param{
     //??
     this.weapon4 = {
       agi : 1,
-      cost : 10,
+      cost : 2,
       speed : 4, 
       length : 400,
       //optional
@@ -155,8 +161,8 @@ export default class Param{
     }
     //Missile
     this.bullet1 = {
-      atkMax : 15,
-      atkMin : 8,
+      atkMax : 1,
+      atkMin : 10,
       hp : 1,
       curve : 0.2
     }
@@ -180,6 +186,6 @@ export default class Param{
       hp : 10,
       curve : 0.2
     }
-  if(!isDebugMode)Param.ApplyDebugOption();
+  if(isDebugMode)Param.ApplyDebugOption();
   }
 }

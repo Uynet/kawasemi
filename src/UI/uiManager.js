@@ -5,7 +5,7 @@ import StagePop from './stagePop.js';
 import GaugeHP from './gaugeHP.js';
 import GaugeBossHP from './gaugeBossHP.js';
 import GaugeBullet from './gaugeBullet.js';
-import WeaponList from './WeaponList.js';
+import WeaponList from './weaponList.js';
 import Font from './font.js';
 import Message from './message.js';
 import Menu from './menu.js';
@@ -13,6 +13,8 @@ import Score from './score.js';
 import EntityManager from '../Stage/entityManager.js';
 import Game from '../game.js';
 import Shop from "./shop.js";
+
+import LoadingComponent from "./Component/loading.js";
 
 const CONTINUEPOINT_STAGENUM = 11;
 const BOSS_STAGENUM = 12;
@@ -53,68 +55,7 @@ export default class UIManager{
     UIManager.addUI(new GaugeBossHP(POS_BossHP));//HP
   }
   static SetLoading(){
-    //背景色
-    let BG = new UI(vec2(0));
-    let rectBG = new PIXI.Graphics();
-    rectBG.beginFill(0x201040);
-    rectBG.drawRect(0,0,800,640);
-    rectBG.endFill();
-    BG.sprite = rectBG;
-
-    //ローディングバー
-    let LoadingBar = new UI(vec2(0));
-    LoadingBar.type = "OTHER"
-    const f = function(){
-      this.frame++;
-      this.sprite.scale.x = Math.min(1,this.frame/100);
-      this.sprite.position.x = (8.0-8.0*this.sprite.scale.x)
-    }
-    f.bind(LoadingBar)
-    LoadingBar.Update = f;
-
-    const w = 252;
-    const h = 16;
-    let rect = new PIXI.Graphics();
-    rect.beginFill(0xec3070);
-    rect.drawRect(8,232-w/2,w,h);
-    rect.endFill();
-    LoadingBar.sprite = rect;
-
-    //メッセージ
-    const p = vec2(8,196);
-    let loadingmes = (new Font(p,"ロードちゅう","MES"));
-    const f2 = function(){
-      this.frame++;
-      let a = Math.floor(this.frame/10);
-      let b = a%4; 
-      let str = "ロードちゅう"
-      for(let i = 0;i<b;i++){
-        str += ".";
-        this.ChangeText(str,p);
-      }
-      this.sprite.alpha = Math.pow(Math.sin(this.frame/10),2); 
-    }
-    loadingmes.Update = f2;
-
-    //進捗率
-    const p2 = vec2(128,96);
-    let progress = (new Font(p,"0%","MES"));
-    const f3 = function(){
-      this.frame++;
-      const str = Math.min(this.frame,100) + "%";
-      this.ChangeText(str, p2);
-
-      //ちょっと跳ねる
-      if(this.frame>=100){
-        let d = this.frame-100;  
-      }
-    }
-    progress.Update = f3;
-     
-    UIManager.addUI(BG); 
-    UIManager.addUI(LoadingBar);
-    UIManager.addUI(loadingmes); 
-    UIManager.addUI(progress);
+    UIManager.addUI(new LoadingComponent());//HP
   }
 
   /*タイトルでのUI配置に変更*/

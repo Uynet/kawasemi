@@ -63,9 +63,9 @@ export default class Shop extends BackEntity{
     let player = EntityManager.player;
     //this.Bright();
     if(this.isCanRead()){
-        player.isCanRead = true;
+      player.isCanRead = true;
       if( Input.isKeyClick(KEY.X)){
-        this.Read();
+        if(Game.scene.substate.Last()!="MES")this.Read();
       }
     }
   }
