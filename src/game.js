@@ -35,7 +35,7 @@ export default class Game{
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(isDebugMode) Game.stage = 12
+    if(isDebugMode) Game.stage = 6
     else Game.stage = 1;
     Game.continuePoint = 1;//コンティニュー地点
 

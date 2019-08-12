@@ -18,12 +18,12 @@ const shopStyle = {
     color:main
   },
   list:{
-    margin : vec2(80,50),
-    size   : vec2(0.4,0.2),
+    position : vec2(0.3,0.3),
+    size   : vec2(0.36,0.091),
     color:main
   },
   description:{
-    position : vec2(0.2,0.5),
+    position : vec2(0.0,0.5),
     margin: vec2(8,0),
     size   : vec2(0.7,0.2),
     color:main

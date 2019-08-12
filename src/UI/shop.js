@@ -52,6 +52,7 @@ export default class Shop extends UI {
       ui.name = e;
       setPrice.bind(ui);
       ui.setPrice = setPrice;
+      ui.globalPos = vec2(0);
     });
 
     const cusor = new shopItemSelectCusor(this);
@@ -88,8 +89,7 @@ export default class Shop extends UI {
         return response.text();
       })
       .then(text => {
-        const po = text + ";shopStyle";
-        const style = eval(po);
+        const style = eval(text + ";shopStyle");
         const componentTree = shopComponent;
         this.component = new Component(componentTree, style, this, "root");
         this.addChild(this.component);
@@ -108,15 +108,14 @@ export default class Shop extends UI {
   Update() {
     //リアクティブにStyleの変更を反映する
     if (isDebugMode) {
-      if (this.frame % 100 == 0) {
+      if (this.frame % 600 == 0) {
         const url = "src/UI/Style/shopStyle.js";
         fetch(url)
           .then(function(response) {
             return response.text();
           })
           .then(text => {
-            const po = text + ";shopStyle";
-            const style = eval(po);
+            const style = eval(text + ";shopStyle");
             this.component.ResetStyle(style);
           });
       }

@@ -41,6 +41,8 @@ export default class Component extends UI {
         const leaf = componentTree[component];
         let spriteSize = leaf.GetSpriteSize();
         leaf.SetPos(vec2(offset_x, 0));
+        //絶対位置
+        leaf.globalPos = add(this.pos,leaf.pos);
         offset_x += spriteSize.x;
         this.addChild(leaf);
       } else {
