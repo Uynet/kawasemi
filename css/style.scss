@@ -1,17 +1,30 @@
-body {
-  height:100%;
-  background-color: #2f2d46;
-  background-image: url("../src/resource/WebBG2.png");
-  animation: fadeIn 2s ease 0s 1 normal;
-}
 @keyframes fadeIn{
   0% {opacity: 0}
   100% {opacity: 1}
 }
+@font-face {
+  font-family: "ronde";
+  src: url("../css/fonts/Ronde-B_square.otf") format("opentype"); }
+@font-face {
+  font-family: "gkktt";
+  src: url("../css/fonts/gkktt.ttf") format("opentype"); }
 canvas{
 	border: 2px groove #331144;
   box-shadow: 0px 0px 4px #220033;
 }
+
+$base:#fa2585;
+$BG:#211040;
+$hilight:#3a85a5;
+$main:#bfbaad;
+$accent:#fae585;
+
+body {
+  height:100%;
+  background-image: url("../src/resource/WebBG2.png");
+  animation: fadeIn 2s ease 0s 1 normal;
+}
+
 .twitter{
   padding:5px;
   background-color:#37a;
@@ -31,21 +44,28 @@ canvas{
 }
 
 .fa-twitter{
-   font-family: "Rounded Mplus 1c";
+  font-family: "Rounded Mplus 1c";
  }
 .loading:before {
   size:30px;
   content:"(✿╹◡╹)Loading..."
 }
-a:visited{ color: #3737ac; }
-a:link{ color: #3737ac; }
-a:hover{ color: #334; }
+a:visited{ color: $accent; }
+a:link{ color: $accent; }
+a:hover{ color: $base; }
 a { text-decoration: none; }
 
+h2{
+  font-size:40px;
+  text-align:center;
+  color: $hilight;
+  font-family: "gkktt";
+}
 h3{
   position: relative;
   left:40px;
-  color: #7a2535;
+  color: $hilight;
+  font-family: "ronde";
 }
 h3#sign::before{
   position: absolute;
@@ -55,20 +75,24 @@ h3#sign::before{
   height: 32px;
   background: url("../src/resource/sign.png") top left no-repeat;
 }
+/*
 h3#icon::before{
   position: absolute;
   left:-40px;
   content: "";
-  width: 32px;
-  height: 32px;
-  background: url("../src/resource/favicon.png") top left no-repeat;
+  background: url("../src/resource/icon.png") top left no-repeat;
 }
+*/
 .textbox {
+  font-family: "ronde";
+  font-size:20px;
   margin : 20px ;
   padding : 20px ;
-  background: #7f92b5;
-  background-image: url("../src/resource/WebBG.png");
-  font-family: "Rounded Mplus 1c";
+  background: $BG;
+  border:dashed 1px $hilight;
+  /*background-image: url("../src/resource/WebBG.png");*/ 
+  border-radius:10px;
+  color:$main;
 }
 .text {
   position:relative;
