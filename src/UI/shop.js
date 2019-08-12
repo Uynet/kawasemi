@@ -1,4 +1,5 @@
 import UI from "./ui.js";
+import ListUI from "./listUI.js";
 import StagePop from "./stagePop.js";
 import Game from "../game.js";
 import Drawer from "../drawer.js";
@@ -55,6 +56,7 @@ export default class Shop extends UI {
       ui.globalPos = vec2(0);
     });
 
+    const itemListUI = new ListUI (this.pos,this.itemList);
     const cusor = new shopItemSelectCusor(this);
     /*SYNTAX
        オリジナルUI記述文法
@@ -63,26 +65,15 @@ export default class Shop extends UI {
        */
     const shopComponent = {
       div: {
-        list: {
-          leaf1: this.itemList[0],
-          leaf2: this.itemList[1],
-          leaf3: this.itemList[2],
-          leaf4: this.itemList[3],
-          leaf5: this.itemList[4]
-        },
-        leaf: cusor,
         price: {
           leaf: this.priceTextUI
         },
-        description: {
-          leaf: this.descriptionTextUI
-        },
-        keyGuide: {
-          leaf: this.keyGuideTextUI
-        }
+        list: { leaf:itemListUI, },
+        leaf: cusor,
+        keyGuide: { leaf: this.keyGuideTextUI },
+        description: { leaf: this.descriptionTextUI}
       }
     };
-
     const url = "src/UI/Style/shopStyle.js";
     fetch(url)
       .then(function(response) {
@@ -92,7 +83,9 @@ export default class Shop extends UI {
         const style = eval(text + ";shopStyle");
         const componentTree = shopComponent;
         this.component = new Component(componentTree, style, this, "root");
-        this.addChild(this.component);
+        //spriteに親子を持たせるのをやめる
+        //this.addChild(this.component);
+        this.children.push(this.component)
         cusor.AddPointer(0);
       });
   }
@@ -101,10 +94,11 @@ export default class Shop extends UI {
   }
   OnSelectItem(item) {
     this.descriptionTextUI.ChangeText(item.descriptionText);
-    this.priceTextUI.ChangeText(item.price);
+    this.priceTextUI.ChangeText("ねだん "+item.price);
   }
-  Update() {
+  Reactive(){
     //リアクティブにStyleの変更を反映する
+    /*
     if (isDebugMode) {
       if (this.frame % 600 == 599) {
         const url = "src/UI/Style/shopStyle.js";
@@ -118,11 +112,13 @@ export default class Shop extends UI {
           });
       }
     }
+    */
+  }
+  Update() {
     if (this.frame > 1) {
-      this.children.forEach(u => u.Update());
       if (Input.isKeyClick(KEY.C)) {
         Game.scene.PopSubState();
-        UIManager.removeUI(this);
+        this.Remove();
       }
     }
     this.frame++;

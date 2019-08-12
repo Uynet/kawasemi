@@ -43,18 +43,19 @@ export default class LoadingComponent extends UI{
     loadingmes.Update = f2;
 
     //進捗率
-    const p2 = vec2(64,48);
+    const p2 = vec2(128,96);
     let progress = (new Font(p,"0%","MES"));
     const f3 = function(){
       this.frame++;
       const str = Math.min(this.frame,100) + "%";
-      this.ChangeText(str, p2);
+      this.ChangeText(str);
 
       //ちょっと跳ねる
       if(this.frame>=100){
         let d = this.frame-100;  
       }
     }
+    progress.SetPos(p2);
     progress.Update = f3;
 
     /*

@@ -19,32 +19,32 @@ const shopStyle = {
     color:base,
   },
   price:{
-    margin : vec2(8),
-    position : vec2(0.75,0.5),
-    size   : vec2(0.07,0.05),
-    color:main
+    //margin : vec2(8),
+    position : vec2(0.38,0.17),
+    //size   : vec2(0.07,0.05),
+    //color:main
   },
   list:{
     position : vec2(0.3,0.3),
     size   : vec2(0.36,0.091),
-    color:main
+    //color:main
   },
   description:{
     position : vec2(0.0,0.5),
     margin: vec2(8,0),
-    size   : vec2(0.7,0.2),
-    color:main
+    size   : vec2(1.0,0.3),
+    color:main,
   },
   keyGuide:{
     position : vec2(0.40,0.90),
     margin: vec2(8,0),
     size   : vec2(0.55,0.07),
     color:main,
-    popin:1
   },
   root:{
     margin : mul(vec2(0.05),gameSreensize),
     color:hilight,
+    //popin:1
   }
 }
 //export {shopStyle}

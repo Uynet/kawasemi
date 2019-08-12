@@ -1,15 +1,19 @@
 import UI from "./ui.js";
 import Event from "../Event/event.js"
+import UIManager from "./uiManager.js";
 
 //ぽよぽよイベント
 class PopInEvent extends Event{
-  constructor(value){
+  constructor(component , value){
     super();
     this.value = value;
     let frame = 0;
     function* popin(){
       while(frame++<50){
-        cl(frame)
+        component.SetSize(vec2(frame))
+        component.pos.y++;
+        component.SetPos(component.pos)
+        component.sprite.position.y ++;
       yield;
       }
     } 
@@ -21,7 +25,7 @@ class PopInEvent extends Event{
 //終端コンポーネントは直属のUIに限られる
 export default class Component extends UI {
   constructor(componentTree, style, parentComponent, NodeTag) {
-    super(vec0());
+    super(parentComponent.pos);
     this.type = "COMPONENT";
     this.NodeTag = NodeTag; //Styleのセレクタとして使う
     this.parentComponent = parentComponent;
@@ -29,34 +33,25 @@ export default class Component extends UI {
     this.size = copy(parentComponent.size);
     this.style = style;
     this.componentTree = componentTree;
+    this.sprite = new PIXI.Container();
 
     this.eventList = [];
-
     this.graphics = new PIXI.Graphics();
-    let r = 10;
-    let g = 10;
-    let b = 10;
-    this.color = "0x" + r + g + b;
+
     this.ParceStyle(style[this.NodeTag]);
-    this.graphics.beginFill(this.color, 1.0);
-    this.graphics.drawRect(0, 0, this.size.x, this.size.y);
-    this.graphics.endFill();
-    this.sprite = this.graphics;
+    this.sprite.position = copy(this.pos);
     this.TraverseComponentTree(componentTree);
-    this.sprite.position = this.pos;
   }
   TraverseComponentTree(componentTree) {
-    let offset_x = 0;
+      this.Add();
     Object.keys(componentTree).forEach(component => {
       //終端ノード:UIをaddChild
       if (component.startsWith("leaf")) {
         const leaf = componentTree[component];
-        let spriteSize = leaf.GetSpriteSize();
-        leaf.SetPos(vec2(offset_x, 0));
-        //絶対位置
-        leaf.globalPos = add(this.pos,leaf.pos);
-        offset_x += spriteSize.x;
-        this.addChild(leaf);
+        leaf.SetPos(this.pos)
+        this.children.push(leaf);
+        //this.addChild(leaf);
+        leaf.Add();
       } else {
         //枝ノード:部分木を解析
         const childTree = componentTree[component];
@@ -66,7 +61,8 @@ export default class Component extends UI {
           this,
           component
         );
-        this.addChild(childComponent);
+        this.children.push(childComponent);
+        //this.addChild(childComponent);
       }
     });
   }
@@ -93,9 +89,17 @@ export default class Component extends UI {
   Size(v) {
     this.size.x *= v.x;
     this.size.y *= v.y;
+    this.SetSize(this.size);
+  }
+  Fill(){
+    this.graphics.beginFill(this.color, 1);
+    this.graphics.drawRect(0, 0, this.size.x, this.size.y);
+    this.graphics.endFill();
+    this.sprite = this.graphics;
   }
   Color(c) {
     this.color = c;
+    this.Fill();
   }
   Position(pos) {
     this.pos.x += this.size.x * pos.x;
@@ -107,7 +111,7 @@ export default class Component extends UI {
     this.SetSize(vec2(this.size.x - 2 * margin.x, this.size.y - 2 * margin.y));
   }
   PopIn(value){
-     this.Emit(new PopInEvent(value));
+     this.Emit(new PopInEvent(this,value));
   }
   ResetStyle(style) {
     this.style = style;
@@ -115,10 +119,6 @@ export default class Component extends UI {
     this.pos = vec2(0);
     this.size = copy(this.parentComponent.size);
     this.ParceStyle(this.style[this.NodeTag]);
-    this.graphics.beginFill(this.color, 1.0);
-    this.graphics.drawRect(0, 0, this.size.x, this.size.y);
-    this.graphics.endFill();
-    this.sprite = this.graphics;
     this.sprite.position = this.pos;
 
     this.children.forEach(u=>{
@@ -136,6 +136,5 @@ export default class Component extends UI {
    }
   Update() {
     this.ExecuteEvent();
-    this.children.forEach(u=>u.Update());
   }
 }

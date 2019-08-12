@@ -80,11 +80,12 @@ export default class Font extends UI{
     this.sprite.addChild(sprite);
     this.d++;
   }
-  ChangeText(text,pos){
+  ChangeText(text){
     this.sprite.children = [];
-    this.str = text; //0~9
+    this.sprite.removeChild();
+    this.str = text;
     this.d = this.str.length;//桁数
-    if(pos!==undefined)this.SetPos(pos);
+    this.pos = vec2(0);
     this.Carning();
   }
 
@@ -93,12 +94,14 @@ export default class Font extends UI{
     this.sprite.position.x = pos.x;
     this.sprite.position.y = pos.y;
   }
-
   Carning(){
     let space;
     let sprite;
     let tex;
     let pos = copy(this.pos); 
+    if(this.str=="ミサイル:つよいばくはつ"){
+      cl(this.pos)
+    }
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
       tex = Art.font[spid];

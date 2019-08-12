@@ -63,7 +63,7 @@ export default class shopItemSelectCusor extends UI {
     this.pointer += i;
     this.pointer = clamp(this.pointer, 0, this.GetItemList().length - 1);
     this.pointedItem = this.GetItemList()[this.pointer];
-    this.pos = copy(this.pointedItem.globalPos);
+    this.pos = copy(this.pointedItem.pos);
     this.pos.x += 8;
     this.pos.y += 8;
     this.SetPos(this.pos);//このSetPosはcomponentのSetPosの初期化で上書きされるため無効化される

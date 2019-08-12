@@ -3,8 +3,10 @@ import UIManager from "./uiManager.js";
 export default class UI{
   constructor(pos){
     this.frame = 0;
-    this.pos = copy(pos);
     this.sprite = new PIXI.Sprite();
+    this.pos = copy(pos);
+    this.sprite.position.x = this.pos.x; 
+    this.sprite.position.y = this.pos.y; 
     this.type;//enum
     this.isUpdater = true;
     this.children = [];
@@ -16,6 +18,9 @@ export default class UI{
     this.pos = copy(pos);
     this.sprite.position.x = this.pos.x; 
     this.sprite.position.y = this.pos.y; 
+  }
+  Add(){
+    UIManager.addUI(this);
   }
   Update(){
   }
@@ -30,9 +35,16 @@ export default class UI{
     }
     return vec2(0);
   }
+  //子持ちSpriteは親の座標変換が子にも適用されるため色々面倒なことが発生する
+  //そのためSprite自体に親子を持たせることを避け、modelが親子を持つようにする
   addChild(ui){
-    this.sprite.addChild(ui.sprite);
-    this.children.push(ui);
+    this.sprite.addChild(ui.sprite); //TODO:Modelとviewを完全に分離する(この行を消す)
+    this.children.push(ui); //こっちはModelなので残す
+  }
+  //子供丸ごと消す
+  Remove(){
+    UIManager.removeUI(this);
+    this.children.forEach(u => u.Remove());
   }
 }
 

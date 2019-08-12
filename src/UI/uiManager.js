@@ -115,9 +115,10 @@ export default class UIManager{
       case "MES" : this.message = ui;break;
       case "MENU" : this.menu = ui;break;
       case "SHOP" : this.shop = ui;break;
-      case "PUSH" : /*noth*/break;
-      case "OTHER" : /*noth*/break;
-      default : console.warn(ui);
+      // case "PUSH" : /*noth*/break;
+      // case "COMPONENT" : /*noth*/break;
+      // case "OTHER" : /*noth*/break;
+      // default : console.warn(ui,ui.type);
     }
     //スプライトの追加
     if(!ui.isNoSprite){
