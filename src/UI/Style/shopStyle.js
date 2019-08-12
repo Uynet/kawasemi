@@ -1,11 +1,10 @@
-import Drawer from "../../drawer.js";
-
+//import Drawer from "../../drawer.js";
 const hilight=0xef1f6a
 const main = 0x403080
 const base = 0x100030
 const accent= 0xf3b000
-
-const gameSreensize = Drawer.GetGameScreenSize();
+//const gameSreensize = Drawer.GetGameScreenSize();
+const gameSreensize = vec2(800/2,640/2);
 
 const shopStyle = {
   div:{
@@ -14,19 +13,19 @@ const shopStyle = {
   },
   price:{
     margin : vec2(8),
-    position : vec2(0.8,0),
-    size   : vec2(0.2,0.2),
+    position : vec2(0.75,0.5),
+    size   : vec2(0.07,0.05),
     color:main
   },
   list:{
-    margin : vec2(8),
-    size   : vec2(0.5,0.4),
+    margin : vec2(80,50),
+    size   : vec2(0.4,0.2),
     color:main
   },
   description:{
-    position : vec2(0,0.5),
+    position : vec2(0.2,0.5),
     margin: vec2(8,0),
-    size   : vec2(1.0,0.2),
+    size   : vec2(0.7,0.2),
     color:main
   },
   keyGuide:{
@@ -40,5 +39,4 @@ const shopStyle = {
     color:hilight 
   }
 }
-
-export {shopStyle}
+//export {shopStyle}
