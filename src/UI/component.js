@@ -1,11 +1,24 @@
 import UI from "./ui.js";
-import UIManager from "./uiManager.js";
-import EntityManager from "../Stage/entityManager.js";
-import Art from "../art.js";
-import Input from "../input.js";
-import Font from "./font.js";
-import Drawer from "../drawer.js";
+import Event from "../Event/event.js"
 
+//ぽよぽよイベント
+class PopInEvent extends Event{
+  constructor(value){
+    super();
+    this.value = value;
+    let frame = 0;
+    function* popin(){
+      while(frame++<50){
+        cl(frame)
+      yield;
+      }
+    } 
+    this.func = popin();
+  }
+}
+
+//コンポーネントは全て子を持ち、自身はスプライトを持たない 
+//終端コンポーネントは直属のUIに限られる
 export default class Component extends UI {
   constructor(componentTree, style, parentComponent, NodeTag) {
     super(vec0());
@@ -17,6 +30,8 @@ export default class Component extends UI {
     this.style = style;
     this.componentTree = componentTree;
 
+    this.eventList = [];
+
     this.graphics = new PIXI.Graphics();
     let r = 10;
     let g = 10;
@@ -26,14 +41,11 @@ export default class Component extends UI {
     this.graphics.beginFill(this.color, 1.0);
     this.graphics.drawRect(0, 0, this.size.x, this.size.y);
     this.graphics.endFill();
-    // this.sprite = Art.CreateSprite(Art.UIPattern.message.frame);
     this.sprite = this.graphics;
     this.TraverseComponentTree(componentTree);
-    //this.pos = copy(this.parentComponent.pos);
     this.sprite.position = this.pos;
   }
   TraverseComponentTree(componentTree) {
-    let i = 0; //index
     let offset_x = 0;
     Object.keys(componentTree).forEach(component => {
       //終端ノード:UIをaddChild
@@ -56,33 +68,28 @@ export default class Component extends UI {
         );
         this.addChild(childComponent);
       }
-      i++;
     });
+  }
+  Emit(event){
+    this.eventList.push(event);
   }
   SetSize(size) {
     this.size = size;
-    //this.scale.x = size.x/this.originalWidth/this.parentComponent.scale.x;
-    //this.scale.y = size.y/this.originalHeight/this.parentComponent.scale.y;
-    //this.sprite.scale = copy(this.scale);
   }
   ParceStyle(style) {
     for (let property in style) {
+      const value = style[property]; 
       switch (property) {
-        case "margin":
-          this.Margin(style[property]);
-          break;
-        case "size":
-          this.Size(style[property]);
-          break;
-        case "color":
-          this.Color(style[property]);
-          break;
-        case "position":
-          this.Position(style[property]);
-          break;
+        case "margin": this.Margin(value); break;
+        case "size": this.Size(value); break;
+        case "color": this.Color(value); break;
+        case "position": this.Position(value); break;
+        case "popin": this.PopIn(value); break;
+        default : console.warn("unknown style:",property);
       }
     }
   }
+  //v:比率
   Size(v) {
     this.size.x *= v.x;
     this.size.y *= v.y;
@@ -98,6 +105,9 @@ export default class Component extends UI {
     this.pos.x += margin.x;
     this.pos.y += margin.y;
     this.SetSize(vec2(this.size.x - 2 * margin.x, this.size.y - 2 * margin.y));
+  }
+  PopIn(value){
+     this.Emit(new PopInEvent(value));
   }
   ResetStyle(style) {
     this.style = style;
@@ -116,5 +126,16 @@ export default class Component extends UI {
       if(u.ResetStyle!==undefined)u.ResetStyle(style)
     }); 
   }
-  Update() {}
+  ExecuteEvent(){
+    //アニメーションイベント
+    for(let e of this.eventList){
+      if(e.Do().done){
+        this.eventList.remove(e);
+      }
+    }
+   }
+  Update() {
+    this.ExecuteEvent();
+    this.children.forEach(u=>u.Update());
+  }
 }

@@ -58,7 +58,7 @@ export default class Shop extends UI {
     const cusor = new shopItemSelectCusor(this);
     /*SYNTAX
        オリジナルUI記述文法
-       [node] : 子を持つノード。名前はstyleで使う
+       [node] : 子を持つノード。プロパティ名に対応するスタイルが適用される
        leaf : このノードが葉であることを宣言、要素のUIがレンダリングされる
        */
     const shopComponent = {
@@ -93,8 +93,6 @@ export default class Shop extends UI {
         const componentTree = shopComponent;
         this.component = new Component(componentTree, style, this, "root");
         this.addChild(this.component);
-        this.children.push(this.component);
-        this.children.push(cusor);
         cusor.AddPointer(0);
       });
   }
@@ -108,7 +106,7 @@ export default class Shop extends UI {
   Update() {
     //リアクティブにStyleの変更を反映する
     if (isDebugMode) {
-      if (this.frame % 600 == 0) {
+      if (this.frame % 600 == 599) {
         const url = "src/UI/Style/shopStyle.js";
         fetch(url)
           .then(function(response) {

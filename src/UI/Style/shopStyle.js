@@ -6,10 +6,17 @@ const accent= 0xf3b000
 //const gameSreensize = Drawer.GetGameScreenSize();
 const gameSreensize = vec2(800/2,640/2);
 
+/*SYNTX
+ * margin : 親コンポーネントからのマージン px単位
+ * position :　コンポーネント内部における相対座標 比率単位 
+ * size : 親コンポーネントに対する要素の大きさの比率　
+ * color : コンポーネント背景色
+ * popin : アニメーションpopinを指定
+ */
 const shopStyle = {
   div:{
     margin : vec2(2),
-    color:base
+    color:base,
   },
   price:{
     margin : vec2(8),
@@ -32,11 +39,12 @@ const shopStyle = {
     position : vec2(0.40,0.90),
     margin: vec2(8,0),
     size   : vec2(0.55,0.07),
-    color:main
+    color:main,
+    popin:1
   },
   root:{
     margin : mul(vec2(0.05),gameSreensize),
-    color:hilight 
+    color:hilight,
   }
 }
 //export {shopStyle}
