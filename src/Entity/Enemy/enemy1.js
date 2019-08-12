@@ -24,6 +24,7 @@ import UIManager from '../../UI/uiManager.js'
 import FontEffect from '../Effect/fontEffect.js';
 import Param from '../../param.js';
 import StartBossBattleEvent from "../../Event/StartBossBattleEvent.js";
+import ToBeContinuedEvent from "../../Event/toBeContinuedEvent.js"
 
 let EntityList = EntityManager.entityList;
 
@@ -236,6 +237,9 @@ export default class Enemy1 extends Enemy{
     Audio.PlaySE("stageChange",1,0.8);
     Audio.PlaySE("bomb",1,0.6);
     Audio.StopBGM();
+    //ボスを倒すとtobe continued..みたいなのがでて終わる
+    const toBeContinuedEvent = new ToBeContinuedEvent(); 
+    EventManager.PushEvent(toBeContinuedEvent); 
   };
   Update(){
     this.ExecuteAI();
