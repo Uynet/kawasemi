@@ -19,6 +19,9 @@ export default class UI{
     this.sprite.position.x = this.pos.x; 
     this.sprite.position.y = this.pos.y; 
   }
+  setFilter(f){
+    this.sprite.filters=[f];
+  }
   Add(){
     UIManager.addUI(this);
   }

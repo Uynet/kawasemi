@@ -402,6 +402,21 @@ export default class Art{
         value: 0 // 初期値
       }
     });
+    let unif = {
+      time: {
+        type: "1f",
+        value: 0 // 初期値
+      },
+      mappedMatrix: {
+        type: "mat3",
+        value: new PIXI.Matrix()
+      }
+    }
+    Drawer.shopFilter = new PIXI.Filter(null, resources.shopShader.data, unif);
+    Drawer.shopFilter.apply = function (filterManager, input, output){
+      filterManager.calculateNormalizedScreenSpaceMatrix(unif.mappedMatrix.value)
+      filterManager.applyFilter(this, input, output);
+    };
 
 
     //Drawer.smokeFilter =new PIXI.Filter(null,resources.smokeShader.data);
@@ -420,6 +435,7 @@ export default class Art{
         .add('distance','src/resource/img/distance.json')
         .add('testShader', 'src/Shader/test.frag')
         .add('fireShader', 'src/Shader/fire.frag')
+        .add('shopShader', 'src/Shader/shop.frag')
         //.add('smokeShader', 'src/Shader/smoke.frag')
         .load((loader,resources)=>Art.Load(resources)).onComplete.add(res)); }
 

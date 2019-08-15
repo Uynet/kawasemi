@@ -44,7 +44,6 @@ const shopStyle = {
   root:{
     margin : mul(vec2(0.05),gameSreensize),
     color:hilight,
-    //popin:1
   }
 }
 //export {shopStyle}

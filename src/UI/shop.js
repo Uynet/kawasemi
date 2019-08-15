@@ -1,17 +1,12 @@
 import UI from "./ui.js";
 import ListUI from "./listUI.js";
-import StagePop from "./stagePop.js";
 import Game from "../game.js";
 import Drawer from "../drawer.js";
-import UIManager from "./uiManager.js";
-import EntityManager from "../Stage/entityManager.js";
 import Art from "../art.js";
 import Input from "../input.js";
 import Font from "./font.js";
 import Component from "./component.js";
-import Param from "../param.js";
 import shopItemSelectCusor from "./shopItemSelectCusor.js";
-
 //import {shopStyle}from "./Style/shopStyle.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
@@ -53,7 +48,6 @@ export default class Shop extends UI {
       ui.name = e;
       setPrice.bind(ui);
       ui.setPrice = setPrice;
-      ui.globalPos = vec2(0);
     });
 
     const itemListUI = new ListUI (this.pos,this.itemList);
@@ -65,9 +59,7 @@ export default class Shop extends UI {
        */
     const shopComponent = {
       div: {
-        price: {
-          leaf: this.priceTextUI
-        },
+        price: { leaf: this.priceTextUI },
         list: { leaf:itemListUI, },
         leaf: cusor,
         keyGuide: { leaf: this.keyGuideTextUI },
@@ -98,9 +90,8 @@ export default class Shop extends UI {
   }
   Reactive(){
     //リアクティブにStyleの変更を反映する
-    /*
     if (isDebugMode) {
-      if (this.frame % 600 == 599) {
+      if (this.frame % 200 == 199) {
         const url = "src/UI/Style/shopStyle.js";
         fetch(url)
           .then(function(response) {
@@ -112,9 +103,9 @@ export default class Shop extends UI {
           });
       }
     }
-    */
   }
   Update() {
+    //this.Reactive();
     if (this.frame > 1) {
       if (Input.isKeyClick(KEY.C)) {
         Game.scene.PopSubState();

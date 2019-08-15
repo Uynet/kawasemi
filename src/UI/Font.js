@@ -1,9 +1,7 @@
 import Art from '../art.js';
-import Drawer from '../drawer.js';
 import UI from './ui.js';
-import Input from '../input.js';
 /*文字*/
-let small = [
+const small = [
   ",",".","!","l","i","j","っ","ぁ","ぃ","ぅ","ぇ","ぉ",
 ]
 export default class Font extends UI{
@@ -63,10 +61,17 @@ export default class Font extends UI{
     };
   };
   Move(pos){
+    /*
+    */
+    cl(this.pos)
+    cl(pos)
     /*TODO コンテナ*/
+      this.pos = copy(pos);
     for(let i=0;i<this.sprite.children.length;i++){
-      this.sprite.children[i].position = pos;
-      this.sprite.children[i].position.x += 10 * i;
+     // this.sprite.position.x = pos.x;
+     // this.sprite.position.y = pos.y;
+     // this.sprite.children[i].position = pos;
+     // this.sprite.children[i].position.x += 10 * i;
     }
   }
 
@@ -84,8 +89,8 @@ export default class Font extends UI{
     this.sprite.children = [];
     this.sprite.removeChild();
     this.str = text;
-    this.d = this.str.length;//桁数
-    this.pos = vec2(0);
+    this.d = this.str.length;
+    this.pos = vec2(0); //フォント関係でバグったら多分ここが原因
     this.Carning();
   }
 
@@ -94,14 +99,12 @@ export default class Font extends UI{
     this.sprite.position.x = pos.x;
     this.sprite.position.y = pos.y;
   }
+  //文字の幅を揃える
   Carning(){
     let space;
     let sprite;
     let tex;
     let pos = copy(this.pos); 
-    if(this.str=="ミサイル:つよいばくはつ"){
-      cl(this.pos)
-    }
     for(let i = 0;i<this.d;i++){
       let spid = this.str[i] + "";//str型にすること
       tex = Art.font[spid];
@@ -121,8 +124,6 @@ export default class Font extends UI{
       pos.x += space;
     };
   }
-
-  //各UIの内部から呼ぶ必要がある
   Update(){
     this.frame++;
   };

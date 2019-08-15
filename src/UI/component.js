@@ -1,6 +1,6 @@
 import UI from "./ui.js";
 import Event from "../Event/event.js"
-import UIManager from "./uiManager.js";
+import Drawer from "../drawer.js";
 
 //ぽよぽよイベント
 class PopInEvent extends Event{
@@ -96,6 +96,7 @@ export default class Component extends UI {
     this.graphics.drawRect(0, 0, this.size.x, this.size.y);
     this.graphics.endFill();
     this.sprite = this.graphics;
+    this.sprite.filters = [Drawer.shopFilter]; 
   }
   Color(c) {
     this.color = c;
@@ -116,7 +117,7 @@ export default class Component extends UI {
   ResetStyle(style) {
     this.style = style;
     this.scale = vec2(1);
-    this.pos = vec2(0);
+    this.pos = copy(this.parentComponent.pos);
     this.size = copy(this.parentComponent.size);
     this.ParceStyle(this.style[this.NodeTag]);
     this.sprite.position = this.pos;
@@ -134,7 +135,25 @@ export default class Component extends UI {
       }
     }
    }
+  bitToFloat(c){
+    return { 
+      r:((c>>16)%256)/256,
+      g:((c>>8)%256)/256,
+      b:(c%256)/256
+    };
+  }
   Update() {
     this.ExecuteEvent();
+    this.frame++;
+    /*
+    let c;
+    if(this.color!==undefined)c = this.bitToFloat(this.color);
+    */
+    if(this.sprite.filters)this.sprite.filters[0].uniforms.time = this.frame;
+    /*
+    if(this.sprite.filters)this.sprite.filters[0].uniforms.r= c.r;
+    if(this.sprite.filters)this.sprite.filters[0].uniforms.g= c.g;
+    if(this.sprite.filters)this.sprite.filters[0].uniforms.b= c.b;
+    */
   }
 }

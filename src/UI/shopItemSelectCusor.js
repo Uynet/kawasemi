@@ -10,10 +10,8 @@ import StagePop from "./stagePop.js"
 export default class shopItemSelectCusor extends UI {
   constructor(shop) {
     super(vec2(0));
-    this.frame = 0;
     this.pointer = 0;
     this.sprite = new PIXI.Sprite();
-    //this.sprite.texture = Art.font["↑"];
     this.pattern = Art.bulletPattern.target;
     this.sprite.texture = this.pattern[0];
     this.shop = shop;
@@ -23,7 +21,7 @@ export default class shopItemSelectCusor extends UI {
     const name = item.name;
     const price = item.price;
     const player = EntityManager.player;
-    let p = vec2(96, 32);
+    let p = vec2(112 ,28);
     if (price <= player.score) {
       if (!Param.isHaveWeapon(name)) {
         player.GetScore(-price);
