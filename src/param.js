@@ -25,7 +25,7 @@ export default class Param{
       maxHp : 30,
       maxBullet : 100,
       fliction : 0.7,
-      invTime : 150,//無敵時間
+      invTime : 30,//無敵時間
       status : {
         hp : 30,
         bullet : 100,
@@ -108,7 +108,7 @@ export default class Param{
     this.weapon1 = {
       //status
       agi : 25,
-      cost : 6,
+      cost : 10,
       speed : 8, 
       length : 280,
       remain : 180,
@@ -119,7 +119,7 @@ export default class Param{
     }
     this.weapon2 = {
       agi : 25,
-      cost : 10,
+      cost : 20,
       length : 300,
       //optional
       isTarget : true,
@@ -177,7 +177,7 @@ export default class Param{
       atkMax : 5,
       atkMin : 3,
       hp : 1,
-      curve : 0.2,
+      curve : 9999.2,
       deleteFrameCount : 180,//残存時間
     }
     this.bullet4 = {

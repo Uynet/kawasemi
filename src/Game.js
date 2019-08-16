@@ -1,26 +1,25 @@
-import EntityManager from './Stage/entityManager.js';
-import Pool from './Stage/pool.js';
-import MapData from './Stage/mapData.js';
-import EventManager from './Event/eventmanager.js';
-import StartStageEvent from './Event/startStageEvent.js';
-import StartGameEvent from './Event/startGameEvent.js';
-import Scene from './Event/scene.js';
-import UIManager from './UI/uiManager.js';
-import Font from './UI/font.js';
-import WeaponManager from './Weapon/weaponManager.js';
-import Art from './art.js';
-import Drawer from './drawer.js';
-import Input from './input.js';
-import Timer from './timer.js';
-import Param from './param.js';
-import Menu from './UI/menu.js';
-import Audio from './audio.js';
-import StageData from './Stage/stageData.js';
+import EntityManager from "./Stage/entityManager.js";
+import Pool from "./Stage/pool.js";
+import MapData from "./Stage/mapData.js";
+import EventManager from "./Event/eventmanager.js";
+import StartStageEvent from "./Event/startStageEvent.js";
+import StartGameEvent from "./Event/startGameEvent.js";
+import Scene from "./Event/scene.js";
+import UIManager from "./UI/uiManager.js";
+import Font from "./UI/font.js";
+import WeaponManager from "./Weapon/weaponManager.js";
+import Art from "./art.js";
+import Drawer from "./drawer.js";
+import Input from "./input.js";
+import Timer from "./timer.js";
+import Param from "./param.js";
+import Menu from "./UI/menu.js";
+import Audio from "./audio.js";
+import StageData from "./Stage/stageData.js";
 import DistanceField from "./Stage/distanceField.js";
 
-
-export default class Game{
-  static Init(){
+export default class Game {
+  static Init() {
     /*audioとartはinitしない*/
     Param.Init();
     Drawer.Init();
@@ -35,9 +34,9 @@ export default class Game{
 
     /*initialize Game state*/
     //現在のステージ番号
-    if(isDebugMode) Game.stage = 21;
+    if (isDebugMode) Game.stage = 6;
     else Game.stage = 1;
-    Game.continuePoint = 1;//コンティニュー地点
+    Game.continuePoint = 1; //コンティニュー地点
 
     Game.scene = new Scene();
 
@@ -48,22 +47,22 @@ export default class Game{
     Game.Run();
   }
 
-  static async Load(){
+  static async Load() {
     await Art.LoadTexture();
     Audio.Load();
 
     Game.Init();
 
-    Input.returnScroll();//スクロール解除
+    Input.returnScroll(); //スクロール解除
   }
   //ローディング画面中の処理
-  static UpdateLoading(){
+  static UpdateLoading() {
     UIManager.Update();
   }
 
   //タイトル画面中の処理
-  static UpdateTitle(){ 
-    if(Input.isAnyKeyClick()){
+  static UpdateTitle() {
+    if (Input.isAnyKeyClick()) {
       let event = new StartStageEvent();
       EventManager.PushEvent(event);
     }
@@ -71,54 +70,67 @@ export default class Game{
   }
 
   //ステージ中の処理
-  static UpdateStage(){
+  static UpdateStage() {
     /*Entityの更新*/
     EntityManager.Update();
     UIManager.Update();
 
     /*ポーズ状態に遷移*/
-    if(Input.isKeyClick(KEY.ESC)){
+    /*
+    if (Input.isKeyClick(KEY.ESC)) {
       UIManager.SetMenu();
       Game.scene.PushSubState("PAUSE");
     }
+    */
   }
-  static UpdatePause(){
+  static UpdatePause() {
     UIManager.Update();
   }
   //看板を読んでいるときにアニメーションだけを行う
-  static UpdateMes(){
+  static UpdateMes() {
     EntityManager.Animation();
     UIManager.Update();
   }
 
-  static Run(){
+  static Run() {
     requestAnimationFrame(Game.Run);
-    for (let event of EventManager.eventList){
-      if(event.Do().done){
+    for (let event of EventManager.eventList) {
+      if (event.Do().done) {
         EventManager.Remove(event);
       }
     }
-    switch(Game.scene.state){
+    switch (Game.scene.state) {
       /*更新*/
       /*Note : Lastは自前関数*/
       case STATE.LOADING:
-        Game.UpdateLoading();break;
-      case STATE.TITLE :
-        switch(Game.scene.substate.Last()){
-          case "DEFAULT" : Game.UpdateTitle();break;
-          case  "TRANS" : /*Nothing to do*/ break;
+        Game.UpdateLoading();
+        break;
+      case STATE.TITLE:
+        switch (Game.scene.substate.Last()) {
+          case "DEFAULT":
+            Game.UpdateTitle();
+            break;
+          case "TRANS":
+            /*Nothing to do*/ break;
         }
         break;
-      case STATE.STAGE :
-        switch(Game.scene.substate.Last()){
-          case "DEFAULT" : Game.UpdateStage();break;
-          case  "PAUSE" : Game.UpdatePause();break;
-          case  "MES" : Game.UpdateMes(); break;
-          case  "TRANS" : /*Nothing to do*/ break;
+      case STATE.STAGE:
+        switch (Game.scene.substate.Last()) {
+          case "DEFAULT":
+            Game.UpdateStage();
+            break;
+          case "PAUSE":
+            Game.UpdatePause();
+            break;
+          case "MES":
+            Game.UpdateMes();
+            break;
+          case "TRANS":
+            /*Nothing to do*/ break;
         }
         break;
-      default :
-        console.warn("unknown state:",Game.scene.state);
+      default:
+        console.warn("unknown state:", Game.scene.state);
         return;
     }
     /*描画*/

@@ -1,27 +1,73 @@
 import UI from "./ui.js";
-import Event from "../Event/event.js"
+import Event from "../Event/event.js";
 import Drawer from "../drawer.js";
 
 //ぽよぽよイベント
-class PopInEvent extends Event{
-  constructor(component , value){
+class PopInEvent extends Event {
+  constructor(component, props) {
     super();
-    this.value = value;
     let frame = 0;
-    function* popin(){
-      while(frame++<50){
-        component.SetSize(vec2(frame))
-        component.pos.y++;
-        component.SetPos(component.pos)
-        component.sprite.position.y ++;
-      yield;
+    let delay = 0;
+    component.sprite.scale.y = 0;
+    component.sprite.scale.x = 0;
+    const f = x => {
+      const y = x * x * 4;
+      return (
+        1.0 - Math.pow(1 - x, 6) + Math.sin(y * Math.PI) * 0.4 * Math.exp(-y)
+      );
+    };
+    const pos = copy(component.pos);
+    function* popin() {
+      while (delay < props.delay) {
+        delay++;
+        yield;
       }
-    } 
+      let sus = props.sus;
+      if (!sus) sus = 20; //default
+      while (frame <= sus) {
+        const s = f(frame / sus);
+        component.sprite.scale.y = s;
+        component.sprite.scale.x = s;
+        component.pos.x = pos.x + (component.size.x / 2) * (1 - s);
+        component.pos.y = pos.y + (component.size.y / 2) * (1 - s);
+        component.SetPos(component.pos);
+        component.sprite.position.y++;
+        frame++;
+        yield;
+      }
+    }
+    component.pos = copy(pos);
     this.func = popin();
   }
 }
 
-//コンポーネントは全て子を持ち、自身はスプライトを持たない 
+class BlinkEvent extends Event {
+  constructor(component, props) {
+    super();
+    let frame = 0;
+    let delay = 0;
+    component.sprite.alpha = 0.0;
+    function* gen() {
+      while (delay < props.delay) {
+        delay++;
+        yield;
+      }
+      let sus = props.sus;
+      if (!sus) sus = 20; //default
+      while (frame <= sus) {
+        if (frame % 6 < 3) component.sprite.alpha = 0.3;
+        else component.sprite.alpha = 1.0;
+        frame++;
+        yield;
+      }
+      component.sprite.alpha = 1.0;
+      yield;
+    }
+    this.func = gen();
+  }
+}
+
+//コンポーネントは全て子を持ち、自身はスプライトを持たない
 //終端コンポーネントは直属のUIに限られる
 export default class Component extends UI {
   constructor(componentTree, style, parentComponent, NodeTag) {
@@ -43,15 +89,15 @@ export default class Component extends UI {
     this.TraverseComponentTree(componentTree);
   }
   TraverseComponentTree(componentTree) {
-      this.Add();
+    this.Add();
     Object.keys(componentTree).forEach(component => {
       //終端ノード:UIをaddChild
       if (component.startsWith("leaf")) {
-        const leaf = componentTree[component];
-        leaf.SetPos(this.pos)
-        this.children.push(leaf);
+        this.leaf = componentTree[component];
+        this.leaf.SetPos(this.pos);
+        this.children.push(this.leaf);
         //this.addChild(leaf);
-        leaf.Add();
+        this.leaf.Add();
       } else {
         //枝ノード:部分木を解析
         const childTree = componentTree[component];
@@ -66,7 +112,7 @@ export default class Component extends UI {
       }
     });
   }
-  Emit(event){
+  Emit(event) {
     this.eventList.push(event);
   }
   SetSize(size) {
@@ -74,14 +120,28 @@ export default class Component extends UI {
   }
   ParceStyle(style) {
     for (let property in style) {
-      const value = style[property]; 
+      const value = style[property];
       switch (property) {
-        case "margin": this.Margin(value); break;
-        case "size": this.Size(value); break;
-        case "color": this.Color(value); break;
-        case "position": this.Position(value); break;
-        case "popin": this.PopIn(value); break;
-        default : console.warn("unknown style:",property);
+        case "margin":
+          this.Margin(value);
+          break;
+        case "size":
+          this.Size(value);
+          break;
+        case "color":
+          this.Color(value);
+          break;
+        case "position":
+          this.Position(value);
+          break;
+        case "popin":
+          this.PopIn(value);
+          break;
+        case "blink":
+          this.Blink(value);
+          break;
+        default:
+          console.warn("unknown style:", property);
       }
     }
   }
@@ -91,12 +151,12 @@ export default class Component extends UI {
     this.size.y *= v.y;
     this.SetSize(this.size);
   }
-  Fill(){
+  Fill() {
     this.graphics.beginFill(this.color, 1);
     this.graphics.drawRect(0, 0, this.size.x, this.size.y);
     this.graphics.endFill();
     this.sprite = this.graphics;
-    this.sprite.filters = [Drawer.shopFilter]; 
+    this.sprite.filters = [Drawer.shopFilter];
   }
   Color(c) {
     this.color = c;
@@ -111,8 +171,11 @@ export default class Component extends UI {
     this.pos.y += margin.y;
     this.SetSize(vec2(this.size.x - 2 * margin.x, this.size.y - 2 * margin.y));
   }
-  PopIn(value){
-     this.Emit(new PopInEvent(this,value));
+  PopIn(value) {
+    this.Emit(new PopInEvent(this, value));
+  }
+  Blink(value) {
+    this.Emit(new BlinkEvent(this, value));
   }
   ResetStyle(style) {
     this.style = style;
@@ -122,24 +185,22 @@ export default class Component extends UI {
     this.ParceStyle(this.style[this.NodeTag]);
     this.sprite.position = this.pos;
 
-    this.children.forEach(u=>{
+    this.children.forEach(u => {
       //leafnode以外
-      if(u.ResetStyle!==undefined)u.ResetStyle(style)
-    }); 
+      if (u.ResetStyle !== undefined) u.ResetStyle(style);
+    });
   }
-  ExecuteEvent(){
+  ExecuteEvent() {
     //アニメーションイベント
-    for(let e of this.eventList){
-      if(e.Do().done){
-        this.eventList.remove(e);
-      }
+    for (let e of this.eventList) {
+      if (e.Do().done) this.eventList.remove(e);
     }
-   }
-  bitToFloat(c){
-    return { 
-      r:((c>>16)%256)/256,
-      g:((c>>8)%256)/256,
-      b:(c%256)/256
+  }
+  bitToFloat(c) {
+    return {
+      r: ((c >> 16) % 256) / 256,
+      g: ((c >> 8) % 256) / 256,
+      b: (c % 256) / 256
     };
   }
   Update() {
@@ -149,7 +210,7 @@ export default class Component extends UI {
     let c;
     if(this.color!==undefined)c = this.bitToFloat(this.color);
     */
-    if(this.sprite.filters)this.sprite.filters[0].uniforms.time = this.frame;
+    if (this.sprite.filters) this.sprite.filters[0].uniforms.time = this.frame;
     /*
     if(this.sprite.filters)this.sprite.filters[0].uniforms.r= c.r;
     if(this.sprite.filters)this.sprite.filters[0].uniforms.g= c.g;
