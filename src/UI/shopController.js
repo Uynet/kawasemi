@@ -51,7 +51,7 @@ export default class shopController extends UI {
     super(vec2(0));
     this.selectPointerIndex = 0;
     this.shop = shop;
-    this.ui = new Cusor(shop);
+    this.ui = new Cusor(shop); //view
   }
   Add() {
     this.ui.Add();
@@ -63,6 +63,7 @@ export default class shopController extends UI {
     if (Input.isKeyClick(KEY.RIGHT)) this.shop.Controle(">");
     if (Input.isKeyClick(KEY.LEFT)) this.shop.Controle("<");
     if (Input.isKeyClick(KEY.X)) this.shop.Buy();
+    if (Input.isKeyClick(KEY.C)) this.shop.Exit();
     this.ui.Update();
   }
 }

@@ -1,6 +1,5 @@
 import Drawer from "../drawer.js";
 import Audio from "../audio.js";
-import UI from "./ui.js";
 import StagePop from "./stagePop.js";
 import GaugeHP from "./gaugeHP.js";
 import GaugeBossHP from "./gaugeBossHP.js";
@@ -10,7 +9,6 @@ import Font from "./font.js";
 import Message from "./message.js";
 import Menu from "./menu.js";
 import Score from "./score.js";
-import EntityManager from "../Stage/entityManager.js";
 import Game from "../game.js";
 import Shop from "./shop.js";
 

@@ -1,4 +1,5 @@
 import UI from "./ui.js";
+import Event from "../Event/event.js";
 import StagePop from "./stagePop.js";
 import UIManager from "./uiManager.js";
 import Audio from "../audio.js";
@@ -7,8 +8,8 @@ import ListUI from "./listUI.js";
 import Game from "../game.js";
 import Drawer from "../drawer.js";
 import Art from "../art.js";
-import Input from "../input.js";
 import Font from "./font.js";
+import Param from "../param.js";
 import Component from "./component.js";
 import shopController from "./shopController.js";
 //import {shopStyle}from "./Style/shopStyle.js";
@@ -40,7 +41,8 @@ export default class Shop extends UI {
       "ファイア:ほのおがのこる",
       "バリア:まだじっそうしてない"
     ];
-    const priceList = ["30", "100", "0", "200", "5000000000000000"];
+    let priceList = ["30", "100", "0", "200", "5000000000000000"];
+    if (isDebugMode) priceList = ["0", "100", "0", "200", "5000000000000000"];
     const setPrice = function(p) {
       this.price = p;
     };
@@ -93,22 +95,6 @@ export default class Shop extends UI {
     this.descriptionTextUI.ChangeText(item.descriptionText);
     this.priceTextUI.ChangeText("ねだん " + item.price);
   }
-  Reactive() {
-    //リアクティブにStyleの変更を反映する
-    if (isDebugMode) {
-      if (this.frame % 200 == 199) {
-        const url = "src/UI/Style/shopStyle.js";
-        fetch(url)
-          .then(function(response) {
-            return response.text();
-          })
-          .then(text => {
-            const style = eval(text + ";style");
-            this.component.ResetStyle(style);
-          });
-      }
-    }
-  }
   //カーソルの指すindexを移動させる
   //selectPointerIndexは状態に対応
   Controle(input) {
@@ -145,16 +131,27 @@ export default class Shop extends UI {
       Audio.PlaySE("playerDamage");
     }
   }
+  Exit() {
+    Game.scene.PopSubState();
+    this.Remove();
+    this.controller.ui.Remove();
+  }
   Update() {
-    //this.Reactive();
-    if (this.frame > 1) {
-      if (Input.isKeyClick(KEY.C)) {
-        Game.scene.PopSubState();
-        this.Remove();
-        this.controller.ui.Remove();
-      }
-      this.controller.Update();
-    }
+    if (this.frame > 1) this.controller.Update();
+    this.ExecuteEvent();
     this.frame++;
+  }
+}
+class OutShopEvent extends Event {
+  constructor(shop) {
+    super();
+    let frame = 0;
+    function* gen() {
+      while (frame < 50) {
+        frame++;
+        yield;
+      }
+    }
+    this.func = gen();
   }
 }
