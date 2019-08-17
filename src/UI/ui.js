@@ -3,6 +3,7 @@ import UIManager from "./uiManager.js";
 export default class UI {
   constructor(pos) {
     this.frame = 0;
+    this.isUI = true; //子要素を持つcomponentと区別するため
     this.sprite = new PIXI.Sprite();
     this.pos = copy(pos);
     this.sprite.position.x = this.pos.x;
@@ -34,7 +35,9 @@ export default class UI {
   Add() {
     UIManager.addUI(this);
   }
-  Update() {}
+  Update() {
+    this.ExecuteEvent();
+  }
   GetSpriteSize() {
     if (this.sprite !== undefined) {
       if (this.sprite.texture !== undefined) {

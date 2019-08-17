@@ -6,8 +6,9 @@ export default class BlinkEvent extends Event {
     super();
     let frame = 0;
     let delay = 0;
-    component.sprite.alpha = 0.0;
     function* gen() {
+      component.sprite.alpha = 0.0;
+      if (component.view) component = component.view;
       while (delay < props.delay) {
         delay++;
         yield;

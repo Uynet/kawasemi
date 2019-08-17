@@ -98,7 +98,6 @@ export default class UIManager {
     UIManager.addUI(new Message(POS_MES, signboard)); //枠
   }
   static EnterShop() {
-    Audio.PlaySE("coin1", -0.4);
     UIManager.addUI(new Shop());
   }
 

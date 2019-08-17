@@ -4,6 +4,18 @@ import Drawer from "../drawer.js";
 import PopInEvent from "../Event/Component/popIn.js";
 import BlinkEvent from "../Event/Component/blink.js";
 
+class ComponentView extends UI {
+  constructor(model) {
+    super(vec2(0));
+    this.sprite = model.sprite;
+    this.size = model.size;
+    this.frame = 0;
+  }
+  Update() {
+    if (this.sprite.filters) this.sprite.filters[0].uniforms.time = this.frame;
+    this.frame++;
+  }
+}
 //コンポーネントは全て子を持ち、自身はスプライトを持たない
 //終端コンポーネントは直属のUIに限られる
 export default class Component extends UI {
@@ -16,36 +28,32 @@ export default class Component extends UI {
     this.scale = vec2(1);
     this.style = style;
     this.componentTree = componentTree;
-    const view = new UI(this.pos);
-
-    this.sprite = new PIXI.Container();
-    view.sprite = this.sprite;
-
     this.eventList = [];
-
+    this.isNoSprite = true;
+    this.sprite = new PIXI.Container();
     this.graphics = new PIXI.Graphics();
 
     this.ParceStyle(style[this.NodeTag]);
     this.sprite.position = copy(this.pos);
-
-    view.sprite = this.sprite;
+    const view = new ComponentView(this);
     this.view = view;
     this.TraverseComponentTree(componentTree);
   }
   TraverseComponentTree(componentTree) {
+    this.view.Add();
     this.Add();
     Object.keys(componentTree).forEach(component => {
       //終端ノード:UIをaddChild
-      if (component.startsWith("leaf")) {
-        const leaf = componentTree[component];
-        leaf.SetParent(this);
-        leaf.SetPos(this.pos);
-        this.children.push(leaf);
-        //this.addChild(leaf);
-        leaf.Add();
+      //if (component.startsWith("leaf")) {
+      const childTree = componentTree[component];
+      if (childTree.isUI) {
+        const ui = childTree;
+        ui.SetParent(this);
+        ui.SetPos(this.pos);
+        this.children.push(ui);
+        ui.Add();
       } else {
         //枝ノード:部分木を解析
-        const childTree = componentTree[component];
         const childComponent = new Component(
           childTree,
           this.style,
@@ -119,29 +127,8 @@ export default class Component extends UI {
   Blink(value) {
     this.Animate(new BlinkEvent(this, value));
   }
-  ResetStyle(style) {
-    this.style = style;
-    this.scale = vec2(1);
-    this.pos = copy(this.parent.pos);
-    this.size = copy(this.parent.size);
-    this.ParceStyle(this.style[this.NodeTag]);
-    this.sprite.position = this.pos;
-
-    this.children.forEach(u => {
-      //leafnode以外
-      if (u.ResetStyle !== undefined) u.ResetStyle(style);
-    });
-  }
-  bitToFloat(c) {
-    return {
-      r: ((c >> 16) % 256) / 256,
-      g: ((c >> 8) % 256) / 256,
-      b: (c % 256) / 256
-    };
-  }
   Update() {
     this.ExecuteEvent();
     this.frame++;
-    if (this.sprite.filters) this.sprite.filters[0].uniforms.time = this.frame;
   }
 }

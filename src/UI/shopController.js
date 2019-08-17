@@ -42,7 +42,7 @@ class Cusor extends UI {
   Update() {
     this.SetPos(this.pos);
     this.ExecuteEvent();
-    this.sprite.rotation = this.frame / 50;
+    //this.sprite.rotation = this.frame / 50;
     this.frame++;
   }
 }

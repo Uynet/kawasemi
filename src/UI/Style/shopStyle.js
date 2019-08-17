@@ -13,8 +13,8 @@ const gameSreensize = vec2(800 / 2, 640 / 2);
  * popin : アニメーションpopinを指定
  */
 
-// const windowOpenEaseFunc = easeOutElastic;
-const windowOpenEaseFunc = bounceOut;
+//const windowOpenEaseFunc = easeOutElastic;
+const windowOpenEaseFunc = bounce;
 
 const style = {
   root: {
@@ -28,11 +28,10 @@ const style = {
     popin: { ease: windowOpenEaseFunc }
   },
   price: {
-    //margin : vec2(8),
-    position: vec2(0.38, 0.17),
-    //size   : vec2(0.07,0.05),
-    //color:main
-    popin: { delay: 20, ease: easeOutElastic }
+    position: vec2(0.38, 0.22)
+  },
+  itemName: {
+    position: vec2(0.38, 0.12)
   },
   list: {
     position: vec2(0.3, 0.3),
