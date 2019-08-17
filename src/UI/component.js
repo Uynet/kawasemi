@@ -10,12 +10,8 @@ class PopInEvent extends Event {
     let delay = 0;
     component.sprite.scale.y = 0;
     component.sprite.scale.x = 0;
-    const f = x => {
-      const y = x * x * 4;
-      return (
-        1.0 - Math.pow(1 - x, 6) + Math.sin(y * Math.PI) * 0.4 * Math.exp(-y)
-      );
-    };
+    let ease = props.ease;
+    if (!ease) ease = x => x;
     const pos = copy(component.pos);
     function* popin() {
       while (delay < props.delay) {
@@ -25,7 +21,7 @@ class PopInEvent extends Event {
       let sus = props.sus;
       if (!sus) sus = 20; //default
       while (frame <= sus) {
-        const s = f(frame / sus);
+        const s = ease(frame / sus);
         component.sprite.scale.y = s;
         component.sprite.scale.x = s;
         component.pos.x = pos.x + (component.size.x / 2) * (1 - s);
@@ -74,14 +70,15 @@ export default class Component extends UI {
     super(parentComponent.pos);
     this.type = "COMPONENT";
     this.NodeTag = NodeTag; //Styleのセレクタとして使う
-    this.parentComponent = parentComponent;
-    this.scale = vec2(1);
+    this.SetParent(parentComponent);
     this.size = copy(parentComponent.size);
+    this.scale = vec2(1);
     this.style = style;
     this.componentTree = componentTree;
     this.sprite = new PIXI.Container();
 
     this.eventList = [];
+
     this.graphics = new PIXI.Graphics();
 
     this.ParceStyle(style[this.NodeTag]);
@@ -93,11 +90,12 @@ export default class Component extends UI {
     Object.keys(componentTree).forEach(component => {
       //終端ノード:UIをaddChild
       if (component.startsWith("leaf")) {
-        this.leaf = componentTree[component];
-        this.leaf.SetPos(this.pos);
-        this.children.push(this.leaf);
+        const leaf = componentTree[component];
+        leaf.SetParent(this);
+        leaf.SetPos(this.pos);
+        this.children.push(leaf);
         //this.addChild(leaf);
-        this.leaf.Add();
+        leaf.Add();
       } else {
         //枝ノード:部分木を解析
         const childTree = componentTree[component];
@@ -180,8 +178,8 @@ export default class Component extends UI {
   ResetStyle(style) {
     this.style = style;
     this.scale = vec2(1);
-    this.pos = copy(this.parentComponent.pos);
-    this.size = copy(this.parentComponent.size);
+    this.pos = copy(this.parent.pos);
+    this.size = copy(this.parent.size);
     this.ParceStyle(this.style[this.NodeTag]);
     this.sprite.position = this.pos;
 

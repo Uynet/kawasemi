@@ -1,5 +1,5 @@
-//const isDebugMode = true;
-const isDebugMode = false;
+const isDebugMode = true;
+//const isDebugMode = false;
 /*meta*/
 Array.prototype.Last = function() {
   if (this.length == 0) {
@@ -223,3 +223,31 @@ let length = v => {
 };
 /*for debug*/
 let cl = console.log;
+
+/*EaseFunc*/
+const easeOutElastic = x => {
+  const y = x * x * 4;
+  return 1.0 - Math.pow(1 - x, 6) + Math.sin(y * Math.PI) * 0.4 * Math.exp(-y);
+};
+//made by @phi16_
+const liner = x => x;
+const smooth = x => (x * x * (3 - x)) / 2;
+const quad = x => x * x;
+const cubic = x => x * x * x;
+const quart = x => x * x * x * x;
+const quint = x => x * x * x * x * x;
+const sine = x => 1 - Math.cos((x * Math.PI) / 2);
+const circ = x => 1 - Math.sqrt(Math.max(0, 1 - x * x));
+const exp = x => Math.pow(2, -(1 - x) * 10);
+const back = x => x * x * (2.70158 * x - 1.70158);
+const softBack = x => x * x * (2 * x - 1);
+const elastic = x =>
+  56 * x * x * x * x * x - 105 * x * x * x * x + 60 * x * x * x - 10 * x * x;
+const bounce = x => {
+  var pow2,
+    bounce = 4;
+  while (x < ((pow2 = Math.pow(2, --bounce)) - 1) / 11) {}
+  return (
+    1 / Math.pow(4, 3 - bounce) - 7.5625 * Math.pow((pow2 * 3 - 2) / 22 - x, 2)
+  );
+};
