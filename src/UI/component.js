@@ -1,67 +1,8 @@
 import UI from "./ui.js";
-import Event from "../Event/event.js";
 import Drawer from "../drawer.js";
 
-//ぽよぽよイベント
-class PopInEvent extends Event {
-  constructor(component, props) {
-    super();
-    let frame = 0;
-    let delay = 0;
-    component.sprite.scale.y = 0;
-    component.sprite.scale.x = 0;
-    let ease = props.ease;
-    if (!ease) ease = x => x;
-    const pos = copy(component.pos);
-    function* popin() {
-      while (delay < props.delay) {
-        delay++;
-        yield;
-      }
-      let sus = props.sus;
-      if (!sus) sus = 20; //default
-      while (frame <= sus) {
-        const s = ease(frame / sus);
-        component.sprite.scale.y = s;
-        component.sprite.scale.x = s;
-        component.pos.x = pos.x + (component.size.x / 2) * (1 - s);
-        component.pos.y = pos.y + (component.size.y / 2) * (1 - s);
-        component.SetPos(component.pos);
-        component.sprite.position.y++;
-        frame++;
-        yield;
-      }
-    }
-    component.pos = copy(pos);
-    this.func = popin();
-  }
-}
-
-class BlinkEvent extends Event {
-  constructor(component, props) {
-    super();
-    let frame = 0;
-    let delay = 0;
-    component.sprite.alpha = 0.0;
-    function* gen() {
-      while (delay < props.delay) {
-        delay++;
-        yield;
-      }
-      let sus = props.sus;
-      if (!sus) sus = 20; //default
-      while (frame <= sus) {
-        if (frame % 6 < 3) component.sprite.alpha = 0.3;
-        else component.sprite.alpha = 1.0;
-        frame++;
-        yield;
-      }
-      component.sprite.alpha = 1.0;
-      yield;
-    }
-    this.func = gen();
-  }
-}
+import PopInEvent from "../Event/Component/popIn.js";
+import BlinkEvent from "../Event/Component/blink.js";
 
 //コンポーネントは全て子を持ち、自身はスプライトを持たない
 //終端コンポーネントは直属のUIに限られる
@@ -75,7 +16,10 @@ export default class Component extends UI {
     this.scale = vec2(1);
     this.style = style;
     this.componentTree = componentTree;
+    const view = new UI(this.pos);
+
     this.sprite = new PIXI.Container();
+    view.sprite = this.sprite;
 
     this.eventList = [];
 
@@ -83,6 +27,9 @@ export default class Component extends UI {
 
     this.ParceStyle(style[this.NodeTag]);
     this.sprite.position = copy(this.pos);
+
+    view.sprite = this.sprite;
+    this.view = view;
     this.TraverseComponentTree(componentTree);
   }
   TraverseComponentTree(componentTree) {
@@ -109,9 +56,6 @@ export default class Component extends UI {
         //this.addChild(childComponent);
       }
     });
-  }
-  Emit(event) {
-    this.eventList.push(event);
   }
   SetSize(size) {
     this.size = size;
@@ -170,10 +114,10 @@ export default class Component extends UI {
     this.SetSize(vec2(this.size.x - 2 * margin.x, this.size.y - 2 * margin.y));
   }
   PopIn(value) {
-    this.Emit(new PopInEvent(this, value));
+    this.Animate(new PopInEvent(this, value));
   }
   Blink(value) {
-    this.Emit(new BlinkEvent(this, value));
+    this.Animate(new BlinkEvent(this, value));
   }
   ResetStyle(style) {
     this.style = style;
@@ -188,12 +132,6 @@ export default class Component extends UI {
       if (u.ResetStyle !== undefined) u.ResetStyle(style);
     });
   }
-  ExecuteEvent() {
-    //アニメーションイベント
-    for (let e of this.eventList) {
-      if (e.Do().done) this.eventList.remove(e);
-    }
-  }
   bitToFloat(c) {
     return {
       r: ((c >> 16) % 256) / 256,
@@ -204,15 +142,6 @@ export default class Component extends UI {
   Update() {
     this.ExecuteEvent();
     this.frame++;
-    /*
-    let c;
-    if(this.color!==undefined)c = this.bitToFloat(this.color);
-    */
     if (this.sprite.filters) this.sprite.filters[0].uniforms.time = this.frame;
-    /*
-    if(this.sprite.filters)this.sprite.filters[0].uniforms.r= c.r;
-    if(this.sprite.filters)this.sprite.filters[0].uniforms.g= c.g;
-    if(this.sprite.filters)this.sprite.filters[0].uniforms.b= c.b;
-    */
   }
 }

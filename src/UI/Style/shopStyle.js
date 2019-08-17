@@ -13,9 +13,10 @@ const gameSreensize = vec2(800 / 2, 640 / 2);
  * popin : アニメーションpopinを指定
  */
 
-const windowOpenEaseFunc = easeOutElastic;
+// const windowOpenEaseFunc = easeOutElastic;
+const windowOpenEaseFunc = bounceOut;
 
-const shopStyle = {
+const style = {
   root: {
     margin: mul(vec2(0.05), gameSreensize),
     color: hilight,
@@ -43,7 +44,7 @@ const shopStyle = {
     margin: vec2(8, 0),
     size: vec2(1.0, 0.3),
     color: main,
-    popin: { delay: 10, sus: 30, ease: easeOutElastic },
+    popin: { delay: 10, sus: 30, ease: bounceOut },
     blink: { delay: 10, sus: 20 }
   },
   keyGuide: {
@@ -52,7 +53,7 @@ const shopStyle = {
     size: vec2(0.55, 0.07),
     color: main,
     blink: { delay: 17 },
-    popin: { delay: 17, sus: 30, ease: bounce }
+    popin: { delay: 17, sus: 30, ease: bounceOut }
   }
 };
 //export {shopStyle}

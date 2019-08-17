@@ -1,4 +1,8 @@
 import UI from "./ui.js";
+import StagePop from "./stagePop.js";
+import UIManager from "./uiManager.js";
+import Audio from "../audio.js";
+import EntityManager from "../Stage/entityManager.js";
 import ListUI from "./listUI.js";
 import Game from "../game.js";
 import Drawer from "../drawer.js";
@@ -6,7 +10,7 @@ import Art from "../art.js";
 import Input from "../input.js";
 import Font from "./font.js";
 import Component from "./component.js";
-import shopItemSelectCusor from "./shopItemSelectCusor.js";
+import shopController from "./shopController.js";
 //import {shopStyle}from "./Style/shopStyle.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
@@ -19,6 +23,7 @@ export default class Shop extends UI {
     this.sprite = new PIXI.Sprite();
     this.size = gameSreensize;
     this.children = [];
+    this.selectPointerIndex = 0;
 
     this.descriptionTextUI = new Font(
       vec2(0),
@@ -26,7 +31,7 @@ export default class Shop extends UI {
       "MES"
     );
     this.keyGuideTextUI = new Font(vec2(0), "X:けってい / C:もどる", "MES");
-    this.priceTextUI = new Font(vec2(0), "5000G", "MES");
+    this.priceTextUI = new Font(vec2(0), " よおこそ", "MES");
     this.itemList = [];
     const descList = [
       "ミサイル:つよいばくはつ",
@@ -50,8 +55,10 @@ export default class Shop extends UI {
       ui.setPrice = setPrice;
     });
 
-    const itemListUI = new ListUI (this.pos,this.itemList);
-    const cusor = new shopItemSelectCusor(this);
+    const itemListUI = new ListUI(this.pos, this.itemList);
+    this.pointedItem = this.itemList[0];
+    this.SelectItem(this.itemList[0]);
+    this.controller = new shopController(this);
     /*SYNTAX
        オリジナルUI記述文法
        [node] : 子を持つノード。プロパティ名に対応するスタイルが適用される
@@ -60,10 +67,10 @@ export default class Shop extends UI {
     const shopComponent = {
       div: {
         price: { leaf: this.priceTextUI },
-        list: { leaf:itemListUI, },
-        leaf: cusor,
+        list: { leaf: itemListUI },
+        leaf: this.controller,
         keyGuide: { leaf: this.keyGuideTextUI },
-        description: { leaf: this.descriptionTextUI}
+        description: { leaf: this.descriptionTextUI }
       }
     };
     const url = "src/UI/Style/shopStyle.js";
@@ -72,23 +79,21 @@ export default class Shop extends UI {
         return response.text();
       })
       .then(text => {
-        const style = eval(text + ";shopStyle");
+        const style = eval(text + ";style");
         const componentTree = shopComponent;
         this.component = new Component(componentTree, style, this, "root");
-        //spriteに親子を持たせるのをやめる
-        //this.addChild(this.component);
-        this.children.push(this.component)
-        cusor.AddPointer(0);
+        this.children.push(this.component);
+        this.controller.FocusOnItem(this.GetItemList()[0]);
       });
   }
   GetItemList() {
     return this.itemList;
   }
-  OnSelectItem(item) {
+  SelectItem(item) {
     this.descriptionTextUI.ChangeText(item.descriptionText);
-    this.priceTextUI.ChangeText("ねだん "+item.price);
+    this.priceTextUI.ChangeText("ねだん " + item.price);
   }
-  Reactive(){
+  Reactive() {
     //リアクティブにStyleの変更を反映する
     if (isDebugMode) {
       if (this.frame % 200 == 199) {
@@ -98,10 +103,46 @@ export default class Shop extends UI {
             return response.text();
           })
           .then(text => {
-            const style = eval(text + ";shopStyle");
+            const style = eval(text + ";style");
             this.component.ResetStyle(style);
           });
       }
+    }
+  }
+  //カーソルの指すindexを移動させる
+  //selectPointerIndexは状態に対応
+  Controle(input) {
+    Audio.PlaySE("targetOn");
+    if (input == ">") this.selectPointerIndex++;
+    else if (input == "<") this.selectPointerIndex--;
+    const N = this.GetItemList().length;
+    this.selectPointerIndex += N;
+    this.selectPointerIndex %= N;
+    this.pointedItem = this.GetItemList()[this.selectPointerIndex];
+    this.controller.FocusOnItem(this.pointedItem);
+    this.SelectItem(this.pointedItem);
+  }
+  Buy() {
+    const item = this.pointedItem;
+    const name = item.name;
+    const price = item.price;
+    const player = EntityManager.player;
+    let p = vec2(128, 42);
+    if (price <= player.score) {
+      if (!Param.isHaveWeapon(name)) {
+        player.GetScore(-price);
+        item.setPrice(0);
+        Param.GetWeapon(name);
+        UIManager.bullet.Push(name);
+        UIManager.addUI(new StagePop(p, "-" + name + "をてにいれた "));
+        Audio.PlaySE("coin1");
+      } else {
+        UIManager.addUI(new StagePop(p, "-もうもってる! ")); //SCORE
+        Audio.PlaySE("playerDamage");
+      }
+    } else {
+      UIManager.addUI(new StagePop(p, "-かえません ")); //SCORE
+      Audio.PlaySE("playerDamage");
     }
   }
   Update() {
@@ -110,7 +151,9 @@ export default class Shop extends UI {
       if (Input.isKeyClick(KEY.C)) {
         Game.scene.PopSubState();
         this.Remove();
+        this.controller.ui.Remove();
       }
+      this.controller.Update();
     }
     this.frame++;
   }

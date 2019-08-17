@@ -251,3 +251,4 @@ const bounce = x => {
     1 / Math.pow(4, 3 - bounce) - 7.5625 * Math.pow((pow2 * 3 - 2) / 22 - x, 2)
   );
 };
+const bounceOut = x => 1 - bounce(1 - x);

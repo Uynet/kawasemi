@@ -10,9 +10,13 @@ export default class UI {
     this.type; //enum
     this.isUpdater = true;
     this.children = [];
+    this.eventList = [];
   }
   Delete() {
     UIManager.removeUI(this);
+  }
+  Animate(event) {
+    this.eventList.push(event);
   }
   SetPos(pos) {
     this.pos = copy(pos);
@@ -49,5 +53,11 @@ export default class UI {
   Remove() {
     UIManager.removeUI(this);
     this.children.forEach(u => u.Remove());
+  }
+  ExecuteEvent() {
+    //アニメーションイベント
+    for (let e of this.eventList) {
+      if (e.Do().done) this.eventList.remove(e);
+    }
   }
 }
