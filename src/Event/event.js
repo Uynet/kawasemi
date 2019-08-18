@@ -1,10 +1,22 @@
-export default class Event{
-  constructor(func,args){
-    this.func = func;/*実行する関数*/
-    this.args = args;/*引数の配列*/
+export default class Event {
+  constructor(unko) {
+    this.func;
+    this.callback = [];
   }
-  Do(){
-    //?
-    return this.func.next();
+  //このイベントがdoneした後に呼ばれるイベント
+  AddCallback(event) {
+    this.callback.push(event);
+  }
+  Do() {
+    let itt = this.func.next();
+    if (itt.done) {
+      const c = this.callback.pop();
+      if (c) {
+        //cl("done:callback", c);
+        this.func = c.func;
+        itt = this.func.next();
+      }
+    }
+    return itt;
   }
 }

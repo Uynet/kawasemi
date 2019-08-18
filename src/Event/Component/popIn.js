@@ -15,7 +15,7 @@ export default class PopInEvent extends Event {
     let delay = 0;
     let ease = props.ease;
     if (!ease) ease = x => x;
-    function* popin() {
+    function* generator() {
       const pos = copy(component.pos);
       let view = component;
       if (component.view) view = component.view;
@@ -25,7 +25,6 @@ export default class PopInEvent extends Event {
         delay++;
         yield;
       }
-      Audio.PlaySE("coin1", -1.3);
       let sus = props.sus;
       if (!sus) sus = 20; //default
       while (frame <= sus) {
@@ -40,6 +39,6 @@ export default class PopInEvent extends Event {
       }
       view.pos = copy(pos);
     }
-    this.func = popin();
+    this.func = generator();
   }
 }

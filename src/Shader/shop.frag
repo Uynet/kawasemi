@@ -16,17 +16,17 @@ vec2 rot(vec2 p){
 }
 
 void main(void){
+  vec2 st=gl_FragCoord.xy;
+  st/=8.;
+  st-=fract(st);
+  st/=80.;
   vec3 map=vec3(vTextureCoord.xy,1)*mappedMatrix;
   vec2 uv=map.xy;
-  float r=68.;
-  uv*=r;
-  uv-=fract(uv);
-  uv/=r;
-  vec2 p=rot(uv);
-  p.y=fract(p.y*10.-time/60.);
   uv=abs(uv-.5);
   if(length(uv)>.68)discard;
-  vec4 c=texture2D(uSampler,vTextureCoord);
+  vec2 p=rot(st);
+  p.y=fract(p.y*10.-time/60.);
+  vec4 c=texture2D(uSampler,vec2(.5));
   if(p.y<.5)c.xyz*=1.2;
   gl_FragColor=c;
 }
