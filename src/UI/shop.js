@@ -25,11 +25,15 @@ export default class Shop extends UI {
   constructor() {
     super(vec0());
     //Audio.PlaySE("enemy3shot", -0.6);
+    Audio.PlaySE("coin2", -0.6, 0.6);
+    Audio.PlaySE("stageChange", -0.6, 1.5);
     this.type = "SHOP";
     this.sprite = new PIXI.Sprite();
     this.size = gameSreensize;
     this.children = [];
     this.selectPointerIndex = 0;
+    this.stetes = { MAIN: "MAIN", CONFIRM: "CONFIRM" };
+    this.state = "MAIN";
 
     this.descriptionTextUI = new Font(
       vec2(0),
@@ -103,9 +107,9 @@ export default class Shop extends UI {
         itemName: { leaf: this.itemNameUI },
         price: { leaf: this.priceTextUI },
         list: { leaf: itemListUI },
-        leaf: this.controller,
         keyGuide: { leaf: this.keyGuideTextUI },
-        description: { leaf: this.descriptionTextUI }
+        description: { leaf: this.descriptionTextUI },
+        leaf: this.controller
       }
     };
 
@@ -120,6 +124,7 @@ export default class Shop extends UI {
         this.component = new Component(componentTree, style, this, "root");
         this.children.push(this.component);
         this.controller.FocusOnItem(this.GetItemList()[0]);
+        //this.SelectItem(this.GetItemList()[0]);
       });
   }
   GetItemList() {
@@ -130,11 +135,6 @@ export default class Shop extends UI {
     this.descriptionTextUI.ChangeText(item.descriptionText);
     this.priceTextUI.ChangeText("ねだん " + item.price);
     this.itemNameUI.ChangeText(item.name);
-    /*
-    this.itemNameUI.Animate(
-      new SlideInEvent(this.itemNameUI, { delay: 0, sus: 2, amp: 4 })
-    );
-    */
     this.itemNameUI.Animate(
       new BlinkEvent(this.itemNameUI, { delay: 0, sus: 3 })
     );
@@ -145,7 +145,8 @@ export default class Shop extends UI {
   //カーソルの指すindexを移動させる
   //selectPointerIndexは状態に対応
   Controle(input) {
-    Audio.PlaySE("changeWeapon", -0.4);
+    Audio.PlaySE("landing1", 1.0, 1.5);
+    Audio.PlaySE("changeWeapon", -0.8, 1.3);
     if (input == ">") this.selectPointerIndex++;
     else if (input == "<") this.selectPointerIndex--;
     const N = this.GetItemList().length;
@@ -155,12 +156,63 @@ export default class Shop extends UI {
     this.controller.FocusOnItem(this.pointedItem);
     this.SelectItem(this.pointedItem);
   }
+  CloseConfirmModal() {
+    this.modal.Remove();
+    this.state = "MAIN";
+  }
+  OpenConfirmModal() {
+    this.state = "CONFIRM";
+    Audio.PlaySE("coin1");
+    const YES = new Font(vec0(), "はい", "MES");
+    const NO = new Font(vec0(), "いいえ ", "MES");
+    const selective = [YES, NO];
+    const coin = new UI(vec0());
+    coin.sprite = Art.CreateSprite(Art.enemyPattern.coin[4]);
+    const modalTree = {
+      div: {
+        icon: { leaf: this.pointedItem },
+        label: { leaf: new Font(vec0(), "かう?", "MES") },
+        price: {
+          leaf1: new Font(vec0(), "  " + this.pointedItem.price, "MES"),
+          leaf2: coin
+        },
+        Y: { leaf: selective[0] },
+        N: { leaf2: selective[1] }
+      }
+    };
+    const hilight = 0xef1f6a;
+    const main = 0x403080;
+    const base = 0x100030;
+    const accent = 0xf3b000;
+    const style = {
+      div: {
+        margin: vec2(4),
+        color: base,
+        popin: { ease: bounceOut }
+      },
+      root: {
+        margin: mul(vec2(0.3), gameSreensize),
+        color: hilight,
+        popin: { delay: 0, ease: bounceOut }
+      },
+      label: { position: vec2(0.4, 0.15) },
+      icon: { position: vec2(0.2, 0.1) },
+      price: { position: vec2(0.3, 0.3) },
+      Y: { position: vec2(0.4, 0.6) },
+      N: { position: vec2(0.4, 0.75) }
+    };
+    this.modal = new Component(modalTree, style, this, "root");
+    this.modal.selective = selective;
+    this.controller.FocusOnItem(this.modal.selective[0]);
+    this.children.push(this.modal);
+  }
   Buy() {
+    this.state = "MAIN";
     const item = this.pointedItem;
     const name = item.name;
     const price = item.price;
     const player = EntityManager.player;
-    let p = vec2(128, 42);
+    let p = vec2(96, 64);
     if (price <= player.score) {
       if (!Param.isHaveWeapon(name)) {
         player.GetScore(-price);
@@ -169,12 +221,11 @@ export default class Shop extends UI {
         UIManager.bullet.Push(name);
         UIManager.addUI(new StagePop(p, "-" + name + "をてにいれた "));
         Audio.PlaySE("coin1");
-      } else {
-        UIManager.addUI(new StagePop(p, "-もうもってる! ")); //SCORE
-        Audio.PlaySE("playerDamage");
+        Audio.PlaySE("bomb", -0.9, 1.6);
+        this.CloseConfirmModal();
       }
     } else {
-      UIManager.addUI(new StagePop(p, "-かえません ")); //SCORE
+      UIManager.addUI(new StagePop(p, "-errorー!"));
       Audio.PlaySE("playerDamage");
     }
   }

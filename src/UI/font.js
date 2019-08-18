@@ -106,6 +106,7 @@ export default class Font extends UI {
 
   SetPos(pos) {
     this.pos = copy(pos);
+    //this.pos = vec2(0); //フォント関係でバグったら多分ここが原因
     this.sprite.position.x = pos.x;
     this.sprite.position.y = pos.y;
   }

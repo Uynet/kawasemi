@@ -14,7 +14,8 @@ class PopItem extends Event {
         yield;
       }
       item.sprite.alpha = 1;
-      Audio.PlaySE("coin1", -1.3);
+      //Audio.PlaySE("coin1", -1.3);
+      Audio.PlaySE("empty", -0.3);
       props.delay = 0;
       item.Animate(new PopInEvent(item, props));
       return;
