@@ -74,11 +74,19 @@ export default class shopController extends UI {
   //はい/いいえを選択
   ControleConfirm() {
     const i = this.shop.modal.selective.indexOf(this.focusedItem);
+    if (Input.isKeyClick(KEY.C)) {
+      this.shop.CloseConfirmModal(); //キャンセル
+    }
     if (Input.isKeyClick(KEY.X)) {
       if (i == 0) this.shop.Buy(); //はい
       if (i == 1) this.shop.CloseConfirmModal(); //いいえ
     }
-    if (Input.isKeyClick(KEY.UP) || Input.isKeyClick(KEY.DOWN)) {
+    if (
+      Input.isKeyPress(KEY.UP) ||
+      Input.isKeyPress(KEY.DOWN) ||
+      Input.isKeyPress(KEY.RIGHT) ||
+      Input.isKeyPress(KEY.LEFT)
+    ) {
       Audio.PlaySE("changeWeapon", -0.4);
       Audio.PlaySE("landing1", 1.0, 1.5);
       let i = this.shop.modal.selective.indexOf(this.focusedItem);
@@ -87,8 +95,10 @@ export default class shopController extends UI {
     }
   }
   ControleMain() {
-    if (Input.isKeyClick(KEY.RIGHT)) this.shop.Controle(">");
-    if (Input.isKeyClick(KEY.LEFT)) this.shop.Controle("<");
+    if (Input.isKeyPress(KEY.RIGHT) || Input.isKeyPress(KEY.DOWN))
+      this.shop.Controle(">");
+    if (Input.isKeyPress(KEY.LEFT) || Input.isKeyPress(KEY.UP))
+      this.shop.Controle("<");
     if (Input.isKeyClick(KEY.X)) {
       const item = this.shop.pointedItem;
       let p = vec2(96, 64);
@@ -106,7 +116,7 @@ export default class shopController extends UI {
         this.shop.OpenConfirmModal();
       }
     }
-    if (Input.isKeyClick(KEY.C)) this.shop.Exit();
+    if (Input.isKeyPress(KEY.C)) this.shop.Exit();
     this.ui.Update();
   }
   Update() {

@@ -76,7 +76,7 @@ export default class Game {
     UIManager.Update();
 
     /*ポーズ状態に遷移*/
-    if (Input.isKeyClick(KEY.ESC)) {
+    if (isDebugMode && Input.isKeyClick(KEY.ESC)) {
       UIManager.SetMenu();
       Game.scene.PushSubState("PAUSE");
     }

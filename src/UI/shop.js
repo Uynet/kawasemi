@@ -159,6 +159,7 @@ export default class Shop extends UI {
   CloseConfirmModal() {
     this.modal.Remove();
     this.state = "MAIN";
+    Audio.PlaySE("playerDamage");
   }
   OpenConfirmModal() {
     this.state = "CONFIRM";
@@ -170,7 +171,7 @@ export default class Shop extends UI {
     coin.sprite = Art.CreateSprite(Art.enemyPattern.coin[4]);
     const modalTree = {
       div: {
-        icon: { leaf: this.pointedItem },
+        //icon: { leaf: this.pointedItem },
         label: { leaf: new Font(vec0(), "かう?", "MES") },
         price: {
           leaf1: new Font(vec0(), "  " + this.pointedItem.price, "MES"),
@@ -193,7 +194,7 @@ export default class Shop extends UI {
       root: {
         margin: mul(vec2(0.3), gameSreensize),
         color: hilight,
-        popin: { delay: 0, ease: bounceOut }
+        popin: { delay: 0, ease: easeOutElastic}
       },
       label: { position: vec2(0.4, 0.15) },
       icon: { position: vec2(0.2, 0.1) },
@@ -230,6 +231,7 @@ export default class Shop extends UI {
     }
   }
   Exit() {
+    Audio.PlaySE("playerDamage");
     Game.scene.PopSubState();
     this.Remove();
     this.controller.ui.Remove();

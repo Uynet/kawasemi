@@ -115,7 +115,7 @@ export default class Player extends Entity {
     this.toArg = 0;
     this.scPos = vec0(); //スクロール位置
     this.score = this.param.score;
-    UIManager.score.SetScore(this.score);
+    if(UIManager.score)UIManager.score.SetScore(this.score);
     //UIManager.HP.SetBar(this.hp);//HPbarの更新
     //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
     this.vxMax = Param.player.vxMax;
