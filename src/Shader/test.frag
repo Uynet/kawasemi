@@ -1,20 +1,20 @@
 precision mediump float;
 varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
+
 uniform float time;
 uniform float x;
 uniform float y;
 uniform vec2 p;
 
-void main(void) {
-  vec2 uv = vTextureCoord;
-  uv -= 0.5;
-  vec2 p = vec2(x,y)-0.5;
-  float L = abs(abs(uv.x-p.x)-time*0.02);
-  //uv.x += exp(-L*40.0)*sin(L*10.0)*0.5;
-  uv.x += exp(-L*40.0-4.0)*7.5/(1.0+time*0.2);
-  uv.x = clamp(uv.x , -0.5 , 0.5);
+uniform mat3 mappedMatrix;
 
-  vec4 color = texture2D(uSampler, uv+0.5);
-  gl_FragColor = color;
+void main(void){
+  vec3 map=vec3(vTextureCoord.xy,1)*mappedMatrix;
+  //vec2 uv=vTextureCoord;
+  vec2 uv=map.xy;
+  vec4 color1=texture2D(uSampler,vTextureCoord);
+  uv=fract(uv*10.);
+  vec4 color2=vec4(uv,0.,.2);
+  gl_FragColor=mix(color1,color2,.3);
 }
