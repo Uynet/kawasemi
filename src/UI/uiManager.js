@@ -66,7 +66,7 @@ export default class UIManager {
     let p3 = vec2(p1.x - 8, p2.y + 48);
     let p4 = vec2(32, 200);
     UIManager.addUI(new Font(p1, "さいはてどろっぷ", "MES")); //SCORE
-    UIManager.addUI(new Font(p2, "- ver0.312 -", "MES")); //SCORE
+    UIManager.addUI(new Font(p2, "- ver0.33 -", "MES")); //SCORE
     UIManager.addUI(new Font(p3, "Press Any Key", "MES")); //SCORE
     UIManager.addUI(new Font(p4, "+ 2018-2019 uynet", "MES")); //SCORE
   }

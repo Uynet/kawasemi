@@ -5,6 +5,7 @@ import EventManager from "./Event/eventmanager.js";
 import StartStageEvent from "./Event/startStageEvent.js";
 import StartGameEvent from "./Event/startGameEvent.js";
 import Scene from "./Event/scene.js";
+import State from "./Event/State.js";
 import UIManager from "./UI/uiManager.js";
 import Font from "./UI/font.js";
 import WeaponManager from "./Weapon/weaponManager.js";
@@ -39,6 +40,7 @@ export default class Game {
     Game.continuePoint = 1; //コンティニュー地点
 
     Game.scene = new Scene();
+    Game.state = new State();
 
     //Gameにタイトル画面状態をプッシュ
     let event = new StartGameEvent();
@@ -91,7 +93,6 @@ export default class Game {
   }
 
   static Run() {
-    requestAnimationFrame(Game.Run);
     for (let event of EventManager.eventList) {
       if (event.Do().done) {
         EventManager.Remove(event);
@@ -135,5 +136,6 @@ export default class Game {
     Drawer.Renderer.render(Drawer.Stage);
     Audio.Update();
     Timer.IncTime();
+    requestAnimationFrame(Game.Run);
   }
 }

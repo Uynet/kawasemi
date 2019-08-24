@@ -60,6 +60,7 @@ export default class Audio {
   }
   // サウンドを再生
   static async PlayBGM(name, gain) {
+    cl(name);
     let buffer = this.BGM[name];
     source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
@@ -89,7 +90,10 @@ export default class Audio {
       this.PlayingBGM.source.playbackRate.value = pitch;
   }
   static StopBGM() {
+    cl(this.PlayingBGM.name);
     if (this.PlayingBGM.name !== null) {
+      cl(this.PlayingBGM);
+      this.PlayingBGM.source.stop();
       this.PlayingBGM.source.stop();
       this.PlayingBGM = {
         name: null,
@@ -131,6 +135,7 @@ export default class Audio {
       this.LoadBGM("stage6");
       this.LoadBGM("boss");
       this.LoadBGM("boss3");
+      this.LoadBGM("title");
       this.LoadSE("jump1");
       this.LoadSE("jump2"); //空中ジャンプ
       this.LoadSE("coin1");
