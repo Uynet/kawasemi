@@ -5,7 +5,7 @@ import EventManager from "./Event/eventmanager.js";
 import StartStageEvent from "./Event/startStageEvent.js";
 import StartGameEvent from "./Event/startGameEvent.js";
 import Scene from "./Event/scene.js";
-import State from "./Event/State.js";
+//import State from "./Event/state.js";
 import UIManager from "./UI/uiManager.js";
 import Font from "./UI/font.js";
 import WeaponManager from "./Weapon/weaponManager.js";
@@ -40,7 +40,7 @@ export default class Game {
     Game.continuePoint = 1; //コンティニュー地点
 
     Game.scene = new Scene();
-    Game.state = new State();
+    //Game.state = new State();
 
     //Gameにタイトル画面状態をプッシュ
     let event = new StartGameEvent();
