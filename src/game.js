@@ -1,23 +1,20 @@
+import Art from "./art.js";
+import Audio from "./audio.js";
+import Drawer from "./drawer.js";
+import EventManager from "./Event/eventmanager.js";
+import Scene from "./Event/scene.js";
+import StartGameEvent from "./Event/startGameEvent.js";
+import StartStageEvent from "./Event/startStageEvent.js";
+import State from "./Event/State.js";
+import Input from "./input.js";
+import Param from "./param.js";
+import DistanceField from "./Stage/distanceField.js";
 import EntityManager from "./Stage/entityManager.js";
 import Pool from "./Stage/pool.js";
-import MapData from "./Stage/mapData.js";
-import EventManager from "./Event/eventmanager.js";
-import StartStageEvent from "./Event/startStageEvent.js";
-import StartGameEvent from "./Event/startGameEvent.js";
-import Scene from "./Event/scene.js";
-import State from "./Event/State.js";
-import UIManager from "./UI/uiManager.js";
-import Font from "./UI/font.js";
-import WeaponManager from "./Weapon/weaponManager.js";
-import Art from "./art.js";
-import Drawer from "./drawer.js";
-import Input from "./input.js";
-import Timer from "./timer.js";
-import Param from "./param.js";
-import Menu from "./UI/menu.js";
-import Audio from "./audio.js";
 import StageData from "./Stage/stageData.js";
-import DistanceField from "./Stage/distanceField.js";
+import Timer from "./timer.js";
+import UIManager from "./UI/uiManager.js";
+import WeaponManager from "./Weapon/weaponManager.js";
 
 export default class Game {
   static Init() {
@@ -35,7 +32,7 @@ export default class Game {
 
     /*initialize Game state*/
     //現在のステージ番号
-    if (isDebugMode) Game.stage = 21;
+    if (isDebugMode) Game.stage = 12;
     else Game.stage = 1;
     Game.continuePoint = 1; //コンティニュー地点
 

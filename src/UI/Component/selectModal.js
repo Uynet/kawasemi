@@ -1,7 +1,6 @@
-import UIManager from "../uiManager.js";
-import UI from "../ui.js";
 import Component from "../component.js";
 import Font from "../font.js";
+import UI from "../ui.js";
 
 export default class selectModal extends UI {
   constructor(componentTree, style, selectTexts) {

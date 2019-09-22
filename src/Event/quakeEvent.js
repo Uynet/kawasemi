@@ -1,50 +1,46 @@
-import Event from './event.js';
-import EventManager from './eventmanager.js';
-import Drawer from '../drawer.js';
+import Drawer from "../drawer.js";
+import Event from "./event.js";
 
 //画面振動エフェクト
-export default class QuakeEvent extends Event{
-
+export default class QuakeEvent extends Event {
   /*
-   * @param time 
+   * @param time
    * @param size
    * @param isRot 回転するかどうかを表すクソboolです
    * */
-  constructor(size,time,isRot){
-
+  constructor(size, time, isRot) {
     //undefined
-    if(time>=1 || !time) {
+    if (time >= 1 || !time) {
       console.warn("invalid time : " + time);
-      time = 0.9
-    };
+      time = 0.9;
+    }
     super(1);
-    function* gen(){
-      if(isRot){
+    function* gen() {
+      if (isRot) {
         let frame = 0;
         let arg;
-        while(frame < 200){
-          arg = Math.sin(frame*0.1)*Math.exp(-frame*0.1)*0.4;
+        while (frame < 200) {
+          arg = Math.sin(frame * 0.1) * Math.exp(-frame * 0.1) * 0.4;
           Drawer.QuakeRot(arg);
           frame++;
-          yield ;
+          yield;
         }
         Drawer.Stage.x = 0;
         Drawer.Stage.y = 0;
-        yield ;
-      }
-      else { 
+        yield;
+      } else {
         let frame = 0;
         let d;
-        while(size > 0.1){
+        while (size > 0.1) {
           d = Rand2D(size);
           Drawer.Quake(d);
           size *= time;
           frame++;
-          yield ;
+          yield;
         }
         Drawer.Stage.x = 0;
         Drawer.Stage.y = 0;
-        yield ;
+        yield;
       }
     }
     let itt = gen();

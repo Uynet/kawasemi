@@ -1,19 +1,18 @@
-import EFFECT from '../effect.js';
-import Art from '../../../art.js';
-import EntityManager from '../../../Stage/entityManager.js';
-import Pool from '../../../Stage/pool.js';
+import Art from "../../../art.js";
+import Pool from "../../../Stage/pool.js";
+import EFFECT from "../effect.js";
 
 //閃光
-export default class Flash extends EFFECT{
-  constructor(pos){
-    super(pos,vec0());
+export default class Flash extends EFFECT {
+  constructor(pos) {
+    super(pos, vec0());
   }
-  Init(pos,vel){
+  Init(pos, vel) {
     this.pos = pos;
     this.vel = vel;
     /*基本情報*/
-    this.continuasFrame =  0;
-    this.name = "flash"
+    this.continuasFrame = 0;
+    this.name = "flash";
     /*スプライト*/
     this.spid = 0;
     this.pattern = Art.bulletPattern.explosion.flash;
@@ -25,9 +24,9 @@ export default class Flash extends EFFECT{
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 
-  Update(){
+  Update() {
     this.ExecuteAI();
-    this.sprite.alpha *=0.8;
-    if(this.frame == 4) Pool.Remove(this);
+    this.sprite.alpha *= 0.8;
+    if (this.frame == 4) Pool.Remove(this);
   }
 }

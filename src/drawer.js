@@ -1,5 +1,3 @@
-import Art from "./art.js";
-
 const PIXI_WIDTH = 800;
 const PIXI_HEIGHT = 640;
 const DEFAULT_MAGNIFICATION = 3;

@@ -1,14 +1,13 @@
-import Event from './event.js';
-import EventManager from './eventmanager.js';
-import FadeEvent from './fadeEvent.js';
-import Game from '../game.js';
-import Audio from '../audio.js';
-import Drawer from '../drawer.js';
+import Audio from "../audio.js";
+import Game from "../game.js";
+import Event from "./event.js";
+import EventManager from "./eventmanager.js";
+import FadeEvent from "./fadeEvent.js";
 
-export default class GameOverEvent extends Event{
-  constructor(){
+export default class GameOverEvent extends Event {
+  constructor() {
     super();
-    function* gen(){
+    function* gen() {
       //if(!Game.debug)Game.stage = Game.continuePoint;
       let frame = 0;
       EventManager.eventList.push(new FadeEvent("fadeout"));
@@ -17,8 +16,7 @@ export default class GameOverEvent extends Event{
       //Audio.PlayBGM("stage5",0.2);
       //if(Game.debug)Audio.PlayBGM("stage5",0.0);
 
-
-      while(frame<30){
+      while (frame < 30) {
         frame++;
         yield;
       }

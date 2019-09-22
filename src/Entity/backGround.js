@@ -1,11 +1,10 @@
-import Entity from './entity.js';
-import Art from '../art.js';
-import EntityManaer from '../Stage/entityManager.js';
+import Art from "../art.js";
+import Entity from "./entity.js";
 
 //真の背景であり背景オブジェクトではない
-export default class BackEntity extends Entity{
-  constructor(pos,tex){
-    super(pos,vec0());
+export default class BackEntity extends Entity {
+  constructor(pos, tex) {
+    super(pos, vec0());
     this.layer = "BG";
     this.isUpdater = false;
     this.tex = tex;

@@ -1,11 +1,8 @@
-import Event from "./event.js";
-import Drawer from "../drawer.js";
-import Game from "../game.js";
-import EventManager from "./eventmanager.js";
-import UIManager from "../UI/uiManager.js";
-import MapData from "../Stage/mapData.js";
 import Audio from "../audio.js";
-import GameClearEvent from "./gameClearEvent.js";
+import Game from "../game.js";
+import UIManager from "../UI/uiManager.js";
+import Event from "./event.js";
+import EventManager from "./eventmanager.js";
 import FadeEvent from "./FadeEvent.js";
 
 /*タイトル画面からゲーム開始画面に移行するイベント

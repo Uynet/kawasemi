@@ -1,24 +1,22 @@
-import EFFECT from '../effect.js';
-import Art from '../../../art.js';
-import EntityManager from '../../../Stage/entityManager.js';
-import Pool from '../../../Stage/pool.js';
+import Art from "../../../art.js";
 import PowSizeAI from "../../AI/powSizeAI.js";
+import EFFECT from "../effect.js";
 
 //閃光
-export default class Fire2 extends EFFECT{
-  constructor(pos){
-    super(pos,vec0());
-    this.Init(pos,vec0());
-    this.addAnimator(false,1,8);
-    this.addAI(new PowSizeAI(this,0.82));
+export default class Fire2 extends EFFECT {
+  constructor(pos) {
+    super(pos, vec0());
+    this.Init(pos, vec0());
+    this.addAnimator(false, 1, 8);
+    this.addAI(new PowSizeAI(this, 0.82));
   }
-  Init(pos,vel){
+  Init(pos, vel) {
     /*基本情報*/
     this.pos = pos;
     this.vel = vel;
     this.name = "fire2";
     /*スプライト*/
-    this.continuasFrame =  0;
+    this.continuasFrame = 0;
     this.spid = 0;
     this.pattern = Art.bulletPattern.explosion.fire;
     this.sprite = Art.SpriteFactory(this.pattern[this.spid]);

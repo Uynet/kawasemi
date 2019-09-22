@@ -1,9 +1,7 @@
-import Event from "./event.js";
-import Audio from "../audio.js";
 import Game from "../game.js";
-import EventManager from "./eventmanager.js";
 import MapData from "../Stage/mapData.js";
 import UIManager from "../UI/uiManager.js";
+import Event from "./event.js";
 
 /*初期状態タイトル画面に移行するイベント
  * (UIの退避)

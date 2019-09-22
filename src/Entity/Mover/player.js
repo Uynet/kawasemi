@@ -1,33 +1,27 @@
-import Entity from "../entity.js";
-import Timer from "../../timer.js";
-import Param from "../../param.js";
 import Art from "../../art.js";
 import Audio from "../../audio.js";
+import Box from "../../Collision/box.js";
 import Collider from "../../Collision/collider.js";
 import Collision from "../../Collision/collision.js";
-import Box from "../../Collision/box.js";
-import Input from "../../input.js";
-import EntityManager from "../../Stage/entityManager.js";
-import MapData from "../../Stage/mapData.js";
-import StageGen from "../../Stage/stageGen.js";
+import Drawer from "../../drawer.js";
 import EventManager from "../../Event/eventmanager.js";
 import GameOverEvent from "../../Event/gameOverEvent.js";
-import Drawer from "../../drawer.js";
-import Game from "../../game.js";
-import WeaponManager from "../../Weapon/weaponManager.js";
-import UIManager from "../../UI/uiManager.js";
-import FontEffect from "../Effect/fontEffect.js";
-import BulletShot from "../Effect/bulletShot.js";
-import Explosion1 from "../Effect/Explosion/explosion1.js";
-import Explosion2 from "../Effect/Explosion/explosion2.js";
-import Explosion3 from "../Effect/Explosion/explosion3.js";
-import Explosion5 from "../Effect/Explosion/explosion5.js";
-import WeaponIcon from "../Effect/weaponIcon.js";
-import Pool from "../../Stage/pool.js";
-import StagePop from "../../UI/stagePop.js";
+import Input from "../../input.js";
+import Param from "../../param.js";
 import DistanceField from "../../Stage/distanceField.js";
-import Spilit from "./spilit.js";
+import EntityManager from "../../Stage/entityManager.js";
+import Pool from "../../Stage/pool.js";
+import Timer from "../../timer.js";
+import StagePop from "../../UI/stagePop.js";
+import UIManager from "../../UI/uiManager.js";
+import WeaponManager from "../../Weapon/weaponManager.js";
 import BasicAI from "../AI/Basic/basicAI.js";
+import Explosion2 from "../Effect/Explosion/explosion2.js";
+import Explosion5 from "../Effect/Explosion/explosion5.js";
+import FontEffect from "../Effect/fontEffect.js";
+import WeaponIcon from "../Effect/weaponIcon.js";
+import Entity from "../entity.js";
+import Spilit from "./spilit.js";
 
 const STATE = {
   WAITING: "WAITING",
@@ -115,7 +109,7 @@ export default class Player extends Entity {
     this.toArg = 0;
     this.scPos = vec0(); //スクロール位置
     this.score = this.param.score;
-    if(UIManager.score)UIManager.score.SetScore(this.score);
+    if (UIManager.score) UIManager.score.SetScore(this.score);
     //UIManager.HP.SetBar(this.hp);//HPbarの更新
     //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
     this.vxMax = Param.player.vxMax;

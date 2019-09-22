@@ -1,4 +1,3 @@
-import Game from "./game.js";
 //パラメータ管理クラス
 export default class Param {
   static ApplyDebugOption() {
