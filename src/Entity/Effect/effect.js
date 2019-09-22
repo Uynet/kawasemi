@@ -1,7 +1,7 @@
-import Entity from "../entity.js";
-import BasicEffectPhysics from "../AI/Basic/basicEffectPhysics.js";
-import BasicAI from "../AI/Basic/basicAI.js";
 import Art from "../../art.js";
+import BasicAI from "../AI/Basic/basicAI.js";
+import BasicEffectPhysics from "../AI/Basic/basicEffectPhysics.js";
+import Entity from "../entity.js";
 
 export default class EFFECT extends Entity{
   constructor(pos,vel){

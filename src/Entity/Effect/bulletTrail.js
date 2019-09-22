@@ -1,7 +1,6 @@
-import EFFECT from './effect.js';
 import Art from '../../art.js';
-import Ease from "../../Math/ease.js";
 import PowSizeAI from "../AI/powSizeAI.js";
+import EFFECT from './effect.js';
 
 /*bullet1残像*/
 export default class Bullettrail extends EFFECT{

@@ -16,6 +16,8 @@ import Timer from "./timer.js";
 import UIManager from "./UI/uiManager.js";
 import WeaponManager from "./Weapon/weaponManager.js";
 
+import { debugOption } from "./debug.js";
+
 export default class Game {
   static Init() {
     /*audioとartはinitしない*/
@@ -32,7 +34,7 @@ export default class Game {
 
     /*initialize Game state*/
     //現在のステージ番号
-    if (isDebugMode) Game.stage = 12;
+    if (isDebugMode) Game.stage = debugOption.entryStage;
     else Game.stage = 1;
     Game.continuePoint = 1; //コンティニュー地点
 

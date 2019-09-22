@@ -1,15 +1,8 @@
-import Enemy from './enemy.js';
-import Art from '../../art.js';
-import Collider from '../../Collision/collider.js';
 import Collision from '../../Collision/collision.js';
-import Box from '../../Collision/box.js';
 import EntityManager from '../../Stage/entityManager.js';
-import Shot from '../AI/shot.js';
 import MoveLissajous from '../AI/moveLissajous.js';
-import EventManager from '../../Event/eventmanager.js';
-import QuakeEvent from '../../Event/quakeEvent.js';
-import Param from '../../param.js';
-import Explosion2 from '../Effect/Explosion/explosion2.js';
+import Shot from '../AI/shot.js';
+import Enemy from './enemy.js';
 
 let STATE = {
   WAITING : "WAITING",
