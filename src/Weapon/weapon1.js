@@ -21,6 +21,9 @@ export default class Weapon1 extends Weapon {
     this.isHorming = this.param.isHorming;
     this.isLasersight = this.param.isLasersight;
   }
+  shot(player) {
+    super.shot(player);
+  }
   //装填
   Set(player) {
     let p = {

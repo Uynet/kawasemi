@@ -9,6 +9,7 @@ import Enemy3 from "../Entity/Enemy/enemy3.js";
 import Enemy4 from "../Entity/Enemy/enemy4.js";
 import Enemy5 from "../Entity/Enemy/enemy5.js";
 import Enemy6 from "../Entity/Enemy/enemy6.js";
+import Enemy7 from "../Entity/Enemy/enemy7.js";
 import Goal from "../Entity/Mover/goal.js";
 import Needle from "../Entity/Mover/needle.js";
 import Player from "../Entity/Mover/player.js";
@@ -208,6 +209,9 @@ export default class MapData {
           break;
         case 174:
           obj = new Enemy6(p);
+          break;
+        case 177:
+          obj = new Enemy7(p);
           break;
         case 185:
           if (isDebugMode) obj = new TutorialObject(p);

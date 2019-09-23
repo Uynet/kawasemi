@@ -37,9 +37,10 @@ export default class Enemy extends Entity {
     this.addAI(new BasicAI(this));
     this.addAI(new BasicEnemyAI(this));
   }
-  BasicEnemyInit() {
+  BasicEnemyInit(size) {
     /*基本情報*/
-    this.collider = new Collider(SHAPE.BOX, new Box(this.pos, 16, 16));
+    if (!size) size = 16;
+    this.collider = new Collider(SHAPE.BOX, new Box(this.pos, size, size));
     /*床の親子関係*/
     this.floor = {
       on: false,

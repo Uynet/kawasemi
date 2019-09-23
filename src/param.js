@@ -1,14 +1,10 @@
+import { debugOption } from "./debug.js";
 //パラメータ管理クラス
 export default class Param {
   static ApplyDebugOption() {
-    this.player.havingWeaponList = {
-      normal: true,
-      missile: false,
-      laser: false,
-      weapon4: false,
-      weapon5: false
-    };
-    this.player.score = 50000;
+    this.player.havingWeaponList = debugOption.playerHavingWeaponList;
+    console.log(debugOption);
+    this.player.score = debugOption.score;
   }
   static isHaveWeapon(name) {
     return this.player.havingWeaponList[name];
@@ -94,6 +90,13 @@ export default class Param {
       coin: 1,
       exp: 49
     };
+    this.enemy7 = {
+      hp: 50,
+      atkMax: 3,
+      atkMin: 2,
+      gravity: 0.02,
+      coin: 2
+    };
     this.eBullet1 = {
       hp: 1,
       atkMin: 2,
@@ -109,7 +112,7 @@ export default class Param {
       //status
       agi: 25,
       cost: 10,
-      speed: 8,
+      speed: 12,
       length: 280,
       remain: 180,
       //optional
