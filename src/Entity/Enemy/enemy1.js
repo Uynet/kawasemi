@@ -17,8 +17,6 @@ import FontEffect from "../Effect/fontEffect.js";
 import Enemy from "./enemy.js";
 import Enemy4 from "./enemy4.js";
 
-let EntityList = EntityManager.entityList;
-
 //enum
 const State = {
   INIT: "INIT",

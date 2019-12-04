@@ -1,7 +1,6 @@
 import Audio from "../audio.js";
 import BulletShot from "../Entity/Effect/bulletShot.js";
 import Param from "../param.js";
-//import Bullet4 from '../Entity/Bullet/bullet4.js';//debug
 import EntityManager from "../Stage/entityManager.js";
 import Weapon from "./weapon.js";
 
