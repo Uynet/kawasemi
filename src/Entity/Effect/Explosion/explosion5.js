@@ -15,7 +15,7 @@ export default class Explosion5 extends Explosion {
     this.Delete();
   }
   ScreenFlash() {
-    EventManager.PushEvent(new ScreenFlashEvent(this.pos));
+    EventManager.Add(new ScreenFlashEvent(this.pos));
     let screenFlash = new ScreenFlash(copy(this.pos));
     screenFlash.addEntity();
   }

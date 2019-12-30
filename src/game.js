@@ -42,9 +42,7 @@ export default class Game {
     Game.state = new State();
 
     //Gameにタイトル画面状態をプッシュ
-    let event = new StartGameEvent();
-    EventManager.PushEvent(event);
-
+    EventManager.Add(new StartGameEvent());
     Game.Run();
   }
 
@@ -64,8 +62,7 @@ export default class Game {
   //タイトル画面中の処理
   static UpdateTitle() {
     if (Input.isAnyKeyClick()) {
-      let event = new StartStageEvent();
-      EventManager.PushEvent(event);
+      EventManager.Add(new StartStageEvent());
     }
     EntityManager.UpdateTitle();
   }
@@ -92,11 +89,7 @@ export default class Game {
   }
 
   static Run() {
-    for (let event of EventManager.eventList) {
-      if (event.Do().done) {
-        EventManager.Remove(event);
-      }
-    }
+    EventManager.Update();
     switch (Game.scene.state) {
       /*更新*/
       /*Note : Lastは自前関数*/

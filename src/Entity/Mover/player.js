@@ -583,8 +583,7 @@ export default class Player extends Entity {
         if (this.isDying) {
           //this.state = STATE.DEAD
           Timer.SetTimeScale(1);
-          let g = new GameOverEvent();
-          EventManager.PushEvent(g);
+          EventManager.Add(new GameOverEvent());
         }
         this.isDying = false;
       }

@@ -100,7 +100,7 @@ export default class Enemy1 extends Enemy {
     exp5.addEntity();
     this.BigExplosion();
 
-    EventManager.PushEvent(e);
+    EventManager.Add(e);
   }
   Drop() {
     this.pos.y = 0;
@@ -238,8 +238,7 @@ export default class Enemy1 extends Enemy {
     Audio.PlaySE("bomb", 1, 0.6);
     Audio.StopBGM();
     //ボスを倒すとtobe continued..みたいなのがでて終わる
-    const toBeContinuedEvent = new ToBeContinuedEvent();
-    EventManager.PushEvent(toBeContinuedEvent);
+    EventManager.Add(new ToBeContinuedEvent());
   }
   Update() {
     this.ExecuteAI();
