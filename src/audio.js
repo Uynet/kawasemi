@@ -59,7 +59,6 @@ export default class Audio {
   }
   // サウンドを再生
   static async PlayBGM(name, gain) {
-    cl(name);
     let buffer = this.BGM[name];
     source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット

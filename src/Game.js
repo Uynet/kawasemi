@@ -2,10 +2,8 @@ import Art from "./art.js";
 import Audio from "./audio.js";
 import Drawer from "./drawer.js";
 import EventManager from "./Event/eventmanager.js";
-import Scene from "./Event/scene.js";
 import StartGameEvent from "./Event/startGameEvent.js";
 import StartStageEvent from "./Event/startStageEvent.js";
-import State from "./Event/State.js";
 import Input from "./input.js";
 import Param from "./param.js";
 import DistanceField from "./Stage/distanceField.js";
@@ -15,9 +13,18 @@ import StageData from "./Stage/stageData.js";
 import Timer from "./timer.js";
 import UIManager from "./UI/uiManager.js";
 import WeaponManager from "./Weapon/weaponManager.js";
+import LoadingScene from "./scene/loadingScene.js";
+import Pipeline from "./pipeline.js";
 
 import { debugOption } from "./debug.js";
 
+/* 
+　このコードを読んでくれてる人へ
+
+             もちもちねこをどうぞ 
+                （＾・ω・＾✿）
+
+*/
 export default class Game {
   static Init() {
     /*audioとartはinitしない*/
@@ -38,12 +45,10 @@ export default class Game {
     else Game.stage = 1;
     Game.continuePoint = 1; //コンティニュー地点
 
-    Game.scene = new Scene();
-    Game.state = new State();
+    Game.state = Pipeline.CreateGameState();
+    Game.scene = new LoadingScene();
 
-    //Gameにタイトル画面状態をプッシュ
-    EventManager.Add(new StartGameEvent());
-    Game.Run();
+    Game.Update();
   }
 
   static async Load() {
@@ -54,31 +59,6 @@ export default class Game {
 
     Input.returnScroll(); //スクロール解除
   }
-  //ローディング画面中の処理
-  static UpdateLoading() {
-    UIManager.Update();
-  }
-
-  //タイトル画面中の処理
-  static UpdateTitle() {
-    if (Input.isAnyKeyClick()) {
-      EventManager.Add(new StartStageEvent());
-    }
-    EntityManager.UpdateTitle();
-  }
-
-  //ステージ中の処理
-  static UpdateStage() {
-    /*Entityの更新*/
-    EntityManager.Update();
-    UIManager.Update();
-
-    /*ポーズ状態に遷移*/
-    if (isDebugMode && Input.isKeyClick(KEY.ESC)) {
-      UIManager.SetMenu();
-      Game.scene.PushSubState("PAUSE");
-    }
-  }
   static UpdatePause() {
     UIManager.Update();
   }
@@ -88,46 +68,14 @@ export default class Game {
     UIManager.Update();
   }
 
-  static Run() {
+  static Update() {
     EventManager.Update();
-    switch (Game.scene.state) {
-      /*更新*/
-      /*Note : Lastは自前関数*/
-      case STATE.LOADING:
-        Game.UpdateLoading();
-        break;
-      case STATE.TITLE:
-        switch (Game.scene.substate.Last()) {
-          case "DEFAULT":
-            Game.UpdateTitle();
-            break;
-          case "TRANS":
-            /*Nothing to do*/ break;
-        }
-        break;
-      case STATE.STAGE:
-        switch (Game.scene.substate.Last()) {
-          case "DEFAULT":
-            Game.UpdateStage();
-            break;
-          case "PAUSE":
-            Game.UpdatePause();
-            break;
-          case "MES":
-            Game.UpdateMes();
-            break;
-          case "TRANS":
-            /*Nothing to do*/ break;
-        }
-        break;
-      default:
-        console.warn("unknown state:", Game.scene.state);
-        return;
-    }
+    Game.state.getState().Update(); // update current scene
+
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);
     Audio.Update();
-    Timer.IncTime();
-    requestAnimationFrame(Game.Run);
+    Timer.Update();
+    requestAnimationFrame(Game.Update);
   }
 }

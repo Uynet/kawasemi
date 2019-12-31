@@ -6,7 +6,7 @@ export default class Timer {
   static GetTime() {
     return this.timer;
   }
-  static IncTime() {
+  static Update() {
     this.timer++;
   }
   static GetTimeScale() {

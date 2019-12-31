@@ -4,6 +4,7 @@ import UIManager from "../UI/uiManager.js";
 /* */
 export default class State {
   constructor() {
+    console.error("このクラス使うな");
     this.state = STATE.INIT;
     this.substate = ["DEFAULT"];
   }

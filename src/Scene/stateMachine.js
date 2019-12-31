@@ -9,9 +9,11 @@ export default class StateMachine {
     this.states = states; //状態集合
     this.reducer = reducer; //状態遷移関数
     this.state = initialState; //初期状態
+    this.state.Init();
   }
   dispatch(action) {
     this.state = this.reducer(this.state, action);
+    this.state.Init();
   }
   getState() {
     return this.state;
