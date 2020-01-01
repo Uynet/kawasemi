@@ -7,7 +7,12 @@ import Game from "../game.js";
 export default class MessageScene extends Scene {
   constructor() {
     super();
-    this.name = "title";
+    this.name = "message";
+  }
+  Input() {
+    if (Input.isKeyClick(KEY.C)) {
+      Game.state.dispatch("closeMessage");
+    }
   }
   Init() {
     UIManager.EnterShop();
@@ -15,6 +20,5 @@ export default class MessageScene extends Scene {
   Update() {
     EntityManager.Animation();
     UIManager.Update();
-    if (Input.isKeyClick(KEY.X)) Game.state.dispatch("closeMessage");
   }
 }

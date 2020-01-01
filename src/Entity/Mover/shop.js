@@ -1,8 +1,5 @@
 import Art from "../../art.js";
-import Game from "../../game.js";
-import Input from "../../input.js";
 import EntityManager from "../../Stage/entityManager.js";
-import UIManager from "../../UI/uiManager.js";
 import BasicAI from "../AI/Basic/basicAI.js";
 import BackEntity from "../backEntity.js";
 import Bright from "../Effect/bright.js";
@@ -16,7 +13,6 @@ export default class Shop extends BackEntity {
     this.name = "shop";
     this.isUpdater = true;
 
-    this.reading = false;
     /* 固有情報
      * message : 複数のページからなる文章
      * text : 1つのページの文章
@@ -57,10 +53,5 @@ export default class Shop extends BackEntity {
     let player = EntityManager.player;
 
     //this.Bright();
-    if (this.isCanRead()) {
-      player.isCanRead = true;
-      this.reading = true;
-      if (Input.isKeyClick(KEY.X)) Game.state.dispatch("openMessage");
-    }
   }
 }

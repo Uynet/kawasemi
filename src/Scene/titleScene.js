@@ -4,11 +4,23 @@ import MapData from "../Stage/mapData.js";
 import UIManager from "../UI/uiManager.js";
 import EntityManager from "../Stage/entityManager.js";
 import Game from "../game.js";
+import Audio from "../audio.js";
 
 export default class TitleScene extends Scene {
   constructor() {
     super();
     this.name = "title";
+  }
+  Input() {
+    if (Input.isAnyKeyClick()) {
+      MapData.DeleteStage();
+      UIManager.Clean();
+      UIManager.SetStage();
+      UIManager.PopStage();
+      Audio.StopBGM();
+      MapData.CreateStage(Game.stage, "ENTER");
+      Game.state.dispatch("onEnter");
+    }
   }
   Init() {
     UIManager.SetTitle();
@@ -17,8 +29,5 @@ export default class TitleScene extends Scene {
   }
   Update() {
     EntityManager.UpdateTitle();
-    if (Input.isAnyKeyClick()) {
-      Game.state.dispatch("onEnter");
-    }
   }
 }

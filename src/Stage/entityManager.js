@@ -77,6 +77,18 @@ export default class EntityManager {
     else if (entity.isNoSprite /*Nothing to do*/);
     else Drawer.removeContainer(entity.sprite, entity.layer);
   }
+
+  /*指定したnameを持つentityを取得する
+  未発見ならばnull、見つかれば配列で返す
+  */
+  static Find(name) {
+    let matched = [];
+    this.entityList.forEach(e => {
+      if (e.name == name) matched.push(e);
+    });
+    if (matched.length == 0) return null;
+    return matched;
+  }
   /*Entityの更新*/
   static Update() {
     for (let i = 0; i < this.entityIndex; i++) {

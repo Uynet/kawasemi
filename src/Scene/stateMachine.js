@@ -1,6 +1,6 @@
 /*
 interface :
-    states = [q0,q1,q2];                    状態集合
+    states = [q0,q1,q2];     状態集合
    reducer = (q,a)=>q2    状態遷移関数
 */
 

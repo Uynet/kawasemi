@@ -1,9 +1,7 @@
 import EntityManager from "../Stage/entityManager.js";
 import UIManager from "../UI/uiManager.js";
 import Scene from "./scene.js";
-import Audio from "../audio.js";
 import Input from "../input.js";
-import MapData from "../Stage/mapData.js";
 import Game from "../game.js";
 
 export default class MainScene extends Scene {
@@ -11,27 +9,30 @@ export default class MainScene extends Scene {
     super();
     this.name = "main";
     this.frame = 0;
+    this.messages = [];
   }
-  Init() {
-    MapData.DeleteStage();
-    UIManager.Clean();
-    UIManager.SetStage();
-    UIManager.PopStage();
-    Audio.StopBGM();
-    MapData.CreateStage(Game.stage, "ENTER");
+  Input() {
+    if (isDebugMode && Input.isKeyClick(KEY.ESC)) {
+      UIManager.SetMenu();
+      Game.scene.PushSubState("PAUSE");
+    }
+    this.messages = EntityManager.Find("shop");
+    if (EntityManager.player) {
+      this.messages.forEach(e => {
+        if (e.isCanRead()) {
+          EntityManager.player.isCanRead = true;
+          if (Input.isKeyClick(KEY.X)) {
+            Game.state.dispatch("openMessage");
+          }
+        }
+      });
+    }
   }
-
+  Init() {}
   Update() {
-    if (this.frame > 50) {
+    if (this.frame++ > 50) {
       EntityManager.Update();
       UIManager.Update();
-
-      /*ポーズ状態に遷移*/
-      if (isDebugMode && Input.isKeyClick(KEY.ESC)) {
-        UIManager.SetMenu();
-        Game.scene.PushSubState("PAUSE");
-      }
     }
-    this.frame++;
   }
 }
