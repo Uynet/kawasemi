@@ -15,6 +15,8 @@ export default class Shop extends BackEntity {
     this.layer = "ENTITY";
     this.name = "shop";
     this.isUpdater = true;
+
+    this.reading = false;
     /* 固有情報
      * message : 複数のページからなる文章
      * text : 1つのページの文章
@@ -27,7 +29,6 @@ export default class Shop extends BackEntity {
       this.message.push(message[l]);
     }
     this.page = 0; //現在のページ番号
-    this.isRead = false; //会話中かどうか
     /*スプライト*/
     this.pattern = Art.wallPattern.shop;
     this.sprite = Art.CreateSprite(this.pattern[0]);
@@ -39,11 +40,6 @@ export default class Shop extends BackEntity {
     EntityManager.addEntity(this.popup);
     //AI
     this.addAI(new BasicAI(this));
-  }
-  Read() {
-    this.isRead = true;
-    Game.scene.PushSubState("MES");
-    UIManager.EnterShop();
   }
   isCanRead() {
     let player = EntityManager.player;
@@ -59,12 +55,12 @@ export default class Shop extends BackEntity {
     this.ExecuteAI();
     //page : 現在のページ番号
     let player = EntityManager.player;
+
     //this.Bright();
     if (this.isCanRead()) {
       player.isCanRead = true;
-      if (Input.isKeyClick(KEY.X)) {
-        if (Game.scene.substate.Last() != "MES") this.Read();
-      }
+      this.reading = true;
+      if (Input.isKeyClick(KEY.X)) Game.state.dispatch("openMessage");
     }
   }
 }

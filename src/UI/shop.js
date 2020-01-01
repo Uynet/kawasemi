@@ -194,7 +194,7 @@ export default class Shop extends UI {
       root: {
         margin: mul(vec2(0.3), gameSreensize),
         color: hilight,
-        popin: { delay: 0, ease: easeOutElastic}
+        popin: { delay: 0, ease: easeOutElastic }
       },
       label: { position: vec2(0.4, 0.15) },
       icon: { position: vec2(0.2, 0.1) },
@@ -232,7 +232,6 @@ export default class Shop extends UI {
   }
   Exit() {
     Audio.PlaySE("playerDamage");
-    Game.scene.PopSubState();
     this.Remove();
     this.controller.ui.Remove();
   }

@@ -9,10 +9,8 @@ import Param from "./param.js";
 import DistanceField from "./Stage/distanceField.js";
 import EntityManager from "./Stage/entityManager.js";
 import Pool from "./Stage/pool.js";
-import StageData from "./Stage/stageData.js";
 import Timer from "./timer.js";
 import UIManager from "./UI/uiManager.js";
-import WeaponManager from "./Weapon/weaponManager.js";
 import LoadingScene from "./scene/loadingScene.js";
 import Pipeline from "./pipeline.js";
 
@@ -28,16 +26,7 @@ import { debugOption } from "./debug.js";
 export default class Game {
   static Init() {
     /*audioとartはinitしない*/
-    Param.Init();
-    Drawer.Init();
-    EventManager.Init();
-    WeaponManager.Init();
-    EntityManager.Init();
-    Pool.Init();
-    Timer.Init();
-    UIManager.Init();
-    StageData.Init();
-    DistanceField.Init();
+    Pipeline.InitializeStaticClasses();
 
     /*initialize Game state*/
     //現在のステージ番号
@@ -62,16 +51,9 @@ export default class Game {
   static UpdatePause() {
     UIManager.Update();
   }
-  //看板を読んでいるときにアニメーションだけを行う
-  static UpdateMes() {
-    EntityManager.Animation();
-    UIManager.Update();
-  }
-
   static Update() {
     EventManager.Update();
     Game.state.getState().Update(); // update current scene
-
     /*描画*/
     Drawer.Renderer.render(Drawer.Stage);
     Audio.Update();

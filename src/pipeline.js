@@ -10,6 +10,7 @@ import DistanceField from "./Stage/distanceField.js";
 import LoadingScene from "./Scene/loadingScene.js";
 import TitleScene from "./Scene/titleScene.js";
 import MainScene from "./Scene/mainScene.js";
+import MessageScene from "./Scene/messageScene.js";
 
 import StateMachine from "./Scene/stateMachine.js";
 import Timer from "./timer.js";
@@ -33,16 +34,17 @@ export default class Pipeline {
     const loadingScene = new LoadingScene();
     const titleScene = new TitleScene();
     const mainScene = new MainScene();
+    const messageScene = new MessageScene();
 
-    const scenes = [loadingScene, titleScene, mainScene];
+    const scenes = [loadingScene, titleScene, mainScene, messageScene];
     const reducer = (scene, action) => {
       if (scene.name == "loading")
         if (action == "loadComplete") return titleScene;
-      if (scene.name == "title")
-        if (action == "onEnter") {
-          return mainScene;
-        }
-      if (scene.name == "main") return mainScene;
+      if (scene.name == "title") if (action == "onEnter") return mainScene;
+      if (scene.name == "main")
+        if (action == "openMessage") return messageScene;
+      if (scene.name == "message")
+        if (action == "closeMessage") return mainScene;
       console.error("Invalid action:" + action);
       console.error(scene);
       return mainScene;

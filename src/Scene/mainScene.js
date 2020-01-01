@@ -20,6 +20,7 @@ export default class MainScene extends Scene {
     Audio.StopBGM();
     MapData.CreateStage(Game.stage, "ENTER");
   }
+
   Update() {
     if (this.frame > 50) {
       EntityManager.Update();
