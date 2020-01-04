@@ -22,7 +22,7 @@ export default class WoodBox extends Wall {
     /*スプライト*/
     this.pattern = Art.wallPattern.steel.entity;
     this.spid = 3; //spriteIndex 現在のスプライト番号
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]); //現在表示中のスプライト
+    this.sprite = Art.Sprite(this.pattern[this.spid]); //現在表示中のスプライト
     this.sprite.position = this.pos;
     /*パラメータ*/
     this.hp = 1;

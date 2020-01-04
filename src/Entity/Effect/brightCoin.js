@@ -11,7 +11,7 @@ export default class BrightCoin extends EFFECT {
     /*スプライト*/
     this.spid = 0;
     this.pattern = Art.bulletPattern.coin.bright;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.sprite = Art.Sprite(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.alpha = 0.7;
   }

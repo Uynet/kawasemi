@@ -18,7 +18,7 @@ export default class ToBeContinuedEvent extends Event {
         frame++;
         yield;
       }
-      UIManager.addUI(new StagePop(p, "^ - To Be Continued... -$", 7));
+      UIManager.add(new StagePop(p, "^ - To Be Continued... -$", 7));
       while (frame < 300) {
         frame++;
         yield;

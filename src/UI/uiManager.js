@@ -41,21 +41,21 @@ export default class UIManager {
     };
     switch (Game.stage) {
       case CONTINUEPOINT_STAGENUM:
-        UIManager.addUI(new StagePop(p, "^- こんてぃにゅーぽいんと -$"));
+        UIManager.add(new StagePop(p, "^- こんてぃにゅーぽいんと -$"));
         break;
       case BOSS_STAGENUM:
         break;
       default:
-        UIManager.addUI(new StagePop(p, "^-すてーじ " + Game.stage + "-$")); //SCORE
+        UIManager.add(new StagePop(p, "^-すてーじ " + Game.stage + "-$")); //SCORE
     }
   }
 
   //call from startbossBattleEvent
   static SetBoss() {
-    UIManager.addUI(new GaugeBossHP(POS_BossHP)); //HP
+    UIManager.add(new GaugeBossHP(POS_BossHP)); //HP
   }
   static SetLoading() {
-    UIManager.addUI(new LoadingComponent()); //HP
+    UIManager.add(new LoadingComponent()); //HP
   }
 
   /*タイトルでのUI配置に変更*/
@@ -64,22 +64,22 @@ export default class UIManager {
     let p2 = vec2(p1.x, p1.y + 10);
     let p3 = vec2(p1.x - 8, p2.y + 48);
     let p4 = vec2(32, 200);
-    UIManager.addUI(new Font(p1, "さいはてどろっぷ", "MES")); //SCORE
-    UIManager.addUI(new Font(p2, "- ver0.33 -", "MES")); //SCORE
-    UIManager.addUI(new Font(p3, "Press Any Key", "MES")); //SCORE
-    UIManager.addUI(new Font(p4, "+ 2018-2019 uynet", "MES")); //SCORE
+    UIManager.add(new Font(p1, "さいはてどろっぷ", "MES")); //SCORE
+    UIManager.add(new Font(p2, "- ver0.33 -", "MES")); //SCORE
+    UIManager.add(new Font(p3, "Press Any Key", "MES")); //SCORE
+    UIManager.add(new Font(p4, "+ 2018-2019 uynet", "MES")); //SCORE
   }
   /*ステージ中でのUI配置に変更*/
   static SetStage() {
-    UIManager.addUI(new GaugeHP(POS_HP)); //HP
-    UIManager.addUI(new GaugeBullet(POS_BULLET)); //BULLET
-    UIManager.addUI(new WeaponList(POS_BULLET)); //WList;
-    UIManager.addUI(new Score(POS_SCORE)); //SCORE
+    UIManager.add(new GaugeHP(POS_HP)); //HP
+    UIManager.add(new GaugeBullet(POS_BULLET)); //BULLET
+    UIManager.add(new WeaponList(POS_BULLET)); //WList;
+    UIManager.add(new Score(POS_SCORE)); //SCORE
   }
   //メニューを開く
   static SetMenu() {
     Drawer.SetFilter([Drawer.testFilter]);
-    UIManager.addUI(new Menu(add(POS_MENU, VECY(16))));
+    UIManager.add(new Menu(add(POS_MENU, VECY(16))));
   }
   //UIをすべて削除
   static Clean() {
@@ -94,18 +94,19 @@ export default class UIManager {
    * sentence : textを改行文字で区切った配列
    */
   static PopMessage(signboard) {
-    UIManager.addUI(new Message(POS_MES, signboard)); //枠
+    const message = new Message(POS_MES, signboard); //枠
+    //UIManager.add(message);
   }
   static EnterShop() {
-    UIManager.addUI(new Shop());
+    UIManager.add(new Shop());
   }
 
   //UIをリストに登録
-  static addUI(ui) {
+  static add(ui) {
     let layer = ui.layer;
     if (!layer) layer = "UI";
 
-    this.UIList.push(ui);
+    UIManager.UIList.push(ui);
     switch (ui.type) {
       case "HP":
         this.HP = ui;
@@ -147,7 +148,7 @@ export default class UIManager {
     let layer = ui.layer;
     if (!layer) layer = "UI";
 
-    this.UIList.remove(ui);
+    UIManager.UIList.remove(ui);
     Drawer.removeContainer(ui.sprite, layer);
   }
   /*UIの更新*/

@@ -6,10 +6,13 @@ interface :
 
 export default class StateMachine {
   constructor(states, reducer, initialState) {
-    this.states = states; //状態集合
-    this.reducer = reducer; //状態遷移関数
-    this.state = initialState; //初期状態
+    this.states = states;
+    this.reducer = reducer;
+    this.state = initialState;
     this.state.Init();
+    this.states.forEach(state => {
+      state.stateMachine = this;
+    });
   }
   dispatch(action) {
     this.state = this.reducer(this.state, action);

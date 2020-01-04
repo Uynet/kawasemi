@@ -94,7 +94,7 @@ export default class Player extends Entity {
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0; // spriteIndex 現在のスプライト番号
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]); //現在表示中のスプライト
+    this.sprite = Art.Sprite(this.pattern[this.spid]); //現在表示中のスプライト
     this.sprite.position.x = Math.floor(this.pos.x);
     this.sprite.position.y = Math.floor(this.pos.y);
     /*パラメータ*/
@@ -620,7 +620,7 @@ export default class Player extends Entity {
         x: 64,
         y: 96
       };
-      UIManager.addUI(new StagePop(p, "-HPがふえた ")); //SCORE
+      UIManager.add(new StagePop(p, "-HPがふえた ")); //SCORE
       p.y += 10;
       if (!this.param.havingWeaponList.missile) {
         this.param.havingWeaponList.missile = true;

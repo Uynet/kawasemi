@@ -88,9 +88,7 @@ export default class Audio {
       this.PlayingBGM.source.playbackRate.value = pitch;
   }
   static StopBGM() {
-    cl(this.PlayingBGM.name);
     if (this.PlayingBGM.name !== null) {
-      cl(this.PlayingBGM);
       this.PlayingBGM.source.stop();
       this.PlayingBGM.source.stop();
       this.PlayingBGM = {

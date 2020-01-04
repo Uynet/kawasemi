@@ -14,7 +14,7 @@ export default class ScreenFlash extends EFFECT {
     this.layer = "FOREENTITY";
     /*スプライト*/
     this.pattern = Art.bulletPattern.screenFlash;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.sprite = Art.Sprite(this.pattern[this.spid]);
     this.sprite.position = this.pos;
     this.sprite.anchor.set(0.5);
   }

@@ -20,7 +20,7 @@ export default class Wall extends Entity {
     }
     /*スプライト*/
     this.tex = wall.texture;
-    this.sprite = Art.SpriteFactory(this.tex);
+    this.sprite = Art.Sprite(this.tex);
     this.sprite.position = pos;
   }
 }

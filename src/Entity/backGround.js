@@ -8,7 +8,7 @@ export default class BackEntity extends Entity {
     this.layer = "BG";
     this.isUpdater = false;
     this.tex = tex;
-    this.sprite = Art.SpriteFactory(this.tex);
+    this.sprite = Art.Sprite(this.tex);
     this.sprite.scale = vec2(2);
     this.sprite.position = pos;
   }

@@ -19,7 +19,7 @@ export default class StartBossBattleEvent extends Event {
       let timer = 0;
       let po = 300;
       if (Audio.PlayingBGM.source !== null) Audio.PlayBGM(BGMTitle, 2.3);
-      UIManager.addUI(new StagePop(p, "^   - どうくつ   ぼす -$", 7));
+      UIManager.add(new StagePop(p, "^   - どうくつ   ぼす -$", 7));
       while (timer < po) {
         Drawer.SetMagnification(3 - Math.pow(timer / po, 3));
         Timer.SetTimeScale(timer / po, 2);

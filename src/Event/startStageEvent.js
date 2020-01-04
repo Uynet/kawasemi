@@ -25,7 +25,6 @@ export default class StartStageEvent extends Event {
       Audio.StopBGM();
       //ここで非同期
       Game.scene.ChangeState(STATE.STAGE);
-      //Game.scene.PopSubState("TRANS");
       UIManager.PopStage();
       yield;
     }

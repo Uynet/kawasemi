@@ -18,7 +18,7 @@ export default class FadeEvent extends Event {
       let frame = 0;
       //♢を初期化して追加
       for (let i = 0; i < 400; i++) {
-        let sp = Art.SpriteFactory(pattern[spid]);
+        let sp = Art.Sprite(pattern[spid]);
         let y = Math.floor(i / 20);
         let x = i % 20;
         sp.scale = vec2(2);

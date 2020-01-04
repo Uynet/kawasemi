@@ -10,10 +10,8 @@ import Pipeline from "./pipeline.js";
 import { debugOption } from "./debug.js";
 
 /* 
-　このコードを読んでくれてる人へ
-
-             もちもちねこをどうぞ 
-                （＾・ω・＾✿）
+          .+†*  Have a nice day *†+.
+                  （＾・ω・＾✿）
 
 */
 export default class Game {

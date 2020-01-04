@@ -17,7 +17,7 @@ export default class BulletBlur extends EFFECT {
     /*スプライト*/
     this.spid = 0; //12~15
     this.pattern = Art.bulletPattern.blur;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.sprite = Art.Sprite(this.pattern[this.spid]);
     this.sprite.anchor.set(0.5);
     this.sprite.alpha = 0.5;
     this.sprite.scale = VECN((Rand(0.5) + 1) / 1);

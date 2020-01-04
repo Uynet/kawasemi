@@ -469,9 +469,8 @@ export default class Art {
     }
     return a;
   }
-
   static SpriteFactory(texture) {
-    return this.Sprite(texture);
+    return new PIXI.Sprite(texture);
   }
   static Sprite(texture) {
     return new PIXI.Sprite(texture);

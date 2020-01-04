@@ -33,7 +33,7 @@ export default class UI {
     this.sprite.filters = [f];
   }
   Add() {
-    UIManager.addUI(this);
+    UIManager.add(this);
   }
   Update() {
     this.ExecuteEvent();

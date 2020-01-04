@@ -1,9 +1,12 @@
 import Art from "../../art.js";
+import Input from "../../input.js";
 import EntityManager from "../../Stage/entityManager.js";
 import BasicAI from "../AI/Basic/basicAI.js";
 import BackEntity from "../backEntity.js";
 import Bright from "../Effect/bright.js";
 import Signpop from "../Effect/signpop.js";
+import UIManager from "../../UI/uiManager.js";
+import Game from "../../game.js";
 
 export default class Shop extends BackEntity {
   constructor(pos, message) {
@@ -36,6 +39,11 @@ export default class Shop extends BackEntity {
     EntityManager.addEntity(this.popup);
     //AI
     this.addAI(new BasicAI(this));
+
+    const self = this;
+    Input.addKeyListenner(this, KEY.X, () => {
+      if (self.isCanRead()) Game.state.dispatch("openMessage");
+    });
   }
   isCanRead() {
     let player = EntityManager.player;
@@ -49,9 +57,5 @@ export default class Shop extends BackEntity {
   }
   Update() {
     this.ExecuteAI();
-    //page : 現在のページ番号
-    let player = EntityManager.player;
-
-    //this.Bright();
   }
 }

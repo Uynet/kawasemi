@@ -5,17 +5,14 @@ import UIManager from "./uiManager.js";
 import Audio from "../audio.js";
 import EntityManager from "../Stage/entityManager.js";
 import ListUI from "./listUI.js";
-import Game from "../game.js";
 import Drawer from "../drawer.js";
 import Art from "../art.js";
 import Font from "./font.js";
 import Param from "../param.js";
 import Component from "./component.js";
 import shopController from "./shopController.js";
-import PopInEvent from "../Event/Component/popIn.js";
-import FadeInEvent from "../Event/Component/fadeIn.js";
-import SlideInEvent from "../Event/Component/slideIn.js";
 import BlinkEvent from "../Event/Component/blink.js";
+import Game from "../game.js";
 //import {shopStyle}from "./Style/shopStyle.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
@@ -220,13 +217,13 @@ export default class Shop extends UI {
         item.setPrice(0);
         Param.GetWeapon(name);
         UIManager.bullet.Push(name);
-        UIManager.addUI(new StagePop(p, "-" + name + "をてにいれた "));
+        UIManager.add(new StagePop(p, "-" + name + "をてにいれた "));
         Audio.PlaySE("coin1");
         Audio.PlaySE("bomb", -0.9, 1.6);
         this.CloseConfirmModal();
       }
     } else {
-      UIManager.addUI(new StagePop(p, "-errorー!"));
+      UIManager.add(new StagePop(p, "-errorー!"));
       Audio.PlaySE("playerDamage");
     }
   }
@@ -234,6 +231,7 @@ export default class Shop extends UI {
     Audio.PlaySE("playerDamage");
     this.Remove();
     this.controller.ui.Remove();
+    Game.state.dispatch("closeMessage");
   }
   Update() {
     if (this.frame > 1) this.controller.Update();

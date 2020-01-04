@@ -1,4 +1,5 @@
 import Timer from "./timer.js";
+import Game from "./game.js";
 
 let inputedKeyList = new Array(256).fill(false);
 let clickedKeyList = new Array(256).fill(false);
@@ -64,6 +65,10 @@ export default class Input {
     $(document).off(scroll_event);
     //SP用
     $(document).off(".noScroll");
+  }
+  static addKeyListenner(entity, keyCode, handler) {
+    if (Game.state)
+      Game.state.getState().addKeyListenner(entity, keyCode, handler);
   }
 }
 /*receive input event*/

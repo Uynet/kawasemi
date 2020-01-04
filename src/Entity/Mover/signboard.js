@@ -1,18 +1,18 @@
 import Art from "../../art.js";
-import Game from "../../game.js";
-import Input from "../../input.js";
 import EntityManager from "../../Stage/entityManager.js";
-import UIManager from "../../UI/uiManager.js";
 import BackEntity from "../backEntity.js";
-import Bright from "../Effect/bright.js";
 import Signpop from "../Effect/signpop.js";
+import Input from "../../input.js";
+import UIManager from "../../UI/UIManager.js";
 
 export default class Signboard extends BackEntity {
   constructor(pos, message, name) {
     super(pos, Art.wallPattern.signboard);
-    /*基本情報*/
+    this.Init(pos, message, name);
+  }
+  Init(pos, message, name) {
     this.layer = "ENTITY";
-    //なおせ
+    //TODO:fix
     this.name = name;
     this.isUpdater = true;
     /* 固有情報
@@ -28,38 +28,33 @@ export default class Signboard extends BackEntity {
     }
     this.page = 0; //現在のページ番号
     this.isRead = false; //会話中かどうか
+    this.isCanRead = false;
     /*スプライト*/
     if (name == "signboard") this.tex = Art.wallPattern.signboard; //テクスチャ
     if (name == "shop") this.tex = Art.wallPattern.shop; //テクスチャ
-    this.sprite = Art.SpriteFactory(this.tex);
+    this.sprite = Art.Sprite(this.tex);
     this.sprite.position = pos;
     //pop
     let p = copy(this.pos);
     p.y -= 16;
     this.popup = new Signpop(p);
     EntityManager.addEntity(this.popup);
-  }
 
-  Read() {
-    this.isRead = true;
-    Game.scene.PushSubState("MES");
-    UIManager.PopMessage(this);
+    const self = this;
+    Input.addKeyListenner(this, KEY.X, () => {
+      if (self.isCanRead) UIManager.PopMessage(self);
+    });
   }
-
   Update() {
-    //page : 現在のページ番号
-    let player = EntityManager.player;
+    const player = EntityManager.player;
+    this.isCanRead = DIST(player.pos, this.pos) < 16 && player.isAlive;
+    this.popup.sprite.alpha = this.isCanRead ? 1 : 0;
+    /*
     if (!this.isRead && this.name == "shop" && this.frame % 8 == 0) {
       let trail = new Bright(add(this.pos, Rand2D(16)), Rand2D(0.5));
       EntityManager.addEntity(trail);
     }
-    if (DIST(player.pos, this.pos) < 16 && player.isAlive) {
-      player.isCanRead = true;
-      if (!this.isRead && Input.isKeyClick(KEY.X)) {
-        //UI側にMESSAGEを生成し、以降の入力はそちらで処理
-        this.Read();
-      }
-    }
+    */
     this.frame++;
   }
 }

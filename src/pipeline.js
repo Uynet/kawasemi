@@ -37,6 +37,15 @@ export default class Pipeline {
     const messageScene = new MessageScene();
 
     const scenes = [loadingScene, titleScene, mainScene, messageScene];
+    const reducerJSON = {
+      loading: { loadComplete: titleScene },
+      title: { onEnter: mainScene },
+      main: { openMessage: messageScene },
+      message: { closeMessage: mainScene }
+    };
+    //こうなってほしいな
+    //const reducer = ParceReducer(reducerJSON);
+
     const reducer = (scene, action) => {
       if (scene.name == "loading")
         if (action == "loadComplete") return titleScene;

@@ -6,7 +6,7 @@ export default class Fire extends EFFECT {
   constructor(pos, vel) {
     super(pos, vel);
     this.pattern = Art.bulletPattern.explosion.fire;
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]);
+    this.sprite = Art.Sprite(this.pattern[this.spid]);
     let texture = new PIXI.Graphics();
     this.color = 0xffa219;
     this.size = 16;
