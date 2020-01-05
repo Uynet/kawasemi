@@ -12,6 +12,7 @@ import TitleScene from "./Scene/titleScene.js";
 import MainScene from "./Scene/mainScene.js";
 import ShopScene from "./Scene/shopScene.js";
 import SignboardScene from "./Scene/signboardScene.js";
+import WorldMapScene from "./Scene/worldMapScene.js";
 
 import StateMachine from "./Scene/stateMachine.js";
 import Timer from "./timer.js";
@@ -37,12 +38,15 @@ export default class Pipeline {
     const mainScene = new MainScene();
     const shopScene = new ShopScene();
     const signboardScene = new SignboardScene();
+    const worldMapScene = new WorldMapScene();
 
     const scenes = [];
     const reducer = (scene, action) => {
       if (scene.name == "loading")
         if (action == "loadComplete") return titleScene;
-      if (scene.name == "title") if (action == "onEnter") return mainScene;
+      if (scene.name == "title") if (action == "onEnter") return worldMapScene;
+      if (scene.name == "worldMap")
+        if (action == "onEnterStage") return mainScene;
       if (scene.name == "main") {
         if (action == "openShop") return shopScene;
         if (action == "openMessage") return signboardScene;

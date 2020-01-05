@@ -17,10 +17,6 @@ export default class TitleScene extends Scene {
     if (Input.isAnyKeyClick()) {
       MapData.DeleteStage();
       UIManager.Clean();
-      UIManager.add(new StagePage());
-      UIManager.PopStage();
-      Audio.StopBGM();
-      MapData.CreateStage(Game.stage, "ENTER");
       Game.state.dispatch("onEnter");
     }
   }
