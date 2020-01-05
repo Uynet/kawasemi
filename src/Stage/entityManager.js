@@ -46,9 +46,9 @@ export default class EntityManager {
         console.warn(entity);
     }
 
-    if (entity.isMultiple) Drawer.addContainer(entity.container, entity.layer);
+    if (entity.isMultiple) Drawer.add(entity.container, entity.layer);
     else if (entity.isNoSprite);
-    else Drawer.addContainer(entity.sprite, entity.layer);
+    else Drawer.add(entity.sprite, entity.layer);
   }
 
   /*Entityをリストから削除する*/
@@ -72,10 +72,9 @@ export default class EntityManager {
     this.entityList.remove(entity);
     this.entityIndex--;
 
-    if (entity.isMultiple)
-      Drawer.removeContainer(entity.container, entity.layer);
+    if (entity.isMultiple) Drawer.remove(entity.container, entity.layer);
     else if (entity.isNoSprite /*Nothing to do*/);
-    else Drawer.removeContainer(entity.sprite, entity.layer);
+    else Drawer.remove(entity.sprite, entity.layer);
   }
 
   /*指定したnameを持つentityを取得する

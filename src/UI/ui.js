@@ -14,7 +14,7 @@ export default class UI {
     this.eventList = [];
   }
   Delete() {
-    UIManager.removeUI(this);
+    UIManager.remove(this);
   }
   Animate(event) {
     this.eventList.push(event);
@@ -54,7 +54,7 @@ export default class UI {
   }
   //子供丸ごと消す
   Remove() {
-    UIManager.removeUI(this);
+    UIManager.remove(this);
     this.children.forEach(u => u.Remove());
   }
   ExecuteEvent() {

@@ -6,14 +6,9 @@ import Input from "./input.js";
 import Timer from "./timer.js";
 import LoadingScene from "./scene/loadingScene.js";
 import Pipeline from "./pipeline.js";
-
 import { debugOption } from "./debug.js";
 
-/* 
-          .+†*  Have a nice day *†+.
-                  （＾・ω・＾✿）
-
-*/
+/* （＾・ω・＾✿） */
 export default class Game {
   static Init() {
     Pipeline.InitializeStaticClasses();
@@ -27,13 +22,11 @@ export default class Game {
     await Art.LoadTexture();
     Audio.Load();
     Game.Init();
-    Input.returnScroll(); //スクロール解除
   }
   static Update() {
     EventManager.Update();
-    //cl(Game.state.getState().name);
     Game.state.getState().Input(); //controller
-    Game.state.getState().Update(); // update current scene
+    Game.state.getState().Update(); // current scene
     Drawer.Renderer.render(Drawer.Stage);
     Audio.Update();
     Timer.Update();

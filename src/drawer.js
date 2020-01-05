@@ -67,7 +67,7 @@ export default class Drawer {
   }
 
   /*コンテナにスプライトを追加*/
-  static addContainer(sprite, CONTAINER) {
+  static add(sprite, CONTAINER) {
     switch (CONTAINER) {
       case "UI":
         this.UIContainer.addChild(sprite);
@@ -96,7 +96,7 @@ export default class Drawer {
   }
 
   /*コンテナからスプライトを削除*/
-  static removeContainer(sprite, container) {
+  static remove(sprite, container) {
     switch (container) {
       case "UI":
         this.UIContainer.removeChild(sprite);

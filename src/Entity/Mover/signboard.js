@@ -2,8 +2,19 @@ import Art from "../../art.js";
 import EntityManager from "../../Stage/entityManager.js";
 import BackEntity from "../backEntity.js";
 import Signpop from "../Effect/signpop.js";
+import Message from "../../UI/message.js";
 import Input from "../../input.js";
-import UIManager from "../../UI/UIManager.js";
+import Game from "../../game.js";
+import UIManager from "../../UI/uiManager.js";
+
+const POS_MES = vec2(8, 132); //message
+const objToArray = obj => {
+  const arr = [];
+  for (let i in obj) {
+    arr.push(obj[i]);
+  }
+  return arr;
+};
 
 export default class Signboard extends BackEntity {
   constructor(pos, message, name) {
@@ -15,23 +26,11 @@ export default class Signboard extends BackEntity {
     //TODO:fix
     this.name = name;
     this.isUpdater = true;
-    /* 固有情報
-     * message : 複数のページからなる文章
-     * text : 1つのページの文章
-     * sentense : 1行の文章
-     * font : 1文字
-     * */
-    //オブジェクトを配列に変換?
-    this.message = [];
-    for (let l in message) {
-      this.message.push(message[l]);
-    }
+    this.message = objToArray(message);
     this.page = 0; //現在のページ番号
     this.isRead = false; //会話中かどうか
-    this.isCanRead = false;
     /*スプライト*/
-    if (name == "signboard") this.tex = Art.wallPattern.signboard; //テクスチャ
-    if (name == "shop") this.tex = Art.wallPattern.shop; //テクスチャ
+    this.tex = Art.wallPattern.signboard;
     this.sprite = Art.Sprite(this.tex);
     this.sprite.position = pos;
     //pop
@@ -39,22 +38,19 @@ export default class Signboard extends BackEntity {
     p.y -= 16;
     this.popup = new Signpop(p);
     EntityManager.addEntity(this.popup);
-
-    const self = this;
-    Input.addKeyListenner(this, KEY.X, () => {
-      if (self.isCanRead) UIManager.PopMessage(self);
-    });
+  }
+  isCanRead() {
+    const player = EntityManager.player;
+    return DIST(player.pos, this.pos) < 16 && player.isAlive;
   }
   Update() {
-    const player = EntityManager.player;
-    this.isCanRead = DIST(player.pos, this.pos) < 16 && player.isAlive;
-    this.popup.sprite.alpha = this.isCanRead ? 1 : 0;
-    /*
-    if (!this.isRead && this.name == "shop" && this.frame % 8 == 0) {
-      let trail = new Bright(add(this.pos, Rand2D(16)), Rand2D(0.5));
-      EntityManager.addEntity(trail);
+    if (this.isCanRead()) {
+      if (Input.isKeyClick(KEY.X)) {
+        Game.state.dispatch("openMessage");
+        UIManager.add(new Message(POS_MES, this)); //枠
+      }
     }
-    */
+    this.popup.sprite.alpha = this.isCanRead ? 1 : 0;
     this.frame++;
   }
 }

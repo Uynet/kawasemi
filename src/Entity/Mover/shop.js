@@ -5,7 +5,6 @@ import BasicAI from "../AI/Basic/basicAI.js";
 import BackEntity from "../backEntity.js";
 import Bright from "../Effect/bright.js";
 import Signpop from "../Effect/signpop.js";
-import UIManager from "../../UI/uiManager.js";
 import Game from "../../game.js";
 
 export default class Shop extends BackEntity {
@@ -42,7 +41,7 @@ export default class Shop extends BackEntity {
 
     const self = this;
     Input.addKeyListenner(this, KEY.X, () => {
-      if (self.isCanRead()) Game.state.dispatch("openMessage");
+      if (self.isCanRead()) Game.state.dispatch("openShop");
     });
   }
   isCanRead() {

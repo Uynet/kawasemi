@@ -7,7 +7,6 @@ import Event from "../Event/event.js";
 import EntityManager from "../Stage/entityManager.js";
 import StagePop from "./stagePop.js";
 import Audio from "../audio.js";
-import Game from "../game.js";
 
 class PoyoEvent extends Event {
   constructor(ui) {
@@ -109,7 +108,6 @@ export default class shopController extends UI {
         Audio.PlaySE("playerDamage");
       } else if (item.price > EntityManager.player.score) {
         //金が足りないので変えない
-        const pop = new StagePop(p, "-かえません ");
         UIManager.add(new StagePop(p, "-かえません "));
         Audio.PlaySE("playerDamage");
       } else {

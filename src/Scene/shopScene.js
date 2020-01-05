@@ -1,16 +1,15 @@
-import Input from "../input.js";
 import Scene from "./scene.js";
 import UIManager from "../UI/uiManager.js";
 import EntityManager from "../Stage/entityManager.js";
-import Game from "../game.js";
+import Shop from "../UI/shop.js";
 
-export default class MessageScene extends Scene {
+export default class ShopScene extends Scene {
   constructor() {
     super();
-    this.name = "message";
+    this.name = "shop";
   }
   Init() {
-    UIManager.EnterShop();
+    UIManager.add(new Shop());
   }
   Update() {
     EntityManager.Animation();

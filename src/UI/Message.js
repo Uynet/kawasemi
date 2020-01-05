@@ -60,7 +60,7 @@ export default class Message extends UI {
     let mes = this.message[this.page];
     let sentence = mes.split("\n");
     for (let i = 0; i < sentence.length; i++) {
-      UIManager.removeUI(sentence[i]);
+      UIManager.remove(sentence[i]);
     }
     //これをすると先頭以外の要素が消える
     //つまり枠スプライトを残し他の文字を消す
@@ -214,7 +214,7 @@ export default class Message extends UI {
     this.signboard.isRead = false;
     this.signboard.isNear = false;
     Game.state.dispatch("closeMessage");
-    UIManager.removeUI(this);
+    UIManager.remove(this);
   }
   Update() {
     if (Input.isKeyClick(KEY.X)) {

@@ -217,7 +217,7 @@ export default class Enemy1 extends Enemy {
       //ダメージをポップ
       EntityManager.addEntity(new FontEffect(this.pos, atk + "", "enemy"));
       //this.SetSize(lerp(96,192,this.hp/this.maxHP));
-      UIManager.BossHP.SetBar(this.hp);
+      UIManager.find("BossHP")[0].SetBar(this.hp);
     }
   }
 

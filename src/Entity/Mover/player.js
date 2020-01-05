@@ -16,7 +16,6 @@ import StagePop from "../../UI/stagePop.js";
 import UIManager from "../../UI/uiManager.js";
 import WeaponManager from "../../Weapon/weaponManager.js";
 import BasicAI from "../AI/Basic/basicAI.js";
-import Explosion2 from "../Effect/Explosion/explosion2.js";
 import Explosion5 from "../Effect/Explosion/explosion5.js";
 import FontEffect from "../Effect/fontEffect.js";
 import WeaponIcon from "../Effect/weaponIcon.js";
@@ -109,9 +108,6 @@ export default class Player extends Entity {
     this.toArg = 0;
     this.scPos = vec0(); //スクロール位置
     this.score = this.param.score;
-    if (UIManager.score) UIManager.score.SetScore(this.score);
-    //UIManager.HP.SetBar(this.hp);//HPbarの更新
-    //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
     this.vxMax = Param.player.vxMax;
     this.vyMax = Param.player.vyMax;
     /*状態*/
@@ -176,10 +172,6 @@ export default class Player extends Entity {
       }
     }
     /*空中ジャンプ*/
-    //空中でZ押すとbulletを消費してジャンプできる
-    if (Input.isKeyClick(KEY.Z)) {
-      //this.AirJump();
-    }
     if (Input.isKeyInput(KEY.C)) {
       //Timer.SetTimeScale(0.08);
     } else {
@@ -256,26 +248,6 @@ export default class Player extends Entity {
       let wNameNext = wList[wIndex + 1]; //次の武器をセレクト
       if (!wNameNext) wNameNext = wList[0]; //最後尾でループ
       this.ChangeWeapon(wNameNext);
-    }
-  }
-  AirJump() {
-    if (this.state == STATE.FALLING) {
-      let jumpCost = 20;
-      if (this.bullet >= jumpCost) {
-        Audio.PlaySE("jump2");
-        EntityManager.addEntity(
-          new Explosion2(copy(this.pos), Math.PI * (1 / 2))
-        );
-        this.Quake(20, 0.8);
-        this.frameShot = this.frame; //最終ショット時刻
-        this.vel.y = -Param.player.jumpVel;
-        this.bullet -= 20;
-        this.state = STATE.JUMPING;
-      } else {
-        //足りないとできない
-        Audio.PlaySE("empty");
-        EntityManager.addEntity(new FontEffect(this.pos, "たりないよ", "pop"));
-      }
     }
   }
   /*状態からアニメーションを行う*/
@@ -374,7 +346,9 @@ export default class Player extends Entity {
   ChangeWeapon(name) {
     this.weapon.Reset();
     WeaponManager.ChangeWeapon(this, name);
-    UIManager.bullet.ChangeWeapon(name);
+    const bullet = UIManager.find("BULLET")[0];
+    bullet.ChangeWeapon(name);
+    bullet.ChangeWeapon(name);
     //変更先の武器アイコンをpop
     let p = copy(this.pos);
     p.y -= 8;
@@ -389,14 +363,6 @@ export default class Player extends Entity {
     //無敵時間は攻撃を受けない
     if (!this.isInvincible && this.isAlive) {
       Audio.PlaySE("playerDamage");
-
-      //bulletが少ないと防御力がさがる(思いつき)
-      //0~1
-      /*
-      let def = (1 - this.bullet/this.maxBullet)
-      atk *= (1 + 30*def*def);
-      atk = Math.floor(atk);
-      */
 
       this.hp -= atk;
       //フォントはダメージ数に応じて数字を表示する
@@ -416,7 +382,7 @@ export default class Player extends Entity {
       this.bullet += 5; //とりあえずbulletも回復しとくか
       //this.hp += 1;//とりあえずhpも回復しとくか
       this.hp = clamp(this.hp, 0, this.maxHP);
-      UIManager.score.SetScore(this.score);
+      UIManager.find("SCORE")[0].SetScore(this.score);
     }
   }
   /* 衝突判定 */
@@ -622,17 +588,19 @@ export default class Player extends Entity {
       };
       UIManager.add(new StagePop(p, "-HPがふえた ")); //SCORE
       p.y += 10;
+      const bullet = UIManager.find("BULLET")[0];
       if (!this.param.havingWeaponList.missile) {
         this.param.havingWeaponList.missile = true;
-        UIManager.bullet.Push("missile");
+        bullet.Push("missile");
       }
       if (!this.param.havingWeaponList.laser) {
         this.param.havingWeaponList.laser = true;
-        UIManager.bullet.Push("laser");
+        bullet.Push("laser");
       }
       //最大HP変更
       this.param.maxHp = 300;
-      UIManager.HP.SetMaxGaugeValue(300);
+      const HP = UIManager.find("HP")[0];
+      HP.SetMaxGaugeValue(300);
       this.Damage(999);
       Audio.PlaySE("missileHit");
     }
@@ -656,8 +624,6 @@ export default class Player extends Entity {
       this.Collision(); //衝突
       this.AutoSupplyBullet(); //bulletのかいふく
     }
-    UIManager.bullet.SetBar(this.bullet); //BulletBarの更新
-    UIManager.HP.SetBar(this.hp); //HPbarの更新
     this.isCanRead = false;
     this.ScrollByDir(); //向きに応じてスクロール位置を変更
     Drawer.ScrollOn(this.pos); //プレイヤー中心にスクロール

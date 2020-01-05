@@ -25,7 +25,7 @@ export default class FadeEvent extends Event {
         sp.position.x = x * 16 - 24;
         sp.position.y = y * 16 - 24;
         seq[i] = sp;
-        Drawer.addContainer(sp, "FILTER");
+        Drawer.add(sp, "FILTER");
       }
       /*フェードアウト*/
       while (frame < 40) {
@@ -58,7 +58,7 @@ export default class FadeEvent extends Event {
         yield;
       }
       for (let i = 0; i < 400; i++) {
-        Drawer.removeContainer(seq[i], "FILTER");
+        Drawer.remove(seq[i], "FILTER");
       }
       yield;
     }

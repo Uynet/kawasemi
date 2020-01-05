@@ -216,7 +216,7 @@ export default class Shop extends UI {
         player.GetScore(-price);
         item.setPrice(0);
         Param.GetWeapon(name);
-        UIManager.bullet.Push(name);
+        UIManager.find("BULLET")[0].bullet.Push(name);
         UIManager.add(new StagePop(p, "-" + name + "をてにいれた "));
         Audio.PlaySE("coin1");
         Audio.PlaySE("bomb", -0.9, 1.6);
@@ -231,7 +231,7 @@ export default class Shop extends UI {
     Audio.PlaySE("playerDamage");
     this.Remove();
     this.controller.ui.Remove();
-    Game.state.dispatch("closeMessage");
+    Game.state.dispatch("closeShop");
   }
   Update() {
     if (this.frame > 1) this.controller.Update();
