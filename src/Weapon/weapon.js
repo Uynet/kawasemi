@@ -14,8 +14,6 @@ const DIR = {
   L: "L"
 };
 
-const SEEN = 2;
-
 export default class Weapon {
   /* 
    * ammunition : 弾薬数 
@@ -33,12 +31,13 @@ export default class Weapon {
     this.isTargetOn = false;
     this.isLaserOn = false;
     this.target = null; //これ大丈夫か??
+    this.bulletGauge = UIManager.find("BULLET")[0];
   }
   shot(player) {
     //最後に撃ってからframeまで停止
     if (player.frame - player.frameShot > this.agi) {
-      const bullet = UIManager.find("BULLET")[0];
-      bullet.Shot();
+      this.bulletGauge.Shot();
+      this.bulletGauge.SetBar(player.bullet);
 
       player.spilit.OnShot();
       //shot時刻

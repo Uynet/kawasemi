@@ -1,7 +1,7 @@
 import Font from "../font.js";
 import UI from "../ui.js";
 
-export default class LoadingComponent extends UI {
+export default class LoadingPage extends UI {
   constructor() {
     super(vec2(0));
     //背景色

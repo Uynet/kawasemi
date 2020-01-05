@@ -3,7 +3,6 @@ import StagePop from "./stagePop.js";
 import GaugeHP from "./gaugeHP.js";
 import GaugeBullet from "./gaugeBullet.js";
 import WeaponList from "./weaponList.js";
-import Font from "./font.js";
 import Menu from "./menu.js";
 import Score from "./score.js";
 import Game from "../game.js";
@@ -36,25 +35,13 @@ export default class UIManager {
     }
   }
   static find(name) {
-    return UIManager.UIList.filter(e => e.type == name);
-  }
-  /*タイトルでのUI配置に変更*/
-  static SetTitle() {
-    let p1 = vec2(96, 64);
-    let p2 = vec2(p1.x, p1.y + 10);
-    let p3 = vec2(p1.x - 8, p2.y + 48);
-    let p4 = vec2(32, 200);
-    UIManager.add(new Font(p1, "さいはてどろっぷ", "MES")); //SCORE
-    UIManager.add(new Font(p2, "- ver0.33 -", "MES")); //SCORE
-    UIManager.add(new Font(p3, "Press Any Key", "MES")); //SCORE
-    UIManager.add(new Font(p4, "+ 2018-2019 uynet", "MES")); //SCORE
-  }
-  /*ステージ中でのUI配置に変更*/
-  static SetStage() {
-    UIManager.add(new GaugeHP(POS_HP)); //HP
-    UIManager.add(new GaugeBullet(POS_BULLET)); //BULLET
-    UIManager.add(new WeaponList(POS_BULLET)); //WList;
-    UIManager.add(new Score(POS_SCORE)); //SCORE
+    let list = [];
+    UIManager.UIList.forEach(e => {
+      e.children.forEach(e => {
+        if (e.type == name) list.push(e);
+      });
+    });
+    return list;
   }
   //メニューを開く
   static SetMenu() {
@@ -69,7 +56,6 @@ export default class UIManager {
     let filters = [];
     Drawer.SetFilter(filters);
   }
-
   //UIをリストに登録
   static add(ui) {
     let layer = ui.layer;

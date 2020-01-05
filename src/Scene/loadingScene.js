@@ -1,7 +1,7 @@
 import Scene from "./scene.js";
 import UIManager from "../UI/uiManager.js";
 import Game from "../game.js";
-import LoadingComponent from "../UI/Component/loading.js";
+import LoadingPage from "../UI/Page/loadingPage.js";
 
 export default class LoadingScene extends Scene {
   constructor() {
@@ -10,12 +10,12 @@ export default class LoadingScene extends Scene {
   }
   Init() {
     this.frame = 0;
-    UIManager.add(new LoadingComponent()); //HP
+    UIManager.add(new LoadingPage()); //HP
   }
   Update() {
-    if (isDebugMode && this.frame == 10) Game.state.dispatch("loadComplete");
+    const wait = isDebugMode ? 10 : 100;
     UIManager.Update();
-    if (this.frame == 100) {
+    if (this.frame == wait) {
       UIManager.Clean();
       Game.state.dispatch("loadComplete");
     }

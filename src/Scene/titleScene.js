@@ -5,6 +5,8 @@ import UIManager from "../UI/uiManager.js";
 import EntityManager from "../Stage/entityManager.js";
 import Game from "../game.js";
 import Audio from "../audio.js";
+import TitlePage from "../UI/Page/titlePage.js";
+import StagePage from "../UI/Page/stagePage.js";
 
 export default class TitleScene extends Scene {
   constructor() {
@@ -15,7 +17,7 @@ export default class TitleScene extends Scene {
     if (Input.isAnyKeyClick()) {
       MapData.DeleteStage();
       UIManager.Clean();
-      UIManager.SetStage();
+      UIManager.add(new StagePage());
       UIManager.PopStage();
       Audio.StopBGM();
       MapData.CreateStage(Game.stage, "ENTER");
@@ -23,7 +25,7 @@ export default class TitleScene extends Scene {
     }
   }
   Init() {
-    UIManager.SetTitle();
+    UIManager.add(new TitlePage());
     const stage = 0;
     MapData.CreateStage(stage, "ENTER");
   }
