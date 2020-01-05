@@ -18,7 +18,6 @@ export default class GameClearEvent extends Event {
       };
 
       let frame = 0;
-      Game.scene.PushSubState("TRANS");
       Game.stage++;
       if (Game.stage == 11) {
         //Audio.isFadeout=true;

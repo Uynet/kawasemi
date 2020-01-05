@@ -41,7 +41,7 @@ export default class Signboard extends BackEntity {
   }
   isCanRead() {
     const player = EntityManager.player;
-    return DIST(player.pos, this.pos) < 16 && player.isAlive;
+    return DIST(player.pos, this.pos) < 24 && player.isAlive;
   }
   Update() {
     if (this.isCanRead()) {
@@ -50,7 +50,7 @@ export default class Signboard extends BackEntity {
         UIManager.add(new Message(POS_MES, this)); //枠
       }
     }
-    this.popup.sprite.alpha = this.isCanRead ? 1 : 0;
+    this.popup.sprite.alpha = this.isCanRead() ? 1 : 0;
     this.frame++;
   }
 }

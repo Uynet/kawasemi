@@ -37,7 +37,9 @@ export default class Weapon {
   shot(player) {
     //最後に撃ってからframeまで停止
     if (player.frame - player.frameShot > this.agi) {
-      UIManager.find("BULLET")[0].Shot();
+      const bullet = UIManager.find("BULLET")[0];
+      bullet.Shot();
+
       player.spilit.OnShot();
       //shot時刻
       player.frameShot = player.frame;

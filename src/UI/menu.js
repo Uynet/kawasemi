@@ -53,7 +53,6 @@ export default class Menu extends UI {
   Close() {
     Drawer.SetFilter([]);
     UIManager.remove(UIManager.menu);
-    Game.scene.PopSubState();
   }
 
   Update() {

@@ -47,8 +47,6 @@ export default class FadeEvent extends Event {
         frame++;
         yield;
       }
-      /*フェードin*/
-      Game.scene.PopSubState();
       while (frame < 40) {
         for (let i = 0; i < 400; i++) {
           spid = 16 + Math.max(0, Math.min(Math.floor(frame - i / 8), 15));

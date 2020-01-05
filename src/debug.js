@@ -1,5 +1,5 @@
 const debugOption = {
-  entryStage: 21,
+  entryStage: 1,
   playerHavingWeaponList: {
     normal: true,
     missile: true,

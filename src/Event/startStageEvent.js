@@ -14,7 +14,6 @@ export default class StartStageEvent extends Event {
     super(1);
     function* gen() {
       let frame = 0;
-      Game.scene.PushSubState("TRANS");
       EventManager.eventList.push(new FadeEvent("fadeout"));
       Audio.PlaySE("stageChange");
       Audio.StopBGM();

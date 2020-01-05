@@ -38,15 +38,10 @@ export default class Shop extends BackEntity {
     EntityManager.addEntity(this.popup);
     //AI
     this.addAI(new BasicAI(this));
-
-    const self = this;
-    Input.addKeyListenner(this, KEY.X, () => {
-      if (self.isCanRead()) Game.state.dispatch("openShop");
-    });
   }
   isCanRead() {
     let player = EntityManager.player;
-    return DIST(player.pos, this.pos) < 16 && player.isAlive;
+    return DIST(player.pos, this.pos) < 24 && player.isAlive;
   }
   Bright() {
     if (this.Modulo(8)) {
@@ -56,5 +51,8 @@ export default class Shop extends BackEntity {
   }
   Update() {
     this.ExecuteAI();
+    if (Input.isKeyClick(KEY.X))
+      if (this.isCanRead()) Game.state.dispatch("openShop");
+    this.popup.sprite.alpha = this.isCanRead() ? 1 : 0;
   }
 }

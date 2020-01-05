@@ -23,7 +23,6 @@ export default class ToBeContinuedEvent extends Event {
         frame++;
         yield;
       }
-      Game.scene.PushSubState("TRANS");
       EventManager.eventList.push(new FadeEvent("fadeout"));
       while (frame < 250) {
         frame++;

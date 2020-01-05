@@ -20,7 +20,6 @@ export default class GameOverEvent extends Event {
         frame++;
         yield;
       }
-      Game.scene.PushSubState("SEQ");
       yield;
     }
     let itt = gen();

@@ -365,6 +365,7 @@ export default class Player extends Entity {
       Audio.PlaySE("playerDamage");
 
       this.hp -= atk;
+      UIManager.find("HP")[0].SetBar(this.hp);
       //フォントはダメージ数に応じて数字を表示する
       EntityManager.addEntity(new FontEffect(this.pos, atk + "", "player"));
       this.hp = Math.max(this.hp, 0);
@@ -379,8 +380,7 @@ export default class Player extends Entity {
     if (this.isAlive) {
       this.score += score;
       this.param.score = this.score;
-      this.bullet += 5; //とりあえずbulletも回復しとくか
-      //this.hp += 1;//とりあえずhpも回復しとくか
+      this.bullet += 5;
       this.hp = clamp(this.hp, 0, this.maxHP);
       UIManager.find("SCORE")[0].SetScore(this.score);
     }
@@ -458,6 +458,7 @@ export default class Player extends Entity {
     } //forここまで
     if (!this.floor.on) this.isJump = true;
   }
+
   Physics() {
     this.MoveOnFloor();
     this.MoveByGravity();
@@ -520,6 +521,7 @@ export default class Player extends Entity {
 
   OnDying() {
     //死亡開始時に一回だけ呼ばれる部分
+
     if (this.isAlive) {
       Timer.SetTimeScale(0.1);
       //なおせ
@@ -537,6 +539,7 @@ export default class Player extends Entity {
       //死亡開始時に一回だけ呼ばれる部分
     }
   }
+
   Dying() {
     //死亡中
     if (this.isDying) {
@@ -575,6 +578,7 @@ export default class Player extends Entity {
     if (d < -Math.PI) d += 2 * Math.PI;
     this.arg += d * 0.2;
   }
+
   Debug() {
     if (
       this.maxHP != 300 &&
@@ -625,7 +629,6 @@ export default class Player extends Entity {
       this.AutoSupplyBullet(); //bulletのかいふく
     }
     this.isCanRead = false;
-    this.ScrollByDir(); //向きに応じてスクロール位置を変更
     Drawer.ScrollOn(this.pos); //プレイヤー中心にスクロール
     this.Dying(); //死亡中
     //無敵時間の有向時間
@@ -638,6 +641,7 @@ export default class Player extends Entity {
     /*reset*/
     //this.PixelizeSpritePosition();
   }
+
   PixelizeSpritePosition() {
     let pos = vec2(
       this.pos.x - (this.pos.x % 3),
