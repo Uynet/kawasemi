@@ -1,16 +1,10 @@
 import Art from "../art.js";
 import Drawer from "../drawer.js";
-import Game from "../game.js";
-import MapData from "../Stage/mapData.js";
 import Event from "./event.js";
-import UIManager from "../UI/uiManager.js";
 
-/*タイトル画面からゲーム開始画面に移行するイベント
- * (UIの退避)
- * UIのセット
- */
+/*タイトル画面からゲーム開始画面に移行するイベント */
 export default class FadeEvent extends Event {
-  constructor(type) {
+  constructor(onFadeInEnd, onFadeOutStart, onFadeOutEnd) {
     super(); //どうでもいい
     function* FadeOut() {
       let pattern = Art.seqPattern;
@@ -28,7 +22,6 @@ export default class FadeEvent extends Event {
         seq[i] = sp;
         Drawer.add(sp, "FILTER");
       }
-      /*フェードアウト*/
       while (frame < 40) {
         for (let i = 0; i < 400; i++) {
           //上から下へ
@@ -38,16 +31,14 @@ export default class FadeEvent extends Event {
         frame++;
         yield;
       }
-      /*ここでマップをロード*/
-      MapData.DeleteStage();
-      MapData.CreateStage(Game.stage, "ENTER");
 
-      /*マップデータを生成するのでちょっと待つ*/
+      onFadeInEnd();
       frame = 0;
       while (frame < 10) {
         frame++;
         yield;
       }
+      onFadeOutStart();
       while (frame < 40) {
         for (let i = 0; i < 400; i++) {
           spid = 16 + Math.max(0, Math.min(Math.floor(frame - i / 8), 15));
@@ -59,6 +50,7 @@ export default class FadeEvent extends Event {
       for (let i = 0; i < 400; i++) {
         Drawer.remove(seq[i], "FILTER");
       }
+      onFadeOutEnd();
       yield;
     }
 

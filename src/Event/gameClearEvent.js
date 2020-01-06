@@ -4,8 +4,7 @@ import Param from "../param.js";
 import EntityManager from "../Stage/entityManager.js";
 import UIManager from "../UI/uiManager.js";
 import Event from "./event.js";
-import EventManager from "./eventmanager.js";
-import FadeEvent from "./fadeEvent.js";
+import MapData from "../Stage/mapData.js";
 
 export default class GameClearEvent extends Event {
   constructor() {
@@ -25,7 +24,16 @@ export default class GameClearEvent extends Event {
       }
       Audio.PlaySE("stageChange");
       UIManager.PopStage(Game.stage);
-      EventManager.eventList.push(new FadeEvent("fadeout"));
+
+      Game.state.transit("transition");
+      const transitionState = Game.state.getState();
+      transitionState.onFadeInEnd = () => {
+        MapData.DeleteStage();
+        MapData.CreateStage(Game.stage);
+      };
+      transitionState.onFadeOutStart = () => {
+        Game.state.transit("main");
+      };
       while (frame < 50) {
         frame++;
         yield;

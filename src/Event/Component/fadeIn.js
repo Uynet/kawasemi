@@ -1,3 +1,5 @@
+MapData.DeleteStage();
+MapData.CreateStage(Game.stage);
 import Event from "../event.js";
 
 /* props

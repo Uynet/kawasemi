@@ -1,20 +1,24 @@
 import Audio from "../audio.js";
 import Game from "../game.js";
 import Event from "./event.js";
-import EventManager from "./eventmanager.js";
-import FadeEvent from "./fadeEvent.js";
+import MapData from "../Stage/mapData.js";
 
 export default class GameOverEvent extends Event {
   constructor() {
     super();
     function* gen() {
-      //if(!Game.debug)Game.stage = Game.continuePoint;
       let frame = 0;
-      EventManager.eventList.push(new FadeEvent("fadeout"));
+      Game.state.transit("transition");
+      const transitionState = Game.state.getState();
+      transitionState.onFadeInEnd = () => {
+        MapData.DeleteStage();
+        MapData.CreateStage(Game.stage);
+      };
+      transitionState.onFadeOutStart = () => {
+        Game.state.transit("main");
+      };
 
       Audio.PlaySE("stageChange");
-      //Audio.PlayBGM("stage5",0.2);
-      //if(Game.debug)Audio.PlayBGM("stage5",0.0);
 
       while (frame < 30) {
         frame++;

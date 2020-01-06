@@ -15,14 +15,22 @@ export default class WorldMapScene extends Scene {
   }
   Input() {
     if (Input.isKeyClick(KEY.X)) {
-      UIManager.Clean();
-
-      UIManager.add(new StagePage());
-      UIManager.PopStage();
       Audio.StopBGM();
-      MapData.CreateStage(Game.stage, "ENTER");
 
-      Game.state.transit("main");
+      Game.state.transit("transition");
+      const transitionState = Game.state.getState();
+      transitionState.onFadeInEnd = () => {
+        UIManager.Clean();
+        MapData.DeleteStage();
+        MapData.CreateStage(Game.stage);
+        UIManager.add(new StagePage());
+      };
+      transitionState.onFadeOutStart = () => {
+        Game.state.transit("main");
+      };
+      transitionState.onFadeOutEnd = () => {
+        UIManager.PopStage();
+      };
     }
   }
   Init() {

@@ -37,8 +37,8 @@ export default class Drawer {
     this.renderTarget.addChild(this.entityContainer);
     this.renderTarget.addChild(this.foreEntityContainer);
     this.renderTarget.addChild(this.foreContainer);
-    this.renderTarget.addChild(this.filterContainer);
     this.renderTarget.addChild(this.UIContainer);
+    this.renderTarget.addChild(this.filterContainer);
     this.Stage.addChild(this.renderTarget);
 
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH, PIXI_HEIGHT);

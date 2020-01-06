@@ -52,7 +52,6 @@ export default class Enemy extends Entity {
     this.SetParam(Param[this.name]);
     /*スプライト*/
     this.pattern = Art.enemyPattern[this.name];
-    console.log(this.name);
     this.sprite = Art.Sprite(this.pattern[this.spid]); //現在表示中のスプライト
     this.sprite.texture = this.pattern[this.spid];
     this.sprite.position = this.pos;

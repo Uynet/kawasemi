@@ -4,9 +4,7 @@ import MapData from "../Stage/mapData.js";
 import UIManager from "../UI/uiManager.js";
 import EntityManager from "../Stage/entityManager.js";
 import Game from "../game.js";
-import Audio from "../audio.js";
 import TitlePage from "../UI/Page/titlePage.js";
-import StagePage from "../UI/Page/stagePage.js";
 
 export default class TitleScene extends Scene {
   constructor() {

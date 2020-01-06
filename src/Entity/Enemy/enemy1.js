@@ -218,7 +218,7 @@ export default class Enemy1 extends Enemy {
       EntityManager.addEntity(new FontEffect(this.pos, atk + "", "enemy"));
       //this.SetSize(lerp(96,192,this.hp/this.maxHP));
       const BossHP = UIManager.find("BossHP")[0];
-      BossHP.SetBar(this.hp);
+      if (BossHP) BossHP.SetBar(this.hp);
     }
   }
 

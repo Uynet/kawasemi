@@ -224,7 +224,7 @@ export default class MapData {
    * ENTER : 新しいステージに入った時
    * RESET : 死んでやり直す時
    */
-  static async CreateStage(stageNo, state) {
+  static async CreateStage(stageNo) {
     //BGM再生
     if (Audio.PlayingBGM.name != StageData.StageBGM[stageNo])
       Audio.PlayBGM(StageData.StageBGM[stageNo], 1.0);
@@ -248,13 +248,6 @@ export default class MapData {
       };
     }
     Drawer.ScrollSet(p);
-  }
-
-  /*マップデータを消して作り直す*/
-  static RebuildStage() {
-    MapData.DeleteStage();
-    let state = "RESET";
-    MapData.CreateStage(Game.stage, state);
   }
 
   /*現在開かれているステージを削除*/

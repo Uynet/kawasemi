@@ -5,6 +5,7 @@ export default class Param {
     this.player.havingWeaponList = debugOption.playerHavingWeaponList;
     console.log(debugOption);
     this.player.score = debugOption.score;
+    if (debugOption.invincibleMode) Param.bullet1.atkMax = 9999;
   }
   static isHaveWeapon(name) {
     return this.player.havingWeaponList[name];
@@ -164,8 +165,8 @@ export default class Param {
     };
     //Missile
     this.bullet1 = {
-      atkMax: 1,
-      atkMin: 10,
+      atkMax: 10,
+      atkMin: 1,
       hp: 1,
       curve: 0.2
     };

@@ -12,9 +12,7 @@ export default class MainScene extends Scene {
   }
   Init() {}
   Update() {
-    if (this.frame++ > 50) {
-      EntityManager.Update();
-      UIManager.Update();
-    }
+    EntityManager.Update();
+    UIManager.Update();
   }
 }

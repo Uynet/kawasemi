@@ -1,11 +1,9 @@
 import Drawer from "../drawer.js";
 import Game from "../game.js";
-import MapData from "../Stage/mapData.js";
 import StagePop from "../UI/stagePop.js";
 import UIManager from "../UI/uiManager.js";
 import Event from "./event.js";
-import EventManager from "./eventmanager.js";
-import FadeEvent from "./fadeEvent.js";
+import MapData from "../Stage/mapData.js";
 
 export default class ToBeContinuedEvent extends Event {
   constructor() {
@@ -23,16 +21,18 @@ export default class ToBeContinuedEvent extends Event {
         frame++;
         yield;
       }
-      EventManager.eventList.push(new FadeEvent("fadeout"));
-      while (frame < 250) {
-        frame++;
-        yield;
-      }
-      MapData.DeleteStage();
-      UIManager.Clean();
-      Drawer.SetMagnification(3);
-      Game.scene.ChangeState(STATE.TITLE);
-      MapData.CreateStage(0, "ENTER");
+
+      Game.state.transit("transition");
+      const transitionState = Game.state.getState();
+      transitionState.onFadeInEnd = () => {
+        Drawer.SetMagnification(3);
+        MapData.DeleteStage();
+      };
+      transitionState.onFadeOutStart = () => {
+        Game.stage = 1;
+        UIManager.Clean();
+        Game.state.transit("title");
+      };
 
       yield;
     }
