@@ -17,7 +17,7 @@ export default class TitleScene extends Scene {
     if (Input.isAnyKeyClick()) {
       MapData.DeleteStage();
       UIManager.Clean();
-      Game.state.dispatch("onEnter");
+      Game.state.transit("worldMap");
     }
   }
   Init() {

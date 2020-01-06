@@ -40,7 +40,14 @@ export default class Pipeline {
     const signboardScene = new SignboardScene();
     const worldMapScene = new WorldMapScene();
 
-    const scenes = [];
+    const scenes = [
+      loadingScene,
+      titleScene,
+      mainScene,
+      shopScene,
+      signboardScene,
+      worldMapScene
+    ];
     const reducer = (scene, action) => {
       if (scene.name == "loading")
         if (action == "loadComplete") return titleScene;

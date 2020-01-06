@@ -3,6 +3,7 @@ import Drawer from "../drawer.js";
 import Game from "../game.js";
 import MapData from "../Stage/mapData.js";
 import Event from "./event.js";
+import UIManager from "../UI/uiManager.js";
 
 /*タイトル画面からゲーム開始画面に移行するイベント
  * (UIの退避)

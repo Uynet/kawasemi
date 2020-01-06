@@ -231,7 +231,7 @@ export default class Shop extends UI {
     Audio.PlaySE("playerDamage");
     this.Remove();
     this.controller.ui.Remove();
-    Game.state.dispatch("closeShop");
+    Game.state.transit("main");
   }
   Update() {
     if (this.frame > 1) this.controller.Update();

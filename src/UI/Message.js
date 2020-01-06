@@ -213,7 +213,7 @@ export default class Message extends UI {
   CloseMessage() {
     this.signboard.isRead = false;
     this.signboard.isNear = false;
-    Game.state.dispatch("closeMessage");
+    Game.state.transit("main");
     UIManager.remove(this);
   }
   Update() {

@@ -14,8 +14,8 @@ export default class StateMachine {
       state.stateMachine = this;
     });
   }
-  dispatch(action) {
-    this.state = this.reducer(this.state, action);
+  transit(stateName) {
+    this.state = this.states.filter(e => e.name == stateName)[0];
     this.state.Init();
   }
   getState() {

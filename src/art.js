@@ -277,7 +277,7 @@ export default class Art {
         PIXI.Texture.fromFrame("enemy02.png"),
         PIXI.Texture.fromFrame("enemy03.png")
       ],
-      enemy7: this.Frame("enemy", 50, 2),
+      enemy5: this.Frame("enemy", 60, 2),
       eBullet2: this.Frame("enemy", 70, 4),
       enemy6: this.Frame("enemy", 80, 2),
       //壊せる木箱

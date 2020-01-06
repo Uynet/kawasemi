@@ -17,7 +17,7 @@ export default class LoadingScene extends Scene {
     UIManager.Update();
     if (this.frame == wait) {
       UIManager.Clean();
-      Game.state.dispatch("loadComplete");
+      Game.state.transit("title");
     }
     this.frame++;
   }

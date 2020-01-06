@@ -22,7 +22,7 @@ export default class WorldMapScene extends Scene {
       Audio.StopBGM();
       MapData.CreateStage(Game.stage, "ENTER");
 
-      Game.state.dispatch("onEnterStage");
+      Game.state.transit("main");
     }
   }
   Init() {

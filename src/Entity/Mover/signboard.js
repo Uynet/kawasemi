@@ -46,7 +46,7 @@ export default class Signboard extends BackEntity {
   Update() {
     if (this.isCanRead()) {
       if (Input.isKeyClick(KEY.X)) {
-        Game.state.dispatch("openMessage");
+        Game.state.transit("message");
         UIManager.add(new Message(POS_MES, this)); //枠
       }
     }

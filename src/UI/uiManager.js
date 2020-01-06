@@ -1,18 +1,11 @@
 import Drawer from "../drawer.js";
 import StagePop from "./stagePop.js";
-import GaugeHP from "./gaugeHP.js";
-import GaugeBullet from "./gaugeBullet.js";
-import WeaponList from "./weaponList.js";
 import Menu from "./menu.js";
-import Score from "./score.js";
 import Game from "../game.js";
 
 const CONTINUEPOINT_STAGENUM = 11;
 const BOSS_STAGENUM = 12;
 
-const POS_HP = vec2(8, 0); //HP
-const POS_BULLET = vec2(POS_HP.x, POS_HP.y + 16); //bullet
-const POS_SCORE = vec2(208, POS_HP.y + 8); //score
 let POS_MENU = vec2(104, 48); //Menu
 /*UIクラス*/
 export default class UIManager {
@@ -37,8 +30,9 @@ export default class UIManager {
   static find(name) {
     let list = [];
     UIManager.UIList.forEach(e => {
-      e.children.forEach(e => {
-        if (e.type == name) list.push(e);
+      if (e.type == name) list.push(e);
+      e.children.forEach(child => {
+        if (child.type == name) list.push(child);
       });
     });
     return list;

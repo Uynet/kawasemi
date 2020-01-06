@@ -16,7 +16,6 @@ import Explosion5 from "../Effect/Explosion/explosion5.js";
 import FontEffect from "../Effect/fontEffect.js";
 import Enemy from "./enemy.js";
 import Enemy4 from "./enemy4.js";
-import gaugeBossHP from "../../UI/gaugeBossHP.js";
 
 //enum
 const State = {
@@ -49,7 +48,6 @@ export default class Enemy1 extends Enemy {
 
     this.enemyPop = 3;
     this.addAnimator(true, 6, 4);
-    this.BossHP = UIManager.find("BossHP")[0];
   }
   PopEnemy(enemyPop) {
     let p = {
@@ -219,7 +217,8 @@ export default class Enemy1 extends Enemy {
       //ダメージをポップ
       EntityManager.addEntity(new FontEffect(this.pos, atk + "", "enemy"));
       //this.SetSize(lerp(96,192,this.hp/this.maxHP));
-      this.BossHP.SetBar(this.hp);
+      const BossHP = UIManager.find("BossHP")[0];
+      BossHP.SetBar(this.hp);
     }
   }
 
