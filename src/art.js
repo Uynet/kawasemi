@@ -19,55 +19,16 @@ export default class Art {
         runUL: this.Frame("player", 30, 6),
         runDR: this.Frame("player", 40, 6),
         runDL: this.Frame("player", 50, 6),
-        waitR: [
-          PIXI.Texture.fromFrame("player60.png"),
-          PIXI.Texture.fromFrame("player61.png"),
-          PIXI.Texture.fromFrame("player62.png"),
-          PIXI.Texture.fromFrame("player63.png")
-        ],
-        waitL: [
-          PIXI.Texture.fromFrame("player64.png"),
-          PIXI.Texture.fromFrame("player65.png"),
-          PIXI.Texture.fromFrame("player66.png"),
-          PIXI.Texture.fromFrame("player67.png")
-        ],
+        waitR: this.Frame("player", 60, 4),
+        waitL: this.Frame("player", 64, 4),
         //上向き右
-        waitUR: [
-          PIXI.Texture.fromFrame("player70.png"),
-          PIXI.Texture.fromFrame("player71.png"),
-          PIXI.Texture.fromFrame("player72.png"),
-          PIXI.Texture.fromFrame("player73.png")
-        ],
+        waitURL: this.Frame("player", 70, 4),
         //上向き左
-        waitUL: [
-          PIXI.Texture.fromFrame("player74.png"),
-          PIXI.Texture.fromFrame("player75.png"),
-          PIXI.Texture.fromFrame("player76.png"),
-          PIXI.Texture.fromFrame("player77.png")
-        ],
-        waitDR: [
-          PIXI.Texture.fromFrame("player80.png"),
-          PIXI.Texture.fromFrame("player81.png"),
-          PIXI.Texture.fromFrame("player82.png"),
-          PIXI.Texture.fromFrame("player83.png")
-        ],
-        waitDL: [
-          PIXI.Texture.fromFrame("player84.png"),
-          PIXI.Texture.fromFrame("player85.png"),
-          PIXI.Texture.fromFrame("player86.png"),
-          PIXI.Texture.fromFrame("player87.png")
-        ],
+        waitUL: this.Frame("player", 74, 4),
+        waitDR: this.Frame("player", 80, 4),
+        waitDL: this.Frame("player", 84, 4),
         //死亡エフェクト
-        dying: [
-          PIXI.Texture.fromFrame("player90.png"),
-          PIXI.Texture.fromFrame("player91.png"),
-          PIXI.Texture.fromFrame("player92.png"),
-          PIXI.Texture.fromFrame("player93.png"),
-          PIXI.Texture.fromFrame("player94.png"),
-          PIXI.Texture.fromFrame("player95.png"),
-          PIXI.Texture.fromFrame("player96.png"),
-          PIXI.Texture.fromFrame("player97.png")
-        ],
+        dying: this.Frame("player", 90, 8),
         jumpR: [
           PIXI.Texture.fromFrame("playerA0.png"),
           PIXI.Texture.fromFrame("playerA1.png"),
@@ -170,6 +131,36 @@ export default class Art {
       },
       message: {
         frame: PIXI.Texture.fromFrame("UI20.png")
+      },
+      key: {
+        X: [
+          PIXI.Texture.fromFrame("UI40.png"),
+          PIXI.Texture.fromFrame("UI41.png")
+        ],
+        Z: [
+          PIXI.Texture.fromFrame("UI42.png"),
+          PIXI.Texture.fromFrame("UI43.png")
+        ],
+        C: [
+          PIXI.Texture.fromFrame("UI44.png"),
+          PIXI.Texture.fromFrame("UI45.png")
+        ],
+        RIGHT: [
+          PIXI.Texture.fromFrame("UI46.png"),
+          PIXI.Texture.fromFrame("UI47.png")
+        ],
+        LEFT: [
+          PIXI.Texture.fromFrame("UI48.png"),
+          PIXI.Texture.fromFrame("UI49.png")
+        ],
+        DOWN: [
+          PIXI.Texture.fromFrame("UI4A.png"),
+          PIXI.Texture.fromFrame("UI4B.png")
+        ],
+        UP: [
+          PIXI.Texture.fromFrame("UI4C.png"),
+          PIXI.Texture.fromFrame("UI4D.png")
+        ]
       }
     };
     this.bulletPattern = {
@@ -382,23 +373,20 @@ export default class Art {
     //shader
     const unif1 = {
       time: {
-        // 変数名
-        type: "1f", // 型
-        value: 300 // 初期値
+        type: "1f",
+        value: 300
       },
       mappedMatrix: {
         type: "mat3",
         value: new PIXI.Matrix()
       },
       x: {
-        // 変数名
-        type: "1f", // 型
-        value: 0 // 初期値
+        type: "1f",
+        value: 0
       },
       y: {
-        // 変数名
-        type: "1f", // 型
-        value: 0 // 初期値
+        type: "1f",
+        value: 0
       }
     };
     Drawer.testFilter = new PIXI.Filter(null, resources.testShader.data, unif1);
@@ -413,13 +401,13 @@ export default class Art {
     Drawer.fireFilter = new PIXI.Filter(null, resources.fireShader.data, {
       paintCol: {
         type: "1f",
-        value: 0 // 初期値
+        value: 0
       }
     });
     let unif = {
       time: {
         type: "1f",
-        value: 0 // 初期値
+        value: 0
       },
       mappedMatrix: {
         type: "mat3",

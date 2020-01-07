@@ -7,6 +7,7 @@ import Drawer from "../../drawer.js";
 import UIManager from "../uiManager.js";
 import Audio from "../../audio.js";
 import Game from "../../game.js";
+import Key from "../atoms/key.js";
 
 class PoyoEvent extends Event {
   constructor(ui) {
@@ -94,7 +95,7 @@ class Node extends UI {
     Audio.PlaySE("landing1", 1.5, 1.5);
     Game.stage = this.stageNum;
     const stagelabel = UIManager.find("stageLabel")[0];
-    stagelabel.ChangeText("すてーじ" + Game.stage, "MES");
+    stagelabel.ChangeText("stage" + Game.stage, "MES");
     stagelabel.SetPos(vec2(108, 140));
   }
   Update() {
@@ -123,16 +124,25 @@ export default class WorldMapPage extends UI {
     super(vec2(0));
     this.layer = "ENTITY";
 
-    UIManager.add(new Font(vec2(100, 64), "わーるどまっぷ", "MES"));
+    UIManager.add(new Font(vec2(100, 64), "world", "MES"));
 
-    const stagelabel = new Font(vec2(108, 140), "すてーじ" + Game.stage, "MES");
+    const stagelabel = new Font(vec2(108, 140), "stage" + Game.stage, "MES");
     stagelabel.type = "stageLabel";
     UIManager.add(stagelabel);
+
+    UIManager.add(new Key(vec2(30, 164), "Z"));
+    UIManager.add(new Key(vec2(50, 164), "X"));
+    UIManager.add(new Key(vec2(70, 164), "C"));
+
+    UIManager.add(new Key(vec2(150, 164), "LEFT"));
+    UIManager.add(new Key(vec2(170, 164), "DOWN"));
+    UIManager.add(new Key(vec2(170, 144), "UP"));
+    UIManager.add(new Key(vec2(190, 164), "RIGHT"));
 
     let p = vec2(106, 124);
     const nodes = [];
     for (let i = 0; i < 5; i++) {
-      nodes.push(new Node(p, i + 1));
+      nodes.push(new Node(p, i * 100 + 1));
       p.x += 32;
     }
     const nodeList = new NodeList(nodes);
