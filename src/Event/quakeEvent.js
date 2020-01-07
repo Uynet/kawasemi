@@ -6,7 +6,7 @@ export default class QuakeEvent extends Event {
   /*
    * @param time
    * @param size
-   * @param isRot 回転するかどうかを表すクソboolです
+   * @param isRot 回転するかどうかを表すbool
    * */
   constructor(size, time, isRot) {
     //undefined
