@@ -8,7 +8,6 @@ export default class StateMachine {
     });
   }
   transit(stateName) {
-    console.log(this.state.name);
     this.state = this.states.filter(e => e.name == stateName)[0];
     this.state.Init();
   }

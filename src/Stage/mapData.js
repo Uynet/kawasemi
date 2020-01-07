@@ -15,9 +15,11 @@ import Needle from "../Entity/Mover/needle.js";
 import Player from "../Entity/Mover/player.js";
 import Shop from "../Entity/Mover/shop.js";
 import Signboard from "../Entity/Mover/signboard.js";
-import TutorialObject from "../Entity/Mover/tutorialObject.js";
 import Woodbox from "../Entity/Mover/woodbox.js";
 import Wall from "../Entity/wall.js";
+
+import EventTrigger1 from "../Entity/EventTrigger/eventTrigger1.js";
+
 import EntityManager from "./entityManager.js";
 import Pool from "./pool.js";
 import StageData from "./stageData.js";
@@ -157,8 +159,8 @@ export default class MapData {
         case 177:
           obj = new Enemy7(p);
           break;
-        case 185:
-          if (isDebugMode) obj = new TutorialObject(p);
+        case 193:
+          obj = new EventTrigger1(p);
           break;
       }
       EntityManager.addEntity(obj);

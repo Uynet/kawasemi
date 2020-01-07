@@ -67,8 +67,8 @@ export default class Drawer {
   }
 
   /*コンテナにスプライトを追加*/
-  static add(sprite, CONTAINER) {
-    switch (CONTAINER) {
+  static add(sprite, layer) {
+    switch (layer) {
       case "UI":
         this.UIContainer.addChild(sprite);
         break;
@@ -91,7 +91,7 @@ export default class Drawer {
         this.backGroundContainer.addChild(sprite);
         break;
       default:
-        console.warn(CONTAINER);
+        console.warn("invalid layer:", layer);
     }
   }
 

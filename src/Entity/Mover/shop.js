@@ -8,25 +8,13 @@ import Signpop from "../Effect/signpop.js";
 import Game from "../../game.js";
 
 export default class Shop extends BackEntity {
-  constructor(pos, message) {
+  constructor(pos) {
     super(pos, 0);
     /*基本情報*/
     this.layer = "ENTITY";
     this.name = "shop";
     this.isUpdater = true;
 
-    /* 固有情報
-     * message : 複数のページからなる文章
-     * text : 1つのページの文章
-     * sentense : 1行の文章
-     * font : 1文字
-     * */
-    //オブジェクトを配列に変換?
-    this.message = [];
-    for (let l in message) {
-      this.message.push(message[l]);
-    }
-    this.page = 0; //現在のページ番号
     /*スプライト*/
     this.pattern = Art.wallPattern.shop;
     this.sprite = Art.CreateSprite(this.pattern[0]);
