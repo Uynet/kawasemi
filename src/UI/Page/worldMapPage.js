@@ -131,7 +131,7 @@ export default class WorldMapPage extends UI {
 
     let p = vec2(106, 124);
     const nodes = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
       nodes.push(new Node(p, i + 1));
       p.x += 32;
     }
