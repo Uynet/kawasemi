@@ -6,6 +6,7 @@ import Input from "../../input.js";
 import Drawer from "../../drawer.js";
 import UIManager from "../uiManager.js";
 import Audio from "../../audio.js";
+import Game from "../../game.js";
 
 class PoyoEvent extends Event {
   constructor(ui) {
@@ -91,6 +92,10 @@ class Node extends UI {
     this.frame = 0;
     this.sprite.position = this.pos;
     Audio.PlaySE("landing1", 1.5, 1.5);
+    Game.stage = this.stageNum;
+    const stagelabel = UIManager.find("stageLabel")[0];
+    stagelabel.ChangeText("すてーじ" + Game.stage, "MES");
+    stagelabel.SetPos(vec2(108, 140));
   }
   Update() {
     if (this.isActive) {
@@ -120,10 +125,14 @@ export default class WorldMapPage extends UI {
 
     UIManager.add(new Font(vec2(100, 64), "わーるどまっぷ", "MES"));
 
+    const stagelabel = new Font(vec2(108, 140), "すてーじ" + Game.stage, "MES");
+    stagelabel.type = "stageLabel";
+    UIManager.add(stagelabel);
+
     let p = vec2(106, 124);
     const nodes = [];
     for (let i = 0; i < 10; i++) {
-      nodes.push(new Node(p));
+      nodes.push(new Node(p, i + 1));
       p.x += 32;
     }
     const nodeList = new NodeList(nodes);
