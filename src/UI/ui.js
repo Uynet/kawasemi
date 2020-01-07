@@ -26,7 +26,7 @@ export default class UI {
   }
   SetParent(parent) {
     if (this.parent !== undefined)
-      console.warn("親がもうすでにあるんだけど", this.parent);
+      console.warn("parent aleady exists:", this.parent);
     this.parent = parent;
   }
   setFilter(f) {
