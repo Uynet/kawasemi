@@ -24,7 +24,7 @@ export default class UIManager {
       case BOSS_STAGENUM:
         break;
       default:
-        UIManager.add(new StagePop(p, "^-すてーじ " + Game.stage + "-$")); //SCORE
+      //UIManager.add(new StagePop(p, "^-すてーじ " + Game.stage + "-$")); //SCORE
     }
   }
   static find(name) {

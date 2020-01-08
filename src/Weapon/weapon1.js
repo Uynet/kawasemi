@@ -26,10 +26,13 @@ export default class Weapon1 extends Weapon {
   }
   //装填
   Set(player) {
+    /*
     let p = {
       x: player.spilit.pos.x - 4 + 10 * Math.cos(this.arg),
       y: player.spilit.pos.y + 10 * Math.sin(this.arg)
     };
+    */
+    let p = copy(player.spilit.pos);
     let bullet = new Bullet1(p, this);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */

@@ -124,7 +124,7 @@ export default class WorldMapPage extends UI {
     super(vec2(0));
     this.layer = "ENTITY";
 
-    UIManager.add(new Font(vec2(100, 64), "world", "MES"));
+    //UIManager.add(new Font(vec2(100, 64), "world", "MES"));
 
     const stagelabel = new Font(vec2(108, 140), "stage" + Game.stage, "MES");
     stagelabel.type = "stageLabel";
@@ -134,15 +134,16 @@ export default class WorldMapPage extends UI {
     UIManager.add(new Key(vec2(50, 164), "X"));
     UIManager.add(new Key(vec2(70, 164), "C"));
 
-    UIManager.add(new Key(vec2(150, 164), "LEFT"));
-    UIManager.add(new Key(vec2(170, 164), "DOWN"));
-    UIManager.add(new Key(vec2(170, 144), "UP"));
-    UIManager.add(new Key(vec2(190, 164), "RIGHT"));
+    UIManager.add(new Key(vec2(170, 164), "LEFT"));
+    UIManager.add(new Key(vec2(190, 164), "DOWN"));
+    UIManager.add(new Key(vec2(190, 144), "UP"));
+    UIManager.add(new Key(vec2(210, 164), "RIGHT"));
 
     let p = vec2(106, 124);
+    const stagelist = [101, 102, 103, 104, 105];
     const nodes = [];
     for (let i = 0; i < 5; i++) {
-      nodes.push(new Node(p, i * 100 + 1));
+      nodes.push(new Node(p, stagelist[i]));
       p.x += 32;
     }
     const nodeList = new NodeList(nodes);

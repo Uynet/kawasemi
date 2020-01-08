@@ -365,10 +365,10 @@ export default class Player extends Entity {
       Audio.PlaySE("playerDamage");
 
       this.hp -= atk;
-      UIManager.find("HP")[0].SetBar(this.hp);
       //フォントはダメージ数に応じて数字を表示する
       EntityManager.addEntity(new FontEffect(this.pos, atk + "", "player"));
       this.hp = Math.max(this.hp, 0);
+      UIManager.find("HP")[0].SetBar(this.hp);
       //ダメージを受けて一定時間無敵になる
       this.isInvincible = true;
       this.frameDamaged = this.frame;
@@ -383,6 +383,7 @@ export default class Player extends Entity {
       this.bullet += 5;
       this.hp = clamp(this.hp, 0, this.maxHP);
       UIManager.find("SCORE")[0].SetScore(this.score);
+      UIManager.find("HP")[0].SetBar(this.hp);
     }
   }
   /* 衝突判定 */
@@ -568,6 +569,7 @@ export default class Player extends Entity {
     else if (t > 1000 && t <= 1500 && t % 3 == 0) this.bullet++;
     else if (t > 1500) this.bullet += 2;
     this.bullet = clamp(this.bullet, 0, this.maxBullet);
+    UIManager.find("BULLET")[0].SetBar(this.bullet);
   }
 
   SetArg(arg) {

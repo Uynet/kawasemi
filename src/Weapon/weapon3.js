@@ -22,11 +22,9 @@ export default class Weapon3 extends Weapon {
   }
   Set(player) {
     this.arg = player.arg;
-    let p = {
-      x: player.spilit.pos.x - 4 + 10 * Math.cos(this.arg),
-      y: player.spilit.pos.y + 10 * Math.sin(this.arg)
-    };
-    let bullet = new Bullet3(p, this);
+    let p = copy(player.spilit.pos);
+    let p2 = add(player.spilit.pos, vec2(8, 8));
+    let bullet = new Bullet3(p2, this);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */
     Audio.PlaySE("normalShot", -0.6);

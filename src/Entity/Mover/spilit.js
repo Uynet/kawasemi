@@ -49,7 +49,7 @@ export default class Spilit extends Entity {
     this.pos = add(this.pos, f);
     this.pos = add(this.pos, repel);
     this.pos = add(this.pos, absorp);
-    this.pos = add(this.pos, fromPolar(this.arg, 8));
+    this.pos = add(this.pos, fromPolar(this.arg, 4));
     this.force = scala(0.8, this.force);
   }
   shot(player) {

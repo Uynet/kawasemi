@@ -37,7 +37,8 @@ export default class Weapon2 extends Weapon {
   }
   Set(player) {
     let arg = player.arg;
-    let p = add(fromPolar(arg, 16), copy(player.pos));
+    //let p = add(fromPolar(arg, 16), copy(player.pos));
+    let p = copy(player.spilit.pos);
     let bullet;
     //再帰的に生成
     p = add(player.spilit.pos, fromPolar(arg, 16));

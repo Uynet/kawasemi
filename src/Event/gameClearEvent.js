@@ -5,6 +5,7 @@ import EntityManager from "../Stage/entityManager.js";
 import UIManager from "../UI/uiManager.js";
 import Event from "./event.js";
 import MapData from "../Stage/mapData.js";
+import StagePage from "../UI/Page/stagePage.js";
 
 export default class GameClearEvent extends Event {
   constructor() {
@@ -29,7 +30,9 @@ export default class GameClearEvent extends Event {
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
         MapData.DeleteStage();
+        UIManager.Clean();
         MapData.CreateStage(Game.stage);
+        UIManager.add(new StagePage());
       };
       transitionState.onFadeOutStart = () => {
         Game.state.transit("main");

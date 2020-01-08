@@ -25,10 +25,7 @@ export default class Weapon4 extends Weapon {
   }
   Set(player) {
     this.arg = player.arg;
-    let p = {
-      x: player.spilit.pos.x - 4 + 10 * Math.cos(this.arg),
-      y: player.spilit.pos.y + 10 * Math.sin(this.arg)
-    };
+    let p = add(player.spilit.pos, vec2(8, 0));
     let bullet = new Bullet4(p, this);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */

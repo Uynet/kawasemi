@@ -19,6 +19,10 @@ import Woodbox from "../Entity/Mover/woodbox.js";
 import Wall from "../Entity/wall.js";
 
 import EventTrigger1 from "../Entity/EventTrigger/eventTrigger1.js";
+import EventTrigger2 from "../Entity/EventTrigger/eventTrigger2.js";
+import EventTrigger3 from "../Entity/EventTrigger/eventTrigger3.js";
+import EventTrigger4 from "../Entity/EventTrigger/eventTrigger4.js";
+import EventTrigger5 from "../Entity/EventTrigger/eventTrigger5.js";
 
 import EntityManager from "./entityManager.js";
 import Pool from "./pool.js";
@@ -161,6 +165,18 @@ export default class MapData {
           break;
         case 193:
           obj = new EventTrigger1(p);
+          break;
+        case 194:
+          obj = new EventTrigger2(p);
+          break;
+        case 195:
+          obj = new EventTrigger3(p);
+          break;
+        case 196:
+          obj = new EventTrigger4(p);
+          break;
+        case 197:
+          obj = new EventTrigger5(p);
           break;
       }
       EntityManager.addEntity(obj);
