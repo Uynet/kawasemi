@@ -21,14 +21,55 @@ export default class Art {
         runDL: this.Frame("player", 50, 6),
         waitR: this.Frame("player", 60, 4),
         waitL: this.Frame("player", 64, 4),
+        waitR: [
+          PIXI.Texture.fromFrame("player60.png"),
+          PIXI.Texture.fromFrame("player61.png"),
+          PIXI.Texture.fromFrame("player62.png"),
+          PIXI.Texture.fromFrame("player63.png")
+        ],
+        waitL: [
+          PIXI.Texture.fromFrame("player64.png"),
+          PIXI.Texture.fromFrame("player65.png"),
+          PIXI.Texture.fromFrame("player66.png"),
+          PIXI.Texture.fromFrame("player67.png")
+        ],
         //上向き右
-        waitURL: this.Frame("player", 70, 4),
+        waitUR: [
+          PIXI.Texture.fromFrame("player70.png"),
+          PIXI.Texture.fromFrame("player71.png"),
+          PIXI.Texture.fromFrame("player72.png"),
+          PIXI.Texture.fromFrame("player73.png")
+        ],
         //上向き左
-        waitUL: this.Frame("player", 74, 4),
-        waitDR: this.Frame("player", 80, 4),
-        waitDL: this.Frame("player", 84, 4),
+        waitUL: [
+          PIXI.Texture.fromFrame("player74.png"),
+          PIXI.Texture.fromFrame("player75.png"),
+          PIXI.Texture.fromFrame("player76.png"),
+          PIXI.Texture.fromFrame("player77.png")
+        ],
+        waitDR: [
+          PIXI.Texture.fromFrame("player80.png"),
+          PIXI.Texture.fromFrame("player81.png"),
+          PIXI.Texture.fromFrame("player82.png"),
+          PIXI.Texture.fromFrame("player83.png")
+        ],
+        waitDL: [
+          PIXI.Texture.fromFrame("player84.png"),
+          PIXI.Texture.fromFrame("player85.png"),
+          PIXI.Texture.fromFrame("player86.png"),
+          PIXI.Texture.fromFrame("player87.png")
+        ],
         //死亡エフェクト
-        dying: this.Frame("player", 90, 8),
+        dying: [
+          PIXI.Texture.fromFrame("player90.png"),
+          PIXI.Texture.fromFrame("player91.png"),
+          PIXI.Texture.fromFrame("player92.png"),
+          PIXI.Texture.fromFrame("player93.png"),
+          PIXI.Texture.fromFrame("player94.png"),
+          PIXI.Texture.fromFrame("player95.png"),
+          PIXI.Texture.fromFrame("player96.png"),
+          PIXI.Texture.fromFrame("player97.png")
+        ],
         jumpR: [
           PIXI.Texture.fromFrame("playerA0.png"),
           PIXI.Texture.fromFrame("playerA1.png"),
