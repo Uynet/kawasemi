@@ -146,7 +146,7 @@ export default class WorldMapPage extends UI {
     UIManager.add(new Font(vec2(210, 190), "タイトル", "MES"));
 
     let p = vec2(106, 124);
-    const stagelist = [203, 201, 301, 401, 501];
+    const stagelist = [206, 201, 301, 401, 501];
     //クリアしてない最小のステージ番号を取得
     for (let i = 0; i < stagelist.length; i++) {
       const e = stagelist[i];
