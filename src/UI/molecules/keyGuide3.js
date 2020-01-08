@@ -32,7 +32,6 @@ export default class KeyGuide3 extends UI {
     this.addChild(new Key(vec2(60, 70), "X"));
     this.addChild(new Font(vec2(90, 74), "うえにショット", "MES"));
     this.Animate(new SlideInLeft(this));
-    console.log("eve");
   }
   KeyNameToCode(keyname) {
     return KEY[keyname];

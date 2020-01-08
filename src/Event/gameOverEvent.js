@@ -4,6 +4,7 @@ import Event from "./event.js";
 import MapData from "../Stage/mapData.js";
 import UIManager from "../UI/uiManager.js";
 import StagePage from "../UI/Page/stagePage.js";
+import Drawer from "../drawer.js";
 
 export default class GameOverEvent extends Event {
   constructor() {
@@ -20,6 +21,7 @@ export default class GameOverEvent extends Event {
       };
       transitionState.onFadeOutStart = () => {
         Game.state.transit("main");
+        Drawer.SetMagnification(3);
       };
 
       Audio.PlaySE("stageChange");

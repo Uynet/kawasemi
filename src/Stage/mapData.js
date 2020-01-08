@@ -188,7 +188,6 @@ export default class MapData {
     if (Audio.PlayingBGM.name != StageData.getStageBGM(stageNo)) {
       Audio.PlayBGM(StageData.getStageBGM(stageNo), 1.0);
     }
-    cl(Audio.PlayingBGM.name);
 
     await this.Load(stageNo);
     //背景の生成

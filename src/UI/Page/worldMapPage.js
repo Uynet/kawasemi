@@ -83,7 +83,7 @@ class Node extends UI {
     this.layer = "ENTITY";
     this.stageNum = stageNum;
 
-    const spid = this.stageNum <= Game.latestStage ? 1 : 0;
+    const spid = this.stageNum <= Game.nextStage ? 1 : 0;
     this.sprite = Art.Sprite(Art.enemyPattern.enemy4[spid]);
     this.sprite.position = pos;
     this.isActive = false;
@@ -146,7 +146,16 @@ export default class WorldMapPage extends UI {
     UIManager.add(new Font(vec2(210, 190), "タイトル", "MES"));
 
     let p = vec2(106, 124);
-    const stagelist = [101, 211, 301, 401, 501];
+    const stagelist = [203, 201, 301, 401, 501];
+    //クリアしてない最小のステージ番号を取得
+    for (let i = 0; i < stagelist.length; i++) {
+      const e = stagelist[i];
+      if (e > Game.latestStage) {
+        Game.nextStage = e;
+        break;
+      }
+    }
+
     const nodes = [];
     for (let i = 0; i < 5; i++) {
       nodes.push(new Node(p, stagelist[i]));

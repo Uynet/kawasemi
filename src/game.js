@@ -12,8 +12,8 @@ export default class Game {
   static Init() {
     Pipeline.InitializeStaticClasses();
     Game.stage = isDebugMode ? debugOption.entryStage : 1;
-    Game.latestStage = 102; // クリアしたステージで最も番号の後のもの
-    Game.continuePoint = 1; //コンティニュー地点
+    Game.latestStage = 1; // クリアしたステージで最も番号の後のもの
+    Game.nextStage = 101; // クリアしてない最小のステージ番号
     Game.state = Pipeline.CreateGameState();
     Game.scene = new LoadingScene();
     Game.Update();

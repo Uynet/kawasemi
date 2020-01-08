@@ -41,6 +41,10 @@ export default class Shop extends BackEntity {
     this.ExecuteAI();
     if (Input.isKeyClick(KEY.X))
       if (this.isCanRead()) Game.state.transit("shop");
-    this.popup.sprite.alpha = this.isCanRead() ? 1 : 0;
+    //this.popup.sprite.alpha = this.isCanRead() ? 1 : 0;
+    let player = EntityManager.player;
+    const d = DIST(player.pos, this.pos);
+    this.popup.sprite.alpha = 1 - Math.max(d - 24, 0) / 12;
+    this.frame++;
   }
 }

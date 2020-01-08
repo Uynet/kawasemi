@@ -50,7 +50,10 @@ export default class Signboard extends BackEntity {
         UIManager.add(new Message(POS_MES, this)); //枠
       }
     }
-    this.popup.sprite.alpha = this.isCanRead() ? 1 : 0;
+    //this.popup.sprite.alpha = this.isCanRead() ? 1 : 0;
+    let player = EntityManager.player;
+    const d = DIST(player.pos, this.pos);
+    this.popup.sprite.alpha = 1 - Math.max(d - 24, 0) / 12;
     this.frame++;
   }
 }
