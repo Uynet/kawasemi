@@ -1,7 +1,7 @@
-import EFFECT from '../effect.js';
 import Art from '../../../art.js';
-import Pool from '../../../Stage/pool.js';
 import Ease from "../../../Math/ease.js";
+import Pool from '../../../Stage/pool.js';
+import EFFECT from '../effect.js';
 
 let pow;
 

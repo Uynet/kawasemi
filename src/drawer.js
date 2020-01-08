@@ -1,5 +1,3 @@
-import Art from "./art.js";
-
 const PIXI_WIDTH = 800;
 const PIXI_HEIGHT = 640;
 const DEFAULT_MAGNIFICATION = 3;
@@ -39,8 +37,8 @@ export default class Drawer {
     this.renderTarget.addChild(this.entityContainer);
     this.renderTarget.addChild(this.foreEntityContainer);
     this.renderTarget.addChild(this.foreContainer);
-    this.renderTarget.addChild(this.filterContainer);
     this.renderTarget.addChild(this.UIContainer);
+    this.renderTarget.addChild(this.filterContainer);
     this.Stage.addChild(this.renderTarget);
 
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH, PIXI_HEIGHT);
@@ -69,8 +67,8 @@ export default class Drawer {
   }
 
   /*コンテナにスプライトを追加*/
-  static addContainer(sprite, CONTAINER) {
-    switch (CONTAINER) {
+  static add(sprite, layer) {
+    switch (layer) {
       case "UI":
         this.UIContainer.addChild(sprite);
         break;
@@ -93,12 +91,12 @@ export default class Drawer {
         this.backGroundContainer.addChild(sprite);
         break;
       default:
-        console.warn(CONTAINER);
+        console.warn("invalid layer:", layer);
     }
   }
 
   /*コンテナからスプライトを削除*/
-  static removeContainer(sprite, container) {
+  static remove(sprite, container) {
     switch (container) {
       case "UI":
         this.UIContainer.removeChild(sprite);

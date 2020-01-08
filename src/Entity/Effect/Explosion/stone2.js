@@ -1,13 +1,13 @@
-import EFFECT from '../effect.js';
-import Art from '../../../art.js';
+import Art from "../../../art.js";
+import EFFECT from "../effect.js";
 
 //火花2
-export default class Stone2 extends EFFECT{
-  constructor(pos,vel){
-    super(pos,vel);
-    this.Init(pos,vel);
+export default class Stone2 extends EFFECT {
+  constructor(pos, vel) {
+    super(pos, vel);
+    this.Init(pos, vel);
   }
-  Init(pos,vel){
+  Init(pos, vel) {
     //constructor
     this.pos = pos;
     this.vel = vel;
@@ -25,13 +25,13 @@ export default class Stone2 extends EFFECT{
     this.sprite.blendMode = PIXI.BLEND_MODES.ADD;
   }
 
-  Update(){
+  Update() {
     this.ExecuteAI();
-    this.sprite.scale.set(this.size/16);
-    let d = lerp(0.88,0.96,((14-this.size)/12));
-    this.vel = mul(this.vel,vec2(d)); //減速
+    this.sprite.scale.set(this.size / 16);
+    let d = lerp(0.88, 0.96, (14 - this.size) / 12);
+    this.vel = mul(this.vel, vec2(d)); //減速
     this.size *= 0.95;
-    this.sprite.rotation += Math.PI/16;
-    if(this.frame >30) this.Delete();
+    this.sprite.rotation += Math.PI / 16;
+    if (this.frame > 30) this.Delete();
   }
 }

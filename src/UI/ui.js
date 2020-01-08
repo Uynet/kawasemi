@@ -14,7 +14,7 @@ export default class UI {
     this.eventList = [];
   }
   Delete() {
-    UIManager.removeUI(this);
+    UIManager.remove(this);
   }
   Animate(event) {
     this.eventList.push(event);
@@ -26,14 +26,14 @@ export default class UI {
   }
   SetParent(parent) {
     if (this.parent !== undefined)
-      console.warn("親がもうすでにあるんだけど", this.parent);
+      console.warn("parent aleady exists:", this.parent);
     this.parent = parent;
   }
   setFilter(f) {
     this.sprite.filters = [f];
   }
   Add() {
-    UIManager.addUI(this);
+    UIManager.add(this);
   }
   Update() {
     this.ExecuteEvent();
@@ -54,7 +54,7 @@ export default class UI {
   }
   //子供丸ごと消す
   Remove() {
-    UIManager.removeUI(this);
+    UIManager.remove(this);
     this.children.forEach(u => u.Remove());
   }
   ExecuteEvent() {

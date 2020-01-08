@@ -1,28 +1,35 @@
-import Event from './event.js';
-import EventManager from './eventmanager.js';
-import FadeEvent from './fadeEvent.js';
-import Game from '../game.js';
-import Audio from '../audio.js';
-import Drawer from '../drawer.js';
+import Audio from "../audio.js";
+import Game from "../game.js";
+import Event from "./event.js";
+import MapData from "../Stage/mapData.js";
+import UIManager from "../UI/uiManager.js";
+import StagePage from "../UI/Page/stagePage.js";
+import Drawer from "../drawer.js";
 
-export default class GameOverEvent extends Event{
-  constructor(){
+export default class GameOverEvent extends Event {
+  constructor() {
     super();
-    function* gen(){
-      //if(!Game.debug)Game.stage = Game.continuePoint;
+    function* gen() {
       let frame = 0;
-      EventManager.eventList.push(new FadeEvent("fadeout"));
+      Game.state.transit("transition");
+      const transitionState = Game.state.getState();
+      transitionState.onFadeInEnd = () => {
+        MapData.DeleteStage();
+        UIManager.Clean();
+        MapData.CreateStage(Game.stage);
+        UIManager.add(new StagePage());
+      };
+      transitionState.onFadeOutStart = () => {
+        Game.state.transit("main");
+        Drawer.SetMagnification(3);
+      };
 
       Audio.PlaySE("stageChange");
-      //Audio.PlayBGM("stage5",0.2);
-      //if(Game.debug)Audio.PlayBGM("stage5",0.0);
 
-
-      while(frame<30){
+      while (frame < 30) {
         frame++;
         yield;
       }
-      Game.scene.PushSubState("SEQ");
       yield;
     }
     let itt = gen();

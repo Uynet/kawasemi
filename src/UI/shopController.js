@@ -104,12 +104,11 @@ export default class shopController extends UI {
       let p = vec2(96, 64);
       //もう持ってる
       if (Param.isHaveWeapon(item.name)) {
-        UIManager.addUI(new StagePop(p, "-もうもってる! ")); //SCORE
+        UIManager.add(new StagePop(p, "-もうもってる! ")); //SCORE
         Audio.PlaySE("playerDamage");
       } else if (item.price > EntityManager.player.score) {
         //金が足りないので変えない
-        const pop = new StagePop(p, "-かえません ");
-        UIManager.addUI(new StagePop(p, "-かえません "));
+        UIManager.add(new StagePop(p, "-かえません "));
         Audio.PlaySE("playerDamage");
       } else {
         //確認モーダル

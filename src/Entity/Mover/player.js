@@ -1,33 +1,26 @@
-import Entity from "../entity.js";
-import Timer from "../../timer.js";
-import Param from "../../param.js";
 import Art from "../../art.js";
 import Audio from "../../audio.js";
+import Box from "../../Collision/box.js";
 import Collider from "../../Collision/collider.js";
 import Collision from "../../Collision/collision.js";
-import Box from "../../Collision/box.js";
-import Input from "../../input.js";
-import EntityManager from "../../Stage/entityManager.js";
-import MapData from "../../Stage/mapData.js";
-import StageGen from "../../Stage/stageGen.js";
+import Drawer from "../../drawer.js";
 import EventManager from "../../Event/eventmanager.js";
 import GameOverEvent from "../../Event/gameOverEvent.js";
-import Drawer from "../../drawer.js";
-import Game from "../../game.js";
-import WeaponManager from "../../Weapon/weaponManager.js";
-import UIManager from "../../UI/uiManager.js";
-import FontEffect from "../Effect/fontEffect.js";
-import BulletShot from "../Effect/bulletShot.js";
-import Explosion1 from "../Effect/Explosion/explosion1.js";
-import Explosion2 from "../Effect/Explosion/explosion2.js";
-import Explosion3 from "../Effect/Explosion/explosion3.js";
-import Explosion5 from "../Effect/Explosion/explosion5.js";
-import WeaponIcon from "../Effect/weaponIcon.js";
-import Pool from "../../Stage/pool.js";
-import StagePop from "../../UI/stagePop.js";
+import Input from "../../input.js";
+import Param from "../../param.js";
 import DistanceField from "../../Stage/distanceField.js";
-import Spilit from "./spilit.js";
+import EntityManager from "../../Stage/entityManager.js";
+import Pool from "../../Stage/pool.js";
+import Timer from "../../timer.js";
+import StagePop from "../../UI/stagePop.js";
+import UIManager from "../../UI/uiManager.js";
+import WeaponManager from "../../Weapon/weaponManager.js";
 import BasicAI from "../AI/Basic/basicAI.js";
+import Explosion5 from "../Effect/Explosion/explosion5.js";
+import FontEffect from "../Effect/fontEffect.js";
+import WeaponIcon from "../Effect/weaponIcon.js";
+import Entity from "../entity.js";
+import Spilit from "./spilit.js";
 
 const STATE = {
   WAITING: "WAITING",
@@ -100,7 +93,7 @@ export default class Player extends Entity {
     /*スプライト*/
     this.pattern = Art.playerPattern;
     this.spid = 0; // spriteIndex 現在のスプライト番号
-    this.sprite = Art.SpriteFactory(this.pattern[this.spid]); //現在表示中のスプライト
+    this.sprite = Art.Sprite(this.pattern[this.spid]); //現在表示中のスプライト
     this.sprite.position.x = Math.floor(this.pos.x);
     this.sprite.position.y = Math.floor(this.pos.y);
     /*パラメータ*/
@@ -115,9 +108,6 @@ export default class Player extends Entity {
     this.toArg = 0;
     this.scPos = vec0(); //スクロール位置
     this.score = this.param.score;
-    if(UIManager.score)UIManager.score.SetScore(this.score);
-    //UIManager.HP.SetBar(this.hp);//HPbarの更新
-    //UIManager.bullet.SetBar(this.bullet);//HPbarの更新
     this.vxMax = Param.player.vxMax;
     this.vyMax = Param.player.vyMax;
     /*状態*/
@@ -182,10 +172,6 @@ export default class Player extends Entity {
       }
     }
     /*空中ジャンプ*/
-    //空中でZ押すとbulletを消費してジャンプできる
-    if (Input.isKeyClick(KEY.Z)) {
-      //this.AirJump();
-    }
     if (Input.isKeyInput(KEY.C)) {
       //Timer.SetTimeScale(0.08);
     } else {
@@ -262,26 +248,6 @@ export default class Player extends Entity {
       let wNameNext = wList[wIndex + 1]; //次の武器をセレクト
       if (!wNameNext) wNameNext = wList[0]; //最後尾でループ
       this.ChangeWeapon(wNameNext);
-    }
-  }
-  AirJump() {
-    if (this.state == STATE.FALLING) {
-      let jumpCost = 20;
-      if (this.bullet >= jumpCost) {
-        Audio.PlaySE("jump2");
-        EntityManager.addEntity(
-          new Explosion2(copy(this.pos), Math.PI * (1 / 2))
-        );
-        this.Quake(20, 0.8);
-        this.frameShot = this.frame; //最終ショット時刻
-        this.vel.y = -Param.player.jumpVel;
-        this.bullet -= 20;
-        this.state = STATE.JUMPING;
-      } else {
-        //足りないとできない
-        Audio.PlaySE("empty");
-        EntityManager.addEntity(new FontEffect(this.pos, "たりないよ", "pop"));
-      }
     }
   }
   /*状態からアニメーションを行う*/
@@ -380,7 +346,9 @@ export default class Player extends Entity {
   ChangeWeapon(name) {
     this.weapon.Reset();
     WeaponManager.ChangeWeapon(this, name);
-    UIManager.bullet.ChangeWeapon(name);
+    const bullet = UIManager.find("BULLET")[0];
+    bullet.ChangeWeapon(name);
+    bullet.ChangeWeapon(name);
     //変更先の武器アイコンをpop
     let p = copy(this.pos);
     p.y -= 8;
@@ -396,18 +364,11 @@ export default class Player extends Entity {
     if (!this.isInvincible && this.isAlive) {
       Audio.PlaySE("playerDamage");
 
-      //bulletが少ないと防御力がさがる(思いつき)
-      //0~1
-      /*
-      let def = (1 - this.bullet/this.maxBullet)
-      atk *= (1 + 30*def*def);
-      atk = Math.floor(atk);
-      */
-
       this.hp -= atk;
       //フォントはダメージ数に応じて数字を表示する
       EntityManager.addEntity(new FontEffect(this.pos, atk + "", "player"));
       this.hp = Math.max(this.hp, 0);
+      UIManager.find("HP")[0].SetBar(this.hp);
       //ダメージを受けて一定時間無敵になる
       this.isInvincible = true;
       this.frameDamaged = this.frame;
@@ -419,10 +380,10 @@ export default class Player extends Entity {
     if (this.isAlive) {
       this.score += score;
       this.param.score = this.score;
-      this.bullet += 5; //とりあえずbulletも回復しとくか
-      //this.hp += 1;//とりあえずhpも回復しとくか
+      this.bullet += 5;
       this.hp = clamp(this.hp, 0, this.maxHP);
-      UIManager.score.SetScore(this.score);
+      UIManager.find("SCORE")[0].SetScore(this.score);
+      UIManager.find("HP")[0].SetBar(this.hp);
     }
   }
   /* 衝突判定 */
@@ -498,6 +459,7 @@ export default class Player extends Entity {
     } //forここまで
     if (!this.floor.on) this.isJump = true;
   }
+
   Physics() {
     this.MoveOnFloor();
     this.MoveByGravity();
@@ -560,6 +522,7 @@ export default class Player extends Entity {
 
   OnDying() {
     //死亡開始時に一回だけ呼ばれる部分
+
     if (this.isAlive) {
       Timer.SetTimeScale(0.1);
       //なおせ
@@ -577,6 +540,7 @@ export default class Player extends Entity {
       //死亡開始時に一回だけ呼ばれる部分
     }
   }
+
   Dying() {
     //死亡中
     if (this.isDying) {
@@ -589,8 +553,7 @@ export default class Player extends Entity {
         if (this.isDying) {
           //this.state = STATE.DEAD
           Timer.SetTimeScale(1);
-          let g = new GameOverEvent();
-          EventManager.PushEvent(g);
+          EventManager.Add(new GameOverEvent());
         }
         this.isDying = false;
       }
@@ -606,6 +569,8 @@ export default class Player extends Entity {
     else if (t > 1000 && t <= 1500 && t % 3 == 0) this.bullet++;
     else if (t > 1500) this.bullet += 2;
     this.bullet = clamp(this.bullet, 0, this.maxBullet);
+    const bullet = UIManager.find("BULLET")[0];
+    if (bullet !== undefined) bullet.SetBar(this.bullet);
   }
 
   SetArg(arg) {
@@ -616,6 +581,7 @@ export default class Player extends Entity {
     if (d < -Math.PI) d += 2 * Math.PI;
     this.arg += d * 0.2;
   }
+
   Debug() {
     if (
       this.maxHP != 300 &&
@@ -627,19 +593,21 @@ export default class Player extends Entity {
         x: 64,
         y: 96
       };
-      UIManager.addUI(new StagePop(p, "-HPがふえた ")); //SCORE
+      UIManager.add(new StagePop(p, "-HPがふえた ")); //SCORE
       p.y += 10;
+      const bullet = UIManager.find("BULLET")[0];
       if (!this.param.havingWeaponList.missile) {
         this.param.havingWeaponList.missile = true;
-        UIManager.bullet.Push("missile");
+        bullet.Push("missile");
       }
       if (!this.param.havingWeaponList.laser) {
         this.param.havingWeaponList.laser = true;
-        UIManager.bullet.Push("laser");
+        bullet.Push("laser");
       }
       //最大HP変更
       this.param.maxHp = 300;
-      UIManager.HP.SetMaxGaugeValue(300);
+      const HP = UIManager.find("HP")[0];
+      HP.SetMaxGaugeValue(300);
       this.Damage(999);
       Audio.PlaySE("missileHit");
     }
@@ -663,10 +631,7 @@ export default class Player extends Entity {
       this.Collision(); //衝突
       this.AutoSupplyBullet(); //bulletのかいふく
     }
-    UIManager.bullet.SetBar(this.bullet); //BulletBarの更新
-    UIManager.HP.SetBar(this.hp); //HPbarの更新
     this.isCanRead = false;
-    this.ScrollByDir(); //向きに応じてスクロール位置を変更
     Drawer.ScrollOn(this.pos); //プレイヤー中心にスクロール
     this.Dying(); //死亡中
     //無敵時間の有向時間
@@ -679,6 +644,7 @@ export default class Player extends Entity {
     /*reset*/
     //this.PixelizeSpritePosition();
   }
+
   PixelizeSpritePosition() {
     let pos = vec2(
       this.pos.x - (this.pos.x % 3),

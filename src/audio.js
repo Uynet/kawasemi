@@ -1,5 +1,4 @@
 import Timer from "./timer.js";
-import Game from "./game.js";
 //サウンド管理
 let source, buffer, gainNode;
 export default class Audio {
@@ -60,7 +59,10 @@ export default class Audio {
   }
   // サウンドを再生
   static async PlayBGM(name, gain) {
-    cl(name);
+    if (name == 0) {
+      this.StopBGM();
+      return;
+    }
     let buffer = this.BGM[name];
     source = this.context.createBufferSource(); // source を作成
     source.buffer = buffer; // buffer をセット
@@ -90,9 +92,7 @@ export default class Audio {
       this.PlayingBGM.source.playbackRate.value = pitch;
   }
   static StopBGM() {
-    cl(this.PlayingBGM.name);
     if (this.PlayingBGM.name !== null) {
-      cl(this.PlayingBGM);
       this.PlayingBGM.source.stop();
       this.PlayingBGM.source.stop();
       this.PlayingBGM = {

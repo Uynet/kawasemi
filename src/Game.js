@@ -1,141 +1,35 @@
-import EntityManager from "./Stage/entityManager.js";
-import Pool from "./Stage/pool.js";
-import MapData from "./Stage/mapData.js";
-import EventManager from "./Event/eventmanager.js";
-import StartStageEvent from "./Event/startStageEvent.js";
-import StartGameEvent from "./Event/startGameEvent.js";
-import Scene from "./Event/scene.js";
-//import State from "./Event/state.js";
-import UIManager from "./UI/uiManager.js";
-import Font from "./UI/font.js";
-import WeaponManager from "./Weapon/weaponManager.js";
 import Art from "./art.js";
-import Drawer from "./drawer.js";
-import Input from "./input.js";
-import Timer from "./timer.js";
-import Param from "./param.js";
-import Menu from "./UI/menu.js";
 import Audio from "./audio.js";
-import StageData from "./Stage/stageData.js";
-import DistanceField from "./Stage/distanceField.js";
+import Drawer from "./drawer.js";
+import EventManager from "./Event/eventmanager.js";
+import Timer from "./timer.js";
+import LoadingScene from "./scene/loadingScene.js";
+import Pipeline from "./pipeline.js";
+import { debugOption } from "./debug.js";
 
+/* （＾・ω・＾✿） */
 export default class Game {
   static Init() {
-    /*audioとartはinitしない*/
-    Param.Init();
-    Drawer.Init();
-    EventManager.Init();
-    WeaponManager.Init();
-    EntityManager.Init();
-    Pool.Init();
-    Timer.Init();
-    UIManager.Init();
-    StageData.Init();
-    DistanceField.Init();
-
-    /*initialize Game state*/
-    //現在のステージ番号
-    if (isDebugMode) Game.stage = 21;
-    else Game.stage = 1;
-    Game.continuePoint = 1; //コンティニュー地点
-
-    Game.scene = new Scene();
-    //Game.state = new State();
-
-    //Gameにタイトル画面状態をプッシュ
-    let event = new StartGameEvent();
-    EventManager.PushEvent(event);
-
-    Game.Run();
+    Pipeline.InitializeStaticClasses();
+    Game.stage = isDebugMode ? debugOption.entryStage : 1;
+    Game.latestStage = 1; // クリアしたステージで最も番号の後のもの
+    Game.nextStage = 101; // クリアしてない最小のステージ番号
+    Game.state = Pipeline.CreateGameState();
+    Game.scene = new LoadingScene();
+    Game.Update();
   }
-
   static async Load() {
     await Art.LoadTexture();
     Audio.Load();
-
     Game.Init();
-
-    Input.returnScroll(); //スクロール解除
   }
-  //ローディング画面中の処理
-  static UpdateLoading() {
-    UIManager.Update();
-  }
-
-  //タイトル画面中の処理
-  static UpdateTitle() {
-    if (Input.isAnyKeyClick()) {
-      let event = new StartStageEvent();
-      EventManager.PushEvent(event);
-    }
-    EntityManager.UpdateTitle();
-  }
-
-  //ステージ中の処理
-  static UpdateStage() {
-    /*Entityの更新*/
-    EntityManager.Update();
-    UIManager.Update();
-
-    /*ポーズ状態に遷移*/
-    if (isDebugMode && Input.isKeyClick(KEY.ESC)) {
-      UIManager.SetMenu();
-      Game.scene.PushSubState("PAUSE");
-    }
-  }
-  static UpdatePause() {
-    UIManager.Update();
-  }
-  //看板を読んでいるときにアニメーションだけを行う
-  static UpdateMes() {
-    EntityManager.Animation();
-    UIManager.Update();
-  }
-
-  static Run() {
-    for (let event of EventManager.eventList) {
-      if (event.Do().done) {
-        EventManager.Remove(event);
-      }
-    }
-    switch (Game.scene.state) {
-      /*更新*/
-      /*Note : Lastは自前関数*/
-      case STATE.LOADING:
-        Game.UpdateLoading();
-        break;
-      case STATE.TITLE:
-        switch (Game.scene.substate.Last()) {
-          case "DEFAULT":
-            Game.UpdateTitle();
-            break;
-          case "TRANS":
-            /*Nothing to do*/ break;
-        }
-        break;
-      case STATE.STAGE:
-        switch (Game.scene.substate.Last()) {
-          case "DEFAULT":
-            Game.UpdateStage();
-            break;
-          case "PAUSE":
-            Game.UpdatePause();
-            break;
-          case "MES":
-            Game.UpdateMes();
-            break;
-          case "TRANS":
-            /*Nothing to do*/ break;
-        }
-        break;
-      default:
-        console.warn("unknown state:", Game.scene.state);
-        return;
-    }
-    /*描画*/
+  static Update() {
+    EventManager.Update();
+    Game.state.getState().Input(); //controller
+    Game.state.getState().Update(); // current scene
     Drawer.Renderer.render(Drawer.Stage);
     Audio.Update();
-    Timer.IncTime();
-    requestAnimationFrame(Game.Run);
+    Timer.Update();
+    requestAnimationFrame(Game.Update);
   }
 }

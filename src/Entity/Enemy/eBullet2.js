@@ -1,44 +1,40 @@
-import Enemy from './enemy.js';
-import Art from '../../art.js';
-import Collider from '../../Collision/collider.js';
-import Collision from '../../Collision/collision.js';
-import Box from '../../Collision/box.js';
-import EntityManager from '../../Stage/entityManager.js';
-import Pool from '../../Stage/pool.js';
-import Param from '../../param.js';
-import Explosion2 from '../Effect/Explosion/explosion2.js';
-import Stone from '../Effect/Explosion/stone.js';
+import Art from "../../art.js";
+import Collision from "../../Collision/collision.js";
+import Param from "../../param.js";
+import EntityManager from "../../Stage/entityManager.js";
+import Pool from "../../Stage/pool.js";
+import Enemy from "./enemy.js";
 
 //敵の弾丸その2
-export default class eBullet2 extends Enemy{
-  constructor(pos,vel){
-    super(pos,vel);
+export default class eBullet2 extends Enemy {
+  constructor(pos, vel) {
+    super(pos, vel);
     /*基本情報*/
-    this.SetBoxCollider(8,8);
-    this.type = "MOVER"
+    this.SetBoxCollider(8, 8);
+    this.type = "MOVER";
     this.pattern = Art.enemyPattern.eBullet2;
-    this.sprite = Art.CreateSprite(this.pattern[this.spid]);//現在表示中のスプライト
+    this.sprite = Art.CreateSprite(this.pattern[this.spid]); //現在表示中のスプライト
     this.sprite.position = this.pos;
     this.SetParam(Param.eBullet2);
 
-    this.addAnimator(true,2,4);
+    this.addAnimator(true, 2, 4);
   }
-  Collision(){
-    for(let w of EntityManager.wallList){
-      let c = Collision.on(this,w);
+  Collision() {
+    for (let w of EntityManager.wallList) {
+      let c = Collision.on(this, w);
       //判定は落下中のみ
-      if(c.isHit && this.vel.y >2){
+      if (c.isHit && this.vel.y > 2) {
         this.hp--;
       }
     }
   }
-  Update(){
+  Update() {
     this.ExecuteAI();
-    if(this.Modulo(3)){
-      let stone = Pool.GetStone(add(this.pos,VECX(4)),vec0());
-      if(stone)EntityManager.addEntity(stone);
+    if (this.Modulo(3)) {
+      let stone = Pool.GetStone(add(this.pos, VECX(4)), vec0());
+      if (stone) EntityManager.addEntity(stone);
     }
     this.Collision();
-    if( this.frame > 300) this.Delete();
+    if (this.frame > 300) this.Delete();
   }
 }

@@ -5,17 +5,14 @@ import UIManager from "./uiManager.js";
 import Audio from "../audio.js";
 import EntityManager from "../Stage/entityManager.js";
 import ListUI from "./listUI.js";
-import Game from "../game.js";
 import Drawer from "../drawer.js";
 import Art from "../art.js";
 import Font from "./font.js";
 import Param from "../param.js";
 import Component from "./component.js";
 import shopController from "./shopController.js";
-import PopInEvent from "../Event/Component/popIn.js";
-import FadeInEvent from "../Event/Component/fadeIn.js";
-import SlideInEvent from "../Event/Component/slideIn.js";
 import BlinkEvent from "../Event/Component/blink.js";
+import Game from "../game.js";
 //import {shopStyle}from "./Style/shopStyle.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
@@ -194,7 +191,7 @@ export default class Shop extends UI {
       root: {
         margin: mul(vec2(0.3), gameSreensize),
         color: hilight,
-        popin: { delay: 0, ease: easeOutElastic}
+        popin: { delay: 0, ease: easeOutElastic }
       },
       label: { position: vec2(0.4, 0.15) },
       icon: { position: vec2(0.2, 0.1) },
@@ -219,22 +216,22 @@ export default class Shop extends UI {
         player.GetScore(-price);
         item.setPrice(0);
         Param.GetWeapon(name);
-        UIManager.bullet.Push(name);
-        UIManager.addUI(new StagePop(p, "-" + name + "をてにいれた "));
+        UIManager.find("BULLET")[0].bullet.Push(name);
+        UIManager.add(new StagePop(p, "-" + name + "をてにいれた "));
         Audio.PlaySE("coin1");
         Audio.PlaySE("bomb", -0.9, 1.6);
         this.CloseConfirmModal();
       }
     } else {
-      UIManager.addUI(new StagePop(p, "-errorー!"));
+      UIManager.add(new StagePop(p, "-errorー!"));
       Audio.PlaySE("playerDamage");
     }
   }
   Exit() {
     Audio.PlaySE("playerDamage");
-    Game.scene.PopSubState();
     this.Remove();
     this.controller.ui.Remove();
+    Game.state.transit("main");
   }
   Update() {
     if (this.frame > 1) this.controller.Update();

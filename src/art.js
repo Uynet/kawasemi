@@ -19,6 +19,8 @@ export default class Art {
         runUL: this.Frame("player", 30, 6),
         runDR: this.Frame("player", 40, 6),
         runDL: this.Frame("player", 50, 6),
+        waitR: this.Frame("player", 60, 4),
+        waitL: this.Frame("player", 64, 4),
         waitR: [
           PIXI.Texture.fromFrame("player60.png"),
           PIXI.Texture.fromFrame("player61.png"),
@@ -170,6 +172,36 @@ export default class Art {
       },
       message: {
         frame: PIXI.Texture.fromFrame("UI20.png")
+      },
+      key: {
+        X: [
+          PIXI.Texture.fromFrame("UI40.png"),
+          PIXI.Texture.fromFrame("UI41.png")
+        ],
+        Z: [
+          PIXI.Texture.fromFrame("UI42.png"),
+          PIXI.Texture.fromFrame("UI43.png")
+        ],
+        C: [
+          PIXI.Texture.fromFrame("UI44.png"),
+          PIXI.Texture.fromFrame("UI45.png")
+        ],
+        RIGHT: [
+          PIXI.Texture.fromFrame("UI46.png"),
+          PIXI.Texture.fromFrame("UI47.png")
+        ],
+        LEFT: [
+          PIXI.Texture.fromFrame("UI48.png"),
+          PIXI.Texture.fromFrame("UI49.png")
+        ],
+        DOWN: [
+          PIXI.Texture.fromFrame("UI4A.png"),
+          PIXI.Texture.fromFrame("UI4B.png")
+        ],
+        UP: [
+          PIXI.Texture.fromFrame("UI4C.png"),
+          PIXI.Texture.fromFrame("UI4D.png")
+        ]
       }
     };
     this.bulletPattern = {
@@ -271,6 +303,12 @@ export default class Art {
       enemy3: this.Frame("enemy", 30, 2),
       eBullet1: this.Frame("enemy", 40, 4),
       enemy4: this.Frame("enemy", 50, 2),
+      enemy7: [
+        PIXI.Texture.fromFrame("enemy00.png"),
+        PIXI.Texture.fromFrame("enemy01.png"),
+        PIXI.Texture.fromFrame("enemy02.png"),
+        PIXI.Texture.fromFrame("enemy03.png")
+      ],
       enemy5: this.Frame("enemy", 60, 2),
       eBullet2: this.Frame("enemy", 70, 4),
       enemy6: this.Frame("enemy", 80, 2),
@@ -376,23 +414,20 @@ export default class Art {
     //shader
     const unif1 = {
       time: {
-        // 変数名
-        type: "1f", // 型
-        value: 300 // 初期値
+        type: "1f",
+        value: 300
       },
       mappedMatrix: {
         type: "mat3",
         value: new PIXI.Matrix()
       },
       x: {
-        // 変数名
-        type: "1f", // 型
-        value: 0 // 初期値
+        type: "1f",
+        value: 0
       },
       y: {
-        // 変数名
-        type: "1f", // 型
-        value: 0 // 初期値
+        type: "1f",
+        value: 0
       }
     };
     Drawer.testFilter = new PIXI.Filter(null, resources.testShader.data, unif1);
@@ -407,13 +442,13 @@ export default class Art {
     Drawer.fireFilter = new PIXI.Filter(null, resources.fireShader.data, {
       paintCol: {
         type: "1f",
-        value: 0 // 初期値
+        value: 0
       }
     });
     let unif = {
       time: {
         type: "1f",
-        value: 0 // 初期値
+        value: 0
       },
       mappedMatrix: {
         type: "mat3",
@@ -463,9 +498,8 @@ export default class Art {
     }
     return a;
   }
-
   static SpriteFactory(texture) {
-    return this.Sprite(texture);
+    return new PIXI.Sprite(texture);
   }
   static Sprite(texture) {
     return new PIXI.Sprite(texture);

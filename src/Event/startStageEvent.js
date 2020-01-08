@@ -1,11 +1,8 @@
-import Event from "./event.js";
-import Drawer from "../drawer.js";
-import Game from "../game.js";
-import EventManager from "./eventmanager.js";
-import UIManager from "../UI/uiManager.js";
-import MapData from "../Stage/mapData.js";
 import Audio from "../audio.js";
-import GameClearEvent from "./gameClearEvent.js";
+import Game from "../game.js";
+import UIManager from "../UI/uiManager.js";
+import Event from "./event.js";
+import EventManager from "./eventmanager.js";
 import FadeEvent from "./FadeEvent.js";
 
 /*タイトル画面からゲーム開始画面に移行するイベント
@@ -17,7 +14,6 @@ export default class StartStageEvent extends Event {
     super(1);
     function* gen() {
       let frame = 0;
-      Game.scene.PushSubState("TRANS");
       EventManager.eventList.push(new FadeEvent("fadeout"));
       Audio.PlaySE("stageChange");
       Audio.StopBGM();
@@ -28,7 +24,6 @@ export default class StartStageEvent extends Event {
       Audio.StopBGM();
       //ここで非同期
       Game.scene.ChangeState(STATE.STAGE);
-      //Game.scene.PopSubState("TRANS");
       UIManager.PopStage();
       yield;
     }

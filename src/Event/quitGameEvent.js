@@ -1,17 +1,16 @@
-import Event from './event.js';
-import UIManager from '../UI/uiManager.js';
-import Game from '../game.js';
-import EventManager from './eventmanager.js';
-import MapData from '../Stage/mapData.js';
+import Game from "../game.js";
+import MapData from "../Stage/mapData.js";
+import UIManager from "../UI/uiManager.js";
+import Event from "./event.js";
 
 /*初期状態タイトル画面に移行するイベント
  * (UIの退避)
  * UIのセット
  */
-export default class QuitGameEvent extends Event{
-  constructor(){
+export default class QuitGameEvent extends Event {
+  constructor() {
     super(1);
-    function* gen(){
+    function* gen() {
       Game.scene.ChangeState(STATE.TITLE);
       /*delete all entities*/
       MapData.DeleteStage();
@@ -20,7 +19,7 @@ export default class QuitGameEvent extends Event{
       Game.stage = 0;
       /*Setting Title*/
       UIManager.SetTitle();
-      yield ;
+      yield;
     }
     let itt = gen();
     this.func = itt;
