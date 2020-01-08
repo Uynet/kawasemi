@@ -569,7 +569,8 @@ export default class Player extends Entity {
     else if (t > 1000 && t <= 1500 && t % 3 == 0) this.bullet++;
     else if (t > 1500) this.bullet += 2;
     this.bullet = clamp(this.bullet, 0, this.maxBullet);
-    UIManager.find("BULLET")[0].SetBar(this.bullet);
+    const bullet = UIManager.find("BULLET")[0];
+    if (bullet !== undefined) bullet.SetBar(this.bullet);
   }
 
   SetArg(arg) {

@@ -185,11 +185,15 @@ export default class MapData {
 
   static async CreateStage(stageNo) {
     //BGM再生
-    if (Audio.PlayingBGM.name != StageData.StageBGM[stageNo])
-      Audio.PlayBGM(StageData.StageBGM[stageNo], 1.0);
+    if (Audio.PlayingBGM.name != StageData.getStageBGM(stageNo)) {
+      Audio.PlayBGM(StageData.getStageBGM(stageNo), 1.0);
+    }
+    cl(Audio.PlayingBGM.name);
+
     await this.Load(stageNo);
     //背景の生成
-    let BG = StageData.StageBackGround[stageNo];
+    //let BG = StageData.StageBackGround[stageNo];
+    let BG = 1;
     this.AddBackGround(BG);
     //entityの生成
     this.CreateEntityLayer("backEntityData");

@@ -10,7 +10,6 @@ export default class ToBeContinuedEvent extends Event {
     super(1);
     function* gen() {
       const p = vec2(96, 32);
-      Game.stage = 1;
       let frame = 0;
       while (frame < 50) {
         frame++;
@@ -29,6 +28,7 @@ export default class ToBeContinuedEvent extends Event {
         MapData.DeleteStage();
       };
       transitionState.onFadeOutStart = () => {
+        Game.latestStage = Game.stage;
         Game.stage = 1;
         UIManager.Clean();
         Game.state.transit("title");

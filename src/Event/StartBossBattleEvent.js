@@ -20,7 +20,8 @@ export default class StartBossBattleEvent extends Event {
       UIManager.add(new GaugeBossHP(POS_BossHP)); //HP
       let timer = 0;
       let po = 300;
-      if (Audio.PlayingBGM.source !== null) Audio.PlayBGM(BGMTitle, 2.3);
+      //if (Audio.PlayingBGM.source !== null)
+      Audio.PlayBGM(BGMTitle, 2.3);
       UIManager.add(new StagePop(p, "^   - どうくつ   ぼす -$", 7));
       while (timer < po) {
         Drawer.SetMagnification(3 - Math.pow(timer / po, 3));

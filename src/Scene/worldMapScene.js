@@ -14,6 +14,16 @@ export default class WorldMapScene extends Scene {
     this.name = "worldMap";
   }
   Input() {
+    if (Input.isKeyClick(KEY.Z)) {
+      Game.state.transit("transition");
+      const transitionState = Game.state.getState();
+      transitionState.onFadeInEnd = () => {
+        UIManager.Clean();
+      };
+      transitionState.onFadeOutStart = () => {
+        Game.state.transit("title");
+      };
+    }
     if (Input.isKeyClick(KEY.X)) {
       Audio.StopBGM();
 

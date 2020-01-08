@@ -1,5 +1,13 @@
 //全ステージに関するデータ
 export default class StageData {
+  static getStageBGM(stageNum) {
+    if (stageNum == 0) return "title";
+    if (101 <= stageNum && stageNum <= 199) return "title"; //tutorial
+    if (201 <= stageNum && stageNum <= 210) return "stage5"; //
+    if (stageNum == 211) return "0"; //ボス前
+    if (stageNum == 212) return "0"; //boss
+    if (stageNum == 1) return 0;
+  }
   static Init() {
     this.StageBackGround = {
       0: 1,
@@ -16,22 +24,6 @@ export default class StageData {
       11: 1,
       12: 1,
       21: 1
-    };
-    this.StageBGM = {
-      0: "title",
-      1: 0,
-      2: "stage5",
-      3: "stage5",
-      4: "stage5",
-      5: "stage5",
-      6: "stage5",
-      7: "stage5",
-      8: "stage5",
-      9: "stage5",
-      10: "stage5",
-      11: "0",
-      12: "0",
-      21: "0"
     };
   }
 }

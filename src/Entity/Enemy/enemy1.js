@@ -5,6 +5,7 @@ import Collision from "../../Collision/collision.js";
 import Drawer from "../../drawer.js";
 import EventManager from "../../Event/eventmanager.js";
 import StartBossBattleEvent from "../../Event/StartBossBattleEvent.js";
+import StageSetClearEvent from "../../Event/stageSetClearEvent.js";
 import ToBeContinuedEvent from "../../Event/toBeContinuedEvent.js";
 import Param from "../../param.js";
 import EntityManager from "../../Stage/entityManager.js";
@@ -240,6 +241,7 @@ export default class Enemy1 extends Enemy {
     Audio.StopBGM();
     //ボスを倒すとtobe continued..みたいなのがでて終わる
     EventManager.Add(new ToBeContinuedEvent());
+    //EventManager.Add(new StageSetClearEvent());
   }
   Update() {
     this.ExecuteAI();

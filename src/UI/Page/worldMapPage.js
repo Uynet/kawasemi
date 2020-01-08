@@ -57,12 +57,16 @@ class Cusor extends UI {
     if (Input.isKeyPress(KEY.RIGHT)) {
       const index = this.nodeList.nodes.indexOf(this.focusedEntity);
       const len = this.nodeList.nodes.length;
-      this.FocusOn(this.nodeList.nodes[clamp(index + 1, 0, len - 1)]);
+      const nextNode = this.nodeList.nodes[clamp(index + 1, 0, len - 1)];
+      if (this.focusedEntity.stageNum <= Game.latestStage)
+        this.FocusOn(nextNode);
+      else Audio.PlaySE("playerDamage", 0.5);
     }
     if (Input.isKeyPress(KEY.LEFT)) {
       const index = this.nodeList.nodes.indexOf(this.focusedEntity);
       const len = this.nodeList.nodes.length;
-      this.FocusOn(this.nodeList.nodes[clamp(index - 1, 0, len - 1)]);
+      const nextNode = this.nodeList.nodes[clamp(index - 1, 0, len - 1)];
+      this.FocusOn(nextNode);
     }
   }
   Update() {
@@ -79,7 +83,8 @@ class Node extends UI {
     this.layer = "ENTITY";
     this.stageNum = stageNum;
 
-    this.sprite = Art.Sprite(Art.enemyPattern.enemy4[0]);
+    const spid = this.stageNum <= Game.latestStage ? 1 : 0;
+    this.sprite = Art.Sprite(Art.enemyPattern.enemy4[spid]);
     this.sprite.position = pos;
     this.isActive = false;
     this.frame = 0;
@@ -99,12 +104,14 @@ class Node extends UI {
     stagelabel.SetPos(vec2(108, 140));
   }
   Update() {
+    /*
     if (this.isActive) {
       this.sprite.texture =
         Art.enemyPattern.enemy1[Math.floor(this.frame / 6) % 4];
     } else {
       this.sprite.texture = Art.enemyPattern.enemy4[0];
     }
+    */
     this.frame++;
   }
 }
@@ -129,18 +136,17 @@ export default class WorldMapPage extends UI {
     const stagelabel = new Font(vec2(108, 140), "stage" + Game.stage, "MES");
     stagelabel.type = "stageLabel";
     UIManager.add(stagelabel);
+    UIManager.add(new Key(vec2(90, 134), "LEFT"));
+    UIManager.add(new Key(vec2(166, 134), "RIGHT"));
 
-    UIManager.add(new Key(vec2(30, 164), "Z"));
-    UIManager.add(new Key(vec2(50, 164), "X"));
-    UIManager.add(new Key(vec2(70, 164), "C"));
+    UIManager.add(new Key(vec2(190, 164), "X"));
+    UIManager.add(new Font(vec2(210, 170), "けってい", "MES"));
 
-    UIManager.add(new Key(vec2(170, 164), "LEFT"));
-    UIManager.add(new Key(vec2(190, 164), "DOWN"));
-    UIManager.add(new Key(vec2(190, 144), "UP"));
-    UIManager.add(new Key(vec2(210, 164), "RIGHT"));
+    UIManager.add(new Key(vec2(190, 184), "Z"));
+    UIManager.add(new Font(vec2(210, 190), "タイトル", "MES"));
 
     let p = vec2(106, 124);
-    const stagelist = [101, 102, 103, 104, 105];
+    const stagelist = [101, 211, 301, 401, 501];
     const nodes = [];
     for (let i = 0; i < 5; i++) {
       nodes.push(new Node(p, stagelist[i]));

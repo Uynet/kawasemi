@@ -11,6 +11,7 @@ export default class StageSetClearEvent extends Event {
       console.log("clear ");
       let frame = 0;
       Game.state.transit("transition");
+      Game.latestStage = Game.stage;
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
         MapData.DeleteStage();
