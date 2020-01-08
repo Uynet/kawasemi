@@ -12,7 +12,6 @@ export default class ShopScene extends Scene {
     UIManager.add(new Shop());
   }
   Update() {
-    console.log("ya");
     EntityManager.Animation();
     UIManager.Update();
   }
