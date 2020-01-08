@@ -11,6 +11,7 @@ const POS_SCORE = vec2(208, POS_HP.y + 8); //score
 export default class StagePage extends UI {
   constructor() {
     super(vec2(0));
+    this.type = "StagePage";
     this.addChild(new GaugeHP(POS_HP)); //HP
     this.addChild(new GaugeBullet(POS_BULLET)); //BULLET
     this.addChild(new WeaponList(POS_BULLET)); //WList;

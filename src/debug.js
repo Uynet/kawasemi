@@ -2,7 +2,7 @@ const debugOption = {
   entryStage: 12,
   playerHavingWeaponList: {
     normal: true,
-    missile: true,
+    missile: false,
     laser: true,
     weapon4: true,
     weapon5: false
