@@ -3,7 +3,7 @@ import Audio from "./audio.js";
 import Drawer from "./drawer.js";
 import EventManager from "./Event/eventmanager.js";
 import Timer from "./timer.js";
-import LoadingScene from "./scene/loadingScene.js";
+import LoadingScene from "./Scene/loadingScene.js";
 import Pipeline from "./pipeline.js";
 import { debugOption } from "./debug.js";
 
@@ -14,6 +14,7 @@ export default class Game {
     Game.stage = isDebugMode ? debugOption.entryStage : 1;
     Game.latestStage = 1; // クリアしたステージで最も番号の後のもの
     Game.nextStage = 101; // クリアしてない最小のステージ番号
+    Game.continuePoint = 1; //コンティニュー地点
     Game.state = Pipeline.CreateGameState();
     Game.scene = new LoadingScene();
     Game.Update();
