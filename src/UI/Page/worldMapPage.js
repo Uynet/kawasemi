@@ -29,6 +29,30 @@ class PoyoEvent extends Event {
     this.func = gen();
   }
 }
+
+class PulpulEvent extends Event {
+  constructor(ui) {
+    super(1);
+    let frame = 0;
+    const amp = 2.5;
+    const ease = x => {
+      return amp * Math.sin(x * 15) * Math.exp(-x * x * x * x);
+    };
+    const sustain = 10;
+    function* gen() {
+      const origPos = copy(ui.pos);
+      while (frame <= sustain) {
+        ui.sprite.position.x = origPos.x + ease(frame / sustain);
+        frame++;
+        yield;
+      }
+      ui.sprite.position = origPos;
+      yield;
+    }
+    this.func = gen();
+  }
+}
+
 class Cusor extends UI {
   constructor(nodeList) {
     super(vec2(0));
@@ -43,8 +67,14 @@ class Cusor extends UI {
 
     Drawer.ScrollSet(this.pos);
   }
+  // カーソルが端にある状態でさらに移動しようとしたときインタラクション
+  InputDeny() {
+    Audio.PlaySE("playerDamage", -0.1);
+    this.Animate(new PulpulEvent(this));
+  }
   FocusOn(entity) {
     if (this.focusedEntity) this.focusedEntity.OnDefocus();
+    Audio.PlaySE("landing1", 1.5, 1.5);
     this.focusedEntity = entity;
     this.pos = copy(entity.pos);
     this.pos.x += 8;
@@ -60,16 +90,27 @@ class Cusor extends UI {
       const nextNode = this.nodeList.nodes[clamp(index + 1, 0, len - 1)];
       if (this.focusedEntity.stageNum <= Game.latestStage)
         this.FocusOn(nextNode);
-      else Audio.PlaySE("playerDamage", 0.5);
+      else this.InputDeny();
     }
     if (Input.isKeyPress(KEY.LEFT)) {
       const index = this.nodeList.nodes.indexOf(this.focusedEntity);
       const len = this.nodeList.nodes.length;
       const nextNode = this.nodeList.nodes[clamp(index - 1, 0, len - 1)];
-      this.FocusOn(nextNode);
+      if (index > 0) this.FocusOn(nextNode);
+      else this.InputDeny();
     }
   }
   Update() {
+    const index = this.nodeList.nodes.indexOf(this.focusedEntity);
+
+    const isCanInputRight = this.focusedEntity.stageNum <= Game.latestStage;
+    const isCanInputLeft = index > 0;
+    const keyRight = UIManager.find("keyRight");
+
+    keyRight[0].sprite.alpha = isCanInputRight ? 1 : 0;
+    const keyLeft = UIManager.find("keyLeft");
+    keyLeft[0].sprite.alpha = isCanInputLeft ? 1 : 0;
+
     this.Input();
     this.SetPos(this.pos);
     this.ExecuteEvent();
@@ -97,7 +138,6 @@ class Node extends UI {
     this.isActive = true;
     this.frame = 0;
     this.sprite.position = this.pos;
-    Audio.PlaySE("landing1", 1.5, 1.5);
     Game.stage = this.stageNum;
     const stagelabel = UIManager.find("stageLabel")[0];
     stagelabel.ChangeText("stage" + Game.stage, "MES");
@@ -136,8 +176,12 @@ export default class WorldMapPage extends UI {
     const stagelabel = new Font(vec2(108, 140), "stage" + Game.stage, "MES");
     stagelabel.type = "stageLabel";
     UIManager.add(stagelabel);
-    UIManager.add(new Key(vec2(90, 134), "LEFT"));
-    UIManager.add(new Key(vec2(166, 134), "RIGHT"));
+    const keyLeft = new Key(vec2(90, 134), "LEFT");
+    keyLeft.type = "keyLeft";
+    UIManager.add(keyLeft);
+    const keyRight = new Key(vec2(166, 134), "RIGHT");
+    keyRight.type = "keyRight";
+    UIManager.add(keyRight);
 
     UIManager.add(new Key(vec2(190, 164), "X"));
     UIManager.add(new Font(vec2(210, 170), "けってい", "MES"));
