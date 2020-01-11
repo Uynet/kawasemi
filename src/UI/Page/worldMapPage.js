@@ -60,16 +60,27 @@ class Cusor extends UI {
       const nextNode = this.nodeList.nodes[clamp(index + 1, 0, len - 1)];
       if (this.focusedEntity.stageNum <= Game.latestStage)
         this.FocusOn(nextNode);
-      else Audio.PlaySE("playerDamage", 0.5);
+      else Audio.PlaySE("playerDamage", 0.3);
     }
     if (Input.isKeyPress(KEY.LEFT)) {
       const index = this.nodeList.nodes.indexOf(this.focusedEntity);
       const len = this.nodeList.nodes.length;
       const nextNode = this.nodeList.nodes[clamp(index - 1, 0, len - 1)];
-      this.FocusOn(nextNode);
+      if (index > 0) this.FocusOn(nextNode);
+      else Audio.PlaySE("playerDamage", 0.3);
     }
   }
   Update() {
+    const index = this.nodeList.nodes.indexOf(this.focusedEntity);
+
+    const isCanInputRight = this.focusedEntity.stageNum <= Game.latestStage;
+    const isCanInputLeft = index > 0;
+    const keyRight = UIManager.find("keyRight");
+
+    keyRight[0].sprite.alpha = isCanInputRight ? 1 : 0;
+    const keyLeft = UIManager.find("keyLeft");
+    keyLeft[0].sprite.alpha = isCanInputLeft ? 1 : 0;
+
     this.Input();
     this.SetPos(this.pos);
     this.ExecuteEvent();
@@ -136,8 +147,12 @@ export default class WorldMapPage extends UI {
     const stagelabel = new Font(vec2(108, 140), "stage" + Game.stage, "MES");
     stagelabel.type = "stageLabel";
     UIManager.add(stagelabel);
-    UIManager.add(new Key(vec2(90, 134), "LEFT"));
-    UIManager.add(new Key(vec2(166, 134), "RIGHT"));
+    const keyLeft = new Key(vec2(90, 134), "LEFT");
+    keyLeft.type = "keyLeft";
+    UIManager.add(keyLeft);
+    const keyRight = new Key(vec2(166, 134), "RIGHT");
+    keyRight.type = "keyRight";
+    UIManager.add(keyRight);
 
     UIManager.add(new Key(vec2(190, 164), "X"));
     UIManager.add(new Font(vec2(210, 170), "けってい", "MES"));

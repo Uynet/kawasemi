@@ -1,6 +1,9 @@
 MapData.DeleteStage();
+UIManager.Clean();
 MapData.CreateStage(Game.stage);
+UIManager.add();
 import Event from "../event.js";
+import UIManager from "../../UI/uiManager.js";
 
 /* props
  * easefunc
