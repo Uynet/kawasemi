@@ -140,6 +140,8 @@ export default class Audio {
       this.LoadSE("jump2"); //空中ジャンプ
       this.LoadSE("coin1");
       this.LoadSE("coin2"); //コイン反射
+      this.LoadSE("clack1");
+      this.LoadSE("clack2");
       this.LoadSE("targetOn"); //照準
       this.LoadSE("playerDamage");
       this.LoadSE("enemyDamage");

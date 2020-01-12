@@ -13,7 +13,7 @@ class PoyoEvent extends Event {
   constructor(ui) {
     super(1);
     let frame = 0;
-    const amp = 0.8;
+    const amp = 0.4;
     const ease = x => {
       return 1.5 + amp / (x * 50 + 1);
     };
@@ -69,12 +69,12 @@ class Cusor extends UI {
   }
   // カーソルが端にある状態でさらに移動しようとしたときインタラクション
   InputDeny() {
-    Audio.PlaySE("playerDamage", -0.1);
+    Audio.PlaySE("landing1", 1.5, 1.5);
     this.Animate(new PulpulEvent(this));
   }
   FocusOn(entity) {
     if (this.focusedEntity) this.focusedEntity.OnDefocus();
-    Audio.PlaySE("landing1", 1.5, 1.5);
+    Audio.PlaySE("clack2", -1.1, 0.8);
     this.focusedEntity = entity;
     this.pos = copy(entity.pos);
     this.pos.x += 8;
@@ -107,9 +107,9 @@ class Cusor extends UI {
     const isCanInputLeft = index > 0;
     const keyRight = UIManager.find("keyRight");
 
-    keyRight[0].sprite.alpha = isCanInputRight ? 1 : 0;
+    keyRight[0].sprite.alpha = isCanInputRight ? 1 : 0.5;
     const keyLeft = UIManager.find("keyLeft");
-    keyLeft[0].sprite.alpha = isCanInputLeft ? 1 : 0;
+    keyLeft[0].sprite.alpha = isCanInputLeft ? 1 : 0.5;
 
     this.Input();
     this.SetPos(this.pos);
@@ -190,7 +190,7 @@ export default class WorldMapPage extends UI {
     UIManager.add(new Font(vec2(210, 190), "タイトル", "MES"));
 
     let p = vec2(106, 124);
-    const stagelist = [101, 200, 201];
+    const stagelist = [101, 200, 201, 301, 401, 501, 601, 701, 801];
     //クリアしてない最小のステージ番号を取得
     for (let i = 0; i < stagelist.length; i++) {
       const e = stagelist[i];

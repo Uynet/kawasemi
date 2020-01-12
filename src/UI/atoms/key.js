@@ -19,6 +19,6 @@ export default class Key extends UI {
   Update() {
     const spid = Input.isKeyInput(this.keyCode) ? 1 : 0;
     this.sprite.texture = Art.UIPattern.key[this.keyname][spid];
-    if (Input.isKeyClick(this.keyCode)) Audio.PlaySE("landing1", 1.5, 1.5);
+    //if (Input.isKeyClick(this.keyCode)) Audio.PlaySE("landing1", 1.5, 1.5);
   }
 }

@@ -27,7 +27,8 @@ export default class Weapon3 extends Weapon {
     let bullet = new Bullet3(p2, this);
     EntityManager.addEntity(bullet);
     /* ■ SoundEffect : shot */
-    Audio.PlaySE("normalShot", -0.6);
+    //Audio.PlaySE("normalShot", -0.6);
+    Audio.PlaySE("clack1", -0.6);
     /* □ Effect : shot */
     EntityManager.addEntity(new BulletShot(copy(p), vec0()));
     //振動
