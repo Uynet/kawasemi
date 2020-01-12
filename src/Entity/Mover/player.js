@@ -372,11 +372,11 @@ export default class Player extends Entity {
       //フォントはダメージ数に応じて数字を表示する
       EntityManager.addEntity(new FontEffect(this.pos, atk + "", "player"));
       this.hp = Math.max(this.hp, 0);
-      UIManager.find("HP")[0].SetBar(this.hp);
       //ダメージを受けて一定時間無敵になる
       this.isInvincible = true;
       this.frameDamaged = this.frame;
       this.Quake(10, 0.6);
+      this.SetUIStatus();
     }
   }
   //コイン取得
@@ -386,8 +386,9 @@ export default class Player extends Entity {
       this.param.score = this.score;
       this.bullet += 5;
       this.hp = clamp(this.hp, 0, this.maxHP);
-      UIManager.find("SCORE")[0].SetScore(this.score);
-      UIManager.find("HP")[0].SetBar(this.hp);
+      const scoreUI = UIManager.find("SCORE")[0];
+      if (scoreUI) scoreUI.setState("score", this.score);
+      UIManager.find("HP")[0].setState("value", this.hp);
     }
   }
   /* 衝突判定 */
@@ -650,11 +651,11 @@ export default class Player extends Entity {
   }
   SetUIStatus() {
     const score = UIManager.find("SCORE")[0];
-    if (score) score.SetScore(this.score);
     const hp = UIManager.find("HP")[0];
-    if (hp) hp.SetBar(this.hp);
     const bullet = UIManager.find("BULLET")[0];
-    if (bullet) bullet.SetBar(this.bullet);
+    if (score) score.setState("score", this.score);
+    if (hp) hp.setState("value", this.hp);
+    if (bullet) bullet.setState("value", this.bullet);
   }
 
   PixelizeSpritePosition() {

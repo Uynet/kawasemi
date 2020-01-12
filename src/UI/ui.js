@@ -12,6 +12,7 @@ export default class UI {
     this.isUpdater = true;
     this.children = [];
     this.eventList = [];
+    this.state = {};
   }
   Delete() {
     UIManager.remove(this);
@@ -32,6 +33,11 @@ export default class UI {
   setFilter(f) {
     this.sprite.filters = [f];
   }
+  setState(name, value) {
+    this.state[name] = value;
+    this.onSetState();
+  }
+  onSetState() {}
   Add() {
     UIManager.add(this);
   }

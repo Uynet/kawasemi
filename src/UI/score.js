@@ -28,7 +28,8 @@ export default class Score extends UI {
     //value
     this.sprite.addChild(this.value.sprite);
   }
-  SetScore(score) {
+  onSetState() {
+    const score = this.state.score;
     this.value.SetFont(score);
   }
   Update() {
