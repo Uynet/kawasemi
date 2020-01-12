@@ -134,6 +134,9 @@ export default class Player extends Entity {
     this.spilit = spilit;
     EntityManager.addEntity(spilit);
     this.addAI(new BasicAI(this));
+
+    // TODO:refactoring
+    this.SetUIStatus();
   }
   //死亡後に初期状態に回復するため
   ResetStatus() {
@@ -159,7 +162,9 @@ export default class Player extends Entity {
         this.isJump = true;
         this.state = STATE.JUMPING;
         // ■ SoundEffect : jump
-        Audio.PlaySE("jump1");
+        //Audio.PlaySE("jump1");
+        Audio.PlaySE("clack1", -0.8, 1.0);
+        Audio.PlaySE("landing1", 0.3, 1.0);
         //Audio.PlaySE("changeWeapon",-1);
         //effect
         let p = add(this.pos, VECY(12));
@@ -171,7 +176,6 @@ export default class Player extends Entity {
         if (s !== false) EntityManager.addEntity(s);
       }
     }
-    /*空中ジャンプ*/
     if (Input.isKeyInput(KEY.C)) {
       //Timer.SetTimeScale(0.08);
     } else {
@@ -643,6 +647,14 @@ export default class Player extends Entity {
     this.Animation(); //状態から画像を更新
     /*reset*/
     //this.PixelizeSpritePosition();
+  }
+  SetUIStatus() {
+    const score = UIManager.find("SCORE")[0];
+    if (score) score.SetScore(this.score);
+    const hp = UIManager.find("HP")[0];
+    if (hp) hp.SetBar(this.hp);
+    const bullet = UIManager.find("BULLET")[0];
+    if (bullet) bullet.SetBar(this.bullet);
   }
 
   PixelizeSpritePosition() {
