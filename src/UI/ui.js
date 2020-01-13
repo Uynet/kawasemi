@@ -34,6 +34,7 @@ export default class UI {
     this.sprite.filters = [f];
   }
   setState(name, value) {
+    if (value === undefined) console.warn("invalid argments");
     this.state[name] = value;
     this.onSetState();
   }

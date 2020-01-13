@@ -184,9 +184,17 @@ export default class MapData {
   }
 
   static async CreateStage(stageNo) {
+    const vol = name => {
+      cl(name);
+      if (name == "stage8") return 3.5;
+      if (name == "stage7") return 3.5;
+      if (name == "stage5") return 0.7;
+      else return 1.0;
+    };
     //BGM再生
-    if (Audio.PlayingBGM.name != StageData.getStageBGM(stageNo)) {
-      Audio.PlayBGM(StageData.getStageBGM(stageNo), 1.0);
+    const title = StageData.getStageBGM(stageNo);
+    if (Audio.PlayingBGM.name != title) {
+      Audio.PlayBGM(title, vol(title));
     }
 
     await this.Load(stageNo);

@@ -31,7 +31,8 @@ export default class Gauge extends UI {
   SetMaxGaugeValue(value) {
     this.maxGaugeValue = value;
   }
-  SetBar(value) {
+  onSetState() {
+    const value = this.state.value;
     //barの長さを更新
     this.barSprite.scale.x = value / this.maxGaugeValue;
     //数字の更新

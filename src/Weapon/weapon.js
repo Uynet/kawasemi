@@ -37,7 +37,7 @@ export default class Weapon {
     if (player.frame - player.frameShot > this.agi) {
       const bulletGauge = UIManager.find("BULLET")[0];
       bulletGauge.Shot();
-      bulletGauge.SetBar(player.bullet);
+      bulletGauge.setState("value", player.bullet);
 
       player.spilit.OnShot();
       //shot時刻

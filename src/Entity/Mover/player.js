@@ -163,8 +163,8 @@ export default class Player extends Entity {
         this.state = STATE.JUMPING;
         // ■ SoundEffect : jump
         //Audio.PlaySE("jump1");
-        Audio.PlaySE("clack1", -0.8, 1.0);
-        Audio.PlaySE("landing1", 0.3, 1.0);
+        //Audio.PlaySE("clack1", -0.8, 1.0);
+        Audio.PlaySE("landing1", 0.3, 1.5);
         //Audio.PlaySE("changeWeapon",-1);
         //effect
         let p = add(this.pos, VECY(12));
@@ -574,8 +574,7 @@ export default class Player extends Entity {
     else if (t > 1000 && t <= 1500 && t % 3 == 0) this.bullet++;
     else if (t > 1500) this.bullet += 2;
     this.bullet = clamp(this.bullet, 0, this.maxBullet);
-    const bullet = UIManager.find("BULLET")[0];
-    if (bullet !== undefined) bullet.SetBar(this.bullet);
+    this.SetUIStatus();
   }
 
   SetArg(arg) {

@@ -133,6 +133,8 @@ export default class Audio {
       this.LoadBGM("stage4");
       this.LoadBGM("stage5");
       this.LoadBGM("stage6");
+      this.LoadBGM("stage7");
+      this.LoadBGM("stage8");
       this.LoadBGM("boss");
       this.LoadBGM("boss3");
       this.LoadBGM("title");
