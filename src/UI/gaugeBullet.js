@@ -58,14 +58,8 @@ export default class GaugeBullet extends Gauge {
       this.maxGaugeValue + "",
       "BULLET"
     ); //数字
-    this.weaponList = {
-      pos: add(pos, POS_weaponList),
-      list: null,
-      sprite: new PIXI.Container()
-    };
 
     /*スプライト*/
-    this.weaponListPattern = Art.UIPattern.bullet.pop;
     this.sprite = new PIXI.Container();
     this.InitChildren();
   }
@@ -75,16 +69,6 @@ export default class GaugeBullet extends Gauge {
     list = list.filter(arr => {
       return Param.player.havingWeaponList[arr];
     });
-    this.weaponList.list = list;
-    //アイコンリストをぷっしゅ
-    let p = this.weaponList.pos;
-    //p = this.pos;
-    for (let w of this.weaponList.list) {
-      s = Art.CreateSprite(Art.UIPattern.bullet.pop[w]);
-      s.position = p;
-      this.sprite.addChild(s);
-      p.x += 8;
-    }
   }
   InitChildren() {
     //outer
@@ -107,15 +91,7 @@ export default class GaugeBullet extends Gauge {
     this.sprite.addChild(this.value.sprite);
     this.InitWeaponList();
   }
-  Push(weaponName) {
-    let p = copy(this.weaponList.pos);
-    let s = Art.CreateSprite(Art.UIPattern.bullet.pop[weaponName]);
-    p.x += (this.weaponList.list.length - 1) * 8;
-    s.position = p;
-    this.sprite.addChild(s);
-    this.weaponList.list.push(weaponName);
-    //samall weapon list
-  }
+  Push(weaponName) {}
   ChangeWeapon(name) {
     //アイコンを武器に変更
     this.iconSprite.texture = Art.UIPattern.bullet.icon[name];

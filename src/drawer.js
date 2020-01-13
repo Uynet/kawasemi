@@ -186,11 +186,6 @@ export default class Drawer {
     this.foreContainer.x = Math.floor(centerX);
     this.foreContainer.y = Math.floor(centerY);
   }
-  //フィルタ
-  static SetFilter(filters) {
-    //Drawer.renderTarget.filters = filters;
-    const r = PIXI.getRenderTarget(); //.filters = filters;
-  }
   static Dist() {
     let extract = this.Renderer.plugins.extract;
     let canvas = extract.canvas();
@@ -223,6 +218,8 @@ export default class Drawer {
   }
   static SetFilter(filters) {
     Drawer.Stage.filters = filters;
+    //Drawer.renderTarget.filters = filters;
+    //const r = PIXI.getRenderTarget(); //.filters = filters;
   }
   static GetGameScreenSize() {
     return vec2(

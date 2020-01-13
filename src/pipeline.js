@@ -10,6 +10,7 @@ import DistanceField from "./Stage/distanceField.js";
 import LoadingScene from "./Scene/loadingScene.js";
 import TitleScene from "./Scene/titleScene.js";
 import MainScene from "./Scene/mainScene.js";
+import MenuScene from "./Scene/menuScene.js";
 import ShopScene from "./Scene/shopScene.js";
 import SignboardScene from "./Scene/signboardScene.js";
 import WorldMapScene from "./Scene/worldMapScene.js";
@@ -41,7 +42,8 @@ export default class Pipeline {
       new ShopScene(),
       new SignboardScene(),
       new WorldMapScene(),
-      new TransitionScene()
+      new TransitionScene(),
+      new MenuScene()
     ];
     return new StateMachine(scenes);
   }

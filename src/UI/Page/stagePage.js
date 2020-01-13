@@ -14,7 +14,6 @@ export default class StagePage extends UI {
     this.type = "StagePage";
     this.addChild(new GaugeHP(POS_HP)); //HP
     this.addChild(new GaugeBullet(POS_BULLET)); //BULLET
-    this.addChild(new WeaponList(POS_BULLET)); //WList;
     this.addChild(new Score(POS_SCORE)); //SCORE
   }
   Update() {

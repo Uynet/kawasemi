@@ -237,22 +237,6 @@ export default class Player extends Entity {
       }
       this.spilit.shot(this);
     }
-    /*for debug*/
-    if (Input.isKeyClick(KEY.C) && this.isAlive) {
-      //武器チェンジ
-      //持っている武器の中で次の武器をセレクト
-      //リストの末尾でループ
-
-      //武器リストから持っている物だけを抽出
-      let wList = Object.keys(this.param.havingWeaponList);
-      wList = wList.filter(arr => {
-        return this.param.havingWeaponList[arr];
-      });
-      let wIndex = wList.indexOf(this.weapon.name);
-      let wNameNext = wList[wIndex + 1]; //次の武器をセレクト
-      if (!wNameNext) wNameNext = wList[0]; //最後尾でループ
-      this.ChangeWeapon(wNameNext);
-    }
   }
   /*状態からアニメーションを行う*/
   Animation() {
@@ -351,7 +335,6 @@ export default class Player extends Entity {
     this.weapon.Reset();
     WeaponManager.ChangeWeapon(this, name);
     const bullet = UIManager.find("BULLET")[0];
-    bullet.ChangeWeapon(name);
     bullet.ChangeWeapon(name);
     //変更先の武器アイコンをpop
     let p = copy(this.pos);

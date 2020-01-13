@@ -217,9 +217,6 @@ export default class Shop extends UI {
         item.setPrice(0);
         Param.GetWeapon(name);
         console.log(UIManager.find("StagePage"));
-        const stagePage = UIManager.find("StagePage")[0];
-        const weaponList = stagePage.children[2];
-        weaponList.Push(name);
         UIManager.add(new StagePop(p, "-" + name + "をてにいれた "));
         Audio.PlaySE("coin1");
         Audio.PlaySE("bomb", -0.9, 1.6);

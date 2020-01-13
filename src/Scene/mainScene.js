@@ -1,6 +1,8 @@
 import EntityManager from "../Stage/entityManager.js";
 import UIManager from "../UI/uiManager.js";
 import Scene from "./scene.js";
+import Input from "../input.js";
+import Game from "../game.js";
 
 export default class MainScene extends Scene {
   constructor() {
@@ -9,6 +11,11 @@ export default class MainScene extends Scene {
     this.frame = 0;
     this.messages = [];
     this.keyListenners = [];
+  }
+  Input() {
+    if (Input.isKeyClick(KEY.C)) {
+      Game.state.transit("menu");
+    }
   }
   Init() {}
   Update() {
