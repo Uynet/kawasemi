@@ -167,8 +167,8 @@ export default class Param {
     };
     //Missile
     this.bullet1 = {
-      atkMax: 100,
-      atkMin: 50,
+      atkMax: 25,
+      atkMin: 18,
       hp: 1,
       curve: 0.2
     };

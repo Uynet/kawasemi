@@ -494,7 +494,7 @@ export default class Player extends Entity {
     if (this.isAlive) {
       Timer.SetTimeScale(0.1);
       //なおせ
-      Audio.StopBGM();
+      //Audio.StopBGM();
       this.ResetStatus();
       this.Quake(50, 0.9);
       EntityManager.addEntity(new Explosion5(copy(this.pos)));

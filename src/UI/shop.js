@@ -59,7 +59,7 @@ export default class Shop extends UI {
     const descList = [
       "つよつよミサイル\nあいてはしぬ",
       "すごいこうせん",
-      "default\nもうもってるよ",
+      "ふつうのショット",
       "めっちゃもえるマン\n",
       "まだじっそうしてない"
     ];
@@ -75,6 +75,8 @@ export default class Shop extends UI {
       ui.descriptionText = descList[i];
       ui.price = priceList[i];
       ui.name = e;
+      if (e == "weapon4") ui.name = "fire";
+      if (e == "weapon5") ui.name = "barrier";
       setPrice.bind(ui);
       ui.setPrice = setPrice;
     });
@@ -160,7 +162,7 @@ export default class Shop extends UI {
   CloseConfirmModal() {
     this.modal.Remove();
     this.state = "MAIN";
-    Audio.PlaySE("playerDamage");
+    Audio.PlaySE("stageChange", -0.6, 1.5);
   }
   OpenConfirmModal() {
     this.state = "CONFIRM";
@@ -232,7 +234,7 @@ export default class Shop extends UI {
     }
   }
   Exit() {
-    Audio.PlaySE("playerDamage");
+    Audio.PlaySE("stageChange", -0.6, 1.5);
     this.Remove();
     this.controller.ui.Remove();
     Game.state.transit("main");

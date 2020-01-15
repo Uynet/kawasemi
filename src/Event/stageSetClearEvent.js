@@ -3,6 +3,7 @@ import Game from "../game.js";
 import Event from "./event.js";
 import MapData from "../Stage/mapData.js";
 import UIManager from "../UI/uiManager.js";
+import EntityManager from "../Stage/entityManager.js";
 
 export default class StageSetClearEvent extends Event {
   constructor() {
@@ -10,9 +11,10 @@ export default class StageSetClearEvent extends Event {
     function* gen() {
       let frame = 0;
       Game.state.transit("transition");
-      Game.latestStage = Game.stage;
+      if (Game.latestStage < Game.stage) Game.latestStage = Game.stage;
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
+        EntityManager.player.ResetStatus();
         MapData.DeleteStage();
         UIManager.Clean();
       };

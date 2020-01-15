@@ -19,8 +19,12 @@ export default class GameOverEvent extends Event {
         UIManager.Clean();
       };
       transitionState.onFadeOutStart = () => {
-        Game.state.transit("worldMap");
-        Drawer.SetMagnification(3);
+        if (Game.currentStageSet == 101) {
+          //チュートリアルの時は死んでもそこから
+          MapData.CreateStage(Game.stage);
+          UIManager.add(new StagePage());
+          Game.state.transit("main");
+        } else Game.state.transit("worldMap");
       };
 
       Audio.PlaySE("stageChange", -0.7);
