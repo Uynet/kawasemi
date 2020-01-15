@@ -9,7 +9,7 @@ export default class TitlePage extends UI {
     let p3 = vec2(p1.x - 8, p2.y + 48);
     let p4 = vec2(32, 200);
     this.addChild(new Font(p1, "さいはてどろっぷ", "MES"));
-    this.addChild(new Font(p2, "- ver0.40 -", "MES"));
+    this.addChild(new Font(p2, "- ver0.41 -", "MES"));
     this.addChild(new Font(p3, "Press Any Key", "MES"));
     this.addChild(new Font(p4, "+ 2018-2020 uynet", "MES"));
   }
