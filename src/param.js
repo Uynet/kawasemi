@@ -53,7 +53,7 @@ export default class Param {
       atkMax: 10000,
       atkMin: 1,
       gravity: 0.03,
-      coin: 15
+      coin: 35
     };
     this.enemy2 = {
       hp: 10,
@@ -63,12 +63,12 @@ export default class Param {
       coin: 4
     };
     this.enemy3 = {
-      hp: 5,
-      atkMax: 4,
+      hp: 50,
+      atkMax: 10,
       atkMin: 1,
       gravity: 0,
       range: 80,
-      coin: 3
+      coin: 12
     };
     this.enemy4 = {
       hp: 5,

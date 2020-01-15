@@ -21,27 +21,25 @@ export default class MenuScene extends Scene {
       const menuPage = UIManager.find("menuPage")[0];
       const selectedWeaponName = menuPage.selectedWeaponName;
       UIManager.remove(menuPage);
-      Timer.timeScale = 1.0;
       Game.state.transit("main");
 
       player.ChangeWeapon(selectedWeaponName);
       Drawer.entityContainer.filters = [];
       Drawer.backContainer.filters = [];
-      Drawer.foreContainer.filters = [];
+      //Drawer.foreContainer.filters = [];
       Drawer.backGroundContainer.filters = [];
     }
   }
   Init() {
     Drawer.entityContainer.filters = [Drawer.blurFilter];
     Drawer.backContainer.filters = [Drawer.blurFilter];
-    Drawer.foreContainer.filters = [Drawer.blurFilter];
+    //Drawer.foreContainer.filters = [Drawer.blurFilter];
     Drawer.backGroundContainer.filters = [Drawer.blurFilter];
     this.frame = 0;
     UIManager.add(new MenuPage());
   }
   Update() {
-    Timer.timeScale = 0.05;
-    EntityManager.Update();
+    //EntityManager.Update();
     UIManager.Update();
     this.frame++;
   }
