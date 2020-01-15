@@ -243,7 +243,7 @@ export default class Enemy1 extends Enemy {
   OnDying() {
     this.Die();
     this.Quake(30, 0.99);
-    Audio.PlaySE("stageChange", 1, 0.6);
+    Audio.PlaySE("stageChange", -0.7, 0.6);
     Audio.PlaySE("bomb", 1, 0.6);
     Audio.StopBGM();
     //ボスを倒すとtobe continued..みたいなのがでて終わる

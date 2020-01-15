@@ -23,7 +23,7 @@ export default class GameClearEvent extends Event {
         //Audio.isFadeout=true;
         Audio.StopBGM();
       }
-      Audio.PlaySE("stageChange");
+      Audio.PlaySE("stageChange", -0.7);
       UIManager.PopStage(Game.stage);
 
       Game.state.transit("transition");
@@ -41,8 +41,6 @@ export default class GameClearEvent extends Event {
         frame++;
         yield;
       }
-
-      Game.continuePoint = 11;
       yield;
     }
     let itt = gen();

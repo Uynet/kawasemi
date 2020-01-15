@@ -176,11 +176,6 @@ export default class Player extends Entity {
         if (s !== false) EntityManager.addEntity(s);
       }
     }
-    if (Input.isKeyInput(KEY.C)) {
-      //Timer.SetTimeScale(0.08);
-    } else {
-      //Timer.SetTimeScale(1.0);
-    }
     /*右向き*/
     if (Input.isKeyInput(KEY.RIGHT)) {
       this.state = STATE.RUNNING;
@@ -491,21 +486,6 @@ export default class Player extends Entity {
       }
       this.isJump = false;
     }
-  }
-
-  ScrollByDir() {
-    let d = fromPolar(this.arg, 100 * po(this.offset));
-    let p = add(this.pos, d);
-    if (Input.isKeyInput(KEY.SP)) {
-      let to = add(p, mul(this.scPos, vec2(-1)));
-      this.scPos = add(this.scPos, mul(to, vec2(1 / 20)));
-      this.offset = Math.min(this.offset + 0.5, 20);
-      Drawer.ScrollOn(this.scPos);
-    } else {
-      this.scPos = p;
-      this.offset = 0;
-    }
-    //Drawer.SetMagnification(3-po(this.offset)/2);
   }
 
   OnDying() {

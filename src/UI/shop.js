@@ -58,7 +58,7 @@ export default class Shop extends UI {
     this.itemList = [];
     const descList = [
       "つよつよミサイル\nあいてはしぬ",
-      "つよつよビーム\nコストたかめ",
+      "すごいこうせん",
       "default\nもうもってるよ",
       "めっちゃもえるマン\n",
       "まだじっそうしてない"
@@ -78,6 +78,10 @@ export default class Shop extends UI {
       setPrice.bind(ui);
       ui.setPrice = setPrice;
     });
+    //swap(itemList , 0,2);
+    const tmp = this.itemList[2];
+    this.itemList[2] = this.itemList[0];
+    this.itemList[0] = tmp;
 
     const itemListUI = new ListUI(this.pos, this.itemList);
     this.pointedItem = this.itemList[0];
@@ -233,6 +237,7 @@ export default class Shop extends UI {
     this.controller.ui.Remove();
     Game.state.transit("main");
 
+    Param.frags.isShopEverUsed = true;
     if (UIManager.find("weaponChangeGuide").length == 0)
       UIManager.add(new KeyGuide5(vec2(100, 100)));
   }

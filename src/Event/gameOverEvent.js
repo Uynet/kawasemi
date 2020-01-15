@@ -23,7 +23,7 @@ export default class GameOverEvent extends Event {
         Drawer.SetMagnification(3);
       };
 
-      Audio.PlaySE("stageChange");
+      Audio.PlaySE("stageChange", -0.7);
 
       while (frame < 30) {
         frame++;

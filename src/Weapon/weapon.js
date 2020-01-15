@@ -44,7 +44,6 @@ export default class Weapon {
       player.frameShot = player.frame;
       //playerの弾薬が残っていなければ打てない
       if (player.bullet < this.cost) {
-        player.bullet = 0;
         EntityManager.addEntity(new FontEffect(player.pos, "たまぎれ", "pop"));
         Audio.PlaySE("empty");
       } else {

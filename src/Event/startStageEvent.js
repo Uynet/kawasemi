@@ -15,7 +15,7 @@ export default class StartStageEvent extends Event {
     function* gen() {
       let frame = 0;
       EventManager.eventList.push(new FadeEvent("fadeout"));
-      Audio.PlaySE("stageChange");
+      Audio.PlaySE("stageChange", -0.7);
       Audio.StopBGM();
       while (frame < 50) {
         frame++;

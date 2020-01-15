@@ -8,7 +8,6 @@ export default class StageSetClearEvent extends Event {
   constructor() {
     super(1);
     function* gen() {
-      console.log("clear ");
       let frame = 0;
       Game.state.transit("transition");
       Game.latestStage = Game.stage;
@@ -20,7 +19,7 @@ export default class StageSetClearEvent extends Event {
       transitionState.onFadeOutStart = () => {
         Game.state.transit("worldMap");
       };
-      Audio.PlaySE("stageChange");
+      Audio.PlaySE("stageChange", -0.7);
 
       while (frame < 30) {
         frame++;

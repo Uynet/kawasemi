@@ -185,10 +185,10 @@ export default class MapData {
 
   static async CreateStage(stageNo) {
     const vol = name => {
-      cl(name);
       if (name == "stage8") return 3.5;
       if (name == "stage7") return 3.5;
       if (name == "stage5") return 0.7;
+      if (name == "title") return 0.7;
       else return 1.0;
     };
     //BGM再生

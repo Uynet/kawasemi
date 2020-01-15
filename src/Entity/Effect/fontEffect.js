@@ -37,7 +37,8 @@ export default class FontEffect extends EFFECT {
       }
 
       let fontSprite = Art.CreateSprite(texture);
-      fontSprite.position.x = i * 10;
+      if (this.str > "z") fontSprite.position.x = i * 10;
+      else fontSprite.position.x = i * 6;
       this.container.addChild(fontSprite);
     }
     this.gravity = 0.2;

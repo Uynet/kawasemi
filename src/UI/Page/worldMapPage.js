@@ -140,6 +140,7 @@ class Node extends UI {
     this.frame = 0;
     this.sprite.position = this.pos;
     Game.stage = this.stageNum;
+    Game.currentStageSet = this.stageNum;
     const stagelabel = UIManager.find("stageLabel")[0];
     stagelabel.ChangeText(this.stageName, "MES");
     stagelabel.SetPos(vec2(108, 140));
@@ -210,7 +211,14 @@ export default class WorldMapPage extends UI {
     const nodeList = new NodeList(nodes);
     this.addChild(nodeList);
     const cusor = new Cusor(nodeList);
-    cusor.FocusOn(nodes[0]);
+
+    // さっきプレイしたステージセットにフォーカスをあわせる
+    let index = stagelist.indexOf(Game.currentStageSet);
+    if (index == -1) {
+      console.warn("invalid:", Game.currentStageSet);
+      index = 0;
+    }
+    cusor.FocusOn(nodes[index]);
     this.addChild(cusor);
   }
   Update() {

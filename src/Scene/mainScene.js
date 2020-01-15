@@ -13,7 +13,7 @@ export default class MainScene extends Scene {
     this.keyListenners = [];
   }
   Input() {
-    if (Input.isKeyClick(KEY.C)) {
+    if (Input.isKeyClick(KEY.C) && EntityManager.player.isAlive) {
       Game.state.transit("menu");
     }
   }

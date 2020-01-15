@@ -3,7 +3,6 @@ import { debugOption } from "./debug.js";
 export default class Param {
   static ApplyDebugOption() {
     this.player.havingWeaponList = debugOption.playerHavingWeaponList;
-    console.log(debugOption);
     this.player.score = debugOption.score;
     if (debugOption.invincibleMode) Param.bullet1.atkMax = 9999;
   }
@@ -115,7 +114,7 @@ export default class Param {
     this.weapon1 = {
       //status
       agi: 25,
-      cost: 100,
+      cost: 50,
       speed: 12,
       length: 280,
       remain: 180,
@@ -136,7 +135,7 @@ export default class Param {
     //normal
     this.weapon3 = {
       agi: 7,
-      cost: 5,
+      cost: 3,
       speed: 6,
       length: 150,
       //optional
@@ -168,8 +167,8 @@ export default class Param {
     };
     //Missile
     this.bullet1 = {
-      atkMax: 10,
-      atkMin: 1,
+      atkMax: 100,
+      atkMin: 50,
       hp: 1,
       curve: 0.2
     };
