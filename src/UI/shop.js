@@ -80,10 +80,6 @@ export default class Shop extends UI {
       setPrice.bind(ui);
       ui.setPrice = setPrice;
     });
-    //swap(itemList , 0,2);
-    const tmp = this.itemList[2];
-    this.itemList[2] = this.itemList[0];
-    this.itemList[0] = tmp;
 
     const itemListUI = new ListUI(this.pos, this.itemList);
     this.pointedItem = this.itemList[0];
