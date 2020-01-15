@@ -119,10 +119,11 @@ class Cusor extends UI {
   }
 }
 class Node extends UI {
-  constructor(pos, stageNum) {
+  constructor(pos, stageNum, stageName) {
     super(pos);
     this.layer = "ENTITY";
     this.stageNum = stageNum;
+    this.stageName = stageName;
 
     const spid = this.stageNum <= Game.nextStage ? 1 : 0;
     this.sprite = Art.Sprite(Art.enemyPattern.enemy4[spid]);
@@ -140,7 +141,7 @@ class Node extends UI {
     this.sprite.position = this.pos;
     Game.stage = this.stageNum;
     const stagelabel = UIManager.find("stageLabel")[0];
-    stagelabel.ChangeText("stage" + Game.stage, "MES");
+    stagelabel.ChangeText(this.stageName, "MES");
     stagelabel.SetPos(vec2(108, 140));
   }
   Update() {
@@ -190,7 +191,7 @@ export default class WorldMapPage extends UI {
     UIManager.add(new Font(vec2(210, 190), "タイトル", "MES"));
 
     let p = vec2(106, 124);
-    const stagelist = [101, 200, 201, 212, 401, 501, 601, 701, 801];
+    const stagelist = [101, 201, 301, 401, 501];
     //クリアしてない最小のステージ番号を取得
     for (let i = 0; i < stagelist.length; i++) {
       const e = stagelist[i];
@@ -200,9 +201,10 @@ export default class WorldMapPage extends UI {
       }
     }
 
+    const stageNames = ["start", "shop", "cave1", "cave2", "boss"];
     const nodes = [];
     for (let i = 0; i < stagelist.length; i++) {
-      nodes.push(new Node(p, stagelist[i]));
+      nodes.push(new Node(p, stagelist[i], stageNames[i]));
       p.x += 32;
     }
     const nodeList = new NodeList(nodes);

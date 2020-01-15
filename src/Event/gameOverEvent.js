@@ -5,6 +5,7 @@ import MapData from "../Stage/mapData.js";
 import UIManager from "../UI/uiManager.js";
 import StagePage from "../UI/Page/stagePage.js";
 import Drawer from "../drawer.js";
+import EntityManager from "../Stage/entityManager.js";
 
 export default class GameOverEvent extends Event {
   constructor() {
@@ -16,11 +17,9 @@ export default class GameOverEvent extends Event {
       transitionState.onFadeInEnd = () => {
         MapData.DeleteStage();
         UIManager.Clean();
-        MapData.CreateStage(Game.stage);
-        UIManager.add(new StagePage());
       };
       transitionState.onFadeOutStart = () => {
-        Game.state.transit("main");
+        Game.state.transit("worldMap");
         Drawer.SetMagnification(3);
       };
 

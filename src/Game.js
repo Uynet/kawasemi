@@ -14,6 +14,7 @@ export default class Game {
     Game.stage = isDebugMode ? debugOption.entryStage : 1;
     Game.latestStage = 601; // クリアしたステージで最も番号の後のもの
     Game.nextStage = 701; // クリアしてない最小のステージ番号
+    Game.currentStageSet = 101; // 現在のstageSetの先頭stage
     Game.continuePoint = 1; //コンティニュー地点
     Game.state = Pipeline.CreateGameState();
     Game.scene = new LoadingScene();

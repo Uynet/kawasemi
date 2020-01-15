@@ -14,17 +14,20 @@ export default class Param {
     this.player.havingWeaponList[name] = true;
   }
   static Init() {
+    this.frags = {
+      isShopEverUsed: false //  今までにshopを開いたことがあるか/チュートリアル用
+    };
     this.player = {
       //プレイ中ステータス
       jumpVel: 6.2, //ジャンプ力
       runVel: 0.3, //はしり速度
       gravity: 0.26,
-      maxHp: 30,
+      maxHp: 10,
       maxBullet: 100,
       fliction: 0.7,
       invTime: 30, //無敵時間
       status: {
-        hp: 30,
+        hp: 10,
         bullet: 100
       },
 
@@ -112,7 +115,7 @@ export default class Param {
     this.weapon1 = {
       //status
       agi: 25,
-      cost: 10,
+      cost: 100,
       speed: 12,
       length: 280,
       remain: 180,
@@ -133,7 +136,7 @@ export default class Param {
     //normal
     this.weapon3 = {
       agi: 7,
-      cost: 3,
+      cost: 5,
       speed: 6,
       length: 150,
       //optional

@@ -24,6 +24,8 @@ export default class Spilit extends Entity {
   }
   SpilitPhisics() {
     player = EntityManager.player;
+    if (!this.pos.x && !this.pos.y) this.pos = copy(player.pos);
+
     this.arg = player.arg;
     let repel = {
       x: -(player.pos.x - this.pos.x),

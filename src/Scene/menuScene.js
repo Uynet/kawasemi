@@ -4,8 +4,8 @@ import Input from "../input.js";
 import Game from "../game.js";
 import Drawer from "../drawer.js";
 import MenuPage from "../UI/Page/menuPage.js";
-import Entity from "../Entity/entity.js";
 import EntityManager from "../Stage/entityManager.js";
+import Timer from "../timer.js";
 
 export default class MenuScene extends Scene {
   constructor() {
@@ -21,19 +21,27 @@ export default class MenuScene extends Scene {
       const menuPage = UIManager.find("menuPage")[0];
       const selectedWeaponName = menuPage.selectedWeaponName;
       UIManager.remove(menuPage);
+      Timer.timeScale = 1.0;
       Game.state.transit("main");
 
       player.ChangeWeapon(selectedWeaponName);
       Drawer.entityContainer.filters = [];
+      Drawer.backContainer.filters = [];
+      Drawer.foreContainer.filters = [];
+      Drawer.backGroundContainer.filters = [];
     }
   }
   Init() {
     Drawer.entityContainer.filters = [Drawer.blurFilter];
+    Drawer.backContainer.filters = [Drawer.blurFilter];
+    Drawer.foreContainer.filters = [Drawer.blurFilter];
+    Drawer.backGroundContainer.filters = [Drawer.blurFilter];
     this.frame = 0;
     UIManager.add(new MenuPage());
   }
   Update() {
-    //EntityManager.Update();
+    Timer.timeScale = 0.05;
+    EntityManager.Update();
     UIManager.Update();
     this.frame++;
   }

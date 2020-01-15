@@ -115,7 +115,6 @@ class Node extends UI {
     this.name = name;
     this.layer = "UI";
     this.sprite = Art.Sprite(Art.UIPattern.bullet.icon[name]);
-    cl(this.sprite);
     this.sprite.position = pos;
   }
   OnDefocus() {

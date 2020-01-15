@@ -3,9 +3,11 @@ export default class StageData {
   static getStageBGM(stageNum) {
     if (stageNum == 0) return "title";
     if (101 <= stageNum && stageNum <= 199) return "stage8"; //tutorial
-    if (201 <= stageNum && stageNum <= 210) return "stage5"; //
-    if (stageNum == 211) return "0"; //ボス前
-    if (stageNum == 212) return "0"; //boss
+    if (201 <= stageNum && stageNum <= 299) return 0; // shop
+    if (301 <= stageNum && stageNum <= 399) return "stage5"; // cave2
+    if (401 <= stageNum && stageNum <= 499) return "stage5"; // cave1
+    if (stageNum == 501) return "0"; //ボス前
+    if (stageNum == 502) return "0"; //boss
     if (stageNum == 1) return 0;
   }
   static Init() {

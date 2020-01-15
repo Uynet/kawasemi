@@ -11,7 +11,7 @@ export default class Signpop extends EFFECT {
     this.name = "signpop";
     /*スプライト*/
     //this.pattern = Art.bulletPattern.signpop;
-    this.pattern = Art.UIPattern.key.X;
+    this.pattern = Art.UIPattern.key.UP;
     this.BasicEffectInit();
     //this.addAnimator(true, 4, 4);
   }

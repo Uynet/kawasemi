@@ -217,7 +217,7 @@ export default class Message extends UI {
     UIManager.remove(this);
   }
   Update() {
-    if (Input.isKeyClick(KEY.X)) {
+    if (Input.isKeyClick(KEY.UP)) {
       if (this.OpeningSelection) {
         this.Select();
       }

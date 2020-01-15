@@ -59,7 +59,7 @@ export default class Audio {
   }
   // サウンドを再生
   static async PlayBGM(name, gain) {
-    if (name == 0) {
+    if (name == 0 || name == this.PlayingBGM.name) {
       this.StopBGM();
       return;
     }

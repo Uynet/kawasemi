@@ -13,6 +13,7 @@ import Component from "./component.js";
 import shopController from "./shopController.js";
 import BlinkEvent from "../Event/Component/blink.js";
 import Game from "../game.js";
+import KeyGuide5 from "../UI/molecules/keyGuide5.js";
 //import {shopStyle}from "./Style/shopStyle.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
@@ -60,7 +61,7 @@ export default class Shop extends UI {
       "つよつよビーム\nコストたかめ",
       "default\nもうもってるよ",
       "めっちゃもえるマン\n",
-      "まだじっそうしてない\n5000ちょうえん"
+      "まだじっそうしてない"
     ];
     let priceList = ["30", "100", "0", "200", "5000000000000000"];
     if (isDebugMode) priceList = ["0", "100", "0", "200", "5000000000000000"];
@@ -142,8 +143,7 @@ export default class Shop extends UI {
   //カーソルの指すindexを移動させる
   //selectPointerIndexは状態に対応
   Controle(input) {
-    Audio.PlaySE("landing1", 1.0, 1.5);
-    Audio.PlaySE("changeWeapon", -0.8, 1.3);
+    Audio.PlaySE("clack2", -0.8, 1.0);
     if (input == ">") this.selectPointerIndex++;
     else if (input == "<") this.selectPointerIndex--;
     const N = this.GetItemList().length;
@@ -232,6 +232,9 @@ export default class Shop extends UI {
     this.Remove();
     this.controller.ui.Remove();
     Game.state.transit("main");
+
+    if (UIManager.find("weaponChangeGuide").length == 0)
+      UIManager.add(new KeyGuide5(vec2(100, 100)));
   }
   Update() {
     if (this.frame > 1) this.controller.Update();

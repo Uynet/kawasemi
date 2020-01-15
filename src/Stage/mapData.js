@@ -194,6 +194,7 @@ export default class MapData {
     //BGM再生
     const title = StageData.getStageBGM(stageNo);
     if (Audio.PlayingBGM.name != title) {
+      Audio.StopBGM();
       Audio.PlayBGM(title, vol(title));
     }
 

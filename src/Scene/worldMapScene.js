@@ -25,8 +25,6 @@ export default class WorldMapScene extends Scene {
       };
     }
     if (Input.isKeyClick(KEY.X)) {
-      Audio.StopBGM();
-
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {

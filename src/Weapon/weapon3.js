@@ -4,6 +4,7 @@ import BulletShot from "../Entity/Effect/bulletShot.js";
 import Param from "../param.js";
 import EntityManager from "../Stage/entityManager.js";
 import Weapon from "./weapon.js";
+import FontEffect from "../Entity/Effect/fontEffect.js";
 
 export default class Weapon3 extends Weapon {
   constructor() {
