@@ -58,7 +58,7 @@ export default class Explosion1 extends Explosion {
   Collision() {
     for (let entity of EntityManager.colliderList) {
       if (entity.isBreakable && dist(this.pos, entity.pos) < 32) {
-        entity.Damage(-RandomRange(5, 8));
+        entity.Damage(-RandomRange(50, 80));
       }
     }
   }

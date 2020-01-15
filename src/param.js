@@ -68,7 +68,7 @@ export default class Param {
       atkMin: 1,
       gravity: 0,
       range: 80,
-      coin: 12
+      coin: 6
     };
     this.enemy4 = {
       hp: 5,

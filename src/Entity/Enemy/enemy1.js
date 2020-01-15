@@ -17,6 +17,7 @@ import Explosion5 from "../Effect/Explosion/explosion5.js";
 import FontEffect from "../Effect/fontEffect.js";
 import Enemy from "./enemy.js";
 import Enemy4 from "./enemy4.js";
+import Enemy7 from "./enemy7.js";
 
 //enum
 const State = {
@@ -47,7 +48,7 @@ export default class Enemy1 extends Enemy {
     this.pos.y = -2000;
     this.vel.y = 12;
 
-    this.enemyPop = 3;
+    this.enemyPop = 1;
     this.addAnimator(true, 6, 4);
   }
   PopEnemy(enemyPop) {
@@ -57,10 +58,13 @@ export default class Enemy1 extends Enemy {
     };
     for (let i = 0; i < enemyPop; i++) {
       let e = new Enemy4(add(p, Rand2D(enemyPop)));
-      //ちょっと特殊
+      //ボス湧き用のenemyは有効範囲実質無限
       e.AIList[2].dist = 1000;
       // e.coin = Dice(2)+1;
       EntityManager.addEntity(e);
+    }
+    if (this.hp / this.maxHP < 0.5 && Math.random() < 0.3) {
+      EntityManager.addEntity(new Enemy7(p));
     }
   }
   Explosion() {
@@ -142,12 +146,15 @@ export default class Enemy1 extends Enemy {
     EntityManager.player.AddForce(f);
     for (let e of EntityManager.enemyList) {
       if (e == this) continue;
+      if (e.name == "enemy4");
       f = { x: this.pos.x + this.size / 2 < e.pos.x ? 0.3 : -0.3, y: -0.7 };
+      if (e.name == "enemy7");
+      f = { x: this.pos.x + this.size / 2 < e.pos.x ? 0.1 : -0.1, y: -0.2 };
       e.AddForce(f);
     }
 
-    if (this.hp / this.maxHP < 0.5) this.enemyPop = 5;
-    if (this.hp / this.maxHP < 0.2) this.enemyPop = 7;
+    if (this.hp / this.maxHP < 0.5) this.enemyPop = 2;
+    if (this.hp / this.maxHP < 0.2) this.enemyPop = 3;
     if (Rand(1) < 0) this.PopEnemy(this.enemyPop);
 
     let p = copy(this.pos);
@@ -216,7 +223,7 @@ export default class Enemy1 extends Enemy {
       Audio.PlaySE("enemyDamage", -0.7);
       this.hp = Math.max(this.hp + atk, 0);
       //ダメージをポップ
-      EntityManager.addEntity(new FontEffect(this.pos, atk + "", "enemy"));
+      EntityManager.addEntity(new FontEffect(-this.pos, atk + "", "enemy"));
       //this.SetSize(lerp(96,192,this.hp/this.maxHP));
       const BossHP = UIManager.find("BossHP")[0];
       if (BossHP) BossHP.SetBar(this.hp);

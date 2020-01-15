@@ -191,7 +191,7 @@ export default class WorldMapPage extends UI {
     UIManager.add(new Font(vec2(210, 190), "タイトル", "MES"));
 
     let p = vec2(106, 124);
-    const stagelist = [101, 201, 301, 401, 501];
+    const stagelist = [101, 201, 301, 401, 404, 501];
     //クリアしてない最小のステージ番号を取得
     for (let i = 0; i < stagelist.length; i++) {
       const e = stagelist[i];
@@ -201,7 +201,7 @@ export default class WorldMapPage extends UI {
       }
     }
 
-    const stageNames = ["start", "shop", "cave1", "cave2", "boss"];
+    const stageNames = ["start", "shop", "cave1", "cave2", "cave3", "boss"];
     const nodes = [];
     for (let i = 0; i < stagelist.length; i++) {
       nodes.push(new Node(p, stagelist[i], stageNames[i]));

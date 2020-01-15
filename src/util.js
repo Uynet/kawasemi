@@ -142,6 +142,7 @@ const fromPolar = (arg, vi) => {
 }; //極表示のベクトルを直交座標に変換
 const normalize = v => {
   let a = Math.sqrt(v.x * v.x + v.y * v.y);
+  if (a == 0) return vec0;
   v.x /= a;
   v.y /= a;
   return v;
