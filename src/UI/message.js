@@ -146,8 +146,8 @@ export default class Message extends UI {
         return "ミサイル";
       case "laser":
         return "レーザー";
-      case "weapon4":
-        return "weapon4";
+      case "fire":
+        return "fire";
       case "weapon5":
         return "weapon5";
       default:

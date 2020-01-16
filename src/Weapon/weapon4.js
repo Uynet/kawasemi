@@ -10,10 +10,10 @@ import Weapon from "./weapon.js";
 export default class Weapon4 extends Weapon {
   constructor() {
     //ここの名前を忘れずに変更すること
-    super("weapon4");
+    super("fire");
     /*基本情報*/
     /*パラメータ*/
-    this.param = Param.weapon4;
+    this.param = Param.fire;
     this.agi = this.param.agi; //間隔
     this.cost = this.param.cost;
     this.speed = this.param.speed; //弾速

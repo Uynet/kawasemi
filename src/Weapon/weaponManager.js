@@ -15,7 +15,7 @@ export default class WeaponManager {
       missile: new Weapon1(),
       laser: new Weapon2(),
       normal: new Weapon3(),
-      weapon4: new Weapon4(),
+      fire: new Weapon4(),
       weapon5: new Weapon5()
     };
     /*selectBoxの選択*/

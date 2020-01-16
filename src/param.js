@@ -41,7 +41,7 @@ export default class Param {
         normal: true,
         missile: false,
         laser: false,
-        weapon4: false,
+        fire: false,
         weapon5: false
       },
       //装備中の武器
@@ -144,7 +144,7 @@ export default class Param {
       isLasersight: false
     };
     //??
-    this.weapon4 = {
+    this.fire = {
       agi: 1,
       cost: 2,
       speed: 4,

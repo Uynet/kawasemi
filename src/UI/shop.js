@@ -64,7 +64,7 @@ export default class Shop extends UI {
       "まだじっそうしてない"
     ];
     let priceList = ["30", "100", "0", "200", "5000000000000000"];
-    if (isDebugMode) priceList = ["0", "100", "0", "200", "5000000000000000"];
+    if (isDebugMode) priceList = ["0", "100", "30", "200", "5000000000000000"];
     const setPrice = function(p) {
       this.price = p;
     };
@@ -75,11 +75,14 @@ export default class Shop extends UI {
       ui.descriptionText = descList[i];
       ui.price = priceList[i];
       ui.name = e;
-      if (e == "weapon4") ui.name = "fire";
       if (e == "weapon5") ui.name = "barrier";
       setPrice.bind(ui);
       ui.setPrice = setPrice;
     });
+    // swap itemList 0,2
+    const tmp = this.itemList[0];
+    this.itemList[0] = this.itemList[2];
+    this.itemList[2] = tmp;
 
     const itemListUI = new ListUI(this.pos, this.itemList);
     this.pointedItem = this.itemList[0];
