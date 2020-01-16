@@ -29,18 +29,17 @@ export default class GameClearEvent extends Event {
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
-        MapData.DeleteStage();
-        UIManager.Clean();
-        MapData.CreateStage(Game.stage);
-        UIManager.add(new StagePage());
+        return new Promise(resolve => {
+          UIManager.CleanBack();
+          MapData.DeleteStage();
+          UIManager.add(new StagePage());
+          MapData.CreateStage(Game.stage, resolve);
+        });
       };
       transitionState.onFadeOutStart = () => {
         Game.state.transit("main");
       };
-      while (frame < 50) {
-        frame++;
-        yield;
-      }
+      transitionState.onFadeOutEnd = () => {};
       yield;
     }
     let itt = gen();

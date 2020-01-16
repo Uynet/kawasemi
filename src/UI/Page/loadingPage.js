@@ -56,18 +56,6 @@ export default class LoadingPage extends UI {
     progress.SetPos(p2);
     progress.Update = f3;
 
-    /*
-    const style = {}
-    const componentTree = {
-      leaf1:BG,
-      leaf2:LoadingBar,
-      leaf3:Loadingmes,
-      leaf4:progress,
-    }
-
-    const component = new Component(componentTree,style,this,"root");
-    */
-    //本当はcomponentTreeにしたいが、実装が固まってから
     this.addChild(BG);
     this.addChild(LoadingBar);
     this.addChild(loadingmes);

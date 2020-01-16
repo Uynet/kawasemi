@@ -26,9 +26,10 @@ export default class Spilit extends Entity {
     player = EntityManager.player;
     if (isNaN(this.pos.x)) {
       console.log("NaN detected");
-      this.pos = copy(player.pos);
+      this.pos.x = player.pos.x;
+      this.pos.y = player.pos.y;
+      this.force = vec0();
     }
-
     this.arg = player.arg;
     let repel = {
       x: -(player.pos.x - this.pos.x),

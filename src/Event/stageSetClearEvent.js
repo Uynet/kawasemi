@@ -16,11 +16,13 @@ export default class StageSetClearEvent extends Event {
       transitionState.onFadeInEnd = () => {
         EntityManager.player.ResetStatus();
         MapData.DeleteStage();
-        UIManager.Clean();
+        UIManager.CleanBack();
       };
       transitionState.onFadeOutStart = () => {
         Game.state.transit("worldMap");
       };
+      transitionState.onFadeOutEnd = () => {};
+
       Audio.PlaySE("stageChange", -0.7);
 
       while (frame < 30) {

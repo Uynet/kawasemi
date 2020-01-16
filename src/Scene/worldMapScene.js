@@ -4,7 +4,6 @@ import EntityManager from "../Stage/entityManager.js";
 import Input from "../input.js";
 import WorldMapPage from "../UI/Page/worldMapPage.js";
 import StagePage from "../UI/Page/stagePage.js";
-import Audio from "../audio.js";
 import MapData from "../Stage/mapData.js";
 import Game from "../game.js";
 
@@ -13,25 +12,37 @@ export default class WorldMapScene extends Scene {
     super();
     this.name = "worldMap";
   }
+
+  async po(callback) {
+    callback();
+  }
+
   Input() {
     if (Input.isKeyClick(KEY.Z)) {
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
-        UIManager.Clean();
+        return new Promise(resolve => {
+          UIManager.CleanBack();
+          MapData.DeleteStage();
+          MapData.CreateStage(0, resolve);
+        });
       };
       transitionState.onFadeOutStart = () => {
         Game.state.transit("title");
       };
+      transitionState.onFadeOutEnd = () => {};
     }
     if (Input.isKeyClick(KEY.X)) {
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
-        UIManager.Clean();
-        MapData.DeleteStage();
-        MapData.CreateStage(Game.stage);
-        UIManager.add(new StagePage());
+        return new Promise(resolve => {
+          UIManager.CleanBack();
+          MapData.DeleteStage();
+          UIManager.add(new StagePage());
+          MapData.CreateStage(Game.stage, resolve);
+        });
       };
       transitionState.onFadeOutStart = () => {
         Game.state.transit("main");

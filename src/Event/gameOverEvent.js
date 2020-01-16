@@ -3,36 +3,32 @@ import Game from "../game.js";
 import Event from "./event.js";
 import MapData from "../Stage/mapData.js";
 import UIManager from "../UI/uiManager.js";
-import StagePage from "../UI/Page/stagePage.js";
-import Drawer from "../drawer.js";
-import EntityManager from "../Stage/entityManager.js";
 
 export default class GameOverEvent extends Event {
   constructor() {
     super();
     function* gen() {
-      let frame = 0;
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
-        MapData.DeleteStage();
-        UIManager.Clean();
-      };
-      transitionState.onFadeOutStart = () => {
         if (Game.currentStageSet == 101) {
-          //チュートリアルの時は死んでもそこから
-          MapData.CreateStage(Game.stage);
-          UIManager.add(new StagePage());
-          Game.state.transit("main");
-        } else Game.state.transit("worldMap");
+          return new Promise(resolve => {
+            //チュートリアルの時は死んでもそこから
+            Game.state.transit("main");
+            MapData.DeleteStage();
+            MapData.CreateStage(Game.stage, resolve);
+          });
+        } else {
+          MapData.DeleteStage();
+          UIManager.CleanBack();
+          Game.state.transit("worldMap");
+        }
       };
+      transitionState.onFadeOutStart = () => {};
+      transitionState.onFadeOutEnd = () => {};
 
       Audio.PlaySE("stageChange", -0.7);
 
-      while (frame < 30) {
-        frame++;
-        yield;
-      }
       yield;
     }
     let itt = gen();

@@ -183,7 +183,7 @@ export default class MapData {
     }
   }
 
-  static async CreateStage(stageNo) {
+  static async CreateStage(stageNo, callback) {
     const vol = name => {
       if (name == "stage8") return 3.5;
       if (name == "stage7") return 3.5;
@@ -219,6 +219,7 @@ export default class MapData {
       };
     }
     Drawer.ScrollSet(p);
+    if (callback) callback();
   }
 
   /*現在開かれているステージを削除*/

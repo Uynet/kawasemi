@@ -5,7 +5,7 @@ import Event from "./event.js";
 /*タイトル画面からゲーム開始画面に移行するイベント */
 export default class FadeEvent extends Event {
   constructor(onFadeInEnd, onFadeOutStart, onFadeOutEnd) {
-    super(); //どうでもいい
+    super();
     function* FadeOut() {
       let pattern = Art.seqPattern;
       let seq = new Array(400);

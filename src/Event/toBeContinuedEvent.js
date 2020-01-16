@@ -24,14 +24,21 @@ export default class ToBeContinuedEvent extends Event {
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
-        Drawer.SetMagnification(3);
-        MapData.DeleteStage();
+        return new Promise(resolve => {
+          UIManager.CleanBack();
+          MapData.DeleteStage();
+          MapData.CreateStage(0, resolve);
+        });
       };
       transitionState.onFadeOutStart = () => {
+        Drawer.SetMagnification(3);
         Game.latestStage = Game.stage;
         Game.stage = 1;
-        UIManager.Clean();
+        UIManager.CleanBack();
         Game.state.transit("title");
+      };
+      transitionState.onFadeOutEnd = () => {
+        Drawer.SetMagnification(3);
       };
 
       yield;

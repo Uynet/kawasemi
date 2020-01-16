@@ -50,6 +50,16 @@ export default class UIManager {
     let filters = [];
     Drawer.SetFilter(filters);
   }
+  //フェードインするやつ以外を削除
+  static CleanBack() {
+    while (this.UIList.length > 1) {
+      this.UIList.forEach(ui => {
+        if (ui.type != "fadepage") this.remove(ui);
+      });
+    }
+    let filters = [];
+    Drawer.SetFilter(filters);
+  }
   //UIをリストに登録
   static add(ui) {
     let layer = ui.layer;

@@ -207,7 +207,7 @@ export default class Drawer {
     //this.UIContainer.scale.set(this.magnification);
     this.foreContainer.scale.set(this.magnification + 1);
     this.foreEntityContainer.scale.set(this.magnification);
-    this.filterContainer.scale.set(this.magnification + 1);
+    //this.filterContainer.scale.set(this.magnification + 1);
   }
   //塗りつぶし
   static ScreenPaint(color) {

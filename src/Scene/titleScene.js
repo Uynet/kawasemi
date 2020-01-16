@@ -20,10 +20,9 @@ export default class TitleScene extends Scene {
   }
   Init() {
     UIManager.add(new TitlePage());
-    const stage = 0;
-    MapData.CreateStage(stage, "ENTER");
   }
   Update() {
+    UIManager.Update();
     EntityManager.UpdateTitle();
   }
 }
