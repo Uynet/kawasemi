@@ -28,6 +28,8 @@ export default class Spilit extends Entity {
       console.log("NaN detected");
       this.pos.x = player.pos.x;
       this.pos.y = player.pos.y;
+      this.vel = vec0();
+      this.acc = vec0();
       this.force = vec0();
     }
     this.arg = player.arg;
