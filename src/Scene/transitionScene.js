@@ -18,7 +18,6 @@ export default class TransitionScene extends Scene {
     this.onFadeOutEnd = new Function();
   }
   Update() {
-    EntityManager.Animation();
     UIManager.Update();
     if (this.frame == 0)
       UIManager.add(

@@ -99,6 +99,7 @@ export default class Player extends Entity {
     /*パラメータ*/
     this.param = Param.player;
     this.maxHP = Param.player.maxHp;
+    console.log(this.maxHp);
     this.maxBullet = Param.player.maxBullet;
     this.gravity = Param.player.gravity;
     this.bullet = this.maxBullet;
@@ -493,8 +494,9 @@ export default class Player extends Entity {
 
     if (this.isAlive) {
       Timer.SetTimeScale(0.1);
-      //なおせ
+      //TODO:fix
       //Audio.StopBGM();
+      this.param.maxHp += 2;
       this.ResetStatus();
       this.Quake(50, 0.9);
       EntityManager.addEntity(new Explosion5(copy(this.pos)));
@@ -560,7 +562,6 @@ export default class Player extends Entity {
         x: 64,
         y: 96
       };
-      UIManager.add(new StagePop(p, "-HPがふえた ")); //SCORE
       p.y += 10;
       const bullet = UIManager.find("BULLET")[0];
       if (!this.param.havingWeaponList.missile) {

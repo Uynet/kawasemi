@@ -25,10 +25,6 @@ export default class Param {
       maxBullet: 100,
       fliction: 0.7,
       invTime: 30, //無敵時間
-      status: {
-        hp: 10,
-        bullet: 100
-      },
 
       animRun: 4,
       animWait: 11,
@@ -47,13 +43,17 @@ export default class Param {
       //装備中の武器
       equip: "normal"
     };
-    this.enemy1 = {
-      hp: 500,
-      atkMax: 10000,
-      atkMin: 1,
-      gravity: 0.03,
-      coin: 35
-    };
+    (this.player.status = {
+      hp: this.player.maxHp,
+      bullet: this.player.maxBullet
+    }),
+      (this.enemy1 = {
+        hp: 500,
+        atkMax: 10000,
+        atkMin: 1,
+        gravity: 0.03,
+        coin: 35
+      });
     this.enemy2 = {
       hp: 10,
       atkMax: 5,
