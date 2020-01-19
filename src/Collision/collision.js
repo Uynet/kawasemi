@@ -2,11 +2,7 @@ export default class Collision {
   /*collisionInfoを返す */
   static on(e1, e2) {
     let isHit = false; //衝突したかどうかのbool値
-    //ココが怪しい
-    //衝突がtrueなら必ず法線が帰ってくるはずなのに
-    //プレイヤー側の押し出しの途中で法線が拾えてない(?)事がある
-
-    let n; // = {x:99999,y:0}; // 押し出すべき方向(法線) 衝突していなければundefined
+    let n;
     let depth;
     /*円同士の衝突判定*/
     if (
@@ -48,8 +44,8 @@ export default class Collision {
           box1.pos.y + box1.height - box2.pos.y,
           box1.pos.x + box1.width - box2.pos.x
         ];
-        let maxI = meri.maxIndex();
         let minI = meri.minIndex();
+        // 四隅を引く
         //console.log(meri);
         isHit = true;
         switch (minI) {

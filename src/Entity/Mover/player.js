@@ -370,78 +370,69 @@ export default class Player extends Entity {
       UIManager.find("HP")[0].setState("value", this.hp);
     }
   }
+  OnCollision(c, l) {
+    /* 衝突応答*j
+        /*フラグの解除*/
+
+    //床との衝突
+    if (c.n.y == -1 && this.vel.y > 0) {
+      this.floor.under = l;
+      this.floor.on = true;
+      /*直せ*/
+      if (l.name == "enemy6") {
+        l.isSwelling = true;
+      }
+      if (this.isJump) {
+        //ぽよぽよイベント
+        this.eventList.push(new Elast());
+        //着地効果音
+        switch (l.material) {
+          case "wall":
+            Audio.PlaySE("landing1", 1);
+            break;
+          case "steel":
+            Audio.PlaySE("landing2", 1);
+            Audio.PlaySE("landing1");
+            break;
+          case "wood":
+            Audio.PlaySE("landing1", 1);
+            break;
+          default:
+            console.warn(l.material);
+        }
+        this.isJump = false;
+      }
+    }
+    //Resolve
+    switch (l.colType) {
+      case "through":
+        //下からのみ通り抜けられる床
+        if (
+          c.n.y == -1 &&
+          l.pos.y - (this.pos.y - (this.vel.y - l.vel.y) + 8) > 0 &&
+          this.vel.y > 0
+        ) {
+          Collision.Resolve(this, l);
+        }
+        break;
+      case "wall":
+        Collision.Resolve(this, l);
+        break;
+      default:
+        console.warn(l.colType);
+        break;
+    }
+  }
   /* 衝突判定 */
   Collision() {
-    //下からしか通れない物体
-    this.floor.on = false;
-    this.floor.under = null;
-    //壁
     for (let l of EntityManager.colliderList) {
       if (l == this) continue;
       if (l.coltype == "none") continue;
       let c = Collision.on(this, l);
       if (c.isHit) {
-        /* 衝突応答*/
-        /*フラグの解除*/
-
-        //床との衝突
-        if (c.n.y == -1 && this.vel.y > 0) {
-          this.floor.under = l;
-          this.floor.on = true;
-          /*直せ*/
-          if (l.name == "enemy6") {
-            l.isSwelling = true;
-          }
-          if (this.isJump) {
-            //着地エフェクト
-            let p = add(this.pos, VECY(16));
-            let v = {
-              x: 2 + Rand(1),
-              y: Rand(0.4)
-            };
-            //ぽよぽよイベント
-            this.eventList.push(new Elast());
-            //着地効果音
-            switch (l.material) {
-              case "wall":
-                Audio.PlaySE("landing1", 1);
-                break;
-              case "steel":
-                Audio.PlaySE("landing2", 1);
-                Audio.PlaySE("landing1");
-                break;
-              case "wood":
-                Audio.PlaySE("landing1", 1);
-                break;
-              default:
-                console.warn(l.material);
-            }
-            this.isJump = false;
-          }
-        }
-        //Resolve
-        switch (l.colType) {
-          case "through":
-            //下からのみ通り抜けられる床
-            if (
-              c.n.y == -1 &&
-              l.pos.y - (this.pos.y - (this.vel.y - l.vel.y) + 8) > 0 &&
-              this.vel.y > 0
-            ) {
-              Collision.Resolve(this, l);
-            }
-            break;
-          case "wall":
-            Collision.Resolve(this, l);
-            break;
-          default:
-            console.warn(l.colType);
-            break;
-          /*note : now isHit == false*/
-        }
-      } //衝突処理ここまで
-    } //forここまで
-    if (!this.floor.on) this.isJump = true;
+        this.OnCollision(c, l);
+      }
+    }
   }
 
   Physics() {
@@ -596,6 +587,10 @@ export default class Player extends Entity {
       this.SetArg(this.toArg);
       this.weapon.Update(this); //weapon
       this.Physics(); //物理
+      if (!this.floor.on) this.isJump = true;
+      //下からしか通れない物体
+      this.floor.on = false;
+      this.floor.under = null;
       this.Collision(); //衝突
       this.AutoSupplyBullet(); //bulletのかいふく
     }
