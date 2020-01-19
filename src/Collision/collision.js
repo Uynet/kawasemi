@@ -44,6 +44,9 @@ export default class Collision {
           box1.pos.y + box1.height - box2.pos.y,
           box1.pos.x + box1.width - box2.pos.x
         ];
+        const minY = Math.min(meri[0], meri[2]);
+        const minX = Math.min(meri[1], meri[3]);
+        if (minX < 4 && minY < 4) return new CollisionInfo(false, vec0(), 0);
         let minI = meri.minIndex();
         // 四隅を引く
         //console.log(meri);
