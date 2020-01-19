@@ -99,7 +99,6 @@ export default class Collision {
     if (l.n.y == -1) e1.vel.y = Math.min(e1.vel.y, 0);
     if (l.n.y == 1) {
       e1.vel.y = Math.max(e1.vel.y, 0);
-      console.log(l.n.x);
     }
     //while(Collision.on(e1,e2).isHit){
     e1.pos.x += l.n.x * l.depth;

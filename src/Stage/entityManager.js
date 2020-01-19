@@ -1,4 +1,5 @@
 import Drawer from "../drawer.js";
+import Collision from "../Collision/collision.js";
 
 export default class EntityManager {
   static Init() {
@@ -88,12 +89,31 @@ export default class EntityManager {
     if (matched.length == 0) return null;
     return matched;
   }
+  static Collision() {
+    const list = EntityManager.colliderList;
+    const len = list.length;
+    for (let i = 0; i < len; i++) {
+      for (let j = i + 1; j < len; j++) {
+        const e1 = list[i];
+        const e2 = list[j];
+        if (e1.coltype == "none") continue;
+        if (e2.coltype == "none") continue;
+
+        // 法線だけが反対になる
+        let c1 = Collision.on(e1, e2);
+        let c2 = Collision.on(e2, e1);
+        if (c1.isHit) e1.OnCollision(c1, e2);
+        if (c2.isHit) e2.OnCollision(c2, e1);
+      }
+    }
+  }
   /*Entityの更新*/
   static Update() {
     for (let i = 0; i < this.entityIndex; i++) {
       let l = this.entityList[i];
       if (l.isUpdater) l.Update();
     }
+    EntityManager.Collision();
   }
   /*Entityの更新(Tiltle用)*/
   static UpdateTitle() {

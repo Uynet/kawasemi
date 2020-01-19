@@ -115,4 +115,5 @@ export default class Entity {
   Quake(time, size, isRot) {
     EventManager.Quake(time, size, isRot);
   }
+  OnCollision(colInfo, entity) {}
 }

@@ -99,7 +99,6 @@ export default class Player extends Entity {
     /*パラメータ*/
     this.param = Param.player;
     this.maxHP = Param.player.maxHp;
-    console.log(this.maxHp);
     this.maxBullet = Param.player.maxBullet;
     this.gravity = Param.player.gravity;
     this.bullet = this.maxBullet;
@@ -424,16 +423,7 @@ export default class Player extends Entity {
     }
   }
   /* 衝突判定 */
-  Collision() {
-    for (let l of EntityManager.colliderList) {
-      if (l == this) continue;
-      if (l.coltype == "none") continue;
-      let c = Collision.on(this, l);
-      if (c.isHit) {
-        this.OnCollision(c, l);
-      }
-    }
-  }
+  Collision() {}
 
   Physics() {
     this.MoveOnFloor();
@@ -591,7 +581,6 @@ export default class Player extends Entity {
       //下からしか通れない物体
       this.floor.on = false;
       this.floor.under = null;
-      this.Collision(); //衝突
       this.AutoSupplyBullet(); //bulletのかいふく
     }
     this.isCanRead = false;
