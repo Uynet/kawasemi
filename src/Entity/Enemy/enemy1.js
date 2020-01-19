@@ -209,9 +209,13 @@ export default class Enemy1 extends Enemy {
     let c = Collision.on(this, player);
     //潰されたとき
     if (c.isHit && c.n.y == -1) {
-      //ダメージ
-      let damage = RandomRange(this.atkMin, this.atkMax);
-      if (!player.isInvincible) player.Damage(damage);
+      if (!player.isJump) {
+        //潰れると即死
+        let damage = RandomRange(this.atkMin, this.atkMax);
+        if (!player.isInvincible) player.Damage(damage);
+      } else {
+        Collision.Resolve(player , this);
+      }
     }
     //横から当たると弾く
     if (c.isHit && c.n.y != 1) {

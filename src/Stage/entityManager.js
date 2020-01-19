@@ -96,14 +96,16 @@ export default class EntityManager {
       for (let j = i + 1; j < len; j++) {
         const e1 = list[i];
         const e2 = list[j];
-        if (e1.coltype == "none") continue;
-        if (e2.coltype == "none") continue;
+        if (e1.name != "player" && e2.name != "player") continue;
+        if (e1.name == "needle" || e2.name == "needle") continue;
 
         // 法線だけが反対になる
-        let c1 = Collision.on(e1, e2);
-        let c2 = Collision.on(e2, e1);
-        if (c1.isHit) e1.OnCollision(c1, e2);
-        if (c2.isHit) e2.OnCollision(c2, e1);
+        const c1 = Collision.on(e1, e2);
+        const c2 = Collision.on(e2, e1);
+        if (c1.isHit) {
+          e1.OnCollision(c1, e2);
+          e2.OnCollision(c2, e1);
+        }
       }
     }
   }

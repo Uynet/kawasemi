@@ -10,6 +10,7 @@ export default class Wall extends Entity {
     //this.name = name; 必要になったら
     this.type = ENTITY.WALL;
     this.layer = "ENTITY";
+    this.name = "wall";
     this.collider = new Collider(SHAPE.BOX, new Box(pos, 16, 16)); //衝突判定の形状
     this.isUpdater = false;
     /*性質*/

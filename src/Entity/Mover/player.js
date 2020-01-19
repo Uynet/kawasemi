@@ -370,8 +370,7 @@ export default class Player extends Entity {
     }
   }
   OnCollision(c, l) {
-    /* 衝突応答*j
-        /*フラグの解除*/
+    /* 衝突応答*/
 
     //床との衝突
     if (c.n.y == -1 && this.vel.y > 0) {
@@ -578,7 +577,6 @@ export default class Player extends Entity {
       this.weapon.Update(this); //weapon
       this.Physics(); //物理
       if (!this.floor.on) this.isJump = true;
-      //下からしか通れない物体
       this.floor.on = false;
       this.floor.under = null;
       this.AutoSupplyBullet(); //bulletのかいふく
