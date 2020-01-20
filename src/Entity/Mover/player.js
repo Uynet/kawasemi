@@ -577,8 +577,6 @@ export default class Player extends Entity {
       this.weapon.Update(this); //weapon
       this.Physics(); //物理
       if (!this.floor.on) this.isJump = true;
-      this.floor.on = false;
-      this.floor.under = null;
       this.AutoSupplyBullet(); //bulletのかいふく
     }
     this.isCanRead = false;
@@ -591,6 +589,8 @@ export default class Player extends Entity {
     /*パラメータ*/
     this.offset *= 0.99;
     this.Animation(); //状態から画像を更新
+    this.floor.on = false;
+    this.floor.under = null;
     /*reset*/
     //this.PixelizeSpritePosition();
   }
