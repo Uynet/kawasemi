@@ -8,7 +8,7 @@ const POS_VALUE = {
 };
 //HP Icon
 const POS_ICON = {
-  x: -16,
+  x: -14,
   y: 0
 };
 const POS_BAR = {

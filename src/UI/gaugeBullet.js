@@ -9,13 +9,8 @@ const POS_VALUE = {
 };
 //HP Icon
 const POS_ICON = {
-  x: -16,
+  x: -14,
   y: 0
-};
-//weaponList
-const POS_weaponList = {
-  x: -12,
-  y: 16
 };
 const POS_BAR = {
   x: -3.5,
