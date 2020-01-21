@@ -382,19 +382,22 @@ export default class Player extends Entity {
       }
       if (this.isJump) {
         //ぽよぽよイベント
-        this.eventList.push(new Elast());
         //着地効果音
         switch (l.material) {
           case "wall":
+            this.eventList.push(new Elast());
             Audio.PlaySE("landing1", 1);
             break;
           case "steel":
+            this.eventList.push(new Elast());
             Audio.PlaySE("landing2", 1);
             Audio.PlaySE("landing1");
             break;
           case "wood":
+            this.eventList.push(new Elast());
             Audio.PlaySE("landing1", 1);
             break;
+          case "none":
           default:
             console.warn(l.material);
         }
@@ -415,6 +418,8 @@ export default class Player extends Entity {
         break;
       case "wall":
         Collision.Resolve(this, l);
+        break;
+      case "none":
         break;
       default:
         break;

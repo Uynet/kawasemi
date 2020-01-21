@@ -16,6 +16,7 @@ export default class Spilit extends Entity {
     this.type = "MOVER";
     this.name = "spilit";
     this.colType = "none";
+    this.material = "none";
     this.pattern = Art.playerPattern.spilit; //
     this.sprite = new PIXI.Sprite(this.pattern[this.spid]);
     this.sprite.position = pos;
