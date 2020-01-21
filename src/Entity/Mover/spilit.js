@@ -27,45 +27,41 @@ export default class Spilit extends Entity {
     this.addAI(new EmitTrail(this, Bright, 8));
     this.addAI(new BasicAI(this));
     this.addAnimator(true, 3, 6);
+
+    this.f = vec0();
+    this.absorp = vec0();
+    this.repel = vec0();
   }
   SpilitPhisics() {
-    this.collider.hitbox.set(this.pos, 16, 16);
-    player = EntityManager.player;
+    this.pos = sub(this.pos, this.force);
+    this.pos = add(this.pos, this.f);
+    this.pos = add(this.pos, this.repel);
+    this.pos = add(this.pos, this.absorp);
+    this.pos = add(this.pos, fromPolar(this.arg, 4));
+    this.force = scala(0.8, this.force);
     if (isNaN(this.pos.x)) {
       console.log("NaN detected");
-      this.pos.x = player.pos.x;
-      this.pos.y = player.pos.y;
-      this.vel = vec0();
-      this.acc = vec0();
-      this.force = vec0();
     }
+
+    this.collider.hitbox.set(this.pos, 16, 16);
+    player = EntityManager.player;
     this.arg = player.arg;
-    let repel = vec2(
+    // 斥力
+    this.repel = vec2(
       -(player.pos.x - this.pos.x),
       -(player.pos.y - this.pos.y)
     );
-    let absorp = {
-      x: -repel.x,
-      y: -repel.y
-    };
-    let len = length(repel);
-    repel = normalize(repel);
-    repel = len == 0 ? scala(30 / (len * len), repel) : vec0();
-    absorp = normalize(absorp);
-    absorp = scala((len * len) / 50, absorp);
+    //引力
+    this.absorp = vec2(-this.repel.x, -this.repel.y);
+    let len = length(this.repel);
+    this.repel = normalize(this.repel);
+    this.repel = scala(30 / (len * len + 1), this.repel);
+    this.absorp = normalize(this.absorp);
+    this.absorp = scala((len * len) / 50, this.absorp);
 
-    let f = {
-      x: Math.sin(this.frame / 17),
-      y: Math.cos(this.frame / 13)
-    };
-    f = scala(2, f);
-    this.pos = sub(this.pos, this.force);
-
-    this.pos = add(this.pos, f);
-    this.pos = add(this.pos, repel);
-    this.pos = add(this.pos, absorp);
-    this.pos = add(this.pos, fromPolar(this.arg, 4));
-    this.force = scala(0.8, this.force);
+    // リサージュ曲線てきなフワフワした動きをする
+    this.f = vec2(Math.sin(this.frame / 17), Math.cos(this.frame / 13));
+    this.f = scala(2, this.f);
   }
   shot(player) {
     player.weapon.shot(player);
@@ -90,6 +86,10 @@ export default class Spilit extends Entity {
     if (e.name == "player") return;
     if (e.colType == "wall") {
       Collision.Resolve(this, e);
+      if (dist(this.pos, EntityManager.player.pos) > 32) {
+        this.pos = copy(EntityManager.player.pos);
+        this.pos.y -= 8;
+      }
     }
     if (e.colType == "through") {
       if (c.n.y == -1) Collision.Resolve(this, e);
