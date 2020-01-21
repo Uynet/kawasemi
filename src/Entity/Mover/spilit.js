@@ -57,6 +57,9 @@ export default class Spilit extends Entity {
     this.repel = normalize(this.repel);
     this.repel = scala(30 / (len * len + 1), this.repel);
     this.absorp = normalize(this.absorp);
+    /* Note! 
+    この時発生する引力は、lenが一定値を越えると凄まじい速度で振動し発散するため、INFになってNaNの原因になります
+     */
     this.absorp = scala((len * len) / 50, this.absorp);
 
     // リサージュ曲線てきなフワフワした動きをする
