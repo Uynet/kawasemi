@@ -140,7 +140,7 @@ export default class Param {
       length: 150,
       //optional
       isTarget: true,
-      // isHorming : false,
+      isHorming: true,
       isLasersight: false
     };
     //??
@@ -183,7 +183,7 @@ export default class Param {
       atkMax: 5,
       atkMin: 3,
       hp: 1,
-      curve: 9999.2,
+      curve: 0.1,
       deleteFrameCount: 180 //残存時間
     };
     this.bullet4 = {

@@ -4,6 +4,7 @@ import EmitTrail from "../AI/emitTrail.js";
 import BulletHitWall from "../Effect/bulletHitWall.js";
 import BulletTrail2 from "../Effect/bulletTrail2.js";
 import Bullet from "./bullet.js";
+import Horming from "../AI/horming.js";
 
 const EMIT_TERM = 2;
 
@@ -25,7 +26,7 @@ export default class Bullet3 extends Bullet {
     this.AIList.push(new Bullet3AI(this));
     this.AIList.push(new EmitTrail(this, BulletTrail2, EMIT_TERM));
     this.addBasic();
-    //if(weapon.isHorming) this.AIList.push(new Horming(this));
+    if (weapon.isHorming) this.AIList.push(new Horming(this));
   }
   OnCollision(entity) {
     if (entity.type == ENTITY.ENEMY) this.OnCollisionEnemy(entity);
