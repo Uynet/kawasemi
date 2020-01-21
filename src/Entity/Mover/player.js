@@ -417,7 +417,6 @@ export default class Player extends Entity {
         Collision.Resolve(this, l);
         break;
       default:
-        console.warn(l.colType);
         break;
     }
   }

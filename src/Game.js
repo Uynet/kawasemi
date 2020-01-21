@@ -3,7 +3,6 @@ import Audio from "./audio.js";
 import Drawer from "./drawer.js";
 import EventManager from "./Event/eventmanager.js";
 import Timer from "./timer.js";
-import LoadingScene from "./Scene/loadingScene.js";
 import Pipeline from "./pipeline.js";
 import { debugOption } from "./debug.js";
 

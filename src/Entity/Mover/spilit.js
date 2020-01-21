@@ -4,6 +4,9 @@ import BasicAI from "../AI/Basic/basicAI.js";
 import EmitTrail from "../AI/emitTrail.js";
 import Bright from "../Effect/bright.js";
 import Entity from "../entity.js";
+import Collider from "../../Collision/collider.js";
+import Collision from "../../Collision/collision.js";
+import Box from "../../Collision/box.js";
 
 let player;
 export default class Spilit extends Entity {
@@ -12,17 +15,20 @@ export default class Spilit extends Entity {
     super(pos, vec0());
     this.type = "MOVER";
     this.name = "spilit";
+    this.colType = "none";
     this.pattern = Art.playerPattern.spilit; //
     this.sprite = new PIXI.Sprite(this.pattern[this.spid]);
     this.sprite.position = pos;
     this.layer = "ENTITY";
     this.isUpdater = true;
     this.arg = 0;
+    this.collider = new Collider(SHAPE.BOX, new Box(pos, 16, 16));
     this.addAI(new EmitTrail(this, Bright, 8));
     this.addAI(new BasicAI(this));
     this.addAnimator(true, 3, 6);
   }
   SpilitPhisics() {
+    this.collider.hitbox.set(this.pos, 16, 16);
     player = EntityManager.player;
     if (isNaN(this.pos.x)) {
       console.log("NaN detected");
@@ -33,17 +39,17 @@ export default class Spilit extends Entity {
       this.force = vec0();
     }
     this.arg = player.arg;
-    let repel = {
-      x: -(player.pos.x - this.pos.x),
-      y: -(player.pos.y - this.pos.y)
-    };
+    let repel = vec2(
+      -(player.pos.x - this.pos.x),
+      -(player.pos.y - this.pos.y)
+    );
     let absorp = {
       x: -repel.x,
       y: -repel.y
     };
     let len = length(repel);
     repel = normalize(repel);
-    repel = scala(30 / (len * len), repel);
+    repel = len == 0 ? scala(30 / (len * len), repel) : vec0();
     absorp = normalize(absorp);
     absorp = scala((len * len) / 50, absorp);
 
@@ -78,6 +84,15 @@ export default class Spilit extends Entity {
         break;
     }
     this.AddForce(f);
+  }
+  OnCollision(c, e) {
+    if (e.name == "player") return;
+    if (e.colType == "wall") {
+      Collision.Resolve(this, e);
+    }
+    if (e.colType == "through") {
+      if (c.n.y == -1) Collision.Resolve(this, e);
+    }
   }
   Update() {
     this.ExecuteAI();

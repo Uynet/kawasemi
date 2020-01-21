@@ -30,6 +30,9 @@ export default class EntityManager {
     //更新が必要なEntityのみリストに追加
     switch (entity.type) {
       case ENTITY.MOVER:
+        if (entity.name == "spilit") {
+          this.colliderList.push(entity);
+        }
         break;
       case ENTITY.PLAYER:
         this.colliderList.push(entity);
@@ -96,7 +99,12 @@ export default class EntityManager {
       for (let j = i + 1; j < len; j++) {
         const e1 = list[i];
         const e2 = list[j];
-        if (e1.name != "player" && e2.name != "player") continue;
+        if (
+          e1.name != "player" &&
+          e1.name != "spilit" &&
+          e2.name != "player" && e2.name != "spilit"
+        )
+          continue;
         if (e1.name == "needle" || e2.name == "needle") continue;
 
         // 法線だけが反対になる
