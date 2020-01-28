@@ -39,9 +39,6 @@ export default class Spilit extends Entity {
     this.pos = add(this.pos, this.absorp);
     this.pos = add(this.pos, fromPolar(this.arg, 4));
     this.force = scala(0.8, this.force);
-    if (isNaN(this.pos.x)) {
-      console.log("NaN detected");
-    }
 
     this.collider.hitbox.set(this.pos, 16, 16);
     player = EntityManager.player;
@@ -57,7 +54,9 @@ export default class Spilit extends Entity {
     this.repel = normalize(this.repel);
     this.repel = scala(30 / (len * len + 1), this.repel);
     this.absorp = normalize(this.absorp);
-    this.absorp = scala((len * len) / 50, this.absorp);
+    /* Note!
+     */
+    this.absorp = scala((len * 16) / 50, this.absorp);
 
     // リサージュ曲線てきなフワフワした動きをする
     this.f = vec2(Math.sin(this.frame / 17), Math.cos(this.frame / 13));
@@ -86,9 +85,8 @@ export default class Spilit extends Entity {
     if (e.name == "player") return;
     if (e.colType == "wall") {
       Collision.Resolve(this, e);
-      if (dist(this.pos, EntityManager.player.pos) > 32) {
+      if (dist(this.pos, EntityManager.player.pos) > 64) {
         this.pos = copy(EntityManager.player.pos);
-        this.pos.y -= 8;
       }
     }
     if (e.colType == "through") {
