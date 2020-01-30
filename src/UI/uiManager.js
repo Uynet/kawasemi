@@ -1,18 +1,16 @@
 import Drawer from "../drawer.js";
 import StagePop from "./stagePop.js";
-import Menu from "./menu.js";
 import Game from "../game.js";
 
 const CONTINUEPOINT_STAGENUM = 11;
 const BOSS_STAGENUM = 12;
 
-let POS_MENU = vec2(104, 48); //Menu
 /*UIクラス*/
 export default class UIManager {
   static Init() {
     this.UIList = []; //UI全部のリスト
   }
-  static PopStage(stage) {
+  static PopStage() {
     let p = {
       x: 96,
       y: 72
@@ -36,11 +34,6 @@ export default class UIManager {
       });
     });
     return list;
-  }
-  //メニューを開く
-  static SetMenu() {
-    Drawer.SetFilter([Drawer.testFilter]);
-    UIManager.add(new Menu(add(POS_MENU, VECY(16))));
   }
   //UIをすべて削除
   static Clean() {

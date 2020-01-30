@@ -24,7 +24,7 @@ export default class GameClearEvent extends Event {
         Audio.StopBGM();
       }
       Audio.PlaySE("stageChange", -0.7);
-      UIManager.PopStage(Game.stage);
+      UIManager.PopStage();
 
       Game.state.transit("transition");
       const transitionState = Game.state.getState();

@@ -12,11 +12,6 @@ export default class WorldMapScene extends Scene {
     super();
     this.name = "worldMap";
   }
-
-  async po(callback) {
-    callback();
-  }
-
   Input() {
     if (Input.isKeyClick(KEY.Z)) {
       Game.state.transit("transition");
@@ -34,6 +29,7 @@ export default class WorldMapScene extends Scene {
       transitionState.onFadeOutEnd = () => {};
     }
     if (Input.isKeyClick(KEY.X)) {
+      Input.lock();
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
@@ -45,6 +41,7 @@ export default class WorldMapScene extends Scene {
         });
       };
       transitionState.onFadeOutStart = () => {
+        Input.restore();
         Game.state.transit("main");
       };
       transitionState.onFadeOutEnd = () => {

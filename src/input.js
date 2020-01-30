@@ -7,12 +7,22 @@ let anyKeyPress = false;
 let timer = 0;
 
 export default class Input {
+  //入力を禁止する
+  static lock() {
+    this.isLocked = true;
+  }
+  //入力禁止を解除
+  static restore() {
+    this.isLocked = false;
+  }
   /*押下状態のときtrue*/
   static isKeyInput(key) {
+    if (this.isLocked) return false;
     return inputedKeyList[key];
   }
   /*押された瞬間のみture*/
   static isKeyClick(key) {
+    if (this.isLocked) return false;
     if (timer == Timer.timer) {
       return clickedKeyList[key];
     } else {
