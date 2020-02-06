@@ -102,15 +102,17 @@ export default class EntityManager {
         if (
           e1.name != "player" &&
           e1.name != "spilit" &&
-          e2.name != "player" && e2.name != "spilit"
+          e2.name != "player" &&
+          e2.name != "spilit"
         )
           continue;
         if (e1.name == "needle" || e2.name == "needle") continue;
 
         // 法線だけが反対になる
         const c1 = Collision.on(e1, e2);
-        const c2 = Collision.on(e2, e1);
         if (c1.isHit) {
+          const c2 = c1;
+          c2.n = scala(-1, c2.n);
           e1.OnCollision(c1, e2);
           e2.OnCollision(c2, e1);
         }
