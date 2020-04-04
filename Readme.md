@@ -16,23 +16,38 @@ running localhost:8080
 エントリーポイントとなるクラス。初期化とメインループによって構成されている。
 
 - Update
-  毎秒 60 回この処理が実行される。パイプラインは以下の様になっている - EventManager.Update();
-  登録されているグローバルイベント(後述)があれば実行する。 - Game.state.getState().Update();
-  現在の state における Update 処理を実行する。 - Drawer.Renderer.render(Drawer.Stage); - Audio.Update(); - Timer.Update();
+  毎フレームこの処理が実行される。パイプラインは以下の様になっている
+  - EventManager.Update();
+    登録されているグローバルイベント(後述)があれば実行する。
+  - Game.state.getState().Update();
+    現在の state における Update 処理を実行する。
+  - Drawer.Renderer.render(Drawer.Stage);
+    ゲーム中の全スプライトを描画する。
+  - Audio.Update();
+  - Timer.Update();
 
 ## EntityManager
 
 ゲーム中の UI を除く物体について管理するクラス。
 
 - add / remove
+  リストに追加/除外
 
 - find(name)
   指定した name を持つ entity の参照を配列で取得する。
 
 ## Enity
 
-player,enemy などゲーム中の UI を除く物体。
+player,enemy などゲーム中の物体。UI は別系統で管理されており、含まれない。
 ECS に近い設計をしているが、component,system は明確には存在しない。
+
+- name
+- floor
+   自身の床にあたる entity があればその参照を追加する。
+- collider
+  衝突形状を指定する。現状 box しか使われていないが、サイズによって形状は異なる。
+- AIList
+  挙動を追加するリスト
 
 - Update()
   毎フレームの更新処理。
@@ -43,20 +58,19 @@ ECS に近い設計をしているが、component,system は明確には存在�
 
 ### AI
 
-「壁にぶつかると跳ね返る」「近づくと攻撃体制になる」などの挙動を分離したもの。
+「壁にぶつかると跳ね返る」「近づくと攻撃体制になる」など、共通して用いられる挙動を分離したもの。
 entity の AIList に追加することによって、entity は AI に追加された挙動を逐次 update する。
 
 ## 衝突判定
 
 形状情報 collider を持つ entity 同士の衝突判定、応答を行う。
-衝突応答関数は衝突したかどうかの真偽値、めり込み距離、法線などを返す。
+衝突応答関数は衝突したかどうかの真偽値、めり込み距離、法線などをもつ**CollisionInfo**を返す。
 衝突応答は本来 entity の更新とは別のフローでバッファリングして行われるべきだが、同じフローで逐次的に実行しているためバグっている。
 
 ## UI
 
-FrontEnd で言うところの AtomicDesign に近い形を採用している
+AtomicDesign に近い形を採用している
 atoms は最小単位の UI , molecules は少しまとまった UI , pages はその画面全体の UI を指す
-entity との実質的な違いはない。
 
 ### フォント
 
@@ -80,8 +94,12 @@ entity との実質的な違いはない。
 
 EntityManager の UI 版。
 
+- Clean()
+  すべての UI を削除する
+- CleanBack()
+  **フェードインエフェクトを除く、**全ての UI を削除する。画面遷移時の幕の裏で UI を更新する用途の為。
 - find(name)
-  この関数にはバグがある
+  指定した name を持つ UI を取得する。
 
 ## イベント管理
 
@@ -131,7 +149,6 @@ PIXI の提供する機能を使用している。uniform 変数の送信など�
 ## リソース管理
 
 リソースは src/resource/以下
-非同期処理していないため、よくバグる。
 
 ### グラフィック
 
@@ -161,7 +178,13 @@ webAudioAPI をラップした Audio クラスで読み込みと再生を行う�
 - StopBGM()
   現在 BGM が再生中であれば、 BGM を停止する。
 
-## 入力
+## Input
+
+- isKeyClicked(key)
+  key が「押された瞬間のフレーム」だけ true を返す。
+- isKeyPressed(key)
+  key が押された瞬間のフレームに true を返し、その後しばらくの間 false を返し、続いて断続的に true を返す。
+  これは名前は知らないが、長押しを扱う入力インターフェースでよく見られる挙動である。
 
 ## その他
 
@@ -187,10 +210,11 @@ Debug クラスの debugOption モジュールにオプションを記載する�
 
 煩雑な手続きを置く場所
 
-### Pool
+- Pool
 
 オブジェクトプールの実装であるが、実はボトルネックではないため実質廃止。
+一部の Entity がまだ pool で管理されているため、統一したい
 
-### distanceField
+- distanceField
 
 画像から距離場を作ってステージ生成したかったときの、試験的導入技術の名残
