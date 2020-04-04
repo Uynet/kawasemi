@@ -52,7 +52,7 @@ export default class Drawer {
     this.foreContainer.scale.set(this.magnification + 1);
     this.foreEntityContainer.scale.set(this.magnification);
     this.filterContainer.scale.set(this.magnification + 1);
-    $("#pixiview").append(this.Renderer.view);
+    document.getElementById("pixiview").append(this.Renderer.view);
 
     //フィルタ
     this.blurFilter = new PIXI.filters.BlurFilter();
