@@ -1,7 +1,5 @@
 /bundle.js
 /webpack.config.js
-<<<<<<< HEAD
-=======
 *.map
 doc.md
 # Logs
@@ -92,7 +90,3 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
-
->>>>>>> develop
-
-
