@@ -72,6 +72,10 @@ class Cusor extends UI {
     Audio.PlaySE("landing1", 1.5, 1.5);
     this.Animate(new PulpulEvent(this));
   }
+  FocusInitialize(entity) {
+    this.FocusOn(entity);
+    Drawer.ScrollSet(this.pos);
+  }
   FocusOn(entity) {
     if (this.focusedEntity) this.focusedEntity.OnDefocus();
     Audio.PlaySE("clack2", -1.1, 0.8);
@@ -218,7 +222,7 @@ export default class WorldMapPage extends UI {
       console.warn("invalid:", Game.currentStageSet);
       index = 0;
     }
-    cusor.FocusOn(nodes[index]);
+    cusor.FocusInitialize(nodes[index]);
     this.addChild(cusor);
   }
   Update() {
