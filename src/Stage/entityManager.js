@@ -99,6 +99,7 @@ export default class EntityManager {
       for (let j = i + 1; j < len; j++) {
         const e1 = list[i];
         const e2 = list[j];
+        if(e2.name=="wall")continue
         if (
           e1.name != "player" &&
           e1.name != "spilit" &&
@@ -110,9 +111,9 @@ export default class EntityManager {
 
         // 法線だけが反対になる
         const c1 = Collision.on(e1, e2);
+        const c2 = Collision.on(e2, e1);
         if (c1.isHit) {
-          const c2 = c1;
-          c2.n = scala(-1, c2.n);
+          
           e1.OnCollision(c1, e2);
           e2.OnCollision(c2, e1);
         }
