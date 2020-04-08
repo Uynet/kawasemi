@@ -13,9 +13,19 @@ export default class TitleScene extends Scene {
   }
   Input() {
     if (Input.isAnyKeyClick()) {
-      MapData.DeleteStage();
-      UIManager.Clean();
-      Game.state.transit("worldMap");
+        Game.state.transit("transition");
+      const transitionState = Game.state.getState();
+      transitionState.onFadeInEnd = () => {
+        return new Promise(resolve => {
+          console.log("po")
+          UIManager.CleanBack();
+          MapData.DeleteStage();
+          resolve();
+        });
+      };
+      transitionState.onFadeOutStart = () => {
+        Game.state.transit("worldMap");
+      };
     }
   }
   Init() {
