@@ -1,3 +1,9 @@
+$base:#fa2585;
+$BG:#211040;
+$hilight:#3a85a5;
+$main:#bfbaad;
+$accent:#fae585;
+
 @keyframes fadeIn{
   0% {opacity: 0}
   100% {opacity: 1}
@@ -8,23 +14,80 @@
 @font-face {
   font-family: "gkktt";
   src: url("../css/fonts/gkktt.ttf") format("opentype"); }
-canvas{
-	border: 2px groove #331144;
-  box-shadow: 0px 0px 4px #220033;
-}
-
-$base:#fa2585;
-$BG:#211040;
-$hilight:#3a85a5;
-$main:#bfbaad;
-$accent:#fae585;
 
 body {
   height:100%;
   background-image: url("../src/resource/WebBG2.png");
-  animation: fadeIn 2s ease 0s 1 normal;
+  // animation: fadeIn 2s ease 0s 1 normal;
 }
 
+#preload{
+  position:relative;
+  background:#000;
+  width: 800px;
+  height: 640px;
+}
+
+@keyframes box{
+  from {
+    top:calc(50% + 32px);
+    height: 0px
+  }
+  to {
+  top:50%;
+    top:calc(50%);
+    height: 64px
+  }
+}
+@keyframes text1{
+ from{
+   opacity: 0;
+  left:24px;
+  } 
+ to{opacity: 1;
+  left:40px;
+ }
+}
+@keyframes text2{
+ from{
+   opacity: 0;
+  left:24px;
+  } 
+ to{opacity: 1;
+  left:44px;
+ }
+}
+.preload-box{
+  position: absolute;
+  background:#fff;
+  left:16px;
+  width:16px;
+  animation:box 1.3s cubic-bezier(1,0,0,1) 0.2s forwards;
+}
+
+.preload-text{
+  position: absolute;
+  font-family: "gkktt";
+  color:#fff;
+  opacity: 0;;
+  top:50%;
+  translate: (0%,-50%);
+  z-index: 2;
+  font-size:60px;
+  animation:text1 0.5s ease 0.3s forwards;
+}
+.preload-text-under{
+  position: absolute;
+  font-family: "gkktt";
+  color:#fff;
+  opacity: 0;;
+  left:44px;
+  top:58%;
+  translate: (0%,-50%);
+  z-index: 2;
+  font-size:16px;
+  animation:text2 0.5s ease 0.5s forwards;
+}
 .twitter{
   padding:5px;
   background-color:#37a;
