@@ -1,5 +1,5 @@
-const isDebugMode = true;
-//const isDebugMode = false;
+//const isDebugMode = true;
+const isDebugMode = false;
 /*meta*/
 Array.prototype.Last = function() {
   if (this.length == 0) {
