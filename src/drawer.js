@@ -1,5 +1,5 @@
-const PIXI_WIDTH = 800;
-const PIXI_HEIGHT = 640;
+const PIXI_WIDTH = window ? window.innerWidth : 800;
+const PIXI_HEIGHT = window ? window.innerHeight: 640;
 const DEFAULT_MAGNIFICATION = 3;
 //const DEFAULT_MAGNIFICATION = 1;
 let centerX, centerY, toX, toY;
@@ -40,7 +40,6 @@ export default class Drawer {
     this.renderTarget.addChild(this.UIContainer);
     this.renderTarget.addChild(this.filterContainer);
     this.Stage.addChild(this.renderTarget);
-
     this.Renderer = new PIXI.autoDetectRenderer(PIXI_WIDTH, PIXI_HEIGHT);
 
     /*拡大率*/

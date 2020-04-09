@@ -10,15 +10,20 @@
 @font-face {
   font-family: "gkktt";
   src: url("../css/fonts/gkktt.ttf") format("opentype"); }
-body {
-  height: 100%;
-  background-image: url("../src/resource/WebBG2.png"); }
+* {
+  margin: 0px;
+  padding: 0px; }
+
+#pixiview {
+  background: #000;
+  top: 0px;
+  left: 0px; }
 
 #preload {
-  position: relative;
-  background: #000;
-  width: 800px;
-  height: 640px; }
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  background: #000; }
 
 @keyframes box {
   from {
@@ -126,14 +131,6 @@ h3#sign::before {
   height: 32px;
   background: url("../src/resource/sign.png") top left no-repeat; }
 
-/*
-h3#icon::before{
-  position: absolute;
-  left:-40px;
-  content: "";
-  background: url("../src/resource/icon.png") top left no-repeat;
-}
-*/
 .textbox {
   font-family: "ronde";
   font-size: 20px;
@@ -141,7 +138,6 @@ h3#icon::before{
   padding: 20px;
   background: #211040;
   border: dashed 1px #3a85a5;
-  /*background-image: url("../src/resource/WebBG.png");*/
   border-radius: 10px;
   color: #bfbaad; }
 
