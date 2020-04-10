@@ -223,8 +223,7 @@ export default class Shop extends UI {
         Param.GetWeapon(name);
         console.log(UIManager.find("StagePage"));
         UIManager.add(new StagePop(p, "-" + name + "をてにいれた "));
-        Audio.PlaySE("coin1");
-        Audio.PlaySE("bomb", -0.9, 1.6);
+        Audio.PlaySE("itemGet", -0.3);
         this.CloseConfirmModal();
       }
     } else {
@@ -233,7 +232,7 @@ export default class Shop extends UI {
     }
   }
   Exit() {
-    Audio.PlaySE("stageChange", -0.6, 1.5);
+    Audio.PlaySE("empty", -0.6, 0.8);
     this.Remove();
     this.controller.ui.Remove();
     Game.state.transit("main");
