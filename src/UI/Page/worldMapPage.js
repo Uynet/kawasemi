@@ -7,7 +7,6 @@ import Node from "./node.js";
 import NodeList from "./nodeList.js";
 import MapCusor from "./mapCusor.js";
 
-
 export default class WorldMapPage extends UI {
   constructor() {
     super(vec2(0));

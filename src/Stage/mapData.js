@@ -60,18 +60,8 @@ export default class MapData {
       this.stageNo = stageNo;
     });
   }
-  static CreateEntityLayer(layer) {
-    let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
+  static getEntityTypeFromID(wallTiletype , ID , layer , x , y , p){
     let entity;
-    let ID; //tiledに対応しているID
-
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
-        ID = this[layer][this.width * y + x] - 1;
-        //tiledのIDがjsonデータより1小さいので引く
-        if (ID == -1) continue; //空白はjsonで0なので(引くと)-1となる
-        if (!wallTiletype[ID]) cl(x + "  " + y);
-        let p = { x: 16 * x, y: 16 * y }; //座標を変換
         switch (wallTiletype[ID].type) {
           case TILE.WALL:
             switch (wallTiletype[ID].name) {
@@ -107,6 +97,21 @@ export default class MapData {
           default:
             console.warn("未実装:" + wallTiletype[ID].type);
         }
+        return entity;
+  }
+
+  static CreateEntityLayer(layer) {
+    let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
+    let ID; //tiledに対応しているID
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        ID = this[layer][this.width * y + x] - 1;
+        //tiledのIDがjsonデータより1小さいので引く
+        if (ID == -1) continue; //空白はjsonで0なので(引くと)-1となる
+        if (!wallTiletype[ID]) cl(x + "  " + y);
+        let p = { x: 16 * x, y: 16 * y }; //座標を変換
+        const entity = this.getEntityTypeFromID(wallTiletype , ID , layer , x , y , p);
         EntityManager.addEntity(entity);
       }
     }

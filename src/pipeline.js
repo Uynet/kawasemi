@@ -6,6 +6,7 @@ import WeaponManager from "./Weapon/weaponManager.js";
 import EventManager from "./Event/eventmanager.js";
 import Param from "./param.js";
 import DistanceField from "./Stage/distanceField.js";
+import ChunkDetector from "./Stage/chnukDetector.js";
 
 import LoadingScene from "./Scene/loadingScene.js";
 import TitleScene from "./Scene/titleScene.js";
@@ -33,6 +34,7 @@ export default class Pipeline {
     UIManager.Init();
     StageData.Init();
     DistanceField.Init();
+    ChunkDetector.Init();
   }
   static CreateGameState() {
     const scenes = [
