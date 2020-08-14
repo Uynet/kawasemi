@@ -3,6 +3,8 @@ import MapData from "./mapData.js";
 
 export default class ChunkDetector{
     static Init(){
+        this.chunkHeight = 64;
+        this.chunkWidh= 64;
         this.prevChunkCoord = vec0();
         this.currentChunkCoord = vec0();
     }
@@ -22,14 +24,15 @@ export default class ChunkDetector{
         this.ChunkConstruct("entityData");
         this.ChunkConstruct("foreEntityData");
         this.ChunkConstruct("foreData");
+        MapData.AddBackGround(1);
     }
     static ChunkConstruct(layer){
      const player = EntityManager.player;
      const cp = {
-        x: Math.floor(player.pos.x/16),
-        y: Math.floor(player.pos.y/16),
+        x: this.currentChunkCoord.x * this.chunkWidh / 16, 
+        y: this.currentChunkCoord.y * this.chunkHeight / 16, 
     }
-    const d =  6
+    const d = this.chunkHeight/16*2; 
     const y0 = Math.max(cp.y-d , 0);
     const y1 = Math.min(cp.y+d , MapData.height);
     const x0 = Math.max(cp.x-d , 0);
@@ -60,12 +63,9 @@ export default class ChunkDetector{
 
         this.prevChunkCoord = copy(this.currentChunkCoord);
 
-        const chunkWidh = 64;
-        const chunkHeight= 48;
-
         this.currentChunkCoord= {
-            x: Math.floor((p.x/chunkWidh)) ,
-            y: Math.floor((p.y/chunkHeight)) 
+            x: Math.floor((p.x/this.chunkWidh)) ,
+            y: Math.floor((p.y/this.chunkHeight)) 
         }
         const isChunkMoved = this.isChunkMoved();
         if(isChunkMoved)this.ChunkReConstruct();

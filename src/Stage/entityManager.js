@@ -95,7 +95,6 @@ export default class EntityManager {
   static Collision() {
     const list = EntityManager.colliderList;
     const len = list.length;
-    console.log(list)
     for (let i = 0; i < len; i++) {
       for (let j = i + 1; j < len; j++) {
         const e1 = list[i];
