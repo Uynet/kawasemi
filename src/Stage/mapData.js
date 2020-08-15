@@ -60,7 +60,18 @@ export default class MapData {
       this.stageNo = stageNo;
     });
   }
-  static getEntityTypeFromID(wallTiletype , ID , layer , x , y , p){
+
+  static getEntityLayer(layer){
+            switch (layer) {
+              case "backEntityData": return "BACK";
+              case "entityData":return "ENTITY";
+              case "foreData": return "FORE";
+              case "foreEntityData": return "FOREENTITY";
+              default: console.warn("layer Error:" + layer);
+            }
+  }
+
+  static createEntity(wallTiletype , ID , layer , x , y , p){
     let entity;
         switch (wallTiletype[ID].type) {
           case TILE.WALL:
@@ -77,22 +88,7 @@ export default class MapData {
             break;
           case TILE.BACK:
             entity = new BackEntity(p, GenerateWall.WallData(ID, layer, x, y));
-            switch (layer) {
-              case "backEntityData":
-                entity.layer = "BACK";
-                break;
-              case "entityData":
-                entity.layer = "ENTITY";
-                break;
-              case "foreData":
-                entity.layer = "FORE";
-                break;
-              case "foreEntityData":
-                entity.layer = "FOREENTITY";
-                break;
-              default:
-                console.warn("れいやーエラー:" + layer);
-            }
+            entity.layer = this.getEntityLayer(layer);
             break;
           default:
             console.warn("未実装:" + wallTiletype[ID].type);
@@ -111,7 +107,7 @@ export default class MapData {
         if (ID == -1) continue; //空白はjsonで0なので(引くと)-1となる
         if (!wallTiletype[ID]) cl(x + "  " + y);
         let p = { x: 16 * x, y: 16 * y }; //座標を変換
-        const entity = this.getEntityTypeFromID(wallTiletype , ID , layer , x , y , p);
+        const entity = this.createEntity(wallTiletype , ID , layer , x , y , p);
         EntityManager.addEntity(entity);
       }
     }

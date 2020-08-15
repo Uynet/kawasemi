@@ -61,6 +61,7 @@ export default class EntityManager {
     switch (entity.type) {
       case ENTITY.PLAYER:
         this.player = null;
+        this.removeEntity(entity.spilit);
         this.colliderList.remove(entity);
         break;
       case ENTITY.ENEMY:
