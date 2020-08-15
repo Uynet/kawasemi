@@ -3,33 +3,24 @@ import Collision from "../Collision/collision.js";
 
 export default class EntityManager {
   static Init() {
-    this.entityList = []; //全Entityのリスト
-    this.enemyList = []; //敵のリスト(moverList?)
-    this.wallList = []; //壁のリスト
-    this.player; //プレイヤーのインスタンス
-    this.updaterList = []; //更新が必要なEntity
+    this.entityList = []; // ALL entities
+    this.enemyList = []; // enemies
+    this.moverList= []; // movable entites : need to dynamic stage load
+    this.wallList = []; 
+    this.player; 
+    this.updaterList = []; //entities who need to update
     this.colliderList = [];
 
     this.entityIndex = 0;
   }
-  static SortWallList() {
-    //比較関数
-    let compare = (w1, w2) => {
-      if (w1.pos.y > w2.pos.y) return 1;
-      else if (w1.pos.y < w2.pos.y) return -1;
-      else return 0;
-    };
-    this.wallList.sort(compare);
-  }
 
-  /*Entityをリストに登録*/
   static addEntity(entity) {
-    //各entityの参照を保持する
     this.entityList[this.entityIndex] = entity;
     this.entityIndex++;
-    //更新が必要なEntityのみリストに追加
+
     switch (entity.type) {
       case ENTITY.MOVER:
+        this.moverList.push(entity);
         if (entity.name == "spilit") {
           this.colliderList.push(entity);
         }
@@ -55,10 +46,12 @@ export default class EntityManager {
     else Drawer.add(entity.sprite, entity.layer);
   }
 
-  /*Entityをリストから削除する*/
   static removeEntity(entity) {
     let i;
     switch (entity.type) {
+      case ENTITY.MOVER:
+        this.moverList.remove(entity);
+        break;
       case ENTITY.PLAYER:
         this.player = null;
         this.removeEntity(entity.spilit);
@@ -71,7 +64,6 @@ export default class EntityManager {
       case ENTITY.WALL:
         this.wallList.remove(entity);
         this.colliderList.remove(entity);
-        //this.SortWallList();
         break;
     }
     this.entityList.remove(entity);
@@ -82,8 +74,9 @@ export default class EntityManager {
     else Drawer.remove(entity.sprite, entity.layer);
   }
 
-  /*指定したnameを持つentityを取得する
-  未発見ならばnull、見つかれば配列で返す
+  /*
+    get entities who has the specified name and return an array;
+    this returns null when nobady has the name ;
   */
   static Find(name) {
     let matched = [];
@@ -110,7 +103,7 @@ export default class EntityManager {
           continue;
         if (e1.name == "needle" || e2.name == "needle") continue;
 
-        // 法線だけが反対になる
+        // revert normal 
         const c1 = Collision.on(e1, e2);
         const c2 = Collision.on(e2, e1);
         if (c1.isHit) {
@@ -121,7 +114,7 @@ export default class EntityManager {
       }
     }
   }
-  /*Entityの更新*/
+
   static Update() {
     for (let i = 0; i < this.entityIndex; i++) {
       let l = this.entityList[i];
@@ -129,22 +122,22 @@ export default class EntityManager {
     }
     EntityManager.Collision();
   }
-  /*Entityの更新(Tiltle用)*/
+
   static UpdateTitle() {
     for (let i = 0; i < this.entityIndex; i++) {
       let l = this.entityList[i];
       if (l.name != "player" && l.isUpdater) l.Update();
     }
   }
-  /*メッセージイベント中にアニメーションだけ行う*/
+  /* only animate while in a event of message*/
   static Animation() {
     for (let i = 0; i < this.entityIndex; i++) {
       let l = this.entityList[i];
-      //playerはアニメーションのみ
+      //player only does animation.
       if (l.type == ENTITY.PLAYER) {
         l.Animation();
       }
-      //看板は読めるようにする
+      //signboards are readable.
       if (l.name == "signboard") {
         l.Update();
       }

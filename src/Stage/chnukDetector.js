@@ -43,18 +43,21 @@ export default class ChunkDetector{
     for (let y = y0 ; y < y1; y++) {
       for (let x = x0 ; x <x1; x++) {
         const ID = MapData[layer][MapData.width * y + x] - 1;
-        //tiledのIDがjsonデータより1小さいので引く
-        if (ID == -1) continue; //空白はjsonで0なので(引くと)-1となる
+        if (ID == -1) continue; 
         let p = { x: 16 * x, y: 16 * y }; //ブロック座標をワールド座標に変換
         const entity = MapData.createEntity(wallTiletype , ID , layer , x , y , p);
-        if(entity.name!="player")EntityManager.addEntity(entity);
+        if(this.isUnmover(entity))EntityManager.addEntity(entity);
         }
       }
     }
 
+    static isUnmover(e){
+        return e.type!=ENTITY.MOVER && e.type!=ENTITY.PLAYER && e.type !=ENTITY.ENEMY
+    }
+
   static DeleteStage() {
-        const entitiesExeptPlayer = EntityManager.entityList.filter(e=> e.name!="player");
-        entitiesExeptPlayer.forEach(e => EntityManager.removeEntity(e))
+        const unmoveEntities = EntityManager.entityList.filter(e=>  this.isUnmover(e));
+        unmoveEntities.forEach(e => EntityManager.removeEntity(e))
   }
 
     static Update(){
@@ -73,7 +76,7 @@ export default class ChunkDetector{
             y: Math.floor((p.y/this.chunkHeight)) 
         }
         const isChunkMoved = this.isChunkMoved();
-        // if(isChunkMoved)this.ChunkReConstruct();
+        if(isChunkMoved)this.ChunkReConstruct();
 
     }
 }
