@@ -1,10 +1,12 @@
 import EntityManager from "./entityManager.js";
 import MapData from "./mapData.js";
 
+const blockWidth = 16;
+
 export default class ChunkDetector{
     static Init(){
-        this.chunkHeight = 64;
-        this.chunkWidh= 64;
+        this.chunkHeight = 96;
+        this.chunkWidh= 96;
         this.prevChunkCoord = vec0();
         this.currentChunkCoord = vec0();
     }
@@ -25,30 +27,42 @@ export default class ChunkDetector{
         this.ChunkConstruct("entityData");
         this.ChunkConstruct("foreEntityData");
         this.ChunkConstruct("foreData");
-        MapData.AddBackGround(1);
     }
 
-    static ChunkConstruct(layer){
-     const cp = {
-        x: this.currentChunkCoord.x * this.chunkWidh / 16, 
-        y: this.currentChunkCoord.y * this.chunkHeight / 16, 
+    static generateSingleChunk(chunkCoord,layer){
+     const blockCoord = {
+        x: chunkCoord.x * this.chunkWidh / blockWidth, 
+        y: chunkCoord.y * this.chunkHeight / blockWidth, 
     }
-    const d = this.chunkHeight/16*2; 
-    const y0 = Math.max(cp.y-d , 0);
-    const y1 = Math.min(cp.y+d , MapData.height);
-    const x0 = Math.max(cp.x-d , 0);
-    const x1 = Math.min(cp.x+d , MapData.width);
+    const cpb = this.chunkWidh/blockWidth;
+    const y0 = Math.max(blockCoord.y , 0);
+    const y1 = Math.min(blockCoord.y+cpb , MapData.height);
+    const x0 = Math.max(blockCoord.x , 0);
+    const x1 = Math.min(blockCoord.x+cpb , MapData.width);
 
     const wallTiletype = MapData.jsonObj.tilesets[0].tileproperties;
     for (let y = y0 ; y < y1; y++) {
       for (let x = x0 ; x <x1; x++) {
         const ID = MapData[layer][MapData.width * y + x] - 1;
         if (ID == -1) continue; 
-        let p = { x: 16 * x, y: 16 * y }; //ブロック座標をワールド座標に変換
-        const entity = MapData.createEntity(wallTiletype , ID , layer , x , y , p);
+        const worldCoord = { x: blockWidth * x, y: blockWidth * y }; 
+        const entity = MapData.createEntity(wallTiletype , ID , layer , x , y , worldCoord);
         if(this.isUnmover(entity))EntityManager.addEntity(entity);
         }
       }
+    }
+
+    static ChunkConstruct(layer){
+        // gen 9 chunks around the player
+        const y0 = this.currentChunkCoord.y -3 ;
+        const y1 = this.currentChunkCoord.y +3 ;
+        const x0 = this.currentChunkCoord.x -3 ;
+        const x1 = this.currentChunkCoord.x +3 ;
+        for (let y = y0 ; y < y1; y++) {
+            for (let x = x0 ; x <x1; x++) {
+                this.generateSingleChunk(vec2(x,y),layer)
+            }
+        }
     }
 
     static isUnmover(e){
@@ -64,7 +78,7 @@ export default class ChunkDetector{
         /*
          *  worldCoord 
          *  chunkCoord 
-         *  blockCoord ... floor(worldCoord/16)
+         *  blockCoord ... floor(worldCoord/blockWidth)
          */
         const player = EntityManager.player;
         const p = player.pos;
