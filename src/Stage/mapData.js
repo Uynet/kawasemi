@@ -84,6 +84,7 @@ export default class MapData {
                 break;
               default:
                 entity = new Wall(p, GenerateWall.WallData(ID, layer, x, y));
+                console.warn("未実装:" + wallTiletype[ID].name);
             }
             break;
           case TILE.BACK:
