@@ -84,13 +84,13 @@ export default class MapData {
                 break;
               default:
                 entity = new Wall(p, GenerateWall.WallData(ID, layer, x, y));
-                console.warn("未実装:" + wallTiletype[ID].name);
+                break;
             }
             break;
           case TILE.BACK:
             entity = new BackEntity(p, GenerateWall.WallData(ID, layer, x, y));
             entity.layer = this.getEntityLayer(layer);
-            break;
+            break;t
           default:
             console.warn("未実装:" + wallTiletype[ID].type);
         }
