@@ -5,10 +5,12 @@ const blockSize = 16;
 
 export default class ChunkDetector{
     static Init(){
-        this.chunkHeight =196; 
-        this.chunkWidh= 128;
+        this.chunkWidh= 128+64;
+        this.chunkHeight =128; 
         this.prevChunkCoord = vec0();
         this.currentChunkCoord = vec0();
+        console.assert(this.chunkWidh % blockSize == 0 , "chunk size must be integer multiple of the blobk size.");
+        console.assert(this.chunkHeight % blockSize == 0,"チャンク幅はブロックサイズの整数倍である必要があります");
     }
 
     static isChunkMoved(){
@@ -92,7 +94,7 @@ export default class ChunkDetector{
 
     static isUnmover(e){
         return e.type!=ENTITY.MOVER && e.type!=ENTITY.PLAYER && e.type !=ENTITY.ENEMY
-    }jsonOb
+    }
    
     static getAroundChunks(chunkCoord){
         let aroundChunks = []
@@ -110,16 +112,6 @@ export default class ChunkDetector{
             }
         }
         return aroundChunks;
-    }
-
-    static getEntireChunks(){
-        let entireChunks = [];
-        for(let y = 0 ; y < MapData.height*blockSize / this.chunkHeight ; y++){
-            for(let x = 0 ; x < MapData.width*blockSize / this.chunkWidh ; x++){
-                entireChunks.push(vec2(x,y));
-            }
-        }
-        return entireChunks;
     }
 
   static DeleteStage() {
@@ -146,12 +138,23 @@ export default class ChunkDetector{
         })
   }
 
+  // detect who leaved from registration-chunk (around 9 chunks by the player)
+  static detectMoverOutofChunk(){
+        const moveEntities = EntityManager.entityList.filter(e=>  !this.isUnmover(e));
+        moveEntities.forEach(mover=>{
+            const moverChunkCoord = vec2(Math.floor(mover.pos.x / this.chunkWidh) , Math.floor(mover.pos.y / this.chunkHeight));
+            // moverがplayer周辺9チャンクより外に出た場合updateを停止する
+            mover.isUpdater = (DIST_C(this.currentChunkCoord , moverChunkCoord)<=1);
+        })
+  }
+
     static Update(){
         /*
          *  worldCoord 
          *  chunkCoord 
          *  blockCoord ... floor(worldCoord/blockSize)
          */
+        this.detectMoverOutofChunk();
         const player = EntityManager.player;
         const p = player.pos;
 
