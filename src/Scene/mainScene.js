@@ -20,7 +20,7 @@ export default class MainScene extends Scene {
   }
   Init() {}
   Update() {
-    ChunkDetector.Update();
+    if(Game.stage != 502) ChunkDetector.Update();
     EntityManager.Update();
     UIManager.Update();
   }
