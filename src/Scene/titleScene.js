@@ -13,11 +13,10 @@ export default class TitleScene extends Scene {
   }
   Input() {
     if (Input.isAnyKeyClick()) {
-        Game.state.transit("transition");
+      Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
         return new Promise(resolve => {
-          console.log("po")
           UIManager.CleanBack();
           MapData.DeleteStage();
           resolve();
