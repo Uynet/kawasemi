@@ -1,5 +1,5 @@
-//const isDebugMode = true;
-const isDebugMode = false;
+const isDebugMode = true;
+//const isDebugMode = false;
 /*meta*/
 Array.prototype.Last = function() {
   if (this.length == 0) {
@@ -216,7 +216,7 @@ let dist = (p1, p2) => {
 };
 //チェビシェフ
 let DIST_C = (p1, p2) => {
-  return Math.max(Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y));
+  return Math.max(Math.abs(p1.x - p2.x) , Math.abs(p1.y - p2.y));
 };
 //
 let length = v => {

@@ -162,6 +162,7 @@ export default class Audio {
       this.LoadSE("enemy6Swell"); //
       this.LoadSE("changeWeapon"); //
       this.LoadSE("bomb"); //
+      this.LoadSE("itemGet"); //
       res();
     });
   }

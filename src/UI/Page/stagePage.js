@@ -1,7 +1,7 @@
 import UI from "../ui.js";
 import GaugeHP from "../gaugeHP.js";
 import GaugeBullet from "../gaugeBullet.js";
-import WeaponList from "../weaponList.js";
+
 import Score from "../score.js";
 
 const POS_HP = vec2(8, 0); //HP

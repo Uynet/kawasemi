@@ -60,18 +60,19 @@ export default class MapData {
       this.stageNo = stageNo;
     });
   }
-  static CreateEntityLayer(layer) {
-    let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
-    let entity;
-    let ID; //tiledに対応しているID
 
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
-        ID = this[layer][this.width * y + x] - 1;
-        //tiledのIDがjsonデータより1小さいので引く
-        if (ID == -1) continue; //空白はjsonで0なので(引くと)-1となる
-        if (!wallTiletype[ID]) cl(x + "  " + y);
-        let p = { x: 16 * x, y: 16 * y }; //座標を変換
+  static getEntityLayer(layer){
+            switch (layer) {
+              case "backEntityData": return "BACK";
+              case "entityData":return "ENTITY";
+              case "foreData": return "FORE";
+              case "foreEntityData": return "FOREENTITY";
+              default: console.warn("layer Error:" + layer);
+            }
+  }
+
+  static createEntity(wallTiletype , ID , layer , x , y , p){
+    let entity;
         switch (wallTiletype[ID].type) {
           case TILE.WALL:
             switch (wallTiletype[ID].name) {
@@ -83,30 +84,31 @@ export default class MapData {
                 break;
               default:
                 entity = new Wall(p, GenerateWall.WallData(ID, layer, x, y));
+                break;
             }
             break;
           case TILE.BACK:
             entity = new BackEntity(p, GenerateWall.WallData(ID, layer, x, y));
-            switch (layer) {
-              case "backEntityData":
-                entity.layer = "BACK";
-                break;
-              case "entityData":
-                entity.layer = "ENTITY";
-                break;
-              case "foreData":
-                entity.layer = "FORE";
-                break;
-              case "foreEntityData":
-                entity.layer = "FOREENTITY";
-                break;
-              default:
-                console.warn("れいやーエラー:" + layer);
-            }
-            break;
+            entity.layer = this.getEntityLayer(layer);
+            break;t
           default:
             console.warn("未実装:" + wallTiletype[ID].type);
         }
+        return entity;
+  }
+
+  static CreateEntityLayer(layer) {
+    let wallTiletype = this.jsonObj.tilesets[0].tileproperties;
+    let ID; //tiledに対応しているID
+
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        ID = this[layer][this.width * y + x] - 1;
+        //tiledのIDがjsonデータより1小さいので引く
+        if (ID == -1) continue; //空白はjsonで0なので(引くと)-1となる
+        if (!wallTiletype[ID]) cl(x + "  " + y);
+        let p = { x: 16 * x, y: 16 * y }; //座標を変換
+        const entity = this.createEntity(wallTiletype , ID , layer , x , y , p);
         EntityManager.addEntity(entity);
       }
     }
