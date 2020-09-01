@@ -6,6 +6,7 @@ import EntityManager from "../../Stage/entityManager.js";
 import Event from "../../Event/event.js";
 import EventManager from "../../Event/eventmanager.js";
 import Param from "../../param.js";
+import UIManager from "../../UI/uiManager.js";
 
 class TestEvent extends Event {
   constructor() {
@@ -44,6 +45,11 @@ export default class TestScript extends Script{
         }.bind(e1);
         this.content = [ e1,e2,e3 ];
         this.eventList = [];
+
+        this.script = [
+          "こんにちは",
+          "きょうもいいてんき"
+        ]
     }
     Init(){
       console.log("init");
@@ -51,11 +57,23 @@ export default class TestScript extends Script{
     Close(){
         Game.state.transit("main");
     }
+    RenderText() {
+      const mes = this.script[this.scriptPointer];
+      //let sent = mes.split("\n");
+
+      const POSITION_TEXT = {
+        x: 16,
+        y: 24
+      };
+      UIManager.add(new Text(POSITION_TEXT, mes));
+
+    }
     Consume(){
         if(this.scriptPointer >= this.content.length) {
             this.Close();
             return;
         }
+        this.RenderText();
         const event = this.content[this.scriptPointer];
         event.execute(this);
         this.scriptPointer++;
