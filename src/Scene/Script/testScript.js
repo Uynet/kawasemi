@@ -7,6 +7,7 @@ import Event from "../../Event/event.js";
 import EventManager from "../../Event/eventmanager.js";
 import Param from "../../param.js";
 import UIManager from "../../UI/uiManager.js";
+import Text from "../../UI/text.js";
 
 class TestEvent extends Event {
   constructor() {
@@ -48,7 +49,8 @@ export default class TestScript extends Script{
 
         this.script = [
           "こんにちは",
-          "きょうもいいてんき"
+          "今日もいい天気ンゴねえ",
+          "それでは。"
         ]
     }
     Init(){
@@ -58,22 +60,30 @@ export default class TestScript extends Script{
         Game.state.transit("main");
     }
     RenderText() {
+      //すでにテキストが出ていれば重複しないように消す
+      const o = UIManager.find("scriptText");
+      console.log(o);
+      if(o.length >= 1)UIManager.remove(o[0]);
+
       const mes = this.script[this.scriptPointer];
       //let sent = mes.split("\n");
 
       const POSITION_TEXT = {
         x: 16,
-        y: 24
+        y: 164
       };
-      UIManager.add(new Text(POSITION_TEXT, mes));
 
+      const t = new Text(POSITION_TEXT, mes);
+      t.type= "scriptText";
+
+      UIManager.add(t);
     }
     Consume(){
+        this.RenderText();
         if(this.scriptPointer >= this.content.length) {
             this.Close();
             return;
         }
-        this.RenderText();
         const event = this.content[this.scriptPointer];
         event.execute(this);
         this.scriptPointer++;
