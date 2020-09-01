@@ -3,6 +3,7 @@ import UIManager from "../UI/uiManager.js";
 import Scene from "./scene.js";
 import Input from "../input.js";
 import Game from "../game.js";
+import ChunkDetector from "../Stage/chnukDetector.js";
 
 export default class MainScene extends Scene {
   constructor() {
@@ -19,6 +20,7 @@ export default class MainScene extends Scene {
   }
   Init() {}
   Update() {
+    if(Game.stage != 502) ChunkDetector.Update();
     EntityManager.Update();
     UIManager.Update();
   }
