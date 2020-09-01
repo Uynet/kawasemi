@@ -13,6 +13,7 @@ export default class WorldMapScene extends Scene {
     this.name = "worldMap";
   }
   GoToTitle(){
+      Input.lock();
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
@@ -25,13 +26,14 @@ export default class WorldMapScene extends Scene {
       transitionState.onFadeOutStart = () => {
         Game.state.transit("title");
       };
-      transitionState.onFadeOutEnd = () => {};
   }
 
+  //暗転中にステージ読み込みの後、ステージ面に移動
   GoToStage(){
       Input.lock();
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
+
       transitionState.onFadeInEnd = () => {
         return new Promise(resolve => {
           UIManager.CleanBack();

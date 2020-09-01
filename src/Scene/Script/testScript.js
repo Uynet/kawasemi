@@ -45,6 +45,9 @@ export default class TestScript extends Script{
         this.content = [ e1,e2,e3 ];
         this.eventList = [];
     }
+    Init(){
+      console.log("init");
+    };
     Close(){
         Game.state.transit("main");
     }

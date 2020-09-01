@@ -20,6 +20,7 @@ import StateMachine from "./Scene/stateMachine.js";
 import Timer from "./timer.js";
 import EntityManager from "./Stage/entityManager.js";
 import ScriptScene from "./Scene/scriptScene.js";
+import Flags from "./Scene/Script/flags.js";
 
 export default class Pipeline {
   static InitializeStaticClasses() {
@@ -34,6 +35,7 @@ export default class Pipeline {
     UIManager.Init();
     StageData.Init();
     DistanceField.Init();
+    Flags.Init();
   }
   static CreateGameState() {
     const scenes = [
