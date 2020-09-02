@@ -93,23 +93,31 @@ export default class TestScript extends Script{
       const player = EntityManager.player;
 
       const messageContent = this.content[this.scriptPointer];
-      const mes = messageContent.content;
-      //let sent = mes.split("\n");
+      const content = messageContent.content;
+      const name = messageContent.name;
+      const img = messageContent.img;
 
-      const POSITION_TEXT = vec2(16,164);
+      const POSITION_TEXT = vec2(16,172);
+      const POSITION_NAME= vec2(16,164);
       const POSITION_FRAME= vec2(12,156);
 
-      const t = new Text(POSITION_TEXT, mes);
-      const frame= new UI(vec0());
-      frame.sprite = Art.CreateSprite(Art.UIPattern.message.frame);
-      frame.sprite.scale.x = 2.5;
-      frame.sprite.scale.y = 1.6;
-      frame.sprite.position = copy(POSITION_FRAME)
-      frame.type = "scriptText";
-      t.type= "scriptText";
+      const contentUI = new Text(POSITION_TEXT, content);
 
-      UIManager.add(frame);
-      UIManager.add(t);
+      const nameUIStyle ={ fontFamily: 'gkktt', fontSize: 40, fill: 0x5080cf}
+      const nameUI = new Text(POSITION_NAME, name , nameUIStyle);
+
+      const frameUI = new UI(vec0());
+      frameUI.sprite = Art.CreateSprite(Art.UIPattern.message.frame);
+      frameUI.sprite.scale.x = 2.5;
+      frameUI.sprite.scale.y = 1.6;
+      frameUI.sprite.position = copy(POSITION_FRAME)
+      frameUI.type = "scriptText";
+      nameUI.type= "scriptText";
+      contentUI.type= "scriptText";
+
+      UIManager.add(frameUI);
+      UIManager.add(nameUI);
+      UIManager.add(contentUI);
       this.state = STATE.READING;
     }
 
