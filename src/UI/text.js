@@ -3,14 +3,15 @@ import UI from "./ui.js";
 export default class Text extends UI{
   constructor(pos, str, style) {
     super(pos);
-    const defaultStyle = { fontFamily: 'gkktt', fontSize: 50, fill: 0xffffff, align: 'center' };
+    const defaultStyle = { fontFamily: 'gkktt', fontSize: 50, fill: 0xffffff};
+    style = style?style:defaultStyle;
     /*基本情報*/
     this.name = "font";
     this.isAlive = true; //消えたらfalse
     this.frame = 0; //stagepopでしか使ってない
     /*スプライト*/
     this.str = str; //0~9
-    this.sprite = new PIXI.Text(str,defaultStyle) ;
+    this.sprite = new PIXI.Text(str,style) ;
     this.sprite.scale.set(0.2);
     this.sprite.position = copy(this.pos);
   }

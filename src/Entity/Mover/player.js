@@ -177,7 +177,7 @@ export default class Player extends Entity {
       }
     }
     /*右向き*/
-    if (Input.isKeyInput(KEY.RIGHT)) {
+    if (Input.isKeyInput(KEY.RIGHT) || this.isWalkRight) {
       this.state = STATE.RUNNING;
       this.dir = DIR.R;
       this.isRun = true;
