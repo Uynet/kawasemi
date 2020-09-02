@@ -52,7 +52,8 @@ export default class Spilit extends Entity {
     this.absorp = vec2(-this.repel.x, -this.repel.y);
     let len = length(this.repel);
     this.repel = normalize(this.repel);
-    this.repel = scala(30 / (len * len + 1), this.repel);
+    const s = Math.min(1,30 / (len * len + 1))
+    this.repel = scala(s , this.repel);
     this.absorp = normalize(this.absorp);
     /* Note!
      */

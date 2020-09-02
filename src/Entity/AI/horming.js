@@ -4,10 +4,10 @@ export default class Horming {
     this.bullet = bullet;
   }
   Do() {
-    //敵方向へのベクトル
     if (this.bullet.isTargetOn) {
+      const targetPoint = this.bullet.targetedEnemy.GetCenterPoint();
       let to = add(
-        this.bullet.targetedEnemy.pos,
+        targetPoint,
         mul(vec2(-1), this.bullet.pos)
       );
       //外積を取って正負を判定
