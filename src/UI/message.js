@@ -19,22 +19,22 @@ const COLUMN = 10; //行間
 export default class Message extends UI {
   constructor(pos, signboard) {
     super(pos);
+    /*基本情報*/
     this.signboard = signboard;
     this.message = signboard.message;
     this.frame = 0;
 
-    //child
+    /*child*/
     this.type = "MES";
     this.outer = {
       sprite: Art.CreateSprite(Art.UIPattern.message.frame)
     };
-    //adjust sprite scale to fit the size of text.
+    //文字の長さに応じて枠を調整
     this.outer.sprite.scale.x *= 2.6;
-    this.outer.sprite.scale.y *= 2.5; //y fixed
-
+    this.outer.sprite.scale.y *= 2.5; //yは固定
+    /*スプライト*/
     this.isMultiple = true;
-
-    //add a frame sprite
+    //枠スプライト追加
     let p = copy(pos);
     this.outer.sprite.position = p;
     this.sprite = new PIXI.Container();
@@ -44,6 +44,9 @@ export default class Message extends UI {
     this.OpeningSelection = false;
     this.isRead = true;
     this.page = 0;
+    //テキスト
+    /*
+     */
   }
   ReadNextPage(text) {
     Audio.PlaySE("changeWeapon");
@@ -53,17 +56,17 @@ export default class Message extends UI {
     this.page++;
   }
   ClearMessage() {
-    //delete All Of Strings to turn the page. 
+    //改ページするために文字だけを消す
     let mes = this.message[this.page];
     let sentence = mes.split("\n");
     for (let i = 0; i < sentence.length; i++) {
       UIManager.remove(sentence[i]);
     }
-    //TODO:FIX:DO NOT DO THIS
-    //delete all contents of an array except head
-    //head content is a Frame , so delete all Strings.
-    this.sprite.children.length = 1; 
+    //これをすると先頭以外の要素が消える
+    //つまり枠スプライトを残し他の文字を消す
+    this.sprite.children.length = 1; //は？
   }
+  //テキストを表示する
   RenderText() {
     let mes = this.message[this.page];
     let sent = mes.split("\n");
@@ -76,27 +79,34 @@ export default class Message extends UI {
       let f = new Font(p, sent[i], "MES");
       f.sprite.scale.x = 1;
       f.sprite.scale.y = 1;
-      sentenceSprite.push(f); //text
+      sentenceSprite.push(f); //テキスト
       p.y += COLUMN;
     }
+    //各行各文字のスプライトを追加
     for (let l of sentenceSprite) {
       this.sprite.addChild(l.sprite);
     }
   }
   EmitEvent() {
+    /*イベント発生用メッセージ*/
     let m = this.message[this.page];
     if (m !== undefined) {
       if (m.slice(0, 5) == "EVENT") {
         let event = new MessageEvent("OPEN", m);
         EventManager.eventList.push(event);
-        //TODO:FIX:DO NOT change the message here
+        //クソポイント
+        //ここでメッセージを変更するな
         this.message[this.page] = "はっこうずみ";
         this.page++;
-      } 
+      } //
       if (m.slice(0, 6) == "SELECT") {
         this.OpenSelection();
       }
-      //goto the specified page
+      if (m.slice(0, 3) == "GET") {
+        this.GetWeapon();
+        this.page++;
+      }
+      //指定したページに飛ぶ
       if (m.slice(0, 4) == "GOTO") {
         let page = m.split("\n")[1];
         if (page == "END") {
@@ -106,7 +116,45 @@ export default class Message extends UI {
       }
     }
   }
-  //Y/N window
+  GetWeapon() {
+    this.page++;
+    let weaponName = this.message[this.page];
+    cl(this.message[this.page]);
+    if (!Param.player.havingWeaponList[weaponName]) {
+      let text =
+        this.ToJap(weaponName) + "をてにいれた\ncキーでチェンジできるよ↓";
+      //UIManager.PopMessage(text,"POP");
+      //テスト
+      Param.player.havingWeaponList[weaponName] = true;
+      UIManager.bullet.Push(weaponName);
+      let p = {
+        x: 64,
+        y: 96
+      };
+      UIManager.add(
+        new StagePop(p, "-" + this.ToJap(weaponName) + "をてにいれた ")
+      ); //SCORE
+    } else {
+      let text = "きりかえはc だよ↓";
+      //     UIManager.PopMessage(text,"POP");
+    }
+  }
+  //武器名を日本語にするだけ
+  ToJap(weaponName) {
+    switch (weaponName) {
+      case "missile":
+        return "ミサイル";
+      case "laser":
+        return "レーザー";
+      case "fire":
+        return "fire";
+      case "weapon5":
+        return "weapon5";
+      default:
+        console.warn("Error ToJapWeaponName");
+    }
+  }
+  //選択肢を表示
   OpenSelection() {
     this.OpeningSelection = true;
     let p = copy(this.pos);
@@ -124,7 +172,7 @@ export default class Message extends UI {
       cusor: {
         pos: p,
         item: ["はい", "いいえ"],
-        pointer: 0, //cusor position
+        pointer: 0, //カーソル位置
         font: new Font(p, "→", "MES"),
         select: null,
         Move: function(dir) {
@@ -149,9 +197,10 @@ export default class Message extends UI {
     }
     this.sprite.addChild(this.Selector.sprite);
   }
+  //選択肢決定
   Select() {
     this.OpeningSelection = false;
-    // hard hit
+    //決め打ち
     switch (this.Selector.GetSelection()) {
       case "はい":
         this.page = 2;
