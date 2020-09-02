@@ -8,64 +8,91 @@ import EventManager from "../../Event/eventmanager.js";
 import Param from "../../param.js";
 import UIManager from "../../UI/uiManager.js";
 import Text from "../../UI/text.js";
+import MapData from "../../Stage/mapData.js";
+import Timer from "../../timer.js";
+
+const STATE = {
+  EVENT:"EVENT",
+  READING:"READING",
+  WAITING:"WAITING"
+}
 
 class TestEvent extends Event {
-  constructor() {
+  constructor(script) {
     super(1);
     let frame = 0;
-    const sustain = 50;
+    const sustain = 30;
+    console.log("1");
 
     const player = EntityManager.player;
     function* gen() {
       while (frame <= sustain) {
-        player.state = "RUNNING";
-        player.dir = "R";
-        player.isRun = true;
-        player.toArg = 0;
-        player.acc.x = Param.player.runVel;
-        player.vel.x = Math.max(0, player.vel.x);
+        player.isWalkRight = true;
         frame++;
         yield;
       }
+     player.isWalkRight = false;
+      script.state = STATE.WAITING;
+      Input.restore();
     }
     this.func = gen();
   }
 }
 
+
 export default class TestScript extends Script{
     constructor(){
         super()
         this.scriptPointer = 0;
-        const e1 = new ScriptEvent("1");
-        const e2 = new ScriptEvent("2");
-        const e3 = new ScriptEvent("3");
-        e1.execute = function(script){ 
-            console.log(this.label);
-            const e = new TestEvent();
-            EventManager.Add(e);
-        }.bind(e1);
-        this.content = [ e1,e2,e3 ];
-        this.eventList = [];
+        this.state = STATE.EVENT; 
+        const e1 = new TestEvent(this);
+        const e2 = new ScriptEvent(this);
+        const e3 = new ScriptEvent(this);
 
-        this.script = [
+        this.content = [ 
+          e1,
           "こんにちは",
+          e2,
           "今日もいい天気ンゴねえ",
-          "それでは。"
-        ]
+          e3,
+          "それでは"
+         ];
+        this.eventList = [];
     }
+    GoToWorldMap(){
+      Game.state.transit("transition");
+      const transitionState = Game.state.getState();
+      transitionState.onFadeInEnd = () => {
+        return new Promise(resolve => {
+          UIManager.CleanBack();
+          MapData.DeleteStage();
+          resolve();
+        });
+      };
+      transitionState.onFadeOutStart = () => {
+        Game.state.transit("worldMap");
+      }
+    };
+
     Init(){
-      console.log("init");
+      this.Consume();
     };
     Close(){
-        Game.state.transit("main");
+        this.CloseText();
+        this.GoToWorldMap();
     }
-    RenderText() {
+
+    CloseText(){
       //すでにテキストが出ていれば重複しないように消す
       const o = UIManager.find("scriptText");
-      console.log(o);
       if(o.length >= 1)UIManager.remove(o[0]);
+    }
 
-      const mes = this.script[this.scriptPointer];
+    RenderText() {
+      this.CloseText()
+      const player = EntityManager.player;
+
+      const mes = this.content[this.scriptPointer];
       //let sent = mes.split("\n");
 
       const POSITION_TEXT = {
@@ -77,18 +104,30 @@ export default class TestScript extends Script{
       t.type= "scriptText";
 
       UIManager.add(t);
+      this.state = STATE.READING;
     }
+
     Consume(){
-        this.RenderText();
         if(this.scriptPointer >= this.content.length) {
             this.Close();
             return;
         }
         const event = this.content[this.scriptPointer];
-        event.execute(this);
+
+        if(typeof(event)=="string")this.RenderText();
+        else {
+          Input.lock();
+          this.state = STATE.EVENT;
+          this.CloseText();
+          const player = EntityManager.player;
+          EventManager.Add(event);
+        }
         this.scriptPointer++;
     }
+
     Update(){
-        if(Input.isKeyClick(KEY.X)) this.Consume() ;
+      if(this.state == STATE.WAITING) this.Consume() ;
+      if(this.state == STATE.READING && Input.isKeyClick(KEY.X)) this.Consume() ;
+
     }
 }
