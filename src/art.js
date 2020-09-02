@@ -3,6 +3,7 @@ import Drawer from "./drawer.js";
 export default class Art {
   static Load(resources) {
     (this.test = PIXI.Texture.fromFrame("distance00.png")),
+    this.elice =  PIXI.Texture.fromFrame("src/resource/img/stills/still_elice.png");
       /*forにして*/
       (this.playerPattern = {
         spilit: this.Frame("player", 100, 6),
@@ -480,7 +481,7 @@ export default class Art {
         .add("testShader", "src/Shader/test.frag")
         .add("fireShader", "src/Shader/fire.frag")
         .add("shopShader", "src/Shader/shop.frag")
-        //.add('smokeShader', 'src/Shader/smoke.frag')
+        .add("elice" , "src/resource/img/stills/still_elice.png")
         .load((loader, resources) => Art.Load(resources))
         .onComplete.add(res)
     );

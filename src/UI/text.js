@@ -3,7 +3,7 @@ import UI from "./ui.js";
 export default class Text extends UI{
   constructor(pos, str, style) {
     super(pos);
-    const defaultStyle = { fontFamily: 'gkktt', fontSize: 50, fill: 0xffffff};
+    const defaultStyle = { fontFamily: 'gkktt', fontSize: 50, fill: 0xffffff }
     style = style?style:defaultStyle;
     /*基本情報*/
     this.name = "font";

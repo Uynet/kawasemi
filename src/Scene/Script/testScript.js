@@ -50,11 +50,12 @@ export default class TestScript extends Script{
 
         this.content = [ 
           e1,
-          new MessageContent("???" , "こんにちは"),
+          new MessageContent("???" , "こんにちは","elice"),
           e2,
-          new MessageContent("???" , "今日もいい天気ンゴねえ"),
+          new MessageContent("エリス", "今日もいい天気ンゴねえ","elice"),
+          new MessageContent("エリス", "五月雨を集めているとき、こちらもまた\n五月雨に集められているのだ","elice"),
           e3,
-          new MessageContent("???" , "それでは"),
+          new MessageContent("エリス", "それでは","elice"),
          ];
         this.eventList = [];
     }
@@ -97,8 +98,9 @@ export default class TestScript extends Script{
       const name = messageContent.name;
       const img = messageContent.img;
 
-      const POSITION_TEXT = vec2(16,172);
-      const POSITION_NAME= vec2(16,164);
+      const POSITION_TEXT = vec2(56,174);
+      const POSITION_NAME= vec2(56,166);
+      const POSITION_IMG= vec2(20,166);
       const POSITION_FRAME= vec2(12,156);
 
       const contentUI = new Text(POSITION_TEXT, content);
@@ -111,13 +113,21 @@ export default class TestScript extends Script{
       frameUI.sprite.scale.x = 2.5;
       frameUI.sprite.scale.y = 1.6;
       frameUI.sprite.position = copy(POSITION_FRAME)
+
+      const imgUI = new UI(vec0());
+      imgUI.sprite = Art.CreateSprite(Art.elice);
+      imgUI.sprite.scale.set(1.5)
+      imgUI.sprite.position = copy(POSITION_IMG)
+
       frameUI.type = "scriptText";
       nameUI.type= "scriptText";
+      imgUI.type = "scriptText";
       contentUI.type= "scriptText";
 
       UIManager.add(frameUI);
       UIManager.add(nameUI);
       UIManager.add(contentUI);
+      UIManager.add(imgUI);
       this.state = STATE.READING;
     }
 
