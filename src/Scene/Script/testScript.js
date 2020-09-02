@@ -10,6 +10,8 @@ import UIManager from "../../UI/uiManager.js";
 import Text from "../../UI/text.js";
 import MapData from "../../Stage/mapData.js";
 import Timer from "../../timer.js";
+import Art from "../../art.js";
+import UI from "../../UI/ui.js";
 
 const STATE = {
   EVENT:"EVENT",
@@ -85,7 +87,8 @@ export default class TestScript extends Script{
     CloseText(){
       //すでにテキストが出ていれば重複しないように消す
       const o = UIManager.find("scriptText");
-      if(o.length >= 1)UIManager.remove(o[0]);
+      console.log(o)
+      o.forEach(e=> UIManager.remove(e));
     }
 
     RenderText() {
@@ -95,14 +98,19 @@ export default class TestScript extends Script{
       const mes = this.content[this.scriptPointer];
       //let sent = mes.split("\n");
 
-      const POSITION_TEXT = {
-        x: 16,
-        y: 164
-      };
+      const POSITION_TEXT = vec2(16,164);
+      const POSITION_FRAME= vec2(2,156);
 
       const t = new Text(POSITION_TEXT, mes);
+      const frame= new UI(vec0());
+      frame.sprite = Art.CreateSprite(Art.UIPattern.message.frame);
+      frame.sprite.scale.x = 2.5;
+      frame.sprite.scale.y = 1.6;
+      frame.sprite.position = copy(POSITION_FRAME)
+      frame.type = "scriptText";
       t.type= "scriptText";
 
+      UIManager.add(frame);
       UIManager.add(t);
       this.state = STATE.READING;
     }
