@@ -11,7 +11,6 @@ export default class ScriptEvent extends Event{
                 frame++;
                 yield;
             }
-            console.log("e")
             script.state = "WAITING";
             Input.restore();
             yield;

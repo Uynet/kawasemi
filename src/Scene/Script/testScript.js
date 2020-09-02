@@ -50,7 +50,7 @@ export default class TestScript extends Script{
 
         this.content = [ 
           e1,
-          new MessageContent("???" , "こんにちは","elice"),
+          new MessageContent("???" , "こんにちは"),
           e2,
           new MessageContent("エリス", "今日もいい天気ンゴねえ","elice"),
           new MessageContent("エリス", "五月雨を集めているとき、こちらもまた\n五月雨に集められているのだ","elice"),
@@ -114,20 +114,23 @@ export default class TestScript extends Script{
       frameUI.sprite.scale.y = 1.6;
       frameUI.sprite.position = copy(POSITION_FRAME)
 
-      const imgUI = new UI(vec0());
-      imgUI.sprite = Art.CreateSprite(Art.elice);
-      imgUI.sprite.scale.set(1.5)
-      imgUI.sprite.position = copy(POSITION_IMG)
-
       frameUI.type = "scriptText";
       nameUI.type= "scriptText";
-      imgUI.type = "scriptText";
       contentUI.type= "scriptText";
 
       UIManager.add(frameUI);
       UIManager.add(nameUI);
       UIManager.add(contentUI);
-      UIManager.add(imgUI);
+
+      if(img){
+        const imgUI = new UI(vec0());
+        imgUI.sprite = Art.CreateSprite(Art[img]);
+        imgUI.sprite.scale.set(1.5)
+        imgUI.sprite.position = copy(POSITION_IMG)
+        imgUI.type = "scriptText";
+        UIManager.add(imgUI);
+      }
+
       this.state = STATE.READING;
     }
 
