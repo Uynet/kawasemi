@@ -17,7 +17,6 @@ export default class TitleScene extends Scene {
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
         return new Promise(resolve => {
-          console.log("po")
           UIManager.CleanBack();
           MapData.DeleteStage();
           resolve();
