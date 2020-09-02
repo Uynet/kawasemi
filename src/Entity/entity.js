@@ -97,6 +97,12 @@ export default class Entity {
   onAnimationEnd() {
     this.Delete();
   }
+  GetCenterPoint(){
+    return {
+      x:this.pos.x + this.size/2,
+      y:this.pos.y + this.size/2,
+    }
+  }
   SetParam(param) {
     Object.keys(param).forEach(key => {
       this[key] = param[key];
