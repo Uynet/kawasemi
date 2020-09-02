@@ -5,13 +5,12 @@ import ScriptEvent from "./scriptEvent.js";
 import EntityManager from "../../Stage/entityManager.js";
 import Event from "../../Event/event.js";
 import EventManager from "../../Event/eventmanager.js";
-import Param from "../../param.js";
 import UIManager from "../../UI/uiManager.js";
 import Text from "../../UI/text.js";
 import MapData from "../../Stage/mapData.js";
-import Timer from "../../timer.js";
 import Art from "../../art.js";
 import UI from "../../UI/ui.js";
+import MessageContent from "./messageContent.js";
 
 const STATE = {
   EVENT:"EVENT",
@@ -24,7 +23,6 @@ class TestEvent extends Event {
     super(1);
     let frame = 0;
     const sustain = 30;
-    console.log("1");
 
     const player = EntityManager.player;
     function* gen() {
@@ -41,7 +39,6 @@ class TestEvent extends Event {
   }
 }
 
-
 export default class TestScript extends Script{
     constructor(){
         super()
@@ -53,11 +50,11 @@ export default class TestScript extends Script{
 
         this.content = [ 
           e1,
-          "こんにちは",
+          new MessageContent("???" , "こんにちは"),
           e2,
-          "今日もいい天気ンゴねえ",
+          new MessageContent("???" , "今日もいい天気ンゴねえ"),
           e3,
-          "それでは"
+          new MessageContent("???" , "それでは"),
          ];
         this.eventList = [];
     }
@@ -79,6 +76,7 @@ export default class TestScript extends Script{
     Init(){
       this.Consume();
     };
+
     Close(){
         this.CloseText();
         this.GoToWorldMap();
@@ -87,7 +85,6 @@ export default class TestScript extends Script{
     CloseText(){
       //すでにテキストが出ていれば重複しないように消す
       const o = UIManager.find("scriptText");
-      console.log(o)
       o.forEach(e=> UIManager.remove(e));
     }
 
@@ -95,11 +92,12 @@ export default class TestScript extends Script{
       this.CloseText()
       const player = EntityManager.player;
 
-      const mes = this.content[this.scriptPointer];
+      const messageContent = this.content[this.scriptPointer];
+      const mes = messageContent.content;
       //let sent = mes.split("\n");
 
       const POSITION_TEXT = vec2(16,164);
-      const POSITION_FRAME= vec2(2,156);
+      const POSITION_FRAME= vec2(12,156);
 
       const t = new Text(POSITION_TEXT, mes);
       const frame= new UI(vec0());
@@ -122,7 +120,8 @@ export default class TestScript extends Script{
         }
         const event = this.content[this.scriptPointer];
 
-        if(typeof(event)=="string")this.RenderText();
+        if(event.type=="MessageContent")this.RenderText();
+
         else {
           Input.lock();
           this.state = STATE.EVENT;
@@ -136,6 +135,5 @@ export default class TestScript extends Script{
     Update(){
       if(this.state == STATE.WAITING) this.Consume() ;
       if(this.state == STATE.READING && Input.isKeyClick(KEY.X)) this.Consume() ;
-
     }
 }
