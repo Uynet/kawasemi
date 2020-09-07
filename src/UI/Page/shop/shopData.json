@@ -8,7 +8,7 @@
        "atk" : 40 ,
        "agi" : 20
     },
-    "missile2" : {
+    "laser" : {
        "price" : 100,
        "name" : "ミサイル2",
        "sprite":"missile",
@@ -17,11 +17,20 @@
        "atk" : 40 ,
        "agi" : 20
     },
-    "missile3" : {
+    "fire" : {
        "price" : 100,
        "name" : "ミサイル3",
        "sprite":"missile",
        "description" : "ミサイル3です",
+       "cost" : 50 ,
+       "atk" : 40 ,
+       "agi" : 20
+    },
+    "weapon5" : {
+       "price" : 100,
+       "name" : "バリア",
+       "sprite":"missile",
+       "description" : "weapon5です",
        "cost" : 50 ,
        "atk" : 40 ,
        "agi" : 20

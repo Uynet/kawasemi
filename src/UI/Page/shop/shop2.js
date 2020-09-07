@@ -27,10 +27,13 @@ export default class Shop2 extends UIComponent{
         console.log("selected");
     }
     render(){
-       //this.addChild(new ShopBG());
+       this.addChild(new ShopBG());
        const shopCarousel = new ShopCarousel(this.shopData);
        shopCarousel.setProps({onSelect : this.onSelect});
        this.setState({focused:shopCarousel});
        this.addChild(shopCarousel);
+    }
+    Update(){
+        this.children.forEach(ui=>ui.Update());
     }
 }

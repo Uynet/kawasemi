@@ -27,7 +27,6 @@ export default class ShopScene extends Scene {
   }
   Input(){
     if(!this.shop)return;
-    console.log(Input.isAnyKeyClick() +":"+ Timer.timer)
     if(Input.isAnyKeyClick()) this.shop.onKeyClick(Input.getClickedKeys());
   }
   Update() {

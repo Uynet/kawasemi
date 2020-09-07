@@ -3,6 +3,54 @@ import UIComponent from "../../uiComponent.js";
 import UI from "../../ui.js";
 import UIManager from "../../uiManager.js";
 import ShopIcon from "./shopIcon.js";
+import Event from "../../../Event/event.js";
+
+class Scroll extends Event {
+  constructor(ui) {
+    super(1);
+    const currentPos = copy(ui.sprite.position);
+    let frame = 0;
+    const amp = 0.4;
+    const ease = x => {
+      return 1-Math.pow(1-x , 8);
+    };
+    const sustain = 10;
+    function* gen() {
+      const start = currentPos.y;
+      const end = 50 - 48* ui.focusedPosition;
+      while (frame <= sustain) {
+        ui.sprite.position.y = lerp(end ,start, ease(frame/sustain))
+
+        frame++;
+        yield;
+      }
+    }
+    this.func = gen();
+  }
+}
+
+class IconDeform extends Event {
+  constructor(ui,start,end) {
+    super(1)
+    let frame = 0;
+    const ease = x => {
+      return 1-Math.pow(1-x , 8);
+    };
+    const sustain = 10;
+    function* gen() {
+      while (frame <= sustain) {
+          let scale = lerp(end ,start, ease(frame/sustain));
+            ui.sprite.anchor.set(0.5);
+            ui.sprite.scale.set(scale);
+            ui.sprite.alpha = 0.5 + 0.5*(scale-2)
+
+        frame++;
+        yield;
+      }
+    }
+    this.func = gen();
+  }
+}
 
 export default class shopCarousel extends UIComponent{
     /* props = {
@@ -10,7 +58,7 @@ export default class shopCarousel extends UIComponent{
         shopData
     } */
     constructor(shopData){
-        super(vec0);
+        super(vec2(40,150));
         this.focusedPosition = 0;
         this.shopData = shopData;
         this.itemList = this.createItems() ;
@@ -20,11 +68,10 @@ export default class shopCarousel extends UIComponent{
     createItems(){
         let items = [];
         let p= vec0();
-        const offsetY = 16;
+        const offsetY = 48;
         for(let data in this.shopData){
             const icon = new ShopIcon(p);
-            // icon.sprite = Art.Sprite(Art.UIPattern.bullet.icon[data]);
-            icon.sprite = Art.Sprite(Art.UIPattern.bullet.icon.laser);
+            icon.sprite = Art.Sprite(Art.UIPattern.bullet.icon[data]);
             icon.sprite.position = p;
             icon.name = data;
             p.y += offsetY;
@@ -35,20 +82,24 @@ export default class shopCarousel extends UIComponent{
     }
     render(){
         this.itemList.forEach(e=>{
-            UIManager.add(e);
+            this.addChild(e);
         })
     }
     focus(){
        this.itemLength = this.itemList.length;
+       const preFocusedItem = this.focusedItem; 
        this.focusedItem = this.itemList[this.focusedPosition];
 
        this.itemList.forEach(e=>{
-          e.sprite.scale.set(1);
+           if(e == this.focusedItem)e.Animate(new IconDeform(e,2,3));
+           else if(e == this.preFocusedItem)e.Animate(new IconDeform(e,3,2));
+           else e.Animate(new IconDeform(e,2,2));
        })
-       this.focusedItem.sprite.scale.set(1.6);
+       //set the focused item to the spesified screen pos 
+
+       this.Animate(new Scroll(this));
     }
     onKeyClick(keyCodes){
-
         switch(keyCodes[0]){
             case KEY.X : this.select(); 
                 break;
@@ -69,5 +120,9 @@ export default class shopCarousel extends UIComponent{
     }
     select(){
        this.props.onSelect();
+    }
+    Update(){
+        this.ExecuteEvent();
+        this.itemList.forEach(e=>e.Update());
     }
 }
