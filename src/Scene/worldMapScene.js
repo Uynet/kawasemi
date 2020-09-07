@@ -12,8 +12,8 @@ export default class WorldMapScene extends Scene {
     super();
     this.name = "worldMap";
   }
-  Input() {
-    if (Input.isKeyClick(KEY.Z)) {
+  GoToTitle(){
+      Input.lock();
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
       transitionState.onFadeInEnd = () => {
@@ -26,12 +26,14 @@ export default class WorldMapScene extends Scene {
       transitionState.onFadeOutStart = () => {
         Game.state.transit("title");
       };
-      transitionState.onFadeOutEnd = () => {};
-    }
-    if (Input.isKeyClick(KEY.X)) {
+  }
+
+  //暗転中にステージ読み込みの後、ステージ面に移動
+  GoToStage(){
       Input.lock();
       Game.state.transit("transition");
       const transitionState = Game.state.getState();
+
       transitionState.onFadeInEnd = () => {
         return new Promise(resolve => {
           UIManager.CleanBack();
@@ -47,7 +49,11 @@ export default class WorldMapScene extends Scene {
       transitionState.onFadeOutEnd = () => {
         UIManager.PopStage();
       };
-    }
+
+  };
+  Input() {
+    if (Input.isKeyClick(KEY.Z)) this.GoToTitle();
+    if (Input.isKeyClick(KEY.X)) this.GoToStage();
   }
   Init() {
     UIManager.add(new WorldMapPage());

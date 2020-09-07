@@ -6,6 +6,7 @@ import Message from "../../UI/message.js";
 import Input from "../../input.js";
 import Game from "../../game.js";
 import UIManager from "../../UI/uiManager.js";
+import TestScript from "../../Scene/Script/testScript.js";
 
 const POS_MES = vec2(8, 132); //message
 const objToArray = obj => {
@@ -46,8 +47,10 @@ export default class Signboard extends BackEntity {
   Update() {
     if (this.isCanRead()) {
       if (Input.isKeyClick(KEY.UP)) {
-        Game.state.transit("message");
-        UIManager.add(new Message(POS_MES, this)); //枠
+        Game.state.transit("script");
+        Game.state.getState().setScript(new TestScript());
+        // Game.state.transit("message");
+        // UIManager.add(new Message(POS_MES, this)); //枠
       }
     }
     //this.popup.sprite.alpha = this.isCanRead() ? 1 : 0;
