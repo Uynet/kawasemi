@@ -3,6 +3,7 @@ import ShopBG from "./shopBG.js";
 import Drawer from "../../../drawer.js";
 import Audio from "../../../audio.js";
 import ShopCarousel from "./shopCarousel.js";
+import ShopMessage from "./shopMessage.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
@@ -32,6 +33,9 @@ export default class Shop2 extends UIComponent{
        shopCarousel.setProps({onSelect : this.onSelect});
        this.setState({focused:shopCarousel});
        this.addChild(shopCarousel);
+
+       const message = new ShopMessage();
+       this.addChild(message);
     }
     Update(){
         this.children.forEach(ui=>ui.Update());
