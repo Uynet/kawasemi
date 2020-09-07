@@ -7,22 +7,28 @@ import Art from "../../../art.js";
 export default class ShopMessage extends UIComponent{ 
     constructor(){
         super(vec0());
-        this.RenderText();
+        this.RenderText("test");
+        this.text;
     }
-    RenderText() {
-      const content = "test" 
+    RenderText(content) {
+        this.children.forEach(u => u.Remove());
 
-      const POSITION_TEXT = vec2(56,174);
-      const POSITION_FRAME= vec2(12,156);
+        const POSITION_TEXT = vec2(26,164);
+        const POSITION_FRAME= vec2(12,156);
 
-      const contentUI = new Text(POSITION_TEXT, content);
-      const frameUI = new UI(vec0());
-      frameUI.sprite = Art.CreateSprite(Art.UIPattern.message.frame);
-      frameUI.sprite.scale.x = 2.5;
-      frameUI.sprite.scale.y = 1.6;
-      frameUI.sprite.position = copy(POSITION_FRAME)
+        const contentUI = new Text(POSITION_TEXT, content);
+        this.text = contentUI;
+        const frameUI = new UI(vec0());
+        frameUI.sprite = Art.CreateSprite(Art.UIPattern.message.frame);
+        frameUI.sprite.scale.x = 2.5;
+        frameUI.sprite.scale.y = 1.6;
+        frameUI.sprite.position = copy(POSITION_FRAME)
 
-      this.addChild(frameUI);
-      this.addChild(contentUI);
+        this.addChild(frameUI);
+        this.addChild(contentUI);
+    }
+    onFocus(shopcarousel){
+        const data = shopcarousel.focusedItem.itemData;
+        this.RenderText(data.description);
     }
 }

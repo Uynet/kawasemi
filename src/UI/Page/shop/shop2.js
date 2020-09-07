@@ -24,18 +24,23 @@ export default class Shop2 extends UIComponent{
        if(!this.states.focused)return;
        this.states.focused.onKeyClick(keyCode);
     }
+    onFocus(states){
+        this.message.onFocus(states);
+    }
     onSelect(){
-        console.log("selected");
     }
     render(){
        this.addChild(new ShopBG());
        const shopCarousel = new ShopCarousel(this.shopData);
        shopCarousel.setProps({onSelect : this.onSelect});
+       shopCarousel.parent = this;
+
+       this.shopCarousel = shopCarousel;
        this.setState({focused:shopCarousel});
        this.addChild(shopCarousel);
 
-       const message = new ShopMessage();
-       this.addChild(message);
+       this.message = new ShopMessage();
+       this.addChild(this.message);
     }
     Update(){
         this.children.forEach(ui=>ui.Update());

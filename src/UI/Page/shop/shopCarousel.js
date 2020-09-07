@@ -74,8 +74,8 @@ export default class shopCarousel extends UIComponent{
             icon.sprite = Art.Sprite(Art.UIPattern.bullet.icon[data]);
             icon.sprite.position = p;
             icon.name = data;
+            icon.itemData = this.shopData[data];
             p.y += offsetY;
-            // const itemData = this.shopData[data];
             items.push(icon);
         }
         return items;
@@ -86,6 +86,7 @@ export default class shopCarousel extends UIComponent{
         })
     }
     focus(){
+       if(this.parent)this.parent.onFocus(this);
        this.itemLength = this.itemList.length;
        const preFocusedItem = this.focusedItem; 
        this.focusedItem = this.itemList[this.focusedPosition];
