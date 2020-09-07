@@ -4,6 +4,7 @@ import Game from "./game.js";
 let inputedKeyList = new Array(256).fill(false);
 let clickedKeyList = new Array(256).fill(false);
 let anyKeyPress = false;
+let anyKeyClick= false;
 let timer = 0;
 
 export default class Input {
@@ -43,20 +44,35 @@ export default class Input {
   static VirtualKeyUp(key) {
     inputedKeyList[key] = false;
   }
-  static isAnyKeyClick() {
+  static isAnyKeyPress() {
     return anyKeyPress;
+  }
+  static isAnyKeyClick() {
+    return timer==Timer.timer && anyKeyClick;
   }
   static addKeyListenner(entity, keyCode, handler) {
     if (Game.state)
       Game.state.getState().addKeyListenner(entity, keyCode, handler);
   }
+  static getClickedKeys(){
+    let a = clickedKeyList.map((e,i)=>{ 
+      if(e) return i;
+      return e;
+    });
+    let b  = a.filter(e=>
+      {return e!=false}
+    );
+    return b; 
+  }
 }
 /*receive input event*/
 document.onkeydown =  (e => {
   anyKeyPress = true;
+  anyKeyClick = false;
   clickedKeyList[event.keyCode] = false;
   if (!inputedKeyList[event.keyCode]) {
     clickedKeyList[event.keyCode] = true;
+    anyKeyClick = true;
     timer = Timer.timer;
   }
   inputedKeyList[event.keyCode] = true;
@@ -72,6 +88,7 @@ document.onkeydown =  (e => {
 });
 document.onkeyup = (e => {
   anyKeyPress = false;
+  anyKeyClick = false;
   clickedKeyList[event.keyCode] = false;
   inputedKeyList[event.keyCode] = false;
 });

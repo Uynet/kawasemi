@@ -315,6 +315,9 @@ export default class Art {
       //壊せる木箱
       woodbox: [PIXI.Texture.fromFrame("enemy40.png")]
     };
+    this.shopPattern = {
+        BG : PIXI.Texture.fromImage("src/resource/img/shop/shopBG.png")
+    };
     this.wallPattern = {
       block: PIXI.Texture.fromFrame("wallA4.png"),
       HPBlock: PIXI.Texture.fromFrame("wallA5.png"),
