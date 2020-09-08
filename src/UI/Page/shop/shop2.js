@@ -9,6 +9,7 @@ import NameLabel from "./nameLabel.js";
 import Game from "../../../game.js";
 import Key from "../../atoms/key.js";
 import Input from "../../../input.js";
+import ShopConfirmWindow from "./shopConfirmWindow.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
@@ -43,7 +44,19 @@ export default class Shop2 extends UIComponent{
         Audio.PlaySE("empty", -0.6, 0.8);
         Game.state.transit("main");
     }
+    buy(){
+        console.log("まいどあり～")
+    }
     onSelect(){
+        Audio.PlaySE("coin1");
+        this.setState({focused:this.selector});
+        this.selector.onSelect();
+        this.message.onSelect();
+    }
+    onDeselect(){
+        console.log(this.shopCarousel)
+        this.setState({focused:this.shopCarousel});
+        this.message.onFocus(this.shopCarousel);
     }
     render(){
        this.addChild(new ShopBG());
@@ -56,16 +69,17 @@ export default class Shop2 extends UIComponent{
 
        this.message = new ShopMessage();
 
-       const shopCarousel = new ShopCarousel(this.shopData);
-       shopCarousel.setProps({onSelect : this.onSelect});
-       shopCarousel.parent = this;
-       shopCarousel.focus();
-       this.shopCarousel = shopCarousel;
-       this.setState({focused:shopCarousel});
-       this.addChild(shopCarousel);
+       this.shopCarousel = new ShopCarousel(this.shopData);
+       this.shopCarousel.parent = this;
+       this.shopCarousel.focus();
+       this.setState({focused:this.shopCarousel});
+       this.addChild(this.shopCarousel);
 
        this.addChild(this.message);
 
+       this.selector = new ShopConfirmWindow();
+       this.selector.parent = this;
+       this.addChild(this.selector);
     }
     Update(){
         this.children.forEach(ui=>ui.Update());

@@ -122,7 +122,7 @@ export default class shopCarousel extends UIComponent{
         this.focus();
     }
     select(){
-       this.props.onSelect();
+       this.parent.onSelect();
     }
     Update(){
         this.ExecuteEvent();

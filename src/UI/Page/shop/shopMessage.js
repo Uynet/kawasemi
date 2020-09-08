@@ -36,6 +36,9 @@ export default class ShopMessage extends UIComponent{
         const data = shopcarousel.focusedItem.itemData;
         this.RenderText(data.description);
     }
+    onSelect(){
+        this.RenderText("購入します");
+    }
     Update(){
         this.children.forEach(u=>u.Update());
     }

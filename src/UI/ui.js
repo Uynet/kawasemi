@@ -66,7 +66,7 @@ export default class UI {
   //子供丸ごと消す
   Remove() {
     UIManager.remove(this);
-    //this.children.forEach(u => u.Remove());
+    this.children.forEach(u => u.Remove());
   }
   ExecuteEvent() {
     //アニメーションイベント
