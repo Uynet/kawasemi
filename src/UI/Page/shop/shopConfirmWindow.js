@@ -8,6 +8,7 @@ import Event from "../../../Event/event.js";
 
 const sustain = 10;
 const POSITION_TEXT = vec2(202,124);
+const POSITION_FRAME= vec2(182,118);
 
 class Focus extends Event {
   constructor(ui,start,end) {
@@ -51,19 +52,13 @@ export default class ShopConfirmWindow extends UIComponent{
         return items;
     }
     render() {
-        this.itemList.forEach(e=>this.addChild(e));
-        return;
-
-        const POSITION_FRAME= vec2(152,106);
-
         const frameUI = new UI(vec0());
-        frameUI.sprite = Art.CreateSprite(Art.UIPattern.message.frame);
-        frameUI.sprite.scale.x = 0.5;
-        frameUI.sprite.scale.y = 0.6;
+        frameUI.sprite = Art.CreateSprite(Art.UIPattern.message.smallFrame);
         frameUI.sprite.position = copy(POSITION_FRAME)
         this.frame = frameUI;
-
         this.addChild(frameUI);
+
+        this.itemList.forEach(e=>this.addChild(e));
     }
     onKeyClick(keyCodes){
         switch(keyCodes[0]){
