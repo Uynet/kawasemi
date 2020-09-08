@@ -9,7 +9,7 @@ export default class NameLabel extends UI{
         this.text;
     }
     RenderText(data) {
-        this.children.forEach(u => u.Remove());
+        this.children.forEach(u => this.removeChild(u));
 
         const POSITION_TEXT = vec2(86,48);
 

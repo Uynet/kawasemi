@@ -35,8 +35,8 @@ export default class Shop2 extends UIComponent{
     }
     onFocus(shopcarousel){
         this.message.onFocus(shopcarousel);
-        //this.parameterLabel.onFocus(shopcarousel);
-        //this.nameLabel.onFocus(shopcarousel);
+        this.parameterLabel.onFocus(shopcarousel);
+        this.nameLabel.onFocus(shopcarousel);
     }
     closeShop(){
         this.Remove();
@@ -47,25 +47,25 @@ export default class Shop2 extends UIComponent{
     }
     render(){
        this.addChild(new ShopBG());
+
+       this.parameterLabel= new ParameterLabel();
+       this.addChild(this.parameterLabel);
+
+       this.nameLabel= new NameLabel();
+       this.addChild(this.nameLabel);
+
+       this.message = new ShopMessage();
+
        const shopCarousel = new ShopCarousel(this.shopData);
        shopCarousel.setProps({onSelect : this.onSelect});
        shopCarousel.parent = this;
-
-       this.message = new ShopMessage();
+       shopCarousel.focus();
        this.shopCarousel = shopCarousel;
        this.setState({focused:shopCarousel});
        this.addChild(shopCarousel);
 
        this.addChild(this.message);
 
-       /*
-       this.parameterLabel= new ParameterLabel();
-       this.addChild(this.parameterLabel);
-
-       this.nameLabel= new NameLabel();
-       this.addChild(this.nameLabel);
-       this.parameterLabel= new ParameterLabel();
-       */
     }
     Update(){
         this.children.forEach(ui=>ui.Update());

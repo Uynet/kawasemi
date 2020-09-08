@@ -33,7 +33,6 @@ export default class ShopMessage extends UIComponent{
         this.addChild(contentUI);
     }
     onFocus(shopcarousel){
-        console.log(this.children)
         const data = shopcarousel.focusedItem.itemData;
         this.RenderText(data.description);
     }

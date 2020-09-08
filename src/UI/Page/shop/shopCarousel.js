@@ -88,9 +88,9 @@ export default class shopCarousel extends UIComponent{
     }
     focus(){
        Audio.PlaySE("clack2", -0.8, 1.0);
-       if(this.parent)this.parent.onFocus(this);
        this.itemLength = this.itemList.length;
        this.focusedItem = this.itemList[this.focusedPosition];
+       if(this.parent)this.parent.onFocus(this);
 
        this.itemList.forEach(e=>{
            if(e == this.focusedItem)e.Animate(new IconDeform(e,2,3));

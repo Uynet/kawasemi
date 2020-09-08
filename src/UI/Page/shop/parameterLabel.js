@@ -11,7 +11,7 @@ export default class ParameterLabel extends UIComponent{
         this.text;
     }
     RenderText(data) {
-        this.children.forEach(u => u.Remove());
+        this.children.forEach(u => this.removeChild(u));
 
         const dif = 14;
         const POSITION_TEXT_ATK = vec2(86,64);
