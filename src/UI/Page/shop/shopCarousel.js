@@ -4,6 +4,7 @@ import UI from "../../ui.js";
 import UIManager from "../../uiManager.js";
 import ShopIcon from "./shopIcon.js";
 import Event from "../../../Event/event.js";
+import Audio from "../../../audio.js";
 
 class Scroll extends Event {
   constructor(ui) {
@@ -86,9 +87,9 @@ export default class shopCarousel extends UIComponent{
         })
     }
     focus(){
+       Audio.PlaySE("clack2", -0.8, 1.0);
        if(this.parent)this.parent.onFocus(this);
        this.itemLength = this.itemList.length;
-       const preFocusedItem = this.focusedItem; 
        this.focusedItem = this.itemList[this.focusedPosition];
 
        this.itemList.forEach(e=>{

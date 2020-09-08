@@ -6,9 +6,9 @@ export default class Text extends UI{
     const defaultStyle = { fontFamily: 'gkktt', fontSize: 50, fill: 0xffffff }
     style = style?style:defaultStyle;
     /*基本情報*/
-    this.name = "font";
     this.isAlive = true; //消えたらfalse
     this.frame = 0; //stagepopでしか使ってない
+    this.type="text";
     /*スプライト*/
     this.str = str; //0~9
     this.sprite = new PIXI.Text(str,style) ;

@@ -10,8 +10,12 @@ export default class ShopMessage extends UIComponent{
         this.RenderText("test");
         this.text;
     }
+    CloseText(){
+        if(this.text)this.removeChild(this.text);
+        if(this.frame) this.removeChild(this.frame);
+    }
     RenderText(content) {
-        this.children.forEach(u => u.Remove());
+        this.CloseText()
 
         const POSITION_TEXT = vec2(26,164);
         const POSITION_FRAME= vec2(12,156);
@@ -23,12 +27,17 @@ export default class ShopMessage extends UIComponent{
         frameUI.sprite.scale.x = 2.5;
         frameUI.sprite.scale.y = 1.6;
         frameUI.sprite.position = copy(POSITION_FRAME)
+        this.frame = frameUI;
 
         this.addChild(frameUI);
         this.addChild(contentUI);
     }
     onFocus(shopcarousel){
+        console.log(this.children)
         const data = shopcarousel.focusedItem.itemData;
         this.RenderText(data.description);
+    }
+    Update(){
+        this.children.forEach(u=>u.Update());
     }
 }

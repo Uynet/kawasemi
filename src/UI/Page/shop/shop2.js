@@ -4,6 +4,11 @@ import Drawer from "../../../drawer.js";
 import Audio from "../../../audio.js";
 import ShopCarousel from "./shopCarousel.js";
 import ShopMessage from "./shopMessage.js";
+import ParameterLabel from "./parameterLabel.js";
+import NameLabel from "./nameLabel.js";
+import Game from "../../../game.js";
+import Key from "../../atoms/key.js";
+import Input from "../../../input.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
@@ -22,10 +27,21 @@ export default class Shop2 extends UIComponent{
     }
     onKeyClick(keyCode){
        if(!this.states.focused)return;
+       if(keyCode == KEY.C){
+            this.closeShop();
+            return;
+       }
        this.states.focused.onKeyClick(keyCode);
     }
-    onFocus(states){
-        this.message.onFocus(states);
+    onFocus(shopcarousel){
+        this.message.onFocus(shopcarousel);
+        //this.parameterLabel.onFocus(shopcarousel);
+        //this.nameLabel.onFocus(shopcarousel);
+    }
+    closeShop(){
+        this.Remove();
+        Audio.PlaySE("empty", -0.6, 0.8);
+        Game.state.transit("main");
     }
     onSelect(){
     }
@@ -35,12 +51,21 @@ export default class Shop2 extends UIComponent{
        shopCarousel.setProps({onSelect : this.onSelect});
        shopCarousel.parent = this;
 
+       this.message = new ShopMessage();
        this.shopCarousel = shopCarousel;
        this.setState({focused:shopCarousel});
        this.addChild(shopCarousel);
 
-       this.message = new ShopMessage();
        this.addChild(this.message);
+
+       /*
+       this.parameterLabel= new ParameterLabel();
+       this.addChild(this.parameterLabel);
+
+       this.nameLabel= new NameLabel();
+       this.addChild(this.nameLabel);
+       this.parameterLabel= new ParameterLabel();
+       */
     }
     Update(){
         this.children.forEach(ui=>ui.Update());

@@ -48,6 +48,7 @@ export default class Input {
     return anyKeyPress;
   }
   static isAnyKeyClick() {
+    //console.log(timer + "/" + Timer.timer)
     return timer==Timer.timer && anyKeyClick;
   }
   static addKeyListenner(entity, keyCode, handler) {
