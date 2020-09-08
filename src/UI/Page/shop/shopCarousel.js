@@ -6,6 +6,10 @@ import ShopIcon from "./shopIcon.js";
 import Event from "../../../Event/event.js";
 import Audio from "../../../audio.js";
 
+
+const offsetY = 40;
+const sustain = 10;
+
 class Scroll extends Event {
   constructor(ui) {
     super(1);
@@ -15,10 +19,9 @@ class Scroll extends Event {
     const ease = x => {
       return 1-Math.pow(1-x , 8);
     };
-    const sustain = 10;
     function* gen() {
       const start = currentPos.y;
-      const end = 50 - 48* ui.focusedPosition;
+      const end = 50 - offsetY * ui.focusedPosition;
       while (frame <= sustain) {
         ui.sprite.position.y = lerp(end ,start, ease(frame/sustain))
 
@@ -37,7 +40,6 @@ class IconDeform extends Event {
     const ease = x => {
       return 1-Math.pow(1-x , 8);
     };
-    const sustain = 10;
     function* gen() {
       while (frame <= sustain) {
           let scale = lerp(end ,start, ease(frame/sustain));
@@ -69,7 +71,6 @@ export default class shopCarousel extends UIComponent{
     createItems(){
         let items = [];
         let p= vec0();
-        const offsetY = 48;
         for(let data in this.shopData){
             const icon = new ShopIcon(p);
             icon.sprite = Art.Sprite(Art.UIPattern.bullet.icon[data]);
@@ -113,11 +114,11 @@ export default class shopCarousel extends UIComponent{
         }
     }
     moveDown(){
-        this.focusedPosition = Math.min(this.itemLength-1 , this.focusedPosition+1);
+        this.focusedPosition = (this.focusedPosition+1 )%this.itemLength;
         this.focus();
     }
     moveUp(){
-        this.focusedPosition = Math.max(0 , this.focusedPosition-1);
+        this.focusedPosition = (this.itemLength + this.focusedPosition-1) % this.itemLength;
         this.focus();
     }
     select(){

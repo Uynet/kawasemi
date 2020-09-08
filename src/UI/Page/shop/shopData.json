@@ -1,7 +1,15 @@
 {
+    "normal" : {
+       "price" : 100,
+       "name" : "Bullet",
+       "description" : "連射できるけど弱い",
+       "cost" : 50 ,
+       "atk" : 40 ,
+       "agi" : 20
+    },
     "missile" : {
        "price" : 100,
-       "name" : "ミサイル",
+       "name" : "Missile",
        "description" : "強力な爆発する弾頭を射出する",
        "cost" : 50 ,
        "atk" : 40 ,
@@ -9,7 +17,7 @@
     },
     "laser" : {
        "price" : 100,
-       "name" : "レーザー",
+       "name" : "LASER",
        "description" : "直線上の物体を焼き切る",
        "cost" : 50 ,
        "atk" : 40 ,
@@ -17,7 +25,7 @@
     },
     "fire" : {
        "price" : 100,
-       "name" : "バーナー",
+       "name" : "Fire",
        "description" : "持続する炎を噴出する",
        "cost" : 50 ,
        "atk" : 40 ,
@@ -25,8 +33,32 @@
     },
     "weapon5" : {
        "price" : 100,
-       "name" : "バリア",
+       "name" : "Barrier",
        "description" : "1秒だけバリアを展開する",
+       "cost" : 50 ,
+       "atk" : 40 ,
+       "agi" : 20
+    },
+    "weapon6" : {
+       "price" : 100,
+       "name" : "Thunder",
+       "description" : "",
+       "cost" : 50 ,
+       "atk" : 40 ,
+       "agi" : 20
+    },
+    "weapon7" : {
+       "price" : 100,
+       "name" : "Blade",
+       "description" : "",
+       "cost" : 50 ,
+       "atk" : 40 ,
+       "agi" : 20
+    },
+    "question" : {
+       "price" : 100,
+       "name" : "???",
+       "description" : "???",
        "cost" : 50 ,
        "atk" : 40 ,
        "agi" : 20

@@ -11,9 +11,10 @@ export default class NameLabel extends UI{
     RenderText(data) {
         this.children.forEach(u => this.removeChild(u));
 
-        const POSITION_TEXT = vec2(86,48);
+        const style = { fontFamily: 'gkktt', fontSize: 80, fill: 0xffffff }
+        const POSITION_TEXT = vec2(86,60);
 
-        this.addChild(new Text(POSITION_TEXT, data.name));
+        this.addChild(new Text(POSITION_TEXT, data.name,style));
     }
     onFocus(shopcarousel){
         const data = shopcarousel.focusedItem.itemData;
