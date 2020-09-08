@@ -27,9 +27,9 @@
        "price" : 500,
        "name" : "Fire",
        "description" : "持続する炎を噴出する",
-       "cost" : 50 ,
-       "atk" : 40 ,
-       "agi" : 20
+       "cost" : 1 ,
+       "atk" : "1-2" ,
+       "agi" : 1
     },
     "weapon5" : {
        "price" : 1000,

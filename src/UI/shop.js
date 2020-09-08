@@ -93,18 +93,6 @@ export default class Shop extends UI {
        [node] : 子を持つノード。プロパティ名に対応するスタイルが適用される
        leaf : このノードが葉であることを宣言、要素のUIがレンダリングされる
        */
-    /*
-    const shopComponent = {
-      div: {
-        leaf :this.controller,
-        itemName: this.itemNameUI,
-        price: this.priceTextUI,
-        list: itemListUI,
-        keyGuide: this.keyGuideTextUI,
-        description: this.descriptionTextUI
-      }
-    };
-    */
     const shopComponent = {
       div: {
         itemName: { leaf: this.itemNameUI },

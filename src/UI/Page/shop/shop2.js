@@ -35,6 +35,10 @@ export default class Shop2 extends UIComponent{
        this.states.focused.onKeyClick(keyCode);
     }
     onFocus(shopcarousel){
+        if(this.parameterLabel)this.removeChild(this.parameterLabel);
+        this.parameterLabel= new ParameterLabel();
+        this.addChild(this.parameterLabel);
+
         this.message.onFocus(shopcarousel);
         this.parameterLabel.onFocus(shopcarousel);
         this.nameLabel.onFocus(shopcarousel);
@@ -49,6 +53,10 @@ export default class Shop2 extends UIComponent{
     }
     onSelect(){
         Audio.PlaySE("coin1");
+        this.selector = new ShopConfirmWindow();
+        this.selector.parent = this;
+        this.addChild(this.selector);
+
         this.setState({focused:this.selector});
         this.selector.onSelect();
         this.message.onSelect();
@@ -61,8 +69,6 @@ export default class Shop2 extends UIComponent{
     render(){
        this.addChild(new ShopBG());
 
-       this.parameterLabel= new ParameterLabel();
-       this.addChild(this.parameterLabel);
 
        this.nameLabel= new NameLabel();
        this.addChild(this.nameLabel);
@@ -77,9 +83,6 @@ export default class Shop2 extends UIComponent{
 
        this.addChild(this.message);
 
-       this.selector = new ShopConfirmWindow();
-       this.selector.parent = this;
-       this.addChild(this.selector);
     }
     Update(){
         this.children.forEach(ui=>ui.Update());

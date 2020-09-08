@@ -39,7 +39,7 @@ export default class ShopConfirmWindow extends UIComponent{
         let items = [];
         let selects = ["はい","いいえ"];
 
-        let p = POSITION_TEXT ;
+        let p = copy(POSITION_TEXT);
         const offsetY = 14;
 
         selects.forEach(e=>{
@@ -92,14 +92,12 @@ export default class ShopConfirmWindow extends UIComponent{
 
        //prev focused
        this.focusedItem.Animate(new Focus(this.focusedItem , POSITION_TEXT.x - 10 , POSITION_TEXT.x));
-       
 
        this.itemLength = this.itemList.length;
        this.focusedItem = this.itemList[this.focusedPosition];
 
        //curret focused
        this.focusedItem.Animate(new Focus(this.focusedItem , POSITION_TEXT.x , POSITION_TEXT.x - 10));
-       
     }
     select(){
        switch(this.focusedItem.str) {
@@ -111,9 +109,9 @@ export default class ShopConfirmWindow extends UIComponent{
     selectYes(){
         Audio.PlaySE("itemGet", -0.3);
 
-        console.log(this.children)
-        this.Remove();
         this.children.forEach(e => this.removeChild(e));
+        this.parent.removeChild(this);
+
         console.log(this.children)
 
         this.parent.buy();
@@ -122,7 +120,8 @@ export default class ShopConfirmWindow extends UIComponent{
     selectNo(){
         Audio.PlaySE("empty", -0.6, 0.8);
 
-        this.Remove();
+        this.children.forEach(e => this.removeChild(e));
+        this.parent.removeChild(this);
 
         this.parent.onDeselect();
     }

@@ -70,7 +70,7 @@ export default class UIManager {
     let layer = ui.layer;
     if (!layer) layer = "UI";
 
-    if (ui.children) ui.children.forEach(e => UIManager.remove(e));
+    //if (ui.children) ui.children.forEach(e => UIManager.remove(e));
 
     UIManager.UIList.remove(ui);
     Drawer.remove(ui.sprite, layer);

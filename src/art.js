@@ -175,7 +175,8 @@ export default class Art {
         icon: PIXI.Texture.fromFrame("UI09.png")
       },
       message: {
-        frame: PIXI.Texture.fromFrame("UI20.png")
+        frame: PIXI.Texture.fromFrame("UI20.png"),
+        smallFrame: PIXI.Texture.fromImage("src/resource/img/UI/smallFrame.png")
       },
       key: {
         X: [
