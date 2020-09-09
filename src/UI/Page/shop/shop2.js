@@ -11,6 +11,8 @@ import Key from "../../atoms/key.js";
 import Input from "../../../input.js";
 import ShopConfirmWindow from "./shopConfirmWindow.js";
 import PriceLabel from "./priceLabel.js";
+import EntityManager from "../../../Stage/entityManager.js";
+import Param from "../../../param.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
@@ -25,6 +27,7 @@ export default class Shop2 extends UIComponent{
         this.stetes = {focused:null}
         this.shopData = shopData;
 
+        this.selectedItem;
         this.render();
     }
     onKeyClick(keyCode){
@@ -57,9 +60,15 @@ export default class Shop2 extends UIComponent{
         Game.state.transit("main");
     }
     buy(){
-        console.log("まいどあり～")
+        const player = EntityManager.player;
+        const price = this.selectedItem.itemData.price;
+        player.GetScore(-price);
+        const itemID = this.selectedItem.itemID;
+        Param.GetWeapon(itemID);
+        Audio.PlaySE("itemGet", -0.3);
+        this.onDeselect();
     }
-    onSelect(){
+    openConfirmWindow(){
         Audio.PlaySE("coin1");
         this.selector = new ShopConfirmWindow();
         this.selector.parent = this;
@@ -69,14 +78,22 @@ export default class Shop2 extends UIComponent{
         this.selector.onSelect();
         this.message.onSelect();
     }
+    buycancel(){
+        this.selector.onDelect();
+        this.message.onBuyCancel();
+    }
+    onSelect(selectedItem , isBuyable){
+        this.selectedItem = selectedItem;
+        if(isBuyable)this.openConfirmWindow();
+        else this.buycancel();
+    }
     onDeselect(){
-        console.log(this.shopCarousel)
         this.setState({focused:this.shopCarousel});
         this.message.onFocus(this.shopCarousel);
+        this.removeChild(this.selector);
     }
     render(){
        this.addChild(new ShopBG());
-
 
        this.nameLabel= new NameLabel();
        this.addChild(this.nameLabel);

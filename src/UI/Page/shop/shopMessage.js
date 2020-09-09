@@ -39,6 +39,9 @@ export default class ShopMessage extends UIComponent{
     onSelect(){
         this.RenderText("購入します");
     }
+    onBuyCancel(){
+        this.RenderText("お金がない");
+    }
     Update(){
         this.children.forEach(u=>u.Update());
     }

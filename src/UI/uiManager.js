@@ -56,7 +56,6 @@ export default class UIManager {
   //UIをリストに登録
   static add(ui) {
     let layer = ui.layer;
-    console.log(ui.type + ":" +layer)
     if (!layer) layer = "UI";
 
     UIManager.UIList.push(ui);

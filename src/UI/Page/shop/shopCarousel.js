@@ -5,6 +5,7 @@ import UIManager from "../../uiManager.js";
 import ShopIcon from "./shopIcon.js";
 import Event from "../../../Event/event.js";
 import Audio from "../../../audio.js";
+import EntityManager from "../../../Stage/entityManager.js";
 
 
 const offsetY = 40;
@@ -77,6 +78,7 @@ export default class shopCarousel extends UIComponent{
             icon.sprite.position = p;
             icon.name = data;
             icon.itemData = this.shopData[data];
+            icon.itemID = data;
             p.y += offsetY;
             items.push(icon);
         }
@@ -122,7 +124,11 @@ export default class shopCarousel extends UIComponent{
         this.focus();
     }
     select(){
-       this.parent.onSelect();
+      const player = EntityManager.player;
+      const price = this.focusedItem.itemData.price;
+      const isBuyable = (price <= player.score);
+      const selectedItem = this.focusedItem;
+      this.parent.onSelect(selectedItem , isBuyable);
     }
     Update(){
         this.ExecuteEvent();

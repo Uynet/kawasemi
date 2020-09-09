@@ -8,7 +8,7 @@ import Event from "../../../Event/event.js";
 
 const sustain = 10;
 const POSITION_TEXT = vec2(202,124);
-const POSITION_FRAME= vec2(182,118);
+const POSITION_FRAME= vec2(185,118);
 
 class Focus extends Event {
   constructor(ui,start,end) {
@@ -104,19 +104,10 @@ export default class ShopConfirmWindow extends UIComponent{
     selectYes(){
         Audio.PlaySE("itemGet", -0.3);
 
-        this.children.forEach(e => this.removeChild(e));
-        this.parent.removeChild(this);
-
-        console.log(this.children)
-
         this.parent.buy();
-        this.parent.onDeselect();
     }
     selectNo(){
         Audio.PlaySE("empty", -0.6, 0.8);
-
-        this.children.forEach(e => this.removeChild(e));
-        this.parent.removeChild(this);
 
         this.parent.onDeselect();
     }
