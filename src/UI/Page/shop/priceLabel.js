@@ -13,6 +13,7 @@ export default class PriceLabel extends UIComponent{
         this.children.forEach(u => u.Remove());
 
         const POSITION_TEXT = vec2(28,68);
+
         const style = { fontFamily: 'gkktt', fontSize: 50, fill: 0x000000 }
         const contentUI = new Text(POSITION_TEXT, content , style);
         this.text = contentUI;
@@ -21,8 +22,6 @@ export default class PriceLabel extends UIComponent{
 
         const BG = new UI(vec0());
         const rect = new PIXI.Graphics();
-        this.color = 0xffa219;
-        this.size = 16;
         const w = 6 + digit * 8;
         const h = 10;
         rect.beginFill(0xffd84d);

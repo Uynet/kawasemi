@@ -5,28 +5,11 @@ import UI from "../../ui.js";
 import Art from "../../../art.js";
 import Audio from "../../../audio.js";
 import Event from "../../../Event/event.js";
+import shopSelectItem from "./shopSelectItem.js";
 
-const sustain = 10;
-const POSITION_TEXT = vec2(202,124);
+const POSITION_TEXT = vec2(192,124);
 const POSITION_FRAME= vec2(185,118);
 
-class Focus extends Event {
-  constructor(ui,start,end) {
-    super(1);
-    let frame = 0;
-    const ease = x => {
-      return 1-Math.pow(1-x , 8);
-    };
-    function* gen() {
-      while (frame <= sustain) {
-        ui.sprite.position.x = lerp(end ,start, ease(frame/sustain))
-        frame++;
-        yield;
-      }
-    }
-    this.func = gen();
-  }
-}
 
 export default class ShopConfirmWindow extends UIComponent{ 
     constructor(){
@@ -44,10 +27,8 @@ export default class ShopConfirmWindow extends UIComponent{
         const offsetY = 14;
 
         selects.forEach(e=>{
-            const contentUI = new Text(p , e);
-            this.text = contentUI;
+            items.push( new shopSelectItem(p , e));
             p.y += offsetY;
-            items.push(contentUI);
         })
         return items;
     }
@@ -64,7 +45,7 @@ export default class ShopConfirmWindow extends UIComponent{
         switch(keyCodes[0]){
             case KEY.X : this.select(); 
                 break;
-            case KEY.C : this.deselect(); 
+            case KEY.C : this.selectNo(); 
                 break;
             case KEY.DOWN : 
             case KEY.RIGHT : this.moveDown();
@@ -82,20 +63,25 @@ export default class ShopConfirmWindow extends UIComponent{
         this.focusedPosition = (this.itemLength + this.focusedPosition-1) % this.itemLength;
         this.focus();
     }
+    // only called when opened window
+    initFocus(){
+       this.itemLength = this.itemList.length;
+       this.focusedItem = this.itemList[this.focusedPosition];
+       this.focusedItem.onFocus();
+    }
     focus(){
        Audio.PlaySE("clack2", -0.8, 1.0);
 
        //prev focused
-       this.focusedItem.Animate(new Focus(this.focusedItem , POSITION_TEXT.x - 10 , POSITION_TEXT.x));
+       this.focusedItem.onDefocus();
 
-       this.itemLength = this.itemList.length;
        this.focusedItem = this.itemList[this.focusedPosition];
 
        //curret focused
-       this.focusedItem.Animate(new Focus(this.focusedItem , POSITION_TEXT.x , POSITION_TEXT.x - 10));
+       this.focusedItem.onFocus();
     }
     select(){
-       switch(this.focusedItem.str) {
+       switch(this.focusedItem.text) {
         case "はい" : this.selectYes();break;
         case "いいえ" : this.selectNo();break;
         default : console.error("p");
@@ -113,7 +99,7 @@ export default class ShopConfirmWindow extends UIComponent{
     }
     onSelect(){
         this.render();
-        this.focus();
+        this.initFocus();
     }
     Update(){
         this.ExecuteEvent();

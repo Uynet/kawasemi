@@ -108,6 +108,8 @@ export default class shopCarousel extends UIComponent{
         switch(keyCodes[0]){
             case KEY.X : this.select(); 
                 break;
+            case KEY.C : this.parent.close(); 
+                break;
             case KEY.DOWN : 
             case KEY.RIGHT : this.moveDown();
                 break;

@@ -7,13 +7,15 @@ import ShopMessage from "./shopMessage.js";
 import ParameterLabel from "./parameterLabel.js";
 import NameLabel from "./nameLabel.js";
 import Game from "../../../game.js";
-import Key from "../../atoms/key.js";
-import Input from "../../../input.js";
 import ShopConfirmWindow from "./shopConfirmWindow.js";
 import PriceLabel from "./priceLabel.js";
 import EntityManager from "../../../Stage/entityManager.js";
 import Param from "../../../param.js";
 import ShopNote from "./shopNote.js";
+import ShopScore from "./shopScore.js";
+import Flags from "../../../Scene/Script/flags.js";
+import UIManager from "../../uiManager.js";
+import KeyGuide5 from "../../molecules/keyGuide5.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
@@ -33,10 +35,6 @@ export default class Shop2 extends UIComponent{
     }
     onKeyClick(keyCode){
        if(!this.states.focused)return;
-       if(keyCode == KEY.C){
-            this.closeShop();
-            return;
-       }
        this.states.focused.onKeyClick(keyCode);
     }
     onFocus(shopcarousel){
@@ -55,10 +53,14 @@ export default class Shop2 extends UIComponent{
         this.nameLabel.onFocus(shopcarousel);
         this.priceLabel.onFocus(shopcarousel);
     }
-    closeShop(){
+    close(){
         this.Remove();
         Audio.PlaySE("empty", -0.6, 0.8);
         Game.state.transit("main");
+        if (Flags.isFirsttimeOfWeaponGet) {
+            UIManager.add(new KeyGuide5(vec2(100, 100)));
+            Flags.isFirsttimeOfWeaponGet = false;
+        }
     }
     buy(){
         const player = EntityManager.player;
@@ -74,7 +76,6 @@ export default class Shop2 extends UIComponent{
         this.selector = new ShopConfirmWindow();
         this.selector.parent = this;
         this.addChild(this.selector);
-
         this.setState({focused:this.selector});
         this.selector.onSelect();
         this.message.onSelect();
@@ -97,6 +98,7 @@ export default class Shop2 extends UIComponent{
     render(){
        this.addChild(new ShopBG());
        this.addChild(new ShopNote());
+       // this.addChild(new ShopScore());
 
        this.nameLabel= new NameLabel();
        this.addChild(this.nameLabel);
