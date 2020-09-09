@@ -13,6 +13,7 @@ import ShopConfirmWindow from "./shopConfirmWindow.js";
 import PriceLabel from "./priceLabel.js";
 import EntityManager from "../../../Stage/entityManager.js";
 import Param from "../../../param.js";
+import ShopNote from "./shopNote.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
@@ -79,7 +80,8 @@ export default class Shop2 extends UIComponent{
         this.message.onSelect();
     }
     buycancel(){
-        this.selector.onDelect();
+        Audio.PlaySE("playerDamage");
+        //this.removeChild(this.selector);
         this.message.onBuyCancel();
     }
     onSelect(selectedItem , isBuyable){
@@ -94,6 +96,7 @@ export default class Shop2 extends UIComponent{
     }
     render(){
        this.addChild(new ShopBG());
+       this.addChild(new ShopNote());
 
        this.nameLabel= new NameLabel();
        this.addChild(this.nameLabel);
