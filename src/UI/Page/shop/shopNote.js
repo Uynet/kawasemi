@@ -7,7 +7,7 @@ export default class ShopNote extends UI{
     constructor(){
         super(vec2(220,20));
         const style = { fontFamily: 'gkktt', fontSize: 50, fill: 0xcfcdc9}
-        const p1 = vec0();
+        const p1 = vec2(-38 , 15);
         const p2 = vec2(0 , 15);
         
         const x = new Key(p1 , "X");

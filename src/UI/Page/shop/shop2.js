@@ -67,6 +67,9 @@ export default class Shop2 extends UIComponent{
         const price = this.selectedItem.itemData.price;
         player.GetScore(-price);
         const itemID = this.selectedItem.itemID;
+
+        this.shopScore.setScore(player.score);
+
         Param.GetWeapon(itemID);
         Audio.PlaySE("itemGet", -0.3);
         this.onDeselect();
@@ -96,22 +99,23 @@ export default class Shop2 extends UIComponent{
         this.removeChild(this.selector);
     }
     render(){
-       this.addChild(new ShopBG());
-       this.addChild(new ShopNote());
-       // this.addChild(new ShopScore());
+        this.shopScore = new ShopScore();
+        this.addChild(new ShopBG());
+        this.addChild(new ShopNote());
+        this.addChild(this.shopScore);
 
-       this.nameLabel= new NameLabel();
-       this.addChild(this.nameLabel);
+        this.nameLabel= new NameLabel();
+        this.addChild(this.nameLabel);
 
-       this.message = new ShopMessage();
+        this.message = new ShopMessage();
 
-       this.shopCarousel = new ShopCarousel(this.shopData);
-       this.shopCarousel.parent = this;
-       this.shopCarousel.focus();
-       this.setState({focused:this.shopCarousel});
-       this.addChild(this.shopCarousel);
+        this.shopCarousel = new ShopCarousel(this.shopData);
+        this.shopCarousel.parent = this;
+        this.shopCarousel.focus();
+        this.setState({focused:this.shopCarousel});
+        this.addChild(this.shopCarousel);
 
-       this.addChild(this.message);
+        this.addChild(this.message);
 
     }
     Update(){
