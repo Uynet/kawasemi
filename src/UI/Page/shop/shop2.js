@@ -10,6 +10,7 @@ import Game from "../../../game.js";
 import Key from "../../atoms/key.js";
 import Input from "../../../input.js";
 import ShopConfirmWindow from "./shopConfirmWindow.js";
+import PriceLabel from "./priceLabel.js";
 
 const gameSreensize = Drawer.GetGameScreenSize();
 
@@ -36,12 +37,19 @@ export default class Shop2 extends UIComponent{
     }
     onFocus(shopcarousel){
         if(this.parameterLabel)this.removeChild(this.parameterLabel);
-        this.parameterLabel= new ParameterLabel();
+        if(this.priceLabel)this.removeChild(this.priceLabel);
+
+        this.parameterLabel = new ParameterLabel();
         this.addChild(this.parameterLabel);
 
+        this.priceLabel = new PriceLabel();
+        this.addChild(this.priceLabel);
+
+        //forEach children
         this.message.onFocus(shopcarousel);
         this.parameterLabel.onFocus(shopcarousel);
         this.nameLabel.onFocus(shopcarousel);
+        this.priceLabel.onFocus(shopcarousel);
     }
     closeShop(){
         this.Remove();
