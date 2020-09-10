@@ -69,7 +69,7 @@ export default class Shop2 extends UIComponent{
         const itemID = this.selectedItem.itemID;
 
         this.shopScore.setScore(player.score);
-
+        this.onFocus(this.shopCarousel);
         Param.GetWeapon(itemID);
         Audio.PlaySE("itemGet", -0.3);
         this.onDeselect();
