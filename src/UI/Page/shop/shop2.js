@@ -69,8 +69,8 @@ export default class Shop2 extends UIComponent{
         const itemID = this.selectedItem.itemID;
 
         this.shopScore.setScore(player.score);
-        this.onFocus(this.shopCarousel);
         Param.GetWeapon(itemID);
+        this.onFocus(this.shopCarousel);
         Audio.PlaySE("itemGet", -0.3);
         this.onDeselect();
     }
@@ -83,15 +83,22 @@ export default class Shop2 extends UIComponent{
         this.selector.onSelect();
         this.message.onSelect();
     }
-    buycancel(){
+    buycancel(code){
         Audio.PlaySE("playerDamage");
         //this.removeChild(this.selector);
-        this.message.onBuyCancel();
+        this.message.onBuyCancel(code);
     }
-    onSelect(selectedItem , isBuyable){
+    onSelect(selectedItem , isBuyable , isSoldOut){
         this.selectedItem = selectedItem;
-        if(isBuyable)this.openConfirmWindow();
-        else this.buycancel();
+        let code;
+        if(isBuyable && !isSoldOut){
+            this.openConfirmWindow();
+            return;
+        }
+        if(!isBuyable) code = "NOMONEY";
+        else if(isSoldOut) code = "SOLDOUT";
+
+        this.buycancel(code);
     }
     onDeselect(){
         this.setState({focused:this.shopCarousel});

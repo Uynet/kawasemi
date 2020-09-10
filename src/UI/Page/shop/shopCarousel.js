@@ -6,6 +6,7 @@ import ShopIcon from "./shopIcon.js";
 import Event from "../../../Event/event.js";
 import Audio from "../../../audio.js";
 import EntityManager from "../../../Stage/entityManager.js";
+import Param from "../../../param.js";
 
 
 const offsetY = 40;
@@ -130,7 +131,8 @@ export default class shopCarousel extends UIComponent{
       const price = this.focusedItem.itemData.price;
       const isBuyable = (price <= player.score);
       const selectedItem = this.focusedItem;
-      this.parent.onSelect(selectedItem , isBuyable);
+      const isSoldOut = Param.isHaveWeapon(selectedItem.name);
+      this.parent.onSelect(selectedItem , isBuyable , isSoldOut);
     }
     Update(){
         this.ExecuteEvent();

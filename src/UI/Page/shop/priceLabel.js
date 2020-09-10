@@ -4,18 +4,23 @@ import Text from "../../text.js";
 import UI from "../../ui.js";
 import Art from "../../../art.js";
 import EntityManager from "../../../Stage/entityManager.js";
+import Param from "../../../param.js";
 
 export default class PriceLabel extends UIComponent{ 
     constructor(){
         super(vec0());
         this.text;
         this.price;
+        this.isSoldOut;
     }
     onBought(){
         this.RenderText(this.price);
+        this.isSoldOut = true;
     }
     RenderText(content) {
-        const isBuyable = EntityManager.player.score >= this.price;
+        this.isSoldOut = Param.isHaveWeapon(this.itemName);
+        const isBuyable = EntityManager.player.score >= this.price && !this.isSoldOut;
+        if(this.isSoldOut)content = "SOLD";
 
         const textColor = isBuyable ? 0x000000 : 0x444444;
         const BGColor = isBuyable ? 0xffd84d : 0x999999;
@@ -45,8 +50,12 @@ export default class PriceLabel extends UIComponent{
         //this.sprite.rotation = -0.04;
     }
     onFocus(shopcarousel){
+        //すでに持っている武器はSOLD OUTと表示
         const data = shopcarousel.focusedItem.itemData;
+        this.itemName = shopcarousel.focusedItem.name
+        this.isSoldOut = Param.isHaveWeapon(this.itemData);
         this.price = data.price;
+
         this.RenderText(data.price + "円");
     }
 }
