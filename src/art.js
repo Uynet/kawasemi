@@ -158,7 +158,10 @@ export default class Art {
           laser: PIXI.Texture.fromFrame("UI19.png"),
           normal: PIXI.Texture.fromFrame("UI1A.png"),
           fire: PIXI.Texture.fromFrame("UI1B.png"),
-          weapon5: PIXI.Texture.fromFrame("UI1C.png")
+          weapon5: PIXI.Texture.fromFrame("UI1C.png"),
+          weapon6: PIXI.Texture.fromFrame("UI1D.png"),
+          weapon7: PIXI.Texture.fromFrame("UI1E.png"),
+          question: PIXI.Texture.fromFrame("UI1F.png"),
         },
         pop: {
           normal: PIXI.Texture.fromFrame("UI30.png"),
@@ -172,7 +175,8 @@ export default class Art {
         icon: PIXI.Texture.fromFrame("UI09.png")
       },
       message: {
-        frame: PIXI.Texture.fromFrame("UI20.png")
+        frame: PIXI.Texture.fromFrame("UI20.png"),
+        smallFrame: PIXI.Texture.fromImage("src/resource/img/UI/smallFrame.png")
       },
       key: {
         X: [
@@ -315,6 +319,9 @@ export default class Art {
       enemy6: this.Frame("enemy", 80, 2),
       //壊せる木箱
       woodbox: [PIXI.Texture.fromFrame("enemy40.png")]
+    };
+    this.shopPattern = {
+        BG : PIXI.Texture.fromImage("src/resource/img/shop/shopBG.png")
     };
     this.wallPattern = {
       block: PIXI.Texture.fromFrame("wallA4.png"),

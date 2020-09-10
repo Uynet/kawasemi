@@ -5,18 +5,21 @@ export default class Text extends UI{
     super(pos);
     const defaultStyle = { fontFamily: 'gkktt', fontSize: 50, fill: 0xffffff }
     style = style?style:defaultStyle;
-    /*基本情報*/
-    this.name = "font";
-    this.isAlive = true; //消えたらfalse
-    this.frame = 0; //stagepopでしか使ってない
-    /*スプライト*/
-    this.str = str; //0~9
+    this.style = style;
+
+    this.frame = 0;
+    this.type="text";
+    this.str = str; // text
+
     this.sprite = new PIXI.Text(str,style) ;
     this.sprite.scale.set(0.2);
     this.sprite.position = copy(this.pos);
   }
+  setStyle(style){
+    this.sprite.style = style;
+  }
   ChangeText(text) {
-    this.sprite.updateText(text);
+    this.sprite.text = text;
   }
   SetPos(pos) {
     this.pos = copy(pos);

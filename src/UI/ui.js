@@ -59,6 +59,10 @@ export default class UI {
     this.sprite.addChild(ui.sprite); //TODO:Modelとviewを完全に分離する(この行を消す)
     this.children.push(ui); //こっちはModelなので残す
   }
+  removeChild(ui){
+    this.sprite.removeChild(ui.sprite);
+    this.children.remove(ui);
+  }
   //子供丸ごと消す
   Remove() {
     UIManager.remove(this);
