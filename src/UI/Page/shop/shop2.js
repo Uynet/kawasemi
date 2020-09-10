@@ -111,9 +111,9 @@ export default class Shop2 extends UIComponent{
 
         this.shopCarousel = new ShopCarousel(this.shopData);
         this.shopCarousel.parent = this;
+        this.addChild(this.shopCarousel);
         this.shopCarousel.focus();
         this.setState({focused:this.shopCarousel});
-        this.addChild(this.shopCarousel);
 
         this.addChild(this.message);
 
