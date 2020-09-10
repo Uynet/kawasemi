@@ -52,6 +52,8 @@ export default class TitleScene extends Scene {
 
   Input() {
     if (Input.isAnyKeyClick()) {
+        this.GoToWorldMap();
+        return;
         if(!Flags.a) this.GoToScript();
         else this.GoToWorldMap();
     }

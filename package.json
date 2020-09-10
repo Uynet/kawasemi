@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "http-server": "^0.11.1",
-    "pixi-gl-core": "^1.1.4"
+    "pixi-gl-core": "^1.1.4",
+    "pixi.js": "^5.3.3"
   }
 }

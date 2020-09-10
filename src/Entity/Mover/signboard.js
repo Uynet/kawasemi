@@ -47,10 +47,10 @@ export default class Signboard extends BackEntity {
   Update() {
     if (this.isCanRead()) {
       if (Input.isKeyClick(KEY.UP)) {
-        Game.state.transit("script");
-        Game.state.getState().setScript(new TestScript());
-        // Game.state.transit("message");
-        // UIManager.add(new Message(POS_MES, this)); //枠
+        //Game.state.transit("script");
+        //Game.state.getState().setScript(new TestScript());
+        Game.state.transit("message");
+        UIManager.add(new Message(POS_MES, this)); //枠
       }
     }
     //this.popup.sprite.alpha = this.isCanRead() ? 1 : 0;
