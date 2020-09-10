@@ -498,6 +498,7 @@ export default class Player extends Entity {
   Dying() {
     //死亡中
     if (this.isDying) {
+    Audio.StopBGM();
       //まだ死んでない
       if (this.frame - this.frameDead < 100 * Timer.GetTimeScale()) {
         this.isDying = true;
