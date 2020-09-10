@@ -20,6 +20,7 @@ export default class Drawer {
      * fore:手前に描画
      * UIコンテナ:UIを描画するレイヤ
      * */
+    this.defaultMagnification = DEFAULT_MAGNIFICATION;
 
     let Re = new PIXI.Rectangle(0, 0, PIXI_WIDTH / 2, PIXI_HEIGHT / 2);
     this.renderTarget = new PIXI.Sprite();

@@ -3,6 +3,7 @@ import Game from "../game.js";
 import Event from "./event.js";
 import MapData from "../Stage/mapData.js";
 import UIManager from "../UI/uiManager.js";
+import Drawer from "../drawer.js";
 
 export default class GameOverEvent extends Event {
   constructor() {
@@ -21,6 +22,7 @@ export default class GameOverEvent extends Event {
         } else {
           MapData.DeleteStage();
           UIManager.CleanBack();
+          Drawer.SetMagnification(Drawer.defaultMagnification);
           Game.state.transit("worldMap");
         }
       };
