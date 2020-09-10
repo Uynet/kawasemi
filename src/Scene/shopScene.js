@@ -27,7 +27,7 @@ export default class ShopScene extends Scene {
   }
   Input(){
     if(!this.shop)return;
-    if(Input.isAnyKeyClick()) this.shop.onKeyClick(Input.getClickedKeys());
+    if(Input.isAnyKeyPress()) this.shop.onKeyClick(Input.getPressedKeys());
   }
   Update() {
     EntityManager.Animation();

@@ -3,9 +3,11 @@ import Game from "./game.js";
 
 let inputedKeyList = new Array(256).fill(false);
 let clickedKeyList = new Array(256).fill(false);
-let anyKeyPress = false;
+let anyKeyDown = false;
 let anyKeyClick= false;
 let timer = 0;
+
+
 
 export default class Input {
   //入力を禁止する
@@ -31,10 +33,11 @@ export default class Input {
     }
   }
   //押してからちょっと時間がたつとtrue
+  //UIの長押しの際などに必要となる挙動
   static isKeyPress(key) {
     const t = Timer.timer - timer;
     return (
-      //200ミリ秒がいいらしい
+      //Click後にインターバルをおいた後、一定の間隔で押下判定
       Input.isKeyClick(key) || (t > 12 && t % 5 == 0 && Input.isKeyInput(key))
     );
   }
@@ -45,7 +48,11 @@ export default class Input {
     inputedKeyList[key] = false;
   }
   static isAnyKeyPress() {
-    return anyKeyPress;
+    const t = Timer.timer - timer;
+    return (
+      //Click後にインターバルをおいた後、一定の間隔で押下判定
+      Input.isAnyKeyClick() || (t > 12 && t % 5 == 0 && anyKeyDown)
+    );
   }
   static isAnyKeyClick() {
     //console.log(timer + "/" + Timer.timer)
@@ -54,6 +61,16 @@ export default class Input {
   static addKeyListenner(entity, keyCode, handler) {
     if (Game.state)
       Game.state.getState().addKeyListenner(entity, keyCode, handler);
+  }
+  static getPressedKeys(){
+    let a = inputedKeyList.map((e,i)=>{ 
+      if(e) return i;
+      return e;
+    });
+    let b  = a.filter(e=>
+      {return e!=false}
+    );
+    return b; 
   }
   static getClickedKeys(){
     let a = clickedKeyList.map((e,i)=>{ 
@@ -68,7 +85,7 @@ export default class Input {
 }
 /*receive input event*/
 document.onkeydown =  (e => {
-  anyKeyPress = true;
+  anyKeyDown = true;
   anyKeyClick = false;
   clickedKeyList[event.keyCode] = false;
   if (!inputedKeyList[event.keyCode]) {
@@ -88,7 +105,7 @@ document.onkeydown =  (e => {
   }
 });
 document.onkeyup = (e => {
-  anyKeyPress = false;
+  anyKeyDown = false;
   anyKeyClick = false;
   clickedKeyList[event.keyCode] = false;
   inputedKeyList[event.keyCode] = false;
