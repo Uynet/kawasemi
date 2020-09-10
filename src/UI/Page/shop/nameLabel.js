@@ -12,7 +12,7 @@ export default class NameLabel extends UI{
         this.children.forEach(u => this.removeChild(u));
 
         const style = { fontFamily: 'gkktt', fontSize: 80, fill: 0xffffff }
-        const POSITION_TEXT = vec2(86,60);
+        const POSITION_TEXT = vec2(86,66);
 
         this.addChild(new Text(POSITION_TEXT, data.name,style));
     }
