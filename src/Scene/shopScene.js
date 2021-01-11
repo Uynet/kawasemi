@@ -1,7 +1,6 @@
 import Scene from "./scene.js";
 import UIManager from "../UI/uiManager.js";
 import EntityManager from "../Stage/entityManager.js";
-import Shop from "../UI/shop.js";
 import Shop2 from "../UI/Page/shop/shop2.js";
 import Input from "../input.js";
 import Timer from "../timer.js";
