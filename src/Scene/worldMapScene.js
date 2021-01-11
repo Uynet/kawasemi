@@ -24,6 +24,7 @@ export default class WorldMapScene extends Scene {
         });
       };
       transitionState.onFadeOutStart = () => {
+        Input.restore();
         Game.state.transit("title");
       };
   }

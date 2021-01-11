@@ -12,7 +12,7 @@ Array.prototype.Last = function() {
 Array.prototype.remove = function(e) {
   let i = this.indexOf(e);
   if (i == -1) {
-    console.error(e)
+    // console.error(e)
     return; //そんな要素は無い
   }
   this.splice(i, 1);

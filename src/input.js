@@ -48,6 +48,7 @@ export default class Input {
     inputedKeyList[key] = false;
   }
   static isAnyKeyPress() {
+    if (this.isLocked) return false;
     const t = Timer.timer - timer;
     return (
       //Click後にインターバルをおいた後、一定の間隔で押下判定
