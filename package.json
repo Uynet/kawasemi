@@ -22,7 +22,7 @@
     "webpack": "^3.12.0"
   },
   "dependencies": {
-    "http-server": "^0.11.1",
+    "http-server": "^0.11.2",
     "pixi-gl-core": "^1.1.4",
     "pixi.js": "^5.3.3"
   }
