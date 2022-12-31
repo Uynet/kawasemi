@@ -19,7 +19,7 @@
   "author": "uynet",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^3.12.0"
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "http-server": "^0.11.1",
