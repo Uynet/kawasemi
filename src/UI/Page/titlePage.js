@@ -14,6 +14,6 @@ export default class TitlePage extends UI {
     this.addChild(new Font(p4, "+ 2018-2020 uynet", "MES"));
   }
   Update() {
-    this.children.forEach(u => u.Update());
+    this.children.forEach((u) => u.Update());
   }
 }
